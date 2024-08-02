@@ -140,6 +140,27 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         }
         return json_encode($diaryGenerationStatus);
     }
+    
+    public function generateAutoDiary($registration_id,$efiling_type)
+    {
+        //$postData = json_decode(file_get_contents('php://input'), true);
+        $diaryGenerationStatus=null;
+        if(!empty($registration_id) && !empty($efiling_type))
+        {
+            $stages_array = array(Transfer_to_IB_Stage); //Transfer_to_IB_Stage=8
+            $isCaseInApprovedStage=$this->Common_model->getApproveStagesCasesListDetails($registration_id,$stages_array); // Method to check and verify the case Approve status
+            if(!empty($isCaseInApprovedStage))
+            {
+                $efiling_no=$isCaseInApprovedStage[0]['efiling_no'];
+                $ref_m_efiled_type_id=$isCaseInApprovedStage[0]['ref_m_efiled_type_id'];
+                $diaryGenerationStatus=$this->getAllFilingDetailsByRegistrationId($efiling_no,$registration_id,$ref_m_efiled_type_id,$efiling_type); //function written for Auto diarization on 29072023
+                echo $diaryGenerationStatus;
+            }
+        }
+        else
+            echo  "Registration_id and Efiling_type are Empty !!!";
+        return json_encode($diaryGenerationStatus);
+    }
     private function getAllFilingDetailsByRegistrationId($efiling_no=NULL,$registration_id=NULL,$ref_m_efiled_type_id=NULL,$file_type=NULL)
     {
         $file_type = !empty($file_type) ?$file_type: NULL;
@@ -430,7 +451,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         }
         $diaryStatus = '';
         $insertData=[];
-
+        pr($response);
         $response=json_decode($response,true);
         if(strtoupper(trim($response['status']))=='SUCCESS'){
 
