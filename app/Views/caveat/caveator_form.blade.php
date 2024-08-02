@@ -831,7 +831,7 @@ body.loading .overlay{
         }
     });   
 
-    <?php  pr("Step ffffff"); ?>   
+    <?php // pr("Step ffffff"); ?>   
     function get_departments(party_is) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
