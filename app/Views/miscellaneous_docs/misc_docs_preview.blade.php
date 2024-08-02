@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SC</title>
+    <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+    @stack('style')
+</head>
+<?php
+if (!isset($efiling_search_header)) {
+    render('miscellaneous_docs.misc_docs_breadcrumb');
+}
+$stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
+if (isset(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+    $hidepencilbtn = 'true';
+} else {
+    $hidepencilbtn = 'false';
+}
+$collapse_class = '';
+?>
+<div class="mainPanel ">
+    <div class="panelInner">
+        <div class="middleContent">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="tab-form-inner">
+                                <div class="row">
+                                    <div style="float: right">
+                                        <?php
+                                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                            $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
+                                            if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
+                                        ?>
+                                                <a class="btn btn-success btn-sm" target="_blank" href="<?php echo base_url('acknowledgement/view'); ?>">
+                                                    <i class="fa fa-download blink"></i> eFiling Acknowledgement
+                                                </a>
+                                        <?php
+                                            }
+                                        }
+                                        ?>
+                                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 visible-lg visible-md">
+                                                    <button class="btn btn-primary btn-sm openall" style="float: right">Expand All <i class="fa fa-eye"></i></button>
+                                                    <button class="btn btn-info btn-sm closeall hidden" style="float: right">Collapse All <i class="fa fa-eye-slash"></i></button>
+                                                </div> -->
+                                        <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right"><span class="fa fa-eye"></span>&nbsp;&nbsp; Expand All</a>
+                                        <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; "> <span class="fa fa-eye-slash"></span> Collapse All</a>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="accordion" id="accordionExample">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header" id="headingOne">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" data-bs-toggle="collapse" aria-controls="collapseOne"> Case Details </button>
+                                                </h2>
+                                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <div class="x_panel">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 text-right" for="filing_no">Diary No. :</label>
+                                                                        <div class="col-md-8">
+                                                                            <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?> </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 text-right" for="filing_no">Registration No.:
+                                                                        </label>
+                                                                        <div class="col-md-8">
+                                                                            <p> <?php echo_data($case_details[0]['reg_no_display']); ?> </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 text-right" for="filing_no">Cause Title :
+                                                                        </label>
+                                                                        <div class="col-md-8">
+                                                                            <p> <?php
+                                                                                echo_data($case_details[0]['cause_title']);
+                                                                                ?> </p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label class="control-label col-md-4 text-right" for="case_status">Case Status:</label>
+                                                                        <div class="col-md-8">
+                                                                            <!--<p> <?php /*echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; */ ?></p>-->
+                                                                            <p> <?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <div class="row">
+                                                    <h2 class="accordion-header col-sm-11" id="headingTwo">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                                            <?php
+                                                            if (!isset($filing_for_details) || empty($filing_for_details)) { ?>
+                                                                <font style="color:red;"> <b>Filing For</b>
+                                                                </font>
+                                                            <?php } else { ?><b>Filing For</b><?php } ?>
+                                                        </button>
+                                                    </h2>
+                                                    <?php
+                                                    if ($hidepencilbtn != 'true') { ?>
+                                                        <div class="col-sm-1">
+                                                            <!-- <a href="<?php //echo base_url('on_behalf_of'); ?>"><i style="color:black; padding-top: 20px !important;" class="fa fa-pencil efiling_search"></i></a> -->
+                                                        </div>
+                                                    <?php } ?>
+                                                </div>
+                                                <div id="collapseTwo" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <?php render('on_behalf_of.filing_for_parties_list_view', @compact('filing_for_details')); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="accordion-item">
+                                                <div class="row">
+                                                    <h2 class="accordion-header col-sm-11" id="headingThree">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" <?php echo $collapse_class; ?>>
+                                                            <?php
+                                                            if (!isset($hidepencilbtn) || empty($hidepencilbtn)) { ?><font style="color:red;">
+                                                                    <b>Documents</b>
+                                                                </font><?php } else { ?>
+                                                                <b>Documents</b><?php } ?>
+                                                        </button>
+                                                    </h2>
+                                                    <div class="collapse" id="demo_9"> 
+                                                        <div class="x_panel">
+                                                            <?php if($hidepencilbtn!='true') { ?>
+                                                                <div class="text-right"><a href="<?php echo base_url('documentIndex'); ?>"><i class="fa fa-pencil efiling_search"></i></a></div>
+                                                            <?php } ?>
+                                                            <?php render('documentIndex.preview_misc_doc_ia_index_doc_list'); ?>
+                                                        </div>        
+                                                    </div>
+                                                </div>
+                                                <div id="collapseThree" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <?php //render('documentIndex.preview_misc_doc_ia_index_doc_list', @compact('efiled_docs_list')); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item">
+                                                <div class="row">
+                                                    <h2 class="accordion-header col-sm-11" id="headingFour">
+                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" <?php echo $collapse_class; ?>>
+                                                                <b>Fees Paid</b>
+                                                        </button>
+                                                    </h2>
+                                                </div>
+                                                <div id="collapseFour" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                                    <div class="accordion-body">
+                                                        <?php render('shcilPayment.payment_list_view', ['payment_details' => $payment_details ]); ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php render('modals'); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js">
+</script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/sha256.js"></script>
+<script src="<?= base_url() . 'assets' ?>/newAdmin/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+</body>
+
+</html>

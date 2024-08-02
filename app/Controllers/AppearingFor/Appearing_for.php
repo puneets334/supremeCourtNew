@@ -1,0 +1,139 @@
+<?php
+namespace App\Controllers;
+
+class Appearing_for extends BaseController {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('appearing_for/Appearing_for_model');
+    }
+
+    public function save_appearing_details() {
+
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+
+        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
+            echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
+            exit(0);
+        }
+
+        $stages_array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
+        if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
+            echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
+            exit(0);
+        }
+
+
+        $this->form_validation->set_rules('user_type', 'Party Type', 'required|in_list[P,R]');
+        //WORK ON IT TO VALIDATE FORWARD SLASH
+        //$this->form_validation->set_rules('party_name[]', 'Party Name', 'required|trim|validate_alpha_numeric_space_dot_hyphen_underscore_slash');
+        $this->form_validation->set_rules('party_email[]', 'Email', 'trim|min_length[5]|max_length[50]|valid_email');
+        $this->form_validation->set_rules('party_mob[]', 'Mobile', 'trim|exact_length[10]|is_natural');
+        $this->form_validation->set_rules('selected_party[]', 'Select Party', 'required|trim|validate_encrypted_value');
+
+        $this->form_validation->set_error_delimiters('<br/>', '');
+        if (!$this->form_validation->run()) {
+            echo '3@@@';
+            echo form_error('user_type'). form_error('party_name[]') . form_error('party_email[]') . form_error('party_mob[]'). form_error('selected_party[]');
+            exit(0);
+        }
+
+        $registration_id = $_SESSION['efiling_details']['registration_id'];
+
+        $party_type = escape_data($_POST['user_type']);
+
+        $party_name = $_POST['party_name'];
+        $parties_selected = $_POST['selected_party'];
+        $party_email = $_POST['party_email'];
+        $party_mobile = $_POST['party_mob'];
+
+        foreach ($parties_selected as $seleced_party) {
+
+            $selected_parties_details = url_decryption($seleced_party);
+
+            $selected_parties_details = explode('$$$', $selected_parties_details);
+            $parties_sr_no = $selected_parties_details[1];
+            $party_id_sequence = $selected_parties_details[0] - 1;
+
+            $appearing_for .= $parties_sr_no . '$$';
+
+            $contact_p_name .= strtoupper($party_name[$party_id_sequence]) . '$$';
+            $contact_p_email .= strtoupper($party_email[$party_id_sequence]) . '$$';
+            $contact_p_mobile .= $party_mobile[$party_id_sequence] . '$$';
+            $contact_partyid .= $parties_sr_no . '$$';
+
+            $appearing_for_tbl_id = $selected_parties_details[2];
+            $contact_tbl_id = $selected_parties_details[3];
+        }
+
+        if (!(int) $appearing_for_tbl_id && !(int) $contact_tbl_id) {
+
+            // INSERT APPEARING FOR AND CONTACT DETAILS OF PARTIES AND UPDATE BREADCRUMB
+
+            $appearing_party_detail = array(
+                'userid' => $_SESSION['login']['id'],
+                'diary_num' => $_SESSION['efiling_details']['diary_no'],
+                'diary_year' => $_SESSION['efiling_details']['diary_year'],
+                'partytype' => $party_type,
+                'appearing_for' => !empty($appearing_for) ? rtrim($appearing_for, '$$') : '',
+                'created_by' => $_SESSION['login']['id'],
+                'created_by_ip' => $_SERVER['REMOTE_ADDR'],
+                'created_on' => date('Y-m-d H:i:s')
+            );
+            //echo "<pre>";print_r($appearing_party_detail); die;
+            $contact_details = array(
+                'userid' => $_SESSION['login']['id'],
+                'diary_no' => $_SESSION['efiling_details']['diary_no'] . $_SESSION['efiling_details']['diary_year'],
+                'p_name' => !empty($contact_p_name) ? rtrim($contact_p_name, '$$') : '',
+                'p_email' => !empty($contact_p_email) ? rtrim($contact_p_email, '$$') : '',
+                'p_mobile' => !empty($contact_p_mobile) ? rtrim($contact_p_mobile, '$$') : '',
+                'partyid' => !empty($contact_partyid) ? rtrim($contact_partyid, '$$') : '',
+                'contact_type' => $party_type,
+                'created_by' => $_SESSION['login']['id'],
+                'created_on' => date('Y-m-d H:i:s'),
+                'create_ip' => $_SERVER['REMOTE_ADDR']
+            );
+
+            $details_saved_status = $this->Appearing_for_model->add_appearing_for($appearing_party_detail, $contact_details, $registration_id);
+
+            if ($details_saved_status) {
+                echo "1@@@Appearing for added successfully.";
+            } else {
+                echo "2@@@Some Error ! Please try after some time.";
+            }
+        } elseif ((int) $appearing_for_tbl_id && (int) $contact_tbl_id) {
+
+            // UPDATE APPEARING FOR AND CONTACT DETAILS OF PARTIES
+
+            $update_appearing_party_detail = array(
+                'partytype' => $party_type,
+                'appearing_for' => !empty($appearing_for) ? rtrim($appearing_for, '$$') : '',
+                'updated_by' => $_SESSION['login']['id'],
+                'updated_by_ip' => $_SERVER['REMOTE_ADDR'],
+                'updated_on' => date('Y-m-d H:i:s')
+            );
+
+            $update_contact_details = array(
+                'p_name' => !empty($contact_p_name) ? rtrim($contact_p_name, '$$') : '',
+                'p_email' => !empty($contact_p_email) ? rtrim($contact_p_email, '$$') : '',
+                'p_mobile' => !empty($contact_p_mobile) ? rtrim($contact_p_mobile, '$$') : '',
+                'partyid' => !empty($contact_partyid) ? rtrim($contact_partyid, '$$') : '',
+                'contact_type' => $party_type,
+                'updated_by' => $_SESSION['login']['id'],
+                'update_ip' => $_SERVER['REMOTE_ADDR'],
+                'updated_on' => date('Y-m-d H:i:s')
+            );
+
+            $result = $this->Appearing_for_model->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
+
+            if ($result) {
+                echo "1@@@Appearing for Updated Successfully.";
+            } else {
+                echo "2@@@Some Error ! Please try after some time.";
+            }
+        }
+    }
+
+}
+
+?>

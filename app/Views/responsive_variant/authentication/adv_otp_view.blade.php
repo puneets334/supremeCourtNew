@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" type="image/png" />
+    <title>SC-eFM</title>
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/bootstrap.min.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/font-awesome.min.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/material.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/glyphicons.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/owl.carousel.min.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/owl.theme.default.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
+</head>
+
+<body class="login-page">
+    <header>
+        <!-- Top Header Section End -->
+        <div class="top-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown">
+
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
+                        <ul>
+                            <li><a href="javascript:void(0)" class="hide skiptomain">Skip To Main Content</a></li>
+                            <li><a class="hide" href="javascript:void(0)">Screen Reader Access</a></li>
+                            <li class="text-size">
+                                <img src="<?= base_url() . 'assets/newDesign/' ?>images/text-ixon.png" alt="" class="txt-icon">
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
+                            </li>
+                            <li class="theme-color">
+                                <a href="javascript:void(0)" class="whitebg">A</a>
+                                <a href="javascript:void(0)" class="blackbg">A</a>
+                            </li>
+                            <li>
+                                <select name="" id="" class="select-lang">
+                                    <option value="">English</option>
+                                    <option value="">Hindi</option>
+                                </select>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Header Section End -->
+        <!-- Logo Section Header Start -->
+        <div class="logo-sec-wraper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 logo-sec wow fadeInUp">
+                        <a class="logo-align" href="index.html">
+                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" alt="emblem">
+                            <div class="brand-text">
+                                <h4>भारत का सर्वोच्च न्यायालय
+                                    <span> Supreme Court of India </span>
+                                    <span class="logo-sm-txt">|| यतो धर्मस्ततो जय: ||</span>
+                                </h4>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-8 loginbtn-sec wow fadeInUp">
+                        <div class="nav-wraper">
+                            <nav class="navbar navbar-expand-lg navbar-light custom-nav  w-100 wow fadeInUp">
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
+                                            <!-- <a class="active" href="index.html">Handbook </a> -->
+                                            <a class="active" target="_blank" href="<?php echo base_url('e-resources') ?>">Handbook </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)">Video Tutorial</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)">FAQ </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)">Stats</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0)">3PDF User Manual</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Logo Section Header End -->
+    </header>
+    <!-- Login Area Start  -->
+    <div class="login-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-7 col-lg-7 login-banner">
+                    <div class="login-banner-inner">
+                        <div class="banimg-sec">
+                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="" class="img-fluid">
+                        </div>
+                        <div class="banner-txts">
+                            <h5>SC-EFM </h5>
+                            <h6>E-Filing Module</h6>
+                            <h6>Supreme Court of India</h6>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
+                    <div class="login-s-inner loin-form">
+                        <?php
+                        $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off');
+                        echo form_open("Register/verify", $attributes);
+                        ?>
+                        <div class="httxt">
+                            <h4><?php echo $_SESSION['adv_details']['register_type']; ?></h4>
+                        </div>
+                        <h5 class="mt-4 text-center" style="color: green; margin: 0;"> OTP Send (Verify)</h5> <br />
+
+                        <?php if (session()->getFlashdata('msg')) : ?>
+                            <div class="alert alert-dismissible text-center flashmessage">
+                                <div class="flas-msg-inner">
+                                    <?= session()->getFlashdata('msg') ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+                        @if(isset($validation) && !empty($validation->getError('adv_email')))
+                        <div class="uk-text-danger">
+                            <b>{{ $validation->getError('adv_email')}}</b>
+                        </div>
+                        @endif
+                        @if(isset($validation) && !empty($validation->getError('adv_mobile')))
+                        <div class="uk-text-danger">
+                            <b>{{ $validation->getError('adv_mobile')}}</b>
+                        </div>
+                        @endif
+
+
+                        <?php
+                        $segment = service('uri');
+
+                        if ($segment->getSegment(2) == 'AdvocateOnRecord') {
+                            $title = 'Advocate On Record';
+                        } elseif ($segment->getSegment(2) == 'ForgetPassword') {
+                            $title = 'Forget Password';
+                        } else {
+                            $title = 'Party In Person';
+                        }
+                        ?>
+
+                        <h4> <strong><?php
+                                        //echo $title; 
+                                        ?>
+                            </strong></h4>
+
+                        <input type="hidden" name="register_type" value="<?php echo $title; ?>">
+
+
+                        <?php if (session()->getFlashdata('msg')) : ?>
+                            <div class="alert alert-dismissible text-center flashmessage">
+                                <div class="flas-msg-inner">
+                                    <?= session()->getFlashdata('msg') ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+
+
+                        @if(isset($validation) && !empty($validation->getError('adv_email')))
+                        <div class="uk-text-danger">
+                            <b>{{ $validation->getError('adv_email')}}</b>
+                        </div>
+                        @endif
+                        @if(isset($validation) && !empty($validation->getError('adv_mobile')))
+                        <div class="uk-text-danger">
+                            <b>{{ $validation->getError('adv_mobile')}}</b>
+                        </div>
+                        @endif
+
+                        <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+
+                        <?php if ($_SESSION['adv_details']['mobile_no']) { ?>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="mb-3">
+
+                                    <label class="form-label">Mobile : <span class="blue-txt"><?php echo $_SESSION['adv_details']['mobile_no']; ?></span></label>
+                                    <!--<input class="uk-input" type="text" value="<?php /*echo $_SESSION['adv_details']['mobile_otp']; */ ?>" name="adv_mobile_otp"  placeholder="Enter Mobile OTP" maxlength="6" minlength="6">-->
+                                    <input class="form-control cus-form-ctrl" type="text" value="" name="adv_mobile_otp" placeholder="Enter Mobile OTP" maxlength="6" minlength="6">
+
+                                </div>
+                            </div>
+
+                        <?php } ?>
+                        <?php if ($_SESSION['adv_details']['email_id']) { ?>
+
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="mb-3">
+                                    <label class="form-label">Email Id : <span class="blue-txt"><?php echo $_SESSION['adv_details']['email_id']; ?></span></label>
+                                    <!--<input class="uk-input" type="text" value="<?php /*echo $_SESSION['adv_details']['email_otp']; */ ?>" id="adv_email_otp" name="adv_email_otp" maxlength="6" minlength="6" placeholder="Enter Email OTP">-->
+                                    <input class="form-control cus-form-ctrl" type="text" value="" id="adv_email_otp" name="adv_email_otp" maxlength="6" minlength="6" placeholder="Enter Email OTP">
+
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="captchaimage">
+                                    <div class="mb-3">
+                                        @include('Captcha.Captcha_view')
+
+                                        {{-- <input type="text" value="" placeholder="HrT5709KL"
+                                                    id="" name="" class="form-control cus-form-ctrl"> --}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="mb-3">
+                                        <button class="btn quick-btn ">VERIFY</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                            <div class="text-center">
+                                <a href="{{base_url()}}" class="blue-txt login-anc">Login ?</a>
+                            </div>
+                            <div class="regester-txts">
+                                <h6 class="htsmall">Register As :</h6>
+                                <div class="regester-links">
+                                    <a href="register" class="blue-txt">Individual (Party In Person)</a>
+                                    <span class="gray-txt">Or</span>
+                                    <a href="register/AdvocateOnRecord" class="blue-txt"> AOR</a>
+                                    <!-- <span class="gray-txt">Or</span>
+                                    <a href="" class="blue-txt">Advocate</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login Area End  -->
+    <footer>
+        <!-- Footer Top Section Start -->
+        <div class="footer-top-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-5 copyright-sec">
+                        <p>Content Owned by Supreme Court of India</p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 contact-txt">
+                        <p>Please email your complaint/issue(s) along with relevant screenshot(s) to – <span class="blue-txt"> efiling[at]sci[dot]nic[dot]in </span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Top Section End -->
+    </footer>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery.easy-ticker.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/wow.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/owl.carousel.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
+    <script></script>
+    <script type="text/javascript" src="{{base_url('assets/responsive_variant/js/jquery/jquery-3.5.0.min.js')}}"></script>
+
+    <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
+    <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
+
+    <!-- scutum JS -->
+    <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor.min.js')}}"></script>
+    <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor/loadjs.js')}}"></script>
+    <script type="text/javascript" src="{{base_url('/assets/responsive_variant/templates/uikit_scutum_2/assets/js/scutum_common.js')}}"></script>
+
+
+
+    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/case_status/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="<?= base_url() ?>assets/js/aes.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>assets/js/aes-json-format.js"></script>
+    <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
+    <script type="text/javascript">
+        function loadPaperBookViewer(obj) {
+            $('#paper-book-viewer-modal iframe').attr('src', $(obj).data('paper-book-viewer-url'));
+            UIkit.modal('#paper-book-viewer-modal').show();
+        }
+        $(function() {
+            $('#loading-overlay').hide();
+            /*****start-code to adjust height of iframes*****/
+            try {
+                if ($.browser.safari || $.browser.opera) {
+                    $('.internal-content-iframe').on('load', function() {
+                        setTimeout(function() {
+                            $('.internal-content-iframe')[0].style.height = ($('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 100) + 'px';
+                        }, 100);
+                    });
+
+                    var iSource = $('.internal-content-iframe')[0].src;
+                    $('.internal-content-iframe')[0].src = '';
+                    $('.internal-content-iframe')[0].src = iSource;
+                } else {
+                    $('.internal-content-iframe').on('load', function() {
+                        setTimeout(function() {
+                            $('.internal-content-iframe')[0].style.height = ($('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 100) + 'px';
+                        }, 500);
+                    });
+                }
+                setInterval(function() {
+                    try {
+                        $('.internal-content-iframe')[0].style.height = $('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 'px';
+                    } catch (e) {}
+                }, 3000);
+            } catch (e) {}
+            /*****start-code to adjust height of iframes*****/
+        });
+
+        /*****start-$.browser feature extract, which has been removed in new jQuery version*****/
+        var matched, browser;
+
+        jQuery.uaMatch = function(ua) {
+            ua = ua.toLowerCase();
+
+            var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+                /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+                /(msie) ([\w.]+)/.exec(ua) ||
+                ua.indexOf("compatible") < script 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) || [];
+
+            return {
+                browser: match[1] || "",
+                version: match[2] || "0"
+            };
+        };
+
+        matched = jQuery.uaMatch(navigator.userAgent);
+        browser = {};
+
+        if (matched.browser) {
+            browser[matched.browser] = true;
+            browser.version = matched.version;
+        }
+
+        // Chrome is Webkit, but Webkit is also Safari.
+        if (browser.chrome) {
+            browser.webkit = true;
+        } else if (browser.webkit) {
+            browser.safari = true;
+        }
+
+        jQuery.browser = browser;
+        /*****end-$.browser feature extract, which has been removed in new jQuery version*****/
+    </script>
+</body>
+
+</html>

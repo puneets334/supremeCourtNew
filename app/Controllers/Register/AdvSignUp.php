@@ -1,0 +1,393 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class AdvSignUp extends CI_Controller {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('register/Register_model');
+        $this->load->library('webservices/efiling_webservices');
+        $this->load->library('slice');
+        $this->load->library('upload');
+    }
+
+    public function index() {
+        if (empty($_SESSION['adv_details']['mobile_no']) || empty($_SESSION['adv_details']['email_id'])) {
+            redirect('register');
+        }
+
+        unset($_SESSION['image_and_id_view']);
+        $data['select_state'] = $this->Register_model->get_state_list();
+        $data['advDetailsIcmis']=$this->efiling_webservices->getBarTable($_SESSION['adv_details']['mobile_no'],$_SESSION['adv_details']['email_id']);
+
+       /* $this->load->view('login/login_header');
+        $this->load->view('register/adv_signup_view', $data);
+        $this->load->view('login/login_footer');*/
+        $this->slice->view('responsive_variant.authentication.adv_signup_view',$data);
+        $this->slice->view('responsive_variant.authentication.adv_signup_nav');
+    }
+
+    function get_dist_list() {
+        $st_data = explode('#$', $_POST['state_id']);
+        $st_id = $st_data[0];
+        $result = $this->Register_model->get_district_list($st_id);
+        echo '<option value=""> Select District </option>';
+        foreach ($result as $district) {
+            echo '<option  value="' . htmlentities($district['district_code'] . '#$' . $district['district_name'], ENT_QUOTES) . '">' . htmlentities(strtoupper($district['district_name']), ENT_QUOTES) . '</option>';
+        }
+    }
+
+    function add_advocate() {
+        $this->form_validation->set_rules('name', 'Name', 'required|trim|is_required|min_length[2]|max_length[26]');
+        $this->form_validation->set_rules('date_of_birth', 'Date Of Birth', 'required|trim|is_required');
+        $this->form_validation->set_rules('gender', 'Gender', 'required|trim|is_required');
+        $this->form_validation->set_rules('address', 'Address', 'required|trim|is_required');
+        $this->form_validation->set_rules('state_id', 'State', 'required|trim|is_required');
+        $this->form_validation->set_rules('district_list', 'District', 'required|trim|is_required');
+        $this->form_validation->set_rules('pincode', 'Pincode', 'required|trim|numeric|is_required|min_length[6]|max_length[6]');
+
+
+        if (!empty($_SESSION['profile_image']['profile_photo'])) {
+        }else if (!empty($_SESSION['kyc_configData']['UidData']['Pht'])) {
+        }else {
+            if (empty($_SESSION['profile_image']['profile_photo'])) {
+                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Please Choose profile Photo!</p> </div>');
+                redirect('register/AdvSignUp');
+            }
+        }
+        if (!empty($_POST['mobile']) || !empty($_POST['email_id'])) {
+            if ($_SESSION['adv_details']['mobile_no'] != $_POST['mobile']) {
+                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Mobile number!</p> </div>');
+                redirect('register');
+            } elseif ($_SESSION['adv_details']['email_id'] != $_POST['email_id']) {
+                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Emai ID!</p> </div>');
+
+                redirect('register');
+            }
+        } else {
+            redirect('register');
+        }
+
+        $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
+        if ($this->form_validation->run() == FALSE) {
+
+            $data['select_state'] = $this->Register_model->get_state_list();
+
+            /*$this->load->view('login/login_header');
+            $this->load->view('register/adv_signup_view', $data);
+            $this->load->view('login/login_footer');*/
+            $this->slice->view('responsive_variant.authentication.adv_signup_view',$data);
+            $this->slice->view('responsive_variant.authentication.adv_signup_nav');
+        } else {
+            $aor_code=0;
+            $adv_sci_bar_id=0;
+            $bar_reg_no='';
+            if($_SESSION['adv_details']['register_type'] == 'Advocate On Record'){$_SESSION['register_type_select']=url_encryption(USER_ADVOCATE);} //added by anshu
+            if(url_decryption($_SESSION['register_type_select'])==USER_ADVOCATE){
+                //Get Advocate Details from ICMIS
+                // $advDetailsIcmis=$this->efiling_webservices->getBarTable($_POST['adv_mobile'],$_POST['adv_email']);//commented by anshu
+                $advDetailsIcmis=$this->efiling_webservices->getBarTable($_SESSION['adv_details']['mobile_no'],$_SESSION['adv_details']['email_id']); //added by anshu
+                if(count($advDetailsIcmis)>0){
+                    $aor_code=$advDetailsIcmis[0]->userid;
+                    $adv_sci_bar_id=$advDetailsIcmis[0]->adv_sci_bar_id;
+                    $bar_reg_no=$advDetailsIcmis[0]->bar_reg_no;
+                }
+                //END
+            }
+
+
+            $st_data = explode('#$', $_POST['state_id']);
+            $st_id = $st_data[0];
+
+            $dist_data = explode('#$', $_POST['district_list']);
+            $dist_id = $st_data[0];
+
+            $date_of_birth_post=str_replace('/','-',$_POST['date_of_birth']);
+            $date = new DateTime($date_of_birth_post);
+            $date_of_birth= $date->format('d-m-Y');
+            $one_time_password= $this->generateRandomString();
+            $_SESSION['user_created_password']= $one_time_password;
+            $data = array(
+                'userid' => strtoupper($_SESSION['adv_details']['mobile_no']),
+                'password' => hash('sha256', $one_time_password),
+                'ref_m_usertype_id' => url_decryption($_SESSION['register_type_select']),
+                'first_name' => strtoupper($_POST['name']),
+                'last_name' => NULL,
+                'moblie_number' => $_SESSION['adv_details']['mobile_no'],
+                'emailid' => strtoupper($_SESSION['adv_details']['email_id']),
+                'adv_sci_bar_id' => $adv_sci_bar_id,
+                'aor_code' => $aor_code,
+                'bar_reg_no' => strtoupper($bar_reg_no),
+                'gender' => url_decryption($_POST['gender']),
+                'photo_path' => '',
+                'admin_for_type_id' => 1,
+                'admin_for_id' => 1,
+                'account_status' => 0,
+                'is_active' => 1,
+                'refresh_token' => NULL,
+                'dob' => $date_of_birth,
+                'm_address1' => strtoupper($_POST['address']),
+                'm_city' => $st_data[1],
+                'm_state_id' => $st_id,
+                'm_district_id' => $dist_id,
+                'm_pincode' => $_POST['pincode'],
+                'create_ip' => get_client_ip()
+            );
+
+            if ($_SESSION['adv_details']['register_type'] == 'Advocate On Record') {
+
+                if (!empty($_SESSION['profile_image']['profile_photo'])) {
+                    $profie_photo = array('photo_path' => $_SESSION['profile_image']['profile_photo']);
+                    $final_data = array_merge($data, $profie_photo);
+                }else{
+                    $final_data =$data;
+                }
+                $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
+
+                if (!empty($already_exist)) {
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">Already Registerd Email!</div>');
+                    redirect('register/AdvSignUp');
+                } else {
+                    $add_adv = $this->Register_model->add_new_advocate_details($final_data);
+                    if (!empty($add_adv)) {
+                        //TODO:: Send Username and Password on email
+                        $to_email=trim($_SESSION['adv_details']['email_id']);
+                        $subject="SC-EFM Registration Details";
+                        $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." ,Please do not share it with any one.";
+                        send_mail_msg($to_email, $subject, $message);
+                        //END
+                        $this->session->set_flashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Successful</p> </div>');
+                        redirect('login');
+                    } else {
+                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Failed</p> </div>');
+                        redirect('register/AdvSignUp');
+                    }
+                }
+            } else {
+                $_SESSION['register_data'] = $data;
+                redirect('register/AdvSignUp/upload');
+            }
+        }
+    }
+
+    private function generateRandomString($length = 10) {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+    function upload() {
+        $this->slice->view('responsive_variant.authentication.adv_upload_view');
+        /*$this->load->view('login/login_header');
+        $this->load->view('register/adv_upload_view');
+        $this->load->view('login/login_footer');*/
+    }
+
+    function upload_photo() {
+        if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
+            echo "1@@@" . 'Profile Image Only JPEG/JPG are allowed in document upload !';
+            exit(0);
+        }
+        if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
+            echo "1@@@" . 'Profile Image Only JPEG/JPG are allowed in document upload !';
+            exit(0);
+        }
+        if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
+            echo "1@@@" . 'Profile Image No double extension allowed in JPEG/JPG !';
+            exit(0);
+        }
+        if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
+            echo "1@@@" . 'Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !';
+            exit(0);
+        }
+        if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
+            echo "1@@@" . 'Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!';
+            exit(0);
+        }
+        if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
+
+            $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
+            echo "1@@@" . 'Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!';
+            exit(0);
+        }
+
+        $new_filename = time() . rand() . ".jpeg";
+        if ($_FILES["advocate_id_prof"]['type'] == 'image/jpeg') {
+            $new_pdf_extens = ".jpeg";
+        }
+
+        $photo_file_path = "user_images/photo/" . $new_filename;
+
+        $data = array(
+            'profile_photo' => base_url() . $photo_file_path
+        );
+
+        $_SESSION['profile_image'] = $data;
+        $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
+
+        if (!$thumb) {
+            $_SESSION['login']['photo_path'] = $file_path_thumbs;
+            echo "1@@@" . 'Please Upload Image Is Requerd!';
+        }
+
+        if ($thumb) {
+            echo '<img class="image-preview" src="' . $_SESSION['profile_image']['profile_photo'] . ' " class="upload-preview" height="40" width="50" />';
+        }
+    }
+
+    function upload_id_proof() {
+        if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">Only JPEG/JPG are allowed in ID proof !</div>');
+            redirect('register/AdvSignUp/upload');
+            exit(0);
+        }
+        if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">Only JPEG/JPG are allowed in ID proof !</div>');
+            redirect('register/AdvSignUp/upload');
+            exit(0);
+        }
+        if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
+
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">Only JPEG/JPG are allowed in ID proof !</div>');
+            redirect('register/AdvSignUp/upload');
+            exit(0);
+        }
+        if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
+
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">ID proof Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !</div>');
+            redirect('register/AdvSignUp/upload');
+            exit(0);
+        }
+        if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">ID proof Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!</div>');
+            redirect('register/AdvSignUp/upload');
+            exit(0);
+        }
+        if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
+            $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">ID proof Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!</div>');
+            redirect('register/AdvSignUp/upload');
+            exit(0);
+        }
+
+        $new_filename = time() . rand() . ".jpeg";
+        if ($_FILES["advocate_image"]['type'] == 'image/jpeg') {
+            $new_pdf_extens = ".jpeg";
+        }
+
+        $photo_file_path = "user_images/photo/" . $new_filename;
+
+        $data = array(
+            'profile_photo' => base_url() . $photo_file_path
+        );
+
+        $_SESSION['image_and_id_view'] = $data;
+        $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
+
+        if (!$thumb) {
+            $_SESSION['login']['photo_path'] = $file_path_thumbs;
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">Please Upload Image!</div>');
+            redirect('register/AdvSignUp/upload');
+        }
+
+        if ($thumb) {
+            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center flashmessage">Successful!</div>');
+            redirect('register/AdvSignUp/upload');
+        }
+    }
+
+    function image_upload($images, $file_path, $file_temp_name) {
+        $thumbnail_path = 'user_images/thumbnail/';
+        if (!is_dir($thumbnail_path)) {
+            $uold = umask(0);
+            if (mkdir('user_images/thumbnail/', 0777, true)) {
+                $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+                write_file($thumbnail_path . '/index.html', $html);
+            }
+            umask($uold);
+        }
+
+        $thumbnail_path = 'user_images/photo/';
+        if (!is_dir($thumbnail_path)) {
+            $uold = umask(0);
+            if (mkdir('user_images/photo/', 0777, true)) {
+                $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+                write_file($thumbnail_path . '/index.html', $html);
+            }
+            umask($uold);
+        }
+        $config['upload_path'] = 'user_images/photo/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['overwrite'] = TRUE;
+        $config['file_name'] = $file_temp_name;
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        $this->upload->do_upload($images);
+        $uploadData = $this->upload->data();
+        $filename = $uploadData['file_name'];
+        $data['picture'] = $filename;
+        $this->_generate_thumbnail($filename);
+        return $data;
+    }
+
+    function _generate_thumbnail($picture) {
+        $this->load->library('image_lib');
+        $config['image_library'] = 'gd2';
+        $config['source_image'] = 'user_images/photo/' . $picture;
+        $config['new_image'] = 'user_images/thumbnail/' . $picture;
+        $config['maintain_ratio'] = TRUE;
+        $config['width'] = 150;
+        $config['height'] = 150;
+        $this->load->library('image_lib', $config);
+        $this->image_lib->initialize($config);
+        $this->image_lib->resize();
+        return true;
+    }
+
+    function final_submit() {
+
+
+        $adv_data = $_SESSION['register_data'];
+       // echo $adv_data['password'];
+        $profie_photo = array('photo_path' => $_SESSION['profile_image']['profile_photo']);
+
+        $id_proof = array('id_proof_path' => $_SESSION['image_and_id_view']['profile_photo']);
+
+        $adv_data1 = array_merge($adv_data, $profie_photo);
+        $final_data = array_merge($adv_data1, $id_proof);
+
+
+        $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
+
+        if (!empty($already_exist)) {
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center flashmessage">Already Registerd Email!</div>');
+            redirect('register/AdvSignUp');
+        } else {
+            $one_time_password= $_SESSION['user_created_password']; //$this->generateRandomString();
+            $add_adv = $this->Register_model->add_new_advocate_details($final_data);
+            if (!empty($add_adv)) {
+                $to_email=trim($_SESSION['adv_details']['email_id']);
+                $subject="SC-EFM Registration Details";
+                $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
+                send_mail_msg($to_email, $subject, $message);
+                //END
+                $this->session->set_flashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Successful</p> </div>');
+                redirect('login');
+            } else {
+                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Failed</p> </div>');
+                redirect('register/AdvSignUp');
+            }
+        }
+    }
+
+}
+
+
+
+?>

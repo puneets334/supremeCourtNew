@@ -1,0 +1,1 @@
+* * * * * chmod -R 777 /var/www/html/uploaded_docs/ >> /var/log/cron.log 2>&1

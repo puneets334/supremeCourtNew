@@ -1,0 +1,90 @@
+<header>
+    <!-- Top Header Section End -->
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown">
+
+                </div>
+                <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
+                    <ul>
+                        <li><a href="javascript:void(0)" class="hide skiptomain">Skip To Main Content</a></li>
+                        <li><a class="hide" href="javascript:void(0)">Screen Reader Access</a></li>
+                        <li class="text-size">
+                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/text-ixon.png" alt=""
+                                class="txt-icon">
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
+                        </li>
+                        <li class="theme-color">
+                            <a href="javascript:void(0)" class="whitebg">A</a>
+                            <a href="javascript:void(0)" class="blackbg">A</a>
+                        </li>
+                        <li>
+                            <select name="" id="" class="select-lang">
+                                <option value="">English</option>
+                                <option value="">Hindi</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Header Section End -->
+    <!-- Logo Section Header Start -->
+    <div class="logo-sec-wraper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-4 logo-sec wow fadeInUp">
+                    <a class="logo-align" href="<?php echo base_url('/')?>">
+                        <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" alt="emblem">
+                        <div class="brand-text">
+                            <h4>भारत का सर्वोच्च न्यायालय
+                                <span> Supreme Court of India </span>
+                                <span class="logo-sm-txt">|| यतो धर्मस्ततो जय: ||</span>
+                            </h4>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 col-lg-8 loginbtn-sec wow fadeInUp">
+                    <div class="nav-wraper">
+                        <nav class="navbar navbar-expand-lg navbar-light custom-nav  w-100 wow fadeInUp">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarSupportedContent">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                <ul class="navbar-nav mr-auto">
+                                    <li class="nav-item">
+                                        <!-- <a class="active" href="index.html">Handbook </a> -->
+                                        <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
+                                        <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
+                                    </li>
+                                    <li class="nav-item">
+
+                                        <a class="nav-link <?= (current_url() == base_url('e-resources/video-tutorial')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/video-tutorial') ?>">Video Tutorial</a>
+                                    </li>
+                                    <li class="nav-item">
+
+                                        <a class="nav-link <?= (current_url() == base_url('e-resources/FAQs')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/FAQs') ?>">FAQs</a>
+                                    </li>
+                                    <li class="nav-item">
+
+                                        <a class="nav-link <?= (current_url() == base_url('e-resources/hand-book-old-efiling')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/hand-book-old-efiling') ?>">Stats</a>
+                                    </li>
+                                    <li class="nav-item">
+
+                                        <a class="nav-link <?= (current_url() == base_url('e-resources/three-pdf-user-manual')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/three-pdf-user-manual') ?>">3PDF User Manual</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Logo Section Header End -->
+</header>
