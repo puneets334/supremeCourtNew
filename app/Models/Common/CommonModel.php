@@ -1705,14 +1705,10 @@ class CommonModel extends Model
             && isset($params['whereFieldValue']) && !empty($params['whereFieldValue'])
             && isset($params['updateArr']) && !empty($params['updateArr'])
         ) {
-            // $this->db->WHERE($params['whereFieldName'], $params['whereFieldValue']);
-            // if ($this->db->UPDATE($params['table_name'], $params['updateArr']) == true) {
-            //     $output = true;
-            // }
             $builder = $this->db->table($params['table_name']);
             $builder->where($params['whereFieldName'], $params['whereFieldValue']);
-            $builder->update($params['updateArr']);
-            if ($builder->update($params['updateArr']) == true) {
+            $builder->set($params['updateArr']);
+            if ($builder->update()) {
                 $output = true;
             }
         }

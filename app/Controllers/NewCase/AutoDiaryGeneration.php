@@ -149,6 +149,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         {
             $stages_array = array(Transfer_to_IB_Stage); //Transfer_to_IB_Stage=8
             $isCaseInApprovedStage=$this->Common_model->getApproveStagesCasesListDetails($registration_id,$stages_array); // Method to check and verify the case Approve status
+            // pr($isCaseInApprovedStage);
             if(!empty($isCaseInApprovedStage))
             {
                 $efiling_no=$isCaseInApprovedStage[0]['efiling_no'];
@@ -174,7 +175,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
             /*$icmisUserData = $this->Common_model->getIcmisUserCodeByRegistrationId($paramArray);
             $userIcmisCode = !empty($icmisUserData[0]->icmis_usercode) ? (int)$icmisUserData[0]->icmis_usercode : 0;    */
             $userIcmisCode=$this->efiling_webservices->getDiaryUserCodeFromICMIS();
-            
+            // pr($userIcmisCode);
             if(empty($userIcmisCode))
             {
                 $userIcmisCode=ADMIN_AUTO_DIARY_ICMIS_USER_CODE;
@@ -356,7 +357,6 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                                     $pp = !empty($getBarData[0]['pp']) ? 'P' : 'A';
                                     $tmpArr['pet_adv_id'] = !empty($getBarData[0]['pp']) ? CAVEATOR_IN_PERSON :   $bar_id;
                                     $tmpArr['adv_pp'] = $pp;
-                                    // $tmpArr['diary_user_id'] = 1; // change in future
                                     $tmpArr['diary_user_id'] = $userIcmisCode;
                                     $tmpArr['casetype_id'] = $case_type_id;
                                 }
@@ -451,7 +451,6 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         }
         $diaryStatus = '';
         $insertData=[];
-        pr($response);
         $response=json_decode($response,true);
         if(strtoupper(trim($response['status']))=='SUCCESS'){
 
@@ -479,17 +478,6 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
             if($file_type=='caveat'){
                 send_whatsapp_message($registration_id,$efiling_no," - filed with Caveat Number $diaryNo");
             }
-
-            /*array_push($filteredData, ["field_name" => "case_detail", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "petitioner", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "respondent", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "extra_party", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "legal_representative", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "act_section", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "earlier_courts", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "upload_document", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "index", "field_value" => "1"]);
-            array_push($filteredData, ["field_name" => "pay_court_fee", "field_value" => "1"]);*/
             $filteredData = ['case_detail'=>'1'];
 
             $typeGeneration ='diary no.';
@@ -502,22 +490,11 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         }
         else  if(strtoupper(trim($response['status'])) == 'ERROR_ALREADY_IN_ICMIS') {
             $diaryStatus = 'exist_diary';
-            //var_dump($response['efiled_cases']);
             $already_generated_diary_no=$response['efiled_cases']['diary_no'];
             $already_generated_created_at=$response['efiled_cases']['created_at'];
-            //echo "Registration_id:".$registration_id;
             if(!empty($already_generated_diary_no) && $already_generated_diary_no>0){
                 $this->updateDiaryInAlreadyGenerated($registration_id,$already_generated_diary_no,$already_generated_created_at);
             }
-
-            /*array_push($filteredData, array("field_name" => "caveator", "field_value" => "1"));
-            array_push($filteredData, array("field_name" => "caveatee", "field_value" => "1"));
-            array_push($filteredData, array("field_name" => "extra_party", "field_value" => "1"));
-            array_push($filteredData, array("field_name" => "subordinate_court", "field_value" => "1"));
-            array_push($filteredData, array("field_name" => "upload_document", "field_value" => "1"));
-            array_push($filteredData, array("field_name" => "index", "field_value" => "1"));
-            array_push($filteredData, array("field_name" => "pay_court_fee", "field_value" => "1"));
-            $typeGeneration = 'caveat no.';*/
         }
         else  if(strtoupper(trim($response['status'])) == 'ERROR_MAIN') {
 

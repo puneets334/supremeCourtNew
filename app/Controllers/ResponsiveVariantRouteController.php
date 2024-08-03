@@ -251,56 +251,58 @@ class ResponsiveVariantRouteController extends BaseController
             $recent_documents = json_decode($recent_documents_str, true);
             // $recent_documents_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date . '%20to%20' . $to_date . '');
             // $recent_documents = json_decode($recent_documents_str);
-            if (!empty($recent_documents) && count($recent_documents) > 0) {
-                foreach ($recent_documents['data'] as $index => $data) {
-                    //echo $index." Record<br/>";
-                    if ($data['advocateId'] == $advocate_id) {
-                        //$recent_documents_by_me[] = $data; //old comments by anshu
-                        if ($data['isIA'] && $data['status'] == 'PENDING') {
-                            //echo $index." its IA<br/>";
-                            $recent_documents_by_me[] = $data;
-                            $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
-                        } else {
-                            if ($data['status'] == 'PENDING') {
-                                //echo $index." its non-IA<br/>";
-                                switch ($data['typeName']) {
-                                    case 'REPLY':
-                                        $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
-                                        $recent_documents_by_me[] = $data;
-                                        break;
-                                    case 'REJOINDER AFFIDAVIT':
-                                        $recent_documents_by_me_grouped_by_document_type['rejoinder'][] = $data;
-                                        $recent_documents_by_me[] = $data;
-                                        break;
-                                    default:
-                                        $recent_documents_by_me_grouped_by_document_type['other'][] = $data;
-                                        $recent_documents_by_me[] = $data;
-                                        break;
+            if (!empty($recent_documents) && count($recent_documents) > 0 && is_array($recent_documents)) {
+                if(is_array($recent_documents['data'])){
+                    foreach ($recent_documents['data'] as $index => $data) {
+                        //echo $index." Record<br/>";
+                        if ($data['advocateId'] == $advocate_id) {
+                            //$recent_documents_by_me[] = $data; //old comments by anshu
+                            if ($data['isIA'] && $data['status'] == 'PENDING') {
+                                //echo $index." its IA<br/>";
+                                $recent_documents_by_me[] = $data;
+                                $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
+                            } else {
+                                if ($data['status'] == 'PENDING') {
+                                    //echo $index." its non-IA<br/>";
+                                    switch ($data['typeName']) {
+                                        case 'REPLY':
+                                            $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
+                                            $recent_documents_by_me[] = $data;
+                                            break;
+                                        case 'REJOINDER AFFIDAVIT':
+                                            $recent_documents_by_me_grouped_by_document_type['rejoinder'][] = $data;
+                                            $recent_documents_by_me[] = $data;
+                                            break;
+                                        default:
+                                            $recent_documents_by_me_grouped_by_document_type['other'][] = $data;
+                                            $recent_documents_by_me[] = $data;
+                                            break;
+                                    }
                                 }
                             }
-                        }
-                    } else {
-                        //$recent_documents_by_others[] = $data; //old comments by anshu
-                        if ($data['status'] == 'PENDING') {
-                            //echo $index." its IA<br/>";
-                            $recent_documents_by_others[] = $data;
-                            $recent_documents_by_others_grouped_by_document_type['ia'][] = $data;
                         } else {
+                            //$recent_documents_by_others[] = $data; //old comments by anshu
                             if ($data['status'] == 'PENDING') {
-                                //echo $index." its non-IA<br/>";
-                                switch ($data['typeName']) {
-                                    case 'REPLY':
-                                        $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
-                                        $recent_documents_by_others[] = $data;
-                                        break;
-                                    case 'REJOINDER AFFIDAVIT':
-                                        $recent_documents_by_others_grouped_by_document_type['rejoinder'][] = $data;
-                                        $recent_documents_by_others[] = $data;
-                                        break;
-                                    default:
-                                        $recent_documents_by_others_grouped_by_document_type['other'][] = $data;
-                                        $recent_documents_by_others[] = $data;
-                                        break;
+                                //echo $index." its IA<br/>";
+                                $recent_documents_by_others[] = $data;
+                                $recent_documents_by_others_grouped_by_document_type['ia'][] = $data;
+                            } else {
+                                if ($data['status'] == 'PENDING') {
+                                    //echo $index." its non-IA<br/>";
+                                    switch ($data['typeName']) {
+                                        case 'REPLY':
+                                            $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
+                                            $recent_documents_by_others[] = $data;
+                                            break;
+                                        case 'REJOINDER AFFIDAVIT':
+                                            $recent_documents_by_others_grouped_by_document_type['rejoinder'][] = $data;
+                                            $recent_documents_by_others[] = $data;
+                                            break;
+                                        default:
+                                            $recent_documents_by_others_grouped_by_document_type['other'][] = $data;
+                                            $recent_documents_by_others[] = $data;
+                                            break;
+                                    }
                                 }
                             }
                         }
