@@ -42,7 +42,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">            
                                             <div class="x_panel">                
-                                                <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                     <div class="x_title">
                                                         <h2><i class="fa  fa-newspaper-o"></i> Resources Handbook</h2>
                                                         <div class="clearfix"></div>
