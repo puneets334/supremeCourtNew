@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers\Caveat;
 use App\Controllers\BaseController;
-use App\Models\caveat\ViewModel;
-use App\Models\uploadDocuments\UploadDocsModel;
+use App\Models\Caveat\ViewModel;
+use App\Models\UploadDocuments\UploadDocsModel;
 use App\Models\Common\CommonModel;
-use App\Models\newcase\GetDetailsModel;
+use App\Models\NewCase\GetDetailsModel;
 
 //require_once APPPATH .'controllers/Auth_Controller.php';
 class View extends BaseController {

@@ -124,7 +124,7 @@ body.loading .overlay{
                                             class="form-control cus-form-ctrl sci_validation" 
                                             minlength="3" maxlength="250" required><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
                                         <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                            data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                            title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                             <i class="fa fa-question-circle-o"></i>
                                         </span> 
                                         
@@ -174,7 +174,7 @@ body.loading .overlay{
                                 class="form-control cus-form-ctrl sci_validation"
                                 type="text" required>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                data-content="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
+                                title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>    
                         </div>
@@ -189,7 +189,7 @@ body.loading .overlay{
                             value="<?php echo isset($caveator_details[0]['party_dob']) ? date('m/d/Y', strtotime($caveator_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                    data-content="Please Enter Date of Birth.">
+                                    title="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -241,7 +241,7 @@ body.loading .overlay{
                             <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
                             name="pet_age" id="pet_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($pet_age); ?>">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                            data-content="Approx. age in years only.">
+                            title="Approx. age in years only.">
                             <i class="fa fa-question-circle-o"></i>
                         </span>
                         </div>
@@ -308,7 +308,7 @@ body.loading .overlay{
                                             placeholder="Other State Name"
                                             type="text"><?php echo isset($caveator_details[0]['org_state_name'])?$caveator_details[0]['org_state_name']:''; ?></textarea>
                                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                                    data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                                    title="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o"></i>
                                             </span>
                                         </div>
@@ -346,7 +346,7 @@ body.loading .overlay{
                                                 <textarea id="org_dept_name" tabindex='14' name="org_dept_name" 
                                                 minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Dept Name"><?php echo isset($caveator_details[0]['org_dept_name'])?$caveator_details[0]['org_dept_name']:''; ?></textarea>
                                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                                data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                                title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o"></i>
                                         </div>
                                     </div>
@@ -380,7 +380,7 @@ body.loading .overlay{
                                             </label>
                                             <textarea id="org_post_name" name="org_post_name" tabindex='16' minlength="3"
                                                 maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name"><?php echo isset($caveator_details[0]['org_post_name'])?$caveator_details[0]['org_post_name']:''; ?></textarea>
-                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                     <i class="fa fa-question-circle-o"></i>
                                                 </span>
                                         </div>
@@ -407,7 +407,7 @@ body.loading .overlay{
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="email" minlength="6" maxlength="49" required>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                    data-content="Please enter caveator valid email id. (eg : abc@example.com)">
+                                    title="Please enter caveator valid email id. (eg : abc@example.com)">
                                     <i class="fa fa-question-circle-o"></i>
                                 </span>
                             </div>
@@ -419,7 +419,7 @@ body.loading .overlay{
                                     <span style="color: red" class="astriks">*</span>
                                 </label>
                                 <input id="pet_mobile" name="pet_mobile" placeholder="Mobile" tabindex='18' value="<?php echo isset($caveator_details[0]['pet_mobile']) ? $caveator_details[0]['pet_mobile'] : ''; ?>" class="form-control cus-form-ctrl sci_validation" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="tel" maxlength="10" required>
-                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Mobile No. should be of 10 digits only.">
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                     <i class="fa fa-question-circle-o"></i>
                                 </span>
                             </div>
@@ -430,7 +430,7 @@ body.loading .overlay{
                                 <textarea tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
                                     class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="99" required> <?php echo isset($caveator_details[0]['address']) ? $caveator_details[0]['address'] : ''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                    data-content="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                    title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o"></i>
                                 </span>
                             </div>
@@ -445,9 +445,9 @@ body.loading .overlay{
                                     value="<?php echo isset($caveator_details[0]['pet_pincode'])?$caveator_details[0]['pet_pincode']:''; ?>"
                                     class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6">
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                    data-content="Pincode should be 6 digits only.">
+                                    title="Pincode should be 6 digits only.">
                                     <i class="fa fa-question-circle-o"></i>
-                                    <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank">Pin Code Locator</a>
+                                    <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank" class="pin-code-loc">Pin Code Locator</a>
                                 </span>
                             </div>
                         </div>
@@ -459,7 +459,7 @@ body.loading .overlay{
                                 </label>
                                 <input id="party_city" tabindex='21' name="party_city" placeholder="City" value="<?php echo isset($caveator_details[0]['pet_city'])?$caveator_details[0]['pet_city']:''; ?>"
                                 class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49" required>
-                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter City name.">
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
                                     <i class="fa fa-question-circle-o"></i>
                                 </span>
                             </div>
@@ -588,25 +588,121 @@ body.loading .overlay{
 
     }); 
      
-      $(document).ready(function () {
+      $(document).ready(function () {   
         $('#pet_dob').datepicker({
-            onSelect: function (value) {
-                var parts = value.split("/");
-                var day = parts[0] && parseInt(parts[0], 10);
-                var month = parts[1] && parseInt(parts[1], 10);
-                var year = parts[2] && parseInt(parts[2], 10);
-                var str = month + '/' + day + '/' + year;
-                var today = new Date(),
-                    dob = new Date(str),
-                    age = new Date(today - dob).getFullYear() - 1970;
-                $('#pet_age').val(age);
-            },
             changeMonth: true,
             changeYear: true,
             yearRange: "-100:-1",
             dateFormat: "dd/mm/yy",
             defaultDate: '-40y'
         });
+
+        $(document).on('change','#pet_dob', function(){
+            var value = $('#pet_dob').val();
+            var parts = value.split("/");
+            var day = parts[0] && parseInt(parts[0], 10);
+            var month = parts[1] && parseInt(parts[1], 10);
+            var year = parts[2] && parseInt(parts[2], 10);
+            var str = day + '/' + month + '/' + year;
+            var today = new Date(),
+            dob = new Date(str),
+            age = new Date(today - dob).getFullYear() - 1970;
+            $('#pet_age').val(age);
+        });
+
+        $('#party_pincode').blur(function(){
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            var pincode = $("#party_pincode").val();
+            if(pincode){
+                var stateObj = JSON.parse(state_Arr);
+                var options = '';
+                options +='<option value="">Select State</option>';
+                stateObj.forEach((response)=>
+                options +='<option value="'+response.id+'">'+response.state_name+'</option>');
+                $('#party_state').html(options).select2().trigger("change");
+                $.ajax({
+                    type: "POST",
+                    data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, pincode : pincode},
+                    url: "<?php echo base_url('newcase/Ajaxcalls/getAddressByPincode'); ?>",
+                    success: function (response)
+                    {
+                        var taluk_name;
+                        var district_name;
+                        var state;
+                        if(response){
+                            var resData = JSON.parse(response);
+                            if(resData){
+                                taluk_name = resData[0]['taluk_name'].trim().toUpperCase();
+                                district_name = resData[0]['district_name'].trim().toUpperCase();
+                                state = resData[0]['state'].trim().toUpperCase();
+                            }
+                            if(taluk_name){
+                                $("#party_city").val('');
+                                $("#party_city").val(taluk_name);
+                            }
+                            else{
+                                $("#party_city").val('');
+                            }
+                            if(state){
+                                var stateObj = JSON.parse(state_Arr);
+                                if(stateObj){
+                                    var singleObj = stateObj.find(
+                                        item => item['state_name'] === state
+                                    );
+                                }
+                                if(singleObj){
+                                    $('#party_state').val('');
+                                    $('#party_state').val(singleObj.id).select2().trigger("change");
+                                }
+                                else{
+                                    $('#party_state').val('');
+                                }
+                                if(district_name){
+                                    var stateId = $('#party_state').val();
+                                    setSelectedDistrict(stateId,district_name);
+                                }
+                            }
+                            else{
+                                $('#party_state').val('');
+                            }
+                        }
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                            $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                        });
+                    },
+                    error: function () {
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                            $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                        });
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $('#add_caveator').on('submit', function () {
             // alert("TESTTSGDSGDSFGDSG");
             if ($('#add_caveator').valid()){
@@ -831,7 +927,7 @@ body.loading .overlay{
         }
     });   
 
-    <?php // pr("Step ffffff"); ?>   
+    <?php  pr("Step ffffff"); ?>   
     function get_departments(party_is) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

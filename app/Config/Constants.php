@@ -674,8 +674,8 @@ define('ESIGN_SERVICE_URL',"http://10.25.78.22/web_service/index.php/Esigner/sig
 #ESIGN_SERVICE_URL="https://registry.sci.gov.in/api/digital_signature/aadhaar/sign_doc"
 #ICMIS_SERVICE_URL="http://10.25.78.22:84/out_service/index.php" #original akg
 // define('ICMIS_SERVICE_URL',"http://10.25.78.43:84/out_service/index.php");
-define('ICMIS_SERVICE_URL',"http://10.25.80.170:84/public");
-// define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
+//define('ICMIS_SERVICE_URL',"http://10.25.80.170:84/public");
+define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
 #ICMIS_SERVICE_URL="http://10.40.186.102/out_service/index.php");
 #ICMIS_SERVICE_URL="http://10.40.186.11/out_service/index.php");
 

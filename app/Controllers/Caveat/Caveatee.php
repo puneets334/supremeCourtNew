@@ -4,9 +4,8 @@ use App\Controllers\BaseController;
 use App\Models\Caveat\CaveatCommonModel;
 use App\Models\Caveat\CaveateeModel;
 use App\Models\Caveat\SubordinateCourtModel;
-use App\Models\Newcase\DropdownListModel;
 use App\Models\Common\CommonModel;
-
+use App\Models\NewCase\DropdownListModel;
 
 //require_once APPPATH .'controllers/Auth_Controller.php';
 class Caveatee extends BaseController {
@@ -34,6 +33,8 @@ class Caveatee extends BaseController {
     }
 
     public function index() {
+
+       
        
         $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         $data = array();
