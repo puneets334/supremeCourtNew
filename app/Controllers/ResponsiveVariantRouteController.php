@@ -1129,19 +1129,37 @@ class ResponsiveVariantRouteController extends BaseController
     public function showOldEfilingCasesCrud($diary_id = null)
     {
        
+        // $direct_access_params = [];
+        // $data['direct_access_params'] = [];
+        // setSessionData('customEfil', 'refile');
+        // if (!empty(@$diary_id)) {
+        //     $_SESSION['efiling_type'] = 'misc';
+        //     $data['direct_access_params'] = [
+        //         'search_filing_type' => 'diary',
+        //         'searchBy' => 'D',
+        //         'is_direct_access' => true,
+        //         'diaryNo' => substr($diary_id, 0, -4),
+        //         'diaryYear' => substr($diary_id, -4),
+        //     ];
+        // }
+        // $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
+        // $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
         $direct_access_params = [];
         $data['direct_access_params'] = [];
         setSessionData('customEfil', 'refile');
+        // setSessionData('efiling_type', 'refile_old_efiling_cases');
         if (!empty(@$diary_id)) {
-            $_SESSION['efiling_type'] = 'misc';
+            // $_SESSION['efiling_type'] = 'misc';
+            $_SESSION['efiling_type'] = 'refile_old_efiling_cases';
             $data['direct_access_params'] = [
                 'search_filing_type' => 'diary',
                 'is_direct_access' => true,
-                'diaryno' => substr($diary_id, 0, -4),
-                'diary_year' => substr($diary_id, -4),
+                'diaryNo' => substr($diary_id, 0, -4),
+                'diaryYear' => substr($diary_id, -4),
             ];
         }
         $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
+        // pr($data);
         $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
 
 

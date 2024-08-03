@@ -1,472 +1,593 @@
 
-<link rel="shortcut icon"
-href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
-rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
-rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css"
-rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css"
-rel="stylesheet" />
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css"
-rel="stylesheet">
-<link rel="stylesheet"
-type="text/css"
-href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css"
-rel="stylesheet">
-<link rel="stylesheet"
-href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-<link rel="stylesheet"
-href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet"
-href="<?= base_url() ?>assets/css/jquery-ui.css">
-<link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
-rel="stylesheet">
+<link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet"> 
+<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 @stack('style')
-                            <div class="center-content-inner comn-innercontent">
-                                <div class="tab-content">
-                                   <div class="tab-pane Active" id="profile" role="tabpanel"
-                                        aria-labelledby="profile-tab">
-                                        <div class="tab-form-inner">
-                                            <?php
-                                            //echo '<pre>'; print_r($caveatee_details); exit;
-                                       $attribute = array('class' => 'form-horizontal', 'name' => 'add_caveatee', 'id' => 'add_caveatee', 'autocomplete' => 'off');
-                                        echo form_open('#', $attribute);
-                                        ?>
-										<?= ASTERISK_RED_MANDATORY ?>
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Caveatee is <span style="color: red" class="astriks">*</span></label>
-                                                        <?php
-                                                        $selectIndividual = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'I') ? 'selected=selected' : '';
-                                                        $selectStateDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'D1') ? 'selected=selected' : '';
-                                                        $selectCentralDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid']  == 'D2') ? 'selected=selected' : '';
-                                                        $selectOtherDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'D3') ? 'selected=selected' : '';
-                                                        $showHideIndividual = '';
-                                                        $stateDiv ='display:block';
-                                                        $showHideOtherIndividual = 'display:none';
-                                                        if(isset($selectIndividual) && !empty($selectIndividual)){
-                                                            $showHideIndividual = 'display:block';
-                                                        }
-                                                        else if(!empty($selectStateDept) || !empty($selectCentralDept)){
-                                                            $showHideOtherIndividual = 'display:block';
-                                                            $showHideIndividual = 'display:none';
-                                                            $stateDiv ='display:block';
-                                                        }
-                                                        else if(!empty($selectOtherDept)){
-                                                            $stateDiv = 'display:none';
-                                                            $showHideOtherIndividual = 'display:block';
-                                                            $showHideIndividual = 'display:none';
-                                                        }
-                                                        ?>
-                                                         <select class="form-select cus-form-ctrl"
-                                                         aria-label="Default select example" name="party_is" id="party_is" onchange="get_caveator_as(this.value)" required>
-                                                         <option value="" title="Select" @required(true)>Select</option>
-                                                         <option value="I" <?php echo $selectIndividual; ?> >Individual</option>
-                                                         <option value="D1" <?php echo $selectStateDept; ?>>State Department</option>
-                                                         <option value="D2" <?php echo $selectCentralDept; ?>>Central Department</option>
-                                                         <option value="D3" <?php echo $selectOtherDept; ?>>Other Organisation</option>
-                                                     </select>
-                                                    </div>
-                                                </div>
-                                              
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                                        <textarea  tabindex = "17" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" required><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
-                                                        <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                                            <i class="fa fa-question-circle-o" ></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Relation <span style="color: red" class="astriks">*</span></label>
-                                                        <?php 
-                                                        $selectSon=$selectDaughter=$selectWife=$selectNotAvailable=$selectNotAvailable='';
-                                                        if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'S')
-                                                        {
-                                                            $selectSon="selected";
-                                                        }
-                                                        if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'D')
-                                                        {
-                                                            $selectDaughter="selected";
-                                                        }
-                                                        if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'W')
-                                                        {
-                                                            $selectWife="selected";
-                                                        }
-                                                        if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'N')
-                                                        {
-                                                            $selectNotAvailable="selected";
-                                                        }
-
-                                                       // $selectSon = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'S') ? 'selected' : '';
-                                                       // $selectDaughter = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'D') ? 'selected' : '';
-                                                       // $selectWife = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'W') ? 'selected' : '';
-                                                       // $selectNotAvailable = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag']) == 'N' ? 'selected' : '';
-                                                        ?>
-                                                        
-                                                        <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
-                                                            class="form-control cus-form-ctrl filter_select_dropdown" required>
-                                                            <option value="" >Select Relation</option>
-                                                            <option <?php echo $selectSon; ?> value="S">Son Of</option>
-                                                            <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
-                                                            <option <?php echo $selectWife; ?> value="W">Spouse Of</option>
-                                                            <option <?php echo $selectNotAvailable; ?> value="N">Not Available</option>
-                                                        </select>
-
-                                                    </div>
-                                                </div>
+<style>
+.overlay{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background: rgba(255,255,255,0.8) url("loader.gif") center no-repeat;
+}
+/* Turn off scrollbar when body element has the loading class */
+body.loading{
+    overflow: hidden;   
+}
+/* Make spinner image visible when body element has the loading class */
+body.loading .overlay{
+    display: block;
+}
+</style>
+<style>
+    .datepicker-dropdown {
+        margin-top: 125px !important;
+    }
+</style>
 
 
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Relative Name <span style="color: red" class="astriks">*</span></label>
-
-                                                        <input tabindex="5" id="relative_name" name="relative_name"
-                                                            minlength="3" maxlength="99" placeholder="Relative Name"
-                                                            value="<?php   echo isset($caveatee_details[0]['relative_name'])?$caveatee_details[0]['relative_name']:''; ?>"
-                                                            class="form-control cus-form-ctrl sci_validation"
-                                                            type="text" required>
-                                                    </div>
-                                                </div>
-
-                                                
-
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
-                                                        <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                                        value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text" required >
-                                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
-                                                            <i class="fa fa-question-circle-o"></i>
-                                                        </span>
-                                                
-                                                    </div>
-                                                </div>
 
 
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
-                                                        <?php
-                                                        $res_age = '';
-                                                        if(isset($caveatee_details[0]['party_age']))
-                                                        {
-                                                        if ($caveatee_details[0]['party_age'] == 0 || $caveatee_details[0]['party_age'] == '' || $caveatee_details[0]['party_age'] == NULL) {
-                                                            $res_age = '';
-                                                        } else {
-                                                            $res_age = $caveatee_details[0]['party_age'];
-                                                        }
-                                                         }
-                                                        ?>
-                                                        <input type="number" class="form-control cus-form-ctrl"
-                                                        name="pet_age" id="pet_age" maxlength="2" placeholder="Age" value="<?php echo ($res_age); ?>" required>
-                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Approx. age in years only.">
-                                                            <i class="fa fa-question-circle-o"  ></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
-                                                    </div>
-                                                    <?php $gmchecked ='';
-                                                        $gmchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender'] == 'M') ? 'checked="checked"' : '';
-                                                        $gfchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'F' )? 'checked="checked"' : '';
-                                                        $gochecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
-                                                        ?>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input cus-form-check" type="radio" name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>>
-                                                            <label class="form-check-label" for="inlineRadio1">Male</span></label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input cus-form-check" type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>>
-                                                            <label class="form-check-label" for="inlineRadio2">Female</label>
-                                                        </div>
-                                                        <div class="form-check form-check-inline">
-                                                            <input class="form-check-input cus-form-check" type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>>
-                                                            <label class="form-check-label" for="inlineRadio2">Other</label>
-                                                        </div>
-                                                   
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_form" style="<?php echo $showHideOtherIndividual;?>">
-                                                    <div class="row" id="org_state_row">
-                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
 
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">State Name <span style="color: red">*</span></label>
-                                                       
-                                                        <select tabindex = '10' name="org_state" id="org_state" class="form-control input-sm filter_select_dropdown org_state">
-                                                            <?php
-                                                           // pr($state_list);
-                                                            echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
-                                                            $select_organization ='';
-                                                            if(isset($state_list) && !empty($state_list)){
-                                                                foreach ($state_list as $k=>$v){
-                                                                    if(!empty($caveatee_details[0]['res_state_id']) && trim($caveatee_details[0]['res_state_id']) == $v->cmis_state_id){
-                                                                        $select_organization = 'selected="selected"';
-                                                                    }
-                                                                    else{
-                                                                        $select_organization ='';
-                                                                    }
-                                                                    echo '<option '.$select_organization.' value="'.url_encryption($v->cmis_state_id).'">'.strtoupper($v->agency_state).'</option>';
-                                                                }
-                                                            }
-                                                            ?>
+    <div class="center-content-inner comn-innercontent">
+        <div class="tab-content">
+            <div class="tab-pane Active" id="profile" role="tabpanel"
+                aria-labelledby="profile-tab">
+                <div class="tab-form-inner">
+                    <?php
+                    //echo '<pre>'; print_r($caveatee_details); exit;
+                $attribute = array('class' => 'form-horizontal', 'name' => 'add_caveatee', 'id' => 'add_caveatee', 'autocomplete' => 'off');
+                echo form_open('#', $attribute);
+                ?>
+                <?= ASTERISK_RED_MANDATORY ?>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Caveatee is <span style="color: red" class="astriks">*</span></label>
+                                <?php
+                                $selectIndividual = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'I') ? 'selected=selected' : '';
+                                $selectStateDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'D1') ? 'selected=selected' : '';
+                                $selectCentralDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid']  == 'D2') ? 'selected=selected' : '';
+                                $selectOtherDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'D3') ? 'selected=selected' : '';
+                                $showHideIndividual = '';
+                                $stateDiv ='display:block';
+                                $showHideOtherIndividual = 'display:none';
+                                if(isset($selectIndividual) && !empty($selectIndividual)){
+                                    $showHideIndividual = 'display:block';
+                                }
+                                else if(!empty($selectStateDept) || !empty($selectCentralDept)){
+                                    $showHideOtherIndividual = 'display:block';
+                                    $showHideIndividual = 'display:none';
+                                    $stateDiv ='display:block';
+                                }
+                                else if(!empty($selectOtherDept)){
+                                    $stateDiv = 'display:none';
+                                    $showHideOtherIndividual = 'display:block';
+                                    $showHideIndividual = 'display:none';
+                                }
+                                ?>
+                                    <select class="form-select cus-form-ctrl"
+                                    aria-label="Default select example" name="party_is" id="party_is" onchange="get_caveator_as(this.value)" required>
+                                    <option value="" title="Select" @required(true)>Select</option>
+                                    <option value="I" <?php echo $selectIndividual; ?> >Individual</option>
+                                    <option value="D1" <?php echo $selectStateDept; ?>>State Department</option>
+                                    <option value="D2" <?php echo $selectCentralDept; ?>>Central Department</option>
+                                    <option value="D3" <?php echo $selectOtherDept; ?>>Other Organisation</option>
+                                </select>
+                            </div>
+                        </div>
                         
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
+                                <textarea  tabindex = "17" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" required><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
+                                <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                    <i class="fa fa-question-circle-o" ></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Relation <span style="color: red" class="astriks">*</span></label>
+                                <?php 
+                                $selectSon=$selectDaughter=$selectWife=$selectNotAvailable=$selectNotAvailable='';
+                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'S')
+                                {
+                                    $selectSon="selected";
+                                }
+                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'D')
+                                {
+                                    $selectDaughter="selected";
+                                }
+                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'W')
+                                {
+                                    $selectWife="selected";
+                                }
+                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'N')
+                                {
+                                    $selectNotAvailable="selected";
+                                }
+
+                                // $selectSon = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'S') ? 'selected' : '';
+                                // $selectDaughter = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'D') ? 'selected' : '';
+                                // $selectWife = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'W') ? 'selected' : '';
+                                // $selectNotAvailable = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag']) == 'N' ? 'selected' : '';
+                                ?>
+                                
+                                <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
+                                    class="form-control cus-form-ctrl filter_select_dropdown" required>
+                                    <option value="" >Select Relation</option>
+                                    <option <?php echo $selectSon; ?> value="S">Son Of</option>
+                                    <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
+                                    <option <?php echo $selectWife; ?> value="W">Spouse Of</option>
+                                    <option <?php echo $selectNotAvailable; ?> value="N">Not Available</option>
+                                </select>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Relative Name <span style="color: red" class="astriks">*</span></label>
+
+                                <input tabindex="5" id="relative_name" name="relative_name"
+                                    minlength="3" maxlength="99" placeholder="Relative Name"
+                                    value="<?php   echo isset($caveatee_details[0]['relative_name'])?$caveatee_details[0]['relative_name']:''; ?>"
+                                    class="form-control cus-form-ctrl sci_validation"
+                                    type="text" required>
+                            </div>
+                        </div>
+
                         
-                                                        </select>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
-                                                        <textarea tabindex = '11' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
-                                                        <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                                            <i class="fa fa-question-circle-o" ></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
-                                                        <select name="org_dept" tabindex = '12' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
-                                                            <?php
-                                                            echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
-                                                            $dept_sel ='';
-                                                            if(isset($dept_list) && !empty($dept_list)){
-                                                                foreach ($dept_list as $k=>$v){
-                                                                    if(!empty($caveatee_details[0]['res_org_dept']) && trim($caveatee_details[0]['res_org_dept']) == $v->deptcode){
-                                                                        $dept_sel = 'selected="selected"';
-                                                                    }
-                                                                    else{
-                                                                        $dept_sel ='';
-                                                                    }
-                                                                    echo '<option '.$dept_sel.' value="'.url_encryption($v->deptcode).'">'.strtoupper($v->deptname).'</option>';
-                                                                }
-                                                            }
-                                                            ?>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Date of Birth  <span style="color: red" class="astriks">*</span></label>
+                                <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
+                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text" required >
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
+                                    <i class="fa fa-question-circle-o"></i>
+                                </span>
                         
-                                                        </select>
-                                                    </div>
-                                                </div>
+                            </div>
+                        </div>
+                        
 
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
-                                                    <div class="row" id="org_state_row">
-                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
 
-                                                        <div class="mb-3">
-                                                            <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
-                                                            <textarea id="org_dept_name"  tabindex = '17' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
-                                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                                                <i class="fa fa-question-circle-o" ></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="stateDivBox" style="<?php echo $stateDiv;?>">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
+                                <?php
+                                $res_age = '';
+                                if(isset($caveatee_details[0]['party_age']))
+                                {
+                                if ($caveatee_details[0]['party_age'] == 0 || $caveatee_details[0]['party_age'] == '' || $caveatee_details[0]['party_age'] == NULL) {
+                                    $res_age = '';
+                                } else {
+                                    $res_age = $caveatee_details[0]['party_age'];
+                                }
+                                    }
+                                ?>
+                                <input type="number" class="form-control cus-form-ctrl"
+                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age" value="<?php echo ($res_age); ?>" required>
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Approx. age in years only.">
+                                    <i class="fa fa-question-circle-o"  ></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
+                            </div>
+                            <?php $gmchecked ='';
+                                $gmchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender'] == 'M') ? 'checked="checked"' : '';
+                                $gfchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'F' )? 'checked="checked"' : '';
+                                $gochecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
+                                ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input cus-form-check" type="radio" name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>>
+                                    <label class="form-check-label" for="inlineRadio1">Male</span></label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input cus-form-check" type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>>
+                                    <label class="form-check-label" for="inlineRadio2">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input cus-form-check" type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>>
+                                    <label class="form-check-label" for="inlineRadio2">Other</label>
+                                </div>
+                            
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_form" style="<?php echo $showHideOtherIndividual;?>">
+                            <div class="row" id="org_state_row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
 
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
-                                                        <select name="org_post" id="org_post" tabindex = '14' class="form-control input-sm filter_select_dropdown org_post">
-                                                            <?php
-                                                            echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
-                                                            $post_sel ='';
-                                                            if(isset($post_list) && !empty($post_list)){
-                                                                foreach ($post_list as $k=>$v){
-                                                                    if(!empty($caveatee_details[0]['res_org_post']) && trim($caveatee_details[0]['res_org_post']) == $v->authcode){
-                                                                        $post_sel = 'selected="selected"';
-                                                                    }
-                                                                    else{
-                                                                        $post_sel ='';
-                                                                    }
-                                                                    echo '<option '.$post_sel.' value="'.url_encryption($v->authcode).'">'.strtoupper($v->authdesc).'</option>';
-                                                                }
-                                                            }
-                                                            ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">State Name <span style="color: red">*</span></label>
+                                
+                                <select tabindex = '10' name="org_state" id="org_state" class="form-control input-sm filter_select_dropdown org_state">
+                                    <?php
+                                    // pr($state_list);
+                                    echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
+                                    $select_organization ='';
+                                    if(isset($state_list) && !empty($state_list)){
+                                        foreach ($state_list as $k=>$v){
+                                            if(!empty($caveatee_details[0]['res_state_id']) && trim($caveatee_details[0]['res_state_id']) == $v->cmis_state_id){
+                                                $select_organization = 'selected="selected"';
+                                            }
+                                            else{
+                                                $select_organization ='';
+                                            }
+                                            echo '<option '.$select_organization.' value="'.url_encryption($v->cmis_state_id).'">'.strtoupper($v->agency_state).'</option>';
+                                        }
+                                    }
+                                    ?>
 
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
-                                                    <div class="row" id="org_state_row">
-                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
 
-                                                        <div class="mb-3">
-                                                            <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
-                                                            <textarea id="org_post_name" name="org_post_name" tabindex = '17' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
-                                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                                                <i class="fa fa-question-circle-o" ></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Email </label>
-                                                        <input id="pet_email" name="pet_email" placeholder="Email" placeholder="Email"
-                                                            tabindex='17' value="<?php echo isset($caveatee_details[0]['res_email']) ? $caveatee_details[0]['res_email'] : ''; ?>"
-                                                            class="form-control cus-form-ctrl sci_validation"
-                                                            type="email" minlength="6" maxlength="49" >
-                                                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter caveatee valid email id. (eg : abc@example.com)">
-                                                                <i class="fa fa-question-circle-o" ></i>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Mobile </label>
-                                                        <input id="pet_mobile" name="pet_mobile" placeholder="Mobile"
-                                                            tabindex='17' value="<?php echo isset($caveatee_details[0]['res_mobile']) ? $caveatee_details[0]['res_mobile'] : ''; ?>"
-                                                            class="form-control cus-form-ctrl sci_validation"
-                                                            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                                            type="tel" minlength="10" maxlength="10" >
-                                                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Mobile No. should be of 10 digits only.">
-                                                                <i class="fa fa-question-circle-o"></i>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
-                                                        <textarea tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
-                                                            class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['address']) ? $caveatee_details[0]['address'] : ''; ?></textarea>
-                                                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                                                <i class="fa fa-question-circle-o" ></i>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">Pin Code </label>
-                                                        <input id="party_pincode" name="party_pincode" tabindex='20'
-                                                            onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                                            placeholder="Pin code" 
-                                                            value="<?php echo !empty($caveatee_details[0]['res_pincode'])?$caveatee_details[0]['res_pincode']:''; ?>"
-                                                            class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6" >
-                                                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Pincode should be 6 digits only.">
-                                                                <i class="fa fa-question-circle-o"></i>
-                                                                <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank">Pin Code Locator</a>
-                                                            </span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">City <span style="color: red" class="astriks">*</span></label>
-                                                        <input id="party_city" tabindex='21' name="party_city" placeholder="City"
-                                                        value="<?php echo isset($caveatee_details[0]['res_city'])?$caveatee_details[0]['res_city']:''; ?>"
-                                                        class="form-control cus-form-ctrl sci_validation" type="text" minlength="3"
-                                                        maxlength="49" required>
-                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter City name.">
-                                                            <i class="fa fa-question-circle-o" ></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                    <div class="mb-3">
-                                                        <label for="" class="form-label">State <span style="color: red" class="astriks">*</span></label>
-                                                        <select class="form-select cus-form-ctrl"  name="party_state" id="party_state" required>
-                                                        <option value="" title="Select">Select State</option>
-                                                        <?php
-                                                        $stateArr = array();
-                                                        if (!empty($state_list)) 
-                                                        {
-                                                        if (count($state_list)>0) {
-                                                            foreach ($state_list as $dataRes) {
-                                                                $sel = (isset($caveatee_details[0]['res_state_id']) && $caveatee_details[0]['res_state_id'] == $dataRes->cmis_state_id) ? "selected=selected" : '';
-                                                                ?>
-                                                                <option <?php echo $sel; ?>
-                                                                        value="<?php echo_data(url_encryption(trim($dataRes->cmis_state_id))); ?>"><?php echo_data(strtoupper($dataRes->agency_state)); ?> </option>;
-                                                                <?php
-                                                                $tempArr = array();
-                                                                $tempArr['id'] = url_encryption(trim($dataRes->cmis_state_id));
-                                                                $tempArr['state_name'] = strtoupper($dataRes->agency_state);
-                                                                $stateArr[] = (object)$tempArr;
-                                                            }
-                                                        }
-                                                        }
-                                                        ?>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                                        <div class="mb-3">
-                                                            <label for="" class="form-label">District <span style="color: red" class="astriks">*</span></label>
-                                                            <select class="form-select cus-form-ctrl"
-                                                                aria-label="Default select example" name="party_district" id="party_district">
-                                                                <option value="" title="Select">Select District</option>
-                                                                <?php
-                                                                if (!empty($district_list)) {
-                                                                    foreach ($district_list as $dataRes) {
-                                                                        $sel = (isset($caveatee_details[0]['res_dist']) && $caveatee_details[0]['res_dist'] == $dataRes->id_no) ? 'selected=selected' : '';
-                                                                        ?>
-                                                                        <option <?php echo $sel; ?>
-                                                                                value="<?php echo_data(url_encryption(trim($dataRes->id_no))); ?>"><?php echo_data(strtoupper($dataRes->name)); ?></option>
-                                                                        <?php
-                                                                    }
-                                                                }
-                                                                ?>
-                                                            </select>
-                                                        </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
-                                                    <div class="save-btns text-center">
-                                                       
-                                                    <a href="<?= base_url('caveat/') ?>" class="quick-btn" id="nextButton" type="button"
-                                                        tabindex='25'>Previous</a>
-                                                    <?php if (isset($caveatee_details[0]['resorgid']) && !empty($caveatee_details[0]['resorgid'])) { ?>
-                                                        
-                                                        <input type="submit" class="quick-btn gray-btn" id="res_save" tabindex='26' value="UPDATE">
-                                                        <a href="<?= base_url('caveat/subordinate_court') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
-                                                    <?php } else { ?>
-                                                        <input type="submit" class="quick-btn gray-btn" id="res_save" value="SAVE" tabindex='24'>
-                                                    <?php } ?>
-                                                     
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                            <?php echo form_close();
-                                                ?>
-                                        </div>
-                                    </div>
+                                </select>
+                            </div>
+                            </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
+                                <textarea tabindex = '11' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
+                                <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                    <i class="fa fa-question-circle-o" ></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
+                                <select name="org_dept" tabindex = '12' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
+                                    <?php
+                                    echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
+                                    $dept_sel ='';
+                                    if(isset($dept_list) && !empty($dept_list)){
+                                        foreach ($dept_list as $k=>$v){
+                                            if(!empty($caveatee_details[0]['res_org_dept']) && trim($caveatee_details[0]['res_org_dept']) == $v->deptcode){
+                                                $dept_sel = 'selected="selected"';
+                                            }
+                                            else{
+                                                $dept_sel ='';
+                                            }
+                                            echo '<option '.$dept_sel.' value="'.url_encryption($v->deptcode).'">'.strtoupper($v->deptname).'</option>';
+                                        }
+                                    }
+                                    ?>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
+                            <div class="row" id="org_state_row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
+                                    <textarea id="org_dept_name"  tabindex = '17' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
+                                    <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                        <i class="fa fa-question-circle-o" ></i>
+                                    </span>
                                 </div>
                             </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="stateDivBox" style="<?php echo $stateDiv;?>">
 
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/sha256.js"></script>
-    <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
+                                <select name="org_post" id="org_post" tabindex = '14' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
+                                    <?php
+                                    echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
+                                    $post_sel ='';
+                                    if(isset($post_list) && !empty($post_list)){
+                                        foreach ($post_list as $k=>$v){
+                                            if(!empty($caveatee_details[0]['res_org_post']) && trim($caveatee_details[0]['res_org_post']) == $v->authcode){
+                                                $post_sel = 'selected="selected"';
+                                            }
+                                            else{
+                                                $post_sel ='';
+                                            }
+                                            echo '<option '.$post_sel.' value="'.url_encryption($v->authcode).'">'.strtoupper($v->authdesc).'</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
+                            <div class="row" id="org_state_row">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
+                                    <textarea id="org_post_name" name="org_post_name" tabindex = '17' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
+                                    <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                        <i class="fa fa-question-circle-o" ></i>
+                                    </span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Email </label>
+                                <input id="pet_email" name="pet_email" placeholder="Email" placeholder="Email"
+                                    tabindex='17' value="<?php echo isset($caveatee_details[0]['res_email']) ? $caveatee_details[0]['res_email'] : ''; ?>"
+                                    class="form-control cus-form-ctrl sci_validation"
+                                    type="email" minlength="6" maxlength="49" >
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter caveatee valid email id. (eg : abc@example.com)">
+                                        <i class="fa fa-question-circle-o" ></i>
+                                    </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Mobile </label>
+                                <input id="pet_mobile" name="pet_mobile" placeholder="Mobile"
+                                    tabindex='17' value="<?php echo isset($caveatee_details[0]['res_mobile']) ? $caveatee_details[0]['res_mobile'] : ''; ?>"
+                                    class="form-control cus-form-ctrl sci_validation"
+                                    onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                                    type="tel" minlength="10" maxlength="10" >
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Mobile No. should be of 10 digits only.">
+                                        <i class="fa fa-question-circle-o"></i>
+                                    </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
+                                <textarea tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
+                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['address']) ? $caveatee_details[0]['address'] : ''; ?></textarea>
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                        <i class="fa fa-question-circle-o" ></i>
+                                    </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Pin Code </label>
+                                <input id="party_pincode" name="party_pincode" tabindex='20'
+                                    onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                                    placeholder="Pin code" 
+                                    value="<?php echo !empty($caveatee_details[0]['res_pincode'])?$caveatee_details[0]['res_pincode']:''; ?>"
+                                    class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6" >
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Pincode should be 6 digits only.">
+                                        <i class="fa fa-question-circle-o"></i>
+                                        <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank">Pin Code Locator</a>
+                                    </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">City <span style="color: red" class="astriks">*</span></label>
+                                <input id="party_city" tabindex='21' name="party_city" placeholder="City"
+                                value="<?php echo isset($caveatee_details[0]['res_city'])?$caveatee_details[0]['res_city']:''; ?>"
+                                class="form-control cus-form-ctrl sci_validation" type="text" minlength="3"
+                                maxlength="49" required>
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter City name.">
+                                    <i class="fa fa-question-circle-o" ></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="mb-3">
+                                <label for="" class="form-label">State <span style="color: red" class="astriks">*</span></label>
+                                <select class="form-select cus-form-ctrl"  name="party_state" id="party_state" required>
+                                <option value="" title="Select">Select State</option>
+                                <?php
+                                $stateArr = array();
+                                if (!empty($state_list)) 
+                                {
+                                if (count($state_list)>0) {
+                                    foreach ($state_list as $dataRes) {
+                                        $sel = (isset($caveatee_details[0]['res_state_id']) && $caveatee_details[0]['res_state_id'] == $dataRes->cmis_state_id) ? "selected=selected" : '';
+                                        ?>
+                                        <option <?php echo $sel; ?>
+                                                value="<?php echo_data(url_encryption(trim($dataRes->cmis_state_id))); ?>"><?php echo_data(strtoupper($dataRes->agency_state)); ?> </option>;
+                                        <?php
+                                        $tempArr = array();
+                                        $tempArr['id'] = url_encryption(trim($dataRes->cmis_state_id));
+                                        $tempArr['state_name'] = strtoupper($dataRes->agency_state);
+                                        $stateArr[] = (object)$tempArr;
+                                    }
+                                }
+                                }
+                                ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">District <span style="color: red" class="astriks">*</span></label>
+                                    <select class="form-select cus-form-ctrl"
+                                        aria-label="Default select example" name="party_district" id="party_district">
+                                        <option value="" title="Select">Select District</option>
+                                        <?php
+                                        if (!empty($district_list)) {
+                                            foreach ($district_list as $dataRes) {
+                                                $sel = (isset($caveatee_details[0]['res_dist']) && $caveatee_details[0]['res_dist'] == $dataRes->id_no) ? 'selected=selected' : '';
+                                                ?>
+                                                <option <?php echo $sel; ?>
+                                                        value="<?php echo_data(url_encryption(trim($dataRes->id_no))); ?>"><?php echo_data(strtoupper($dataRes->name)); ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
+                            <div class="save-btns text-center">
+                                
+                            <a href="<?= base_url('caveat/') ?>" class="quick-btn" id="nextButton" type="button"
+                                tabindex='25'>Previous</a>
+                            <?php if (isset($caveatee_details[0]['resorgid']) && !empty($caveatee_details[0]['resorgid'])) { ?>
+                                
+                                <input type="submit" class="quick-btn gray-btn" id="res_save" tabindex='26' value="UPDATE">
+                                <a href="<?= base_url('caveat/subordinate_court') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
+                            <?php } else { ?>
+                                <input type="submit" class="quick-btn gray-btn" id="res_save" value="SAVE" tabindex='24'>
+                            <?php } ?>
+                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <?php echo form_close();
+                        ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquer<style>y-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+<script src="<?= base_url() ?>assets/js/sha256.js"></script>
+<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+<script>
+    $(document).ready(function() {
+        // alert("SC");
+        $('#pet_dob').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:-1",
+        dateFormat: "dd/mm/yy",
+        defaultDate: '-40y'
+        });
+
+        $(document).on('change','#pet_dob', function(){
+            var value = $('#pet_dob').val();
+            var parts = value.split("/");
+            var day = parts[0] && parseInt(parts[0], 10);
+            var month = parts[1] && parseInt(parts[1], 10);
+            var year = parts[2] && parseInt(parts[2], 10);
+            var str = day + '/' + month + '/' + year;
+            var today = new Date(),
+            dob = new Date(str),
+            age = new Date(today - dob).getFullYear() - 1970;
+            $('#pet_age').val(age);
+        });
+
+    })
+
+    $('#party_pincode').blur(function(){
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var pincode = $("#party_pincode").val();
+        if(pincode){
+            var stateObj = JSON.parse(state_Arr);
+            var options = '';
+            options +='<option value="">Select State</option>';
+            stateObj.forEach((response)=>
+            options +='<option value="'+response.id+'">'+response.state_name+'</option>');
+            $('#party_state').html(options).select2().trigger("change");
+            $.ajax({
+                type: "POST",
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, pincode : pincode},
+                url: "<?php echo base_url('newcase/Ajaxcalls/getAddressByPincode'); ?>",
+                success: function (response)
+                {
+                    var taluk_name;
+                    var district_name;
+                    var state;
+                    if(response){
+                        var resData = JSON.parse(response);
+                        if(resData){
+                            taluk_name = resData[0]['taluk_name'].trim().toUpperCase();
+                            district_name = resData[0]['district_name'].trim().toUpperCase();
+                            state = resData[0]['state'].trim().toUpperCase();
+                        }
+                        if(taluk_name){
+                            $("#party_city").val('');
+                            $("#party_city").val(taluk_name);
+                        }
+                        else{
+                            $("#party_city").val('');
+                        }
+                        if(state){
+                            var stateObj = JSON.parse(state_Arr);
+                            if(stateObj){
+                                var singleObj = stateObj.find(
+                                    item => item['state_name'] === state
+                                );
+                            }
+                            if(singleObj){
+                                $('#party_state').val('');
+                                $('#party_state').val(singleObj.id).select2().trigger("change");
+                            }
+                            else{
+                                $('#party_state').val('');
+                            }
+                            if(district_name){
+                                var stateId = $('#party_state').val();
+                                setSelectedDistrict(stateId,district_name);
+                            }
+                        }
+                        else{
+                            $('#party_state').val('');
+                        }
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function () {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    });
+</script>
+
+
+
+
+
+
+
 <script>
     $(".sci_validation").keyup(function(){
         var initVal = $(this).val();
@@ -1039,27 +1160,40 @@ rel="stylesheet">
         }
     }
 
-    $(document).ready(function () {
+    // $(document).ready(function () {
+    //     $('#pet_dob').datepicker({
+    //         onSelect: function (value) {
+    //             var parts = value.split("/");
+    //             var day = parts[0] && parseInt(parts[0], 10);
+    //             var month = parts[1] && parseInt(parts[1], 10);
+    //             var year = parts[2] && parseInt(parts[2], 10);
+    //             var str = month + '/' + day + '/' + year;
+    //             var today = new Date(),
+    //                 dob = new Date(str),
+    //                 age = new Date(today - dob).getFullYear() - 1970;
+    //             $('#pet_age').val(age);
+    //         },
+    //         changeMonth: true,
+    //         changeYear: true,
+    //         yearRange: "-100:-1",
+    //         dateFormat: "dd/mm/yy",
+    //         defaultDate: '-40y'
+    //     });
+    // });
+    
 
-$('#pet_dob').datepicker({
-        onSelect: function (value) {
-            var parts = value.split("/");
-            var day = parts[0] && parseInt(parts[0], 10);
-            var month = parts[1] && parseInt(parts[1], 10);
-            var year = parts[2] && parseInt(parts[2], 10);
-            var str = month + '/' + day + '/' + year;
-            var today = new Date(),
-                dob = new Date(str),
-                age = new Date(today - dob).getFullYear() - 1970;
-            $('#pet_age').val(age);
-        },
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
-    });
-});
+  
+
+
+
+
+
+
+
+
+
+
+
 </script>
 
 

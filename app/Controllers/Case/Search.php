@@ -157,11 +157,11 @@ class Search extends BaseController
             } else if ($diary_type == 'register') {
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($this->request->getGet('sc_case_type'))), escape_data($this->request->getGet('case_number')), escape_data($this->request->getGet('case_year')));
             }
-            // pr($web_service_result);
             if (!empty($web_service_result->message)) {
                 echo '3@@@ No Record found!';
                 exit(0);
             } elseif (!empty($web_service_result->case_details[0])) {
+                // pr($web_service_result);
                 $diary_no = $web_service_result->case_details[0]->diary_no;
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {

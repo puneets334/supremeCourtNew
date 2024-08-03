@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers\Caveat;
 use App\Controllers\BaseController;
-use App\Models\caveat\CaveatCommonModel;
-use App\Models\newcase\DropdownListModel;
-use App\Models\caveat\SubordinateCourtModel;
-use App\Models\caveat\ExtraPartyModel;
+use App\Models\Caveat\CaveatCommonModel;
+use App\Models\NewCase\DropdownListModel;
+use App\Models\Caveat\SubordinateCourtModel;
+use App\Models\Caveat\ExtraPartyModel;
 
 
 //require_once APPPATH .'controllers/Auth_Controller.php';

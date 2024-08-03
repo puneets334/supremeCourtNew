@@ -1,5 +1,7 @@
 <?php 
 $segment = service('uri');
+
+echo $segment->getSegment(2); 
 $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
 ?>
 <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
@@ -265,8 +267,11 @@ $efiling_num_label_for_display = 'DRAFT-';;
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
                             <?php
+                          //  echo $segment->getTotalSegments() ;
+
+
                            
-                                if ($segment->getSegment(1) == 'caveat') {
+                                if ($segment->getTotalSegments()== '1') {
                                     $ColorCode = 'background-color: #01ADEF';
                                     $status_color = 'active';
                                 } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray)) {
