@@ -3,11 +3,11 @@ namespace App\Controllers\Caveat;
 use App\Controllers\BaseController;
 use App\Models\Caveat\CaveateeModel;
 use App\Models\Caveat\SubordinateCourtModel;
-use App\Models\Newcase\DropdownListModel;
-use App\Models\Newcase\ViewModel;
+use App\Models\NewCase\ViewModel;
 use App\Models\Common\CommonModel;
 use App\Models\NewCase\NewCaseModel;
 use App\Models\NewCase\GetDetailsModel;
+use App\Models\NewCase\DropdownListModel;
 //require_once APPPATH .'controllers/Auth_Controller.php';
 class Subordinate_court extends BaseController {
 
