@@ -267,7 +267,8 @@ class SubordinateCourt extends BaseController {
             $decision_date = NULL;
             $status = FALSE;
         }
-        $Sc_Case_TypeId=$_POST['Sc_Case_TypeId'];
+        $Sc_Case_TypeId=isset($_POST['Sc_Case_TypeId'])?$_POST['Sc_Case_TypeId']:'';
+
 
         if($Sc_Case_TypeId==7 || $Sc_Case_TypeId==8){
             $Is_Judgment_Challenged = '1' ;
