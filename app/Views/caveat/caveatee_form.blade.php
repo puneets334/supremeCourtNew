@@ -210,15 +210,18 @@ body.loading .overlay{
                         </div>
                     </div>
 
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_form" style="<?php echo $showHideOtherIndividual;?>">
-                            <div class="row" id="org_state_row">
+                    
+                        <div id="org_form" style="<?php echo $showHideOtherIndividual;?>">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row">
+
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
                                     <div class="mb-3">
                                         <label for="" class="form-label">State Name 
                                             <span style="color: red">*</span>
                                         </label>
                                         
-                                        <select tabindex = '10' name="org_state" id="org_state" class="form-control input-sm filter_select_dropdown org_state">
+                                        <select tabindex = '10' name="org_state" id="org_state" class="form-control cus-form-ctrl input-sm filter_select_dropdown org_state">
                                             <?php
                                                 echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                 $select_organization ='';
@@ -237,6 +240,10 @@ body.loading .overlay{
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+
+
+
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
@@ -246,7 +253,8 @@ body.loading .overlay{
                                         </span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" >
                                     <div class="mb-3">
                                         <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
                                         <select name="org_dept" tabindex = '12' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
@@ -324,7 +332,8 @@ body.loading .overlay{
                                 </div>
 
                             </div>
-                         </div>
+                        </div>
+                        </div>
 
                         <div class="row">
 
