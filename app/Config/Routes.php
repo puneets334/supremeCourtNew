@@ -265,7 +265,7 @@ $routes->match(['GET', 'POST'], 'dashboard_alt/getDailyCaseCounts', 'ResponsiveV
 $routes->match(['GET', 'POST'], 'dashboard_alt/getDayCaseDetails', 'ResponsiveVariantRouteController::getDayCaseDetails');
 $routes->match(['GET', 'POST'], 'caveat/defaultController/processing/(:any)', 'Caveat\DefaultController::processing/$1');
 $routes->match(['GET', 'POST'], 'caveat/view', 'Caveat\View::index');
-$routes->match(['GET', 'POST'], 'caveat/extra_party', 'Caveat\extra_party::index');
+$routes->match(['GET', 'POST'], 'caveat/extra_party', 'Caveat\Extra_party::index');
 $routes->match(['GET', 'POST'], 'caveat/subordinate_court', 'Caveat\Subordinate_court::index');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/send_sms', 'Mycases\CitationNotes::send_sms');
 $routes->match(['GET', 'POST'], 'case/search/search_old_efiling_case_details', 'Case\Search::search_old_efiling_case_details');
@@ -306,3 +306,6 @@ $routes->match(['GET', 'POST'], 'case/search/(:any)', 'Case\Search::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/view', 'MiscellaneousDocs\View::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee', 'MiscellaneousDocs\CourtFee::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee/add_court_fee_details', 'MiscellaneousDocs\CourtFee::add_court_fee_details');
+$routes->match(['GET', 'POST'], 'caveat/caveatee', 'Caveat\Caveatee::index');
+$routes->match(['GET', 'POST'], 'efilingAction/Caveat_final_submit', 'EfilingAction\CaveatFinalSubmit::index');
+
