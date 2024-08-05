@@ -29,6 +29,7 @@ $segment = service('uri');
                 <tbody>
                     <?php
                     $sr = 1;
+                    if(isset($efiled_docs_list)){
                     foreach ($efiled_docs_list as $doc_list) {
                         ?>
                         <tr>
@@ -59,12 +60,12 @@ $segment = service('uri');
                                 </td>-->
                             <?php } ?>
                         </tr>
-                    <?php } ?>
+                    <?php }  } ?>
 
                 </tbody>
             </table>
             <?php if (!empty($uploaded_docs )) {
-                $this->load->view('uploadDocuments/uploaded_doc_list');
+                render('uploadDocuments.uploaded_doc_list',$uploaded_docs);
             } ?>
         </div>
     </div>

@@ -46,6 +46,9 @@ class AppearingForModel extends Model
         $builder->WHERE('misc_ia.is_deleted', FALSE);
         $builder->WHERE('cc.is_deleted', FALSE);
         //$this->db->WHERE('cc.is_deleted', FALSE)->OR_WHERE('cc.is_deleted', NULL);
+        // $sql = $builder->getCompiledSelect();
+        // print_r($sql);
+        // die;
         $query = $builder->get();
 
         if ($query === false) {
