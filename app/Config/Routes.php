@@ -309,3 +309,4 @@ $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee/add_court_fee_detai
 $routes->match(['GET', 'POST'], 'caveat/caveatee', 'Caveat\Caveatee::index');
 $routes->match(['GET', 'POST'], 'efilingAction/Caveat_final_submit', 'EfilingAction\CaveatFinalSubmit::index');
 
+$routes->match(['GET', 'POST'], 'appearing_for/appearing_for/save_appearing_details', 'AppearingFor\Appearing_for::save_appearing_details');
