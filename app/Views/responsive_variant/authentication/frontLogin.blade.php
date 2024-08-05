@@ -110,11 +110,11 @@
                         <div class="regester-txts">
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
-                                <a href="{{ base_url('register') }}" class="blue-txt">Individual (Party In Person)</a>
+                                <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
                                 <span class="gray-txt">Or</span>
-                                <a href="{{ base_url('register/AdvocateOnRecord') }}" class="blue-txt"> AOR</a>
+                                <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
                                 <span class="gray-txt">Or</span>
-                                <a href="" class="blue-txt">Advocate</a>
+                                <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
                             </div>
                         </div>
                     </div>

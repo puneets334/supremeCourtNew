@@ -73,25 +73,27 @@
 								<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
 									<span class="navbar-toggler-icon"></span>
 								</button>
-								<div class="collapse navbar-collapse" id="navbarSupportedContent">
-									<ul class="navbar-nav mr-auto">
-										<li class="nav-item">
-											<a href="index.html">Handbook </a>
-										</li>
-										<li class="nav-item">
-											<a href="javascript:void(0)">Video Tutorial</a>
-										</li>
-										<li class="nav-item">
-											<a href="javascript:void(0)">FAQ </a>
-										</li>
-										<li class="nav-item">
-											<a href="javascript:void(0)">Stats</a>
-										</li>
-										<li class="nav-item">
-											<a href="javascript:void(0)">3PDF User Manual</a>
-										</li>
-									</ul>
-								</div>
+                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                                    <ul class="navbar-nav mr-auto">
+                                        <li class="nav-item">
+                                            <!-- <a class="active" href="index.html">Handbook </a> -->
+                                            <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/video-tutorial')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/video-tutorial') ?>">Video Tutorial</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/FAQs')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/FAQs') ?>">FAQs</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/hand-book-old-efiling')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/hand-book-old-efiling') ?>">Stats</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/three-pdf-user-manual')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/three-pdf-user-manual') ?>">3PDF User Manual</a>
+                                        </li>
+                                    </ul>
+                                </div>
 							</nav>
 						</div>
 					</div>

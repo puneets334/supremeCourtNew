@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Register;
 use App\Controllers\BaseController;
-use App\Models\Register\Register_model;
+use App\Models\Register\RegisterModel;
 use App\Libraries\webservices\Efiling_webservices;
 use App\Libraries\Slice;
 
@@ -19,7 +19,7 @@ class AdvocateOnRecord extends BaseController {
         // $this->load->model('register/Register_model');
         // $this->load->library('webservices/efiling_webservices');
         // $this->load->library('slice');
-        $this->Register_model = new Register_model();
+        $this->Register_model = new RegisterModel();
         $this->slice = new Slice();
         $this->efiling_webservices = new Efiling_webservices();
         $this->session = \Config\Services::session();
