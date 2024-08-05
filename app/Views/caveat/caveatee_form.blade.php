@@ -12,7 +12,6 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 @stack('style')
-
 <style>
 .overlay{
     display: none;
@@ -38,11 +37,6 @@ body.loading .overlay{
         margin-top: 125px !important;
     }
 </style>
-
-
-
-
-
     <div class="center-content-inner comn-innercontent">
         <div class="tab-content">
             <div class="tab-pane Active" id="profile" role="tabpanel"
@@ -90,7 +84,8 @@ body.loading .overlay{
                                 </select>
                             </div>
                         </div>
-                        
+                    </div>
+                    <div class="row" id="indvidual_form" >         
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
@@ -130,7 +125,7 @@ body.loading .overlay{
                                 ?>
                                 
                                 <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
-                                    class="form-control cus-form-ctrl filter_select_dropdown" required>
+                                    class="form-control cus-form-ctrl" required>
                                     <option value="" >Select Relation</option>
                                     <option <?php echo $selectSon; ?> value="S">Son Of</option>
                                     <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
@@ -153,7 +148,6 @@ body.loading .overlay{
                                     type="text" required>
                             </div>
                         </div>
-
                         
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -167,9 +161,7 @@ body.loading .overlay{
                                 </span>
                         
                             </div>
-                        </div>
-                        
-
+                        </div>  
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
@@ -192,6 +184,7 @@ body.loading .overlay{
                                 </span>
                             </div>
                         </div>
+
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
@@ -215,124 +208,129 @@ body.loading .overlay{
                                 </div>
                             
                         </div>
+                    </div>
+
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_form" style="<?php echo $showHideOtherIndividual;?>">
                             <div class="row" id="org_state_row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
-                            <div class="mb-3">
-                                <label for="" class="form-label">State Name <span style="color: red">*</span></label>
-                                
-                                <select tabindex = '10' name="org_state" id="org_state" class="form-control input-sm filter_select_dropdown org_state">
-                                    <?php
-                                    // pr($state_list);
-                                    echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
-                                    $select_organization ='';
-                                    if(isset($state_list) && !empty($state_list)){
-                                        foreach ($state_list as $k=>$v){
-                                            if(!empty($caveatee_details[0]['res_state_id']) && trim($caveatee_details[0]['res_state_id']) == $v->cmis_state_id){
-                                                $select_organization = 'selected="selected"';
-                                            }
-                                            else{
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">State Name 
+                                            <span style="color: red">*</span>
+                                        </label>
+                                        
+                                        <select tabindex = '10' name="org_state" id="org_state" class="form-control input-sm filter_select_dropdown org_state">
+                                            <?php
+                                                echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                 $select_organization ='';
-                                            }
-                                            echo '<option '.$select_organization.' value="'.url_encryption($v->cmis_state_id).'">'.strtoupper($v->agency_state).'</option>';
-                                        }
-                                    }
-                                    ?>
-
-
-                                </select>
-                            </div>
-                            </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
-                                <textarea tabindex = '11' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
-                                <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                    <i class="fa fa-question-circle-o" ></i>
-                                </span>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
-                            <div class="mb-3">
-                                <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
-                                <select name="org_dept" tabindex = '12' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
-                                    <?php
-                                    echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
-                                    $dept_sel ='';
-                                    if(isset($dept_list) && !empty($dept_list)){
-                                        foreach ($dept_list as $k=>$v){
-                                            if(!empty($caveatee_details[0]['res_org_dept']) && trim($caveatee_details[0]['res_org_dept']) == $v->deptcode){
-                                                $dept_sel = 'selected="selected"';
-                                            }
-                                            else{
-                                                $dept_sel ='';
-                                            }
-                                            echo '<option '.$dept_sel.' value="'.url_encryption($v->deptcode).'">'.strtoupper($v->deptname).'</option>';
-                                        }
-                                    }
-                                    ?>
-
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
-                            <div class="row" id="org_state_row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
-                                    <textarea id="org_dept_name"  tabindex = '17' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
-                                    <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                        <i class="fa fa-question-circle-o" ></i>
-                                    </span>
+                                                if(isset($state_list) && !empty($state_list)){
+                                                    foreach ($state_list as $k=>$v){
+                                                        if(!empty($caveatee_details[0]['res_state_id']) && trim($caveatee_details[0]['res_state_id']) == $v->cmis_state_id){
+                                                            $select_organization = 'selected="selected"';
+                                                        }
+                                                        else{
+                                                            $select_organization ='';
+                                                        }
+                                                        echo '<option '.$select_organization.' value="'.url_encryption($v->cmis_state_id).'">'.strtoupper($v->agency_state).'</option>';
+                                                    }
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
-                            <div class="mb-3">
-                                <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
-                                <select name="org_post" id="org_post" tabindex = '14' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
-                                    <?php
-                                    echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
-                                    $post_sel ='';
-                                    if(isset($post_list) && !empty($post_list)){
-                                        foreach ($post_list as $k=>$v){
-                                            if(!empty($caveatee_details[0]['res_org_post']) && trim($caveatee_details[0]['res_org_post']) == $v->authcode){
-                                                $post_sel = 'selected="selected"';
-                                            }
-                                            else{
-                                                $post_sel ='';
-                                            }
-                                            echo '<option '.$post_sel.' value="'.url_encryption($v->authcode).'">'.strtoupper($v->authdesc).'</option>';
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
-                            <div class="row" id="org_state_row">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
-                                <div class="mb-3">
-                                    <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
-                                    <textarea id="org_post_name" name="org_post_name" tabindex = '17' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
-                                    <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                        <i class="fa fa-question-circle-o" ></i>
-                                    </span>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
+                                        <textarea tabindex = '11' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
+                                        <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                            <i class="fa fa-question-circle-o" ></i>
+                                        </span>
+                                    </div>
                                 </div>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
+                                        <select name="org_dept" tabindex = '12' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
+                                            <?php
+                                            echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
+                                            $dept_sel ='';
+                                            if(isset($dept_list) && !empty($dept_list)){
+                                                foreach ($dept_list as $k=>$v){
+                                                    if(!empty($caveatee_details[0]['res_org_dept']) && trim($caveatee_details[0]['res_org_dept']) == $v->deptcode){
+                                                        $dept_sel = 'selected="selected"';
+                                                    }
+                                                    else{
+                                                        $dept_sel ='';
+                                                    }
+                                                    echo '<option '.$dept_sel.' value="'.url_encryption($v->deptcode).'">'.strtoupper($v->deptname).'</option>';
+                                                }
+                                            }
+                                            ?>
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
+                                    <div class="row" id="org_state_row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
+                                            <textarea id="org_dept_name"  tabindex = '17' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
+                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                                <i class="fa fa-question-circle-o" ></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="stateDivBox" style="<?php echo $stateDiv;?>">
+
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
+                                        <select name="org_post" id="org_post" tabindex = '14' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
+                                            <?php
+                                            echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
+                                            $post_sel ='';
+                                            if(isset($post_list) && !empty($post_list)){
+                                                foreach ($post_list as $k=>$v){
+                                                    if(!empty($caveatee_details[0]['res_org_post']) && trim($caveatee_details[0]['res_org_post']) == $v->authcode){
+                                                        $post_sel = 'selected="selected"';
+                                                    }
+                                                    else{
+                                                        $post_sel ='';
+                                                    }
+                                                    echo '<option '.$post_sel.' value="'.url_encryption($v->authcode).'">'.strtoupper($v->authdesc).'</option>';
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
+                                    <div class="row" id="org_state_row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
+                                            <textarea id="org_post_name" name="org_post_name" tabindex = '17' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
+                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                                <i class="fa fa-question-circle-o" ></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+
                             </div>
-                            </div>
-                        </div>
+                         </div>
+
+                        <div class="row">
+
+
+
+                         
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Email </label>
@@ -381,7 +379,7 @@ body.loading .overlay{
                                     class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6" >
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Pincode should be 6 digits only.">
                                         <i class="fa fa-question-circle-o"></i>
-                                        <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank">Pin Code Locator</a>
+                                        <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank" class="pin-code-loc" >Pin Code Locator</a>
                                     </span>
                             </div>
                         </div>
@@ -447,6 +445,7 @@ body.loading .overlay{
                                     </select>
                                 </div>
                         </div>
+                        </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                             <div class="save-btns text-center">
                                 
@@ -485,6 +484,56 @@ body.loading .overlay{
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+<script>
+    function get_caveator_as(value) {        
+        var party_as = value;
+        if (party_as == 'I') {
+            $('#indvidual_form').show();
+            $('#org_form').hide();
+            $('#org_state_row').show();
+            $('#org_state').val('');
+            $('#org_dept').val('');
+            $('#org_post').val('');
+            $('#otherOrgState').hide();
+            $('#otherOrgDept').hide();
+            $('#otherOrgPost').hide();
+        } else {
+
+            get_departments(party_as);
+            get_posts();
+            if (party_as == 'D3') {
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').hide();
+                $('#otherOrgState').hide();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                /*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');*/
+            } else {
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').show();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                $("#stateDivBox").show();
+
+                /*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');            */
+            }
+        }
+    }
+</script>
+
+
 <script>
     $(document).ready(function() {
         // alert("SC");
@@ -601,52 +650,7 @@ body.loading .overlay{
 </script>
 <script type="text/javascript">
     var state_Arr = '<?php echo json_encode($stateArr)?>';
-    function get_caveator_as(value) {
-        var party_as = value;
-        if (party_as == 'I') {
-            $('#indvidual_form').show();
-            $('#org_form').hide();
-            $('#org_state_row').show();
-            $('#org_state').val('');
-            $('#org_dept').val('');
-            $('#org_post').val('');
-            $('#otherOrgState').hide();
-            $('#otherOrgDept').hide();
-            $('#otherOrgPost').hide();
-        } else {
-
-            get_departments(party_as);
-            get_posts();
-            if (party_as == 'D3') {
-                $('#indvidual_form').hide();
-                $('#org_form').show();
-                $('#org_state_row').hide();
-                $('#otherOrgState').hide();
-                $('#caveator_name').val('');
-                $('#relation').val('');
-                $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                /*$('#party_gender1').val('');
-                 $('#party_gender2').val('');
-                 $('#party_gender3').val('');*/
-            } else {
-                $('#indvidual_form').hide();
-                $('#org_form').show();
-                $('#org_state_row').show();
-                $('#caveator_name').val('');
-                $('#relation').val('');
-                $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                $("#stateDivBox").show();
-
-                /*$('#party_gender1').val('');
-                 $('#party_gender2').val('');
-                 $('#party_gender3').val('');            */
-            }
-        }
-    }
+    
 
     //---------- Organisation State Name----------------------//
     $('#org_state').change(function () {

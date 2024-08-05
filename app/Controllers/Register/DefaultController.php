@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Register;
 use App\Controllers\BaseController;
-use App\Models\Register\Register_model;
+use App\Models\Register\RegisterModel;
 use App\Libraries\webservices\Efiling_webservices;
 use App\Libraries\Slice;
 // if (!defined('BASEPATH')) exit('No direct script access allowed');
@@ -21,7 +21,7 @@ class DefaultController extends BaseController {
         require_once APPPATH . 'ThirdParty/eSign/XMLSecEnc.php';
         require_once APPPATH . 'ThirdParty/eSign/XMLSecurityDSig.php';
         require_once APPPATH . 'ThirdParty/eSign/XMLSecurityKey.php';
-        $this->Register_model = new Register_model();
+        $this->Register_model = new RegisterModel();
         $this->slice = new Slice();
         $this->efiling_webservices = new Efiling_webservices();
         $this->session = \Config\Services::session();

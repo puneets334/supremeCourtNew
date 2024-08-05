@@ -1583,7 +1583,7 @@ class Efiling_webservices {
     }
 
     public function get_last_listed_details($diary_no,$diary_year){
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
         // pr($data);
         // pr(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
@@ -1997,8 +1997,8 @@ class Efiling_webservices {
         /*echo ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".$diary_no;
         exit;*/
         
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
-        // pr(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
+        // $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
+        pr(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
     //     var_dump($data);
     //    exit;
         if ($data != false) {

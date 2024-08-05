@@ -166,6 +166,7 @@ class Search extends BaseController
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
                     $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
+                    // pr($listing_data);
                     // $data['listing_details'] = $listing_data->listed[0];
                     // $data['listing_details'] = $listing_data->listed[0];
                     if (isset($listing_data->listed) && is_array($listing_data->listed) && isset($listing_data->listed[0])) {
@@ -227,7 +228,9 @@ class Search extends BaseController
     function save_searched_case_result()
     {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            pr($allowed_users_array);
             redirect('login');
             exit(0);
         }
@@ -258,7 +261,7 @@ class Search extends BaseController
             $parties_list = $_SESSION['parties_list'];
         }
 
-        $parties_list = $_SESSION['parties_list'];
+        // $parties_list = $_SESSION['parties_list'];
         unset($_SESSION['parties_list']);
         $confirm_response = escape_data($_POST['confirm_response']);
         if ($confirm_response == 'yes') {
@@ -275,7 +278,9 @@ class Search extends BaseController
 
                     if (!$appearance_exists) {
                         $diary_number = $diary_no . $diary_year;
+                        pr($diary_number);
                         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
+                        // pr($advPartyDetails);
                         foreach ($advPartyDetails as $index => $detail) {
                             $result = $this->FetchDataModel->updateAdvocatePartyDetails($detail);
                         }
