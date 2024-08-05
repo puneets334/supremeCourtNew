@@ -268,10 +268,10 @@
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"> Sub Category 1 :</label>
+                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"> Sub Category :</label>
                             <div class="col-md-7 col-sm-12 col-xs-12">
                                 <select tabindex='6' name="subj_sub_cat_1" id="subj_sub_cat_1" class="form-control input-sm filter_select_dropdown subj_sub_cat_1">
-                                    <option value="" title="Select">Select Sub Category 1 </option>
+                                    <option value="" title="Select">Select Sub Category </option>
                                 </select>
                             </div>
                         </div>
