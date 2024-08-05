@@ -72,16 +72,20 @@ if ($filing_type == E_FILING_TYPE_MISC_DOCS || $filing_type == E_FILING_TYPE_IA 
 }
 $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0]->last_name);
 ?>
-<div class="right_col" role="main">
-    <div class="row">
+<div class="dashboard-section">
+<div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="dash-card">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                     <a class="btn btn-info" type="button" onclick="window.history.back()"> Back</a>
                 </div>
-                <h3 style="text-align: center"> <strong><?php echo $lbl_history; ?></strong> </h3>
-                <div class="x_content">
-                    <table id="example_ef" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                <div class="title-sec">
+                    <h5 class="unerline-title"><?php echo $lbl_history; ?></h5>
+                </div>
+                <!-- <h3 style="text-align: center"> <strong><?php echo $lbl_history; ?></strong> </h3> -->
+                <div class="table-sec">
+                <div class="table-responsive">
+                    <table id="example_ef" class="table table-striped custom-table" cellspacing="0" width="100%">
                         <thead> 
                             <tr class="success">
                                 <th><?php echo $lbl_efiling_no; ?> </th>
@@ -101,12 +105,18 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                         </tbody>
                     </table>
                 </div>
+                </div>
 
                 <div class="col-md-6 col-sm-6 col-xs-6">
-                    <h5>
+                    <!-- <h5>
                         <strong>Progress through various Stages</strong>
-                    </h5>
-                    <table id="example" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    </h5> -->
+                    <div class="title-sec">
+                        <h5 class="unerline-title">Progress through various Stages</h5>
+                    </div>
+                    <div class="table-sec">
+                <div class="table-responsive">
+                    <table id="example" class="table table-striped custom-table" cellspacing="0" width="100%">
                         <thead> 
                             <tr class="success">
                                 <th>#</th>
@@ -145,12 +155,19 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                         </tbody>
                     </table>
                 </div>
+                    </div>
+                </div>
                 <?php if ($filing_type != E_FILING_TYPE_CDE) { ?>
                     <div class="col-md-6 col-sm-6 col-xs-6">
-                        <h5>
+                        <!-- <h5>
                             <strong>Uploaded Documents</strong>
-                        </h5>
-                        <table id="example_up" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        </h5> -->
+                        <div class="title-sec">
+                            <h5 class="unerline-title">Uploaded Documents</h5>
+                        </div>
+                        <div class="table-sec">
+                <div class="table-responsive">
+                    <table id="example_up" class="table table-striped custom-table" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
@@ -177,6 +194,8 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                             </tbody>
                         </table>
                     </div>
+                    </div>
+                    </div>
                 <?php } ?>
                 <?php
                 if ($payment_details != "") {
@@ -186,7 +205,10 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                         <div id="modal_loader">
                             <img id="loader_img" style="margin-top: 30px;margin-left: 30px;display:block;" src="<?php echo base_url('assets/images/loading-data.gif'); ?>" />
                         </div>
-                        <h5><strong>Payment History</strong></h5>
+                        <!-- <h5><strong>Payment History</strong></h5> -->
+                        <div class="title-sec">
+                            <h5 class="unerline-title">Payment History</h5>
+                        </div>
                         <?php $this->load->view('shcilPayment/payment_list_view'); ?>
 
                     </div>
@@ -194,10 +216,15 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
 
                 <?php if ($remark > 0) { ?>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h5>
+                        <!-- <h5>
                             <strong>Defects</strong>
-                        </h5>
-                        <table id="example_up" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        </h5> -->
+                        <div class="title-sec">
+                            <h5 class="unerline-title">Defects</h5>
+                        </div>
+                        <div class="table-sec">
+                <div class="table-responsive">
+                    <table id="example_up" class="table table-striped custom-table" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
@@ -224,11 +251,18 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                             </tbody>
                         </table>
                     </div>
+                    </div>
+                    </div>
                 <?php } ?>
                 <?php if ($allocation_details > 0) { ?>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <h5><strong>Allocation Details</strong></h5>
-                        <table id="example_up" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <!-- <h5><strong>Allocation Details</strong></h5> -->
+                        <div class="title-sec">
+                            <h5 class="unerline-title">Allocation Details</h5>
+                        </div>
+                        <div class="table-sec">
+                <div class="table-responsive">
+                    <table id="example_up" class="table table-striped custom-table" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
@@ -255,14 +289,16 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                             </tbody>
                         </table>
                     </div>
+                    </div>
+                    </div>
                 <?php } ?> 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <a class="btn btn-info" type="button" onclick="window.history.back()"> Back</a> 
                 </div>
-            </div>
+                </div>
         </div>
     </div>
-</div>
+    </div>
 </div>
                     </div>
                 </div>

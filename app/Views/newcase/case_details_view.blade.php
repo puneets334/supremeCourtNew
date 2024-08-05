@@ -153,7 +153,7 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Sub-Category</label>
                             <select tabindex='7' name="subj_sub_cat_1" id="subj_sub_cat_1" class="form-control cus-form-ctrl filter_select_dropdown subj_sub_cat_1">
-                                <option value="" title="Select">Select Sub Category 1 </option>
+                                <option value="" title="Select">Select Sub Category </option>
                             </select>
                         </div>
                     </div>
