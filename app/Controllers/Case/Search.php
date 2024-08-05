@@ -230,7 +230,7 @@ class Search extends BaseController
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            pr($allowed_users_array);
+            // pr($allowed_users_array);
             redirect('login');
             exit(0);
         }
@@ -278,7 +278,7 @@ class Search extends BaseController
 
                     if (!$appearance_exists) {
                         $diary_number = $diary_no . $diary_year;
-                        pr($diary_number);
+                        // pr($diary_number);
                         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
                         // pr($advPartyDetails);
                         foreach ($advPartyDetails as $index => $detail) {

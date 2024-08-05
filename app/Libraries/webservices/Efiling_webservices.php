@@ -1997,8 +1997,8 @@ class Efiling_webservices {
         /*echo ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".$diary_no;
         exit;*/
         
-        // $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
-        pr(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
+        // pr(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
     //     var_dump($data);
     //    exit;
         if ($data != false) {

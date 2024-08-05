@@ -1,18 +1,24 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\AppearingFor;
+use App\Controllers\BaseController;
+use App\Models\AppearingFor\AppearingForModel;
+use App\Models\MiscellaneousDocs\GetDetailsModel;
 
 class Appearing_for extends BaseController {
+    protected $AppearingForModel;
+    protected $GETDetailsModel;
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('appearing_for/Appearing_for_model');
+        $this->AppearingForModel = new AppearingForModel();
+        $this->GETDetailsModel= new GETDetailsModel();
     }
 
     public function save_appearing_details() {
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
 
-        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
+        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);
         }
@@ -24,7 +30,7 @@ class Appearing_for extends BaseController {
         }
 
 
-        $this->form_validation->set_rules('user_type', 'Party Type', 'required|in_list[P,R]');
+      /*   $this->form_validation->set_rules('user_type', 'Party Type', 'required|in_list[P,R]');
         //WORK ON IT TO VALIDATE FORWARD SLASH
         //$this->form_validation->set_rules('party_name[]', 'Party Name', 'required|trim|validate_alpha_numeric_space_dot_hyphen_underscore_slash');
         $this->form_validation->set_rules('party_email[]', 'Email', 'trim|min_length[5]|max_length[50]|valid_email');
@@ -36,7 +42,7 @@ class Appearing_for extends BaseController {
             echo '3@@@';
             echo form_error('user_type'). form_error('party_name[]') . form_error('party_email[]') . form_error('party_mob[]'). form_error('selected_party[]');
             exit(0);
-        }
+        } */
 
         $registration_id = $_SESSION['efiling_details']['registration_id'];
 
@@ -46,6 +52,7 @@ class Appearing_for extends BaseController {
         $parties_selected = $_POST['selected_party'];
         $party_email = $_POST['party_email'];
         $party_mobile = $_POST['party_mob'];
+        $appearing_for=$contact_p_name=$contact_p_email=$contact_p_mobile=$contact_partyid='';
 
         foreach ($parties_selected as $seleced_party) {
 
@@ -94,7 +101,7 @@ class Appearing_for extends BaseController {
                 'create_ip' => $_SERVER['REMOTE_ADDR']
             );
 
-            $details_saved_status = $this->Appearing_for_model->add_appearing_for($appearing_party_detail, $contact_details, $registration_id);
+            $details_saved_status = $this->AppearingForModel->add_appearing_for($appearing_party_detail, $contact_details, $registration_id);
 
             if ($details_saved_status) {
                 echo "1@@@Appearing for added successfully.";
@@ -124,7 +131,7 @@ class Appearing_for extends BaseController {
                 'updated_on' => date('Y-m-d H:i:s')
             );
 
-            $result = $this->Appearing_for_model->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
+            $result = $this->AppearingForModel->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
 
             if ($result) {
                 echo "1@@@Appearing for Updated Successfully.";
