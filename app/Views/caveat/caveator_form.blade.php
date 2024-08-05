@@ -248,7 +248,6 @@ body.loading .overlay{
                             </div>
                         </div>
                     </div>
-                    
                     <div class="row" id="org_form" style="<?php echo $showHideOtherIndividual; ?>">                    
                         <div class="container">
                             <div class="row">
