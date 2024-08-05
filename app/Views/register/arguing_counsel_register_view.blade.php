@@ -15,10 +15,16 @@
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
 </head>
+<style type="text/css">
+    @media only screen and (min-width: 960px) {
+        body{
+            overflow-y:hidden;
+        }
+    }
+</style>
 <?php
 $segment = service('uri');
 $session = service('session');
-$security = service('security');
 ?>
 <body class="login-page">
     <header>
@@ -119,8 +125,13 @@ $security = service('security');
                             <?php
                             if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                                 $title = 'Advocate On Record';
+                                $adv_type_select=USER_ADVOCATE;
+                            } elseif ($segment->getSegment(1) == 'arguingCounselRegister') {
+                                $title = 'Advocate';
+                                $adv_type_select=USER_ADVOCATE;
                             } else {
                                 $title = 'Party In Person';
+                                $adv_type_select=USER_IN_PERSON;
                             }
                             ?>
                         </div>
@@ -152,14 +163,13 @@ $security = service('security');
                         <div class="httxt">
                             <h4><?php echo $title; ?><strong> (Registration)</strong></h4>
                         </div>
-                        <div class="loin-form" id="offline_proceed" >
+                        <div>
                             <?php
                             $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off');
-                            echo form_open("register/AdvocateOnRecord/adv_get_otp", $attributes);
-                                echo $session->setFlashdata('msg');
-                                ?>
-                                <input type="hidden" name="register_type" value="<?php echo $title; ?>">
+                            echo form_open("register/ArguingCounselRegister/senOtp", $attributes);
+                            ?>
                                 <input type="hidden" name="ctvrg">
+                                <input type="hidden" name="register_type" value="Advocate">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
@@ -195,7 +205,7 @@ $security = service('security');
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
-                        {{-- <a href="{{base_url()}}" class="btn quick-btn">LOGIN</a> --}}
+                        <a href="{{base_url()}}" class="btn quick-btn">LOGIN</a>
                         <div class="regester-txts">
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
@@ -212,24 +222,41 @@ $security = service('security');
         </div>
     </div>
     <!-- Login Area End  -->
+    <script src="<?= base_url('assets/js/jquery.min.js'); ?>" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?=base_url('CaptchaResource/js/Captcha.js');?>"></script>
     <script type="text/javascript">
-        $(function(){
-        // grecaptcha.ready(function () {
-                $("#loginform").one('submit', function (e) {
-                    var form = this;
-                    $('[name="ctvrg"]').val('<?=csrf_field()?>');
-                    $(form).submit();
-                /*  e.preventDefault();
-                    grecaptcha.execute('6LfE13AUAAAAACYtRe104ECi3APlECcyJfbH3VrV', {action: '{{str_replace('-','_hyphen_',uri_string())}}'})
-                        .then(function (token) {
-                            $('[name="ctvrg"]').val(token);
-                            $(form).submit();
-                        });*/
-                });
-            //});
-        });
-    </script> 
+        function showHideDiv(ele) {
+            var srcElement = document.getElementById(ele);
+            var srcElement2 = document.getElementById('offline_proceed');
+            if (srcElement != null) {
+                if (srcElement.style.display == "block") {
+                } else {
+                    srcElement.style.display = 'block';
+                    srcElement2.style.display = 'none';
+                    document.getElementById("new_advocate").checked = false;
+                    document.getElementById("ekyc").checked = true;
+                    //window.scrollBy(0, 60);
+                }
+                return false;
+            }
+        }
+        function HideEkycDiv(ele) {
+            var srcElement = document.getElementById(ele);
+            var srcElement2 = document.getElementById('ekyc_upload_share');
+            if (srcElement != null) {
+                if (srcElement.style.display == "block") {
+                } else {
+                    // alert(srcElement2);
+                    srcElement.style.display = 'block';
+                    srcElement2.style.display = 'none';
+                    document.getElementById("ekyc").checked = false;
+                    document.getElementById("new_advocate").checked = true;
+                    //window.scrollBy(0, 60);
+                }
+                return false;
+            }
+        }
+    </script>   
 </body>
 </html>

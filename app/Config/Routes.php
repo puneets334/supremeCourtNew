@@ -148,7 +148,7 @@ $routes->match(['GET', 'POST'], 'case/ancillary/form', 'ResponsiveVariantRouteCo
 // $routes->match(['GET', 'POST'],'registerCounsel','register/ArguingCounsel/saveArguingCounselByAOR');
 // $routes->match(['GET', 'POST'],'matchRegistrationCode', 'register/ArguingCounsel/matchRegistrationCode');
 // $routes->match(['GET', 'POST'],'saveArguingCounselCompleteDetails', 'register/ArguingCounsel/saveArguingCounselCompleteDetails');
-$routes->match(['GET', 'POST'], 'arguingCounselRegister', 'register/ArguingCounselRegister/addAarguingCounsel');
+$routes->match(['GET', 'POST'], 'arguingCounselRegister', 'Register\ArguingCounselRegister::addAarguingCounsel');
 $routes->match(['GET', 'POST'], 'case/arguingCounsel/(:num)', 'ResponsiveVariantRouteController::arguingCounselData/$1');
 $routes->match(['GET', 'POST'], 'case/iamiscdocshare', 'ResponsiveVariantRouteController::iaMiscDocShare');
 $routes->match(['GET', 'POST'], 'case/ancillary/Indexdocuments', 'ResponsiveVariantRouteController::prefilled_index_docs');
