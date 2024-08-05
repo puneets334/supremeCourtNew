@@ -62,6 +62,12 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
 ?>
 
 <body>
+<!-- <div id="loader" style="display: none;">
+    <div class="spinner"></div>
+</div> -->
+<div id="loader-wrapper" style="display: none;">
+    <div id="loader"></div>
+</div>
     <div class="mainPanel ">
         <div class="panelInner">
             <div class="middleContent">
@@ -1392,6 +1398,34 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         max-height: 250px;
     }
 </style>
+<!-- <style>
+    #loader {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style> -->
 <script>
     $(document).ready(function () {
         $('.closeall').click(function () {
@@ -1453,27 +1487,33 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 var dataarr = dataas[1].slice(1).split(',');
                 if ((dataarr[0] != 2) && (dataarr[0] != 3) && (dataarr[0] != 7) && (dataarr[0]) != 8 && (dataarr[0]) != 10) {
                      alert("all completed");
-                    window.location.href = "<?php echo base_url('newcase/AutoDiary')?>"; //ENABLED THIS FOR AUTO DIARY
+                    // window.location.href = "<?php echo base_url('newcase/AutoDiary')?>"; //ENABLED THIS FOR AUTO DIARY
+                    showLoaderAndRedirect("<?php echo base_url('newcase/AutoDiary')?>");
                 }
                 if ((dataarr[0]) == 2) {
                     alert("Petitioner details are mandatory to fill. Redirecting to page !!");
-                    window.location.href = "<?php echo base_url('newcase/petitioner')?>";
+                    // window.location.href = "<?php echo base_url('newcase/petitioner')?>";
+                    showLoaderAndRedirect("<?php echo base_url('newcase/petitioner')?>");
                 }
                 if ((dataarr[0]) == 3) {
                     alert("Respondent details are mandatory to fill. Redirecting to page !!");
-                    window.location.href = "<?php echo base_url('newcase/respondent')?>";
+                    // window.location.href = "<?php echo base_url('newcase/respondent')?>";
+                    showLoaderAndRedirect("<?php echo base_url('newcase/respondent')?>");
                 }
                 if (((dataarr[0]) == 7) && (ct != 5) && (ct != 6) && (ct != 7) && (ct != 8)) {
                     alert("Subordinate_courts details are mandatory to fill. Redirecting to page !!");
-                    window.location.href = "<?php echo base_url('newcase/subordinate_court')?>";
+                    // window.location.href = "<?php echo base_url('newcase/subordinate_court')?>";
+                    showLoaderAndRedirect("<?php echo base_url('newcase/subordinate_court')?>");
                 }
                 if (((dataarr[0]) == 8)) {
                     alert("Documents are not uploaded. Redirecting to page !!");
-                    window.location.href = "<?php echo base_url('newcase/uploadDocuments')?>";
+                    // window.location.href = "<?php echo base_url('newcase/uploadDocuments')?>";
+                    showLoaderAndRedirect("<?php echo base_url('newcase/uploadDocuments')?>");
                 }
                 if (((dataarr[0]) == 10)) {
                     alert("Court Fees not paid. Redirecting to page !!");
-                    window.location.href = "<?php echo base_url('newcase/courtFee')?>";
+                    // window.location.href = "<?php echo base_url('newcase/courtFee')?>";
+                    showLoaderAndRedirect("<?php echo base_url('newcase/courtFee')?>");
                 }
             },
             error: function () {
@@ -1484,6 +1524,15 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         });
         return false;
     });
+    function showLoaderAndRedirect(url) {
+        // Show the loader
+        document.getElementById('loader-wrapper').style.display = 'flex';
+        
+        // Delay to ensure the loader is visible for a moment
+        setTimeout(function() {
+            window.location.href = url;
+        }, 500); // Adjust delay as needed
+    }
     $("#efilpip").click(function () {
         $.ajax({
             url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
