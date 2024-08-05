@@ -19,25 +19,23 @@ if(isset($_SESSION['login'])){
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Resources</h5>
                                 </div>
-                                <?php if(getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item">
-                                            <a href="{{base_url('resources/hand_book')}}" aria-current="page" class="nav-link {{(current_url() == base_url('support') || current_url() == base_url('resources/hand_book')) ? 'active' : ''}}">Hand Book</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{base_url('resources/video_tutorial/view')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/video_tutorial/view') ? 'active' : ''}}">Video Tutorial</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{base_url('resources/FAQ')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/FAQ') ? 'active' : ''}}">FAQ</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{base_url('resources/hand_book_old_efiling')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/hand_book_old_efiling') ? 'active' : ''}}">Refile Old Efiling Cases</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="{{base_url('resources/Three_PDF_user_manual')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/Three_PDF_user_manual') ? 'active' : ''}}">3PDF User Manual</a>
-                                        </li>
-                                    </ul>
-                                <?php } ?>
+                                <ul class="nav nav-tabs">
+                                    <li class="nav-item">
+                                        <a href="{{base_url('resources/hand_book')}}" aria-current="page" class="nav-link {{(current_url() == base_url('support') || current_url() == base_url('resources/hand_book')) ? 'active' : ''}}">Hand Book</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{base_url('resources/video_tutorial/view')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/video_tutorial/view') ? 'active' : ''}}">Video Tutorial</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{base_url('resources/FAQ')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/FAQ') ? 'active' : ''}}">FAQ</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{base_url('resources/hand_book_old_efiling')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/hand_book_old_efiling') ? 'active' : ''}}">Refile Old Efiling Cases</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{base_url('resources/Three_PDF_user_manual')}}" aria-current="page" class="nav-link {{current_url() == base_url('resources/Three_PDF_user_manual') ? 'active' : ''}}">3PDF User Manual</a>
+                                    </li>
+                                </ul>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
                                 <div class="right_col" role="main">
@@ -69,7 +67,7 @@ if(isset($_SESSION['login'])){
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_content">
-                                                    <!-- <div>3PDF User Manual</div> -->
+                                                    <div>3PDF User Manual</div>
                                                     <embed src="<?php echo base_url('/uploaded_docs/user_manual/3pdf_user_manual.pdf'); ?>" type="application/pdf" width="100%" height="800">
                                                 </div>
                                             </div>
