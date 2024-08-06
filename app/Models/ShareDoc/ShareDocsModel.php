@@ -2,7 +2,7 @@
 namespace App\Models\ShareDoc;
 
 use CodeIgniter\Model;
-class Share_docs_model extends Model {
+class ShareDocsModel extends Model {
 
     function __construct() {
         parent::__construct();
