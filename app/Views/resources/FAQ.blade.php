@@ -1,4 +1,11 @@
-@extends('layout.advocateApp')
+<?php 
+if(isset($_SESSION['login'])){
+    $ex = 'layout.advocateApp';
+}else{
+    $ex = 'layout.frontApp';
+}
+?>
+@extends($ex)
 @section('content')
     <style>
         #accordion {
@@ -55,7 +62,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">            
                                             <div class="x_panel">                
-                                                <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                     <div class="x_title">
                                                         <h2><i class="fa  fa-newspaper-o"></i> Resources FAQ</h2>
                                                         <div class="clearfix"></div>
@@ -332,58 +339,62 @@
     </div>
 @endsection
 @push('script')
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 <script>
-    $( function() {
-        $( "#accordion" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
+    $(document).ready(function(){
+        $( function() {
+            $( "#accordion" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion1" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion2" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion3" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion4" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion5" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion6" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion7" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion8" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
+            $( "#accordion9" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
+                $("h3.ui-accordion-header").each(function(i, el) {
+                    $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
+                })
+            });
         });
-        $( "#accordion1" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion2" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion3" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion4" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion5" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion6" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion7" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion8" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-        $( "#accordion9" ).accordion({heightStyle: "content",collapsible: true}).on("click", "h3.ui-accordion-header", function(e) {
-            $("h3.ui-accordion-header").each(function(i, el) {
-                $(this).find(".panel-icon").text($(el).is(".ui-state-active") ? "-" : "+")
-            })
-        });
-    } );
+    });
 </script>
 @endpush

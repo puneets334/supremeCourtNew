@@ -1,4 +1,11 @@
-@extends('layout.advocateApp')
+<?php 
+if(isset($_SESSION['login'])){
+    $ex = 'layout.advocateApp';
+}else{
+    $ex = 'layout.frontApp';
+}
+?>
+@extends($ex)
 @section('content')
     <div class="container-fluid">
         <div class="row">

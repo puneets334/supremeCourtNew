@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,16 +15,13 @@
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
 </head>
-
 <body class="login-page">
     <header>
         <!-- Top Header Section End -->
         <div class="top-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown">
-
-                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown"></div>
                     <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
                         <ul>
                             <li><a href="javascript:void(0)" class="hide skiptomain">Skip To Main Content</a></li>
@@ -77,19 +73,20 @@
                                     <ul class="navbar-nav mr-auto">
                                         <li class="nav-item">
                                             <!-- <a class="active" href="index.html">Handbook </a> -->
-                                            <a class="active" target="_blank" href="<?php echo base_url('e-resources') ?>">Handbook </a>
+                                            <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">Video Tutorial</a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/video-tutorial')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/video-tutorial') ?>">Video Tutorial</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">FAQ </a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/FAQs')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/FAQs') ?>">FAQs</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">Stats</a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/hand-book-old-efiling')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/hand-book-old-efiling') ?>">Stats</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">3PDF User Manual</a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/three-pdf-user-manual')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/three-pdf-user-manual') ?>">3PDF User Manual</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -117,9 +114,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
                     <div class="login-s-inner">
                         <?php $session = session(); ?>
@@ -143,8 +137,6 @@
                             <b>{{ $validation->getError('txt_password')}}</b>
                         </div>
                         @endif
-
-
                         <div class="httxt">
                             <h4>Login</h4>
                         </div>
@@ -153,71 +145,68 @@
                             $attribute = array('class' => 'form_horizontal', 'name' => 'form_horizontal', 'id' => 'login-form', 'accept-charset' => 'utf-8', 'autocomplete' => 'off', 'onsubmit' => 'enableSubmit();');
                             echo form_open(base_url('login'), $attribute);
                             ?>
-                            <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">User Name</label>
-                                        <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="txt_username" value="{{@$session->get('user')}}" placeholder="UserId/Mobile/Email Id" maxlength="60">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Password</label>
-                                        <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="Test@4321">
-                                        @if(!empty($session->get('impersonated_user_authentication_mobile_otp')))
-                                        <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="captchaimage">
+                                <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
-                                            @include('Captcha.Captcha_view')
-
-                                            {{-- <input type="text" value="" placeholder="HrT5709KL"
-                                                    id="" name="" class="form-control cus-form-ctrl"> --}}
+                                            <label for="" class="form-label">User Name</label>
+                                            <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="txt_username" value="{{@$session->get('user')}}" placeholder="UserId/Mobile/Email Id" maxlength="60">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Password</label>
+                                            <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="Test@4321">
+                                            @if(!empty($session->get('impersonated_user_authentication_mobile_otp')))
+                                            <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="mb-3">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                            <label class="form-check-label gray-txt" for="exampleCheck1">Remember
-                                                Me</label>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="captchaimage">
+                                            <div class="mb-3">
+                                                @include('Captcha.Captcha_view')
+
+                                                {{-- <input type="text" value="" placeholder="HrT5709KL"
+                                                        id="" name="" class="form-control cus-form-ctrl"> --}}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-right">
-                                    <div class="mb-3">
-                                        <label class="form-label gray-txt">Forget Password ? <a href="<?php echo base_url('Register/ForgetPassword'); ?>" class="blue-txt"> Click Here</a></label>
-
-
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <label class="form-check-label gray-txt" for="exampleCheck1">Remember
+                                                    Me</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-right">
+                                        <div class="mb-3">
+                                            <label class="form-label gray-txt">Forget Password ? <a href="<?php echo base_url('Register/ForgetPassword'); ?>" class="blue-txt"> Click Here</a></label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <button class="btn quick-btn ">LOGIN</button>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="mb-3">
+                                            <button class="btn quick-btn ">LOGIN</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            </form>
+                            <?php echo form_close(); ?>
                             <div class="regester-txts">
                                 <h6 class="htsmall">Register As :</h6>
                                 <div class="regester-links">
-                                    <a href="register" class="blue-txt">Individual (Party In Person)</a>
+                                    <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
                                     <span class="gray-txt">Or</span>
-                                    <a href="register/AdvocateOnRecord" class="blue-txt"> AOR</a>
-                                    <!-- <span class="gray-txt">Or</span>
-                                    <a href="" class="blue-txt">Advocate</a> -->
+                                    <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
+                                    <span class="gray-txt">Or</span>
+                                    <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
                                 </div>
                             </div>
                         </div>

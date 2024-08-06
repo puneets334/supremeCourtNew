@@ -1,4 +1,11 @@
-@extends('layout.advocateApp')
+<?php 
+if(isset($_SESSION['login'])){
+    $ex = 'layout.advocateApp';
+}else{
+    $ex = 'layout.frontApp';
+}
+?>
+@extends($ex)
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -42,7 +49,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">            
                                             <div class="x_panel">                
-                                                <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                     <div class="x_title">
                                                         <h2><i class="fa  fa-newspaper-o"></i> Refile Old eFiling Cases</h2>
                                                         <div class="clearfix"></div>

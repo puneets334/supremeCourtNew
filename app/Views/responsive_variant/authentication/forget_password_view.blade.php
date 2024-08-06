@@ -77,19 +77,20 @@
                                     <ul class="navbar-nav mr-auto">
                                         <li class="nav-item">
                                             <!-- <a class="active" href="index.html">Handbook </a> -->
-                                            <a class="active" target="_blank" href="<?php echo base_url('e-resources') ?>">Handbook </a>
+                                            <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">Video Tutorial</a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/video-tutorial')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/video-tutorial') ?>">Video Tutorial</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">FAQ </a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/FAQs')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/FAQs') ?>">FAQs</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">Stats</a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/hand-book-old-efiling')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/hand-book-old-efiling') ?>">Stats</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="javascript:void(0)">3PDF User Manual</a>
+                                            <a class="nav-link <?= (current_url() == base_url('e-resources/three-pdf-user-manual')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/three-pdf-user-manual') ?>">3PDF User Manual</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -244,11 +245,11 @@
                                 <div class="regester-txts">
                                     <h6 class="htsmall">Register As :</h6>
                                     <div class="regester-links">
-                                        <a href="register" class="blue-txt">Individual (Party In Person)</a>
+                                        <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
                                         <span class="gray-txt">Or</span>
-                                        <a href="register/AdvocateOnRecord" class="blue-txt"> AOR</a>
-                                        <!-- <span class="gray-txt">Or</span>
-                                    <a href="" class="blue-txt">Advocate</a> -->
+                                        <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
+                                        <span class="gray-txt">Or</span>
+                                        <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
                                     </div>
                                 </div>
                             </div>
@@ -373,7 +374,7 @@
         <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
         <script type="text/javascript">
             $(function() {
-                @if(empty(@$session - > get('user')))
+                @if(empty(@$session->get('user')))
                 $('[name="txt_username"]').focus();
                 @else
                 $('[name="txt_password"]').focus();

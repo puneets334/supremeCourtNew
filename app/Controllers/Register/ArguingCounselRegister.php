@@ -1,27 +1,45 @@
 <?php
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
-class ArguingCounselRegister extends CI_Controller {
+namespace App\Controllers\Register;
+use App\Controllers\BaseController;
+use App\Models\Register\RegisterModel;
+use App\Libraries\webservices\Efiling_webservices;
+use App\Libraries\Slice;
+
+// if (!defined('BASEPATH')) exit('No direct script access allowed');
+
+class ArguingCounselRegister extends BaseController {
+
+    protected $Register_model;
+    protected $slice;
+    protected $form_validation;
+    protected $session;
 
     public function __construct() {
         parent::__construct();
-        $this->load->library('encrypt');
-        $this->load->model('register/Register_model');
-        $this->load->library('webservices/efiling_webservices');
-        $this->load->library('slice');
-        $this->load->helper('security');
+        // $this->load->library('encrypt');
+        // $this->load->model('register/Register_model');
+        // $this->load->library('webservices/efiling_webservices');
+        // $this->load->library('slice');
+        // $this->load->helper('security');
+        $this->Register_model = new RegisterModel();
+        $this->slice = new Slice();
+        $this->efiling_webservices = new Efiling_webservices();
+        $this->session = \Config\Services::session();
+        helper(['security']);
     }
-    public function index(){
-        }
-        public function addAarguingCounsel(){
-            unset($_SESSION['adv_details']);
-           /* $captcha_value = captcha_generate();
-            $data['captcha']['image'] = $captcha_value['image'];
-            $data['captcha']['word'] = $captcha_value['word'];*/
-            $this->slice->view('register.arguing_counsel_register_view');
-        }
-    public function senOtp(){
+
+    public function index(){ }
+
+    public function addAarguingCounsel() {
+        unset($_SESSION['adv_details']);
+        /* $captcha_value = captcha_generate();
+        $data['captcha']['image'] = $captcha_value['image'];
+        $data['captcha']['word'] = $captcha_value['word'];*/
+        $this->render('register.arguing_counsel_register_view');
+    }
+
+    public function senOtp() {
         unset($_SESSION['self_register_arguing_counsel']);
         unset($_SESSION['self_arguing_counsel']);
         unset($_SESSION['arguingCounselId']);

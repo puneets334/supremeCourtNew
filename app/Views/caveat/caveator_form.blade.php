@@ -113,162 +113,141 @@ body.loading .overlay{
                     </div>
 
                     <!-- III  Field Start -->  
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                    <div class="row" id="indvidual_form" style="<?php echo $showHideIndividual; ?>">
+                    <div class="row" id="indvidual_form" >
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    
                         <div class="container">
                             <div class="row">
                                
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Caveator Name <span style="color: red" class="astriks">*</span></label>
-                                        <textarea id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
-                                            class="form-control cus-form-ctrl sci_validation" 
-                                            minlength="3" maxlength="250" required><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
-                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                            title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
-                                            <i class="fa fa-question-circle-o"></i>
-                                        </span> 
-                                        
-                                        
-                                    </div>
+                                    
                                 </div>
                             </div>
+                        </div>    
+                        <div style="clear:both"></div>
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Caveator Name <span style="color: red" class="astriks">*</span></label>
+                                    <textarea id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
+                                        class="form-control cus-form-ctrl sci_validation" 
+                                        minlength="3" maxlength="250" required><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
+                                        title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                        <i class="fa fa-question-circle-o"></i>
+                                    </span> 
+                                            
+                                            
+                                </div>
+
+
+                            </div>
+
+
+                        
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Relation</label>
+                                <?php
+                                if (isset($caveator_details)) {
+                                    $selectSon = $caveator_details[0]['relation'] == 'S' ? 'selected=selected' : '';
+                                    $selectDaughter = $caveator_details[0]['relation'] == 'D' ? 'selected=selected' : '';
+                                    $selectWife = $caveator_details[0]['relation'] == 'W' ? 'selected=selected' : '';
+                                    $selectNotAvailable = $caveator_details[0]['relation'] == 'N' ? 'selected=selected' : '';
+                                }
+                                
+                                ?>
+                                <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
+                                    class="form-control cus-form-ctrl filter_select_dropdown" required>
+                                    <option value="">Select Relation</option>
+                                    <option <?php echo isset($selectSon) ? $selectSon : '';
+                                    $selectSon; ?> value="S">Son Of</option>
+                                    <option <?php echo isset($selectDaughter) ? $selectDaughter : ''; ?> value="D">Daughter Of
+                                    </option>
+                                    <option <?php echo isset($selectWife) ? $selectWife : ''; ?> value="W">Spouse Of
+                                    </option>
+                                    <option <?php echo isset($selectNotAvailable) ? $selectNotAvailable : ''; ?> value="N">Not Available
+                                    </option>
+                                </select>
+
+                            </div>
+                        </div>                    
+                        <!-- V  Field Start -->  
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Relative Name <span style="color: red" class="astriks">*</span></label>
+
+                                <input tabindex="5" id="relative_name" name="relative_name"
+                                    minlength="3" maxlength="99" placeholder="Relative Name"
+                                    value="<?php   echo isset($caveator_details[0]['relative_name'])?$caveator_details[0]['relative_name']:''; ?>"
+                                    class="form-control cus-form-ctrl sci_validation"
+                                    type="text" required>
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
+                                    title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
+                                    <i class="fa fa-question-circle-o"></i>
+                                </span>    
+                            </div>
+                        </div>                    
+                        <!-- VI  Field Start -->  
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
+                                <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
+                                value="<?php echo isset($caveator_details[0]['party_dob']) ? date('m/d/Y', strtotime($caveator_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
+                                        title="Please Enter Date of Birth.">
+                                    <i class="fa fa-question-circle-o"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Relation</label>
-                            <?php
-                            if (isset($caveator_details)) {
-                                $selectSon = $caveator_details[0]['relation'] == 'S' ? 'selected=selected' : '';
-                                $selectDaughter = $caveator_details[0]['relation'] == 'D' ? 'selected=selected' : '';
-                                $selectWife = $caveator_details[0]['relation'] == 'W' ? 'selected=selected' : '';
-                                $selectNotAvailable = $caveator_details[0]['relation'] == 'N' ? 'selected=selected' : '';
-                            }
-                            
-                            ?>
-                            <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
-                                class="form-control cus-form-ctrl filter_select_dropdown" required>
-                                <option value="">Select Relation</option>
-                                <option <?php echo isset($selectSon) ? $selectSon : '';
-                                $selectSon; ?> value="S">Son Of</option>
-                                <option <?php echo isset($selectDaughter) ? $selectDaughter : ''; ?> value="D">Daughter Of
-                                </option>
-                                <option <?php echo isset($selectWife) ? $selectWife : ''; ?> value="W">Spouse Of
-                                </option>
-                                <option <?php echo isset($selectNotAvailable) ? $selectNotAvailable : ''; ?> value="N">Not Available
-                                </option>
-                            </select>
-
-                        </div>
-                    </div>
-                   
-                    <!-- V  Field Start -->  
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Relative Name <span style="color: red" class="astriks">*</span></label>
-
-                            <input tabindex="5" id="relative_name" name="relative_name"
-                                minlength="3" maxlength="99" placeholder="Relative Name"
-                                value="<?php   echo isset($caveator_details[0]['relative_name'])?$caveator_details[0]['relative_name']:''; ?>"
-                                class="form-control cus-form-ctrl sci_validation"
-                                type="text" required>
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
-                                <i class="fa fa-question-circle-o"></i>
-                            </span>    
-                        </div>
-                    </div>
-
-                    
-                    <!-- VI  Field Start -->  
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                            value="<?php echo isset($caveator_details[0]['party_dob']) ? date('m/d/Y', strtotime($caveator_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
-                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                    title="Please Enter Date of Birth.">
+                        <!-- VII  Field Start -->  
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
+                                <?php
+                                $pet_age = '';
+                                if(isset($caveator_details[0]['party_age']))
+                                {
+                                if ($caveator_details[0]['party_age'] == 0 || $caveator_details[0]['party_age'] == '' || $caveator_details[0]['party_age'] == NULL) {
+                                    $pet_age = '';
+                                } else {
+                                    $pet_age = $caveator_details[0]['party_age'];
+                                }
+                                    }
+                                ?>
+                                <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
+                                name="pet_age" id="pet_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($pet_age); ?>">
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
+                                title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
-                        </div>
-                    </div>
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <!-- VII  Field Start -->  
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
-                            <?php
-                            $pet_age = '';
-                            if(isset($caveator_details[0]['party_age']))
-                            {
-                            if ($caveator_details[0]['party_age'] == 0 || $caveator_details[0]['party_age'] == '' || $caveator_details[0]['party_age'] == NULL) {
-                                $pet_age = '';
-                            } else {
-                                $pet_age = $caveator_details[0]['party_age'];
-                            }
-                                }
-                            ?>
-                            <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
-                            name="pet_age" id="pet_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($pet_age); ?>">
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                            title="Approx. age in years only.">
-                            <i class="fa fa-question-circle-o"></i>
-                        </span>
-                        </div>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
-                        <div class="mb-3">
-                            <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
-                        </div>
-                        <?php $gmchecked ='';
-                            $gmchecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender'] == 'M') ? 'checked="checked"' : '';
-                            $gfchecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender']== 'F' )? 'checked="checked"' : '';
-                            $gochecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender']== 'O')? 'checked="checked"' : '';
-                            ?>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input cus-form-check" tabindex='8' type="radio"  name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>>
-                                <label class="form-check-label" for="inlineRadio1">Male</span></label>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input cus-form-check" tabindex='9' type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>>
-                                <label class="form-check-label" for="inlineRadio2">Female</label>
+                        </div>
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
+                                <div class="mb-3">
+                                    <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
+                                </div>
+                                <?php $gmchecked ='';
+                                    $gmchecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender'] == 'M') ? 'checked="checked"' : '';
+                                    $gfchecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender']== 'F' )? 'checked="checked"' : '';
+                                    $gochecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender']== 'O')? 'checked="checked"' : '';
+                                    ?>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input cus-form-check" tabindex='8' type="radio"  name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>>
+                                        <label class="form-check-label" for="inlineRadio1">Male</span></label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input cus-form-check" tabindex='9' type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>>
+                                        <label class="form-check-label" for="inlineRadio2">Female</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input cus-form-check" tabindex='10' type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>>
+                                        <label class="form-check-label" for="inlineRadio2">Other</label>
+                                    </div>                        
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input cus-form-check" tabindex='10' type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>>
-                                <label class="form-check-label" for="inlineRadio2">Other</label>
-                            </div>                        
+                        </div>
                     </div>
-
                     <div class="row" id="org_form" style="<?php echo $showHideOtherIndividual; ?>">                    
                         <div class="container">
                             <div class="row">
@@ -525,7 +504,14 @@ body.loading .overlay{
                         </div>
                         <div class="save-btns text-center">
                             
-                            <?php if (isset($caveator_details[0]) && !empty($caveator_details[0])) { ?>
+                            <?php 
+                           
+                            
+                            
+                            if (isset($caveator_details[0]) && !empty($caveator_details[0])) { 
+                               
+                                
+                                ?>
                                 <input type="submit" class="quick-btn gray-btn" id="caveator_save" tabindex='26' value="UPDATE">
                                 <a href="<?= base_url('caveat/caveatee') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
                             <?php } else { ?>
@@ -559,6 +545,96 @@ body.loading .overlay{
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+<script>
+    $(document).ready(function() {
+        
+        var party_as = $('select#party_is option:selected').val();
+        if (party_as == 'I') {          
+            $('#indvidual_form').show();
+            $('#org_form').hide();
+            $('#org_state_row').show();
+            $('#org_state').val('');
+            $('#org_dept').val('');
+            $('#org_post').val('');
+            $('#otherOrgState').hide();
+            $('#otherOrgDept').hide();
+            $('#otherOrgPost').hide();
+        }else {
+            if (party_as == 'D3') {
+               
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').hide();
+                $('#otherOrgState').hide();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                /*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');*/
+            } else {
+                
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').show();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                $("#stateDivBox").show();
+            }
+        }
+    });
+
+
+    function get_caveator_as(value) {      
+        var party_as = value;      
+        if (party_as == 'I') {          
+            $('#indvidual_form').show();
+            $('#org_form').hide();
+            $('#org_state_row').show();
+            $('#org_state').val('');
+            $('#org_dept').val('');
+            $('#org_post').val('');
+            $('#otherOrgState').hide();
+            $('#otherOrgDept').hide();
+            $('#otherOrgPost').hide();
+        }else {
+            if (party_as == 'D3') {
+               
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').hide();
+                $('#otherOrgState').hide();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                /*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');*/
+            } else {
+                
+                $('#indvidual_form').hide();
+                $('#org_form').show();
+                $('#org_state_row').show();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                $("#stateDivBox").show();
+            }
+        }
+    } 
+</script>
+
+
+
 <script>
 
 
@@ -679,30 +755,6 @@ body.loading .overlay{
                 });
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $('#add_caveator').on('submit', function () {
             // alert("TESTTSGDSGDSFGDSG");
             if ($('#add_caveator').valid()){
@@ -826,49 +878,7 @@ body.loading .overlay{
             get_caveator_as(party_as_sel);//--call to selected
         }
     });
-    function get_caveator_as(value) {        
-        var party_as = value;      
-        if (party_as == 'I') {          
-            $('#indvidual_form').show();
-            $('#org_form').hide();
-            $('#org_state_row').show();
-            $('#org_state').val('');
-            $('#org_dept').val('');
-            $('#org_post').val('');
-            $('#otherOrgState').hide();
-            $('#otherOrgDept').hide();
-            $('#otherOrgPost').hide();
-        } 
-        else
-        {
-            if (party_as == 'D3') {
-               
-                $('#indvidual_form').hide();
-                $('#org_form').show();
-                $('#org_state_row').hide();
-                $('#otherOrgState').hide();
-                $('#caveator_name').val('');
-                $('#relation').val('');
-                $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                /*$('#party_gender1').val('');
-                 $('#party_gender2').val('');
-                 $('#party_gender3').val('');*/
-            } else {
-                
-                $('#indvidual_form').hide();
-                $('#org_form').show();
-                $('#org_state_row').show();
-                $('#caveator_name').val('');
-                $('#relation').val('');
-                $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                $("#stateDivBox").show();
-            }
-        }
-    }  
+    
   
     //---------- Organisation State Name----------------------//
     $('#org_state').change(function () {
