@@ -18,7 +18,7 @@ class Appearing_for extends BaseController {
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
 
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);
         }
@@ -49,29 +49,34 @@ class Appearing_for extends BaseController {
         $party_type = escape_data($_POST['user_type']);
 
         $party_name = $_POST['party_name'];
-        $parties_selected = $_POST['selected_party'];
+        $parties_selected = isset($_POST['selected_party'])?$_POST['selected_party']:'';
         $party_email = $_POST['party_email'];
         $party_mobile = $_POST['party_mob'];
         $appearing_for=$contact_p_name=$contact_p_email=$contact_p_mobile=$contact_partyid='';
 
-        foreach ($parties_selected as $seleced_party) {
+        if(isset($parties_selected)  && is_array($parties_selected))
+        {
+            foreach ($parties_selected as $seleced_party) {
 
-            $selected_parties_details = url_decryption($seleced_party);
+                $selected_parties_details = url_decryption($seleced_party);
+    
+                $selected_parties_details = explode('$$$', $selected_parties_details);
+                $parties_sr_no = $selected_parties_details[1];
+                $party_id_sequence = $selected_parties_details[0] - 1;
+    
+                $appearing_for .= $parties_sr_no . '$$';
+    
+                $contact_p_name .= strtoupper($party_name[$party_id_sequence]) . '$$';
+                $contact_p_email .= strtoupper($party_email[$party_id_sequence]) . '$$';
+                $contact_p_mobile .= $party_mobile[$party_id_sequence] . '$$';
+                $contact_partyid .= $parties_sr_no . '$$';
+    
+                $appearing_for_tbl_id = $selected_parties_details[2];
+                $contact_tbl_id = $selected_parties_details[3];
+            }
 
-            $selected_parties_details = explode('$$$', $selected_parties_details);
-            $parties_sr_no = $selected_parties_details[1];
-            $party_id_sequence = $selected_parties_details[0] - 1;
-
-            $appearing_for .= $parties_sr_no . '$$';
-
-            $contact_p_name .= strtoupper($party_name[$party_id_sequence]) . '$$';
-            $contact_p_email .= strtoupper($party_email[$party_id_sequence]) . '$$';
-            $contact_p_mobile .= $party_mobile[$party_id_sequence] . '$$';
-            $contact_partyid .= $parties_sr_no . '$$';
-
-            $appearing_for_tbl_id = $selected_parties_details[2];
-            $contact_tbl_id = $selected_parties_details[3];
         }
+        
 
         if (!(int) $appearing_for_tbl_id && !(int) $contact_tbl_id) {
 

@@ -77,7 +77,7 @@ if ($segment->getSegment(2) != 'view') {
                         $saved_appearing_for = explode('$$', $saved_appearing_for);
 
                         $saved_filing_for = $appearing_for_details[0]['filing_for_parties'];
-                        // $saved_filing_for = explode('$$', $saved_filing_for);
+                        $saved_filing_for = explode('$$', $saved_filing_for);
                     } else {
                         $saved_appearing_for = NULL;
                         $saved_filing_for = NULL;
@@ -107,12 +107,13 @@ if ($segment->getSegment(2) != 'view') {
                                 if (!$appearing) {
                                     continue;
                                 }
-
+                                $selected = (in_array($key, $saved_filing_for)) ? 'checked' : NULL;
+                                $saved_sr_no = array_search($key, $saved_filing_for);
                             ?>
                                 <tr>
                                     <td>
                                         <input class="form-control cus-form-ctrl" name="party_name[]" type="text"  value="<?php echo_data($value); ?>" readonly=""></td>                                
-                                    <td class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_for_details[0]['partytype']); ?>" <?php  // echo $selected; ?> ></td>
+                                    <td class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_for_details[0]['partytype']); ?>" <?php   echo $selected; ?> ></td>
                                 </tr>
                                 <?php
                                 $i++;
