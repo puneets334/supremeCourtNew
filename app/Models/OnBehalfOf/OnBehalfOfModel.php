@@ -78,7 +78,9 @@ class OnBehalfOfModel extends Model
         sort($newBreadcrumbsArray);
         $newBreadcrumbs = implode(',', $newBreadcrumbsArray);
         $efilingDetails['breadcrumb_status'] = $newBreadcrumbs;
-        $session->set('efiling_details', $efilingDetails);
+
+        setSessionData('efiling_details', $efilingDetails);
+
         $builder = $this->db->table('efil.tbl_efiling_nums');
         $builder->where('registration_id', $registrationId);
         $builder->update(['breadcrumb_status' => $newBreadcrumbs]);
