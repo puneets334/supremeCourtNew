@@ -156,6 +156,7 @@ class Search extends BaseController
                 $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
             } else if ($diary_type == 'register') {
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($this->request->getGet('sc_case_type'))), escape_data($this->request->getGet('case_number')), escape_data($this->request->getGet('case_year')));
+                // pr($web_service_result);
             }
             if (!empty($web_service_result->message)) {
                 echo '3@@@ No Record found!';
@@ -247,6 +248,7 @@ class Search extends BaseController
             redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
             exit(0);
         }
+        // pr($searched_details);
         $parties_list = '';
         $diary_no = $searched_details[0];
         $diary_year = $searched_details[1];
@@ -260,7 +262,7 @@ class Search extends BaseController
         if (isset($_SESSION['parties_list'])) {
             $parties_list = $_SESSION['parties_list'];
         }
-
+// pr($_SESSION);
         // $parties_list = $_SESSION['parties_list'];
         unset($_SESSION['parties_list']);
         $confirm_response = escape_data($_POST['confirm_response']);
@@ -269,7 +271,7 @@ class Search extends BaseController
             if (isset($_POST['radio_appearing_for'])) {
                 $intervenorName = "";
                 $radio_appearing_for = $_POST['radio_appearing_for'];
-
+                
 
                 if ($radio_appearing_for == 'E') {
                     $this->session->set('radio_appearing_for', $radio_appearing_for);
@@ -278,7 +280,7 @@ class Search extends BaseController
 
                     if (!$appearance_exists) {
                         $diary_number = $diary_no . $diary_year;
-                        // pr($diary_number);
+
                         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
                         // pr($advPartyDetails);
                         foreach ($advPartyDetails as $index => $detail) {
