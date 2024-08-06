@@ -161,25 +161,6 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     echo $details['details'][0]['c_status'] == 'D' ? '<a data-toggle="modal" href="#disposedModal" class="btn btn-success btn-sm" >Disposed</a>' : '';
                 }
             }
-            $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
-                if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-                    if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
-
-                        if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
-                            (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
-                                (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't')
-                            )
-                        ) {
-                            echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-                        }
-                    }
-                    if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { ?>
-                        <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
-                        <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a>
-            <?php }
-                }
-            }
             ?>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -282,7 +263,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span> Court Fee </a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <?php 
+                    <?php
                     if ($segment->getSegment(2) == 'view') {
                         $ColorCode = 'background-color: #01ADEF';
                         $status_color = 'first active';
@@ -297,6 +278,36 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> View </a>
                 </li>
             </ul>
+            <div class="row m-3 ">
+                <div class="col-md-12 text-end">
+
+                    <?php $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
+                            if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+
+                                if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
+                                    (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
+                                        (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't')
+                                    )
+                                ) {
+
+                                    echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                    // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                } else {
+                                    
+                                }
+                            }
+                            if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { ?>
+                                <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
+                                <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
+                    <?php }
+                        }
+                    }
+                    ?>
+                </div>
+            </div>
         </form>
         <div class="modal fade" id="FinalSubmitModal" role="dialog">
             <div class="modal-dialog">
@@ -374,6 +385,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                 </div>
             </div>
         </div>
+
 
         <!-- </div>
 </div> -->
@@ -538,8 +550,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     ?>
                                     <a href="<?php // $cnr_url; 
                                                 ?>" class="<?php // echo $status_color; 
-                                                                            ?>" style="z-index:9;"><span style="<?php // echo $ColorCode; 
-                                                                                                                                            ?>">1</span> Case Details </a>
+                                                            ?>" style="z-index:9;"><span style="<?php // echo $ColorCode; 
+                                                                                                ?>">1</span> Case Details </a>
 
                                 </li>
                                 <li>
@@ -558,11 +570,11 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     ?>
                                     <a href="<?php // $appearing_url; 
                                                 ?>" class="<?php  // echo $status_color; 
-                                                                                    ?>" style="z-index:8; <?php // if (!in_array(MISC_BREAD_CASE_DETAILS, $StageArray)) {
-                                                                                                                                        // echo $disabled_status;
-                                                                                                                                        //  } 
-                                                                                                                                        ?>"><span style="<?php // echo $ColorCode; 
-                                                                                                                                                    ?>">2</span> Appearing for</a>
+                                                            ?>" style="z-index:8; <?php // if (!in_array(MISC_BREAD_CASE_DETAILS, $StageArray)) {
+                                                                                    // echo $disabled_status;
+                                                                                    //  } 
+                                                                                    ?>"><span style="<?php // echo $ColorCode; 
+                                                                                                        ?>">2</span> Appearing for</a>
 
                                 </li>
                                 <li>
@@ -581,11 +593,11 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     ?>
                                     <a href="<?php // $onbehlaf_url; 
                                                 ?>" class="<?php // echo $status_color; 
-                                                                                ?>" style="z-index:7; <?php // if (!in_array(MISC_BREAD_APPEARING_FOR, $StageArray)) {
-                                                                                                                                    //  echo $disabled_status;
-                                                                                                                                    // } 
-                                                                                                                                    ?>"><span style="<?php //  echo $ColorCode; 
-                                                                                                                                                    ?>">3</span> Filing For</a>
+                                                            ?>" style="z-index:7; <?php // if (!in_array(MISC_BREAD_APPEARING_FOR, $StageArray)) {
+                                                                                    //  echo $disabled_status;
+                                                                                    // } 
+                                                                                    ?>"><span style="<?php //  echo $ColorCode; 
+                                                                                                        ?>">3</span> Filing For</a>
 
                                 </li>
 
@@ -608,11 +620,11 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     ?>
                                     <a href="<?php // $doc_index_url ?? '' 
                                                 ?>" class="<?php // echo $status_color; 
-                                                                                        ?>" style="z-index:6; <?php //if (!in_array(MISC_BREAD_ON_BEHALF_OF, $StageArray)) {
-                                                                                                                                            //     echo $disabled_status;
-                                                                                                                                            // } 
-                                                                                                                                            ?>"><span style="<?php // echo $ColorCode; 
-                                                                                                                                                            ?>">4</span> Upload Document / Index</a>
+                                                            ?>" style="z-index:6; <?php //if (!in_array(MISC_BREAD_ON_BEHALF_OF, $StageArray)) {
+                                                                                    //     echo $disabled_status;
+                                                                                    // } 
+                                                                                    ?>"><span style="<?php // echo $ColorCode; 
+                                                                                                        ?>">4</span> Upload Document / Index</a>
 
                                 </li> -->
 
@@ -653,11 +665,11 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     ?>
                                     <!-- <a href="<?php // $fee_url; 
                                                     ?>" class="<?php // echo $status_color; 
-                                                                                ?>" style="z-index:4; <?php // if (!in_array(MISC_BREAD_DOC_INDEX, $StageArray)) {
-                                                                                                                                    //     echo $disabled_status;
-                                                                                                                                    // } 
-                                                                                                                                    ?>"><span style="<?php //echo $ColorCode; 
-                                                                                                                                                ?>">5</span> Court Fee </a> -->
+                                                                ?>" style="z-index:4; <?php // if (!in_array(MISC_BREAD_DOC_INDEX, $StageArray)) {
+                                                                                        //     echo $disabled_status;
+                                                                                        // } 
+                                                                                        ?>"><span style="<?php //echo $ColorCode; 
+                                                                                                            ?>">5</span> Court Fee </a> -->
 
                                     <!-- </li> -->
                                     <!--<li>
@@ -715,8 +727,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     ?>
                                     <!-- <a href="<?php // base_url('miscellaneous_docs/view') 
                                                     ?>" class="<?php //echo $status_color; 
-                                                                                                            ?>" style="z-index:1;"><span style="<?php // echo $ColorCode; 
-                                                                                                                                                                            ?>">7</span> View </a> -->
+                                                                ?>" style="z-index:1;"><span style="<?php // echo $ColorCode; 
+                                                                                                    ?>">7</span> View </a> -->
                                     <!-- </li> -->
                                     </ul>
                                     <div class="clearfix"></div>

@@ -1,14 +1,21 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\MiscellaneousDocs;
+use App\Controllers\BaseController;
+use App\Models\Common\CommonModel;
+use App\Models\ShareDoc\ShareDocsModel;
 
 class FinalSubmit extends BaseController {
-
+    protected $Common_model;
+    protected $Share_docs_model;
+    
     public function __construct() {
         parent::__construct();
-        $this->load->model('common/Common_model');
-        $this->load->model('shareDoc/Share_docs_model');
+        $this->Common_model = new CommonModel();
+        $this->Share_docs_model = new ShareDocsModel();
+        // $this->load->model('common/Common_model');
+        // $this->load->model('shareDoc/Share_docs_model');
         //$this->load->library('encrypt');
-        $this->load->library('encryption');
+        // $this->load->library('encryption');
 
 
 
@@ -45,7 +52,7 @@ class FinalSubmit extends BaseController {
         } elseif ($_SESSION['efiling_details']['stage_id'] == I_B_Rejected_Stage || $_SESSION['efiling_details']['stage_id'] == E_REJECTED_STAGE) {
             $next_stage = Initial_Defects_Cured_Stage;
         } else {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
+            $this->session->set('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
             redirect('dashboard');
         }
 
@@ -138,13 +145,13 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
                 send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS,SCISMS_Initial_Approval);
                 send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
 
-                $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                $this->session->set('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 $_SESSION['efiling_details']['stage_id']=Initial_Approaval_Pending_Stage;
                 redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
                 exit(0);
             } else {
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
+                $this->session->set('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
                 log_message('CUSTOM', "Miscellaneous Docs- Submition failed. Please try again!");
                 redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
