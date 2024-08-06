@@ -4,7 +4,7 @@ namespace App\Controllers\AdminReport;
 
 use App\Controllers\BaseController;
 use App\Models\AdminReport\AdminSearchModel;
-use App\Models\Newcase\Dropdown_list_model;
+use App\Models\NewCase\DropdownListModel;
 use App\Libraries\Zip;
 
 class Search extends BaseController
@@ -16,7 +16,7 @@ class Search extends BaseController
     {
         parent::__construct();
         $this->AdminSearchModel = new AdminSearchModel();
-        $this->Dropdown_list_model = new Dropdown_list_model();
+        $this->Dropdown_list_model = new DropdownListModel();
         helper(['url']);
         ini_set('memory_limit', '51200M'); // This also needs to be increased in some cases. Can be changed to a higher value as per need)
         ini_set('max_execution_time', 0);
