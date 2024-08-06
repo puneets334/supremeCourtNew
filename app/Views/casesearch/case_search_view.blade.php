@@ -11,8 +11,6 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <div class="mainPanel ">
-
-
     <div class="panelInner">
         <div class="middleContent">
             <div class="container-fluid">
@@ -27,7 +25,6 @@
                                                 <div class="page-title">
                                                     <?php
                                                     $commonHeading = '';
-
                                                     if (getSessionData('customEfil') == 'ia') {
                                                         unset($_SESSION['efiling_type']);
                                                         setSessionData('efiling_type', 'ia');
@@ -44,9 +41,7 @@
                                                     ?>
                                                     <h5><i class="fa fa-file"></i> {{$commonHeading}}</h5>
                                                 </div>
-                                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
-                                                </div>
-
+                                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
                                             </div>
                                             <div class="ryt-dash-breadcrumb">
                                                 <div class="btns-sec">
@@ -72,13 +67,12 @@
                             <div class="dash-card dashboard-section">
                                 <div class="row">
                                     <div class="panel panel-default">
-
                                         <?php
                                         $attribute = array('class' => 'form-horizontal', 'id' => 'search_case_details', 'name' => 'search_case_details', 'autocomplete' => 'off', 'novalidate' => 'novalidate');
                                         echo form_open('#', $attribute);
                                         ?>
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <center>
+                                        <div style="text-align: center;">
                                             <?php
                                             if (!empty(getSessionData('MSG'))) {
                                                 echo getSessionData('MSG');
@@ -87,14 +81,12 @@
                                                 echo getSessionData('msg');
                                             }
                                             ?>
-
-                                        </center>
-                                        <br>
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Diary Number &nbsp;</label><label class="radio-inline input-lg"><b>OR</b> </label>
-                                            <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="register">Registration No</label>
+                                            <br>
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Diary Number &nbsp;</label><label class="radio-inline input-lg"><b>OR</b> </label>
+                                                <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="register">Registration No</label>
+                                            </div>
                                         </div>
-                                        </center>
                                         <br>
                                         <div id="diarySec">
                                             <div class="row">
