@@ -29,8 +29,7 @@ echo form_open(base_url('case/search/search_case_details'), $attribute);
                                     <?php
                                     $var = empty(@$direct_access_params) ? base_url('case/search/' . url_encryption('refile_old_efiling_cases')) : '';
                                     ?>
-                                    <!-- <iframe name="case-document-crud-iframe" class="col-12 iframe-scroll-bar" src="{{$var}}"></iframe> -->
-                                    <iframe name="case-refile-crud-iframe" class="col-12 iframe-scroll-bar" src="{{$var}}"></iframe>
+                                    <iframe name="case-document-crud-iframe" class="col-12 iframe-scroll-bar" src="{{$var}}"></iframe>
                                 </div>
                             </div>
                         </div>
