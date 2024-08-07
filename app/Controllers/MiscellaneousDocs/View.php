@@ -71,7 +71,7 @@ class View extends BaseController {
             $data['esigned_docs_details'] = $this->Affirmation_model->get_esign_doc_details($registration_id);
 
             $data['uploaded_docs'] = $this->UploadDocs_model->get_uploaded_pdfs($registration_id);
-
+            // pr($data);
             $creaedBy = !empty($data['case_details'][0]['created_by']) ? $data['case_details'][0]['created_by'] : NULL;
             if(isset($creaedBy) && !empty($creaedBy)){
                 // $this->load->model('common/Common_model');
