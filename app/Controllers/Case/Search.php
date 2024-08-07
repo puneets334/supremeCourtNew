@@ -84,7 +84,8 @@ class Search extends BaseController
 
     public function index($efiling_type = null)
     {
-        $efiling_type =getSessionData('efiling_type');        
+        
+        $efiling_type =getSessionData('efiling_type');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('login'));

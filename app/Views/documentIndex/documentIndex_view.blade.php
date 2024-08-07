@@ -547,6 +547,7 @@
                 }
             }
             function delete_index(value) {
+                alert(value);
                 var a = confirm("Are you sure that you really want to delete this record?");
                 if (a == true)
                 {

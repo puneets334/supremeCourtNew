@@ -455,7 +455,7 @@ if(isset($payment_details) && !empty($payment_details)){
     $this->load->view('shcilPayment/payment_list_view');
 }
 ?>
-
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script>
 
     function edValueKeyPress(txb)

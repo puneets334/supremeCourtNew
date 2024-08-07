@@ -103,6 +103,7 @@ class CourtFee extends BaseController
         // echo "<pre>"; print_r($_SESSION); die();
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
+            pr($_SESSION);
             $_SESSION['MSG'] = 'Unauthorised Access !';
             redirect('login');
             exit(0);
@@ -127,20 +128,24 @@ class CourtFee extends BaseController
                 "rules" => "required|trim|min_length[1]|max_length[5]|is_natural"
             ],
         ]);
+      
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             $_SESSION['MSG'] = $this->validation->getError('print_fee_details') . $this->validation->getError('usr_court_fee');
             return redirect()->to(base_url('newcase/courtFee'));
             exit(0);
         }
+        
         $registration_id = $_SESSION['efiling_details']['registration_id'];
         $user_declared_extra_fee = escape_data($_POST['user_declared_extra_fee']);
         $print_fee_details = escape_data($_POST['print_fee_details']);
         $print_fee_details = explode('$$', url_decryption($print_fee_details));
+        
         if (count($print_fee_details) != 5) {
             $_SESSION['MSG'] = 'Printing Fee details tempered';
             redirect('miscellaneous_docs/courtFee');
             exit(0);
         }
+
         $order_no = rand(1001, 9999) . date("yhmids");
         $order_date = date('Y-m-d H:i:s');
         $court_fee_part2 = calculate_court_fee(null, 2, 'wd', null);
@@ -202,6 +207,7 @@ class CourtFee extends BaseController
             'payment_mode' => 'online',
             'payment_mode_name' => 'SHCIL'
         );
+        // pr($data_to_save);
         $status = $this->Court_Fee_model->insert_pg_request($data_to_save);
         unset($_SESSION['pg_request_payment_details']);
         if ($status) {
@@ -220,9 +226,10 @@ class CourtFee extends BaseController
                 'user_declared_total_amt' => escape_data($_POST['usr_court_fee']),
                 'order_no' => $order_no,
                 'order_date' => $order_date
-            );        //echo '<pre>';print_r($_SESSION['pg_request_payment_details']); echo '</pre>'; exit();
-            redirect('shcilPayment/paymentRequest');
-            exit(0);
+            );   
+                //  echo '<pre>';print_r($_SESSION['pg_request_payment_details']); echo '</pre>'; exit();
+            return redirect('shcilPayment/paymentRequest');
+            // exit(0);
         }
     }
     
