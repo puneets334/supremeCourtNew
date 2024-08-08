@@ -76,11 +76,12 @@ class Appearing_for extends BaseController {
             }
 
         }
-        
+        // pr($_SESSION['login']['id']);
 
         if (!(int) $appearing_for_tbl_id && !(int) $contact_tbl_id) {
 
             // INSERT APPEARING FOR AND CONTACT DETAILS OF PARTIES AND UPDATE BREADCRUMB
+            
 
             $appearing_party_detail = array(
                 'userid' => $_SESSION['login']['id'],
@@ -135,7 +136,7 @@ class Appearing_for extends BaseController {
                 'update_ip' => $_SERVER['REMOTE_ADDR'],
                 'updated_on' => date('Y-m-d H:i:s')
             );
-
+           // pr($contact_tbl_id);
             $result = $this->AppearingForModel->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
 
             if ($result) {

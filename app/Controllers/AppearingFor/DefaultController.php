@@ -38,7 +38,8 @@ class DefaultController extends BaseController {
 
             $data['parties_details'] = $this->AppearingForModel->get_case_parties_list($registration_id);
             $data['appearing_for_details'] = $this->AppearingForModel->get_appearing_for_details($registration_id, getSessionData('login')['id']);
-            $this->render('appearing_for.appearing_for_view', $data);
+           
+            $this->render('appearing_for.appearing_for_view',compact('data'));
             
         } else {
             redirect('dashboard');

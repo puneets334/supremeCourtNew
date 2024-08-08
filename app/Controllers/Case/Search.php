@@ -168,7 +168,7 @@ class Search extends BaseController
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
                     $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                    // pr($listing_data);
+                    pr($listing_data);
                     // $data['listing_details'] = $listing_data->listed[0];
                     // $data['listing_details'] = $listing_data->listed[0];
                     if (isset($listing_data->listed) && is_array($listing_data->listed) && isset($listing_data->listed[0])) {
@@ -191,7 +191,7 @@ class Search extends BaseController
                             $allowed_case_types = array('39', '9', '10', '25', '26', '19', '20');
                             //var_dump($web_service_result->case_details[0]);exit();
                             if ($current_stage &&  !(in_array($web_service_result->case_details[0]->active_casetype_id, $allowed_case_types) || in_array($web_service_result->case_details[0]->casetype_id, $allowed_case_types))) {
-                                if ($current_stage[0]['stage_id'] != E_Filed_Stage) {
+                                if ($current_stage[0]->stage_id != E_Filed_Stage) {
                                     echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                                     exit(0);
                                 }
