@@ -111,7 +111,7 @@ class DefaultController extends BaseController {
                 $password = $_POST['txt_password'];
                 $userCaptcha = $_POST['userCaptcha'];
                 if ($username == NULL  || $password == NULL || preg_match('/[^A-Za-z0-9!@#$]/i', $password) || $userCaptcha == NULL || preg_match('/[^A-Za-z0-9]/i', $userCaptcha)) {
-                    $this->session->setFlashdata('msg', '<div class="danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid username or password or Captcha!</p> </div>');
+                    $this->session->setFlashdata('msg', '<div class="danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Invalid username or password or Captcha!</p> </div>');
                     return response()->redirect(base_url('/'));
                 }
                 elseif ($this->session->get('captcha') != $userCaptcha) {

@@ -35,7 +35,7 @@ class ResponsiveVariantRouteController extends BaseController
         $this->CommonModel = new CommonModel();
         $this->AdjournmentModel = new AdjournmentModel();
         $this->StageslistModel = new StageslistModel();
-        $this->ReportModel = new ReportModel(); 
+        $this->ReportModel = new ReportModel();
         $this->CertificateModel = new CertificateModel();
         $this->MentioningModel = new MentioningModel();
         $this->CitationModel = new CitationModel();
@@ -49,7 +49,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showDashboard()
     {
-        $data = []; 
+        $data = [];
         $this->render('responsive_variant.dashboard.index', $data);
     }
 
@@ -252,7 +252,7 @@ class ResponsiveVariantRouteController extends BaseController
             // $recent_documents_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date . '%20to%20' . $to_date . '');
             // $recent_documents = json_decode($recent_documents_str);
             if (!empty($recent_documents) && count($recent_documents) > 0 && is_array($recent_documents)) {
-                if(is_array($recent_documents['data'])){
+                if (is_array($recent_documents['data'])) {
                     foreach ($recent_documents['data'] as $index => $data) {
                         //echo $index." Record<br/>";
                         if ($data['advocateId'] == $advocate_id) {
@@ -486,12 +486,12 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showCases()
     {
-       
+
         log_message('info', 'My cases access on ' . date('d-m-Y') . ' at ' . date("h:i:s A") . getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
         // $advocate_id = $this->session->userdata['login']['adv_sci_bar_id'];
         $advocate_id = getSessionData('login')['adv_sci_bar_id'];
         if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {
-            
+
             // $this->load->model('common/CommonModel');
             $params = array();
             $params['table_name'] = 'efil.tbl_sr_advocate_engage';
@@ -547,12 +547,12 @@ class ResponsiveVariantRouteController extends BaseController
                 }
             }
         } else {
-            
+
             //$advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]=50&diaryIds[]=43532020');
             //$advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id);
             $adv_Cases = array();
             if (!empty($advocate_id) && $advocate_id != null) {
-                 $advocate_cases_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id);
+                $advocate_cases_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id);
                 $adv_cases_response = json_decode($advocate_cases_response_str, true);
                 $adv_Cases = !empty($adv_cases_response) ? $adv_cases_response['data'] : [];
             }
@@ -580,13 +580,13 @@ class ResponsiveVariantRouteController extends BaseController
         $engageCounsel['is_active'] = true;
         // $this->load->model('common/CommonModel');
         $engagedDiaryCounselData = $this->CommonModel->getEngagedDiaryIds($engageCounsel);
-       
-        
-       
+
+
+
         //$diaryEngaged = !empty($engagedDiaryCounselData) ? $engagedDiaryCounselData : NULL;
         $diaryEngaged = !empty($engagedDiaryCounselData) ? array_column($engagedDiaryCounselData, 'diary_no') : NULL;
-      
-         // $meta_data=array(
+
+        // $meta_data=array(
         //     'adv_cases_list' =>$adv_Cases,
         //     'adv_cases_response' =>$adv_cases_response,
         //     'sr_advocate_data'=>$sr_advocate_data['details'],
@@ -597,13 +597,13 @@ class ResponsiveVariantRouteController extends BaseController
             'adv_cases_response' => !empty($adv_cases_response) ? $adv_cases_response : [],
             'sr_advocate_data' => !empty($sr_advocate_data['details']) ? $sr_advocate_data['details'] : [],
             'diaryEngaged' => $diaryEngaged,
-            
+
         );
-       // pr( $meta_data);
+        // pr( $meta_data);
 
         // pr($meta_data);
-        
-       
+
+
         // $this->slice->view('responsive_variant.cases.index_1',$meta_data);
         $this->render('responsive_variant.cases.index_1', compact('meta_data'));
     }
@@ -729,7 +729,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showCaseDocumentCrud($diary_id = null)
     {
-        
+
         $direct_access_params = [];
         setSessionData('customEfil', 'misc');  // Use session service to set data
         setSessionData('efiling_type', 'misc');
@@ -1128,7 +1128,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showOldEfilingCasesCrud($diary_id = null)
     {
-       
+
         // $direct_access_params = [];
         // $data['direct_access_params'] = [];
         // setSessionData('customEfil', 'refile');
@@ -1144,7 +1144,7 @@ class ResponsiveVariantRouteController extends BaseController
         // }
         // $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
         // $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
-  
+
         $direct_access_params = [];
         setSessionData('customEfil', 'refile_old_efiling_cases');
         setSessionData('efiling_type', 'refile_old_efiling_cases');
@@ -1161,9 +1161,6 @@ class ResponsiveVariantRouteController extends BaseController
         $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
         // pr($data);
         $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
-        
-
-
     }
     /* end:function written for file a case of old e-filing */
 
@@ -1183,7 +1180,8 @@ class ResponsiveVariantRouteController extends BaseController
         // $this->slice->view('responsive_variant.case.interim_application.crud', compact('direct_access_params'));
     }
 
-    public function getDailyCaseCounts() {
+    public function getDailyCaseCounts()
+    {
         if (getSessionData('login')['ref_m_usertype_id'] != SR_ADVOCATE || getSessionData('login')['ref_m_usertype_id']  != ARGUING_COUNSEL) {
             $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1));
             if ($final_submitted_applications == false) {
@@ -1192,9 +1190,9 @@ class ResponsiveVariantRouteController extends BaseController
                 http_response_code(400);
                 return json_encode($final_submitted_applications);
             } else {
-                $dateCounts = []; 
+                $dateCounts = [];
                 foreach ($final_submitted_applications as $obj) {
-                    $activatedDate = (isset($obj->activated_on) && !empty($obj->activated_on)) ? substr($obj->activated_on, 0, 10) : '';  
+                    $activatedDate = (isset($obj->activated_on) && !empty($obj->activated_on)) ? substr($obj->activated_on, 0, 10) : '';
                     if (isset($dateCounts[$activatedDate]) && !empty($dateCounts[$activatedDate])) {
                         $dateCounts[$activatedDate]++;
                     } else {
@@ -1209,7 +1207,7 @@ class ResponsiveVariantRouteController extends BaseController
                         'count' => $count
                     );
                 }
-                return json_encode($jayParsedAry);              
+                return json_encode($jayParsedAry);
             }
         }
     }
@@ -1240,5 +1238,8 @@ class ResponsiveVariantRouteController extends BaseController
             }
         }
     }
-
+    public function showPhysicalHearing()
+    {
+        
+    }
 }

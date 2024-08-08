@@ -47,7 +47,6 @@ class CourtFee extends BaseController
                 }
                 $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
                 if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
-                    echo 'dsssfads';
                     redirect('miscellaneous_docs/view');
                     exit(0);
                 }
