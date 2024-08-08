@@ -168,7 +168,7 @@ class Search extends BaseController
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
                     $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                    pr($listing_data);
+                    // pr($listing_data);
                     // $data['listing_details'] = $listing_data->listed[0];
                     // $data['listing_details'] = $listing_data->listed[0];
                     if (isset($listing_data->listed) && is_array($listing_data->listed) && isset($listing_data->listed[0])) {
