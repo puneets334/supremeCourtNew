@@ -308,6 +308,9 @@ $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee', 'MiscellaneousDoc
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee/add_court_fee_details', 'MiscellaneousDocs\CourtFee::add_court_fee_details');
 $routes->match(['GET', 'POST'], 'caveat/caveatee', 'Caveat\Caveatee::index');
 $routes->match(['GET', 'POST'], 'efilingAction/Caveat_final_submit', 'EfilingAction\CaveatFinalSubmit::index');
+$routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_icmis_district_list', 'NewCase\AjaxcallsSubordinateCourt::get_icmis_district_list');
+$routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_police_station_list', 'NewCase\AjaxcallsSubordinateCourt::get_police_station_list');
+$routes->match(['GET', 'POST'], 'redirect_on_login', 'DefaultController::redirect_on_login');
 
 $routes->match(['GET', 'POST'], 'appearing_for/appearing_for/save_appearing_details', 'AppearingFor\Appearing_for::save_appearing_details');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/FinalSubmit', 'MiscellaneousDocs\FinalSubmit::index');

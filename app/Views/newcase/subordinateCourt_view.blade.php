@@ -25,7 +25,9 @@
     <link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
         rel="stylesheet">
     @stack('style')
-
+    <div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+    </div>
                             <div class="center-content-inner comn-innercontent">
                                 <div class="tab-content">
                                     <div class="tab-pane active"
@@ -350,7 +352,7 @@
                                                             data-content="Please enter CNR ">
                                                             <i class="fa fa-question-circle-o"></i>
                                                         </span>
-                                                        <div class="col-sm-4 col-xs-12">
+                                                        <div class="col-sm-12 col-xs-12">
                                                             <strong style="color: red;font-size:14px;"><b>Kindly
                                                                     search lower case details using CNR
                                                                     preferably for swift data
@@ -782,7 +784,7 @@
                                                             id="police_station_name"
                                                             name="police_station_name"
                                                             placeholder="Police Station Name"
-                                                            class="form-control"
+                                                            class="form-control cus-form-ctrl"
                                                             type="text">
                                                         <span class="input-group-addon"
                                                             data-placement="bottom"
@@ -1102,7 +1104,7 @@
 
             $("#search_case_hc").click(function() {
                 $('#search_button_div').hide();
-                $('#loader_div').show();
+                document.getElementById('loader-wrapper').style.display = 'flex';
                 var court_type = $("input[name=radio_selected_court]:checked").val();
                 if (court_type == 1) { //-High Court
                     var hc_court = $('#hc_court option:selected').val();
@@ -1149,7 +1151,7 @@
                     },
                     async: true,
                     success: function(data) {
-                        $('#loader_div').hide();
+                        document.getElementById('loader-wrapper').style.display = 'none';
                         $('#search_button_div').show();
                         var resArr = data.split('@@@');
                         if (resArr[0] == 1) {

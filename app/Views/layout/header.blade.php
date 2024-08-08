@@ -13,7 +13,7 @@
             </div>
             <!-- Menu - Button Start  -->
             <div class="brand-logo-sec">
-                <div class="logo"><a href="#"><img src="<?= base_url().'assets/newAdmin/'?>images/logo.png" alt="  " title=" "></a></div>
+                <div class="logo"><a href="{{ base_url('redirect_on_login') }}"><img src="<?= base_url().'assets/newAdmin/'?>images/logo.png" alt="  " title=" "></a></div>
                 <div class="logoSubtitle">
                     <div class="brand-text">
                         <h4>भारत का सर्वोच्च न्यायालय

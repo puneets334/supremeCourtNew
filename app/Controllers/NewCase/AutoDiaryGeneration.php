@@ -129,7 +129,6 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                         $efiling_no=$isCaseInApprovedStage[0]['efiling_no'];
                         $ref_m_efiled_type_id=$isCaseInApprovedStage[0]['ref_m_efiled_type_id'];
                         $diaryGenerationStatus=$this->getAllFilingDetailsByRegistrationId($efiling_no,$registration_id,$ref_m_efiled_type_id,$efiling_type); //function written for Auto diarization on 29072023
-                        echo $diaryGenerationStatus;
                     }
                 }
                 else
