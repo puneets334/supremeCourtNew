@@ -219,7 +219,7 @@ $collapse_class = '';
                                         <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
                         <?php }
                                 }
-                            }
+                            } 
                         } ?>
                     </div>
                 </div>
