@@ -126,7 +126,7 @@
 						<div class="loin-form otp-form">
 							<?php $session = session(); ?>
 							@if($session->has('msg'))
-							<div class="uk-text-danger">
+							<div class="text-danger">
 								<b>{{ esc($session->get('msg')) }}</b>
 							</div>
 							@endif

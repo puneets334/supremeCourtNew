@@ -124,7 +124,6 @@ class AjaxcallsSubordinateCourt extends BaseController {
     public function search_case_details() {
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, JAIL_SUPERINTENDENT);
-
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('/'));
         }
@@ -253,12 +252,16 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
         // $this->form_validation->set_error_delimiters('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
+         
             echo '3@@@';
             echo $this->validation->getError('radio_selected_court') . $this->validation->getError('hc_court') . $this->validation->getError('case_type_id'). $this->validation->getError('case_type_name') . $this->validation->getError('case_number') . $this->validation->getError('case_year'). $this->validation->getError('cnr');
             exit(0);
         } else {
+
             if ($selected_court_type == '1') { //---High Court
+
                 if(empty(trim($_POST['cnr'])) && !empty($_POST['high_court_id'])){
+
                     $hc = explode("##", url_decryption(escape_data($_POST['high_court_id'])));
                     $high_court_id = $hc[0];
 
@@ -270,19 +273,21 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
                     $hc_bench_array = explode('##', url_decryption($_POST['hc_court_bench']));
                     $est_code = $hc_bench_array[2];
-
                     $string = $this->highcourt_webservices->by_case_no($est_code, $case_type_id, $case_number, $case_year);
                     $case_data_temp = json_decode($string, true);
                     $cino = !empty($case_data_temp) ? $case_data_temp['casenos']['case1']['cino'] : '';
                 }
 
-                if(!empty(trim($_POST['cnr'])))
+                if(!empty(trim($_POST['cnr']))) 
+
                     $cino = trim($_POST['cnr']);
 
 
                 if ((!empty($high_court_id) && !empty($est_code) && !empty($case_type_id) && !empty($case_number) && !empty($case_year) ) || !empty($cino)) {
                     $case_data_array = null;
+
                     if(!empty($cino)){
+
                         $string = $this->highcourt_webservices->by_cino($cino);
                         $case_data_array = json_decode($string, true);
                         $case_data[0] = $case_data_array;
@@ -291,12 +296,15 @@ class AjaxcallsSubordinateCourt extends BaseController {
                         $case_data[0]['case_no']='0000'.str_pad($case_data[0]['reg_no'],4,"0",STR_PAD_LEFT).$case_data[0]['reg_year'];
                     }
                     if (isset($case_data) && !empty($case_data) && isset($case_data[0]['pet_name'])) {
+
                         $this->case_details_table($highcourt_name, $case_data[0], 'CASE');
                     } else {
+
                         echo '1@@@' . htmlentities('Case data not found !', ENT_QUOTES);
                         exit(0);
                     }
                 } else {
+
                     echo '1@@@' . htmlentities('Invalid request !', ENT_QUOTES);
                     exit(0);
                 }
@@ -307,7 +315,6 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 $case_year = url_decryption($_POST['case_year']);
 
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(escape_data($case_type_id), escape_data($case_number), escape_data($case_year));
-
                 if (!empty($web_service_result->message)) {
                     echo '3@@@ No Record found!';
                     exit(0);
@@ -531,7 +538,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
             'est_code' => $case_data[0]->est_code,
         );
         $sessiondata = array('search_case_data_save' => $search_case_data);
-        $this->session->set_userdata($sessiondata);
+        $this->session->set($sessiondata);
 
         echo '2@@@<div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_content">
@@ -637,19 +644,14 @@ class AjaxcallsSubordinateCourt extends BaseController {
         if (isset($state_id) && preg_match("/^[0-9]*$/", $state_id) && strlen($state_id) <= INTEGER_FIELD_LENGTH) {
             if (!empty($state_id)) {
                 $result = $this->Dropdown_list_model->get_districts_list($state_id);
-                if (!empty($status->status_code)) {
-                    echo 'ERROR_' . $status->status;
-                    exit(0);
-                } else {
-                    if (count($result)) {
-                        echo '<option value="" selected="true" disabled="disabled"> Select District</option>';
-                       // echo '<option value="0"> All </option>';
-                        foreach ($result as $dataRes) {
-                                echo '<option  value="' . htmlentities(url_encryption($dataRes->id_no . '#$' . $dataRes->name), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes->name), ENT_QUOTES) . '</option>';
-                        }
-                    } else {
-                        echo '<option value="" selected="true" disabled="disabled"> Select District </option>';
+                if (count($result)) {
+                    echo '<option value="" selected="true" disabled="disabled"> Select District</option>';
+                   // echo '<option value="0"> All </option>';
+                    foreach ($result as $dataRes) {
+                            echo '<option  value="' . htmlentities(url_encryption($dataRes->id_no . '#$' . $dataRes->name), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes->name), ENT_QUOTES) . '</option>';
                     }
+                } else {
+                    echo '<option value="" selected="true" disabled="disabled"> Select District </option>';
                 }
             } else {
                 echo '<option value="" selected="true" disabled="disabled"> Select District</option>';
@@ -669,15 +671,15 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
             if (!empty($state_id)) {
                 $result = $this->efiling_webservices->get_police_station_list($state_id,$district_id);
-                    if (count($result)) {
-                        echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
-                       foreach($result['policeStation'] as $dataRes)
-                        {
-                            echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.$dataRes['Police_district']), ENT_QUOTES) . '</option>';
-                        }
-                    } else {
-                        echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
+                if (is_array($result) && count($result)) {
+                    echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
+                    foreach($result['policeStation'] as $dataRes)
+                    {
+                        echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.$dataRes['police_district']), ENT_QUOTES) . '</option>';
                     }
+                } else {
+                    echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
+                }
 
             } else {
                 echo '<option value="" selected="true" disabled="disabled"> Select Police Station</option>';

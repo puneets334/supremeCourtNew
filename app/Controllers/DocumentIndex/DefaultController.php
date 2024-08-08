@@ -321,7 +321,7 @@ class DefaultController extends BaseController
                     'no_of_affidavit_copies'=>$no_of_affi_copies,
                     'no_of_petitioner_appellant'=>$no_of_petitioner_appellant,
                 );
-                //print_r($data); exit();
+                // print_r($data); exit();
                 $data_2 = array('last_page' => $page_no_to);
                 $last_page = $page_no_to + 1;
 

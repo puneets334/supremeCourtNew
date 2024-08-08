@@ -201,26 +201,26 @@ class Database extends Config
         }
 
         /*****start-Session Hijacking prevention*****/
-        if(isset($_SESSION['ipaddress']) && isset($_SESSION['useragent']) && isset($_SESSION['lastaccess'])){
-            if ($_SERVER['REMOTE_ADDR'] != $_SESSION['ipaddress'])
-            { session_unset(); session_destroy();
-            } // Does user agent match?
-            if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['useragent'])
-            { session_unset(); session_destroy(); }
-            // Is the last access over an hour ago?
-            if (time() > ($_SESSION['lastaccess'] + 3600))
-            {
-                session_unset(); session_destroy();
-            }
-            else
-            { $_SESSION['lastaccess'] = time(); }
-        }
-        else{
+        // if(isset($_SESSION['ipaddress']) && isset($_SESSION['useragent']) && isset($_SESSION['lastaccess'])){
+        //     if ($_SERVER['REMOTE_ADDR'] != $_SESSION['ipaddress'])
+        //     { session_unset(); session_destroy();
+        //     } // Does user agent match?
+        //     if ($_SERVER['HTTP_USER_AGENT'] != $_SESSION['useragent'])
+        //     { session_unset(); session_destroy(); }
+        //     // Is the last access over an hour ago?
+        //     if (time() > ($_SESSION['lastaccess'] + 3600))
+        //     {
+        //         session_unset(); session_destroy();
+        //     }
+        //     else
+        //     { $_SESSION['lastaccess'] = time(); }
+        // }
+        // else{
 
-            $_SESSION['ipaddress']=$_SERVER['REMOTE_ADDR'];
-            $_SESSION['useragent']=$_SERVER['HTTP_USER_AGENT'];
-            $_SESSION['lastaccess']=time();
-        }
+        //     $_SESSION['ipaddress']=$_SERVER['REMOTE_ADDR'];
+        //     $_SESSION['useragent']=$_SERVER['HTTP_USER_AGENT'];
+        //     $_SESSION['lastaccess']=time();
+        // }
         /*****end-Session Hijacking prevention*****/
     }
 }

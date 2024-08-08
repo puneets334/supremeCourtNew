@@ -1132,14 +1132,14 @@ class ResponsiveVariantRouteController extends BaseController
         // }
         // $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
         // $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
+  
         $direct_access_params = [];
-        $data['direct_access_params'] = [];
-        setSessionData('customEfil', 'refile');
-        // setSessionData('efiling_type', 'refile_old_efiling_cases');
+        setSessionData('customEfil', 'refile_old_efiling_cases');
+        setSessionData('efiling_type', 'refile_old_efiling_cases');
         if (!empty(@$diary_id)) {
             // $_SESSION['efiling_type'] = 'misc';
             $_SESSION['efiling_type'] = 'refile_old_efiling_cases';
-            $data['direct_access_params'] = [
+            $direct_access_params = [
                 'search_filing_type' => 'diary',
                 'is_direct_access' => true,
                 'diaryNo' => substr($diary_id, 0, -4),
@@ -1149,6 +1149,7 @@ class ResponsiveVariantRouteController extends BaseController
         $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
         // pr($data);
         $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
+        
 
 
     }

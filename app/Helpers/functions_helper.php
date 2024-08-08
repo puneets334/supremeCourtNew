@@ -1913,10 +1913,9 @@ function get_challanged_sc_base_case_details($registration_id)
 {
     // get the lower court diary no of the base case
 
-    $ci = &get_instance();
-    $ci->load->model('newcase/Get_details_model');
+    $Get_details_model = new GetDetailsModel();
 
-    $base_disposed_cases = $ci->Get_details_model->get_subordinate_court_details($registration_id);
+    $base_disposed_cases = $Get_details_model->get_subordinate_court_details($registration_id);
     $lower_court_type = $base_disposed_cases[0]['court_type'];
     $subject_category = null;
     $subcode1 = null;

@@ -161,24 +161,32 @@ if ($segment->getSegment(2) != 'view') {
 <script type="text/javascript">
     $(document).ready(function () {
         $('#add_filing_for_details').on('submit', function () {
-         
+            
+            var selectedCases = [];
+            $('#onbehalf_table input:checked').each(function() {
+                    selectedCases.push($(this).attr('value'));
+            });
+            if(selectedCases.length<=0){
+                alert("Please Select at least one party for whom you are filing.");
+                return false;
+            }         
             var form_data = $(this).serialize();
             console.log(form_data);
             $('#modal_loader').show();            
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('on_behalf_of/DefaultController/save_filing_for'); ?>",
-                data: form_data,
+                data: form_data,    
                 success: function (data) {
                     $('#modal_loader').hide();
                     var resArr = data.split('@@@');
                     if (resArr[0] == 1) {
                         $('#msg').show();
-                        $(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        $(".form-response").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                         location.reload();
                     } else if (resArr[0] == 3) {
                         $('#msg').show();
-                        $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                     }
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
