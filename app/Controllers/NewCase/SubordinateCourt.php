@@ -286,66 +286,69 @@ class SubordinateCourt extends BaseController {
             } else {
                 $decision_date = $_SESSION['search_case_data_save']['date_of_decision'];
             }
-            $Is_Judgment_Challenged = $_POST['judgement_challenged'];
-            $Judgment_Type = $_POST['judgement_type'];
+            $Is_Judgment_Challenged = !empty($_POST['judgement_challenged']) ? $_POST['judgement_challenged'] : '';
+            $Judgment_Type = !empty($_POST['judgement_type']) ? $_POST['judgement_type'] : '';
         }
         $cnr_number = '';
         if ($_POST['radio_selected_court'] == '1') {
 
-            $case_type_array = url_decryption($_POST['case_type_id']);
-            $case_type_ids = explode('##', $case_type_array);
-            $case_type_name=$_POST['hc_case_type_name'];
-            $case_number=$_POST['hc_case_number'];
-            $case_year=url_decryption($_POST['hc_case_year']);
-            $cnr_number=$_POST['cnr'];
-            $hc = explode('##', url_decryption($_POST['hc_court']));
-            $bench = explode('##', url_decryption($_POST['hc_court_bench']));
-            $estabid = $hc[0];
+            $case_type_array = !empty($_POST['case_type_id']) ? url_decryption($_POST['case_type_id']) : '';
+            $case_type_ids = !empty($case_type_array) ? explode('##', $case_type_array) : '';
+            $case_type_name= !empty($_POST['hc_case_type_name']) ? $_POST['hc_case_type_name'] : '';
+            $case_number= !empty($_POST['hc_case_number']) ? $_POST['hc_case_number'] : '';
+            $case_year= !empty($_POST['hc_case_year']) ? url_decryption($_POST['hc_case_year']) : '';
+            $cnr_number= !empty($_POST['cnr']) ? $_POST['cnr'] : '';
+            $hc = !empty($_POST['hc_court']) ? explode('##', url_decryption($_POST['hc_court'])) : '';
+            $bench = !empty($_POST['hc_court_bench']) ? explode('##', url_decryption($_POST['hc_court_bench'])) : '';
+            $estabid = !empty($hc) ? $hc[0] : '';
             $estab_code = $bench[2];
-            $estab_name = $hc[1];
-            $court_name = $estab_name . " High Court";
+            $estab_name = !empty($hc) ? $hc[1] : '';
+            $court_name = !empty($estab_name) ? $estab_name . " High Court" : '';
             $state_id = 0;
             $state_name = 0;
             $district_id = 0;
             $district_name = null;
         } elseif ($_POST['radio_selected_court'] == '3') {
 
-            $case_type_array = url_decryption($_POST['dc_case_type_id']);
-            $case_type_ids = explode('##', $case_type_array);
-            $case_type_name=$_POST['dc_case_type_name'];
-            $cnr_number=$_POST['cnr'];
-            $state = explode('#$', url_decryption($_POST['state']));
-            $case_number=$_POST['dc_case_number'];
-            $case_year=url_decryption($_POST['dc_case_year']);
-            $state_id = $state[0];
-            $state_name = $state[1];
+            $case_type_array = !empty($_POST['dc_case_type_id']) ? url_decryption($_POST['dc_case_type_id']) : '';
+            $case_type_ids = !empty($case_type_array) ? explode('##', $case_type_array) : '';
+            $case_type_name= !empty($_POST['hc_case_type_name']) ? $_POST['hc_case_type_name'] : '';
+            $cnr_number= !empty($_POST['cnr']) ? $_POST['cnr'] : '';
+            $state = !empty($_POST['state']) ? explode('#$', url_decryption($_POST['state'])) : '';
+            $case_number= !empty($_POST['dc_case_number']) ? $_POST['dc_case_number'] : '';
+            $case_year= !empty($_POST['dc_case_year']) ? url_decryption($_POST['dc_case_year']) : '';
+            $state_id = !empty($state) ? $state[0] : '';
+            $state_name = !empty($state) ? $state[1] : '';
 
-            $district = explode('#$', url_decryption($_POST['district']));
-            $district_id = $district[0];
-            $district_name = $district[1];
+            $district = !empty($_POST['district']) ? explode('#$', url_decryption($_POST['district'])) : '';
+            $district_id = !empty($district) ? $district[0] : '';
+            $district_name = !empty($district) ? $district[1] : '';
 
-            $establishment = explode('#$', url_decryption($_POST['establishment']));
-            $estab_code = $establishment[0];
-            $estab_name = $establishment[1];
-            $estabid = $establishment[2];
+            $establishment = !empty($_POST['establishment']) ? explode('#$', url_decryption($_POST['establishment'])) : '';
+            $estab_code = !empty($establishment) ? $establishment[0] : '';
+            $estab_name = !empty($establishment) ? $establishment[1] : '';
+            $estabid = !empty($establishment[2]) ? $establishment[2] : '';
         } elseif ($_POST['radio_selected_court'] == '4') {
-
-            $case_type_array = url_decryption($_POST['sci_case_type_id']);
-            $case_type_ids = explode('#$', $case_type_array);
+            $case_type_array = !empty($_POST['sci_case_type_id']) ? url_decryption($_POST['sci_case_type_id']) : '';
+            $case_type_ids = !empty($case_type_array) ? explode('#$', $case_type_array) : '';
             $district_id = 0;
-            $case_number=$_POST['sci_case_number'];
-            $case_year=url_decryption($_POST['sci_case_year']);
+            $case_number= !empty($_POST['sci_case_number']) ? $_POST['sci_case_number'] : '';
+            $case_year= !empty($_POST['sci_case_year']) ? url_decryption($_POST['sci_case_year']) : '';
             $state_name = 0;
             $district_name = null;
         }
 
-
-        if ($case_type_ids[0]=='0'){
-            $case_type_id=$case_type_ids[0];
-            $case_type_name=$case_type_name;
+        if(!empty($case_type_ids)){
+            if ($case_type_ids[0]=='0'){
+                $case_type_id=$case_type_ids[0];
+                $case_type_name=$case_type_name;
+            }else{
+                $case_type_id=$case_type_ids[0];
+                $case_type_name=$case_type_ids[1];
+            }
         }else{
-            $case_type_id=$case_type_ids[0];
-            $case_type_name=$case_type_ids[1];
+            $case_type_id= '';
+            $case_type_name='';
         }
 
         $case_details = array(
@@ -382,16 +385,16 @@ class SubordinateCourt extends BaseController {
         //echo '<pre>';print_r($case_details);echo '</pre>';exit();
         // State Agency
         if($_POST['radio_selected_court'] == '5'){
-            $agency_state = explode('#$', url_decryption($_POST['agency_state']));
-            $case_details['state_id']=$agency_state[0];
-            $case_details['state_name']=$agency_state[1];
-            $agency = explode('##', url_decryption($_POST['agency']));
+            $agency_state = !empty($_POST['agency_state']) ? explode('#$', url_decryption($_POST['agency_state'])) : '';
+            $case_details['state_id']= !empty($agency_state) ? $agency_state[0] : '';
+            $case_details['state_name']= !empty($agency_state) ? $agency_state[1] : '';
+            $agency = !empty($_POST['agency']) ? explode('##', url_decryption($_POST['agency'])) : '';
             $case_details['agency_code']='1';
-            $case_details['estab_id']=$agency[0];
-            $case_details['estab_name']=$agency[1];
-            $case_details['estab_code']=$agency[2];
-            $agency_case_type = explode('##', url_decryption($_POST['agency_case_type_id']));
-            $case_details['case_type_id']=$agency_case_type[0];
+            $case_details['estab_id']= !empty($agency) ? $agency[0] : '';
+            $case_details['estab_name']= !empty($agency) ? $agency[1] : '';
+            $case_details['estab_code']= !empty($agency) ? $agency[2] : '';
+            $agency_case_type = !empty($_POST['agency_case_type_id']) ? explode('##', url_decryption($_POST['agency_case_type_id'])) : '';
+            $case_details['case_type_id']= !empty($agency_case_type) ? $agency_case_type[0] : '';
             if ($agency_case_type[0]=='0'){
                 $case_details['casetype_name']=$_POST['agency_case_type_name'];
             }else{
@@ -399,8 +402,8 @@ class SubordinateCourt extends BaseController {
             }
 
 
-            $case_details['case_num']=$_POST['case_number'];
-            $case_details['case_year']=url_decryption($_POST['case_year']);
+            $case_details['case_num']= !empty($_POST['case_number']) ? $_POST['case_number'] : '';
+            $case_details['case_year']= !empty($_POST['case_year']) ? url_decryption($_POST['case_year']) : '';
         }
         // echo '<pre>';print_r($case_details);echo '</pre>';exit();
         $casedetails=$this->Get_details_model->get_new_case_details($registration_id);
@@ -413,12 +416,12 @@ class SubordinateCourt extends BaseController {
                 $fir_state_id = $fir_state[0];
                 $fir_state_name = $fir_state[1];
 
-                $fir_district = explode('#$', url_decryption($_POST['fir_district']));
-                $fir_district_id = $fir_district[0];
-                $fir_district_name = $fir_district[1];
-                $fir_police_station = explode('#$', url_decryption($_POST['fir_policeStation']));
-                $fir_police_station_id = $fir_police_station[0];
-                $fir_police_station_name = $fir_police_station[1];
+                $fir_district = !empty($_POST['fir_district']) ? explode('#$', url_decryption($_POST['fir_district'])) : '';
+                $fir_district_id = !empty($fir_district) ? $fir_district[0] : '';
+                $fir_district_name = !empty($fir_district) ? $fir_district[1] : '';
+                $fir_police_station = !empty($_POST['fir_policeStation']) ? explode('#$', url_decryption($_POST['fir_policeStation'])) : '';
+                $fir_police_station_id = !empty($fir_police_station) ? $fir_police_station[0] : '';
+                $fir_police_station_name = !empty($fir_police_station) ? $fir_police_station[1] : '';
                 $complete_fir_no = '';
                 $fir_year = url_decryption($_POST['fir_year']);
                 if (!empty($fir_police_station_id)) {

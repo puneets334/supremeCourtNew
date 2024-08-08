@@ -133,7 +133,7 @@ class GetCISStatusModel extends Model
         $update_data = array(
             'deactivated_on' => $curr_dt,
             'is_active' => FALSE,
-            'updated_by' => $_SESSION['login']['id'],
+            'updated_by' => !empty(getSessionData('login')) ? getSessionData('login')['id'] : '',
             'updated_by_ip' => $_SERVER['REMOTE_ADDR']
         );
         $builder = $this->db->table('efil.tbl_efiling_num_status');
@@ -145,7 +145,7 @@ class GetCISStatusModel extends Model
             'stage_id' => $next_stage,
             'activated_on' => $curr_dt,
             'is_active' => TRUE,
-            'activated_by' => $_SESSION['login']['id'],
+            'activated_by' => !empty(getSessionData('login')) ? getSessionData('login')['id'] : '',
             'activated_by_ip' => $_SERVER['REMOTE_ADDR']
         );
         $builder->INSERT($insert_data);
@@ -227,10 +227,10 @@ class GetCISStatusModel extends Model
 
     function update_case_status1($registration_id, $next_stage, $current_date_n_time)
     {
-        if (!(isset($_SESSION['login']['id']) && !empty($_SESSION['login']['id']))) {
+        if (!(isset(getSessionData('login')['id']) && !empty(getSessionData('login')['id']))) {
             $approved_by = '000';
         } else {
-            $approved_by = $_SESSION['login']['id'];
+            $approved_by = getSessionData('login')['id'];
         }
         $update_data = array(
             'deactivated_on' => $current_date_n_time,
@@ -351,7 +351,7 @@ class GetCISStatusModel extends Model
                 $update_data = array(
                     'deactivated_on' => date('Y-m-d H:i:s'),
                     'is_active' => FALSE,
-                    'updated_by' => $_SESSION['login']['id'],
+                    'updated_by' => getSessionData('login')['id'],
                     'updated_by_ip' => $_SERVER['REMOTE_ADDR']
                 );
                 $builder = $this->db->table('efil.tbl_efiling_num_status');
@@ -363,7 +363,7 @@ class GetCISStatusModel extends Model
                     'stage_id' => $next_stage,
                     'activated_on' => date('Y-m-d H:i:s'),
                     'is_active' => TRUE,
-                    'activated_by' => $_SESSION['login']['id'],
+                    'activated_by' => getSessionData('login')['id'],
                     'activated_by_ip' => $_SERVER['REMOTE_ADDR']
                 );
                 if ($this->db->affectedRows() > 0) {
@@ -389,7 +389,7 @@ class GetCISStatusModel extends Model
                                         'is_approved' => TRUE,
                                         'scrutiny_date' => $scrutiny_date,
                                         'approve_date' => date('Y-m-d H:i:s'),
-                                        'approved_by' => $_SESSION['login']['id']
+                                        'approved_by' => getSessionData('login')['id']
                                     );
                                 } elseif ($next_stage == I_B_Defected_Stage || $next_stage == I_B_Rejected_Stage) {
                                     $update_defect_data = array(
@@ -397,7 +397,7 @@ class GetCISStatusModel extends Model
                                         'scrutiny_date' => $scrutiny_date,
                                         'still_defective' => TRUE,
                                         'approve_date' => date('Y-m-d H:i:s'),
-                                        'approved_by' => $_SESSION['login']['id']
+                                        'approved_by' => getSessionData('login')['id']
                                     );
                                 }
                                 $builder = $this->db->table('tbl_initial_defects');

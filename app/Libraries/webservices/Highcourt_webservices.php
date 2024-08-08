@@ -16,7 +16,7 @@ class Highcourt_webservices {
         $response = json_encode($response);
         $response = json_decode($response, true);
         $response = json_decode($response);
-
+        
         if(isset($response->response_str)) {
             $response_str = $response->response_str;
             //----Response  String-----
@@ -132,6 +132,7 @@ class Highcourt_webservices {
     }
 
     public function by_case_no($est_code, $case_type, $reg_no, $reg_year){
+        // pr($est_code .'---'. $case_type .'---'. $reg_no .'---'. $reg_year);
         $input_param="est_code=$est_code|case_type=$case_type|reg_no=$reg_no|reg_year=$reg_year";
         $request_token = $this->encrypted_request_token($input_param);
         $request_str = $this->encrypted_request_string($input_param);

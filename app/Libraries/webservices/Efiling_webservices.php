@@ -65,8 +65,12 @@ class Efiling_webservices {
         $configData = json_decode($configData);
 
         $authentication_key = OPENAPI_KEY;
-        $iv = OPENAPI_IV;
+        // $iv = OPENAPI_IV;
+        $cipher = 'aes-128-cbc'; // Replace with your cipher
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $predefined_iv = OPENAPI_IV; // Replace with your IV
 
+        $iv = $this->pad_iv($predefined_iv, $iv_length);
         $response_str = $configData->response_str;
         $status_str = $configData->status;
         //----Response  String-----
@@ -81,7 +85,12 @@ class Efiling_webservices {
 
     public function OpenAPIwebservice_CINO($est_code = '') {
         $authentication_key = OPENAPI_KEY;
-        $iv = OPENAPI_IV;
+        // $iv = OPENAPI_IV;
+        $cipher = 'aes-128-cbc'; // Replace with your cipher
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $predefined_iv = OPENAPI_IV; // Replace with your IV
+
+        $iv = $this->pad_iv($predefined_iv, $iv_length);
         $url = OPENAPI_URL . $est_code . '&version=' . OPENAPI_VERSION;
         $web_response = curl_get_contents($url . $est_code);
 
@@ -1265,7 +1274,12 @@ class Efiling_webservices {
 
     public function getOpenAPICNRSearch($cino) {
         $input_str = "cino=" . $cino;
-        $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, OPENSSL_RAW_DATA, OPENAPI_IV);
+        $cipher = 'aes-128-cbc'; // Replace with your cipher
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $predefined_iv = OPENAPI_IV; // Replace with your IV
+
+        $iv = $this->pad_iv($predefined_iv, $iv_length);
+        $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, OPENSSL_RAW_DATA, $iv);
         $request_str = base64_encode($encrypt);
         $request_token = hash_hmac('sha256', $input_str, OPENAPI_HASHHMAC_KEY);
         $est_code = 'casesearch/cnrFullCaseDetails?dept_id=' . OPENAPI_DEPT_NO . '&request_str=' . urlencode($request_str) . '&request_token=' . $request_token;
@@ -1282,14 +1296,16 @@ class Efiling_webservices {
             return NULL;
         }
     }
-
+    function pad_iv($iv, $required_length) {
+        return str_pad($iv, $required_length, "\0");
+    }
     public function getOpenAPIcaseHistoryWebService($establishment_id, $case_type_id, $case_number, $case_year) {
         $establishment_id = trim($establishment_id);
         $case_type_id = trim($case_type_id);
         $case_number = trim($case_number);
         $case_year = trim($case_year);
         $input_str = "est_code=" . $establishment_id . "|case_type=" . $case_type_id . "|reg_no=" . $case_number . "|reg_year=" . $case_year;
-        $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, OPENSSL_RAW_DATA, OPENAPI_IV);
+        $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, 0, OPENAPI_IV);
         $request_str = base64_encode($encrypt);
         $request_token = hash_hmac('sha256', $input_str, OPENAPI_HASHHMAC_KEY);
         $est_code = 'casesearch/caseNumber?dept_id=' . OPENAPI_DEPT_NO . '&request_str=' . urlencode($request_str) . '&request_token=' . $request_token;
@@ -1572,7 +1588,7 @@ class Efiling_webservices {
     }
 
     public function get_case_details_from_SCIS($case_type_id, $case_no, $case_year) {
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
         
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
         if ($data != false) {
@@ -1596,7 +1612,7 @@ class Efiling_webservices {
 
     public function get_police_station_list($state_id,$district_id)
     {
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getPoliceStation/?state_id=$state_id&district_id=$district_id");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getPoliceStation/?state_id=$state_id&district_id=$district_id");
         if ($data != false) {
             return json_decode($data,true);
         } else {
