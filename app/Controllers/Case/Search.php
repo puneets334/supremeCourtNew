@@ -84,7 +84,8 @@ class Search extends BaseController
 
     public function index($efiling_type = null)
     {
-        $efiling_type =getSessionData('efiling_type');        
+        
+        $efiling_type =getSessionData('efiling_type');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('login'));
@@ -156,6 +157,7 @@ class Search extends BaseController
                 $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
             } else if ($diary_type == 'register') {
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($this->request->getGet('sc_case_type'))), escape_data($this->request->getGet('case_number')), escape_data($this->request->getGet('case_year')));
+                // pr($web_service_result);
             }
             if (!empty($web_service_result->message)) {
                 echo '3@@@ No Record found!';
@@ -166,7 +168,7 @@ class Search extends BaseController
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
                     $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                    // pr($listing_data);
+                    pr($listing_data);
                     // $data['listing_details'] = $listing_data->listed[0];
                     // $data['listing_details'] = $listing_data->listed[0];
                     if (isset($listing_data->listed) && is_array($listing_data->listed) && isset($listing_data->listed[0])) {
@@ -189,7 +191,7 @@ class Search extends BaseController
                             $allowed_case_types = array('39', '9', '10', '25', '26', '19', '20');
                             //var_dump($web_service_result->case_details[0]);exit();
                             if ($current_stage &&  !(in_array($web_service_result->case_details[0]->active_casetype_id, $allowed_case_types) || in_array($web_service_result->case_details[0]->casetype_id, $allowed_case_types))) {
-                                if ($current_stage[0]['stage_id'] != E_Filed_Stage) {
+                                if ($current_stage[0]->stage_id != E_Filed_Stage) {
                                     echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                                     exit(0);
                                 }
@@ -230,7 +232,7 @@ class Search extends BaseController
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            pr($allowed_users_array);
+            // pr($allowed_users_array);
             redirect('login');
             exit(0);
         }
@@ -247,6 +249,7 @@ class Search extends BaseController
             redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
             exit(0);
         }
+        // pr($searched_details);
         $parties_list = '';
         $diary_no = $searched_details[0];
         $diary_year = $searched_details[1];
@@ -260,7 +263,7 @@ class Search extends BaseController
         if (isset($_SESSION['parties_list'])) {
             $parties_list = $_SESSION['parties_list'];
         }
-
+// pr($_SESSION);
         // $parties_list = $_SESSION['parties_list'];
         unset($_SESSION['parties_list']);
         $confirm_response = escape_data($_POST['confirm_response']);
@@ -269,7 +272,7 @@ class Search extends BaseController
             if (isset($_POST['radio_appearing_for'])) {
                 $intervenorName = "";
                 $radio_appearing_for = $_POST['radio_appearing_for'];
-
+                
 
                 if ($radio_appearing_for == 'E') {
                     $this->session->set('radio_appearing_for', $radio_appearing_for);
@@ -278,7 +281,7 @@ class Search extends BaseController
 
                     if (!$appearance_exists) {
                         $diary_number = $diary_no . $diary_year;
-                        pr($diary_number);
+
                         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
                         // pr($advPartyDetails);
                         foreach ($advPartyDetails as $index => $detail) {
@@ -598,6 +601,7 @@ class Search extends BaseController
 
             $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_POST['sc_case_type'])), escape_data($_POST['case_number']), escape_data($_POST['case_year']));
         }
+        // pr($web_service_result);
         if (!empty($web_service_result->message)) {
             echo '3@@@ No Record found!';
             exit(0);
@@ -610,6 +614,7 @@ class Search extends BaseController
                 $_SESSION['listing_details'] = $data['listing_details'];
 
                 $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
+                // pr($data['old_efiling_cases']);
                 if (empty($data['old_efiling_cases'])) {
                     echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
                     exit(0);

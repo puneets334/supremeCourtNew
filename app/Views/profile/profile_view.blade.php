@@ -36,6 +36,8 @@
                                                         $user_type = 'SR Advocate';
                                                     } elseif ($profile->ref_m_usertype_id == USER_ADMIN) {
                                                         $user_type = 'User Admin';
+                                                    } elseif ($profile->ref_m_usertype_id == USER_EFILING_ADMIN) {
+                                                        $user_type = 'Filing Admin';
                                                     }
                                                     echo htmlentities($user_type, ENT_QUOTES);
                                                 }

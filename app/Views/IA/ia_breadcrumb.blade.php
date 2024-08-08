@@ -15,6 +15,13 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<style>
+        #msg {
+            padding: 15px;
+            color: #000;
+           
+        }
+    </style>
 
 <div class="dash-card dashboard-section">
     <div class="row">
@@ -38,20 +45,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         <h5><i class="fa fa-file"></i> {{$commonHeading}}</h5>
                     </div>
                     <!-- Page Title End -->
-                    <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-response" id="msg">
-                                    <?php
-                                        if (!empty(getSessionData('MSG'))) 
-                                        {
-                                            echo getSessionData('MSG');
-                                        }
-                                    ?>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>    
+                    
+
+                    
                     <!-- Response End -->       
                     <div class="page-breifs">
                         <ul>
@@ -86,6 +82,22 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     </div>
                 </div>
             </div>
+
+            <div style="clear:both"></div>                    
+          
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                            <?php
+                                if (!empty(getSessionData('MSG'))) 
+                                {
+                                    echo getSessionData('MSG');
+                                }
+                            ?>
+                        </div> 
+                    </div>
+                </div>
+              
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="crnt-page-head">
@@ -109,7 +121,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             {
                                 echo '<a href="javascript::void(0); " class="btn '.$efiling_num_button_background_class.' btn-sm"  style="color: #ffffff"><strong id="copyTarget_EfilingNumber">' . $filing_num_label .$efiling_num_label_for_display. htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</strong></a> &nbsp;';
                             }
-                            ?>
+                        ?>
                             <a href="javascript:void(0)" class="quick-btn gray-btn" href="<?php echo base_url('history/efiled_case/view'); ?>"> E-filling History</a>
                         </div>
                     </div>

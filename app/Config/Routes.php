@@ -312,3 +312,7 @@ $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_icmis_d
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_police_station_list', 'NewCase\AjaxcallsSubordinateCourt::get_police_station_list');
 $routes->match(['GET', 'POST'], 'redirect_on_login', 'DefaultController::redirect_on_login');
 
+$routes->match(['GET', 'POST'], 'appearing_for/appearing_for/save_appearing_details', 'AppearingFor\Appearing_for::save_appearing_details');
+$routes->match(['GET', 'POST'], 'miscellaneous_docs/FinalSubmit', 'MiscellaneousDocs\FinalSubmit::index');
+$routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/delete_index', 'DocumentIndex\Ajaxcalls::delete_index');
+

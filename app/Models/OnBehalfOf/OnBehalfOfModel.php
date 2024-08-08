@@ -54,7 +54,7 @@ class OnBehalfOfModel extends Model
         $builder = $this->db->table('efil.tbl_misc_docs_ia');
         $builder->where('registration_id', $registrationId);
         $builder->update($updateFilingForDetail);
-        $this->updateBreadcrumbs($registrationId, MISC_BREAD_ON_BEHALF_OF);
+        $this->update_breadcrumbs($registrationId, MISC_BREAD_ON_BEHALF_OF);
         $this->db->transComplete();
         if ($this->db->transStatus() === FALSE) {
             return FALSE;
@@ -68,6 +68,7 @@ class OnBehalfOfModel extends Model
     {
         // Your logic to update breadcrumbs
     }
+
     public function update_breadcrumbs($registrationId, $stepNo)
     {
         $session = session();
@@ -78,7 +79,9 @@ class OnBehalfOfModel extends Model
         sort($newBreadcrumbsArray);
         $newBreadcrumbs = implode(',', $newBreadcrumbsArray);
         $efilingDetails['breadcrumb_status'] = $newBreadcrumbs;
-        $session->set('efiling_details', $efilingDetails);
+
+        setSessionData('efiling_details', $efilingDetails);
+
         $builder = $this->db->table('efil.tbl_efiling_nums');
         $builder->where('registration_id', $registrationId);
         $builder->update(['breadcrumb_status' => $newBreadcrumbs]);

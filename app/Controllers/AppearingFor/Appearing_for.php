@@ -1,11 +1,17 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\AppearingFor;
+use App\Controllers\BaseController;
+use App\Models\AppearingFor\AppearingForModel;
+use App\Models\MiscellaneousDocs\GetDetailsModel;
 
 class Appearing_for extends BaseController {
+    protected $AppearingForModel;
+    protected $GETDetailsModel;
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('appearing_for/Appearing_for_model');
+        $this->AppearingForModel = new AppearingForModel();
+        $this->GETDetailsModel= new GETDetailsModel();
     }
 
     public function save_appearing_details() {
@@ -24,7 +30,7 @@ class Appearing_for extends BaseController {
         }
 
 
-        $this->form_validation->set_rules('user_type', 'Party Type', 'required|in_list[P,R]');
+      /*   $this->form_validation->set_rules('user_type', 'Party Type', 'required|in_list[P,R]');
         //WORK ON IT TO VALIDATE FORWARD SLASH
         //$this->form_validation->set_rules('party_name[]', 'Party Name', 'required|trim|validate_alpha_numeric_space_dot_hyphen_underscore_slash');
         $this->form_validation->set_rules('party_email[]', 'Email', 'trim|min_length[5]|max_length[50]|valid_email');
@@ -36,39 +42,46 @@ class Appearing_for extends BaseController {
             echo '3@@@';
             echo form_error('user_type'). form_error('party_name[]') . form_error('party_email[]') . form_error('party_mob[]'). form_error('selected_party[]');
             exit(0);
-        }
+        } */
 
         $registration_id = $_SESSION['efiling_details']['registration_id'];
 
         $party_type = escape_data($_POST['user_type']);
 
         $party_name = $_POST['party_name'];
-        $parties_selected = $_POST['selected_party'];
+        $parties_selected = isset($_POST['selected_party'])?$_POST['selected_party']:'';
         $party_email = $_POST['party_email'];
         $party_mobile = $_POST['party_mob'];
+        $appearing_for=$contact_p_name=$contact_p_email=$contact_p_mobile=$contact_partyid='';
 
-        foreach ($parties_selected as $seleced_party) {
+        if(isset($parties_selected)  && is_array($parties_selected))
+        {
+            foreach ($parties_selected as $seleced_party) {
 
-            $selected_parties_details = url_decryption($seleced_party);
+                $selected_parties_details = url_decryption($seleced_party);
+    
+                $selected_parties_details = explode('$$$', $selected_parties_details);
+                $parties_sr_no = $selected_parties_details[1];
+                $party_id_sequence = $selected_parties_details[0] - 1;
+    
+                $appearing_for .= $parties_sr_no . '$$';
+    
+                $contact_p_name .= strtoupper($party_name[$party_id_sequence]) . '$$';
+                $contact_p_email .= strtoupper($party_email[$party_id_sequence]) . '$$';
+                $contact_p_mobile .= $party_mobile[$party_id_sequence] . '$$';
+                $contact_partyid .= $parties_sr_no . '$$';
+    
+                $appearing_for_tbl_id = $selected_parties_details[2];
+                $contact_tbl_id = $selected_parties_details[3];
+            }
 
-            $selected_parties_details = explode('$$$', $selected_parties_details);
-            $parties_sr_no = $selected_parties_details[1];
-            $party_id_sequence = $selected_parties_details[0] - 1;
-
-            $appearing_for .= $parties_sr_no . '$$';
-
-            $contact_p_name .= strtoupper($party_name[$party_id_sequence]) . '$$';
-            $contact_p_email .= strtoupper($party_email[$party_id_sequence]) . '$$';
-            $contact_p_mobile .= $party_mobile[$party_id_sequence] . '$$';
-            $contact_partyid .= $parties_sr_no . '$$';
-
-            $appearing_for_tbl_id = $selected_parties_details[2];
-            $contact_tbl_id = $selected_parties_details[3];
         }
+        // pr($_SESSION['login']['id']);
 
         if (!(int) $appearing_for_tbl_id && !(int) $contact_tbl_id) {
 
             // INSERT APPEARING FOR AND CONTACT DETAILS OF PARTIES AND UPDATE BREADCRUMB
+            
 
             $appearing_party_detail = array(
                 'userid' => $_SESSION['login']['id'],
@@ -94,7 +107,7 @@ class Appearing_for extends BaseController {
                 'create_ip' => $_SERVER['REMOTE_ADDR']
             );
 
-            $details_saved_status = $this->Appearing_for_model->add_appearing_for($appearing_party_detail, $contact_details, $registration_id);
+            $details_saved_status = $this->AppearingForModel->add_appearing_for($appearing_party_detail, $contact_details, $registration_id);
 
             if ($details_saved_status) {
                 echo "1@@@Appearing for added successfully.";
@@ -123,8 +136,8 @@ class Appearing_for extends BaseController {
                 'update_ip' => $_SERVER['REMOTE_ADDR'],
                 'updated_on' => date('Y-m-d H:i:s')
             );
-
-            $result = $this->Appearing_for_model->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
+           // pr($contact_tbl_id);
+            $result = $this->AppearingForModel->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
 
             if ($result) {
                 echo "1@@@Appearing for Updated Successfully.";

@@ -1589,7 +1589,7 @@ class Efiling_webservices {
 
     public function get_case_details_from_SCIS($case_type_id, $case_no, $case_year) {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
-        
+
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
         if ($data != false) {
             return json_decode($data);
@@ -2013,8 +2013,7 @@ class Efiling_webservices {
         /*echo ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".$diary_no;
         exit;*/
         
-        // $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
-        pr(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/advPartyMappingDetailsBydiaryNo?diary_no=".urlencode($diary_no));
     //     var_dump($data);
     //    exit;
         if ($data != false) {
