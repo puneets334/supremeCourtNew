@@ -485,13 +485,11 @@ class ResponsiveVariantRouteController extends BaseController
     }
 
     public function showCases()
-    {
-       
+    {       
         log_message('info', 'My cases access on ' . date('d-m-Y') . ' at ' . date("h:i:s A") . getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
         // $advocate_id = $this->session->userdata['login']['adv_sci_bar_id'];
         $advocate_id = getSessionData('login')['adv_sci_bar_id'];
-        if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {
-            
+        if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {            
             // $this->load->model('common/CommonModel');
             $params = array();
             $params['table_name'] = 'efil.tbl_sr_advocate_engage';
@@ -546,13 +544,12 @@ class ResponsiveVariantRouteController extends BaseController
                     }
                 }
             }
-        } else {
-            
-            //$advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]=50&diaryIds[]=43532020');
-            //$advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id);
+        } else {            
+            // $advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]=50&diaryIds[]=43532020');
+            // $advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id);
             $adv_Cases = array();
             if (!empty($advocate_id) && $advocate_id != null) {
-                 $advocate_cases_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id);
+                $advocate_cases_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id);
                 $adv_cases_response = json_decode($advocate_cases_response_str, true);
                 $adv_Cases = !empty($adv_cases_response) ? $adv_cases_response['data'] : [];
             }
@@ -579,14 +576,10 @@ class ResponsiveVariantRouteController extends BaseController
         $engageCounsel = array();
         $engageCounsel['is_active'] = true;
         // $this->load->model('common/CommonModel');
-        $engagedDiaryCounselData = $this->CommonModel->getEngagedDiaryIds($engageCounsel);
-       
-        
-       
-        //$diaryEngaged = !empty($engagedDiaryCounselData) ? $engagedDiaryCounselData : NULL;
-        $diaryEngaged = !empty($engagedDiaryCounselData) ? array_column($engagedDiaryCounselData, 'diary_no') : NULL;
-      
-         // $meta_data=array(
+        $engagedDiaryCounselData = $this->CommonModel->getEngagedDiaryIds($engageCounsel);       
+        // $diaryEngaged = !empty($engagedDiaryCounselData) ? $engagedDiaryCounselData : NULL;
+        $diaryEngaged = !empty($engagedDiaryCounselData) ? array_column($engagedDiaryCounselData, 'diary_no') : NULL;      
+        // $meta_data=array(
         //     'adv_cases_list' =>$adv_Cases,
         //     'adv_cases_response' =>$adv_cases_response,
         //     'sr_advocate_data'=>$sr_advocate_data['details'],
@@ -599,11 +592,6 @@ class ResponsiveVariantRouteController extends BaseController
             'diaryEngaged' => $diaryEngaged,
             
         );
-       // pr( $meta_data);
-
-        // pr($meta_data);
-        
-       
         // $this->slice->view('responsive_variant.cases.index_1',$meta_data);
         $this->render('responsive_variant.cases.index_1', compact('meta_data'));
     }

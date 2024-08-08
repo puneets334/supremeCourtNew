@@ -19,11 +19,8 @@ class App extends BaseConfig
 
 
 
-    //public string $baseURL = "http://localhost:81/";
-    public string $baseURL = "http://10.25.80.170:82/";
-
-
-
+    // public string $baseURL = "http://localhost:81/";
+    public string $baseURL = "http://10.40.186.239:81/";
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.

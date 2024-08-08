@@ -28,7 +28,7 @@ class ForgetPasswordController extends BaseController
     function adv_get_otp_old()
     {      
         if (empty($_POST['userCaptcha'])) {
-            setSessionData('msg', 'Captcha is required!');
+            $this->session->setFlashdata('msg', 'Captcha is required!');
             redirect('register/ForgetPassword');
             exit(0);
         }
@@ -52,7 +52,7 @@ class ForgetPasswordController extends BaseController
             ],
         ];
         if(empty($_POST['adv_mobile']) && empty($_POST['adv_email']) ){
-         	setSessionData('msg', 'Please Enter Mobile or Email!');
+            $this->session->setFlashdata('msg', 'Please Enter Mobile or Email!');
 			redirect('register/ForgetPassword');
 		}
         if ($this->validate($rules) === FALSE) {
@@ -62,7 +62,7 @@ class ForgetPasswordController extends BaseController
             return $this->render('responsive_variant.authentication.forget_password_view');
         } else {
             if (getSessionData("captcha") != $_POST['userCaptcha']) {
-                setSessionData('msg', 'Invalid Captcha!');
+                $this->session->setFlashdata('msg', 'Invalid Captcha!');
                 redirect('register/ForgetPassword');
                 exit(0);
             }
@@ -70,10 +70,10 @@ class ForgetPasswordController extends BaseController
                 $mobile_exist = $this->Register_model->check_already_reg_mobile($_POST['adv_mobile']);
                 $email_exist = $this->Register_model->check_already_reg_email(strtoupper($_POST['adv_email']));                
                 if($mobile_exist[0]['moblie_number'] != $_POST['adv_mobile']) {
-                    setSessionData('msg', 'Not Registerd This Mobile Number!');
+                    $this->session->setFlashdata('msg', 'Not Registerd This Mobile Number!');
                     redirect('register/ForgetPassword');
                 } else if(strtoupper($email_exist[0]['emailid']) != strtoupper($_POST['adv_email'])) {
-                    setSessionData('msg', 'Not Registerd This Email ID!');
+                    $this->session->setFlashdata('msg', 'Not Registerd This Email ID!');
                     redirect('register/ForgetPassword');
                 } else {
                     if(!empty($_POST['adv_mobile']))
@@ -115,7 +115,7 @@ class ForgetPasswordController extends BaseController
         helper(['form', 'url']);    
         // Check if captcha is empty
         if (empty($this->request->getPost('userCaptcha'))) {
-            setSessionData('msg', 'Captcha is required!');    
+            $this->session->setFlashdata('msg', 'Captcha is required!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }
         $rules = [
@@ -143,19 +143,19 @@ class ForgetPasswordController extends BaseController
         $adv_email = $this->request->getPost('adv_email');    
         // Check if either mobile or email is empty
         if (empty($adv_mobile) && empty($adv_email)) {
-            setSessionData('msg', 'Please Enter Mobile or Email!');    
+            $this->session->setFlashdata('msg', 'Please Enter Mobile or Email!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }    
         // Check captcha validity
         if (getSessionData("captcha") != $this->request->getPost('userCaptcha')) {
-            setSessionData('msg', 'Invalid Captcha!');    
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }    
         // Check if mobile and email exist
         $mobile_exist = $this->Register_model->check_already_reg_mobile($adv_mobile);
         $email_exist = $this->Register_model->check_already_reg_email(strtoupper($adv_email));    
         if (!$mobile_exist || !$email_exist) {
-            setSessionData('msg', 'Not Registered With This Mobile Number or Email ID!');    
+            $this->session->setFlashdata('msg', 'Not Registered With This Mobile Number or Email ID!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }    
         // Set name array based on input
@@ -219,7 +219,7 @@ class ForgetPasswordController extends BaseController
         ];
         if ($registerType == 'Forget Password') {
             $validationRules['adv_mobile_otp'] = 'numeric|trim|min_length[6]|max_length[6]';
-            setSessionData('msg', 'Mobile OTP And Email OTP Required');
+            $this->session->setFlashdata('msg', 'Mobile OTP And Email OTP Required');
         }       
         if (!$this->validate($validationRules)) {           
             $captcha_value = captcha_generate();
@@ -248,7 +248,7 @@ class ForgetPasswordController extends BaseController
                 // $captcha_value = captcha_generate_test();
                 // $data['captcha']['image'] = $captcha_value['image'];
                 // $data['captcha']['word'] = $captcha_value['word'];               
-                setSessionData('msg', 'OTP Verification Failed');                
+                $this->session->setFlashdata('msg', 'OTP Verification Failed');                
                 return $this->render('responsive_variant.authentication.adv_otp_view');
             }
         }
@@ -368,7 +368,7 @@ class ForgetPasswordController extends BaseController
 			$this->load->view('login/login_footer');*/
             $this->render('responsive_variant.authentication.update_password_view', $data);
         } else if(!$this->valid_password($decoded_password)) {
-            setSessionData('msg', 'Password policy has to be followed.');
+            $this->session->setFlashdata('msg', 'Password policy has to be followed.');
             redirect('register/ForgetPassword/update_user_password');
         } else {
             /* $data['captcha']['image'] = $captcha_value['image'];
@@ -379,7 +379,7 @@ class ForgetPasswordController extends BaseController
                 redirect('register/ForgetPassword/update_password');
             } */
             if($_POST['password'] != $_POST['confirm_password']){
-        	 	setSessionData('msg', 'Confirm Passwrod not matched!');
+                $this->session->setFlashdata('msg', 'Confirm Passwrod not matched!');
                 redirect('register/ForgetPassword/update_user_password');
             }
             if(!empty(getSessionData('adv_details')['mobile_no'])){
@@ -393,10 +393,10 @@ class ForgetPasswordController extends BaseController
             $passUpdate = $this->Register_model->update_user_password($data,$forget_mobile,$forget_email);
             if($passUpdate){
                 $_SESSION['adv_details']['ForgetPasswordDone']='ForgetPasswordDone';
-                setSessionData('msg', 'Passwrod Update Successful!');
+                $this->session->setFlashdata('msg', 'Passwrod Update Successful!');
                 redirect('login');
             } else{
-                setSessionData('msg', 'Failed Passwrod update!');
+                $this->session->setFlashdata('msg', 'Failed Passwrod update!');
                 redirect('register/ForgetPassword/update_user_password');
             }
         }
