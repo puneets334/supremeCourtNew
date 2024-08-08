@@ -174,7 +174,6 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
             /*$icmisUserData = $this->Common_model->getIcmisUserCodeByRegistrationId($paramArray);
             $userIcmisCode = !empty($icmisUserData[0]->icmis_usercode) ? (int)$icmisUserData[0]->icmis_usercode : 0;    */
             $userIcmisCode=$this->efiling_webservices->getDiaryUserCodeFromICMIS();
-            // pr($userIcmisCode);
             if(empty($userIcmisCode))
             {
                 $userIcmisCode=ADMIN_AUTO_DIARY_ICMIS_USER_CODE;
@@ -472,10 +471,10 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                 $records_inserted = $response['records_inserted'];
             }
             if($file_type=='new_case'){
-                send_whatsapp_message($registration_id,$efiling_no," - filed with Diary Number $diaryNo");
+                // send_whatsapp_message($registration_id,$efiling_no," - filed with Diary Number $diaryNo");
             }
             if($file_type=='caveat'){
-                send_whatsapp_message($registration_id,$efiling_no," - filed with Caveat Number $diaryNo");
+                // send_whatsapp_message($registration_id,$efiling_no," - filed with Caveat Number $diaryNo");
             }
             $filteredData = ['case_detail'=>'1'];
 
@@ -502,9 +501,9 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
 
         }
         if(strtoupper(trim($response['status'])) != 'ERROR_ALREADY_IN_ICMIS'){
-        array_push($response, array("field_name" => "diaryStatus", "field_value" => $diaryStatus));
-        $updateDiaryDetailsStatus=$this->updateDiaryDetails($efiling_no,$registration_id,$ref_m_efiled_type_id,$file_type,$insertData);
-        return $updateDiaryDetailsStatus;
+            array_push($response, array("field_name" => "diaryStatus", "field_value" => $diaryStatus));
+            $updateDiaryDetailsStatus=$this->updateDiaryDetails($efiling_no,$registration_id,$ref_m_efiled_type_id,$file_type,$insertData);
+            return $updateDiaryDetailsStatus;
         }
 
 
@@ -786,7 +785,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                                         //$message = 'Your case efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Diary No. '.$diary_No.' on '.$current_date.'';
                                         $message = 'Your case '.$efiling_no.' is filed with Diary No. '.$diary_No.' on '.$current_date.'. - Supreme Court of India';
                                         //$smsRes = send_mobile_sms($mobile,$message,SCISMS_Case_Filed_Diary_No);
-                                        send_whatsapp_message($registration_id,$efiling_no," - filed with Diary Number $diary_No");
+                                        // send_whatsapp_message($registration_id,$efiling_no," - filed with Diary Number $diary_No");
                                     }
                                     if(isset($email) && !empty($email)){
                                         $message = 'Dear '.$userName.', your case efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Diary No. '.$diary_No.' on '.$current_date.'';
@@ -900,7 +899,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                                     if(isset($mobile) && !empty($mobile)){
                                         $message = 'Your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.'';
                                         $smsRes = send_mobile_sms($mobile,$message,SCISMS_EFILING_CAVEAT);
-                                        send_whatsapp_message($registration_id,$efiling_no,"- filed with Caveat Number $caveatNo");
+                                        // send_whatsapp_message($registration_id,$efiling_no,"- filed with Caveat Number $caveatNo");
                                     }
                                     if(isset($email) && !empty($email)){
                                         $message = 'Dear '.$userName.' ,your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.'';

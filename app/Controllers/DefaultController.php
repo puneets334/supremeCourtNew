@@ -111,12 +111,12 @@ class DefaultController extends BaseController {
                 $password = $_POST['txt_password'];
                 $userCaptcha = $_POST['userCaptcha'];
                 if ($username == NULL  || $password == NULL || preg_match('/[^A-Za-z0-9!@#$]/i', $password) || $userCaptcha == NULL || preg_match('/[^A-Za-z0-9]/i', $userCaptcha)) {
-                    $this->session->setFlashdata('msg', '<div class="danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Invalid username or password or Captcha!</p> </div>');
+                    $this->session->setFlashdata('msg', 'Invalid username or password or Captcha!');
                     return response()->redirect(base_url('/'));
                 }
                 elseif ($this->session->get('captcha') != $userCaptcha) {
                     // pr($this->session->getFlashdata('captcha'));
-                    $this->session->setFlashdata('msg', '<div class="danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
+                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
                     return response()->redirect(base_url('/'));
                 }
                 else {
@@ -202,7 +202,7 @@ class DefaultController extends BaseController {
                             $this->session->set($sessiondata);
                             return $this->render('responsive_variant.authentication.loginOtp');
                     } else {
-                        $this->session->setFlashdata('msg', '<div class="danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid username or password !</p> </div>');
+                        $this->session->setFlashdata('msg', 'Invalid username or password !');
                         return response()->redirect(base_url('/'));
                         exit(0);
                     }
@@ -317,12 +317,12 @@ class DefaultController extends BaseController {
                 $this->logUser('login', $logindata);
                 $this->redirect_on_login();
             } else {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid username or password !</p> </div>');
+                $this->session->setFlashdata('msg', 'Invalid username or password !');
                 return response()->redirect(base_url('/'));
                 exit(0);
             }
         }else{
-            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">OTP Not matched !</p> </div>');
+            $this->session->setFlashdata('msg', 'OTP Not matched !');
             return response()->redirect(base_url('/'));
             exit(0);
         }
