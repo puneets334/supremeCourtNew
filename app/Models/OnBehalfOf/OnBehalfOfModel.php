@@ -68,6 +68,7 @@ class OnBehalfOfModel extends Model
     {
         // Your logic to update breadcrumbs
     }
+
     public function update_breadcrumbs($registrationId, $stepNo)
     {
         $session = session();

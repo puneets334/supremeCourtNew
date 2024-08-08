@@ -84,7 +84,8 @@ class Search extends BaseController
 
     public function index($efiling_type = null)
     {
-        $efiling_type =getSessionData('efiling_type');        
+        
+        $efiling_type =getSessionData('efiling_type');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('login'));
@@ -600,6 +601,7 @@ class Search extends BaseController
 
             $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_POST['sc_case_type'])), escape_data($_POST['case_number']), escape_data($_POST['case_year']));
         }
+        // pr($web_service_result);
         if (!empty($web_service_result->message)) {
             echo '3@@@ No Record found!';
             exit(0);
@@ -612,6 +614,7 @@ class Search extends BaseController
                 $_SESSION['listing_details'] = $data['listing_details'];
 
                 $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
+                // pr($data['old_efiling_cases']);
                 if (empty($data['old_efiling_cases'])) {
                     echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
                     exit(0);

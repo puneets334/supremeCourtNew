@@ -281,8 +281,10 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
             <div class="row m-3 ">
                 <div class="col-md-12 text-end">
 
-                    <?php $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    <?php 
+                   /*  $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                     $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                    if($segment->getSegment(2) == 'view'){
                     if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
                         if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
                             if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
@@ -305,6 +307,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     <?php }
                         }
                     }
+                } */
                     ?>
                 </div>
             </div>
