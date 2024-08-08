@@ -21,32 +21,7 @@ if ($this->uri->segment(2) != 'view') {
         echo form_open('#', $attribute);
         if(!empty($this->session->userdata('radio_appearing_for')) && $this->session->userdata('radio_appearing_for') == 'N' && !empty($appearing_for_details))
         {
-                        /*$pet_default_checked = ($appearing_for_details[0]['partytype'] == 'P' || $appearing_for_details[0]['appearing_for'] == NULL) ? 'checked' : NULL;
-                        $res_checked = ($appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
-                        if ($pet_default_checked) {
-                            $party_name_array = explode('##', $parties_details[0]['p_partyname']);
-                            $party_sr_no_array = explode('##', $parties_details[0]['p_sr_no']);
-                        } else {
-                            $party_name_array = explode('##', $parties_details[0]['r_partyname']);
-                            $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);
-                        }
-                        $parties_list = array_combine($party_sr_no_array, $party_name_array);
-
-                        if (($appearing_for_details[0]['partytype'] == 'P') || ($appearing_for_details[0]['partytype'] == 'R')) {
-                            $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
-                            $saved_appearing_for = explode('$$', $saved_appearing_for);
-
-                            $saved_appearing_for_email = $appearing_for_details[0]['p_email'];
-                            $saved_appearing_for_email = explode('$$', $saved_appearing_for_email);
-
-                            $saved_appearing_for_mobile = $appearing_for_details[0]['p_mobile'];
-                            $saved_appearing_for_mobile = explode('$$', $saved_appearing_for_mobile);
-                        } else {
-                            $saved_appearing_for = NULL;
-                            $saved_appearing_for_email = NULL;
-                            $saved_appearing_for_mobile = NULL;
-                        }
-                        */?>
+                        ?>
             <div class="row">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12">Appearing For <span style="color: red">*</span> :</label>
                 <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">

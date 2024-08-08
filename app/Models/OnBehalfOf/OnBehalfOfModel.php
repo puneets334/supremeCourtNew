@@ -54,7 +54,7 @@ class OnBehalfOfModel extends Model
         $builder = $this->db->table('efil.tbl_misc_docs_ia');
         $builder->where('registration_id', $registrationId);
         $builder->update($updateFilingForDetail);
-        $this->updateBreadcrumbs($registrationId, MISC_BREAD_ON_BEHALF_OF);
+        $this->update_breadcrumbs($registrationId, MISC_BREAD_ON_BEHALF_OF);
         $this->db->transComplete();
         if ($this->db->transStatus() === FALSE) {
             return FALSE;
