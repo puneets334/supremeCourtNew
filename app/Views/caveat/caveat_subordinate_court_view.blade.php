@@ -1,16 +1,30 @@
 
-<link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet"> 
-<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
-<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+
+<link rel="shortcut icon"
+        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
+        rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
+        rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css"
+        rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css"
+        rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        type="text/css"
+        href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet"
+        href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet"
+        href="<?= base_url() ?>assets/css/jquery-ui.css">
+    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
+        rel="stylesheet">
 <style>
 </style>
 @stack('style')
@@ -116,9 +130,9 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">CNR <span style="color: red">*</span></label>
                                     <?php
-                                    
+                                    // pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     ?>
-                                    <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                                    <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
                                     type="text"  maxlength="16" > <strong style="color: red;font-size:14px;"><b>Kindly search lower case details using CNR preferably for swift data retrieval</b></strong>
 
                                 </div>
@@ -222,9 +236,9 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">CNR <span style="color: red">*</span></label>
                                     <?php
-                                    
+                                    //  pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     ?>
-                                    <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                                    <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16"
                                     type="text"  maxlength="16" > <strong style="color: red;font-size:14px;"><b>Kindly search lower case details using CNR preferably for swift data retrieval</b></strong>
 
                                 </div>
@@ -386,12 +400,18 @@ body.loading .overlay{
                         <div class="mb-3">
                             <label for="" class="form-label">Impugned Order Date <span style="color: red" class="astriks">*</span></label>
 
-                            <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="order_date"  name="order_date"
-                                value="" placeholder="DD/MM/YYYY" type="text" required >
-                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
-                                    <i class="fa fa-question-circle-o"></i>
-                                </span>
+                            <input tabindex = '18'
+                                                            class="form-control has-feedback-left cus-form-ctrl mb-3"
+                                                            id="order_date"
+                                                            name="order_date"
+                                                            maxlength="10"
+                                                            placeholder="DD/MM/YYYY"
+                                                            type="text"
+                                                            style="width: 80%">
+                                                        <select id="order_dates_list"
+                                                            class="form-control cus-form-ctrl"
+                                                            style="width: 10%">
+                                                        </select>
 
 
 
@@ -566,23 +586,24 @@ body.loading .overlay{
     </div>
                             <!-- form--end  -->
                        
-                            <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquer<style>y-3.5.1.slim.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-<script src="<?= base_url() ?>assets/js/sha256.js"></script>
-<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>  
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/sha256.js"></script>
+    <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+    <script type="text/javascript"
+        src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script>
 
-    $(document).ready(function() {
+ /*    $(document).ready(function() {
         $('#order_date').datepicker({
         changeMonth: true,
         changeYear: true,
@@ -590,8 +611,9 @@ body.loading .overlay{
         dateFormat: "dd/mm/yy",
         defaultDate: '-40y'
         });
-    });
- 
+    }); */
+  
+
 
 
 
@@ -627,13 +649,13 @@ body.loading .overlay{
             }else {  $('.agency_case_type_name').hide();}
         });
 
-        $('#order_dates_list').on('change', function () {
-            var selectedText = $("#order_dates_list option:selected").html();
-            var dateText = selectedText.split(" ");
-            $("#order_date").val(dateText[0]);
-            var ordType = dateText[1].split("-");
-            $("#judgement_type").val(ordType[0]).change();
-        });
+        $('#order_dates_list').on('change', function() {
+                var selectedText = $("#order_dates_list option:selected").html();
+                var dateText = selectedText.split(" ");
+                $("#order_date").val(dateText[0]);
+                var ordType = dateText[1].split("-");
+                $("#judgement_type").val(ordType[0]).change();
+            });
 
         $('#cnr').on('input', function () {
             if( $.trim($('#cnr').val())=='')

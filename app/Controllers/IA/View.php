@@ -32,10 +32,8 @@ class View extends BaseController
 
     function index()
     {
-        // echo 'hi';
-        // pr($_SESSION);
      
-        $registration_id = getSessionData('efiling_details')['registration_id']='';
+        $registration_id = getSessionData('efiling_details')['registration_id'];
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, USER_CLERK);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');
@@ -44,7 +42,7 @@ class View extends BaseController
         // if (isset(getSessionData('efiling_details')['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
             // $registration_id = getSessionData('efiling_details')['registration_id'];
 
-            $this->CommonModel->get_efiling_num_basic_Details($registration_id);
+            // $this->CommonModel->get_efiling_num_basic_Details($registration_id);
 
             $data['case_details'] = $this->GetDetailsModel->get_case_details($registration_id);
             $diary_number = '';
