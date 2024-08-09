@@ -195,7 +195,7 @@ $collapse_class = '';
                         <?php $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                     //    echo '<pre>'; print_r($Array);
                         $segment = service('uri');
-                        // $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                        $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
                         if ($segment->getSegment(2) == 'view') {
                             if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
                                 if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
@@ -219,7 +219,7 @@ $collapse_class = '';
                                         <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
                         <?php }
                                 }
-                            }
+                            } 
                         } ?>
                     </div>
                 </div>

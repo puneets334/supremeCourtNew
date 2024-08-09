@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,16 +15,13 @@
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
 </head>
-
 <body class="login-page">
     <header>
         <!-- Top Header Section End -->
         <div class="top-header">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown">
-
-                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown"></div>
                     <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
                         <ul>
                             <li><a href="javascript:void(0)" class="hide skiptomain">Skip To Main Content</a></li>
@@ -77,7 +73,7 @@
                                     <ul class="navbar-nav mr-auto">
                                         <li class="nav-item">
                                             <!-- <a class="active" href="index.html">Handbook </a> -->
-                                            <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
+                                            <!-- <a class="active"  href="<?php // echo base_url('e-resources')?>">Handbook </a> -->
                                             <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
                                         </li>
                                         <li class="nav-item">
@@ -118,16 +114,13 @@
                         </div>
                     </div>
                 </div>
-
-
-
                 <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
                     <div class="login-s-inner">
                         <?php $session = session(); ?>
-                        @if($session->has('msg'))
-                        <div class="uk-text-danger">
-                            <b>{{ esc($session->get('msg')) }}</b>
-                        </div>
+                        @if($session->getFlashdata('msg'))
+                            <div class="alert alert-danger">
+                                {{ esc($session->getFlashdata('msg')) }}
+                            </div>
                         @endif
                         @if($session->has('information'))
                         <div class="uk-text-primary">
@@ -144,263 +137,225 @@
                             <b>{{ $validation->getError('txt_password')}}</b>
                         </div>
                         @endif
-
-
-
                         <div class="loin-form">
                             <?php
                             $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off');
                             echo form_open("Register/ForgetPassword/adv_get_otp", $attributes);
-                            ?>
-
-
-
-                            <?php
-                            $segment = service('uri');
-
-                            if ($segment->getSegment(2) == 'AdvocateOnRecord') {
-                                $title = 'Advocate On Record';
-                            } elseif ($segment->getSegment(2) == 'ForgetPassword') {
-                                $title = 'Forget Password';
-                            } else {
-                                $title = 'Party In Person';
-                            }
-                            ?>
-
-                            <div class="httxt">
-                                <h4> <?php echo $title; ?> </h4>
-                            </div>
-
-                            <input type="hidden" name="register_type" value="<?php echo $title; ?>">
-
-
-                            <?php if (session()->getFlashdata('msg')) : ?>
-                                <div class="alert alert-dismissible text-center flashmessage">
-                                    <div class="flas-msg-inner">
-                                        <?= session()->getFlashdata('msg') ?>
-                                    </div>
+                                $segment = service('uri');
+                                if ($segment->getSegment(2) == 'AdvocateOnRecord') {
+                                    $title = 'Advocate On Record';
+                                } elseif ($segment->getSegment(2) == 'ForgetPassword') {
+                                    $title = 'Forget Password';
+                                } else {
+                                    $title = 'Party In Person';
+                                }
+                                ?>
+                                <div class="httxt">
+                                    <h4> <?php echo $title; ?> </h4>
                                 </div>
-                            <?php endif; ?>
-
-
-                            @if(isset($validation) && !empty($validation->getError('adv_email')))
-                            <div class="uk-text-danger">
-                                <b>{{ $validation->getError('adv_email')}}</b>
-                            </div>
-                            @endif
-                            @if(isset($validation) && !empty($validation->getError('adv_mobile')))
-                            <div class="uk-text-danger">
-                                <b>{{ $validation->getError('adv_mobile')}}</b>
-                            </div>
-                            @endif
-
-                            <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
-
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Mobile</label>
-                                        <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="adv_mobile" minlength="10" maxlength="10" placeholder="Mobile">
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-2 ">
-                                    <div class="text-center">
-                                        <h6 class="gray-txt">Or</h6>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Email</label>
-                                        <input type="text" name="adv_email" class="form-control cus-form-ctrl" id="password" placeholder="Email ID">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="captchaimage">
-                                        <div class="mb-3">
-                                            @include('Captcha.Captcha_view')
-
-                                            {{-- <input type="text" value="" placeholder="HrT5709KL"
-                                                    id="" name="" class="form-control cus-form-ctrl"> --}}
+                                <input type="hidden" name="register_type" value="<?php echo $title; ?>">
+                                <?php if (session()->getFlashdata('msg')) : ?>
+                                    <div class="alert alert-dismissible text-center flashmessage">
+                                        <div class="flas-msg-inner">
+                                            <?= session()->getFlashdata('msg') ?>
                                         </div>
                                     </div>
+                                <?php endif; ?>
+                                @if(isset($validation) && !empty($validation->getError('adv_email')))
+                                <div class="uk-text-danger">
+                                    <b>{{ $validation->getError('adv_email')}}</b>
                                 </div>
-                            </div>
-                            <div class="row">
-
-
+                                @endif
+                                @if(isset($validation) && !empty($validation->getError('adv_mobile')))
+                                <div class="uk-text-danger">
+                                    <b>{{ $validation->getError('adv_mobile')}}</b>
+                                </div>
+                                @endif
+                                <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
-                                            <button class="btn quick-btn ">SEND OTP</button>
+                                            <label for="" class="form-label">Mobile</label>
+                                            <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="adv_mobile" minlength="10" maxlength="10" placeholder="Mobile">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-2 ">
+                                        <div class="text-center">
+                                            <h6 class="gray-txt">Or</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Email</label>
+                                            <input type="text" name="adv_email" class="form-control cus-form-ctrl" id="password" placeholder="Email ID">
+
                                         </div>
                                     </div>
                                 </div>
-                                </form>
-                                <div class="text-center">
-                                    <a href="{{base_url()}}" class="blue-txt login-anc">Login ?</a>
-                                </div>
-                                <div class="regester-txts">
-                                    <h6 class="htsmall">Register As :</h6>
-                                    <div class="regester-links">
-                                        <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
-                                        <span class="gray-txt">Or</span>
-                                        <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
-                                        <span class="gray-txt">Or</span>
-                                        <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="captchaimage">
+                                            <div class="mb-3">
+                                                @include('Captcha.Captcha_view')
+                                                {{-- <input type="text" value="" placeholder="HrT5709KL" id="" name="" class="form-control cus-form-ctrl"> --}}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="mb-3">
+                                                <button class="btn quick-btn ">SEND OTP</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <a href="{{base_url()}}" class="blue-txt login-anc">Login ?</a>
+                                    </div>
+                                    <div class="regester-txts">
+                                        <h6 class="htsmall">Register As :</h6>
+                                        <div class="regester-links">
+                                            <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
+                                            <span class="gray-txt">Or</span>
+                                            <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
+                                            <span class="gray-txt">Or</span>
+                                            <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Login Area End  -->
-        <footer>
-            <!-- Footer Top Section Start -->
-            <div class="footer-top-sec">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-5 copyright-sec">
-                            <p>Content Owned by Supreme Court of India</p>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-7 contact-txt">
-                            <p>Please email your complaint/issue(s) along with relevant screenshot(s) to – <span class="blue-txt"> efiling[at]sci[dot]nic[dot]in </span></p>
-                        </div>
+    </div>
+    <!-- Login Area End  -->
+    <footer>
+        <!-- Footer Top Section Start -->
+        <div class="footer-top-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-5 copyright-sec">
+                        <p>Content Owned by Supreme Court of India</p>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 contact-txt">
+                        <p>Please email your complaint/issue(s) along with relevant screenshot(s) to – <span class="blue-txt"> efiling[at]sci[dot]nic[dot]in </span></p>
                     </div>
                 </div>
             </div>
-            <!-- Footer Top Section End -->
-        </footer>
-        <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script>
-        <script src="<?= base_url() . 'assets/newDesign/' ?>js/bootstrap.bundle.min.js"></script>
-        <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery.easy-ticker.min.js"></script>
-        <script src="<?= base_url() . 'assets/newDesign/' ?>js/wow.min.js"></script>
-        <script src="<?= base_url() . 'assets/newDesign/' ?>js/owl.carousel.js"></script>
-        <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
-        <script></script>
-        <script type="text/javascript" src="{{base_url('assets/responsive_variant/js/jquery/jquery-3.5.0.min.js')}}"></script>
-
-        <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
-        <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
-
-        <!-- scutum JS -->
-        <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor.min.js')}}"></script>
-        <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor/loadjs.js')}}"></script>
-        <script type="text/javascript" src="{{base_url('/assets/responsive_variant/templates/uikit_scutum_2/assets/js/scutum_common.js')}}"></script>
-
-
-
-        <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/case_status/bootstrap.min.js"></script>
-
-        <script type="text/javascript" src="<?= base_url() ?>assets/js/aes.js"></script>
-        <script type="text/javascript" src="<?= base_url() ?>assets/js/aes-json-format.js"></script>
-        <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
-        <script type="text/javascript">
-            function loadPaperBookViewer(obj) {
-                $('#paper-book-viewer-modal iframe').attr('src', $(obj).data('paper-book-viewer-url'));
-                UIkit.modal('#paper-book-viewer-modal').show();
-            }
-            $(function() {
-                $('#loading-overlay').hide();
-                /*****start-code to adjust height of iframes*****/
-                try {
-                    if ($.browser.safari || $.browser.opera) {
-                        $('.internal-content-iframe').on('load', function() {
-                            setTimeout(function() {
-                                $('.internal-content-iframe')[0].style.height = ($('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 100) + 'px';
-                            }, 100);
-                        });
-
-                        var iSource = $('.internal-content-iframe')[0].src;
-                        $('.internal-content-iframe')[0].src = '';
-                        $('.internal-content-iframe')[0].src = iSource;
-                    } else {
-                        $('.internal-content-iframe').on('load', function() {
-                            setTimeout(function() {
-                                $('.internal-content-iframe')[0].style.height = ($('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 100) + 'px';
-                            }, 500);
-                        });
-                    }
-                    setInterval(function() {
-                        try {
-                            $('.internal-content-iframe')[0].style.height = $('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 'px';
-                        } catch (e) {}
-                    }, 3000);
-                } catch (e) {}
-                /*****start-code to adjust height of iframes*****/
-            });
-
-            /*****start-$.browser feature extract, which has been removed in new jQuery version*****/
-            var matched, browser;
-
-            jQuery.uaMatch = function(ua) {
-                ua = ua.toLowerCase();
-
-                var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
-                    /(webkit)[ \/]([\w.]+)/.exec(ua) ||
-                    /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
-                    /(msie) ([\w.]+)/.exec(ua) ||
-                    ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) || [];
-
-                return {
-                    browser: match[1] || "",
-                    version: match[2] || "0"
-                };
-            };
-
-            matched = jQuery.uaMatch(navigator.userAgent);
-            browser = {};
-
-            if (matched.browser) {
-                browser[matched.browser] = true;
-                browser.version = matched.version;
-            }
-
-            // Chrome is Webkit, but Webkit is also Safari.
-            if (browser.chrome) {
-                browser.webkit = true;
-            } else if (browser.webkit) {
-                browser.safari = true;
-            }
-
-            jQuery.browser = browser;
-            /*****end-$.browser feature extract, which has been removed in new jQuery version*****/
-        </script>
-        <script src="<?= base_url('assets/js/sha256.js'); ?>" type="text/javascript"></script>
-        <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
-        <script type="text/javascript">
-            $(function() {
-                @if(empty(@$session->get('user')))
-                $('[name="txt_username"]').focus();
-                @else
-                $('[name="txt_password"]').focus();
-                @endif
-
-            });
-        </script>
-        <script>
-            function enableSubmit() {
-                var form = this;
-                var password = $('[name="txt_password"]').val(); //$('#txt_password').val();
-                $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= $_SESSION['login_salt'] ?>');
-                if (password != '') {
-                    var pwd = sha256(password);
-                    var pwd2 = pwd + '<?= $_SESSION['login_salt'] ?>';
+        </div>
+        <!-- Footer Top Section End -->
+    </footer>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery.easy-ticker.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/wow.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/owl.carousel.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
+    <script type="text/javascript" src="{{base_url('assets/responsive_variant/js/jquery/jquery-3.5.0.min.js')}}"></script>
+    <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
+    <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
+    <!-- scutum JS -->
+    <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor.min.js')}}"></script>
+    <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor/loadjs.js')}}"></script>
+    <script type="text/javascript" src="{{base_url('/assets/responsive_variant/templates/uikit_scutum_2/assets/js/scutum_common.js')}}"></script>
+    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/case_status/bootstrap.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>assets/js/aes.js"></script>
+    <script type="text/javascript" src="<?= base_url() ?>assets/js/aes-json-format.js"></script>
+    <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
+    <script type="text/javascript">
+        function loadPaperBookViewer(obj) {
+            $('#paper-book-viewer-modal iframe').attr('src', $(obj).data('paper-book-viewer-url'));
+            UIkit.modal('#paper-book-viewer-modal').show();
+        }
+        $(function() {
+            $('#loading-overlay').hide();
+            /*****start-code to adjust height of iframes*****/
+            try {
+                if ($.browser.safari || $.browser.opera) {
+                    $('.internal-content-iframe').on('load', function() {
+                        setTimeout(function() {
+                            $('.internal-content-iframe')[0].style.height = ($('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 100) + 'px';
+                        }, 100);
+                    });
+                    var iSource = $('.internal-content-iframe')[0].src;
+                    $('.internal-content-iframe')[0].src = '';
+                    $('.internal-content-iframe')[0].src = iSource;
+                } else {
+                    $('.internal-content-iframe').on('load', function() {
+                        setTimeout(function() {
+                            $('.internal-content-iframe')[0].style.height = ($('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 100) + 'px';
+                        }, 500);
+                    });
                 }
+                setInterval(function() {
+                    try {
+                        $('.internal-content-iframe')[0].style.height = $('.internal-content-iframe')[0].contentWindow.document.body.offsetHeight + 'px';
+                    } catch (e) {}
+                }, 3000);
+            } catch (e) {}
+            /*****start-code to adjust height of iframes*****/
+        });
+        /*****start-$.browser feature extract, which has been removed in new jQuery version*****/
+        var matched, browser;
+        jQuery.uaMatch = function(ua) {
+            ua = ua.toLowerCase();
+            var match = /(chrome)[ \/]([\w.]+)/.exec(ua) ||
+                /(webkit)[ \/]([\w.]+)/.exec(ua) ||
+                /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
+                /(msie) ([\w.]+)/.exec(ua) ||
+                ua.indexOf("compatible") < 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) || [];
+            return {
+                browser: match[1] || "",
+                version: match[2] || "0"
+            };
+        };
+        matched = jQuery.uaMatch(navigator.userAgent);
+        browser = {};
+        if (matched.browser) {
+            browser[matched.browser] = true;
+            browser.version = matched.version;
+        }
+        // Chrome is Webkit, but Webkit is also Safari.
+        if (browser.chrome) {
+            browser.webkit = true;
+        } else if (browser.webkit) {
+            browser.safari = true;
+        }
+        jQuery.browser = browser;
+        /*****end-$.browser feature extract, which has been removed in new jQuery version*****/
+    </script>
+    <script src="<?= base_url('assets/js/sha256.js'); ?>" type="text/javascript"></script>
+    <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
+    <script type="text/javascript">
+        $(function() {
+            @if(empty(@$session->get('user')))
+            $('[name="txt_username"]').focus();
+            @else
+            $('[name="txt_password"]').focus();
+            @endif
+        });
+    </script>
+    <script>
+        function enableSubmit() {
+            var form = this;
+            var password = $('[name="txt_password"]').val(); //$('#txt_password').val();
+            $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= $_SESSION['login_salt'] ?>');
+            if (password != '') {
+                var pwd = sha256(password);
+                var pwd2 = pwd + '<?= $_SESSION['login_salt'] ?>';
             }
-            var base_url = '{{ base_url() }}';
+        }
+        var base_url = '{{ base_url() }}';
+    </script>
+    <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
+        <script>
+            setTimeout(function() {
+                window.location.href = "<?php echo base_url('login/logout') ?>";
+            }, 2000);
         </script>
-        <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
-            <script>
-                setTimeout(function() {
-                    window.location.href = "<?php echo base_url('login/logout') ?>";
-                }, 2000);
-            </script>
-        <?php } ?>
+    <?php } ?>
 </body>
-
 </html>

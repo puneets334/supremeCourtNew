@@ -2066,7 +2066,7 @@ class Efiling_webservices {
 
     public function getDiaryUserCodeFromICMIS()
     {
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getDiaryUserCodeFromICMIS");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getDiaryUserCodeFromICMIS");
         if ($data != false) {
             return json_decode($data,true);
         } else {

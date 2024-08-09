@@ -22,6 +22,8 @@ class FinalSubmit extends BaseController {
     }
 
     public function index() {
+        $index_data = '';
+        $sentSMS = '';
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
@@ -34,7 +36,7 @@ class FinalSubmit extends BaseController {
             redirect('dashboard');
             exit(0);
         }
-
+// pr($_SESSION['efiling_details']);
         $registration_id = $_SESSION['efiling_details']['registration_id'];
 
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway']) {
@@ -52,10 +54,10 @@ class FinalSubmit extends BaseController {
         } elseif ($_SESSION['efiling_details']['stage_id'] == I_B_Rejected_Stage || $_SESSION['efiling_details']['stage_id'] == E_REJECTED_STAGE) {
             $next_stage = Initial_Defects_Cured_Stage;
         } else {
-            $this->session->set('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
+            getSessionData('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
             redirect('dashboard');
         }
-
+        // pr(Transfer_to_IB_Stage);
         $final_submit = TRUE;
         if ($final_submit) {
             $result = $this->Common_model->updateCaseStatus($registration_id, $next_stage);
@@ -76,19 +78,21 @@ class FinalSubmit extends BaseController {
                 } else {
                     $efiled_docs_list_mail = NULL;
                 }
-
+                
                 if (!empty($efiled_docs_list_mail)) {
 
                     foreach ($efiled_docs_list_mail as $doc_list) {
+                        
 
                         /*$index_data .= '
                                         <a href="' . base_url('documentIndex/viewIndexItem/' . url_encryption($doc_list['doc_id'].'##'.'pdfmail')) . '" target="_blank">' . $doc_list['doc_title'] . '<br>( ' . $doc_list['docdesc'] . ')</a> ';*/
-
-                        $key=$this->config->item( 'encryption_key' );
+                        
+                        // $key=$this->config->item( 'encryption_key' );
                         $msg = $doc_list['doc_id'];
+                     
 
                         //$encrypted_string = $this->encrypt->encode($msg , $key);
-                        $encrypted_string = $this->encryption->encrypt($msg);
+                        $encrypted_string = integerEncreption($msg);
 
                         $index_data .= '
                                         <a href="' . base_url('documentIndex/WithoutLoginViewIndex/' . $encrypted_string) . '" target="_blank">' . $doc_list['doc_title'] . '<br>( ' . $doc_list['docdesc'] . ')</a> ';
@@ -109,8 +113,8 @@ class FinalSubmit extends BaseController {
 
                 $sentSMS .= "Document have been filed in Diary No. $diaryno as Efiling no. ". efile_preview($_SESSION['efiling_details']['efiling_no']) . " 
 by Advocate $user_name  and is pending for initial approval with efiling admin. - Supreme Court of India";
-                log_message('CUSTOM', "Document have been filed in Diary No. $diaryno as Efiling no. ". efile_preview($_SESSION['efiling_details']['efiling_no']) . " 
-by Advocate $user_name  and is pending for initial approval with efiling admin. - Supreme Court of India");
+//                 log_message('CUSTOM', "Document have been filed in Diary No. $diaryno as Efiling no. ". efile_preview($_SESSION['efiling_details']['efiling_no']) . " 
+// by Advocate $user_name  and is pending for initial approval with efiling admin. - Supreme Court of India");
 
                 $sentSMS .= '<br>';
 
@@ -141,21 +145,21 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
                 }
                 //Code to sent mail to login user
                 $sentSMS = "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin. - Supreme Court of India";
-                log_message('CUSTOM', "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin. - Supreme Court of India");
+                // log_message('CUSTOM', "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin. - Supreme Court of India");
                 send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS,SCISMS_Initial_Approval);
                 send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
 
                 $this->session->set('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 $_SESSION['efiling_details']['stage_id']=Initial_Approaval_Pending_Stage;
-                redirect('miscellaneous_docs/view');
+                return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
-                exit(0);
+                // exit(0);
             } else {
                 $this->session->set('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
-                log_message('CUSTOM', "Miscellaneous Docs- Submition failed. Please try again!");
-                redirect('miscellaneous_docs/view');
+                // log_message('CUSTOM', "Miscellaneous Docs- Submition failed. Please try again!");
+               return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
-                exit(0);
+                // exit(0);
             }
         }
     }

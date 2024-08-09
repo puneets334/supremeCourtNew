@@ -23,22 +23,22 @@
                 <div class="login-s-inner">
                     <?php $session = session(); ?>
                     @if($session->has('msg'))
-                    <div class="uk-text-danger">
+                    <div class="text-danger">
                         <b>{{ esc($session->get('msg')) }}</b>
                     </div>
                     @endif
                     @if($session->has('information'))
-                    <div class="uk-text-primary">
+                    <div class="text-primary">
                         <b>{{esc($session->get('information'))}}</b>
                     </div>
                     @endif
                     @if(isset($validation) && !empty($validation->getError('txt_username')))
-                    <div class="uk-text-danger">
+                    <div class="text-danger">
                         <b>{{ $validation->getError('txt_username')}}</b>
                     </div>
                     @endif
                     @if(isset($validation) && !empty($validation->getError('txt_password')))
-                    <div class="uk-text-danger">
+                    <div class="text-danger">
                         <b>{{ $validation->getError('txt_password')}}</b>
                     </div>
                     @endif

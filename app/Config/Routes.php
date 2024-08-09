@@ -102,6 +102,7 @@ $routes->post('vacation/advance/declineVacationListCasesAOR', 'Vacation\Advance:
 $routes->match(['GET', 'POST'], 'dashboard', 'ResponsiveVariantRouteController::showDashboard');
 $routes->match(['GET', 'POST'], 'dashboard_alt', 'ResponsiveVariantRouteController::showDashboardAlt');
 $routes->match(['GET', 'POST'], 'cases', 'ResponsiveVariantRouteController::showCases');
+$routes->match(['GET', 'POST'], 'physical_hearing', 'ResponsiveVariantRouteController::showPhysicalHearing');
 $routes->match(['GET', 'POST'], 'causelist', 'ResponsiveVariantRouteController::showCauselist');
 $routes->match(['GET', 'POST'], 'case/crud/(:any)', 'ResponsiveVariantRouteController::showCaseCrud/$1');
 $routes->match(['GET', 'POST'], 'case/crud', 'ResponsiveVariantRouteController::showCaseCrud');
@@ -168,7 +169,7 @@ $routes->match(['GET', 'POST'], 'captcha/get_code', 'captcha/DefaultController/g
 /*...........Deepak Sharma...........*/
 // $routes->match(['GET', 'POST'],'case_status/defaultController/showCaseStatus','Case_details\DefaultController::showCaseStatus');
 // $routes->get('case_status/defaultController/showCaseStatus', 'Case_details\DefaultController::showCaseStatus');
-$routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatus', 'Case_details\DefaultController::showCaseStatus');
+// $routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatus', 'Case_details\DefaultController::showCaseStatus');
 /*................End................*/
 
 /****start-Responsive variant routes****/
@@ -201,12 +202,7 @@ $routes->match(['GET', 'POST'], 'Register/AdvOtp', 'Register\ForgetPasswordContr
 $routes->match(['GET', 'POST'], 'Register/verify', 'Register\ForgetPasswordController::verify');
 $routes->match(['GET', 'POST'], 'Register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
 // $routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'App\Controllers\Mycases\CitationNotes::add_case_contact');
-$routes->post('mycases/add_case_contact', 'Mycases\CitationNotes::add_case_contact');
-$routes->post('mycases/get_contact_list', 'Mycases\CitationNotes::get_contact_list');
 $routes->post('mycases/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
-$routes->post('mycases/case_contact', 'Mycases\CitationNotes::case_contact');
-$routes->post('mycases/update_case_contacts', 'Mycases\CitationNotes::update_case_contacts');
-$routes->post('mycases/aor_contact_list', 'Mycases\CitationNotes::aor_contact_list');
 $routes->post('newcase/assignSrAdvocate', 'Newcase\Ajaxcalls::assignSrAdvocate');
 $routes->post('newcase/deleteSrAdvocate', 'Newcase\Ajaxcalls::deleteSrAdvocate');
 /* End Vinit Garg Routes */
@@ -267,13 +263,32 @@ $routes->match(['GET', 'POST'], 'caveat/defaultController/processing/(:any)', 'C
 $routes->match(['GET', 'POST'], 'caveat/view', 'Caveat\View::index');
 $routes->match(['GET', 'POST'], 'caveat/extra_party', 'Caveat\Extra_party::index');
 $routes->match(['GET', 'POST'], 'caveat/subordinate_court', 'Caveat\Subordinate_court::index');
-$routes->match(['GET', 'POST'], 'mycases/citation_notes/send_sms', 'Mycases\CitationNotes::send_sms');
 $routes->match(['GET', 'POST'], 'case/search/search_old_efiling_case_details', 'Case\Search::search_old_efiling_case_details');
 /****start-Responsive variant routes refile old efiling cases ****/
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud/(:any)', 'ResponsiveVariantRouteController::showOldEfilingCasesCrud/$1');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud', 'ResponsiveVariantRouteController::showOldEfilingCasesCrud');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud_registration/(:any)', 'ResponsiveVariantRouteController::showOldEfilingCasesCrudByRegistrationId/$1');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud_registration', 'ResponsiveVariantRouteController::showOldEfilingCasesCrudByRegistrationId');
+
+$routes->match(['GET', 'POST'], 'mycases/update_case_contacts', 'Mycases\CitationNotes::update_case_contacts');
+$routes->match(['GET', 'POST'], 'mycases/aor_contact_list', 'Mycases\CitationNotes::aor_contact_list');
+$routes->match(['GET', 'POST'], 'mycases/case_contact', 'Mycases\CitationNotes::case_contact');
+$routes->match(['GET', 'POST'], 'mycases/get_contact_list', 'Mycases\CitationNotes::get_contact_list');
+$routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'Mycases\CitationNotes::add_case_contact');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/send_sms_and_mail', 'Mycases\CitationNotes::send_sms_and_mail');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/add_notes_mycases', 'Mycases\CitationNotes::add_notes_mycases');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/update_notes_mycases', 'Mycases\CitationNotes::update_notes_mycases');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/view_contact_list', 'Mycases\CitationNotes::view_contact_list');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/add_citation_mycases', 'Mycases\CitationNotes::add_citation_mycases');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/update_citation_mycases', 'Mycases\CitationNotes::update_citation_mycases');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/get_citation_and_notes_list', 'Mycases\CitationNotes::get_citation_and_notes_list');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/delete_citation_n_notes', 'Mycases\CitationNotes::delete_citation_n_notes');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/get_recipients_mail', 'Mycases\CitationNotes::get_recipients_mail');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/send_sms', 'Mycases\CitationNotes::send_sms');
+$routes->match(['GET', 'POST'], 'case_status/defaultController/get_case_status_other_tab_data', 'CaseStatus\DefaultController::get_case_status_other_tab_data');
+$routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatus', 'CaseStatus\DefaultController::showCaseStatus');
+$routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatusCertificate', 'CaseStatus\DefaultController::showCaseStatusCertificate');
+$routes->match(['GET', 'POST'], 'case_status/defaultController/showPaperBook', 'CaseStatus\DefaultController::showPaperBook');
 /****end-Responsive variant routes refile old efiling cases ****/
 
 
