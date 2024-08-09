@@ -17,13 +17,13 @@ class DefaultController extends BaseController {
         parent::__construct();
         $this->db = \Config\Database::connect();
         // $this->load->library('slice');
-        unset($_SESSION['efiling_details']);
+        // unset($_SESSION['efiling_details']);
         // unset($_SESSION['estab_details']);
-        unset($_SESSION['case_table_ids']);
-        unset($_SESSION['parties_list']);
-        unset($_SESSION['efiling_type']);
-        unset($_SESSION['pg_request_payment_details']);
-        unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
+        // unset($_SESSION['case_table_ids']);
+        // unset($_SESSION['parties_list']);
+        // unset($_SESSION['efiling_type']);
+        // unset($_SESSION['pg_request_payment_details']);
+        // unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
     }
 
     public function index() {
@@ -139,7 +139,6 @@ class DefaultController extends BaseController {
             $diary_no = escape_data($this->request->getPost("diaryno"));
             $accordingId = escape_data($this->request->getPost("according_id"));
             $accordingNt = escape_data($this->request->getPost("according_nt"));
-            pr($diary_no);
             if($accordingId==($accordingNt+2)) $url="/get_indexing.php";
             if($accordingId==($accordingNt+3)) $url="/get_earlier_court.php";
             if($accordingId==($accordingNt+4)) $url="/get_connected.php";
