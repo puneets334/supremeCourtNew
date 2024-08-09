@@ -139,7 +139,6 @@ class DefaultController extends BaseController {
             $diary_no = escape_data($this->request->getPost("diaryno"));
             $accordingId = escape_data($this->request->getPost("according_id"));
             $accordingNt = escape_data($this->request->getPost("according_nt"));
-            pr($diary_no);
             if($accordingId==($accordingNt+2)) $url="/get_indexing.php";
             if($accordingId==($accordingNt+3)) $url="/get_earlier_court.php";
             if($accordingId==($accordingNt+4)) $url="/get_connected.php";

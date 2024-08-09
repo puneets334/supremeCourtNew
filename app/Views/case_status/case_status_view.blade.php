@@ -1,11 +1,9 @@
-<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script type="text/javascript" src="<?/*= base_url().'assets'*/?>/js/case_status/common.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
-
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="<?= base_url() ?>/assets/js/case_status/common.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- Case Status modal-start-->
 <style>
-    tr.hide-table-padding td {
+    /* tr.hide-table-padding td {
         padding: 0;
     }
 
@@ -24,51 +22,55 @@
     .accordion-toggle.collapsed .expand-button:after
     {
         content: '+';
-    }
+    } */
 
 </style>
-<div id="case_status" uk-modal class="uk-modal-full">
-    <div class="uk-modal-dialog">
-        <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title"><div id="case_status_diary">CASE STATUS</div></h2>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="dashboard-section dashboard-tiles-area"></div>
+            <div class="dashboard-section">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="dash-card">
+                            <div id="case_status" uk-modal class="uk-modal-full">
+                                <div class="uk-modal-dialog">
+                                    <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+                                    <div class="uk-modal-header">
+                                        <h2 class="uk-modal-title"><div id="case_status_diary">CASE STATUS</div></h2>
+                                    </div>
+                                    <div class="uk-modal-body">
+                                        <div id="view_case_status_data"></div>
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-right">
+                                        <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Case Status modal-end-->
+                            <!-- Paper book modal-start-->
+                            <div id="paper_book" class="uk-modal-full" uk-modal>
+                                <div class="uk-modal-dialog">
+                                    <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+                                    <div class="uk-modal-header">
+                                        <h2 class="uk-modal-title"><div id="paper_book_diary">CASE - PAPER BOOK</div></h2>
+                                    </div>
+                                    <div class="uk-modal-body">
+                                        <div id="view_paper_book_data"></div>
+                                    </div>
+                                    <div class="uk-modal-footer uk-text-right">
+                                        <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Paper Book modal-end-->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="uk-modal-body">
-            <div id="view_case_status_data"></div>
-        </div>
-
-        <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
-        </div>
-
     </div>
 </div>
-
-<!-- Case Status modal-end-->
-
-<!-- Paper book modal-start-->
-
-<div id="paper_book" class="uk-modal-full" uk-modal>
-    <div class="uk-modal-dialog">
-        <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
-        <div class="uk-modal-header">
-            <h2 class="uk-modal-title"><div id="paper_book_diary">CASE - PAPER BOOK</div></h2>
-        </div>
-        <div class="uk-modal-body">
-            <div id="view_paper_book_data"></div>
-        </div>
-
-        <div class="uk-modal-footer uk-text-right">
-            <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
-
-        </div>
-
-    </div>
-</div>
-
-<!-- Paper Book modal-end-->
-
-
 <script type="text/javascript">
     $(document).ready(function(){
         $(document).on('click','[id^=accordion] a',function (event) {
@@ -104,7 +106,6 @@
         });
 
     });
-
     function open_case_status()
     {
         var CSRF_TOKEN = 'CSRF_TOKEN';
@@ -147,7 +148,6 @@
             url: "<?php echo base_url('case_status/defaultController/showCaseStatusCertificate'); ?>",
             success: function (data) {
                 var resArr = data.split('@@@');
-
                 if (resArr[0] == 1) {
                     alert(resArr[1]);
                     $('#msg').show();
@@ -195,6 +195,4 @@
         });
         UIkit.modal('#paper_book').toggle();
     }
-
-
 </script>

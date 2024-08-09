@@ -879,8 +879,37 @@ class CitationNotes extends BaseController
                     exit(0);
                 }
             }
-            $validate_names = validate_names_for_cis_master($InputArray['mail_subject'], TRUE, 3, 200, 'Subject');
-            pr($validate_names);
+            // $validate_names = validate_names_for_cis_master($InputArray['mail_subject'], TRUE, 3, 200, 'Subject');
+            $validation =  \Config\Services::validation();
+            $data = array('field_name' => $InputArray['mail_subject']);
+            if ($data == TRUE) {
+                // $ci->form_validation->set_rules('field_name', $field_label, 'required|min_length[' . $field_min_length . ']|max_length[' . $field_max_length . ']|regex_match[/^[0-9a-zA-Z:,\/._\[\])@#&(; -]+$/]');
+                $rules=[
+                    "field_name" => [
+                        "label" => 'Subject',
+                        "rules" => 'required|min_length[3]|max_length[200]|regex_match[/^[0-9a-zA-Z:,\/._\[\])@#&(; -]+$/]'
+                    ],
+                ];
+            } else {
+                // $ci->form_validation->set_rules('field_name', $field_label, 'min_length[' . $field_min_length . ']|max_length[' . $field_max_length . ']|regex_match[/^[0-9a-zA-Z:,\/._\[\])@#&(; -]+$/]');
+                $rules=[
+                    "field_name" => [
+                        "label" => 'Subject',
+                        "rules" => 'min_length[3]|max_length[200]|regex_match[/^[0-9a-zA-Z:,\/._\[\])@#&(; -]+$/]'
+                    ],
+                ];
+            }
+            if ($this->validate($rules) === FALSE) {
+                $data = [
+                    'validation' => $this->validator,
+                ];
+                $validate_names = array('response' => false, 'msg' => $data);
+                return $validate_names;
+            } else {
+                $validate_names = array('response' => true);
+                return $validate_names;
+            }
+            // pr($validate_names);
             if ($validate_names['response'] == FALSE) {
                 echo '1@@@' . htmlentities($validate_names['msg']['field_name'], ENT_QUOTES);
                 exit(0);
