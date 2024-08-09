@@ -89,7 +89,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                <textarea  tabindex = "17" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" required><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
+                                <textarea  tabindex = "17" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
@@ -125,7 +125,7 @@ body.loading .overlay{
                                 ?>
                                 
                                 <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
-                                    class="form-control cus-form-ctrl" required>
+                                    class="form-control cus-form-ctrl" >
                                     <option value="" >Select Relation</option>
                                     <option <?php echo $selectSon; ?> value="S">Son Of</option>
                                     <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
@@ -145,7 +145,7 @@ body.loading .overlay{
                                     minlength="3" maxlength="99" placeholder="Relative Name"
                                     value="<?php   echo isset($caveatee_details[0]['relative_name'])?$caveatee_details[0]['relative_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
-                                    type="text" required>
+                                    type="text" >
                             </div>
                         </div>
                         
@@ -154,7 +154,7 @@ body.loading .overlay{
                             <div class="mb-3">
                                 <label for="" class="form-label">Date of Birth  <span style="color: red" class="astriks">*</span></label>
                                 <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text" required >
+                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
                                     <i class="fa fa-question-circle-o"></i>

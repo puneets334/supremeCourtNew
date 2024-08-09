@@ -324,6 +324,7 @@ class CommonModel extends Model
         // $builder->where('en.is_active', 'TRUE');
         // $builder->where('en.is_deleted', 'FALSE');
         // $builder->where('en.registration_id', $registration_id);
+        
         $sql = "SELECT 
             tcd.if_sclsc, 
             en.registration_id, 

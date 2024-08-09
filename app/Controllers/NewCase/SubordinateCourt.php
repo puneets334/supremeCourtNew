@@ -301,7 +301,7 @@ class SubordinateCourt extends BaseController {
             $hc = !empty($_POST['hc_court']) ? explode('##', url_decryption($_POST['hc_court'])) : '';
             $bench = !empty($_POST['hc_court_bench']) ? explode('##', url_decryption($_POST['hc_court_bench'])) : '';
             $estabid = !empty($hc) ? $hc[0] : '';
-            $estab_code = $bench[2];
+            $estab_code =  !empty($bench) ? $bench[2] : ''; 
             $estab_name = !empty($hc) ? $hc[1] : '';
             $court_name = !empty($estab_name) ? $estab_name . " High Court" : '';
             $state_id = 0;
@@ -407,7 +407,7 @@ class SubordinateCourt extends BaseController {
         }
         // echo '<pre>';print_r($case_details);echo '</pre>';exit();
         $casedetails=$this->Get_details_model->get_new_case_details($registration_id);
-        $sc_casetype=$casedetails[0]->sc_case_type_id;
+        $sc_casetype=isset($casedetails[0]->sc_case_type_id)?$casedetails[0]->sc_case_type_id:'';
         $criminal_case_type_id=array(10,12,14,26,2,28,6,4,8,18,20,29,16,33,35,36,41);
         if(in_array($sc_casetype,$criminal_case_type_id) || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
             if(isset($_POST['fir_state']) && !empty($_POST['fir_state'])){
