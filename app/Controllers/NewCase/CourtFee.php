@@ -254,7 +254,7 @@ window.location.href='" . base_url() . "documentIndex';</script>";
             'payment_mode_name' => 'SHCIL'
         );
         $status = $this->Court_Fee_model->insert_pg_request($data_to_save);
-        unset($_SESSION['pg_request_payment_details']);
+        // unset($_SESSION['pg_request_payment_details']);
         if ($status) {
             //comment 16 march 2021 by akg
             /* $_SESSION['pg_request_payment_details'] = array(

@@ -49,6 +49,15 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         }
                         ?>
                     </div>
+                    <div class="form-response"
+                        role="alert"
+                        data-auto-dismiss="5000">
+                        <?php
+                        if (!empty(getSessionData('msg'))) {
+                            echo getSessionData('msg');
+                        }
+                        ?>
+                    </div>
                     <?php echo getSessionData('msg'); ?>
                     
                     <?php

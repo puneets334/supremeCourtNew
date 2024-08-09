@@ -22,7 +22,8 @@ class PaymentRequest extends BaseController {
 
 
     public function index() {
-
+        $params = session_get_cookie_params();
+        setcookie(session_name(), $_COOKIE[session_name()], time() + 60*60*24*30, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('/'));
