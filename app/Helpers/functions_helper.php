@@ -1622,7 +1622,7 @@ function sendSMS($typeId = "38", $mobileNo = "", $smsText = "", $templateId = ""
             // $ci = &get_instance();
             // $ci->load->model('common/Common_model');
             // $ci->load->library('session');
-            $common_model = new \App\Models\common\CommonModel();
+            $common_model = new \App\Models\Common\CommonModel();
             $db_response_sms = $common_model->insert_efiling_sms_dtl($efiling_sms_details);
             return $rslt_sms;
         } //end of if condition $rslt_sms..

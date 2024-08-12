@@ -20,7 +20,6 @@ class PaymentResponse extends BaseController {
 
 
     public function index() {
-
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
         if (!empty($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');
@@ -49,12 +48,10 @@ class PaymentResponse extends BaseController {
         }
         elseif (!empty($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE) {
             //$redirection_url = 'miscellaneous_docs/courtFee';
-
             $redirection_url = 'deficitCourtFee/DefaultController/';
         }
         elseif (!empty($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == OLD_CASES_REFILING) {
             $redirection_url = 'case/refile_old_efiling_cases/crud_registration/?tab=courtFee';
-
         }
         else {
             $_SESSION['MSG'] = message_show("fail", 'Invalid Action.');
@@ -105,9 +102,6 @@ class PaymentResponse extends BaseController {
         }*/
 
         if (!empty($_SESSION['efiling_details']) && isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
-
-            
-
             if (isset($InputArray['txnid']) && !empty($InputArray['txnid']) && isset($InputArray['txnStatus']) && !empty($InputArray['txnStatus'])) {
 
                 $registration_id = $_SESSION['efiling_details']['registration_id'];
@@ -149,7 +143,7 @@ class PaymentResponse extends BaseController {
                     $_SESSION['MSG'] = message_show("success", 'Fee payment received successfully !');
                     $sentSMS = "Fee received successfully for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                 Receipt No. " . $transaction_num . ", of amount Rs. " . $received_amount . "/-. - Supreme Court of India";
-                    send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
+                    // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
 
                     $smsTemplate=SCISMS_Payment_Success;
                     $subject = "Payment Success : Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
@@ -161,7 +155,7 @@ class PaymentResponse extends BaseController {
                     $sentSMS = "Fee payment for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                 Receipt No. " . $grn_number . " still pending. - Supreme Court of India";
 
-                    send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. PENDING");
+                    // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. PENDING");
                     $smsTemplate=SCISMS_Payment_pending;
                     $subject = "Payment Pending : Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
                 } elseif ($shciltxnstatus == 'failed') {
@@ -172,7 +166,7 @@ class PaymentResponse extends BaseController {
                     $_SESSION['MSG'] = message_show("fail", 'Fee payment failed !');
                     $sentSMS = "Fee payment for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                Receipt No. " . $grn_number . ",  of amount Rs. " . $received_amount . " failed due to some technical reason. If amount is deducted from your bank account, please check with your bank before retry. - Supreme Court of India";
-                    send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-.  FAILED. Please check your bank account for any deduction before retrying to make payment");
+                    // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-.  FAILED. Please check your bank account for any deduction before retrying to make payment");
 
                     $smsTemplate=SCISMS_Payment_failed;
                     $subject = "Payment Failed : Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
@@ -185,7 +179,7 @@ class PaymentResponse extends BaseController {
                     $sentSMS = "Fee payment for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                 Receipt No. " . $grn_number . " cancelled. - Supreme Court of India";
 
-                    send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. CANCELLED");
+                    // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. CANCELLED");
 
                     $smsTemplate=SCISMS_Payment_Cancelled;
                     $subject = "Payment Cancelled : Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']);

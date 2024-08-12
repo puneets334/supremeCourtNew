@@ -19,8 +19,10 @@ class App extends BaseConfig
 
   
     // public string $baseURL = "http://localhost:81/";
+
     // public string $baseURL = "http://10.25.80.170:82/";
        public string $baseURL = "http://10.40.186.81:81//";
+
 
 
     /**
@@ -45,7 +47,7 @@ class App extends BaseConfig
      * something else. If you have configured your web server to remove this file
      * from your site URIs, set this variable to an empty string.
      */
-    public string $indexPage = 'index.php';
+    public string $indexPage = '';
 
     /**
      * --------------------------------------------------------------------------
@@ -210,6 +212,12 @@ class App extends BaseConfig
     public string $csrf_cookie_name = 'CSRFTOKENVALUE';
     public int $csrf_expire = 7200;
     public bool $csrf_regenerate = TRUE;
+
+    public $cookieName = 'ci_session';
+    public $cookiePath = '/';
+    public $cookieDomain = ''; // Set if needed
+    public $cookieSecure = false; // Set to true if using HTTPS
+    public $cookieSameSite = ''; // Or 'Strict' if not using 'Secure'
 
     public array $csrf_exclude_uris = array('shcilPayment/paymentResponse','shcilPayment/paymentCheckStatus','newcase/Ajaxcalls/getAllFilingDetailsByRegistrationId','newcase/Ajaxcalls/updateDiaryDetails','newcase/Ajaxcalls/getAddressByPincode','newcase/Ajaxcalls/get_districts','newcase/Ajaxcalls/getSelectedDistricts','newcase/Ajaxcalls/getSelectedDistricts','newcase/Ajaxcalls_subordinate_court/[a-z_]+','affirmation/Esign_signature/advocate_esign_response','documentIndex/Ajaxcalls/get_index_type','documentIndex/Ajaxcalls/get_doc_type','documentIndex/Ajaxcalls/get_sub_doc_type_check', 'newcase/FeeVerifyLock_Controller/feeVeryLock','case_status/defaultController/showCaseStatus','documentIndex/Ajaxcalls/markCuredDefect','mycases/citation_notes/add_citation_mycases','mycases/citation_notes/get_citation_and_notes_list','mycases/citation_notes/delete_citation_n_notes','mycases/citation_notes/update_citation_mycases','mycases/citation_notes/add_notes_mycases','mycases/citation_notes/update_notes_mycases','mycases/citation_notes/get_contact_list','mycases/citation_notes/add_case_contact','mycases/citation_notes/delete_contacts','mycases/citation_notes/case_contact','mycases/citation_notes/update_case_contacts','mycases/citation_notes/send_sms_and_mail','newcase/Ajaxcalls/assignSrAdvocate','newcase/Ajaxcalls/deleteSrAdvocate','shareDoc/Ajaxcalls_doc_share/add_share_email','deficitCourtFee/DefaultController/record_data_deficit_insrt','deficitCourtFee/DefaultController/record_data_deficit_insrt_paid','register/AdvSignUp/add_advocate','shcilPayment/paymentCheckStatus','admin/EfilingAction/updateDocumentNumber','adminReport/DefaultController/getReportData','superAdmin/DefaultController/addSciUser','filingAdmin/DefaultController/fileTransferToAnOtherUser','register/AdvSignUp/upload_photo','admin/EfilingAction/updateRefiledCase','uploadDocuments/DefaultController/upload_pdf','uploadDocuments/DefaultController/deletePDF','newcase/AutoDiaryGeneration','newcase/AutoDiaryGeneration/updateOldEfilingRefiledCase');
 

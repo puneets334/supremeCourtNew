@@ -183,7 +183,7 @@
                             <section>
                                 <div  id="myFilter" ukfilter="target: .js-filter">
                                     <!-- <table id='example' class="display dataTable uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" ukfilter="target: .js-filter"> -->
-                                    <table id='example' class="display dataTable uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" ukfilter="target: .js-filter">
+                                    <table id="example" class="table table-striped custom-table">
                                         <tfoot>
                                             <tr>
                                                 <th><input type="hidden" placeholder="Search"></th>
@@ -330,6 +330,7 @@
                                                             <b ng-if="case.advocatetype=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionername}}">P:</b>
                                                             &nbsp;<span ng-bind="case.petitionername"></span>
                                                         </div>
+                                                        <br>
                                                         <div>
                                                             <b ng-if="case.advocatetype!='R' && case.advocatetype!=='I'">R:</b>
                                                             <b ng-if="case.advocatetype=='R' || case.advocatetype=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentname}}">R:</b>
@@ -841,7 +842,6 @@
         UIkit.modal('#mail').toggle();
         $('#emailids').html('');
         $('#recipient_mail').val('');
-        //alert(id);
         var x=id.split("-");
         var diaryGet=x[0];
         var caseno=x[1];
@@ -853,24 +853,21 @@
         var dnl= diaryGet.slice(-4);
         var dnf = diaryGet.substring(0,diaryGet.length-4);
         var diary=dnf+'/'+dnl;
-        if(casesStatus=='P')
-        {
+        if(casesStatus=='P') {
             cases_status='Pending.';
-        }else{
+        } else{
             cases_status='Disposed.';
         }
-        if(caseno=='')
-        {
+        if(caseno=='') {
             caseno='UNREGISTERED';
         }
         var type = type;
-        // alert(type);
-        //   var data = $('#case_details_' + id).val();
+        // var data = $('#case_details_' + id).val();
         // var subject = $('#subject_case_details_' + id).val();
         // var data = 'dfd';
-        //  document.getElementById('mail_diary').value=diary;
+        // document.getElementById('mail_diary').value=diary;
         document.getElementById('mail_subject').value="Case Details of Diary No. "+diary;
-        //    document.getElementById('caseinfosms').hide();
+        // document.getElementById('caseinfosms').hide();
         $('#caseinfosms').hide();
         document.getElementById('caseinfomsg').innerHTML="<b>Diary No. </b>"+diary +"<br><b> Registration No.</b>"+ caseno +"<br><b>Cause Title. </b>"+pet_name+" VS "+res_name;
         document.getElementById('caseinfosms').innerHTML="Diary No. "+diary +" Registration No."+ caseno +"Cause Title. "+pet_name+" VS "+res_name;

@@ -329,8 +329,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row"
+                                                <div class="row"
                                                 id="district_court_info"
                                                 style="display: none;">
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -476,9 +475,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row"
+
+                                            </div>
+                                            <div class="row"
                                             id="state_agency_info"
                                             style="display: none;">
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -574,8 +574,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
+                                        <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12"
                                             id="search_button_div">
                                             <div class="col-sm-4 col-xs-12 col-md-offset-5">
@@ -840,6 +839,12 @@
                                         </div>
                                     </div>
                                     <?php echo form_close(); ?>
+                                        </div>
+
+                                        
+                                    </div>
+                                    
+                                    
                                     <?php render('newcase.subordinate_court_list',['subordinate_court_details' => @$subordinate_court_details]); ?>
                                 </div>
                             </div>

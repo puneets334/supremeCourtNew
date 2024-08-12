@@ -27,7 +27,7 @@ class Cookie extends BaseConfig
      *
      * @var DateTimeInterface|int|string
      */
-    public $expires = 0;
+    public $expires = 86400;
 
     /**
      * --------------------------------------------------------------------------
@@ -63,7 +63,7 @@ class Cookie extends BaseConfig
      *
      * Cookie will only be accessible via HTTP(S) (no JavaScript).
      */
-    public bool $httponly = true;
+    public bool $httponly = false;
 
     /**
      * --------------------------------------------------------------------------
@@ -87,7 +87,7 @@ class Cookie extends BaseConfig
      *
      * @phpstan-var 'None'|'Lax'|'Strict'|''
      */
-    public string $samesite = 'Lax';
+    public string $samesite = '';
 
     /**
      * --------------------------------------------------------------------------
