@@ -1,5 +1,5 @@
 <?php
-namespace App\Controllers\Newcase;
+namespace App\Controllers\NewCase;
 
 use App\Controllers\BaseController;
 use App\Libraries\webservices\Efiling_webservices;
@@ -1070,7 +1070,7 @@ class Ajaxcalls extends BaseController {
                 $srAdvocate = getSessionData('diaryDetails');
                 $diaryNo = !empty($srAdvocate->diary_no) ? $srAdvocate->diary_no : NULL;
                 $diaryYear = !empty($srAdvocate->diary_year) ? $srAdvocate->diary_year : NULL;
-                $adv_sci_bar_id = !empty(getSessionData['login']['adv_sci_bar_id']) ? getSessionData['login']['adv_sci_bar_id'] : NULL;
+                $adv_sci_bar_id = !empty(getSessionData('login')['adv_sci_bar_id']) ? getSessionData('login')['adv_sci_bar_id'] : NULL;
                 $inArr = array();
                 $inArr['diary_no'] = $diaryNo.$diaryYear;
                 $inArr['sr_advocate_id'] = $sradvocateId;
@@ -1078,11 +1078,11 @@ class Ajaxcalls extends BaseController {
                 $inArr['createdbyip'] = getClientIP();
                 $inArr['createdby'] = $adv_sci_bar_id;
                 $inArr['user_type'] = $userType;
-                $this->load->model('citation/Citation_model');
+                // $this->load->model('citation/Citation_model');
                 $table = "efil.tbl_sr_advocate_engage";
                 $res = $this->Citation_model->insertData($table,$inArr);
                 if(isset($res) && !empty($res)){
-                    $adv_sci_bar_id = !empty(getSessionData['login']['adv_sci_bar_id']) ? getSessionData['login']['adv_sci_bar_id'] : NULL;
+                    $adv_sci_bar_id = !empty(getSessionData('login')['adv_sci_bar_id']) ? getSessionData('login')['adv_sci_bar_id'] : NULL;
                     $inArr = array();
                     $inArr['diary_no'] = $diaryNo . $diaryYear;
                     $inArr['sr_advocate_id'] = $sradvocateId;
@@ -1091,7 +1091,7 @@ class Ajaxcalls extends BaseController {
                     $inArr['createdby'] = $adv_sci_bar_id;
                     $inArr['is_active'] = true;
                     $inArr['user_type'] = $userType;
-                    $this->load->model('citation/Citation_model');
+                    // $this->load->model('citation/Citation_model');
                     $table = "efil.tbl_sr_advocate_engage_history";
                     $res1 =$this->Citation_model->insertData($table, $inArr);
                     if(isset($res1) && !empty($res1)){
@@ -1143,7 +1143,7 @@ class Ajaxcalls extends BaseController {
                 $engageValue = false;
                 $engageMessage = 'disengaged';
             }
-            $adv_sci_bar_id = !empty(getSessionData['login']['adv_sci_bar_id']) ? getSessionData['login']['adv_sci_bar_id'] : NULL;
+            $adv_sci_bar_id = !empty(getSessionData('login')['adv_sci_bar_id']) ? getSessionData('login')['adv_sci_bar_id'] : NULL;
             $upArr = array();
             if(isset($engageValue) && !empty($engageValue) && $engageValue == true){
                 $upArr['createdAt'] = date('Y-m-d H:i:s');
@@ -1154,7 +1154,7 @@ class Ajaxcalls extends BaseController {
             $upArr['createdbyip'] = getClientIP();
             $upArr['updatedby'] = $adv_sci_bar_id;
             $upArr['is_active'] = $engageValue;
-            $this->load->model('common/Common_model');
+            // $this->load->model('common/Common_model');
             $params = array();
             $params['table_name'] = "efil.tbl_sr_advocate_engage";
             $whereArr['sr_advocate_id']=(int)$srAdvocateId;
@@ -1171,7 +1171,7 @@ class Ajaxcalls extends BaseController {
                     $srAdvocate = getSessionData('diaryDetails');
                     $diaryNo = !empty($srAdvocate->diary_no) ? $srAdvocate->diary_no : NULL;
                     $diaryYear = !empty($srAdvocate->diary_year) ? $srAdvocate->diary_year : NULL;
-                    $adv_sci_bar_id = !empty(getSessionData['login']['adv_sci_bar_id']) ? getSessionData['login']['adv_sci_bar_id'] : NULL;
+                    $adv_sci_bar_id = !empty(getSessionData('login')['adv_sci_bar_id']) ? getSessionData('login')['adv_sci_bar_id'] : NULL;
                     $inArr = array();
                     $inArr['diary_no'] = $diaryNo . $diaryYear;
                     $inArr['sr_advocate_id'] = $srAdvocateId;
@@ -1180,7 +1180,7 @@ class Ajaxcalls extends BaseController {
                     $inArr['createdby'] = $adv_sci_bar_id;
                     $inArr['is_active'] = $engageValue;
                     $inArr['user_type'] = $userType;
-                    $this->load->model('citation/Citation_model');
+                    // $this->load->model('citation/Citation_model');
                     $table = "efil.tbl_sr_advocate_engage_history";
                     $this->Citation_model->insertData($table, $inArr);
                 }
