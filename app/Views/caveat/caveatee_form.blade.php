@@ -75,7 +75,7 @@ body.loading .overlay{
                                 }
                                 ?>
                                     <select class="form-select cus-form-ctrl"
-                                    aria-label="Default select example" name="party_is" id="party_is" onchange="get_caveator_as(this.value)" required>
+                                    aria-label="Default select example" name="party_is" id="party_is"   tabindex = "1"  onchange="get_caveator_as(this.value)" required>
                                     <option value="" title="Select" @required(true)>Select</option>
                                     <option value="I" <?php echo $selectIndividual; ?> >Individual</option>
                                     <option value="D1" <?php echo $selectStateDept; ?>>State Department</option>
@@ -89,7 +89,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                <textarea  tabindex = "17" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
+                                <textarea  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
@@ -124,7 +124,7 @@ body.loading .overlay{
                                 // $selectNotAvailable = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag']) == 'N' ? 'selected' : '';
                                 ?>
                                 
-                                <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
+                                <select tabindex='3' name="pet_rel_flag" id="pet_rel_flag"
                                     class="form-control cus-form-ctrl" >
                                     <option value="" >Select Relation</option>
                                     <option <?php echo $selectSon; ?> value="S">Son Of</option>
@@ -141,7 +141,7 @@ body.loading .overlay{
                             <div class="mb-3">
                                 <label for="" class="form-label">Relative Name <span style="color: red" class="astriks">*</span></label>
 
-                                <input tabindex="5" id="relative_name" name="relative_name"
+                                <input tabindex="4" id="relative_name" name="relative_name"
                                     minlength="3" maxlength="99" placeholder="Relative Name"
                                     value="<?php   echo isset($caveatee_details[0]['relative_name'])?$caveatee_details[0]['relative_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
@@ -153,7 +153,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Date of Birth  <span style="color: red" class="astriks">*</span></label>
-                                <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
+                                <input tabindex='5' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
                                 value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
@@ -178,7 +178,7 @@ body.loading .overlay{
                                     }
                                 ?>
                                 <input type="number" class="form-control cus-form-ctrl"
-                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age" value="<?php echo ($res_age); ?>" required>
+                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" required>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
                                 </span>
@@ -195,7 +195,7 @@ body.loading .overlay{
                                 $gochecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
                                 ?>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input cus-form-check" type="radio" name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>>
+                                    <input class="form-check-input cus-form-check" type="radio" name="pet_gender" id="pet_gender1"  tabindex='7'  value="M" <?php echo $gmchecked; ?>>
                                     <label class="form-check-label" for="inlineRadio1">Male</span></label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -221,7 +221,7 @@ body.loading .overlay{
                                             <span style="color: red">*</span>
                                         </label>
                                         
-                                        <select tabindex = '10' name="org_state" id="org_state" class="form-control cus-form-ctrl input-sm filter_select_dropdown org_state">
+                                        <select tabindex = '8' name="org_state" id="org_state" class="form-control cus-form-ctrl input-sm filter_select_dropdown org_state">
                                             <?php
                                                 echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                 $select_organization ='';
@@ -247,7 +247,7 @@ body.loading .overlay{
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
-                                        <textarea tabindex = '11' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
+                                        <textarea tabindex = '9' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
                                         <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                             <i class="fa fa-question-circle-o" ></i>
                                         </span>
@@ -257,7 +257,7 @@ body.loading .overlay{
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" >
                                     <div class="mb-3">
                                         <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
-                                        <select name="org_dept" tabindex = '12' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
+                                        <select name="org_dept" tabindex = '10' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
                                             <?php
                                             echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                             $dept_sel ='';
@@ -284,7 +284,7 @@ body.loading .overlay{
 
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
-                                            <textarea id="org_dept_name"  tabindex = '17' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
+                                            <textarea id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
                                             <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
@@ -296,7 +296,7 @@ body.loading .overlay{
 
                                     <div class="mb-3">
                                         <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
-                                        <select name="org_post" id="org_post" tabindex = '14' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
+                                        <select name="org_post" id="org_post" tabindex = '12' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
                                             <?php
                                             echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                             $post_sel ='';
@@ -322,7 +322,7 @@ body.loading .overlay{
 
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
-                                            <textarea id="org_post_name" name="org_post_name" tabindex = '17' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
+                                            <textarea id="org_post_name" name="org_post_name" tabindex = '13' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
                                             <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
@@ -344,7 +344,7 @@ body.loading .overlay{
                             <div class="mb-3">
                                 <label for="" class="form-label">Email </label>
                                 <input id="pet_email" name="pet_email" placeholder="Email" placeholder="Email"
-                                    tabindex='17' value="<?php echo isset($caveatee_details[0]['res_email']) ? $caveatee_details[0]['res_email'] : ''; ?>"
+                                    tabindex='14' value="<?php echo isset($caveatee_details[0]['res_email']) ? $caveatee_details[0]['res_email'] : ''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="email" minlength="6" maxlength="49" >
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter caveatee valid email id. (eg : abc@example.com)">
@@ -357,7 +357,7 @@ body.loading .overlay{
                             <div class="mb-3">
                                 <label for="" class="form-label">Mobile </label>
                                 <input id="pet_mobile" name="pet_mobile" placeholder="Mobile"
-                                    tabindex='17' value="<?php echo isset($caveatee_details[0]['res_mobile']) ? $caveatee_details[0]['res_mobile'] : ''; ?>"
+                                    tabindex='15' value="<?php echo isset($caveatee_details[0]['res_mobile']) ? $caveatee_details[0]['res_mobile'] : ''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     type="tel" minlength="10" maxlength="10" >
@@ -370,7 +370,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
-                                <textarea tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
+                                <textarea tabindex='16' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
                                     class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['address']) ? $caveatee_details[0]['address'] : ''; ?></textarea>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o" ></i>
@@ -381,7 +381,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Pin Code </label>
-                                <input id="party_pincode" name="party_pincode" tabindex='20'
+                                <input id="party_pincode" name="party_pincode" tabindex='17'
                                     onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     placeholder="Pin code" 
                                     value="<?php echo !empty($caveatee_details[0]['res_pincode'])?$caveatee_details[0]['res_pincode']:''; ?>"
@@ -396,7 +396,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">City <span style="color: red" class="astriks">*</span></label>
-                                <input id="party_city" tabindex='21' name="party_city" placeholder="City"
+                                <input id="party_city" tabindex='18' name="party_city" placeholder="City"
                                 value="<?php echo isset($caveatee_details[0]['res_city'])?$caveatee_details[0]['res_city']:''; ?>"
                                 class="form-control cus-form-ctrl sci_validation" type="text" minlength="3"
                                 maxlength="49" required>
@@ -409,7 +409,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">State <span style="color: red" class="astriks">*</span></label>
-                                <select class="form-select cus-form-ctrl"  name="party_state" id="party_state" required>
+                                <select class="form-select cus-form-ctrl"  name="party_state" id="party_state"  tabindex='19'  required>
                                 <option value="" title="Select">Select State</option>
                                 <?php
                                 $stateArr = array();
@@ -438,7 +438,7 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">District <span style="color: red" class="astriks">*</span></label>
                                     <select class="form-select cus-form-ctrl"
-                                        aria-label="Default select example" name="party_district" id="party_district">
+                                        aria-label="Default select example" name="party_district" id="party_district"  tabindex='20' >
                                         <option value="" title="Select">Select District</option>
                                         <?php
                                         if (!empty($district_list)) {
@@ -462,10 +462,10 @@ body.loading .overlay{
                                 tabindex='25'>Previous</a>
                             <?php if (isset($caveatee_details[0]['resorgid']) && !empty($caveatee_details[0]['resorgid'])) { ?>
                                 
-                                <input type="submit" class="quick-btn gray-btn" id="res_save" tabindex='26' value="UPDATE">
+                                <input type="submit" class="quick-btn gray-btn" id="res_save" tabindex='21' value="UPDATE">
                                 <a href="<?= base_url('caveat/subordinate_court') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
                             <?php } else { ?>
-                                <input type="submit" class="quick-btn gray-btn" id="res_save" value="SAVE" tabindex='24'>
+                                <input type="submit" class="quick-btn gray-btn" id="res_save" value="SAVE" tabindex='22'>
                             <?php } ?>
                                 
                             </div>

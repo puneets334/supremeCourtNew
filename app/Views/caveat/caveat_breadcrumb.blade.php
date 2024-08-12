@@ -147,9 +147,15 @@ $efiling_num_label_for_display = 'DRAFT-';;
                                 if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {  
 
                                     if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
-                                        if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                        // Comment By Amit Mishra as 
+                                        // if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                        //     echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                        // }
+
+                                        
                                             echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-                                        }
+
+                                        
                                         if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                                             ?>
                                             <?php
