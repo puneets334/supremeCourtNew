@@ -1,12 +1,23 @@
 <?php
+namespace App\Controllers\EfilingAction;
 namespace App\Controllers;
+use App\Models\Caveat\ViewModel;
+use App\Models\EfilingAction\CaveatFinalSubmitModel;
+use App\Models\Caveat\CaveateeModel;
+
 
 class Caveat_final_submit extends BaseController {
 
+    protected $View_model;
+    protected $Caveat_final_submit_model;
+    protected $Caveatee_model;
+
     public function __construct() {
         parent::__construct();
-        $this->load->model('efilingAction/Caveat_final_submit_model');
-        $this->load->model('caveat/View_model');
+        $this->View_model = new ViewModel();
+        $this->Caveat_final_submit_model = new CaveatFinalSubmitModel();
+        $this->Caveatee_model = new CaveateeModel();
+        
     }
 
     public function index() {
