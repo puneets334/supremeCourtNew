@@ -909,8 +909,10 @@ class ResponsiveVariantRouteController extends BaseController
         $data['srAssignedListId'] = !empty(array_column($srAssignedList, 'id')) ? $srassingedId : NULL;
         if (isset($srassingedId) && !empty($srassingedId)) {
             foreach ($srAdvocate as $k => $v) {
-                $arr = $this->removeElementWithValue($srAdvocate, 'id', $srassingedId[$k]);
-                $srAdvocate = $arr;
+                if(isset($srassingedId[$k])) {
+                    $arr = $this->removeElementWithValue($srAdvocate, 'id', $srassingedId[$k]);
+                    $srAdvocate = $arr;
+                }
             }
         }
         $data['srAdvocate'] = !empty($srAdvocate) ? $srAdvocate : NULL;
@@ -920,8 +922,8 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function removeElementWithValue($array, $key, $value)
     {
-        foreach ($array as $subKey => $subArray) {
-            if ($subArray[$key] == $value) {
+        foreach($array as $subKey => $subArray){
+            if($subArray[$key] == $value){
                 unset($array[$subKey]);
             }
         }
@@ -960,8 +962,10 @@ class ResponsiveVariantRouteController extends BaseController
         $data['srAssignedListId'] = !empty(array_column($arguingCounselList, 'id')) ? $arguingCounselId : NULL;
         if (isset($arguingCounselId) && !empty($arguingCounselId)) {
             foreach ($arguingCounsel as $k => $v) {
-                $arr = $this->removeElementWithValue($arguingCounsel, 'id', $arguingCounselId[$k]);
-                $arguingCounsel = $arr;
+                if(isset($arguingCounselId[$k])) {
+                    $arr = $this->removeElementWithValue($arguingCounsel, 'id', $arguingCounselId[$k]);
+                    $arguingCounsel = $arr;
+                }
             }
         }
         $data['arguingCounsel'] = !empty($arguingCounsel) ? $arguingCounsel : NULL;
@@ -1154,7 +1158,6 @@ class ResponsiveVariantRouteController extends BaseController
             ];
         }
         $data['sc_case_type'] = $this->ReportModel->get_sci_case_type();
-        // pr($data);
         $this->render('responsive_variant.case.refile_old_efiling_cases.crud', compact('direct_access_params', 'data'));
     }
     /* end:function written for file a case of old e-filing */

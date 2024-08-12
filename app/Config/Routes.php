@@ -203,8 +203,8 @@ $routes->match(['GET', 'POST'], 'Register/verify', 'Register\ForgetPasswordContr
 $routes->match(['GET', 'POST'], 'Register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
 // $routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'App\Controllers\Mycases\CitationNotes::add_case_contact');
 $routes->post('mycases/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
-$routes->post('newcase/assignSrAdvocate', 'Newcase\Ajaxcalls::assignSrAdvocate');
-$routes->post('newcase/deleteSrAdvocate', 'Newcase\Ajaxcalls::deleteSrAdvocate');
+$routes->post('newcase/assignSrAdvocate', 'NewCase\Ajaxcalls::assignSrAdvocate');
+$routes->post('newcase/deleteSrAdvocate', 'NewCase\Ajaxcalls::deleteSrAdvocate');
 /* End Vinit Garg Routes */
 
 /* Ashutosh Gupta Routes */
