@@ -9,9 +9,6 @@ $routes->get('/', 'DefaultController::index');
 $routes->post('/login', 'DefaultController::login');
 $routes->get('/logout', 'Login\Logout::index');
 $routes->post('/otp', 'DefaultController::otp');
-$routes->match(['GET', 'POST'], '/captcha/index', 'Captcha\DefaultController::index');
-$routes->match(['GET', 'POST'], '/captcha/DefaultController/get_code', 'captcha\DefaultController::get_code');
-$routes->match(['GET', 'POST'], 'captcha_refresh', 'captcha');
 $routes->match(['GET', 'POST'], 'fetch_icmis_data', 'fetchIcmisData');
 $routes->match(['GET', 'POST'], 'fetch_icmis_data/test', 'fetchIcmisData/test');
 $routes->match(['GET', 'POST'], 'default_controller', 'defaultController');
@@ -154,7 +151,6 @@ $routes->match(['GET', 'POST'], 'case/arguingCounsel/(:num)', 'ResponsiveVariant
 $routes->match(['GET', 'POST'], 'case/iamiscdocshare', 'ResponsiveVariantRouteController::iaMiscDocShare');
 $routes->match(['GET', 'POST'], 'case/ancillary/Indexdocuments', 'ResponsiveVariantRouteController::prefilled_index_docs');
 $routes->match(['GET', 'POST'], 'vakalatnama/dashboard/action(:any)', 'vakalatnama/dashboard/action/$1');
-$routes->match(['GET', 'POST'], 'captcha/get_code', 'captcha/DefaultController/get_code');
 // $routes->match(['GET', 'POST'],'e-resources/(:any)','Resources\DefaultController::index/$1');
 // $routes->match(['GET', 'POST'],'e-resources','Resources\DefaultController::index');
 
@@ -290,6 +286,9 @@ $routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatus', 
 $routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatusCertificate', 'CaseStatus\DefaultController::showCaseStatusCertificate');
 $routes->match(['GET', 'POST'], 'case_status/defaultController/showPaperBook', 'CaseStatus\DefaultController::showPaperBook');
 $routes->match(['GET', 'POST'], 'register/ArguingCounselRegister/senOtp', 'Register\ArguingCounselRegister::senOtp');
+$routes->match(['GET', 'POST'], 'captcha/index', 'Captcha\DefaultController::index');
+$routes->match(['GET', 'POST'], 'captcha_refresh', 'Captcha\DefaultController::index');
+$routes->match(['GET', 'POST'], 'captcha/DefaultController/get_code', 'Captcha\DefaultController::get_code');
 /****end-Responsive variant routes refile old efiling cases ****/
 
 
