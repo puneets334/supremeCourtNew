@@ -98,7 +98,6 @@ class CaveatFinalSubmitModel extends Model
                 $builder->where('registration_id', $registrationId);
                 $builder->where('is_active', true);
                 $builder->update($numsDataUpdate);
-                // pr($registrationId);
 
                 if ($this->db->affectedRows() > 0) {
                     $data = [
@@ -114,13 +113,12 @@ class CaveatFinalSubmitModel extends Model
 
                     $builder = $this->db->table('efil.tbl_efiling_allocation');
                     $builder->insert($data);
-                    if ($this->db->insertID()) {    
-                                  
+                    if ($this->db->affectedRows() > 0) {    
                         if ($userTypeId == USER_ADVOCATE) {
                             $efilingForTypeId = getSessionData('efiling_details')['efiling_for_type_id'];
                             $efilingForId = getSessionData('efiling_details')['efiling_for_id'];
                             $registerInfo = $this->get_advocate_register_info($registrationId);
-                            //  pr($registerInfo);
+                            $actionRes = TRUE;
                             $advocateCode = $registerInfo[0]['advocate_code'] ?? '';
                         } else {
                             $actionRes = TRUE;
@@ -134,7 +132,6 @@ class CaveatFinalSubmitModel extends Model
             } else {
                 $actionRes = TRUE;
             }
-            
             if ($actionRes) {             
                 $proceed = false;
 
