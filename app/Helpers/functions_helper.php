@@ -1156,8 +1156,9 @@ function remark_preview($reg_id, $current_stage_id)
     $defects['pdfdefects'] = $Common_model->get_pdf_defects_remarks($reg_id);
     //echo "<pre>";    print_r($result_icmis); echo "</pre>";
     if (isset($result_icmis) && !empty($result_icmis)) {
-        $msg = '<div class="alert table-responsive-sm">';
-        $msg .= '<table id="datatable-defects" class="table table-striped table-bordered dt-responsive nowrap"
+        $msg = '<div class="alert table-responsive-sm"><div class="table-sec">
+                    <div class="table-responsive">';
+        $msg .= '<table id="datatable-defects" class="table table-striped custom-table"
                     cellspacing="0" width="100%">'
             . '<thead class="success">
                         <th>Mark Cured<br /><input type="checkbox" id="checkAll" /></th>
@@ -1235,6 +1236,8 @@ function remark_preview($reg_id, $current_stage_id)
             $msg .= '</b>';
             $msg .= '</div>';
         }
+        $msg .= '</div>';
+        $msg .= '</div>';
         $msg .= '<script type="text/javascript">';
         $msg .= '$(document).ready(function () {';
 

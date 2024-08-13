@@ -275,14 +275,15 @@ class SubordinateCourt extends BaseController {
             $Judgment_Type = '';
 
         }else{
-
             if (!empty($_POST['order_date'])) {
-                if (!preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/[0-9]{4}$/", $_POST['order_date'])) {
+                $date = date('d/m/Y', strtotime($_POST['order_date']));
+                if (!preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/[0-9]{4}$/", $date)) {
                     echo '1@@@' . htmlentities('Invalid Date of birth date format !', ENT_QUOTES);
                     exit(0);
                 }
-                $date = explode('/', $_POST['order_date']);
-                $decision_date = $date[2] . '-' . $date[1] . '-' . $date[0];
+                // $date = explode('/', $_POST['order_date']);
+                // $decision_date = $date[2] . '-' . $date[1] . '-' . $date[0];
+                $decision_date = date('Y-m-d', strtotime($_POST['order_date']));
             } else {
                 $decision_date = $_SESSION['search_case_data_save']['date_of_decision'];
             }

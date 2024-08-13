@@ -236,14 +236,14 @@ class Respondent extends BaseController {
             }
         }
         $this->validation->setRules([
-            "party_email" => [
-                "label" => "Email",
-                "rules" => "required|trim|min_length[6]|max_length[49]|valid_email"
-            ],
-            "party_mobile" => [
-                "label" => "Mobile number",
-                "rules" => "required|trim|exact_length[10]|is_natural"
-            ],
+            // "party_email" => [
+            //     "label" => "Email",
+            //     "rules" => "required|trim|min_length[6]|max_length[49]|valid_email"
+            // ],
+            // "party_mobile" => [
+            //     "label" => "Mobile number",
+            //     "rules" => "required|trim|exact_length[10]|is_natural"
+            // ],
             "party_pincode" => [
                 "label" => "Pincode",
                 "rules" => "required|trim|exact_length[6]|is_natural"
@@ -255,7 +255,7 @@ class Respondent extends BaseController {
             echo '3@@@';
             echo $this->validation->getError('party_as') . $this->validation->getError('party_name') . $this->validation->getError('relation') . $this->validation->getError('relative_name'). $this->validation->getError('party_age') .
             $this->validation->getError('party_gender') . $this->validation->getError('org_state') . $this->validation->getError('org_state_name') . $this->validation->getError('org_dept') . $this->validation->getError('org_dept_name') .
-            $this->validation->getError('org_post') . $this->validation->getError('org_post_name') . $this->validation->getError('party_email') . $this->validation->getError('party_mobile') .
+            $this->validation->getError('org_post') . $this->validation->getError('org_post_name') .
             $this->validation->getError('party_address') . $this->validation->getError('party_city') . $this->validation->getError('party_state') . $this->validation->getError('party_district') . $this->validation->getError('party_pincode');
             exit(0);
         }

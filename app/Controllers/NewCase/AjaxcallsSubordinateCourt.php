@@ -108,7 +108,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
     function get_hc_case_type_list() {
         $hc_bench_id = explode("##", url_decryption(escape_data($_POST['hc_bench_id'])));
-        $est_code = $hc_bench_id[2];
+        $est_code = isset($hc_bench_id[2]) ? $hc_bench_id[2] : '';
         $court_type = $_POST['court_type'];
         $dropDownOptions='<option value="">Select Case Type</option>';
         if (!empty($est_code) && !empty($court_type)) {
@@ -402,15 +402,15 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 'cnr_num' => $case_data['cino'],
                 'case_num' => $case_nums,
                 'case_year' => $case_year,
-                'case_type_id' => $case_data['case_type_id'],
-                'case_type_name' => $case_data['type_name_fil'],
-                'pet_name' => $case_data['pet_name'],
-                'res_name' => $case_data['res_name'],
-                'type_name' => $case_data['type_name_fil'],
-                'date_of_decision' => $case_data['date_of_decision'],
+                'case_type_id' => !empty($case_data['case_type_id']) ? $case_data['case_type_id'] : null,
+                'case_type_name' => !empty($case_data['type_name_fil']) ? $case_data['type_name_fil'] : null,
+                'pet_name' => !empty($case_data['pet_name']) ? $case_data['pet_name'] : null,
+                'res_name' => !empty($case_data['res_name']) ? $case_data['res_name'] : null,
+                'type_name' => !empty($case_data['type_name_fil']) ? $case_data['type_name_fil'] : '',
+                'date_of_decision' => !empty($case_data['date_of_decision']) ? $case_data['date_of_decision'] : null,
                 'case_status' => $status,
-                'court_est_name' => $case_data['court_est_name'],
-                'est_code' => $case_data['est_code'],
+                'court_est_name' => !empty($case_data['court_est_name']) ? $case_data['court_est_name'] : null,
+                'est_code' => !empty($case_data['est_code']) ? $case_data['est_code'] : null,
             );
             //var_dump($search_case_data);
             $sessiondata = array('search_case_data_save' => $search_case_data);

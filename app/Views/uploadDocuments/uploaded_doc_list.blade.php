@@ -1,9 +1,16 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        <?php $segment = service('uri');
+        <?php
+
+use App\Models\Common\CommonModel;
+
+ $segment = service('uri');
         ?>
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <div class="table-sec">
+                    <div class="table-responsive">
+                        <table id="datatable-responsive" class="table table-striped custom-table">
+            <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                 <thead>
                     <tr class="success">
                         <th>#</th>
@@ -18,7 +25,7 @@
                 <tbody>
                     <?php
                     if (getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage) {
-                        $Common_model = new \App\Model\CommonModel();
+                        $Common_model = new CommonModel();
                         $result = $Common_model->max_pending_stage_date(getSessionData('efiling_details')['registration_id']);
                     }
                     $sr = 1;
@@ -49,7 +56,7 @@
                                     <?php
                                     if (isset($result) && strtotime($doc['uploaded_on']) > strtotime($result[0]->max_date) || in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage))) {
                                     ?>
-                                        <a href="javascript:void(0)" onclick="DocDeleteAction('<?php echo htmlentities(url_encryption(trim($doc['doc_id'] . '$$' . getSessionData('efiling_details')['registration_id']), ENT_QUOTES)); ?>')"><i class="fa fa-trash"> Delete</i> </a>
+                                        <a href="javascript:void(0)" class="btn btn-xs btn-danger" onclick="DocDeleteAction('<?php echo htmlentities(url_encryption(trim($doc['doc_id'] . '$$' . getSessionData('efiling_details')['registration_id']), ENT_QUOTES)); ?>')"><i class="fa fa-trash"></i> </a>
                                         <?php } else { ?>-<?php } ?>
                                 </td>
                             <?php } ?>
@@ -58,11 +65,15 @@
 
                 </tbody>
             </table>
+                    </div></div>
             <input type="hidden" name="caveateDocNum" id="caveateDocNum" data-caveateDocNum="<?php echo $caveateDocNum; ?>" />
 
             <!-- start : To show previously submitted and deleted petition while re-filing -->
             <?php if ($segment->getSegment(2) != 'caseDetails' && !empty($uploaded_deleted_docs_while_refiling) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)) { ?>
-                <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                <div class="table-sec">
+                    <div class="table-responsive">
+                        <table id="datatable-responsive1" class="table table-striped custom-table">
+                <!-- <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                     <thead>
                         <tr class="danger">
                             <th>#</th>
@@ -102,6 +113,7 @@
                         <?php } ?>
                     </tbody>
                 </table>
+                    </div></div>
             <?php } ?>
             <!-- end : To show previously submitted and deleted petition while re-filing -->
         </div>

@@ -40,7 +40,7 @@
     background: rgba(255,255,255,0.8) url("loader.gif") center no-repeat;
 }
 /* Turn off scrollbar when body element has the loading class */
-body.loading{
+body.loading{HCBM010302202020
     overflow: hidden;   
 }
 /* Make spinner image visible when body element has the loading class */

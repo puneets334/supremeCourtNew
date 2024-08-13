@@ -25,20 +25,40 @@
     <link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
         rel="stylesheet">
     @stack('style')
-
+<style>
+.card.custom-card {
+    padding: 20px;
+    height: 100%;
+}
+.card.custom-card h5 {
+    font-size: 18px;
+    line-height: 26px;
+    color: #0D48BE;
+}
+    </style>
                             <div class="center-content-inner comn-innercontent">
                                 <div class="tab-content">
                                     <div class="tab-pane active"
                                         id="home"
                                         role="tabpanel"
                                         aria-labelledby="home-tab">
-                                        <?php render('uploadDocuments.upload_document',['uploaded_docs' => @$uploaded_docs]);?>
+                                        
                                         <div class="tab-form-inner">
+                                        <div class="row">
+                                        <div class="col-12">
+                                        <div class="row">
+                                        <div class="col-6">
+                                            <div class="card custom-card">
+                                            <?php render('uploadDocuments.upload_document',['uploaded_docs' => @$uploaded_docs]);?>
+                                        </div>
+                                        </div>
+                                        <div class="col-6">
+                                        <div class="card custom-card">
                                             <?php 
                                                 $segment = service('uri');
                                                 if (!empty($uploaded_docs) && !empty($uploaded_pdf)){ ?>
                                             <?= ASTERISK_RED_MANDATORY ?>
-                                            <h5 style="text-align: left;"><b>For computation of court fees, please use the options below carefully for all documents, interim application(s), if any, uploaded.</b> </h5>
+                                            <h5 style="text-align: left;">For computation of court fees, please use the options below carefully for all documents, interim application(s), if any, uploaded. </h5>
                                             <?php
                                             if(isset($index_details[0]['doc_type_id']) && $index_details[0]['doc_type_id']!=''){
                                                 $editDocType_id=$index_details[0]['doc_type_id'];
@@ -156,14 +176,15 @@
                                                     </div>
                                                 </div>
                                                 <?php echo form_close(); ?>
-                                                <div class="panel panel-default">
-                                                    <div class="panel-body">        
-                                                        <div id ="index_data">             
+                                                <div id ="index_data">             
                                                         <?php // INDEX LIST BEING POPULATED USING AJAX HERE  JAVASCRIPT FUNCTION reload_document_index  -- AJAXCALLS load_document_index METHOD  ?>
                                                         </div>
-                                                    </div>
-                                                </div>
                                             <?php } ?>
+                                            </div>
+                                            
+                                        </div>
+                                            </div>
+                                            </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                                                 <div class="text-center">
                                                     <?php 
@@ -195,7 +216,7 @@
                                                     <a href="<?= $next_url ?>" <?= $next_url; ?> class="btn quick-btn" tabindex = '27' type="button">Next</a>
                                                 </div>
                                             </div>
-                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,7 +244,10 @@
     <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
     {{-- @endsection --}}
     <script type="text/javascript">
-
+            $(".filter_select_dropdown").select2().on('select2-focus', function() {
+                // debugger;
+                $(this).data('select2-closed', true)
+            });
         /*Changes added on 11 September 2020 as a part of modification*/
             function index_title()
             {
@@ -593,6 +617,7 @@
                                 $(this).show();
                             }
                         });
+                        $('#datatableresponsive').removeClass("table table-striped table-bordered dt-responsive nowrap dataTable no-footer").addClass( "table table-striped custom-table" );
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

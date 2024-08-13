@@ -55,10 +55,6 @@
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
-                            {{-- <input type="text"
-                                                        class="form-control cus-form-ctrl"
-                                                        id="exampleInputEmail1"
-                                                        placeholder=""> --}}
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
@@ -86,10 +82,6 @@
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
-                            {{-- <input type="text"
-                                                        class="form-control cus-form-ctrl"
-                                                        id=""
-                                                        placeholder=""> --}}
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">

@@ -818,8 +818,8 @@
         }
 
 
-        $("#sc_sp_case_type_id").select2().on('select2-focus', function() {
-            debugger;
+        $(".filter_select_dropdown").select2().on('select2-focus', function() {
+            // debugger;
             $(this).data('select2-closed', true)
         });
 
