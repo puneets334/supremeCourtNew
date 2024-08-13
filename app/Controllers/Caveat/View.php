@@ -27,7 +27,7 @@ class View extends BaseController {
         $this->UploadDocs_model = new UploadDocsModel();
         
         
-        $this->Get_details_model = new GetDetailsModel();
+        $this->GetDetailsModel = new GetDetailsModel();
         $this->Common_model = new CommonModel();
     }
 
@@ -35,7 +35,7 @@ class View extends BaseController {
 
         $this->check_caveator_info();
 
- if (!empty(getSessionData('efiling_details')) && (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) {
+        if (!empty(getSessionData('efiling_details')) && (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) {
             $registration_id = getSessionData('efiling_details')['registration_id'];
     
         } else {
@@ -75,7 +75,7 @@ class View extends BaseController {
             }
         }
     
-        $data['subordinate_court_details'] = $this->Get_details_model->get_subordinate_court_details($registration_id);
+        $data['subordinate_court_details'] = $this->GetDetailsModel->get_subordinate_court_details($registration_id);
 		//pr($data['subordinate_court_details']);
       
         $data['efiled_docs_list'] = $this->View_model->get_caveat_index_items_list($registration_id);
