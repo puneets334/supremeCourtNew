@@ -38,7 +38,7 @@ $segment = service('uri');
                                 <?php
                                 if($segment->getSegment(1) == 'efiling_search'){
                                 $encrypted_string = $this->encryption->encrypt($doc_list['doc_id']);
-
+                                    
                                 ?>
                                 <a target="_blank" href="<?php echo base_url('documentIndex/WithoutLoginViewIndex/' . $encrypted_string ); ?>">
                                     <?php }else{ ?>
@@ -64,9 +64,9 @@ $segment = service('uri');
 
                 </tbody>
             </table>
-            <?php if (!empty($uploaded_docs )) {
-                render('uploadDocuments.uploaded_doc_list',$uploaded_docs);
-            } ?>
+            <?php if (!empty($uploaded_docs )) {  ?> 
+            @include('uploadDocuments.uploaded_doc_list')
+           <?php } ?>
         </div>
     </div>
 </div>

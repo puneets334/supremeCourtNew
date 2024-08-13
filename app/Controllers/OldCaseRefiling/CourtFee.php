@@ -1,22 +1,47 @@
 <?php
 
+namespace App\Controllers\OldCaseRefiling;
+
+use App\Controllers\BaseController;
+use App\Models\Common\CommonModel;
+use App\Models\MiscellaneousDocs\CourtFeeModel;
+use App\Models\ShcilPayment\PaymentModel;
+use App\Models\DocumentIndex\DocumentIndexSelectModel;
+
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class CourtFee extends CI_Controller {
+class CourtFee extends BaseController
+{
 
-    public function __construct() {
+    protected $Common_model;
+    protected $Court_Fee_model;
+    protected $Payment_model;
+    protected $DocumentIndex_Select_model;
+    protected $request;
+    protected $validation;
+
+    public function __construct()
+    {
         parent::__construct();
-        $this->load->model('common/Common_model');
-        $this->load->model('miscellaneous_docs/Court_Fee_model');
-        $this->load->model('shcilPayment/Payment_model');
+        $this->Common_model = new CommonModel();
+        $this->Court_Fee_model = new CourtFeeModel();
+        $this->Payment_model = new PaymentModel();
+        $this->DocumentIndex_Select_model = new DocumentIndexSelectModel();
+        $this->request = \Config\Services::request();
+        $this->validation = \Config\Services::validation();
+        // $this->load->model('common/Common_model');
+        // $this->load->model('miscellaneous_docs/Court_Fee_model');
+        // $this->load->model('shcilPayment/Payment_model');
 
         //line aaded on 11 nov
-        $this->load->model('documentIndex/DocumentIndex_Select_model');
+        // $this->load->model('documentIndex/DocumentIndex_Select_model');
     }
 
-    public function index() {
-//func added on 11 nov 2020
+    public function index()
+    {
+
+        //func added on 11 nov 2020
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
 
             $registration_id = $_SESSION['efiling_details']['registration_id'];
@@ -43,52 +68,46 @@ class CourtFee extends CI_Controller {
                     $registration_id = $_SESSION['efiling_details']['registration_id'];
 
                     //todo change code when user change doctype which has more than 0 court fee
-                    $pending_court_fee=getPendingCourtFee();
+                    $pending_court_fee = getPendingCourtFee();
                     $breadcrumb_to_update = MISC_BREAD_COURT_FEE;
-                    if($pending_court_fee>0) {
+                    if ($pending_court_fee > 0) {
                         $update_courtfee_breadcrumb_status = $this->Payment_model->remove_breadcrumb($registration_id, $breadcrumb_to_update);
-                    }
-                    else
-                    {
+                    } else {
                         $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, $breadcrumb_to_update);
                     }
 
                     $data['uploaded_pages_count'] = $this->Court_Fee_model->get_uploaded_pages_count($registration_id);
                     $data['payment_details'] = $this->Court_Fee_model->get_payment_details($registration_id);
-                  //start new added by akg
-                    $data['court_fee_bifurcation']=$this->Common_model->get_court_fee_bifurcation($registration_id);
-                    $data['court_fee_list1']=$court_fee_calculation_param1=$this->Common_model->get_subject_category_casetype_court_fee($registration_id);
-                    $data['court_fee_list2']=$this->Common_model->get_ia_or_misc_doc_court_fee(null,12,0);
+                    //start new added by akg
+                    $data['court_fee_bifurcation'] = $this->Common_model->get_court_fee_bifurcation($registration_id);
+                    $data['court_fee_list1'] = $court_fee_calculation_param1 = $this->Common_model->get_subject_category_casetype_court_fee($registration_id);
+                    $data['court_fee_list2'] = $this->Common_model->get_ia_or_misc_doc_court_fee(null, 12, 0);
                     //start new added by akg
                     $data['court_fee_list3'] = $this->Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null);
 
-                    $court_fee_part1=calculate_court_fee(null,1,null,'O'); //start new added by akg
-                    $court_fee_part2=calculate_court_fee(null, 2, null, null);
+                    $court_fee_part1 = calculate_court_fee(null, 1, null, 'O'); //start new added by akg
+                    $court_fee_part2 = calculate_court_fee(null, 2, null, null);
 
                     //$total_court_fee = (int)$court_fee_part2;
-                    $total_court_fee = (int)$court_fee_part1+(int)$court_fee_part2; //start new added by akg
-                    if($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) //vakaltnama fee need to added by default in the case of caveat
+                    $total_court_fee = (int)$court_fee_part1 + (int)$court_fee_part2; //start new added by akg
+                    if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) //vakaltnama fee need to added by default in the case of caveat
                     {
-                        $data['court_fee'] = $total_court_fee +10;
+                        $data['court_fee'] = $total_court_fee + 10;
+                    } else {
+                        $data['court_fee'] = $total_court_fee;
                     }
-                    else
-                    {
-                        $data['court_fee'] = $total_court_fee ;
-                    }
-
                 }
-
-                $this->load->view('templates/header');
-                $this->load->view('oldCaseRefiling/old_efiling_view', $data);
-                $this->load->view('templates/footer');
+                return $this->render('oldCaseRefiling.old_efiling_view', $data);
+                // $this->load->view('templates/header');
+                // $this->load->view('oldCaseRefiling/old_efiling_view', $data);
+                // $this->load->view('templates/footer');
             } else {
 
-                $updateData="";
-                foreach ($index_pdf_details as $val)
-                {
+                $updateData = "";
+                foreach ($index_pdf_details as $val) {
                     $updateData .= $val['doc_title'] . " , ";
                 }
-                $updateData= !emtpy($updateData) ? rtrim($updateData, " , ") : '';
+                $updateData = isset($updateData) ? rtrim($updateData, " , ") : '';
 
                 //  echo htmlentities("Index of file " . $val['doc_title'] . ' not completed ', ENT_QUOTES);
                 echo "<script>alert('$updateData Pdf file index is not complete ');
@@ -98,7 +117,8 @@ window.location.href='" . base_url() . "uploadDocuments/DefaultController';</scr
         }
     }
 
-    public function add_court_fee_details() {
+    public function add_court_fee_details()
+    {
 
         //echo "<pre>";       print_r($_SESSION);die;
 
@@ -118,41 +138,61 @@ window.location.href='" . base_url() . "uploadDocuments/DefaultController';</scr
             exit(0);
         }
 
-        $this->form_validation->set_rules('print_fee_details', 'Printing Details', 'required|trim|validate_encrypted_value');
-        $this->form_validation->set_rules('usr_court_fee', 'Court Fee', 'required|trim|min_length[1]|max_length[5]|is_natural');
-        $this->form_validation->set_rules('user_declared_extra_fee', 'want to more pay Court Fee', 'required|trim|min_length[1]|max_length[5]|is_natural');
+        // $this->form_validation->set_rules('print_fee_details', 'Printing Details', 'required|trim|validate_encrypted_value');
+        // $this->form_validation->set_rules('usr_court_fee', 'Court Fee', 'required|trim|min_length[1]|max_length[5]|is_natural');
+        // $this->form_validation->set_rules('user_declared_extra_fee', 'want to more pay Court Fee', 'required|trim|min_length[1]|max_length[5]|is_natural');
 
-        $this->form_validation->set_error_delimiters('<br/>', '');
-        if (!$this->form_validation->run()) {
+        // $this->form_validation->set_error_delimiters('<br/>', '');
+        // if (!$this->form_validation->run()) {
 
-            $_SESSION['MSG'] = form_error('print_fee_details') . form_error('usr_court_fee'). form_error('Want_to_pay_more_court_fee');
-            redirect('oldCaseRefiling/courtFee');
+        //     $_SESSION['MSG'] = form_error('print_fee_details') . form_error('usr_court_fee') . form_error('Want_to_pay_more_court_fee');
+        //     redirect('oldCaseRefiling/courtFee');
+        //     exit(0);
+        // }
+        $this->validation->setRules([
+            "print_fee_details" => [
+                "label" => "Printing Details",
+                "rules" => "required|trim"
+            ],
+            "usr_court_fee" => [
+                "label" => "Court Fee",
+                "rules" => "required|trim|min_length[1]|max_length[5]|is_natural"
+            ],
+            "user_declared_extra_fee" => [
+                "label" => "want to more pay Court Fee",
+                "rules" => "required|trim|min_length[1]|max_length[5]|is_natural"
+            ],
+        ]);
+      
+        if ($this->validation->withRequest($this->request)->run() === FALSE) {
+            $_SESSION['MSG'] = $this->validation->getError('print_fee_details') . $this->validation->getError('usr_court_fee');
+            return redirect()->to(base_url('oldCaseRefiling/courtFee'));
             exit(0);
         }
 
 
 
-         $registration_id = $_SESSION['efiling_details']['registration_id'];
+        $registration_id = $_SESSION['efiling_details']['registration_id'];
 
         $user_declared_extra_fee = escape_data($_POST['user_declared_extra_fee']);
         $print_fee_details = escape_data($_POST['print_fee_details']);
         $print_fee_details = explode('$$', url_decryption($print_fee_details));
-        
+
         if (count($print_fee_details) != 5) {
             $_SESSION['MSG'] = 'Printing Fee details tempered';
             redirect('oldCaseRefiling/courtFee');
             exit(0);
         }
-        
+
         $order_no = rand(1001, 9999) . date("yhmids");
         $order_date = date('Y-m-d H:i:s');
 
-        $court_fee_part2=calculate_court_fee(null,2,'wd',null);
-        $total_court_fee=(int)$court_fee_part2;
+        $court_fee_part2 = calculate_court_fee(null, 2, 'wd', null);
+        $total_court_fee = (int)$court_fee_part2;
 
         $already_paid_payment = $this->Common_model->get_already_paid_court_fee($registration_id);
-        if(!empty($already_paid_payment[0]['court_fee_already_paid']))
-            $total_court_fee=$total_court_fee-(int)$already_paid_payment[0]['court_fee_already_paid'];
+        if (!empty($already_paid_payment[0]['court_fee_already_paid']))
+            $total_court_fee = $total_court_fee - (int)$already_paid_payment[0]['court_fee_already_paid'];
 
 
 
@@ -173,8 +213,8 @@ window.location.href='" . base_url() . "uploadDocuments/DefaultController';</scr
             'payment_mode' => 'online',
             'payment_mode_name' => 'SHCIL'
         );*/
-          //comment 16 march 2021 by akg
-       /* $data_to_save = array(
+        //comment 16 march 2021 by akg
+        /* $data_to_save = array(
             'registration_id' => $registration_id,
             'entry_for_type_id' => $_SESSION['efiling_details']['efiling_for_type_id'],
             'entry_for_id' => $_SESSION['efiling_details']['efiling_for_id'],
@@ -215,7 +255,7 @@ window.location.href='" . base_url() . "uploadDocuments/DefaultController';</scr
         unset($_SESSION['pg_request_payment_details']);
         if ($status) {
             //comment 16 march 2021 by akg
-               /* $_SESSION['pg_request_payment_details'] = array(
+            /* $_SESSION['pg_request_payment_details'] = array(
                     'user_declared_extra_fee' => escape_data($user_declared_extra_fee),
                     'user_declared_court_fee' => escape_data($total_court_fee),
                     'printing_total' => escape_data($print_fee_details[1]),
@@ -234,5 +274,4 @@ window.location.href='" . base_url() . "uploadDocuments/DefaultController';</scr
             exit(0);
         }
     }
-
 }

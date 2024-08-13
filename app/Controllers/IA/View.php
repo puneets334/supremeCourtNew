@@ -35,7 +35,7 @@ class View extends BaseController
         // echo 'hi';
         // pr($_SESSION);
      
-        $registration_id = getSessionData('efiling_details')['registration_id']='';
+        $registration_id = getSessionData('efiling_details')['registration_id'];
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, USER_CLERK);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');

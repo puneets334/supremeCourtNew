@@ -1570,7 +1570,7 @@ class Efiling_webservices {
 
     public function getCISData($diaryNo)
     {
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getCaseDetails/?diaryNo=$diaryNo");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getCaseDetails/?diaryNo=$diaryNo");
         if ($data != false) {
             return json_decode($data,true);
         } else {
@@ -2035,7 +2035,7 @@ class Efiling_webservices {
 
     public function getCaseDefectDetails($diary_no='',$diary_year='')
     {
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getCaseDefectsList?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getCaseDefectsList?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
         // pr(ICMIS_SERVICE_URL."/ConsumedData/getCaseDefectsList?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
         if ($data != false) {
             return json_decode($data);
@@ -2106,6 +2106,7 @@ class Efiling_webservices {
     public function checkInTheOldEfilingCasesList($diary_no='',$diary_year='')
     {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/checkCaseIsEligibleForRefiling?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
+        // pr(ICMIS_SERVICE_URL."/ConsumedData/checkCaseIsEligibleForRefiling?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
         if ($data != false) {
             return json_decode($data);
         } else {

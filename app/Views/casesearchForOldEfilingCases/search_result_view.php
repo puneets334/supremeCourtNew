@@ -1,11 +1,9 @@
-
-
-
-<?php
+<?php;
 $attribute = array('class' => 'form-horizontal', 'id' => 'save_searched_case', 'name' => 'save_searched_case', 'autocomplete' => 'off');
 //echo form_open('case/search/save_searched_case_result', $attribute);
 
 unset($_SESSION['parties_list']);
+
 $diary_no = $searched_case_details->diary_no;
 $diary_year = $searched_case_details->diary_year;
 $order_date = $searched_case_details->ord_dt;

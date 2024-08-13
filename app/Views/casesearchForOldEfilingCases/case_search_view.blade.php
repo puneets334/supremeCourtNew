@@ -31,11 +31,11 @@
                                                         $commonHeading = 'File An IA';
                                                     } elseif (getSessionData('customEfil') == 'misc') {
                                                         unset($_SESSION['efiling_type']);
-                                                        setSessionData('efiling_type', 'misc'); 
+                                                        setSessionData('efiling_type', 'misc');
                                                         $commonHeading = 'File A Document';
                                                     } elseif (getSessionData('customEfil') == 'refile') {
                                                         unset($_SESSION['efiling_type']);
-                                                        setSessionData('efiling_type', 'refile_old_efiling_cases');                                                         
+                                                        setSessionData('efiling_type', 'refile_old_efiling_cases');
                                                         $commonHeading = 'Refile old efiling cases';
                                                     }
                                                     ?>
@@ -204,9 +204,7 @@
 
                                         <br>
                                         <div id="msg"></div>
-                                        <div id="show_search_result_diary">
-
-                                        </div>
+                                        <div id="show_search_result_diary"></div>
                                         <div id="show_search_result"></div>
 
                                     </div>
@@ -232,12 +230,13 @@
         <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
         <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
         <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-      
+
         <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script> -->
         <script>
             $(document).ready(function() {
                 var inputValue = $('input[type="radio"]:checked').val();
+                
                 if (inputValue == 'register') {
                     $('#diaryno').val('');
                     $('#diary_year').val('');
@@ -318,18 +317,22 @@
                             $('#search_sc_case').prop('disabled', true);
                         },
                         success: function(data) {
-
-
                             $('#search_sc_case').val('SEARCH');
                             $('#search_sc_case').prop('disabled', false);
                             var resArr = data.split('@@@');
                             console.log(resArr[1]);
+                            $('#show_search_result_diary').html(resArr[1]);
 
                             if (resArr[0] == 1) {
+                                alert('sdf');
                                 $('#show_search_result_diary').html(resArr[1]);
+                                
+                                // $("#show_search_result_diary").css("display", "block");
                             } else if (resArr[0] == 2) {
+                                alert('2');
                                 $('#show_search_result').html(resArr[1]);
                             } else if (resArr[0] == 3) {
+                                alert('3');
                                 $(".form-response").show();
                                 $('#msg').show();
                                 $(".form-response").html(
