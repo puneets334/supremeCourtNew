@@ -44,56 +44,78 @@ class ArguingCounselRegister extends BaseController {
         unset($_SESSION['self_arguing_counsel']);
         unset($_SESSION['arguingCounselId']);
         unset($_SESSION['aor_register']);
-
-        if ($_SESSION["captcha"] !=$_POST['userCaptcha']) {
-            $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!!</p> </div>');
-            redirect('arguingCounselRegister');
+        if ($_SESSION["captcha"] != $_POST['userCaptcha']) {
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');
+            return redirect()->to(base_url('arguingCounselRegister'));
             exit(0);
-        }$this->form_validation->set_rules('userCaptcha', 'Captcha', 'required|trim|is_required');
-        $this->form_validation->set_rules('adv_mobile', 'Mobile', 'required|numeric|trim|is_required|min_length[10]|max_length[10]');
-        $this->form_validation->set_rules('adv_email', 'Email', 'required|valid_email|trim|is_required');
-        $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
-        if ($this->form_validation->run() === FALSE) {
+        }
+        // $this->form_validation->set_rules('userCaptcha', 'userCaptcha', 'required|trim|is_required');
+        // $this->form_validation->set_rules('adv_mobile', 'Mobile', 'required|numeric|trim|is_required|min_length[10]|max_length[10]');
+        // $this->form_validation->set_rules('adv_email', 'Email', 'required|valid_email|trim|is_required');
+        // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
+        // if ($this->form_validation->run() === FALSE) {
+        //     $captcha_value = captcha_generate();
+        //     $data['captcha']['image'] = $captcha_value['image'];
+        //     $data['captcha']['word'] = $captcha_value['word'];
+        //     $this->addAarguingCounsel();
+        // } else {
+        $rules = [
+            "userCaptcha" => [
+                "label" => "userCaptcha",
+                "rules" => "required|trim"
+            ],
+            "adv_mobile" => [
+                "label" => "Mobile",
+                "rules" => "required|numeric|trim|min_length[10]|max_length[10]"
+            ],
+            "adv_email" => [
+                "label" => "Email",
+                "rules" => "required|valid_email|trim"
+            ],
+        ];
+        if ($this->validate($rules) === FALSE) {
+            $data = [
+                'validation' => $this->validator,
+            ];
             $captcha_value = captcha_generate();
             $data['captcha']['image'] = $captcha_value['image'];
             $data['captcha']['word'] = $captcha_value['word'];
             $this->addAarguingCounsel();
-        }
-        else {
+        } else {
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
                 $mobile_already_exist = $this->Register_model->check_already_reg_mobile($_POST['adv_mobile']);
                 $email_already_exist = $this->Register_model->check_already_reg_email($_POST['adv_email']);
                 $mobile_arguing_counsel_exist = $this->Register_model->check_already_reg_mobile_arguing_counsel($_POST['adv_mobile']);
                 $email_arguing_counsel_exist = $this->Register_model->check_already_reg_email_arguing_counsel($_POST['adv_email']);
                 if ($_POST['register_type'] == 'Advocate') {
-                    if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                        redirect('arguingCounselRegister');
+                    if (isset($mobile_already_exist) && $mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
+                        $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
+                        return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                        redirect('arguingCounselRegister');
+                    if (isset($email_already_exist) && $email_already_exist[0]['emailid'] == $_POST['adv_email']) {
+                        $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
+                        return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if ($mobile_arguing_counsel_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                        redirect('arguingCounselRegister');
+                    if (isset($mobile_arguing_counsel_exist) && $mobile_arguing_counsel_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
+                        $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
+                        return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if ($email_arguing_counsel_exist[0]['emailid'] == $_POST['adv_email']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                        redirect('arguingCounselRegister');
+                    if (isset($email_arguing_counsel_exist) && $email_arguing_counsel_exist[0]['emailid'] == $_POST['adv_email']) {
+                        $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
+                        return redirect()->to(base_url('arguingCounselRegister'));
                     }
-
-//                    $advDetailsIcmis=$this->efiling_webservices->getBarTable($_POST['adv_mobile'],$_POST['adv_email']);
-//                    if ($advDetailsIcmis[0]->moblie_number != $_POST['adv_mobile'] || $advDetailsIcmis[0]->emailid != $_POST['adv_email']) {
-//                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number And Email ID Not Vailid for Bar! Please Contact SCI !</p> </div>');
-//                        redirect('arguingCounselRegister');
-//                    }
+                    // $advDetailsIcmis=$this->efiling_webservices->getBarTable($_POST['adv_mobile'],$_POST['adv_email']);
+                    // if ($advDetailsIcmis[0]->moblie_number != $_POST['adv_mobile'] || $advDetailsIcmis[0]->emailid != $_POST['adv_email']) {
+                    //     $this->session->setFlashdata('msg', 'Mobile Number And Email ID Not Vailid for Bar! Please Contact SCI !');
+                    //     return redirect()->to(base_url('arguingCounselRegister'));
+                    // }
                 }
                 $mobile_otp_is = $this->generateNumericOTP();
                 $email_otp_is = $this->generateNumericOTP();
                 $startTime=date("H:i");
                 $endTime = date("H:i", strtotime('+15 minutes', strtotime($startTime)));
-                $_SESSION['adv_details'] = array('mobile_no' => $_POST['adv_mobile'],
+                $_SESSION['adv_details'] = array(
+                    'mobile_no' => $_POST['adv_mobile'],
                     'mobile_otp' => $mobile_otp_is,
                     'email_id' => $_POST['adv_email'],
                     'email_otp' => $email_otp_is,
@@ -112,7 +134,7 @@ class ArguingCounselRegister extends BaseController {
                     $message="OTP for Registration SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
                     send_mail_msg($to_email, $subject, $message);
                 }
-                    redirect('register/AdvOtp');
+                return redirect()->to(base_url('register/AdvOtp'));
             }
         }
     }
@@ -125,6 +147,5 @@ class ArguingCounselRegister extends BaseController {
         }
         return $result;
     }
-
 
 }

@@ -126,18 +126,15 @@ class DefaultController extends BaseController {
         //     'session_not_register_type_user' => stringDecreption($_POST['not_register_type_user'])
         // );
         // setSessionData('reg_details', $sess_reg_data);
-        // pr(getSessionData('reg_details'));
         if (empty($_POST['userCaptcha'])) {
-            $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Captcha is required!</p> </div>');
-            redirect('register');
+            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Captcha is required!</p> </div>');
+            return redirect()->to(base_url('register'));
             exit(0);
         }
         // $this->form_validation->set_rules('userCaptcha', 'Captcha', 'required|trim|is_required');
         // $this->form_validation->set_rules('adv_mobile', 'Mobile', 'required|numeric|trim|is_required|min_length[10]|max_length[10]');
         // $this->form_validation->set_rules('adv_email', 'Email', 'required|valid_email|trim|is_required');
-
         // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
-
         // if ($this->form_validation->run() === FALSE) {
         //     /*$captcha_value = captcha_generate();
         //     $data['captcha']['image'] = $captcha_value['image'];
@@ -166,56 +163,51 @@ class DefaultController extends BaseController {
                 'currentPath' => $this->slice->getSegment(1) ?? 'public',
             ];
             $this->session->set('login_salt', $this->generateRandomString());
-            return $this->slice->view('responsive_variant.authentication.register_view', $data);
-        } else{
+            return $this->render('responsive_variant.authentication.register_view', $data);
+        } else {
             if ($_SESSION["captcha"] !=$_POST['userCaptcha']) {
-                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
-                redirect('register');
+                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
+                return redirect()->to(base_url('register'));
                 exit(0);
             }
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
-
                 $mobile_already_exist = $this->Register_model->check_already_reg_mobile($_POST['adv_mobile']);
                 $email_already_exist = $this->Register_model->check_already_reg_email($_POST['adv_email']);
-
                 //$mobile_already_bar = $this->Register_model->check_already_reg_mobile_bar($_POST['adv_mobile']);
                 //$email_already_bar = $this->Register_model->check_already_reg_email_bar($_POST['adv_email']);
-
                 if ($_POST['register_type'] == 'Party In Person') {
                     if (!empty($mobile_already_exist)) {
                         if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                            redirect('register');
+                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                            return redirect()->to(base_url('register'));
                         } elseif ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                            redirect('register');
+                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                            return redirect()->to(base_url('register'));
                         }
                     }
                 } else if ($_POST['register_type'] == 'Advocate On Record') {
                     if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                        redirect('register/AdvocateOnRecord');
+                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                        return redirect()->to(base_url('register/AdvocateOnRecord'));
                     }
                     if ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                        redirect('register/AdvocateOnRecord');
+                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                        return redirect()->to(base_url('register/AdvocateOnRecord'));
                     }
                     $advDetailsIcmis=$this->efiling_webservices->getBarTable($_POST['adv_mobile'],$_POST['adv_email']);
                     if ($advDetailsIcmis[0]->moblie_number != $_POST['adv_mobile'] || $advDetailsIcmis[0]->emailid != $_POST['adv_email']) {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number And Email ID Not Valid for Bar! Please Contact SCI !</p> </div>');
-                        redirect('register/AdvocateOnRecord');
+                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number And Email ID Not Valid for Bar! Please Contact SCI !</p> </div>');
+                        return redirect()->to(base_url('register/AdvocateOnRecord'));
                     }
                 }
-
                 if (!empty($_FILES["ekyc_zip_file"]['name'])) {
                     $is_valid_files='';
                     $uploaded_file_size=$_FILES["ekyc_zip_file"]['size'];
                     if($uploaded_file_size > OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE) // allow  upto 50 kb size
                     {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">File size are beyond allowable limit.</p> </div>');
-                        redirect('register');
-                    }
-                    else {
+                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">File size are beyond allowable limit.</p> </div>');
+                        return redirect()->to(base_url('register'));
+                    } else {
                         //$is_valid_files=$this->inspect_files_within_zip($_FILES["ekyc_zip_file"]['name']);
                         $is_valid_files=true;
                     }
@@ -229,7 +221,6 @@ class DefaultController extends BaseController {
                     $config['overwrite'] = TRUE;
                     // Load upload library
                     $imageExtention = pathinfo($_FILES["ekyc_zip_file"]["name"], PATHINFO_EXTENSION);
-
                     $this->load->library('upload', $config);
                     //only ZIP file allowed
                     if($imageExtention=='zip'){
@@ -248,29 +239,25 @@ class DefaultController extends BaseController {
                                 //$res = $zip->open("assets/ekyc/" . $filename);
                                 $res = $zip->open("uploaded_docs/ekyc/" . $filename);
                                 $_SESSION['uploaded_file_name'] = $filename;
-
                                 if ($res === TRUE) {
                                     $DIR2 = $DIR . '/' . $_SESSION['filename'] . '.xml';
                                     if ($zip->setPassword($_POST['share_code'])) {
                                         if (!$zip->extractTo($DIR)) {
-                                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Extraction failed (wrong password?)</p> </div>');
-                                            redirect('register');
+                                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Extraction failed (wrong password?)</p> </div>');
+                                            return redirect()->to(base_url('register'));
                                         }
                                     }
                                     $zip->close();
                                     $xml = simplexml_load_file($DIR2);
                                     $json = json_encode($xml);
                                     $data_config = json_decode($json, true);
-
                                     $_SESSION['kyc_configData'] = $data_config;
                                     $data['configData'] = $_SESSION['kyc_configData'];
                                     $data['mobile_addhar'] = $_POST['mobile'];
                                     $data['email_addhar'] = $_POST['emailid'];
                                     $this->load->library('encryption');
-
                                     //Check if mobile & email matched with aadhar data dated 29-12-2020
                                     $reference_id = $data_config['@attributes']['referenceId'];
-
                                     $get_adhar_last_digit = substr(substr($reference_id, 0 , 4),-1);
                                     if($get_adhar_last_digit == 0){
                                         $get_adhar_last_digit = 1;
@@ -278,57 +265,46 @@ class DefaultController extends BaseController {
                                     $share_code = $_POST['share_code'];
                                     $mobile_sha256_hash = $_POST['adv_mobile'].$share_code;
                                     $email_sha256_hash = $_POST['adv_email'].$share_code;
-
                                     for($i=1;$i<=$get_adhar_last_digit;$i++){
                                         $mobile_sha256_hash = hash('sha256', $mobile_sha256_hash);
                                         $email_sha256_hash = hash('sha256', $email_sha256_hash);
                                     }
                                     $Poi = $data_config['UidData']['Poi']['@attributes'];
-
                                     //if($mobile_sha256_hash != $Poi['m'] || $email_sha256_hash != $Poi['e']){
                                     if($mobile_sha256_hash != $Poi['m']){
-                                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Mobile should be same as registered with Aadhar! </p> </div>');
-                                        redirect('register');
-                                    }
-                                    else{
+                                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Mobile should be same as registered with Aadhar! </p> </div>');
+                                        return redirect()->to(base_url('register'));
+                                    } else {
                                         $responseString = file_get_contents($DIR2);
                                         $signature_match = $this->offlineKycResponse($responseString);
-                                        if($signature_match != 'Signature validated'){
-                                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Aadhar file tampered, please try with fresh offline aadhar! </p> </div>');
-                                            redirect('register');
+                                        if($signature_match != 'Signature validated') {
+                                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Aadhar file tampered, please try with fresh offline aadhar! </p> </div>');
+                                            return redirect()->to(base_url('register'));
                                         }
                                     }
-
-
-                                    //END
-
-
                                     $aadhar_no = $data['configData']['@attributes']['referenceId'];
                                     $aadhar_last_disit_no = substr($aadhar_no, -18, -17);
                                     $this->load->library('encryption');
                                     $share_code = '8976';
-
                                     $mob = "9582551896";
                                     $l_digit = "3";
-                                    $this->session->set_flashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Upload & Extract successfully.</p> </div>');
+                                    $this->session->setFlashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Upload & Extract successfully.</p> </div>');
                                 } else {
-                                    $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Failed to extract.</p> </div>');
-                                    redirect('register');
+                                    $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Failed to extract.</p> </div>');
+                                    return redirect()->to(base_url('register'));
                                 }
-                            }
-                            else{
+                            } else {
                                 unlink($file_path);
-                                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Pls. upload the original offline Aadhaar eKYC Zip file.</p> </div>');
-                                redirect('register');
+                                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Pls. upload the original offline Aadhaar eKYC Zip file.</p> </div>');
+                                return redirect()->to(base_url('register'));
                             }
-
                         } else {
-                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Failed to upload (only zip file upload allowed). Some problem</p> </div>');
-                            redirect('register');
+                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Failed to upload (only zip file upload allowed). Some problem</p> </div>');
+                            return redirect()->to(base_url('register'));
                         }
                     } else {
-                        $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Only zip file upload allowed.</p> </div>');
-                        redirect('register');
+                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Only zip file upload allowed.</p> </div>');
+                        return redirect()->to(base_url('register'));
                     }
                 }
                 if(!empty($_POST['adv_mobile']))
@@ -339,15 +315,14 @@ class DefaultController extends BaseController {
                     $first_name = (!empty($email_exist)) ? $email_exist[0]['first_name'] : 'Abc';
                     $last_name = (!empty($email_exist)) ? $email_exist[0]['last_name'] : 'Xyz';
                     $name_array = array('first_name'=> $first_name, 'last_name'=> $last_name);
-
                 $mobile_otp_is = $this->generateNumericOTP();
                 $email_otp_is = $this->generateNumericOTP();
-
-                /* $_SESSION['adv_details'] = array('mobile_no' => $_POST['adv_mobile'],
-                     'mobile_otp' => $mobile_otp_is,
-                     'email_id' => $_POST['adv_email'],
-                     'email_otp' => $email_otp_is,
-                     'register_type' => $_POST['register_type']);*/
+                /* $_SESSION['adv_details'] = array(
+                    'mobile_no' => $_POST['adv_mobile'],
+                    'mobile_otp' => $mobile_otp_is,
+                    'email_id' => $_POST['adv_email'],
+                    'email_otp' => $email_otp_is,
+                    'register_type' => $_POST['register_type']);*/
                 /* Code Added on 13-03-2023 by Amit Tripathi for OTP expiration */
                 date_default_timezone_set('Asia/Kolkata');
                 $startTime=date("H:i");
@@ -362,7 +337,8 @@ class DefaultController extends BaseController {
                     'end_time' => $endTime), $name_array);
                 setSessionData('adv_details', $sess_data);
                 /* END */
-                /*$_SESSION['adv_details'] =  array_merge(array('mobile_no'=>$_POST['adv_mobile'],
+                /*$_SESSION['adv_details'] =  array_merge(array(
+                    'mobile_no'=>$_POST['adv_mobile'],
                     'mobile_otp'=>$mobile_otp_is,
                     'email_id'=>$_POST['adv_email'],
                     'email_otp'=>$email_otp_is,
@@ -378,13 +354,13 @@ class DefaultController extends BaseController {
                     $subject="SC-EFM Registration password OTP";
                     $message="OTP for Registration SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
                     send_mail_msg($to_email, $subject, $message);
-                    //relay_mail_api($to_email, $subject, $message);
-                    //var_dump($test);exit;
+                    // relay_mail_api($to_email, $subject, $message);
+                    // var_dump($test);exit;
                 }
-                redirect('register/AdvOtp');
+                return redirect()->to(base_url('register/AdvOtp'));
             } else {
                 $this->session->setFlashdata('login_salt', $this->generateRandomString());
-                return $this->slice->view('responsive_variant.authentication.register_view');
+                return $this->render('responsive_variant.authentication.register_view');
             }
         }
     }

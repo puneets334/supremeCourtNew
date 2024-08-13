@@ -196,16 +196,12 @@ $session = service('session');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="mb-3">
-                                            <button class="btn quick-btn ">SEND OTP</button>
-                                        </div>
-                                    </div>
+                                <div class="row mb-3">
+                                    <button class="btn quick-btn">SEND OTP</button>
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
-                        <a href="{{base_url()}}" class="btn quick-btn">LOGIN</a>
+                        <center><a href="{{base_url()}}" class="col-sm-3 col-md-3 btn quick-btn">LOGIN</a></center>
                         <div class="regester-txts">
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
