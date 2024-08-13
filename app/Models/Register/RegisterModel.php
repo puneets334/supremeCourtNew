@@ -73,7 +73,7 @@ class RegisterModel extends Model
 
     public function check_already_reg_email($email)
     {
-        $query = $this->db->table($this->table)
+        $query = $this->db->table('efil.tbl_users')
             ->select('emailid, first_name, last_name')
             ->where('UPPER(emailid)', $email)
             ->where('is_active', '1')
@@ -193,12 +193,17 @@ class RegisterModel extends Model
         // } else {
         //     return false;
         // }
-        $builder = $this->db->table('dscr.tbl_arguing_counsels');
-        $builder->select('advocate_name,mobile_number,emailid');
-        $builder->where('emailid', $email);
-        $builder->where('is_deleted', false);
-        $query = $builder->get();
-        return $query->getResultArray();
+        $query = $this->db->table('dscr.tbl_arguing_counsels')
+            ->select('advocate_name,mobile_number,emailid')
+            ->where('emailid', $email)
+            ->where('is_deleted', false)
+            ->get();
+
+        if ($query->getNumRows() >= 1) {
+            return $query->getResultArray();
+        } else {
+            return false;
+        }
     }
 
     public function getArguingCounselData($params = array())

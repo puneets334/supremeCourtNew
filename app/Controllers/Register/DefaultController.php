@@ -1,10 +1,20 @@
 <?php
 
 namespace App\Controllers\Register;
+
 use App\Controllers\BaseController;
 use App\Models\Register\RegisterModel;
 use App\Libraries\webservices\Efiling_webservices;
 use App\Libraries\Slice;
+use CodeIgniter\Files\File;
+use CodeIgniter\HTTP\Files\UploadedFile;
+use Config\Services;
+use DOMDocument;
+use Exception;
+use XMLSecEnc;
+use XMLSecurityDSig;
+use ZipArchive;
+
 // if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class DefaultController extends BaseController {
@@ -25,63 +35,60 @@ class DefaultController extends BaseController {
         $this->slice = new Slice();
         $this->efiling_webservices = new Efiling_webservices();
         $this->session = \Config\Services::session();
+        $this->encryption = Services::encryption();
         helper(['form']);
     }
 
-    public function index() {
-        
+    public function index() {        
         unset($_SESSION['kyc_configData']);
         unset($_SESSION['adv_details']);
         unset($_SESSION['register_data']);
         /* $captcha_value = captcha_generate();
-         $data['captcha']['image'] = $captcha_value['image'];
-         $data['captcha']['word'] = $captcha_value['word'];*/
+        $data['captcha']['image'] = $captcha_value['image'];
+        $data['captcha']['word'] = $captcha_value['word'];*/
         $this->render('responsive_variant.authentication.register_view');
     }
-    /*    function check_and_save_zip_file_temporary()
-        {
-            $filename = $_FILES['ekyc_zip_file']['name'];
-            $source = $_FILES['ekyc_zip_file']['tmp_name'];
-            $type = $_FILES['ekyc_zip_file']['type'];
-            $name = explode('.', $filename);
-            $target = 'uploaded_docs/ekyc/temp/';
-            $accepted_types = array('application/zip','application/x-zip-compressed','multipart/x-zip','application/s-compressed');
-            foreach($accepted_types as $mime_type) {
-                if($mime_type == $type) {
-                    $okay = true;
-                    break;
-                }
+
+    /* function check_and_save_zip_file_temporary() {
+        $filename = $_FILES['ekyc_zip_file']['name'];
+        $source = $_FILES['ekyc_zip_file']['tmp_name'];
+        $type = $_FILES['ekyc_zip_file']['type'];
+        $name = explode('.', $filename);
+        $target = 'uploaded_docs/ekyc/temp/';
+        $accepted_types = array('application/zip','application/x-zip-compressed','multipart/x-zip','application/s-compressed');
+        foreach($accepted_types as $mime_type) {
+            if($mime_type == $type) {
+                $okay = true;
+                break;
             }
-            //Safari and Chrome don't register zip mime types. Something better could be used here.
-            $okay = strtolower($name[1]) == 'zip' ? true: false;
-            if(!$okay) {
-                die("Please choose a zip file!!");
-            }
-            mkdir($target);
-            $saved_file_location = $target . $filename;
-            if(!(move_uploaded_file($source, $saved_file_location))) {
-                die("There was a problem. Sorry!");
-            }
-            return $saved_file_location;
-        }*/
-    function inspect_files_within_zip($file_path=null)
-    {
-        if(!empty($file_path))
-        {
+        }
+        //Safari and Chrome don't register zip mime types. Something better could be used here.
+        $okay = strtolower($name[1]) == 'zip' ? true: false;
+        if(!$okay) {
+            die("Please choose a zip file!!");
+        }
+        mkdir($target);
+        $saved_file_location = $target . $filename;
+        if(!(move_uploaded_file($source, $saved_file_location))) {
+            die("There was a problem. Sorry!");
+        }
+        return $saved_file_location;
+    }*/
+
+    function inspect_files_within_zip($file_path=null) {
+        if(!empty($file_path)) {
             $allowable_file_formats=json_decode(OFFLINE_ADHAAR_EKYC_ZIP_ALLOWABLE_FILE_FORMAT);
             $zip = new \ZipArchive();
             $zip->open($file_path);
             $is_valid_file='';
             for( $i = 0; $i < $zip->numFiles; $i++ ){
                 $filename = $zip->getNameIndex($i);
-                //echo $filename.'<br>';
+                // echo $filename.'<br>';
                 $imageExtention = pathinfo($filename, PATHINFO_EXTENSION);
-                if(in_array($imageExtention, $allowable_file_formats))
-                {
+                if(in_array($imageExtention, $allowable_file_formats)) {
                     $is_valid_file=true;
                     continue;
-                }
-                else{
+                } else {
                     $is_valid_file=false;
                     break;
                 }
@@ -90,24 +97,19 @@ class DefaultController extends BaseController {
         }
         return $is_valid_file;
     }
-    /* function inspect_files_within_zip($fileName)
-    {
 
+    /* function inspect_files_within_zip($fileName) {
         $allowable_file_formats=json_decode(OFFLINE_ADHAAR_EKYC_ZIP_ALLOWABLE_FILE_FORMAT);
         $zip = new \ZipArchive();
         $zip->open("assets/ekyc/" . $fileName);
         $is_valid_file='';
-        for( $i = 0; $i < $zip->numFiles; $i++ ){
-
+        for( $i = 0; $i < $zip->numFiles; $i++ ) {
             $filename = $zip->getNameIndex($i);
-
             $imageExtention = pathinfo($filename, PATHINFO_EXTENSION);
-            if(in_array($imageExtention, $allowable_file_formats))
-            {
+            if(in_array($imageExtention, $allowable_file_formats)) {
                 $is_valid_file=true;
                 continue;
-            }
-            else{
+            } else {
                 $is_valid_file=false;
                 break;
             }
@@ -127,7 +129,7 @@ class DefaultController extends BaseController {
         // );
         // setSessionData('reg_details', $sess_reg_data);
         if (empty($_POST['userCaptcha'])) {
-            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Captcha is required!</p> </div>');
+            $this->session->setFlashdata('msg', 'Captcha is required!');
             return redirect()->to(base_url('register'));
             exit(0);
         }
@@ -166,7 +168,7 @@ class DefaultController extends BaseController {
             return $this->render('responsive_variant.authentication.register_view', $data);
         } else {
             if ($_SESSION["captcha"] !=$_POST['userCaptcha']) {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
+                $this->session->setFlashdata('msg', 'Invalid Captcha!');
                 return redirect()->to(base_url('register'));
                 exit(0);
             }
@@ -178,25 +180,25 @@ class DefaultController extends BaseController {
                 if ($_POST['register_type'] == 'Party In Person') {
                     if (!empty($mobile_already_exist)) {
                         if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                            $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
                             return redirect()->to(base_url('register'));
                         } elseif ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                            $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
                             return redirect()->to(base_url('register'));
                         }
                     }
                 } else if ($_POST['register_type'] == 'Advocate On Record') {
                     if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                        $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('register/AdvocateOnRecord'));
                     }
                     if ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                        $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('register/AdvocateOnRecord'));
                     }
                     $advDetailsIcmis=$this->efiling_webservices->getBarTable($_POST['adv_mobile'],$_POST['adv_email']);
                     if ($advDetailsIcmis[0]->moblie_number != $_POST['adv_mobile'] || $advDetailsIcmis[0]->emailid != $_POST['adv_email']) {
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number And Email ID Not Valid for Bar! Please Contact SCI !</p> </div>');
+                        $this->session->setFlashdata('msg', 'Mobile Number And Email ID Not Valid for Bar! Please Contact SCI !');
                         return redirect()->to(base_url('register/AdvocateOnRecord'));
                     }
                 }
@@ -205,7 +207,7 @@ class DefaultController extends BaseController {
                     $uploaded_file_size=$_FILES["ekyc_zip_file"]['size'];
                     if($uploaded_file_size > OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE) // allow  upto 50 kb size
                     {
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">File size are beyond allowable limit.</p> </div>');
+                        $this->session->setFlashdata('msg', 'File size are beyond allowable limit.');
                         return redirect()->to(base_url('register'));
                     } else {
                         //$is_valid_files=$this->inspect_files_within_zip($_FILES["ekyc_zip_file"]['name']);
@@ -221,15 +223,16 @@ class DefaultController extends BaseController {
                     $config['overwrite'] = TRUE;
                     // Load upload library
                     $imageExtention = pathinfo($_FILES["ekyc_zip_file"]["name"], PATHINFO_EXTENSION);
-                    $this->load->library('upload', $config);
+                    // $this->load->library('upload', $config);
+                    Services::upload($config);
                     //only ZIP file allowed
                     if($imageExtention=='zip'){
                         // File upload
-                        if ($this->upload->do_upload('ekyc_zip_file')) {
+                        // if ($this->upload->do_upload('ekyc_zip_file')) {
+                        if($this->upload->doUpload('ekyc_zip_file')) {
                             $file_path=$config['upload_path'].$_FILES["ekyc_zip_file"]['name'];
                             $is_valid_files = $this->inspect_files_within_zip($file_path);
-                            if (!empty($is_valid_files))
-                            {
+                            if (!empty($is_valid_files)) {
                                 // Get data about the file
                                 $uploadData = $this->upload->data();
                                 $filename = $uploadData['file_name'];
@@ -243,7 +246,7 @@ class DefaultController extends BaseController {
                                     $DIR2 = $DIR . '/' . $_SESSION['filename'] . '.xml';
                                     if ($zip->setPassword($_POST['share_code'])) {
                                         if (!$zip->extractTo($DIR)) {
-                                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Extraction failed (wrong password?)</p> </div>');
+                                            $this->session->setFlashdata('msg', 'Extraction failed (wrong password?)');
                                             return redirect()->to(base_url('register'));
                                         }
                                     }
@@ -255,7 +258,7 @@ class DefaultController extends BaseController {
                                     $data['configData'] = $_SESSION['kyc_configData'];
                                     $data['mobile_addhar'] = $_POST['mobile'];
                                     $data['email_addhar'] = $_POST['emailid'];
-                                    $this->load->library('encryption');
+                                    // $this->load->library('encryption');
                                     //Check if mobile & email matched with aadhar data dated 29-12-2020
                                     $reference_id = $data_config['@attributes']['referenceId'];
                                     $get_adhar_last_digit = substr(substr($reference_id, 0 , 4),-1);
@@ -272,38 +275,38 @@ class DefaultController extends BaseController {
                                     $Poi = $data_config['UidData']['Poi']['@attributes'];
                                     //if($mobile_sha256_hash != $Poi['m'] || $email_sha256_hash != $Poi['e']){
                                     if($mobile_sha256_hash != $Poi['m']){
-                                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Mobile should be same as registered with Aadhar! </p> </div>');
+                                        $this->session->setFlashdata('msg', 'Mobile should be same as registered with Aadhar! ');
                                         return redirect()->to(base_url('register'));
                                     } else {
                                         $responseString = file_get_contents($DIR2);
                                         $signature_match = $this->offlineKycResponse($responseString);
                                         if($signature_match != 'Signature validated') {
-                                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Aadhar file tampered, please try with fresh offline aadhar! </p> </div>');
+                                            $this->session->setFlashdata('msg', 'Aadhar file tampered, please try with fresh offline aadhar! ');
                                             return redirect()->to(base_url('register'));
                                         }
                                     }
                                     $aadhar_no = $data['configData']['@attributes']['referenceId'];
                                     $aadhar_last_disit_no = substr($aadhar_no, -18, -17);
-                                    $this->load->library('encryption');
+                                    // $this->load->library('encryption');
                                     $share_code = '8976';
                                     $mob = "9582551896";
                                     $l_digit = "3";
-                                    $this->session->setFlashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Upload & Extract successfully.</p> </div>');
+                                    $this->session->setFlashdata('msg', 'Upload & Extract successfully.');
                                 } else {
-                                    $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Failed to extract.</p> </div>');
+                                    $this->session->setFlashdata('msg', 'Failed to extract.');
                                     return redirect()->to(base_url('register'));
                                 }
                             } else {
                                 unlink($file_path);
-                                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Pls. upload the original offline Aadhaar eKYC Zip file.</p> </div>');
+                                $this->session->setFlashdata('msg', 'Pls. upload the original offline Aadhaar eKYC Zip file.');
                                 return redirect()->to(base_url('register'));
                             }
                         } else {
-                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Failed to upload (only zip file upload allowed). Some problem</p> </div>');
+                            $this->session->setFlashdata('msg', 'Failed to upload (only zip file upload allowed). Some problem');
                             return redirect()->to(base_url('register'));
                         }
                     } else {
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">Only zip file upload allowed.</p> </div>');
+                        $this->session->setFlashdata('msg', 'Only zip file upload allowed.');
                         return redirect()->to(base_url('register'));
                     }
                 }
@@ -365,33 +368,23 @@ class DefaultController extends BaseController {
         }
     }
 
-    function offlineKycResponse($responseXML)
-    {
+    function offlineKycResponse($responseXML) {
         $doc = new DOMDocument('1.0', 'utf-8');
-//foreach ($arTests AS $testName=>$testFile) {
+        // foreach ($arTests AS $testName=>$testFile) {
         $doc->encoding = 'utf-8';
         $doc->formatOutput = false;
         $doc->preserveWhiteSpace = true;
         $doc->loadXML($responseXML);
-
         //$doc->load("$responseXML");
-
-
         $objXMLSecDSig = new XMLSecurityDSig();
-
         $objDSig = $objXMLSecDSig->locateSignature($doc);
-
         if (! $objDSig) {
             throw new Exception("Cannot locate Signature Node");
         }
-
         $objXMLSecDSig->canonicalizeSignedInfo();
         $objXMLSecDSig->idKeys = array('wsu:Id');
         $objXMLSecDSig->idNS = array('wsu'=>'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd');
-
-
         $retVal = $objXMLSecDSig->validateReference();
-
         if (! $retVal) {
             throw new Exception("Reference Validation Failed");
         }
@@ -400,18 +393,14 @@ class DefaultController extends BaseController {
             throw new Exception("We have no idea about the key");
         }
         $key = NULL;
-
         $objKeyInfo = XMLSecEnc::staticLocateKeyInfo($objKey, $objDSig);
-
         if (! $objKeyInfo->key && empty($key)) {
             $address_pem=base_url()."assets/ekyc/adhar_offline_kyc_public_key.pem";
-            //$address_pem = $_SERVER['DOCUMENT_ROOT']."/bharatkosh/adhar_offline_kyc_public_key.pem";
-            //$address_pem = "adhar_offline_kyc_public_key.pem";
-            //$address_pem = "http://10.25.78.29/bharatkosh/adhar_offline_kyc_public_key.pem";
+            // $address_pem = $_SERVER['DOCUMENT_ROOT']."/bharatkosh/adhar_offline_kyc_public_key.pem";
+            // $address_pem = "adhar_offline_kyc_public_key.pem";
+            // $address_pem = "http://10.25.78.29/bharatkosh/adhar_offline_kyc_public_key.pem";
             $objKey->loadKey($address_pem, TRUE);
         }
-//var_dump($objXMLSecDSig);
-        //print $testName.": ";
         if ($objXMLSecDSig->verify($objKey) === 1) {
             return "Signature validated";
         } else {
@@ -429,9 +418,6 @@ class DefaultController extends BaseController {
     }
 
     private function generateRandomString($length = 10) {
-
-        // generates random string for login salt
-
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -442,6 +428,3 @@ class DefaultController extends BaseController {
     }
 
 }
-
-?>
-
