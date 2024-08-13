@@ -1,10 +1,10 @@
  //refreshCaptcha();
 function refreshCaptcha(){
     var CSRF_TOKEN = 'CSRF_TOKEN';
-    var CSRF_TOKEN_VALUE =$('[name="CSRF_TOKEN"]').val();
+    var CSRF_TOKEN_VALUE = $('[name="_token"]').val();
     if(CSRF_TOKEN_VALUE){
         var img = document.images['captcha_image'];
-        img.src = base_url+"/captcha/index?rand="+Math.random()*1000+'&CSRF_TOKEN='+CSRF_TOKEN_VALUE;
+        img.src = "/captcha/index?rand="+Math.random()*1000+'&CSRF_TOKEN='+CSRF_TOKEN_VALUE;
     }else{
         $('.text-red').html('The action you requested is not allowed (Invalid CSRF TOKEN)');
     }
