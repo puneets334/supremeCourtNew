@@ -6,25 +6,20 @@ use App\Models\EfilingAction\CaveatFinalSubmitModel;
 use App\Models\Caveat\CaveateeModel;
 use App\Models\Common\CommonModel;
 
-
 class CaveatFinalSubmit extends BaseController {
-
     protected $View_model;
     protected $Caveat_final_submit_model;
     protected $Caveatee_model;
     protected $CommonModel;
-
     public function __construct() {
         parent::__construct();
         $this->View_model = new ViewModel();
         $this->Caveat_final_submit_model = new CaveatFinalSubmitModel();
         $this->Caveatee_model = new CaveateeModel();
-        $this->CommonModel = new CommonModel();
-        
+        $this->CommonModel = new CommonModel();        
     }
 
     public function index() {
-
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('dashboard');
@@ -38,9 +33,9 @@ class CaveatFinalSubmit extends BaseController {
         
         $registration_id = $_SESSION['efiling_details']['registration_id'];
         $this->CommonModel->get_efiling_num_basic_Details($registration_id);
-//        if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway']) {
-//            $next_stage = Transfer_to_IB_Stage;
-//        }
+        //        if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway']) {
+        //            $next_stage = Transfer_to_IB_Stage;
+        //        }
         if(in_array(CAVEAT_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status'])) && (bool) $_SESSION['estab_details']['enable_payment_gateway'] && ($_SESSION['efiling_details']['stage_id'] == Draft_Stage)){
             $next_stage = Initial_Approaval_Pending_Stage;
         }
@@ -57,7 +52,7 @@ class CaveatFinalSubmit extends BaseController {
         } else {
             $this->session->setFlashData('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
             redirect('dashboard');
-        }
+        }       
 
         $final_submit = TRUE;
         if ($final_submit) {
@@ -68,28 +63,28 @@ class CaveatFinalSubmit extends BaseController {
                 }
                 $_SESSION['dept_adv_panel']['id'] = url_decryption($_POST['advocate_id']);
             }
-            //  pr($next_stage);
+
+
             $result = $this->Caveat_final_submit_model->updateCaseStatus($registration_id, $next_stage);
-            // pr($result);
              if ($result) {
                 $session_bredcrumbs = $_SESSION['efiling_details']['breadcrumb_status'].','.CAVEAT_BREAD_VIEW ;
                 $_SESSION['efiling_details']['breadcrumb_status'] = $session_bredcrumbs;
-                // $this->load->model('caveat/Caveatee_model');
+
                 $this->Caveatee_model->update_breadcrumbs($registration_id,CAVEAT_BREAD_VIEW);
-            //$sentSMS = "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin.";
-            //comment for work
-//                $sms_data = get_sms_text(1);
-//                $sms_text = $sms_data['sms'];
-//                $sms_text = str_replace('{#var#}', efile_preview($_SESSION['efiling_details']['efiling_no']), $sms_text);
-//                $subject = "Submitted : Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
-//
-//                $user_name = $_SESSION['login']['first_name'] . ' ' . $_SESSION['login']['last_name'];
-//                send_mobile_sms($_SESSION['login']['mobile_number'], $sms_text, $sms_data);
-//                send_mail_msg($_SESSION['login']['emailid'], $subject, $sms_text, $user_name);
+                //$sentSMS = "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin.";
+                //comment for work
+                //   $sms_data = get_sms_text(1);
+                //   $sms_text = $sms_data['sms'];
+                //   $sms_text = str_replace('{#var#}', efile_preview($_SESSION['efiling_details']['efiling_no']), $sms_text);
+                //   $subject = "Submitted : Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
+                //
+                //   $user_name = $_SESSION['login']['first_name'] . ' ' . $_SESSION['login']['last_name'];
+                //   send_mobile_sms($_SESSION['login']['mobile_number'], $sms_text, $sms_data);
+                //   send_mail_msg($_SESSION['login']['emailid'], $subject, $sms_text, $user_name);                  
 
                 getSessionData('caveat_msg',true);
                 setSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
-                log_message('CUSTOM', " E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) . "submitted successfully for approval of E-filing Admin.!");
+                // log_message('CUSTOM', " E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) . "submitted successfully for approval of E-filing Admin.!");
                        // redirect('dashboard');
                  }
                 else {

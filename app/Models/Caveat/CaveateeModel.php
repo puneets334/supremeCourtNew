@@ -81,18 +81,22 @@ class CaveateeModel extends Model {
         $old_breadcrumbs = getSessionData('efiling_details')['breadcrumb_status'] . ',' . $breadcrumb_step;
         $old_breadcrumbs_array = explode(',', $old_breadcrumbs);
         $new_breadcrumbs_array = array_unique($old_breadcrumbs_array);
-        $session = session();
+        // $session = session();
         sort($new_breadcrumbs_array);
         $new_breadcrumbs = implode(',', $new_breadcrumbs_array);
 		$builder = $this->db->table('efil.tbl_efiling_nums');
         $builder->WHERE('registration_id', $registration_id);
         $builder->UPDATE(array('breadcrumb_status' => $new_breadcrumbs));
         if ($this->db->affectedRows() > 0) {
-            $session->set([
-                'efiling_details' => [
-                    'breadcrumb_status' => $new_breadcrumbs
-                ]
-            ]);
+
+
+
+            $_SESSION['efiling_details']['breadcrumb_status']=$new_breadcrumbs;
+            // $session->set([
+            //     'efiling_details' => [
+            //         'breadcrumb_status' => $new_breadcrumbs
+            //     ]
+            // ]);
             return TRUE;
         } else {
             return FALSE;
