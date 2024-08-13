@@ -236,6 +236,7 @@ class Search extends BaseController
             redirect('login');
             exit(0);
         }
+       
         $this->validation->setRules([
             'confirm_response' => [
                 'label' => 'Confirmation',
@@ -249,7 +250,7 @@ class Search extends BaseController
             redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
             exit(0);
         }
-        // pr($searched_details);
+        
         $parties_list = '';
         $diary_no = $searched_details[0];
         $diary_year = $searched_details[1];
@@ -263,9 +264,10 @@ class Search extends BaseController
         if (isset($_SESSION['parties_list'])) {
             $parties_list = $_SESSION['parties_list'];
         }
-// pr($_SESSION);
+
         // $parties_list = $_SESSION['parties_list'];
-        unset($_SESSION['parties_list']);
+        // unset($_SESSION['parties_list']);
+     
         $confirm_response = escape_data($_POST['confirm_response']);
         if ($confirm_response == 'yes') {
             $_SESSION['efiling_details'] = '';
@@ -313,7 +315,6 @@ class Search extends BaseController
                     $intervenorName = !empty($_POST['txtIntervenorName']) ? $_POST['txtIntervenorName'] : NULL;
                 }
             }
-
             //END
             $pet_sr_no_array = array();
             $pet_sr_no_show_array = array();
@@ -321,7 +322,7 @@ class Search extends BaseController
             $res_sr_no_array = array();
             $res_sr_no_show_array = array();
             $res_party_name_array = array();
-
+            if(isset($parties_list)){
             foreach ($parties_list as $party_list) {
                 if ($party_list->pet_res == 'P') {
                     $pet_sr_no_array[] = $party_list->sr_no;
@@ -333,7 +334,7 @@ class Search extends BaseController
                     $res_party_name_array[] = $party_list->partyname;
                 }
             }
-
+        }
             //--PETITIONER PARTY DETAILS---//
             $pet_sr_no = implode("##", $pet_sr_no_array);
             $pet_sr_no_show = implode("##", $pet_sr_no_show_array);
@@ -363,7 +364,6 @@ class Search extends BaseController
             if (isset($diary_already_exists) && !empty($diary_already_exists)) {
                 $_SESSION['tbl_sci_case_id'] = $diary_already_exists[0]->id;
                 // echo  $_SESSION['tbl_sci_case_id'];
-
                 if ($diary_already_exists[0]->reg_no_display != $reg_no_display || $diary_already_exists[0]->cause_title != $cause_title || $diary_already_exists[0]->c_status != $c_status || $diary_already_exists[0]->p_no != $pno || $diary_already_exists[0]->r_no != $rno || $diary_already_exists[0]->p_sr_no != $pet_sr_no || $diary_already_exists[0]->p_sr_no_show != $pet_sr_no_show || $diary_already_exists[0]->p_partyname != $pet_party_name || $diary_already_exists[0]->r_sr_no != $res_sr_no || $diary_already_exists[0]->r_sr_no_show != $res_sr_no_show || $diary_already_exists[0]->r_partyname != $res_party_name) {
                     $sci_cases_details1 = array(
                         'updated_on' => $curr_dt_time,
@@ -372,7 +372,7 @@ class Search extends BaseController
                     );
                     $sci_cases_details = array_merge($sci_cases_details1, $sci_cases_details);
                     $diary_saved = $this->CaseSearchModel->add_update_sci_cases_details($sci_cases_details, array('diary_no' => $diary_no, 'diary_year' => $diary_year));
-                    //echo $diary_saved;die;
+                    // echo $diary_saved;die;
                 } else {
                     $diary_saved = TRUE;
                 }
@@ -466,7 +466,7 @@ class Search extends BaseController
                     $redirectURL = 'citation/defaultController/' . url_encryption($registration_id . '#' . E_FILING_TYPE_CITATION . '#' . Draft_Stage);
                     $type = 'Efiled citation No. ';
                 } elseif (isset($_SESSION['efiling_type']) && $_SESSION['efiling_type'] == 'refile_old_efiling_cases') {
-
+                    // pr('refile');
                     $registration_id = $this->OldEfilingDocsModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time);
 
                     $redirectURL = 'oldCaseRefiling/defaultController/' . url_encryption($registration_id . '#' . OLD_CASES_REFILING . '#' . Draft_Stage);
@@ -506,7 +506,6 @@ class Search extends BaseController
                     $subject = $type . efile_preview($efiling_num) . " generated from your efiling account";
                     send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS, SCISMS_Submit_Pending);
                     send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
-                    //  pr($redirectURL);
                     // echo $redirectURL; 
                     return response()->redirect(base_url($redirectURL));
 
@@ -596,7 +595,6 @@ class Search extends BaseController
             // $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($_POST['diaryno']), escape_data($_POST['diary_year']));
 
             $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
-            // pr($web_service_result);
         } else if ($diary_type == 'register') {
 
             $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_POST['sc_case_type'])), escape_data($_POST['case_number']), escape_data($_POST['case_year']));
@@ -610,9 +608,10 @@ class Search extends BaseController
             $diary_year = $web_service_result->case_details[0]->diary_year;
             if (!empty($diary_no) && !empty($diary_year)) {
                 $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
+                // pr($listing_data);
                 $data['listing_details'] = $listing_data->listed[0];
                 $_SESSION['listing_details'] = $data['listing_details'];
-
+                // pr($_SESSION);
                 $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
                 // pr($data['old_efiling_cases']);
                 if (empty($data['old_efiling_cases'])) {
@@ -621,6 +620,7 @@ class Search extends BaseController
                 } else {
                     // logic written for aor can only refile the already file old efilinf case after 3 days
                     $data['case_last_refiled_details'] = $this->efiling_webservices->checkInTheOldEfilingCasesList($diary_no, $diary_year);
+                    // pr($data['case_last_refiled_details']);
                     if (!empty($data['case_last_refiled_details'])) {
                         $last_refiled_on = ($data['case_last_refiled_details']->case_refiling_status[0]->created_at);
                         $last_refiled_on = date('d-m-Y', strtotime($last_refiled_on));
@@ -635,24 +635,32 @@ class Search extends BaseController
                     }
                 }
                 $data['case_uncured_defects_details'] = $this->efiling_webservices->getCaseDefectDetails($diary_no, $diary_year); // add by kbpujari : To restrict AOR to file Misc.Document(s)/IA(s) in any of the defective matters, whether the case is filed  through efiling, new filing or filed physically
+                // pr($data['case_uncured_defects_details']);
                 if (empty($data['case_uncured_defects_details']->defects)) {
                     echo '3@@@ Please note, All the notified defects of this case,filed through old -efiling application has been already cured.';
                     exit(0);
                 }
                 //print_r($data['mentioning_request_details']);
                 $data['searched_case_details'] = $web_service_result->case_details[0];
-                $result = $this->load->view('casesearchForOldEfilingCases/search_result_view', $data, TRUE);
+                // $result = $this->load->view('casesearchForOldEfilingCases/search_result_view', $data, TRUE);
+                $result = $this->render('casesearchForOldEfilingCases.search_result_view', $data);
+
+
                 if ($diary_type == 'diary') {
                     if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
-                        $this->load->view('templates/header');
+                        // $this->load->view('templates/header');
                         echo $result;
                         $this->Common_model->get_establishment_details();
-                        $this->load->view('templates/footer');
+                        echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
+                        // $this->load->view('templates/footer');
                     } else {
                         echo '1@@@' . $result;
+
+                        echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
                     }
                 } else if ($diary_type == 'register') {
                     echo '2@@@' . $result;
+                    echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
                 }
             } else {
                 echo '3@@@ No Record found!';
