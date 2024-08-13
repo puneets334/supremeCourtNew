@@ -254,7 +254,9 @@ class Ajaxcalls extends BaseController {
         }
         $i = 1;
         $index_data .= '<div class="col-md-12 col-sm-12 col-xs-12"> 
-          <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <div class="table-sec">
+                    <div class="table-responsive">
+                        <table id="datatable-responsive" class="table table-striped custom-table">
           <thead>
             <tr class="success">
                 <th width="3%">#</th>
@@ -278,13 +280,13 @@ class Ajaxcalls extends BaseController {
                         <td>' . $i++ . '</td>
                         <td><a href="' . base_url('documentIndex/viewIndexItem/' . url_encryption($doc_list['doc_id'])) . '" target="_blank">' . $doc_list['doc_title'] . '<br>( ' . $doc_list['docdesc'] . ')</a></td>
                         <td width="9%">' . $indx . '</td>
-                        <td width="10%"> <a onclick = "delete_index(' . "'" . htmlentities(url_encryption(trim($doc_list['doc_id']), ENT_QUOTES)) . "'" . ')"class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a></td>
+                        <td width="10%"> <a onclick = "delete_index(' . "'" . htmlentities(url_encryption(trim($doc_list['doc_id']), ENT_QUOTES)) . "'" . ')"class="btn btn-xs"><i class="fa fa-trash"></i></a></td>
                   </tr>';
             }
         } else {
             $index_data .= '<tr><td colspan="4" class="text-center">No record found.</td></tr>';
         }
-        $index_data .= '</tbody></table></div>';
+        $index_data .= '</tbody></table></div></div></div>';
 
         echo $index_data;
     }

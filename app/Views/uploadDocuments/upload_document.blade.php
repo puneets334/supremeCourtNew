@@ -1,7 +1,7 @@
 					<div class="tab-form-inner">
 
 					    <?= ASTERISK_RED_MANDATORY ?>
-					    <h5 style="text-align: left;"><b>All documents, Interlocutory Applications, if any, other than main petition are to be uploaded using this feature..</b> </h5>
+					    <h5 style="text-align: left;">All documents, Interlocutory Applications, if any, other than main petition are to be uploaded using this feature.. </h5>
 					    <?php
                         
                         $attribute = array('class' => 'form-horizontal', 'name' => 'uploadDocument', 'id' => 'uploadDocument', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
@@ -21,7 +21,7 @@
 					                </div>
 					            </div>
 					        <?php } ?>
-					        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+					        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
 					            <div class="mb-3">
 					                <label for="" class="form-label">Title<span style="color: red" class="astriks">*</span></label>
 					                <input type="text" class="form-control cus-form-ctrl" tabindex="2" name="doc_title" id="doc_title" required="" placeholder="PDF Title" minlength="3" maxlength="75">
@@ -30,7 +30,7 @@
 					                </span>
 					            </div>
 					        </div>
-					        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+					        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
 					            <div class="mb-3">
 					                <label for="" class="form-label">Browse PDF <span style="color: red">*</span></label>
 					                <input name="pdfDocFile" id="browser" tabindex="3" class="cus-form-ctrl" required="required" type="file">
@@ -71,11 +71,11 @@
 
 					            </div>
 					        </div>
-					        <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
+					        <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
 					            <div class="progress" style="display: none">
 					                <div class="progress-bar progress-bar-success myprogress" role="progressbar" value="0" max="100" style="width:0%">0%</div>
 					            </div>
-					        </div>
+					        </div> -->
 					    </div>
 					    <?php echo form_close(); ?>
 

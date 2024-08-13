@@ -55,7 +55,7 @@
                                                         <div align="center"
                                                             id="nohc">
                                                             <input type="checkbox"
-                                                                <?php echo $noHcEntry; ?>
+                                                                <?php //echo $noHcEntry; ?>
                                                                 value="1"
                                                                 name="chk_nohc"
                                                                 id="chk_nohc"
@@ -616,18 +616,24 @@
                                                         <label class="form-label">Impugned Order Date <span
                                                                 style="color: red"
                                                                 class="astriks">*</span></label>
-                                                        <input tabindex = '18'
-                                                            class="form-control has-feedback-left cus-form-ctrl mb-3"
-                                                            id="order_date"
-                                                            name="order_date"
-                                                            maxlength="10"
-                                                            placeholder="DD/MM/YYYY"
-                                                            type="text"
-                                                            style="width: 80%">
-                                                        <select id="order_dates_list"
-                                                            class="form-control cus-form-ctrl"
-                                                            style="width: 10%">
-                                                        </select>
+                                                                <div class="row">
+                                                        <div class="col-9">
+                                                            <input tabindex = '18'
+                                                                class="form-control cus-form-ctrl mb-3 order_date col-8"
+                                                                id="order_date"
+                                                                name="order_date"
+                                                                maxlength="10"
+                                                                placeholder="DD/MM/YYYY"
+                                                                type="text">
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <select id="order_dates_list"
+                                                                class="form-control cus-form-ctrl col-4">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -848,14 +854,14 @@
                                     <?php render('newcase.subordinate_court_list',['subordinate_court_details' => @$subordinate_court_details]); ?>
                                 </div>
                             </div>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+                            <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script src="<?= base_url() ?>assets/js/sha256.js"></script>
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
@@ -863,6 +869,19 @@
     <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
     <script type="text/javascript"
         src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#order_date').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:-1",
+            dateFormat: "dd/mm/yy",
+            defaultDate: new Date(new Date().setFullYear(new Date().getFullYear() - 40))
+        });
+    });
+    </script>
+
+
     <script type="text/javascript">
         $(document).ready(function() {
             //xxxxxxxxxxxxxxxxxxxxxxxx
@@ -911,6 +930,12 @@
                 $("#order_date").val(dateText[0]);
                 var ordType = dateText[1].split("-");
                 $("#judgement_type").val(ordType[0]).change();
+            });
+            $('.order_date').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "dd/mm/yy",
+                maxDate: new Date
             });
             $('#cnr').on('input', function() {
                 if ($.trim($('#cnr').val()) == '')
@@ -1063,10 +1088,6 @@
                     url: "<?php echo base_url('newcase/Ajaxcalls_subordinate_court/get_hc_bench_list'); ?>",
                     success: function(data) {
                         $('#hc_court_bench').html(data);
-                        if (hc_bench_value && court_type == 1) {
-                            $('#hc_court_bench').val(hc_bench_value).select2().trigger(
-                                "change");
-                        }
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                         });
@@ -1078,7 +1099,10 @@
                     }
                 });
             });
-
+            $(".filter_select_dropdown").select2().on('select2-focus', function() {
+                // debugger;
+                $(this).data('select2-closed', true)
+            });
             //----------Get Case Type List----------------------//
             $('#hc_court_bench').change(function() {
                 var CSRF_TOKEN = 'CSRF_TOKEN';

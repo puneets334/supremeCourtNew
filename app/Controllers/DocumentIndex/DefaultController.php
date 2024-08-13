@@ -165,7 +165,7 @@ class DefaultController extends BaseController
                 $this->validation->setRules([
                     "error_affidavit_Attested" => [
                         "label" => "Affidavit",
-                        "rules" => "required|trim|validate_encrypted_value"
+                        "rules" => "required|trim"
                     ],
                 ]);
             } elseif (!empty($_POST["affidavitCheck"]) && !empty($if_with_affidavit)) {
@@ -176,7 +176,7 @@ class DefaultController extends BaseController
                 $this->validation->setRules([
                     "error_affidavit_Attested" => [
                         "label" => "Attested",
-                        "rules" => "required|trim|validate_encrypted_value"
+                        "rules" => "required|trim"
                     ],
                 ]);
             } elseif (!empty($_POST["attestedCheck"]) && !empty($Attested_within_delhi)) {
@@ -187,7 +187,7 @@ class DefaultController extends BaseController
                 $this->validation->setRules([
                     "error_affidavit_Attested" => [
                         "label" => "Letter of Inspection of File",
-                        "rules" => "required|trim|validate_encrypted_value"
+                        "rules" => "required|trim"
                     ],
                 ]);
             } elseif (!empty($_POST["inspectionLetterCheck"]) && !empty($letter_of_inspection_of_file)) {
@@ -210,7 +210,7 @@ class DefaultController extends BaseController
                 $this->validation->setRules([
                     "sub_doc_type" => [
                         "label" => "Sub Document Type",
-                        "rules" => "required|trim|validate_encrypted_value"
+                        "rules" => "required|trim"
                     ],
                 ]);
             }

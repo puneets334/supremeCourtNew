@@ -223,7 +223,7 @@
                     <div class="row">
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label class="form-label">Email <span style="color: red" class="astriks">*</span></label>
+                            <label class="form-label">Email </label>
                             <input id="party_email" name="party_email" placeholder="Email" tabindex='16' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
                                 <i class="fa fa-question-circle-o"></i>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label class="form-label">Mobile <span style="color: red" class="astriks">*</span></label>
+                            <label class="form-label">Mobile </label>
                             <input id="party_mobile" name="party_mobile" tabindex='17' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Mobile" value="<?php echo (@$party_details[0]['mobile_num']); ?>" class="form-control cus-form-ctrl" type="text" minlength="10" maxlength="10">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                 <i class="fa fa-question-circle-o"></i>

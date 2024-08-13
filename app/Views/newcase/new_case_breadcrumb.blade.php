@@ -58,12 +58,9 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         }
                         ?>
                     </div>
-                    <?php echo getSessionData('msg'); ?>
+                    <?php //echo getSessionData('msg'); ?>
                     
-                    <?php
-                    echo !empty(getSessionData('efiling_details')['stage_id']) ? '<div class="row">
-                    <div class="col-12">'.remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']).'</div></div>' : '';
-                    ?>
+                    
                     <?php
                     $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
                     if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
@@ -157,7 +154,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         }*/
                         $stages_array = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-                            echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                            // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                             if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                 echo '<a href="' . base_url('newcase/finalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
                             }
@@ -230,7 +227,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             }
                             $stages_array = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             if (!empty(getSessionData('efiling_details')['stage_id']) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-                                echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                                // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                                 if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                     echo '<a href="'.base_url('newcase/finalSubmit').'" class="quick-btn black-btn"><span class="mdi mdi-file-send"></span></a>';
                                 }
@@ -243,9 +240,24 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
         </div>
     </div>
 </div>
+<style>
+    .tabs-sec-inner h5 {
+        font-size: 18px;
+        line-height: 26px;
+        color: #0D48BE;
+        padding: 20px;
+    }
+</style>
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
+        <?php
+        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+            echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+        }
+        echo !empty(getSessionData('efiling_details')['stage_id']) ? '<div class="row">
+        <div class="col-12">'.remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']).'</div></div>' : '';
+        ?>
         <!-- form--start  -->
         <form action="">
             <?php
