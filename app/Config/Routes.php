@@ -289,6 +289,7 @@ $routes->match(['GET', 'POST'], 'case_status/defaultController/get_case_status_o
 $routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatus', 'CaseStatus\DefaultController::showCaseStatus');
 $routes->match(['GET', 'POST'], 'case_status/defaultController/showCaseStatusCertificate', 'CaseStatus\DefaultController::showCaseStatusCertificate');
 $routes->match(['GET', 'POST'], 'case_status/defaultController/showPaperBook', 'CaseStatus\DefaultController::showPaperBook');
+$routes->match(['GET', 'POST'], 'register/ArguingCounselRegister/senOtp', 'Register\ArguingCounselRegister::senOtp');
 /****end-Responsive variant routes refile old efiling cases ****/
 
 

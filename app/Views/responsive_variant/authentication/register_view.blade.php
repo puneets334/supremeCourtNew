@@ -182,7 +182,7 @@ $session = service('session');
                                 <!--<input hidden id="user_login_type" name="adv_type1" value="<?php /*echo htmlentities(stringEncreption('1'), ENT_QUOTES); */?>">-->
                                 <input hidden id="user_login_type" name="adv_type1" value="<?php echo integerEncreption($adv_type_select); ?>">
                                 <p class="">
-                                    <a style="width: 89%;" class="btn quick-btn"  target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File  </a>
+                                    <a style="width: 100%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
                                     <!-- <span style="padding: 0px; font-size: 40px; margin-top: -10px;" class="uk-button uk-button-default" uk-tooltip="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
                                     The Zip file containing the digitally signed XML will be downloaded to device wherein the above mentioned steps have been performed.">?</span> -->
                                 </p>
@@ -228,12 +228,8 @@ $session = service('session');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="mb-3">
-                                            <button class="btn quick-btn">SEND OTP</button>
-                                        </div>
-                                    </div>
+                                <div class="row mb-3">
+                                    <button class="btn quick-btn">SEND OTP</button>
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
@@ -249,7 +245,7 @@ $session = service('session');
                                             <label for="" class="form-label"></label>
                                             <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
                                             <a class="">
-                                                <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo stringEncreption('not_register_ekyc'); ?>" checked> Offline</label>
+                                                <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo htmlentities(stringEncreption('not_register_ekyc'), ENT_QUOTES); ?>" checked> Offline</label>
                                             </a>
                                             <a class="">
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user" id="ekyc" onclick="showHideDiv('ekyc_upload_share')" value="<?php echo htmlentities(stringEncreption('not_register_other'), ENT_QUOTES); ?>" > Paperless KYC </label>
@@ -286,20 +282,20 @@ $session = service('session');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
+                                <div class="row mb-3">
                                     <button class="btn quick-btn">SEND OTP</button>
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
-                        <a href="{{base_url()}}" class="btn quick-btn">LOGIN</a>
+                        <center><a href="{{base_url()}}" class="col-sm-3 col-md-3 btn quick-btn">LOGIN</a></center>
                         <div class="regester-txts">
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
                                 <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
                                 <span class="gray-txt">Or</span>
                                 <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
-                                <span class="gray-txt">Or</span>
-                                <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
+                                <!-- <span class="gray-txt">Or</span>
+                                <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a> -->
                             </div>
                         </div>
                     </div>
