@@ -39,26 +39,60 @@ class AdvOtp extends BaseController {
         $data['captcha']['word'] = $captcha_value['word'];        
         $userCaptcha = escape_data($_POST['userCaptcha']);  
         if ($this->session->userdata("captchaWord") != $userCaptcha) {
-            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>'); 
+            $this->session->setFlashdata('msg', 'Invalid Captcha!'); 
             return redirect()->to(base_url('register/AdvOtp'));
         } */
+        // if($_SESSION['adv_details']['register_type'] == 'Forget Password') {
+        //     $this->form_validation->set_rules('adv_mobile_otp', 'Mobile OTP', 'numeric|trim|is_required|min_length[6]|max_length[6]');
+        //     $this->form_validation->set_rules('adv_email_otp', 'Email OTP', 'numeric|min_length[6]|max_length[6]|trim|is_required'); 
+        // } else {
+        //     $this->form_validation->set_rules('adv_mobile_otp', 'Mobile OTP', 'required|numeric|trim|is_required|min_length[6]|max_length[6]');
+        //     $this->form_validation->set_rules('adv_email_otp', 'Email OTP', 'required|numeric|min_length[6]|max_length[6]|trim|is_required');
+        //     $this->session->setFlashdata('msg', 'Mobile OTP And Email OTP Required');
+        // }
+        // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
+        // if ($this->form_validation->run() == FALSE) { 
+        //     $captcha_value = captcha_generate();
+        //     $data['captcha']['image'] = $captcha_value['image'];
+        //     $data['captcha']['word'] = $captcha_value['word'];
+        // 	/*$this->load->view('login/login_header');
+        // 	$this->load->view('register/adv_otp_view',$data);
+		// 	$this->load->view('login/login_footer');*/
+        //     $this->render('responsive_variant.authentication.adv_otp_view',$data);
+        // } else {
+        $validation =  \Config\Services::validation();
         if($_SESSION['adv_details']['register_type'] == 'Forget Password') {
-            $this->form_validation->set_rules('adv_mobile_otp', 'Mobile OTP', 'numeric|trim|is_required|min_length[6]|max_length[6]');
-            $this->form_validation->set_rules('adv_email_otp', 'Email OTP', 'numeric|min_length[6]|max_length[6]|trim|is_required'); 
+            $rules=[
+                "adv_mobile_otp" => [
+                    "label" => "Mobile OTP",
+                    "rules" => "numeric|trim|is_required|min_length[6]|max_length[6]"
+                ],
+                "adv_email_otp" => [
+                    "label" => "Email OTP",
+                    "rules" => "numeric|min_length[6]|max_length[6]|trim|is_required"
+                ],
+            ];
         } else {
-            $this->form_validation->set_rules('adv_mobile_otp', 'Mobile OTP', 'required|numeric|trim|is_required|min_length[6]|max_length[6]');
-            $this->form_validation->set_rules('adv_email_otp', 'Email OTP', 'required|numeric|min_length[6]|max_length[6]|trim|is_required');
-            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">Mobile OTP And Email OTP Required</p> </div>');
+            $rules=[
+                "adv_mobile_otp" => [
+                    "label" => "Mobile OTP",
+                    "rules" => "required|numeric|trim|is_required|min_length[6]|max_length[6]"
+                ],
+                "adv_email_otp" => [
+                    "label" => "Email OTP",
+                    "rules" => "required|numeric|min_length[6]|max_length[6]|trim|is_required"
+                ],
+            ];
         }
-        $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
-        if ($this->form_validation->run() == FALSE) { 
+        if ($this->validate($rules) === FALSE) {
+            $data = [
+                'validation' => $this->validator,
+                'currentPath' => $this->slice->getSegment(1) ?? 'public',
+            ];
             $captcha_value = captcha_generate();
             $data['captcha']['image'] = $captcha_value['image'];
             $data['captcha']['word'] = $captcha_value['word'];
-        	/*$this->load->view('login/login_header');
-        	$this->load->view('register/adv_otp_view',$data);
-			$this->load->view('login/login_footer');*/
-            $this->render('responsive_variant.authentication.adv_otp_view',$data);
+            $this->render('responsive_variant.authentication.adv_otp_view', $data);
         } else {
             date_default_timezone_set('Asia/Kolkata');
             $currentTime=date("H:i");
@@ -84,10 +118,10 @@ class AdvOtp extends BaseController {
                     $captcha_value = captcha_generate();
                     $data['captcha']['image'] = $captcha_value['image'];
                     $data['captcha']['word'] = $captcha_value['word'];
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Expired.</p> </div>');
+                    $this->session->setFlashdata('msg', 'OTP Expired.');
                     $this->render('responsive_variant.authentication.adv_otp_view',$data);
                 } else if($mobile_status == 'done' && $email_status == 'done'){
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-success flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Verification Successful !</p> </div>');
+                    $this->session->setFlashdata('msg', 'OTP Verification Successful !');
                     if(!empty($_SESSION['adv_details']['register_type']) && $_SESSION['adv_details']['register_type'] == 'Advocate'){
                         $_SESSION['self_register_arguing_counsel'] = true;
                         return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
@@ -99,7 +133,7 @@ class AdvOtp extends BaseController {
                     $captcha_value = captcha_generate();
                     $data['captcha']['image'] = $captcha_value['image'];
                     $data['captcha']['word'] = $captcha_value['word'];
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Verification Failed</p> </div>');
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');
                     $this->render('responsive_variant.authentication.adv_otp_view',$data);
                 }
             }
@@ -121,16 +155,16 @@ class AdvOtp extends BaseController {
                 }
                 $_SESSION['verify_details'] =  array('mobile_verified'=>$mobile_status, 'email_verified'=>$email_status);                
                 if($email_status == 'done'){
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-success flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Verification Successful !</p> </div>');  
+                    $this->session->setFlashdata('msg', 'OTP Verification Successful !');  
                     return redirect()->to(base_url('register/ForgetPassword/update_password'));
                 } elseif ($mobile_status == 'done') {
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-success flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Verification Successful !</p> </div>');  
+                    $this->session->setFlashdata('msg', 'OTP Verification Successful !');  
                     return redirect()->to(base_url('register/ForgetPassword/update_password'));
                 } elseif ($mobile_status == 'expired' || $email_status == 'expired') {
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Expired !</p> </div>');
+                    $this->session->setFlashdata('msg', 'OTP Expired !');
                     return redirect()->to(base_url('register/ForgetPassword'));
                 } else{
-                    $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close " uk-close></a > <p style="text-align: center;">OTP Verification Failed</p> </div>'); 
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed'); 
                     return redirect()->to(base_url('register/ForgetPassword'));
                 }   
             }
