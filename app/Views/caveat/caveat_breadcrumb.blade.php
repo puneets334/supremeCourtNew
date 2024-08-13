@@ -1,7 +1,6 @@
 <?php 
 $segment = service('uri');
 
-echo $segment->getSegment(2); 
 $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
 ?>
 <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
@@ -56,9 +55,14 @@ $efiling_num_label_for_display = 'DRAFT-';;
                         if (!empty(getSessionData('MSG'))) {
                             echo getSessionData('MSG');
                         }
+                        if (!empty(getSessionData('msg'))) {
+                            echo getSessionData('msg');
+                        }
+
+
                         ?>
                     </div>
-                    <?php echo getSessionData('msg'); ?>
+                    <?php // echo getSessionData('msg'); ?>
                     <?php 
                         echo !empty(getSessionData('efiling_details')['stage_id']) ? remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']) : '';
                     ?>
