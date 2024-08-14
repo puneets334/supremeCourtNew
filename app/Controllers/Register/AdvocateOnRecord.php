@@ -48,7 +48,7 @@ class AdvocateOnRecord extends BaseController {
         $data['captcha']['word'] = $captcha_value['word'];
         $userCaptcha = escape_data($_POST['userCaptcha']);
         if ($this->session->userdata("captchaWord") != $userCaptcha) {
-            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');
             return redirect()->to(base_url('register/AdvocateOnRecord'));
         }*/
         // $this->form_validation->set_rules('userCaptcha', 'Captcha', 'required|trim|is_required');
@@ -89,7 +89,7 @@ class AdvocateOnRecord extends BaseController {
             $this->render('responsive_variant.authentication.aor_register_view', $data);
         } else{
             if ($_SESSION["captcha"] !=$_POST['userCaptcha']) {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
+                $this->session->setFlashdata('msg', 'Invalid Captcha!');
                 return redirect()->to(base_url('register/AdvocateOnRecord')); exit(0);
             }
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
@@ -100,13 +100,13 @@ class AdvocateOnRecord extends BaseController {
                 if ($_POST['register_type'] == 'Advocate On Record') {
                     if(!empty($mobile_already_exist)) {
                         if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                            $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
                             return redirect()->to(base_url('register/AdvocateOnRecord'));
                         }
                     }
                     if(!empty($email_already_exist)) {
                         if ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
+                            $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
                             return redirect()->to(base_url('register/AdvocateOnRecord'));
                         }
                     }
@@ -115,7 +115,7 @@ class AdvocateOnRecord extends BaseController {
                     //if ($mobile_already_bar[0]['mobile'] != $_POST['adv_mobile'] || $email_already_bar[0]['email'] != $_POST['adv_email']) {
                     if (!empty($advDetailsIcmis)) {
                         if ($advDetailsIcmis[0]->moblie_number != $_POST['adv_mobile'] || $advDetailsIcmis[0]->emailid != $_POST['adv_email']) {
-                            $this->session->setFlashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number And Email ID Not Vailid for Bar! Please Contact SCI !</p> </div>');
+                            $this->session->setFlashdata('msg', 'Mobile Number And Email ID Not Vailid for Bar! Please Contact SCI !');
                             return redirect()->to(base_url('register/AdvocateOnRecord'));
                         }
                     }

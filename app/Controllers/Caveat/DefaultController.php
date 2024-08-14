@@ -94,10 +94,7 @@ class DefaultController extends BaseController
     }
     
     public function processing($id = NULL)
-    {
-
-        
-       
+    {       
         if ($id !== NULL) {
             session()->remove('estab_details');
             $id = url_decryption($id);

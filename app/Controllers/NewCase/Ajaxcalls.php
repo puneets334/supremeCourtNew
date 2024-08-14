@@ -463,7 +463,6 @@ class Ajaxcalls extends BaseController {
 
                     break;
                 case 'caveat' :
-                    $this->load->model('caveat/View_model');
                     $registration_id = !empty(getSessionData('efiling_details')['registration_id']) ? (int)getSessionData('efiling_details')['registration_id'] : NULL;
                     //caveator
                     $arr = array();

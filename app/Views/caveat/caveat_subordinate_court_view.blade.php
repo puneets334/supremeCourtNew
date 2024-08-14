@@ -603,7 +603,7 @@ body.loading .overlay{
         src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script>
 
- /*    $(document).ready(function() {
+ $(document).ready(function() {
         $('#order_date').datepicker({
         changeMonth: true,
         changeYear: true,
@@ -611,8 +611,7 @@ body.loading .overlay{
         dateFormat: "dd/mm/yy",
         defaultDate: '-40y'
         });
-    }); */
-  
+    });  
 
 
 
