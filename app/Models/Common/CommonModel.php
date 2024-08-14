@@ -1605,7 +1605,6 @@ class CommonModel extends Model
         if (isset($barId) && !empty($barId)) {
             $builder = $this->db->table('icmis.bar');
             $builder->select('bar_id, aor_code,pp,concat(title,name) as name,mobile,email');
-            // $this->db->from();
             $builder->where('bar_id', (int)$barId);
             $query = $builder->get();
             $output = $query->getResultArray();

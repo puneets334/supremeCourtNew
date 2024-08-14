@@ -330,4 +330,5 @@ $routes->match(['GET', 'POST'], 'redirect_on_login', 'DefaultController::redirec
 $routes->match(['GET', 'POST'], 'appearing_for/appearing_for/save_appearing_details', 'AppearingFor\Appearing_for::save_appearing_details');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/FinalSubmit', 'MiscellaneousDocs\FinalSubmit::index');
 $routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/delete_index', 'DocumentIndex\Ajaxcalls::delete_index');
+$routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/markCuredDefect', 'DocumentIndex\Ajaxcalls::markCuredDefect');
 
