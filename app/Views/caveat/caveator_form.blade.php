@@ -30,6 +30,9 @@ body.loading{
 body.loading .overlay{
     display: block;
 }
+.error {
+    color:red !important;
+}
 </style>
 <style>
     .datepicker-dropdown {
@@ -117,10 +120,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                     
                         <div class="container">
-                            <div class="row">
-                               
-                                    
-                                </div>
+                            <div class="row">   </div>
                             </div>
                         </div>    
                         <div style="clear:both"></div>
@@ -131,12 +131,11 @@ body.loading .overlay{
                                     <label for="" class="form-label">Caveator Name <span style="color: red" class="astriks">*</span></label>
                                     <textarea id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
                                         class="form-control cus-form-ctrl sci_validation" 
-                                        minlength="3" maxlength="250" required><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
+                                        minlength="3" maxlength="250" ><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                         title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o"></i>
-                                    </span> 
-                                            
+                                    </span>                                           
                                             
                                 </div>
 
@@ -158,7 +157,7 @@ body.loading .overlay{
                                 
                                 ?>
                                 <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
-                                    class="form-control cus-form-ctrl filter_select_dropdown" required>
+                                    class="form-control cus-form-ctrl filter_select_dropdown" >
                                     <option value="">Select Relation</option>
                                     <option <?php echo isset($selectSon) ? $selectSon : '';
                                     $selectSon; ?> value="S">Son Of</option>
@@ -181,7 +180,7 @@ body.loading .overlay{
                                     minlength="3" maxlength="99" placeholder="Relative Name"
                                     value="<?php   echo isset($caveator_details[0]['relative_name'])?$caveator_details[0]['relative_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
-                                    type="text" required>
+                                    type="text" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                     title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                     <i class="fa fa-question-circle-o"></i>
@@ -256,7 +255,7 @@ body.loading .overlay{
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" >
                                             <div class="mb-3">
                                                 <label for="" class="form-label">State Name <span style="color: red">*</span> </label>
-                                                <select tabindex='11' name="org_state" id="org_state" class="form-select cus-form-ctrl filter_select_dropdown org_state">
+                                                <select  style="width:100% !important;" tabindex='11' name="org_state" id="org_state" class="form-control cus-form-ctrl filter_select_dropdown org_state ">
                                                     <?php
                                                     echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                     $select_organization = '';
@@ -297,8 +296,8 @@ body.loading .overlay{
                                         <div class="mb-3">
                                             <label for="" class="form-label">Department Name 
                                                 <span  style="color: red">*</span> 
-                                            </label>
-                                            <select name="org_dept" tabindex='13' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
+                                            </label><br>
+                                            <select style="width:100% !important;"  name="org_dept" tabindex='13' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept cus-form-ctrl" >
                                                 <?php
                                                     echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                     $dept_sel = '';
@@ -333,8 +332,8 @@ body.loading .overlay{
                                         <div class="mb-3">
                                             <label for="" class="form-label">Post Name
                                                 <span style="color: red">*</span>
-                                             </label>
-                                            <select tabindex='15' name="org_post" id="org_post" class="form-control cus-form-ctrl filter_select_dropdown org_post" required>
+                                             </label><br>
+                                            <select  style="width:100% !important;"  tabindex='15' name="org_post" id="org_post" class="form-control cus-form-ctrl filter_select_dropdown org_post" required>
                                                 <?php
                                                     echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                     $post_sel = '';
@@ -547,6 +546,10 @@ body.loading .overlay{
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script>
     $(document).ready(function() {
+        $(".filter_select_dropdown").select2().on('select2-focus', function() {
+            // debugger;
+            $(this).data('select2-closed', true)
+        });
         
         var party_as = $('select#party_is option:selected').val();
         if (party_as == 'I') {          
