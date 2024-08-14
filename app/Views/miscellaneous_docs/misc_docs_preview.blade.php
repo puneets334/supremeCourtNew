@@ -193,14 +193,14 @@ $collapse_class = '';
                 <div class="row m-3">
                     <div class="col-md-12 text-end">
                         <?php $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                    //    echo '<pre>'; print_r($Array);
+                        //    echo '<pre>'; print_r($Array);
                         $segment = service('uri');
                         $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
                         if ($segment->getSegment(2) == 'view') {
                             if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
                                 if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
                                     if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
-                                //    print_r($_SESSION['efiling_details']['breadcrumb_status']);
+                                        //    print_r($_SESSION['efiling_details']['breadcrumb_status']);
 
                                         if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
                                             (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
@@ -219,7 +219,7 @@ $collapse_class = '';
                                         <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
                         <?php }
                                 }
-                            } 
+                            }
                         } ?>
                     </div>
                 </div>

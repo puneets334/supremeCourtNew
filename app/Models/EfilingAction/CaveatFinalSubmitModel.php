@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Models\EfilingAction;
-
 use CodeIgniter\Model;
-
 class CaveatFinalSubmitModel extends Model
 {
     protected $session;
@@ -11,36 +9,36 @@ class CaveatFinalSubmitModel extends Model
     {
         parent::__construct();
         $db = \Config\Database::connect();
-        $this->session = \Config\Services::session();
+        // $this->session = \Config\Services::session();
     }
 
     public function updateCaseStatus($registrationId, $nextStage)
-    {
-        $userTypeId = $this->session->get('login.ref_m_usertype_id');
-        $userId = $this->session->get('login.id');
+    {        
+        $this->db->transStart();
+        $userTypeId = getSessionData('login')['ref_m_usertype_id'];
+        $userId = getSessionData('login')['id'];
         $userIp = $_SERVER['REMOTE_ADDR'];
         $actionRes = false;
-        $affectedRows = false;
+        $affectedRows = false;           
 
-        $this->db->transStart();
-
-        if ($userTypeId == USER_CLERK) {
+        if ($userTypeId == USER_CLERK) {            
             $updateData = [
                 'deactivated_on' => date('Y-m-d H:i:s'),
                 'is_active' => true,
                 'updated_by' => $userId,
                 'updated_by_ip' => $userIp,
-            ];
+            ];           
 
             $builder = $this->db->table('efil.tbl_efiled_docs');
             $builder->where('registration_id', $registrationId);
-            $builder->update(['uploaded_by' => $this->session->get('dept_adv_panel.id')]);
+            $builder->update(['uploaded_by' => getSessionData('dept_adv_panel')['id']]);
 
             if ($this->db->affectedRows() > 0) {
                 $builder = $this->db->table('efil.tbl_court_fee_payment');
                 $builder->where('registration_id', $registrationId);
-                $builder->update(['receipt_uploaded_by' => $this->session->get('dept_adv_panel.id')]);
+                $builder->update(['receipt_uploaded_by' => getSessionData('dept_adv_panel')['id']]);
             }
+          
         } else {
             $updateData = [
                 'deactivated_on' => date('Y-m-d H:i:s'),
@@ -49,16 +47,21 @@ class CaveatFinalSubmitModel extends Model
                 'updated_by_ip' => $userIp,
             ];
         }
-
+        // pr($updateData);
+  
         $builder = $this->db->table('public.tbl_efiling_case_status');
         $builder->where('registration_id', $registrationId);
         $builder->where('is_active', true);
         $builder->update($updateData);
-
         if ($this->db->affectedRows() > 0) {
+            // echo $userTypeId. "<br>";
+            // echo Initial_Approaval_Pending_Stage. "<br>";
+            // pr($nextStage);
+
+
             if ($userTypeId == USER_CLERK) {
                 $createdBy = [
-                    'created_by' => $this->session->get('dept_adv_panel.id'),
+                    'created_by' => getSessionData('dept_adv_panel')['id'],
                     'allocated_on' => date('Y-m-d H:i:s'),
                 ];
 
@@ -69,16 +72,17 @@ class CaveatFinalSubmitModel extends Model
                 if ($this->db->affectedRows() > 0) {
                     $this->db->transComplete();
                 }
-                unset($_SESSION['dept_adv_panel']);
+               // unset($_SESSION['dept_adv_panel']);
             } else if ($nextStage == Initial_Approaval_Pending_Stage) {
-                $efilingType = $this->session->get('efiling_details.efiling_type');
+                $efilingType = getSessionData('efiling_details')['efiling_type'];
+                // pr($efilingType);
                 $allocatedTo = 0;
                 $params = [];
 
                 if (!empty($efilingType) && $efilingType == 'CAVEAT') {
                     $params['user_type'] = USER_ADMIN;
                     $params['loginId'] = $userId;
-                    $params['pp_a'] = ($this->session->get('login.ref_m_usertype_id') == 2) ? 'P' : 'A';
+                    $params['pp_a'] = (getSessionData('login')['ref_m_usertype_id'] == 2) ? 'P' : 'A';
                     $params['not_in_user_id'] = unserialize(USER_NOT_IN_LIST);
                     $params['file_type_id'] = E_FILING_TYPE_CAVEAT;
                     $allocatedUser = $this->getAllocatedUser($params);
@@ -89,7 +93,7 @@ class CaveatFinalSubmitModel extends Model
                     'allocated_to' => $allocatedTo,
                     'allocated_on' => date('Y-m-d H:i:s'),
                 ];
-
+                
                 $builder = $this->db->table('efil.tbl_efiling_nums');
                 $builder->where('registration_id', $registrationId);
                 $builder->where('is_active', true);
@@ -105,16 +109,17 @@ class CaveatFinalSubmitModel extends Model
                         'update_ip' => $userIp,
                         'reason_to_allocate' => NULL,
                     ];
+                    // pr($data);
 
                     $builder = $this->db->table('efil.tbl_efiling_allocation');
                     $builder->insert($data);
-
-                    if ($this->db->insertID()) {
+                    if ($this->db->affectedRows() > 0) {    
                         if ($userTypeId == USER_ADVOCATE) {
-                            $efilingForTypeId = $this->session->get('efiling_details.efiling_for_type_id');
-                            $efilingForId = $this->session->get('efiling_details.efiling_for_id');
-                            $registerInfo = $this->getAdvocateRegisterInfo($registrationId);
-                            $advocateCode = $registerInfo[0]['advocate_code'];
+                            $efilingForTypeId = getSessionData('efiling_details')['efiling_for_type_id'];
+                            $efilingForId = getSessionData('efiling_details')['efiling_for_id'];
+                            $registerInfo = $this->get_advocate_register_info($registrationId);
+                            $actionRes = TRUE;
+                            $advocateCode = $registerInfo[0]['advocate_code'] ?? '';
                         } else {
                             $actionRes = TRUE;
                         }
@@ -127,8 +132,7 @@ class CaveatFinalSubmitModel extends Model
             } else {
                 $actionRes = TRUE;
             }
-
-            if ($actionRes) {
+            if ($actionRes) {             
                 $proceed = false;
 
                 if ($nextStage == Initial_Defects_Cured_Stage) {
@@ -152,7 +156,7 @@ class CaveatFinalSubmitModel extends Model
                     $proceed = TRUE;
                 }
 
-                if ($this->session->get('efiling_details.stage_id') == Initial_Defected_Stage) {
+                if (getSessionData('efiling_details')['stage_id'] == Initial_Defected_Stage) {
                     $insertData = [
                         'registration_id' => $registrationId,
                         'stage_id' => Initial_Defects_Cured_Stage,
@@ -192,7 +196,7 @@ class CaveatFinalSubmitModel extends Model
                     'activated_by' => $userId,
                     'activated_by_ip' => $userIp,
                 ];
-
+                // pr($registrationId);
                 $builder = $this->db->table('public.tbl_efiling_case_status');
                 $builder->where('registration_id', $registrationId);
                 $builder->update($updateData);
@@ -208,11 +212,8 @@ class CaveatFinalSubmitModel extends Model
         }
     }
 
-
     public function assign_efiling_number($efiling_for_type_id, $efiling_for_id)
     {
-
-
         $sql = "SELECT users.id, users.ref_m_usertype_id, users.admin_for_type_id, users.admin_for_id, count(allocated_on) as efiling_num_count
             FROM efil.tbl_users users
             LEFT JOIN efil.tbl_efiling_nums en ON en.allocated_to = users.id AND DATE(en.allocated_on) = :current_date:
@@ -251,13 +252,10 @@ class CaveatFinalSubmitModel extends Model
 
     public function get_advocate_register_info($registration_id)
     {
-
-        $builder = $this->db->table('tbl_efiling_caveat');
-        $builder->select('pet_adv_cd');
+        $builder = $this->db->table('public.tbl_efiling_caveat');
+        $builder->select('*');
         $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
-
         $query = $builder->get();
-
         if ($query->getNumRows() > 0) {
             return $query->getResultArray();
         } else {

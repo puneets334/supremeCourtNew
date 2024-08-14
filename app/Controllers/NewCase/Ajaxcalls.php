@@ -245,7 +245,7 @@ class Ajaxcalls extends BaseController {
     }
     public function load_document_index() {
 
-
+        $index_data = '';
         $registration_id = $_SESSION['efiling_details']['registration_id'];
         if (!empty($registration_id)) {
             $efiled_docs_list = $this->DocumentIndex_Select_model->get_index_items_list($registration_id);

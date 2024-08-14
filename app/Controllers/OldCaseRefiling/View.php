@@ -1,21 +1,42 @@
 <?php
+namespace App\Controllers\OldCaseRefiling;
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+use App\Controllers\BaseController;
+use App\Models\MiscellaneousDocs\GetDetailsModel;
+use App\Models\OldCaseRefiling\ViewModel;
+use App\Models\Affirmation\AffirmationModel;
+use App\Models\UploadDocuments\UploadDocsModel;
+use App\Models\Common\CommonModel;
+use App\Libraries\webservices\Efiling_webservices;
 
-class View extends CI_Controller {
+// if (!defined('BASEPATH'))
+//     exit('No direct script access allowed');
+
+class View extends BaseController {
+
+    protected $Get_details_model;
+    protected $View_model;
+    protected $Affirmation_model;
+    protected $UploadDocs_model;
+    protected $Common_model;
+    protected $efiling_webservices;
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('miscellaneous_docs/Get_details_model');
-        $this->load->model('oldCaseRefiling/View_model');
-        $this->load->model('affirmation/Affirmation_model');
-        $this->load->model('uploadDocuments/UploadDocs_model');
-        $this->load->library('webservices/efiling_webservices');
+        // $this->load->model('miscellaneous_docs/Get_details_model');
+        // $this->load->model('oldCaseRefiling/View_model');
+        // $this->load->model('affirmation/Affirmation_model');
+        // $this->load->model('uploadDocuments/UploadDocs_model');
+        // $this->load->library('webservices/efiling_webservices');
+        $this->Get_details_model = new GetDetailsModel();
+        $this->View_model = new ViewModel();
+        $this->Affirmation_model = new AffirmationModel();
+        $this->UploadDocs_model = new UploadDocsModel();
+        $this->Common_model = new CommonModel();
+        $this->efiling_webservices = new Efiling_webservices();
     }
 
     function index() {
-
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN, USER_CLERK, USER_DEPARTMENT);
 
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
@@ -39,6 +60,7 @@ class View extends CI_Controller {
                 {
                     $data['case_listing_details']=$this->efiling_webservices->getCaseListedDetail($diary_number,$diary_year);
                     $data['details']=$this->efiling_webservices->getCISData($diary_number.$diary_year);
+                    // pr($data['details']);
                 }
             }
 
@@ -56,7 +78,7 @@ class View extends CI_Controller {
 
             $creaedBy = !empty($data['case_details'][0]['created_by']) ? $data['case_details'][0]['created_by'] : NULL;
             if(isset($creaedBy) && !empty($creaedBy)){
-                $this->load->model('common/Common_model');
+                // $this->load->model('common/Common_model');
                 $params = array();
                 $params['table_name'] ='efil.tbl_users';
                 $params['whereFieldName'] ='id';
@@ -72,9 +94,12 @@ class View extends CI_Controller {
                 }
             }
 
-            $this->load->view('templates/header');
-            $this->load->view('oldCaseRefiling/old_efiling_preview', $data);
-            $this->load->view('templates/footer');
+            return $this->render('oldCaseRefiling.old_efiling_preview',$data);
+
+
+            // $this->load->view('templates/header');
+            // $this->load->view('oldCaseRefiling/old_efiling_preview', $data);
+            // $this->load->view('templates/footer');
         } else {
             redirect('login');
             exit(0);

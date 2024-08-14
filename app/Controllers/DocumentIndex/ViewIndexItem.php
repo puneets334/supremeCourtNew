@@ -31,7 +31,6 @@ class ViewIndexItem extends BaseController {
 //     }
 
     public function index($doc_id) {
-
         $this->check_login();
 
         $doc_id = url_decryption($doc_id);

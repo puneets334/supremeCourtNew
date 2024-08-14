@@ -1,14 +1,15 @@
 <?php
 
 namespace App\Controllers\Register;
+
 use App\Controllers\BaseController;
 use App\Models\Register\RegisterModel;
 use App\Libraries\webservices\Efiling_webservices;
 use App\Libraries\Slice;
-
 // if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class AdvocateOnRecord extends BaseController {
+
     protected $Register_model;
     protected $slice;
     protected $form_validation;
@@ -29,11 +30,9 @@ class AdvocateOnRecord extends BaseController {
     public function index() {
         unset($_SESSION['adv_details']);
         // $captcha_value = captcha_generate();
-        // print_r($captcha_value); die();
         // $data['captcha']['image'] = $captcha_value['image'];
         // $data['captcha']['word'] = $captcha_value['word'];
-
-       /* $this->load->view('login/login_header');
+        /* $this->load->view('login/login_header');
         $this->load->view('register/aor_register_view', $data);
         $this->load->view('login/login_footer');*/
         $this->render('responsive_variant.authentication.aor_register_view');
@@ -41,25 +40,21 @@ class AdvocateOnRecord extends BaseController {
 
     function adv_get_otp() {
         /*if(!is_recaptcha_valid(@$_POST['ctvrg'])){
-            $this->session->set_flashdata('msg', 'We are not able to verify you. Please try later or try with a different web browser / device.');
-            redirect('register/AdvocateOnRecord');
+            $this->session->setFlashdata('msg', 'We are not able to verify you. Please try later or try with a different web browser / device.');
+            return redirect()->to(base_url('register/AdvocateOnRecord'));
             exit(0);
         }*/
         /*$data['captcha']['image'] = $captcha_value['image'];
         $data['captcha']['word'] = $captcha_value['word'];
-
         $userCaptcha = escape_data($_POST['userCaptcha']);
-
         if ($this->session->userdata("captchaWord") != $userCaptcha) {
-            $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
-            redirect('register/AdvocateOnRecord');
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');
+            return redirect()->to(base_url('register/AdvocateOnRecord'));
         }*/
         // $this->form_validation->set_rules('userCaptcha', 'Captcha', 'required|trim|is_required');
         // $this->form_validation->set_rules('adv_mobile', 'Mobile', 'required|numeric|trim|is_required|min_length[10]|max_length[10]');
         // $this->form_validation->set_rules('adv_email', 'Email', 'required|valid_email|trim|is_required');
-
         // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
-
         // if ($this->form_validation->run() === FALSE) {
         //    /* $captcha_value = captcha_generate();
         //     $data['captcha']['image'] = $captcha_value['image'];
@@ -91,30 +86,28 @@ class AdvocateOnRecord extends BaseController {
                 'currentPath' => $this->slice->getSegment(1) ?? 'public',
             ];
             $this->session->set('login_salt', $this->generateRandomString());
-            return $this->render('responsive_variant.authentication.aor_register_view', $data);
+            $this->render('responsive_variant.authentication.aor_register_view', $data);
         } else{
             if ($_SESSION["captcha"] !=$_POST['userCaptcha']) {
-                $this->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Captcha!</p> </div>');
-                redirect('register/AdvocateOnRecord'); exit(0);
+                $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                return redirect()->to(base_url('register/AdvocateOnRecord')); exit(0);
             }
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
-
                 $mobile_already_exist = $this->Register_model->check_already_reg_mobile($_POST['adv_mobile']);
                 $email_already_exist = $this->Register_model->check_already_reg_email($_POST['adv_email']);
                 //$mobile_already_bar = $this->Register_model->check_already_reg_mobile_bar($_POST['adv_mobile']);
                 //$email_already_bar = $this->Register_model->check_already_reg_email_bar($_POST['adv_email']);
-
                 if ($_POST['register_type'] == 'Advocate On Record') {
                     if(!empty($mobile_already_exist)) {
                         if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
-                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                            redirect('register/AdvocateOnRecord');
+                            $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
+                            return redirect()->to(base_url('register/AdvocateOnRecord'));
                         }
                     }
                     if(!empty($email_already_exist)) {
                         if ($email_already_exist[0]['emailid'] == $_POST['adv_email']) {
-                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Email ID Already Registerd! Please click on forgot password and reset your password!</p> </div>');
-                            redirect('register/AdvocateOnRecord');
+                            $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
+                            return redirect()->to(base_url('register/AdvocateOnRecord'));
                         }
                     }
                     $advDetailsIcmis=$this->efiling_webservices->getBarTable($_POST['adv_mobile'],$_POST['adv_email']);
@@ -122,16 +115,13 @@ class AdvocateOnRecord extends BaseController {
                     //if ($mobile_already_bar[0]['mobile'] != $_POST['adv_mobile'] || $email_already_bar[0]['email'] != $_POST['adv_email']) {
                     if (!empty($advDetailsIcmis)) {
                         if ($advDetailsIcmis[0]->moblie_number != $_POST['adv_mobile'] || $advDetailsIcmis[0]->emailid != $_POST['adv_email']) {
-                            $this->session->set_flashdata('msg', '<div class="uk-alert-danger flashmessage" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Mobile Number And Email ID Not Vailid for Bar! Please Contact SCI !</p> </div>');
-                            redirect('register/AdvocateOnRecord');
+                            $this->session->setFlashdata('msg', 'Mobile Number And Email ID Not Vailid for Bar! Please Contact SCI !');
+                            return redirect()->to(base_url('register/AdvocateOnRecord'));
                         }
                     }
                 }
-
                 $mobile_otp_is = $this->generateNumericOTP();
                 $email_otp_is = $this->generateNumericOTP();
-
-
                 date_default_timezone_set('Asia/Kolkata');
                 $startTime=date("H:i");
                 $endTime = date("H:i", strtotime('+15 minutes', strtotime($startTime)));
@@ -146,7 +136,6 @@ class AdvocateOnRecord extends BaseController {
                     'first_name' => '',
                     'last_name' => ''
                 );
-
                 if(!empty($_POST['adv_mobile'])){
                     $typeId="38";
                     $mobileNo=trim($_POST['adv_mobile']);
@@ -161,11 +150,10 @@ class AdvocateOnRecord extends BaseController {
                     //relay_mail_api($to_email, $subject, $message);
                     //var_dump($test);exit;
                 }
-
-                redirect('register/AdvOtp');
+                return redirect()->to(base_url('register/AdvOtp'));
             } else {
                 $this->session->setFlashdata('login_salt', $this->generateRandomString());
-                return $this->render('responsive_variant.authentication.aor_register_view');
+                $this->render('responsive_variant.authentication.aor_register_view');
             }
         }
     }
@@ -193,5 +181,3 @@ class AdvocateOnRecord extends BaseController {
     }
 
 }
-
-?>
