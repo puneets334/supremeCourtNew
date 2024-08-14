@@ -178,7 +178,7 @@ body.loading .overlay{
                                     }
                                 ?>
                                 <input type="number" class="form-control cus-form-ctrl"
-                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" required>
+                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
                                 </span>
