@@ -5,6 +5,7 @@ use App\Controllers\BaseController;
 use App\Models\FilingAdmin\FilingAdminModel;
 use App\Models\Report\ReportModel;
 use App\Models\Common\Common\Dropdown_list_model;
+use App\Libraries\webservices\Efiling_webservices;
 class Search extends BaseController {   
     protected $ReportModel;
     protected $Dropdown_list_model;
@@ -12,6 +13,7 @@ class Search extends BaseController {
     protected $slice;
     protected $agent;
     protected $validation;
+    protected $Efiling_webservices;
 
     public function __construct() {
         parent::__construct();
@@ -20,6 +22,7 @@ class Search extends BaseController {
         $this->session = \Config\Services::session();
         $this->agent = \Config\Services::request()->getUserAgent();
         $this->validation = \Config\Services::validation();
+        $this->Efiling_webservices = new Efiling_webservices();
         // $this->slice = new Slice();
         helper(['file']);
         /* $this->load->helper();
@@ -114,6 +117,7 @@ class Search extends BaseController {
         }
     }
     function view() {
+        
        $uris= $this->uri->segment(4); $muri= str_replace('.','/',$uris);
        $registration_id= $this->uri->segment(5); $type= $this->uri->segment(6); $stage= $this->uri->segment(7); $efiling_no= $this->uri->segment(8);
        $ids= $registration_id.'#'.$type.'#'.$stage.'#'.$efiling_no;
@@ -130,13 +134,13 @@ class Search extends BaseController {
             {
                 if(!empty($_POST["diary_year"]))
                 {
-                    $diary_no=escape_data($this->input->post("diary_no"));
-                    $diary_year=escape_data($this->input->post("diary_year"));
+                    $diary_no=escape_data($_POST["diary_no"]);
+                    $diary_year=escape_data($_POST["diary_year"]);
                 }
                 else
                 {
-                    $diary_no=escape_data(SUBSTR($this->input->post("diary_no"), 0, LENGTH($this->input->post("diary_no")) - 4));
-                    $diary_year=escape_data(SUBSTR($this->input->post("diary_no"), - 4));
+                    $diary_no=escape_data(SUBSTR($_POST["diary_no"], 0, LENGTH($_POST["diary_no"]) - 4));
+                    $diary_year=escape_data(SUBSTR($_POST["diary_no"], - 4));
                 }
 
                 $view_path=env('CASE_STATUS_API').'?d_no='.$diary_no.'&d_yr='.$diary_year;
@@ -161,8 +165,8 @@ class Search extends BaseController {
         $CaseYr=$_POST['caseYr'];*/
 
 
-        $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_POST['case_type'])), escape_data($_POST['caseNo']), escape_data($_POST['caseYr']));
-        //print_r($web_service_result);exit();
+        $web_service_result = $this->Efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_POST['case_type'])), escape_data($_POST['caseNo']), escape_data($_POST['caseYr']));
+        // print_r($web_service_result);exit();
         if(!empty($web_service_result->case_details[0])){
             $diary_no = $web_service_result->case_details[0]->diary_no;
             $diary_year = $web_service_result->case_details[0]->diary_year;

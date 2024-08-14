@@ -34,11 +34,13 @@ class CourtFee extends BaseController
 
     public function index()
     {
+        
         //func added on 11 nov 2020
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
             $registration_id = $_SESSION['efiling_details']['registration_id'];
             //$index_pdf_details = $this->DocumentIndex_Select_model->unfilled_pdf_pages_for_index($registration_id);
             $index_pdf_details = $this->DocumentIndex_Select_model->is_index_created($registration_id);
+            
             if (!empty($index_pdf_details)) {
                 $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
                 if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
@@ -50,16 +52,19 @@ class CourtFee extends BaseController
                     redirect('miscellaneous_docs/view');
                     exit(0);
                 }
+                
                 if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
                     $registration_id = $_SESSION['efiling_details']['registration_id'];
                     //todo change code when user change doctype which has more than 0 court fee
                     $pending_court_fee = getPendingCourtFee();
                     $breadcrumb_to_update = MISC_BREAD_COURT_FEE;
+                   
                     if ($pending_court_fee > 0) {
                         $update_courtfee_breadcrumb_status = $this->Payment_model->remove_breadcrumb($registration_id, $breadcrumb_to_update);
                     } else {
                         $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, $breadcrumb_to_update);
                     }
+                    
                     $data['uploaded_pages_count'] = $this->Court_Fee_model->get_uploaded_pages_count($registration_id);
                     $data['payment_details'] = $this->Court_Fee_model->get_payment_details($registration_id);                    
                     //start new added by akg
@@ -71,6 +76,7 @@ class CourtFee extends BaseController
                     $court_fee_part1 = calculate_court_fee(null, 1, null, 'O'); //start new added by akg
                     $court_fee_part2 = calculate_court_fee(null, 2, null, null);
                     //$total_court_fee = (int)$court_fee_part2;
+           
                     $total_court_fee = (int)$court_fee_part1 + (int)$court_fee_part2; //start new added by akg
                     if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) //vakaltnama fee need to added by default in the case of caveat
                     {

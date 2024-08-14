@@ -451,9 +451,9 @@
     </div>
 </div>
 <?php
-if(isset($payment_details) && !empty($payment_details)){
-    $this->load->view('shcilPayment/payment_list_view');
-}
+if(isset($payment_details) && !empty($payment_details)){ ?>
+    @include('shcilPayment.payment_list_view')
+<?php }
 ?>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script>

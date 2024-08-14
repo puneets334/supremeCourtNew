@@ -150,22 +150,24 @@ class view extends BaseController
 
             $case_details = $this->Get_details_model->get_case_details($registration_id);
             $title = explode('VS.', $case_details[0]['cause_title']);
-
+           
             $data['view_data'] = array(
-                'efiling_name' => $_SESSION['efiling_details']['efiling_for_name'],
+                'efiling_name' => !empty($_SESSION['efiling_details']['efiling_for_name']) ? $_SESSION['efiling_details']['efiling_for_name'] : '',
                 'efiling_type' => 'Misc. Document',
                 'sc_case' => $case_details[0]['reg_no_display'] ? $case_details[0]['reg_no_display'] : 'D. No.: ' . $case_details[0]['diary_no'] . '/' . $case_details[0]['diary_year'],
                 'efiling_no' => efile_preview($_SESSION['efiling_details']['efiling_no']),
-                'create_on' => date('d-m-Y', strtotime($_SESSION['efiling_details']['create_on'])),
+                'create_on' => isset($efiling_civil_data) ? date('d-m-Y H:i:s A', strtotime($efiling_civil_data[0]['create_on'])) : '',
                 'pet_name' => $title[0],
                 'res_name' =>  $title[1],
                 'total_ia' => 'NA',
-                'ref_file_no' => cin_preview($_SESSION['cnr_details']['cnr_num']),
-                'payment_type' => $payment_type[0]['payment_type'],
-                'payment_method_code' => $payment_type[0]['payment_method_code'],
-                'payment_details' => $fee_payment_mode_and_fee,
-                'count_number_of_fee_pay' => $count_number_of_fee_pay,
-                'total_amount' => $total_fee_paid,
+                // 'ref_file_no' => cin_preview($_SESSION['cnr_details']['cnr_num']) ?? '',
+                'ref_file_no' => 'NA',
+                
+                'payment_type' => $payment_type[0]['payment_type'] ?? '',
+                'payment_method_code' => $payment_type[0]['payment_method_code'] ?? '',
+                'payment_details' => $fee_payment_mode_and_fee ?? '',
+                'count_number_of_fee_pay' => $count_number_of_fee_pay ?? '',
+                'total_amount' => $total_fee_paid ?? '',
                 's' => $img
             );
 
@@ -176,7 +178,7 @@ class view extends BaseController
             $case_details = $this->Get_details_model->get_case_details($registration_id);
             $title = explode('VS.', $case_details[0]['cause_title']);
             $data['view_data'] = array(
-                'efiling_name' => $_SESSION['efiling_details']['efiling_for_name'],
+                'efiling_name' => $_SESSION['efiling_details']['efiling_for_name'] ?? '',
                 'efiling_type' => 'Deficit Court Fee',
                 'sc_case' => $case_details[0]['reg_no_display'] ? $case_details[0]['reg_no_display'] : 'D. No.: ' . $case_details[0]['diary_no'] . '/' . $case_details[0]['diary_year'],
                 'efiling_no' => efile_preview($_SESSION['efiling_details']['efiling_no']),
@@ -200,7 +202,7 @@ class view extends BaseController
             $title = explode('VS.', $case_details[0]['cause_title']);
             $ref_file_no = ($_SESSION['cnr_details']['efiling_case_reg_id']) ? efile_preview($_SESSION['cnr_details']['cnr_num']) : cin_preview($_SESSION['cnr_details']['cnr_num']);
             $data['view_data'] = array(
-                'efiling_name' => $_SESSION['efiling_details']['efiling_for_name'],
+                'efiling_name' => $_SESSION['efiling_details']['efiling_for_name'] ?? '',
                 'efiling_type' => 'I.A.',
                 'sc_case' => $case_details[0]['reg_no_display'] ? $case_details[0]['reg_no_display'] : 'D. No.: ' . $case_details[0]['diary_no'] . '/' . $case_details[0]['diary_year'],
                 'efiling_no' => efile_preview($_SESSION['efiling_details']['efiling_no']),
@@ -221,12 +223,15 @@ class view extends BaseController
 
             $file_name_prefix = 'IA_';
         }
+        // pr($data);
 
+        // return view('acknowledgement/case_preview_pdf', $data);
         $content = view('acknowledgement/case_preview_pdf', $data);
 
         ob_start();
         $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
+        
+        // pr($pdf);
         $pdf->SetPrintHeader(TRUE);
         $pdf->SetPrintFooter(TRUE);
         $pdf->SetAuthor('Supreme Court of India');
@@ -244,7 +249,7 @@ class view extends BaseController
         $pdf->SetFont('helvetica', '', 8, '', true);
         $pdf->AddPage();
 
-        ob_end_clean();
+        
 
         $output_file_name = $file_name_prefix . $_SESSION['efiling_details']['efiling_no'] . ".pdf";
 
@@ -254,6 +259,7 @@ class view extends BaseController
         //$img='<img src="@'.preg_replace('#^data:image/[^;]+;base64,#','',$img_encoded).'"';
         //$pdf->writeHTML($img);
         $pdf->writeHTML($content . '', true, false, false, false, '');
+
         /*if( ($data['view_data']['cdeval'])==1)
         {
 
@@ -265,8 +271,12 @@ class view extends BaseController
             //   $pdf->writeHTML('<font color=red>Note: You are required to Show this Acknowledgment Receipt along with documents at filing counter</font>',true, false, true, false, '');
             // $pdf->writeHTML('With this Acknowledgment you case will not be processed for CASE DATA ENTRY .',true, false, true, false, '');
         }*/
+        
         $pdf->lastPage();
+        
+        ob_end_clean();
         $response = $this->Acknowledgement_model->get_payment_details($_SESSION['efiling_details']['registration_id']);
+        
         if ($response) {
             $i = 1;
             /*foreach ($response as $resData){
@@ -297,7 +307,7 @@ class view extends BaseController
                 $i++;
             }*/
         }
-
         $pdf->Output($output_file_name, 'I');
+        exit(0);
     }
 }

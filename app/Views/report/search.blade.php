@@ -1,4 +1,4 @@
-@extends('layout.app')
+    @extends('layout.app')
 @section('content')
 <link rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/templates/uikit_scutum_2/assets/css/main.min.css" />
 <link type="text/css" rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css" />
@@ -1169,7 +1169,7 @@
                         rd = 'newcase.defaultController'; //. equal to / required
                         v = '/' + report['registration_id'] + '/' + report['ref_m_efiled_type_id'] + '/' + report['stage_id'] + '/' + report['efiling_no'];
                     } else if (report['efiling_type'] != '' && report['efiling_type'] == 'misc_document') {
-                        rd = 'miscellaneous_docs.DefaultController'; //. equal to / required
+                        rd = 'miscellaneous_docs/DefaultController'; //. equal to / required
                         v = '/' + report['registration_id'] + '/' + report['ref_m_efiled_type_id'] + '/' + report['stage_id'];
                     } else if (report['efiling_type'] != '' && report['efiling_type'] == 'IA') {
                         rd = 'IA.DefaultController'; //. equal to / required
