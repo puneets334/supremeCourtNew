@@ -5,6 +5,8 @@ use App\Models\Common\CommonModel;
 use App\Models\DocumentIndex\DocumentIndexDropDownModel;
 use App\Models\DocumentIndex\DocumentIndexModel;
 use App\Models\DocumentIndex\DocumentIndexSelectModel;
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 
 class Ajaxcalls extends BaseController
 {
@@ -483,10 +485,12 @@ class Ajaxcalls extends BaseController
     {
         extract($_POST);
         if(!empty($val) && !empty($objectionId)){
-            $this->db->set('aor_cured', $val);
-            $this->db->WHERE('id', $objectionId);
-            $this->db->WHERE('is_deleted', false);
-            $this->db->UPDATE('efil.tbl_icmis_objections');
+            $dbs = \Config\Database::connect();
+            $dbs->connect();
+            $builder = $dbs->table('efil.tbl_icmis_objections');
+            $builder->WHERE('id', $objectionId);
+            $builder->WHERE('is_deleted', false);
+            $builder->UPDATE('aor_cured', $val);
         }
 
     }

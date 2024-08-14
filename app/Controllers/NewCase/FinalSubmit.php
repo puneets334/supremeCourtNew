@@ -10,7 +10,7 @@ use App\Models\Filehashing\PdfHashTasksModel;
 use App\Models\Mentioning\ListingModel;
 use App\Models\NewCase\DropdownListModel;
 use App\Models\NewCase\GetDetailsModel;
-use App\Models\Newcase\NewCaseModel;
+use App\Models\NewCase\NewCaseModel;
 
 class FinalSubmit extends BaseController
 {
@@ -373,7 +373,8 @@ class FinalSubmit extends BaseController
                         $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
                         if ($aor_cured == 'f') {
                             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit.</div>');
-                            redirect('documentIndex');exit();
+                            return redirect()->to(base_url('documentIndex'));
+                            // redirect('documentIndex');exit();
                         }
                     }
                     isRefilingCompulsoryIADefect($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);
