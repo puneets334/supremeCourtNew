@@ -621,6 +621,7 @@ class ResponsiveVariantRouteController extends BaseController
     //Start
     public function showCaseDocumentCrudByRegistrationId($registration_id = null)
     {
+        pr($registration_id);
         $registration_id = str_replace('_', '#', @$registration_id);
         $tab = @$_REQUEST['tab'];
     }
