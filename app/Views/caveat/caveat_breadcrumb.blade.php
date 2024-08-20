@@ -529,8 +529,7 @@ $efiling_num_label_for_display = 'DRAFT-';;
 
 
 <script>
-    function ActionToTrash(trash_type) {
-        alert("HEllo");
+    function ActionToTrash(trash_type) {       
         event.preventDefault();
         var trash_type =trash_type;
         var url="";

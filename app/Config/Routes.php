@@ -335,3 +335,5 @@ $routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/markCuredDefect', 'Docu
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/defaultController/(:any)', 'OldCaseRefiling\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/courtFee', 'OldCaseRefiling\CourtFee::index');
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::index');
+
+$routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
