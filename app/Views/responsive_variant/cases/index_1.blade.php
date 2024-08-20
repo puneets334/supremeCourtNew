@@ -72,7 +72,6 @@
 <link type="text/css" rel="stylesheet" href="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css')}}" />
 <div class="container-fluid">
     <?php
-    // pr($meta_data);
     $adv_cases_response_data = array();
     // $adv_cases_response_data = $adv_cases_response->data;
     if(isset($meta_data['adv_cases_response']['data']) && count($meta_data['adv_cases_response']['data']) > 0) {
@@ -101,20 +100,17 @@
                 $tmp = array();
                 $userType = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
                 $tmp['userType'] = $userType;
-                $tmp['diaryId'] = $v['diary_no'];
-                $tmp['status'] = $v['c_status'];
-                $tmp['registrationNumber'] = $v['reg_no_display'];
-                $tmp['petitionerName'] = $v['pet_name'];
-                $tmp['respondentName'] = $v['res_name'];
-                $tmp['filedOn'] = $v['createdAt'];
-                $tmp['assignedby'] = $v['assignedby'];
+                $tmp['diaryId'] = $v->diary_no;
+                $tmp['status'] = $v->c_status;
+                $tmp['registrationNumber'] = $v->reg_no_display;
+                $tmp['petitionerName'] = $v->pet_name;
+                $tmp['respondentName'] = $v->res_name;
+                $tmp['filedOn'] = $v->createdAt;
+                $tmp['assignedby'] = $v->assignedby;
                 $adv_cases_response_data[] = $tmp;
             }
         }
     }
-    // pr($tmp);
-    // echo '<pre>'; print_r($adv_cases_response_data); exit;
-    // echo '<pre>'; print_r($meta_data['diaryEngaged']); exit;
     ?>
     <div class="row">
         <div class="col-lg-12">
@@ -247,34 +243,34 @@
                                             </div>
                                         <?php } ?>
                                         <tbody class="js-filter">
-                                            <tr ng-repeat="case in cases" data-case-status="@{{ case.status }}" data-diaryEngaged="@{{ (diaryEngaged.indexOf(case.diaryId) !== -1) ? 'E' : '' }}" data-advocate-appearing-for="@{{ case.advocateType }}" data-case-registration-status="@{{ case.registrationNumber ? 'R' : 'U'}}" on-finish-render="initialize_cases_data_table">
-                                            <!-- <tr ng-repeat="case in cases track by case.diaryId"
+                                            <tr ng-repeat="case in cases" data-case-status="@{{ case.status }}" data-diaryEngaged="@{{ (diaryEngaged.indexOf(case.diaryid) !== -1) ? 'E' : '' }}" data-advocate-appearing-for="@{{ case.advocatetype }}" data-case-registration-status="@{{ case.registrationnumber ? 'R' : 'U'}}" on-finish-render="initialize_cases_data_table">
+                                            <!-- <tr ng-repeat="case in cases track by case.diaryid"
                                                 data-case-status="@{{ case.status }}"
-                                                data-diaryEngaged="@{{ (diaryEngaged.indexOf(case.diaryId) !== -1) ? 'E' : '' }}"
-                                                data-advocate-appearing-for="@{{ case.advocateType }}"
-                                                data-case-registration-status="@{{ case.registrationNumber ? 'R' : 'U'}}"
+                                                data-diaryEngaged="@{{ (diaryEngaged.indexOf(case.diaryid) !== -1) ? 'E' : '' }}"
+                                                data-advocate-appearing-for="@{{ case.advocatetype }}"
+                                                data-case-registration-status="@{{ case.registrationnumber ? 'R' : 'U'}}"
                                                 on-finish-render="initialize_cases_data_table"> -->
                                                 <!-- <td ng-bind="$index + 1"></td>
                                                 <td>
-                                                    <a onClick="open_case_status()" href="" title="show CaseStatus" data-diary_no="@{{case.diaryId}}" data-diary_year="">
-                                                        <span class="uk-text-muted" ng-bind="case.diaryId"></span>
+                                                    <a onClick="open_case_status()" href="" title="show CaseStatus" data-diary_no="@{{case.diaryid}}" data-diary_year="">
+                                                        <span class="uk-text-muted" ng-bind="case.diaryid"></span>
                                                         <br>
-                                                        <span class="uk-text-emphasis" ng-bind="case.registrationNumber"></span>
+                                                        <span class="uk-text-emphasis" ng-bind="case.registrationnumber"></span>
                                                     </a>
                                                     mandatory background hidden area search click top header (Appearing for Petitioner,Appearing for Respondent)
-                                                    <b class="scif" ng-if="case.advocateType=='P'">AfP</b>
-                                                    <b class="scif" ng-if="case.advocateType=='R' || case.advocateType=='I'">AfR</b>
+                                                    <b class="scif" ng-if="case.advocatetype=='P'">AfP</b>
+                                                    <b class="scif" ng-if="case.advocatetype=='R' || case.advocatetype=='I'">AfR</b>
                                                 </td>
                                                 <td>
                                                     <div>
                                                         <div>
-                                                            <b ng-if="case.advocateType!='P'">P:</b>
-                                                            <b ng-if="case.advocateType=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionerName}}">P:</b>
+                                                            <b ng-if="case.advocatetype!='P'">P:</b>
+                                                            <b ng-if="case.advocatetype=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionerName}}">P:</b>
                                                             &nbsp;<span ng-bind="case.petitionerName"></span>
                                                         </div>
                                                         <div>
-                                                            <b ng-if="case.advocateType!='R' && case.advocateType!=='I'">R:</b>
-                                                            <b ng-if="case.advocateType=='R' || case.advocateType=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentName}}">R:</b>
+                                                            <b ng-if="case.advocatetype!='R' && case.advocatetype!=='I'">R:</b>
+                                                            <b ng-if="case.advocatetype=='R' || case.advocatetype=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentName}}">R:</b>
                                                             &nbsp;<span ng-bind="case.respondentName"></span>
                                                         </div>
                                                     </div>
@@ -285,11 +281,10 @@
                                                     <br>
                                                     <span class="uk-text-emphasis" ng-bind="case.filedOn"></span>
                                                 </td>
-                                                <?php // echo '<pre>'; print_r(this.id); die(); ?>
                                                 <td ng-if="case.userType!=19">
-                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon="icon:receiver" title="Add contact" id="@{{case.diaryId}}"><span class="mdi mdi-account-plus"></span></a>&nbsp;&nbsp;
-                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon="icon:mail" title="Send SMS" id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}"><span class="mdi mdi-message-bulleted"></span></a>&nbsp;&nbsp;
-                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
+                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon="icon:receiver" title="Add contact" id="@{{case.diaryid}}"><span class="mdi mdi-account-plus"></span></a>&nbsp;&nbsp;
+                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon="icon:mail" title="Send SMS" id="@{{case.diaryid+'-'+case.registrationnumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}"><span class="mdi mdi-message-bulleted"></span></a>&nbsp;&nbsp;
+                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryid) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryid}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
                                                     <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'"></b>mandatory background hidden area search click top header (Listed Cases)
                                                 </td>
                                                 <td>
@@ -297,21 +292,21 @@
                                                     <div class="uk-padding-small md-bg-grey-700" uk-dropdown="pos:left-center;mode:click;" ng-if="case.status=='P'">
                                                         <ul class="uknav-parent-icon uk-dropdown-nav" uk-nav>
                                                             <li ng-if="case.userType!=19" class="uk-nav-header uk-padding-remove-left text-white">File a new</li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
-                                                            <li ng-if="case.userType=='1'"><a href="{{base_url('case/advocate')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
-                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            <li ng-if="case.userType=='1'"><a href="{{base_url('case/advocate')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
+                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
                                                             <li class="uk-nav-divider uk-margin-remove"></li>
                                                             <li class="uk-nav-header uk-padding-remove-left uk-margin-remove-top text-white">View</li>
                                                             <li>
-                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryId}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
+                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryid}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
                                                                     <span uk-icon="icon: bookmark"></span> Paper Book (with Indexing)
                                                                 </a>
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     mandatory background hidden area search click top header (Registered Cases, Unregistered Cases)
-                                                    <b class="scif" ng-if="case.registrationNumber==''">Unr</b><b class="scif" ng-if="case.registrationNumber!=''">Reg</b>
+                                                    <b class="scif" ng-if="case.registrationnumber==''">Unr</b><b class="scif" ng-if="case.registrationnumber!=''">Reg</b>
                                                 </td> -->
                                                 <td ng-bind="$index + 1"></td>
                                                 <td>

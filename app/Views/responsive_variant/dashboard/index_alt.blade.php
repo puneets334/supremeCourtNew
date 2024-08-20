@@ -382,16 +382,16 @@
                                     @if(!empty($sr_advocate_data))
                                         <div class="uk-width-expand uk-margin-medium-top uk-overflow-hidden">
                                             <h4 class="uk-heading-bullet uk-text-bold">My Cases <small class="uk-text-muted">assigned by AOR</small></h4>
-                                            <table class="uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" id="efiled-cases-table">
+                                            <table class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%" id="efiled-cases-table">
                                                 <thead>
-                                                    <tr class="uk-text-bold">
-                                                        <th class="uk-text-bold d-print-none">#</th>
-                                                        <th class="uk-text-bold">Case Number</th>
-                                                        <th class="uk-text-bold">Cause Title</th>
-                                                        <th class="uk-text-bold" style="width: 90px;">Status</th>
-                                                        <th class="uk-text-bold">Engaged By/Date</th>
-                                                        <th class="uk-text-bold">Paper Book</th>
-                                                        <!-- <th class="uk-text-bold d-print-none">...</th>-->
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Case Number</th>
+                                                        <th>Cause Title</th>
+                                                        <th style="width: 90px;">Status</th>
+                                                        <th>Engaged By/Date</th>
+                                                        <th>Paper Book</th>
+                                                        <!-- <th>...</th>-->
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -412,9 +412,7 @@
                                                                 <td>'.$c_status.'</td>
                                                                 <td>'.$assignedby.'<br/>'.$createdAt.'</td>
                                                                 <td>
-                                                                        <a href="#" onclick="javascript:loadPaperBookViewer(this);" data-paper-book-viewer-url="'.base_url("case/paper_book_viewer").'/'.$diary_no.'" targe="_blank" data-diary_no="'.$diary_no.'" data-diary_year="">
-                                                                    View
-                                                                    </a>
+                                                                    <a href="#" onclick="javascript:loadPaperBookViewer(this);" data-paper-book-viewer-url="'.base_url("case/paper_book_viewer").'/'.$diary_no.'" target="_blank" data-diary_no="'.$diary_no.'" data-diary_year="">View</a>
                                                                 </td>
                                                             </tr>';
                                                             $n++;
