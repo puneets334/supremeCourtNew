@@ -1,6 +1,5 @@
 <?php 
 $segment = service('uri');
-
 $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
 ?>
 <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
@@ -16,29 +15,26 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ?
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <?php
-
 $disabled_status1='pointer-events: none; cursor: default;';
 $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT);
 $allowed_users_trash = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-
-if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id']==DRAFT_STAGE) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id']==INITIAL_DEFECTED_STAGE) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id']== TRASH_STAGE))
-{
-$efiling_num_label_for_display = 'DRAFT-';;
-        $efiling_num_button_background_class = 'btn-danger';
-    } else {
-        $efiling_num_label_for_display = '';
-        $efiling_num_button_background_class = 'btn-success';
-    }
-
+if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id']==DRAFT_STAGE) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id']==INITIAL_DEFECTED_STAGE) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id']== TRASH_STAGE)) {
+    $efiling_num_label_for_display = 'DRAFT-';;
+    $efiling_num_button_background_class = 'btn-danger';
+} else {
+    $efiling_num_label_for_display = '';
+    $efiling_num_button_background_class = 'btn-success';
+}
 ?>
-
 <div class="dash-card dashboard-section">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
             <div class=" dashboard-bradcrumb">
                 <div class="left-dash-breadcrumb">
                     <div class="page-title">
-                        <h5><i class="fa fa-file"></i> <?php
+                        <h5>
+                            <i class="fa fa-file"></i>
+                            <?php
                             echo "Caveat Filing Form";
                             $filing_num_label=$lbl_history='';
                             if (!empty(getSessionData('efiling_details')['stage_id']) && ((getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE) || (getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE) || (getSessionData('efiling_details')['stage_id'] == TRASH_STAGE))) {
@@ -48,7 +44,8 @@ $efiling_num_label_for_display = 'DRAFT-';;
                                 $efiling_num_label_for_display = '';
                                 $efiling_num_button_background_class = 'btn-success';
                             }
-                            ?></h5>
+                            ?>
+                        </h5>
                     </div>
                     <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
                         <?php
@@ -58,78 +55,51 @@ $efiling_num_label_for_display = 'DRAFT-';;
                         if (!empty(getSessionData('msg'))) {
                             echo getSessionData('msg');
                         }
-
-
                         ?>
                     </div>
-                    <?php // echo getSessionData('msg'); ?>
-                    <?php 
-                        echo !empty(getSessionData('efiling_details')['stage_id']) ? remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']) : '';
-                    ?>
                     <?php
+                    // echo getSessionData('msg');
+                    echo !empty(getSessionData('efiling_details')['stage_id']) ? remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']) : '';
                     $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
                     if (((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) || (getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN)) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                         if (isset($efiling_civil_data[0]['orgid']) && $efiling_civil_data[0]['orgid'] == '0' && $efiling_civil_data[0]['not_in_list_org'] == 't' || isset($efiling_civil_data[0]['resorgid']) && $efiling_civil_data[0]['resorgid'] == '0' && $efiling_civil_data[0]['res_not_in_list_org'] == 't') {
-                        ?>
-                        <a data-toggle="modal" href="#approveModal" class="btn btn-success btn-sm">Approve</a> 
+                            ?>
+                            <a data-toggle="modal" href="#approveModal" class="btn btn-success btn-sm">Approve</a> 
                         <?php } else { ?>
-                        <a data-toggle="modal" href="#disapproveModal" class="btn btn-danger btn-sm" >Disapprove</a>
-                        <?php } ?>
-                        
-                    <?php } ?>
-
-                    <?php
+                            <a data-toggle="modal" href="#disapproveModal" class="btn btn-danger btn-sm" >Disapprove</a>
+                            <?php
+                        }
+                    }
                     $idle_Array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
                     if(!empty((getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $idle_Array) && $this->uri->segment(3) == url_encryption('idle')) {
                         ?>
                         <a data-toggle="modal" href="#lodges_cases" class="btn btn-success">Make Idle</a> 
                         <a data-toggle="modal" href="#delete_lodges_cases" class="btn btn-danger" >Make Idle & Delete</a>
-                    <?php } ?>
-
-                    <?php
-                            $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
-                            $Array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-
-                           
-                            ?>
+                        <?php
+                    }
+                    $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+                    $Array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    ?>
                     <div class="page-breifs">
                         <ul>
-                            <li>
-                                <a href="" class="blue-dot"><span
-                                        class="mdi mdi-record"></span> Active
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="green-dot"> <span
-                                        class="mdi mdi-record"></span> Done </a>
-                            </li>
-                            <li>
-                                <a href="" class="yellow-dot"> <span
-                                        class="mdi mdi-record"></span> Optional
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="red-dot"> <span
-                                        class="mdi mdi-record"></span> Required
-                                </a>
-                            </li>
+                            <li><a href="" class="blue-dot"><span class="mdi mdi-record"></span> Active </a></li>
+                            <li><a href="" class="green-dot"> <span class="mdi mdi-record"></span> Done </a></li>
+                            <li><a href="" class="yellow-dot"> <span class="mdi mdi-record"></span> Optional </a></li>
+                            <li><a href="" class="red-dot"> <span class="mdi mdi-record"></span> Required </a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
                         <?php
-                       /* if (!empty(getSessionData('efiling_details')) && !empty(getSessionData('efiling_details')['efiling_no'])) {
+                        /* if (!empty(getSessionData('efiling_details')) && !empty(getSessionData('efiling_details')['efiling_no'])) {
                             echo '<a href="javascript::void(0); " class="btn '.$efiling_num_button_background_class.' btn-sm"  style="color: #ffffff"><strong id="copyTarget_EfilingNumber">' . $filing_num_label .$efiling_num_label_for_display. htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</strong></a> &nbsp;<strong id="copyButton" class="btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="glyphicon glyphicon-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                             echo '&nbsp; <a class="btn btn-default btn-sm" href="' . base_url('history/efiled_case/view') . '">' . $lbl_history . ' </a>';
                         }*/
                         ?>
-                        <a href="javascript:void(0)"
-                            class="quick-btn gray-btn" onclick="window.history.back()"><span
-                                class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -141,60 +111,38 @@ $efiling_num_label_for_display = 'DRAFT-';;
                 </div>
                 <div class="current-pg-actions">
                     <?php
-					
-					 if (in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
-
-                                if ((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == Initial_Defected_Stage) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage)) {
-                                    echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                    if (in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
+                        if ((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == Initial_Defected_Stage) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage)) {
+                            echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                        }
+                        if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {
+                            if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
+                                // Comment By Amit Mishra as 
+                                if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                    echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                 }
-                              
-                                if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {  
-
-                                    if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
-                                        // Comment By Amit Mishra as 
-                                        if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                            echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-                                        }
-
-                                        
-                                            echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-
-                                        
-                                        if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
-                                            ?>
-                                            <?php
-                                        }
-                                    } elseif (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
-                                        if (in_array(CAVEAT_BREAD_DOC_INDEX, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-
-                                            $action = base_url('efilingAction/Caveat_final_submit');
-                                            $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
-                                            echo form_open($action, $attribute);
-
-                                            $ci = & get_instance();
-                                            $clerk_adv='';
-                                           
-                                            echo form_close();
-                                        }
-                                    }
+                                // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';                                        
+                                if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { }
+                            } elseif (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
+                                if (in_array(CAVEAT_BREAD_DOC_INDEX, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                    $action = base_url('efilingAction/Caveat_final_submit');
+                                    $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
+                                    echo form_open($action, $attribute);
+                                    $ci = & get_instance();
+                                    $clerk_adv='';                                    
+                                    echo form_close();
                                 }
-                       }
-						
+                            }
+                        }
+                    }						
                     if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
                         echo '<a href="javascript::void(0); " class="quick-btn transparent-btn '.$efiling_num_button_background_class.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
-                        echo '&nbsp; <a class="quick-btn gray-btn" href="' . base_url('history/efiled_case/view ') . '">eFiling History</a>';
-						
-						
+                        echo '&nbsp; <a class="quick-btn gray-btn" href="' . base_url('history/efiled_case/view ') . '">eFiling History</a>';						
                     }
-					 if (!empty($_SESSION['efiling_details']['stage_id']) == Draft_Stage) {
-                      ?>
-                     <a href="javascript:void(0)"
-                        class="quick-btn gradient-btn"
-                        onclick="ActionToTrash('EAT')">Trash </a>
-                                            <?php
-                        }
-                    ?>
-						
+                    if (!empty($_SESSION['efiling_details']['stage_id']) == Draft_Stage) {
+                        ?>
+                        <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('EAT')">Trash </a>
+                    <?php } ?>						
                 </div>
             </div>
         </div>
@@ -206,212 +154,181 @@ $efiling_num_label_for_display = 'DRAFT-';;
         <!-- form--start  -->
         <form action="">
             <?php 
-           // pr(getSessionData('efiling_details'));
-                $StageArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
-                $breadcrumb_status=count($StageArray);
-
-                $step=11;
-                $p_r_type_petitioners='P';
-                $p_r_type_respondents='R';
-                $registration_id = !empty(getSessionData('efiling_details')['registration_id']) ? getSessionData('efiling_details')['registration_id'] : '';
-                if (!empty(getSessionData('efiling_details')['no_of_petitioners'])){
-                    $total_petitioners = get_extra_party_P_or_R($p_r_type_petitioners);
-                }else{$total_petitioners=0;}
-                if (!empty(getSessionData('efiling_details')['no_of_respondents'])){
-                    $total_respondents = get_extra_party_P_or_R($p_r_type_respondents);
-                }else{$total_respondents=0;}
-
-                if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], array(USER_ADVOCATE, USER_IN_PERSON, USER_PDE))) {
-                    
-                    $final_submit_action = TRUE;
-                    $final_submit_continue_action = TRUE;
-					
-					$url_caveator = base_url('caveat/caveator');
-                    $url_caveatee = base_url('caveat/caveatee');
-                    $url_extra_party = base_url('caveat/extra_party');
-                    $url_subordinate_court = base_url('caveat/subordinate_court');
-                    $upload_doc_url = base_url('uploadDocuments');
-                    $doc_index_url = base_url('documentIndex');
-                    $url_case_courtfee = base_url('courtFee');					
-					
-
-                } elseif (!empty(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] ==  USER_CLERK && in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage)))) {
-					
-					$url_caveator = base_url('caveat/caveator');
-                    $url_caveatee = base_url('caveat/caveatee');
-                    $url_extra_party = base_url('caveat/extra_party');
-                    $url_subordinate_court = base_url('caveat/subordinate_court');
-                    $upload_doc_url = base_url('uploadDocuments');
-                    $doc_index_url = base_url('documentIndex');
-                    $url_case_courtfee = base_url('courtFee');
-								
-                } else {					
-					 $url_case_detail = $url_caveator = $url_caveatee = $url_extra_party = $url_subordinate_court = $upload_doc_url = $doc_index_url = $url_case_courtfee = '#';
-                }
-
-                
-
-                if (isset(getSessionData('efiling_for_details')['case_type_pet_title']) && !empty(getSessionData('efiling_for_details')['case_type_pet_title'])) {
-                            $case_type_pet_title = htmlentities(getSessionData('efiling_for_details')['case_type_pet_title'], ENT_QUOTES);
-                        } elseif (isset($efiling_civil_data[0]['case_type_pet_title']) && !empty($efiling_civil_data[0]['case_type_pet_title'])) {
-                            $case_type_pet_title = htmlentities($efiling_civil_data[0]['case_type_pet_title'], ENT_QUOTES);
-                        } else {
-                            $case_type_pet_title = htmlentities('Caveator', ENT_QUOTES);
-                        }
-
-
-                        if (isset(getSessionData('efiling_for_details')['case_type_res_title']) && !empty(getSessionData('efiling_for_details')['case_type_res_title'])) {
-                            $case_type_res_title = htmlentities(getSessionData('efiling_for_details')['case_type_res_title'], ENT_QUOTES);
-                        } elseif (isset($efiling_civil_data[0]['case_type_res_title']) && !empty($efiling_civil_data[0]['case_type_res_title'])) {
-                            $case_type_res_title = htmlentities($efiling_civil_data[0]['case_type_res_title'], ENT_QUOTES);
-                        } else {
-                            $case_type_res_title = htmlentities('Caveatee', ENT_QUOTES);
-                        }
-                ?>
-                @if(!empty(getSessionData('efiling_details')['stage_id']) && (getSessionData('efiling_details')['stage_id']==I_B_Defected_Stage || getSessionData('efiling_details')['stage_id']==I_B_Defects_Cured_Stage))
-                    {{-- @include('newcase/refile_case_appeal_ci_breadcrumb', $data) --}}
-                @else
+            // pr(getSessionData('efiling_details'));
+            $StageArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
+            $breadcrumb_status=count($StageArray);
+            $step=11;
+            $p_r_type_petitioners='P';
+            $p_r_type_respondents='R';
+            $registration_id = !empty(getSessionData('efiling_details')['registration_id']) ? getSessionData('efiling_details')['registration_id'] : '';
+            if (!empty(getSessionData('efiling_details')['no_of_petitioners'])) {
+                $total_petitioners = get_extra_party_P_or_R($p_r_type_petitioners);
+            } else {
+                $total_petitioners=0;
+            }
+            if (!empty(getSessionData('efiling_details')['no_of_respondents'])) {
+                $total_respondents = get_extra_party_P_or_R($p_r_type_respondents);
+            } else {
+                $total_respondents=0;
+            }
+            if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], array(USER_ADVOCATE, USER_IN_PERSON, USER_PDE))) {
+                $final_submit_action = TRUE;
+                $final_submit_continue_action = TRUE;                
+                $url_caveator = base_url('caveat/caveator');
+                $url_caveatee = base_url('caveat/caveatee');
+                $url_extra_party = base_url('caveat/extra_party');
+                $url_subordinate_court = base_url('caveat/subordinate_court');
+                $upload_doc_url = base_url('uploadDocuments');
+                $doc_index_url = base_url('documentIndex');
+                $url_case_courtfee = base_url('courtFee');
+            } elseif (!empty(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] ==  USER_CLERK && in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage)))) {					
+                $url_caveator = base_url('caveat/caveator');
+                $url_caveatee = base_url('caveat/caveatee');
+                $url_extra_party = base_url('caveat/extra_party');
+                $url_subordinate_court = base_url('caveat/subordinate_court');
+                $upload_doc_url = base_url('uploadDocuments');
+                $doc_index_url = base_url('documentIndex');
+                $url_case_courtfee = base_url('courtFee');                            
+            } else {					
+                $url_case_detail = $url_caveator = $url_caveatee = $url_extra_party = $url_subordinate_court = $upload_doc_url = $doc_index_url = $url_case_courtfee = '#';
+            }
+            if (isset(getSessionData('efiling_for_details')['case_type_pet_title']) && !empty(getSessionData('efiling_for_details')['case_type_pet_title'])) {
+                $case_type_pet_title = htmlentities(getSessionData('efiling_for_details')['case_type_pet_title'], ENT_QUOTES);
+            } elseif (isset($efiling_civil_data[0]['case_type_pet_title']) && !empty($efiling_civil_data[0]['case_type_pet_title'])) {
+                $case_type_pet_title = htmlentities($efiling_civil_data[0]['case_type_pet_title'], ENT_QUOTES);
+            } else {
+                $case_type_pet_title = htmlentities('Caveator', ENT_QUOTES);
+            }
+            if (isset(getSessionData('efiling_for_details')['case_type_res_title']) && !empty(getSessionData('efiling_for_details')['case_type_res_title'])) {
+                $case_type_res_title = htmlentities(getSessionData('efiling_for_details')['case_type_res_title'], ENT_QUOTES);
+            } elseif (isset($efiling_civil_data[0]['case_type_res_title']) && !empty($efiling_civil_data[0]['case_type_res_title'])) {
+                $case_type_res_title = htmlentities($efiling_civil_data[0]['case_type_res_title'], ENT_QUOTES);
+            } else {
+                $case_type_res_title = htmlentities('Caveatee', ENT_QUOTES);
+            }
+            ?>
+            @if(!empty(getSessionData('efiling_details')['stage_id']) && (getSessionData('efiling_details')['stage_id']==I_B_Defected_Stage || getSessionData('efiling_details')['stage_id']==I_B_Defects_Cured_Stage))
+                {{-- @include('newcase/refile_case_appeal_ci_breadcrumb', $data) --}}
+            @else
                 <?php 
-                 $breadCrumbsArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
+                $breadCrumbsArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
                 ?>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <?php
-                          //  echo $segment->getTotalSegments() ;
-
-
-                           
-                                if ($segment->getTotalSegments()== '1') {
-                                    $ColorCode = 'background-color: #01ADEF';
-                                    $status_color = 'active';
-                                } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray)) {
-                                    $ColorCode = 'background-color: #169F85;color:#ffffff;';
-                                    $status_color = '';
-                                } else {
-                                    $ColorCode = 'background-color: #f0ad4e;color:#ffffff;';
-                                    $status_color = '';
-                                }
-                                ?>
-
-                            <a href="<?= $url_caveator ?>" class="nav-link <?php echo $status_color; ?> " id="home-tab"
-                                data-bs-toggle="tab" data-bs-target="#home" type="button"
-                                role="tab" aria-controls="home"
-                                aria-selected="true"><span class="tab-num" style="<?php echo $ColorCode; ?>">1</span>Caveator</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <?php
-                            if ($segment->getSegment(2) == 'caveatee') {
-                                $ColorCode = 'background-color: #01ADEF';
-                                $status_color = 'active';
-                                $disabled_status='';
-                            } elseif (in_array(CAVEAT_BREAD_SUBORDINATE_COURT, $breadCrumbsArray)) {
-                                $ColorCode = 'background-color: #169F85;color:#ffffff;';
-                                $status_color = '';
-                                $disabled_status='';
-                            } else {
-                                $ColorCode = 'background-color: #C11900;color:#ffffff;';
-                                $status_color = '';
-                                $disabled_status='pointer-events: none; cursor: default;';
-                            }
-                            ?>
-                            <a href="<?= $url_caveatee ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" style="<?php if(!in_array(NEW_CASE_CASE_DETAIL, $StageArray)){ echo $disabled_status; }?>"
-                                data-bs-target="#home" type="button" role="tab"
-                                aria-controls="home"
-                                aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span>Caveatee</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <?php
-                          //  pr($breadCrumbsArray);
-                            if ($segment->getSegment(2) == 'subordinate_court') {
-                                $ColorCode = 'background-color: #01ADEF';
-                                $status_color = 'active';
-                                $disabled_status='';
-                            } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadCrumbsArray)) {
-                                $ColorCode = 'background-color: #169F85;color:#ffffff;';
-                                $status_color = '';
-                                $disabled_status='';
-                            } else {
-                                $ColorCode = 'background-color: #C11900;color:#ffffff;';
-                                $status_color = '';
-                                $disabled_status='pointer-events: none; cursor: default;';
-                            }
-                            ?>
-                            <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home" type="button" role="tab"
-                                aria-controls="home" style="<?php if(!in_array(NEW_CASE_PETITIONER, $StageArray)){ echo $disabled_status; }?>"
-                                aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts</a>
-                        </li>
-                        
-                        <li class="nav-item" role="presentation">
-                            <?php
-                           
-                            if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(2) == 'documentIndex') {
-                                $ColorCode = 'background-color: #01ADEF';
-                                $status_color = 'active';
-                                $disabled_status='';
-                            } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadCrumbsArray)) {
-                                $ColorCode = 'background-color: #169F85;color:#ffffff;';
-                                $status_color = '';
-                                $disabled_status='';
-                            } else {
-                                $ColorCode = 'background-color: #C11900;color:#ffffff;';
-                                $status_color = '';
-                                $disabled_status='pointer-events: none; cursor: default;';
-                            }
-                            ?>
-                            <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home" type="button" role="tab"
-                                aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
-                                aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <?php
-                            if ($segment->getSegment(2) == 'courtFee') {
-                                $ColorCode = 'background-color: #01ADEF';
-                                $status_color = 'active';
-                                $disabled_status='';
-                            } elseif (in_array(CAVEAT_BREAD_COURT_FEE, $breadCrumbsArray)) {
-                               
-                                $bgcolor='background-color: #169F85;';
-                                $ColorCode = $bgcolor . ";color:#ffffff";
-                                $status_color = '';
-                                $disabled_status='';
-                            } else {
-                                $bgcolor='background-color: #C11900;';
-                                $ColorCode = $bgcolor . ";color:#ffffff";
-                                $status_color = '';
-                                $disabled_status='pointer-events: none; cursor: default;';
-                            }
-                            ?>
-                            <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
-                                data-bs-target="#home" type="button" role="tab"
-                                aria-controls="home"
-                                aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Pay Court Fee</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <?php
-                            if ($segment->getSegment(2) == 'view') {
-                                $ColorCode = 'background-color: #01ADEF';
-                                $status_color = 'first active';
-                                $disabled_status='';
-                            } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray) && in_array(CAVEAT_BREAD_CAVEATEE, $breadCrumbsArray)  && in_array(CAVEAT_BREAD_DOC_INDEX, $breadCrumbsArray)) {
-                                $ColorCode = 'background-color: #169F85;color:#ffffff';
-                                $status_color = '';
-                                $disabled_status='';
-                            } else {
-                                $ColorCode = 'background-color: #C11900;color:#ffffff';
-                                $status_color = '';
-                                $disabled_status='pointer-events: none; cursor: default;';
-                            }
-                            ?>
-                            <a href="<?= base_url('caveat/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab"
-                                data-bs-target="#home" type="button" role="tab"
-                                aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>"
-                                aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">6</span>View</a>
-                        </li>
-                    </ul>
-                @endif
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        //  echo $segment->getTotalSegments() ;                        
+                        if ($segment->getTotalSegments()== '1') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                        } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                        } else {
+                            $ColorCode = 'background-color: #f0ad4e;color:#ffffff;';
+                            $status_color = '';
+                        }
+                        ?>
+                        <a href="<?= $url_caveator ?>" class="nav-link <?php echo $status_color; ?> " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><span class="tab-num" style="<?php echo $ColorCode; ?>">1</span>Caveator</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        if ($segment->getSegment(2) == 'caveatee') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                            $disabled_status='';
+                        } elseif (in_array(CAVEAT_BREAD_SUBORDINATE_COURT, $breadCrumbsArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $url_caveatee ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" style="<?php if(!in_array(NEW_CASE_CASE_DETAIL, $StageArray)){ echo $disabled_status; }?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span>Caveatee</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        //  pr($breadCrumbsArray);
+                        if ($segment->getSegment(2) == 'subordinate_court') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                            $disabled_status='';
+                        } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadCrumbsArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_PETITIONER, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts</a>
+                    </li>                        
+                    <li class="nav-item" role="presentation">
+                        <?php                        
+                        if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(2) == 'documentIndex') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                            $disabled_status='';
+                        } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadCrumbsArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        if ($segment->getSegment(2) == 'courtFee') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                            $disabled_status='';
+                        } elseif (in_array(CAVEAT_BREAD_COURT_FEE, $breadCrumbsArray)) {
+                            
+                            $bgcolor='background-color: #169F85;';
+                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $status_color = '';
+                            $disabled_status='';
+                        } else {
+                            $bgcolor='background-color: #C11900;';
+                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $status_color = '';
+                            $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Pay Court Fee</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        if ($segment->getSegment(2) == 'view') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                            $disabled_status='';
+                        } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray) && in_array(CAVEAT_BREAD_CAVEATEE, $breadCrumbsArray)  && in_array(CAVEAT_BREAD_DOC_INDEX, $breadCrumbsArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff';
+                            $status_color = '';
+                            $disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff';
+                            $status_color = '';
+                            $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= base_url('caveat/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">6</span>View</a>
+                    </li>
+                </ul>
+            @endif
         </form>
+    </div>
+</div>
 <div class="modal fade" id="FinalSubmitModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -505,15 +422,13 @@ $efiling_num_label_for_display = 'DRAFT-';;
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquer<style>y-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
@@ -526,52 +441,48 @@ $efiling_num_label_for_display = 'DRAFT-';;
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
 <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
 <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
-
-
 <script>
     function ActionToTrash(trash_type) {       
         event.preventDefault();
         var trash_type =trash_type;
         var url="";
-        if (trash_type==''){
+        if (trash_type=='') {
             swal("Cancelled", "Your imaginary file is safe :)", "error");
             return false;
-        }else if (trash_type=='UAT'){
+        } else if (trash_type=='UAT') {
             url="<?php echo base_url('userActions/trash'); ?>";
-        }else if (trash_type=='SLT'){
+        } else if (trash_type=='SLT') {
             url="<?php echo base_url('stage_list/trash'); ?>";
-        }else if (trash_type=='EAT'){
+        } else if (trash_type=='EAT') {
             url="<?php echo base_url('userActions/trash'); ?>";
-        }else{
+        } else {
             swal("Cancelled", "Your imaginary file is safe :)", "error");
             return false;
         }
-       // alert('trash_type'+trash_type+'url='+url);//return false;
+        // alert('trash_type'+trash_type+'url='+url);//return false;
         swal({
-                title: "Do you really want to trash this E-Filing,",
-                text: "once it will be trashed you can't restore the same.",
-                type: "warning",
-                position: "top",
-                showCancelButton: true,
-                confirmButtonColor: "green",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                buttons: ["Make Changes", "Yes!"],
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function(isConfirm){
-                if (isConfirm) {  // submitting the form when user press yes
-                    var link = document.createElement("a");
-                    link.href = url;
-                    link.target = "_self";
-                    link.click();
-                    swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
-
-                } else {
-                    //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
-                }
-
-            });
+            title: "Do you really want to trash this E-Filing,",
+            text: "once it will be trashed you can't restore the same.",
+            type: "warning",
+            position: "top",
+            showCancelButton: true,
+            confirmButtonColor: "green",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            buttons: ["Make Changes", "Yes!"],
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm){
+            if (isConfirm) {  // submitting the form when user press yes
+                var link = document.createElement("a");
+                link.href = url;
+                link.target = "_self";
+                link.click();
+                swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
+            } else {
+                //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+            }
+        });
     }
 </script>
