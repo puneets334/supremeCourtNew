@@ -600,7 +600,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                          
                        
    

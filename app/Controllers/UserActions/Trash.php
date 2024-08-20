@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers\UserActions;
 use App\Controllers\BaseController;
-use App\Models\UserActions\UserActionsModel;
+use App\Models\UserActions\UserActionsModel; 
 
 
 
