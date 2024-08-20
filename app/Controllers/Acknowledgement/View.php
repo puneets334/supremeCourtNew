@@ -251,7 +251,7 @@ class view extends BaseController
 
         
 
-        $output_file_name = $file_name_prefix . $_SESSION['efiling_details']['efiling_no'] . ".pdf";
+        $output_file_name = $file_name_prefix ?? '' . $_SESSION['efiling_details']['efiling_no'] . ".pdf";
 
         //  $data['s']=$qr_code_base64;
         //  $x='<img  height="200" width="200" src="data:image/png;base64,".$qr_code_base64>';

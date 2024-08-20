@@ -152,9 +152,9 @@ $efiling_num_label_for_display = 'DRAFT-';;
 
                                     if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
                                         // Comment By Amit Mishra as 
-                                        // if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                        //     echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-                                        // }
+                                        if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                            echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                        }
 
                                         
                                             echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
@@ -190,7 +190,7 @@ $efiling_num_label_for_display = 'DRAFT-';;
                       ?>
                      <a href="javascript:void(0)"
                         class="quick-btn gradient-btn"
-                        onclick="ActionToTrash(EAT)">Trash</a>
+                        onclick="ActionToTrash('EAT')">Trash </a>
                                             <?php
                         }
                     ?>
@@ -509,3 +509,70 @@ $efiling_num_label_for_display = 'DRAFT-';;
         </div>
     </div>
 </div>
+
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquer<style>y-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+<script src="<?= base_url() ?>assets/js/sha256.js"></script>
+<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+<script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
+<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css">
+
+
+<script>
+    function ActionToTrash(trash_type) {
+        alert("HEllo");
+        event.preventDefault();
+        var trash_type =trash_type;
+        var url="";
+        if (trash_type==''){
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }else if (trash_type=='UAT'){
+            url="<?php echo base_url('userActions/trash'); ?>";
+        }else if (trash_type=='SLT'){
+            url="<?php echo base_url('stage_list/trash'); ?>";
+        }else if (trash_type=='EAT'){
+            url="<?php echo base_url('userActions/trash'); ?>";
+        }else{
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }
+       // alert('trash_type'+trash_type+'url='+url);//return false;
+        swal({
+                title: "Do you really want to trash this E-Filing,",
+                text: "once it will be trashed you can't restore the same.",
+                type: "warning",
+                position: "top",
+                showCancelButton: true,
+                confirmButtonColor: "green",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                buttons: ["Make Changes", "Yes!"],
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+            function(isConfirm){
+                if (isConfirm) {  // submitting the form when user press yes
+                    var link = document.createElement("a");
+                    link.href = url;
+                    link.target = "_self";
+                    link.click();
+                    swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
+
+                } else {
+                    //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+                }
+
+            });
+    }
+</script>

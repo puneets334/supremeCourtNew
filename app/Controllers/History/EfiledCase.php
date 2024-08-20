@@ -24,15 +24,17 @@ class EfiledCase extends BaseController {
     }
 
     public function view() {
-
+        
         if (getSessionData('login')['ref_m_usertype_id'] == USER_PDE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || getSessionData('login')['ref_m_usertype_id'] ==USER_EFILING_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK || getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
             // pr(getSessionData('efiling_details'));
+            // pr(getSessionData('efiling_details')['created_by']);
             if (isset(getSessionData('efiling_details')['registration_id'])) {
                 $regid = getSessionData('efiling_details')['registration_id'];
                 $type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
+                
 
                 $remark = $this->History_model->get_intials_defects_for_history($regid);
-                if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA || $type == E_FILING_TYPE_DEFICIT_COURT_FEE) {
+                if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA || $type == E_FILING_TYPE_DEFICIT_COURT_FEE   || $type ==  E_FILING_TYPE_CAVEAT ) {
 //                    $cnr_details = $this->Common_model->get_CNR_Details($regid);
                     $case_details = $this->Get_details_model->get_case_details($regid);
                     if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA) {
@@ -46,6 +48,7 @@ class EfiledCase extends BaseController {
                     $uploaded_docs = $this->Common_model->get_uploaded_documents($regid);
                     $created_by = $result[0]['created_by'];
                 }
+                // pr($created_by);
 
                 $efiled_by_user = $this->History_model->get_efiled_by_user($created_by);
                 $stage = $this->History_model->get_stages($regid);

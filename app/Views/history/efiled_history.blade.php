@@ -58,7 +58,7 @@ if ($filing_type == E_FILING_TYPE_MISC_DOCS || $filing_type == E_FILING_TYPE_IA 
     } elseif ($filing_type == E_FILING_TYPE_IA) {
         $type = 'Interim Application';
     }
-} elseif ($filing_type == E_FILING_TYPE_NEW_CASE || $filing_type == E_FILING_TYPE_CDE) {
+} elseif ($filing_type == E_FILING_TYPE_NEW_CASE || $filing_type == E_FILING_TYPE_CDE || $filing_type ==  E_FILING_TYPE_CAVEAT ) {
     $lbl_history = 'eFiling History';
     $lbl_efiling_no = 'eFiling No.';
     if ($filing_type == E_FILING_TYPE_NEW_CASE) {
@@ -98,7 +98,7 @@ $efiled_by = strtoupper($efiled_by_user[0]->first_name . ' ' . $efiled_by_user[0
                             <tr>
                                 <td  width="14%"><?php echo htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES); ?></td>
                                 <td><?php echo $cause_title ?></td>                                    
-                                <td width="14%"><?php echo htmlentities($type, ENT_QUOTES); ?></td>
+                                <td width="14%"><?php echo htmlentities($filing_type, ENT_QUOTES); ?></td>
                                 <!--<td width="14%"><a href="<?/*= base_url() */?>history/efiled_case/user_info/<?php /*echo htmlentities(url_encryption(trim($efiled_by_user[0]->id)), ENT_QUOTES) . '/' . htmlentities(url_encryption(trim($efiled_by_user[0]->ref_m_usertype_id)), ENT_QUOTES); */?>"><?php /*echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); */?></a></td>-->
                                 <td width="14%"><?php echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); ?></td>
                             </tr>
