@@ -1,13 +1,17 @@
 <?php
+namespace App\Controllers\UserActions;
+use App\Controllers\BaseController;
+use App\Models\UserActions\UserActionsModel; 
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
 
-class Trash extends CI_Controller {
 
+class Trash extends BaseController {
+
+    protected $UserActionsModel;
     public function __construct() {
         parent::__construct();
-        $this->load->model('userActions/UserActions_model');
+        $this->UserActions_model = new UserActionsModel();
+      
     }
 
     public function index() {

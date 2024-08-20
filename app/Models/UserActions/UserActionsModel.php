@@ -1,7 +1,7 @@
 <?php
 namespace App\Models\UserActions;
 
-use CodeIgniter\Model;
+use CodeIgniter\Model; 
 class UserActions_model extends Model {
 
     function __construct() {

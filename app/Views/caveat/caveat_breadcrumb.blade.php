@@ -525,12 +525,11 @@ $efiling_num_label_for_display = 'DRAFT-';;
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
 <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
-<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css">
+<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
 
 
 <script>
-    function ActionToTrash(trash_type) {
-        alert("HEllo");
+    function ActionToTrash(trash_type) {       
         event.preventDefault();
         var trash_type =trash_type;
         var url="";
