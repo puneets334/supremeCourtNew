@@ -43,8 +43,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <input style="display: none" id="printButton" type="button" onclick="PrintDiv();" value="Print" />
-                    <div class="panel-body" id="tableData" style="display: none; overflow: scroll;">
+                    <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" />
+                    <div class="panel-body" id="tableData" style="display: none;">
                     </div>
                 </div>
             </div>
@@ -126,7 +126,8 @@
                                 $("#error_" + res.id).html('');
                                 $("#error_" + res.id).html(res.msg);
                                 $("#error_" + res.id).css({
-                                    "color": "red"
+                                    "color": "red",
+                                    "margin": "10px 0px -55px 0px"
                                 });
                                 return false;
                             } else if (res.status == 'success') {
@@ -136,7 +137,8 @@
                                 $("#" + res.id).html('');
                                 $("#" + res.id).html(res.msg);
                                 $("#" + res.id).css({
-                                    "color": "red"
+                                    "color": "red",
+                                    "margin": "10px 0px -55px 0px"
                                 });
                                 $("#" + res.id).css({
                                     "text-align": "center"

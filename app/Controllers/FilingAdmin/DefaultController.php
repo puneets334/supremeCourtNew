@@ -36,8 +36,7 @@ class DefaultController extends BaseController {
         $params['is_active']= true;
         $params['id'] =array(1,2,4,12);
         // $filingType = $this->FilingAdminModel->getAllRecordFromTable($params);
-        // $data['filingType'] = $filingType; 
-        //  pr($data);
+        // $data['filingType'] = $filingType;
         $users_array = array(USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
         $users_read_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
         if (in_array($this->session->get('login')['ref_m_usertype_id'], $users_array)) {
@@ -54,7 +53,6 @@ class DefaultController extends BaseController {
         }
         $data['stage_list'] = $this->ReportModel->get_stage();
         $data['count_efiling_data'] = $this->AdminDashboardModel->get_efilied_nums_stage_wise_count();
-        // pr($data['count_efiling_data'][0]->total_new_efiling);
         return $this->render('filingAdmin.fillingAdminDashboard',$data);
     }
     // public function getEmpDetailsByUserId_old()
@@ -129,7 +127,7 @@ class DefaultController extends BaseController {
                     'status' => 'success',
                     'message' => 'User data has been fetched successfully!',
                 );
-                $response[0] = array_merge($response[0], $resp);
+                $response[0] = array_merge((array)$response[0], $resp);
                 $output = json_encode($response[0]);
                 
             } else {
@@ -145,7 +143,6 @@ class DefaultController extends BaseController {
 
     public function updateUserRole()
     {
-        //pr($_POST);
         $session = session();
         helper(['form', 'url']);
 
@@ -304,7 +301,6 @@ class DefaultController extends BaseController {
        
         
         $data['users'] = $response;
-        //pr($data['users']);
         
      
         $params= array();
@@ -384,7 +380,6 @@ class DefaultController extends BaseController {
             }
             $params['stage_id'] = array(Initial_Approaval_Pending_Stage);
             $response = $this->FilingAdminModel->getAssignedCaseByUserId($params);
-            // pr($response);
             if(isset($response) && !empty($response)){
                 $tmpArr = array();
                 $tmpArr['status']= 'success';
@@ -394,13 +389,12 @@ class DefaultController extends BaseController {
                 $arr['not_in_user_id'] = unserialize(USER_NOT_IN_LIST); //array(2660,2659,2658,2657,2656,2647);
                 $arr['userId'] = $userId;
                 $arr['type'] = 2;
-                $transferUser = $this->FilingAdminModel->getAssignedUserByUserId($arr);  
-                // pr($transferUser);       
+                $transferUser = $this->FilingAdminModel->getAssignedUserByUserId($arr);
                 $option = ' <option value="">Select</option>';
                 if(isset($transferUser) && !empty($transferUser)){
                     foreach ($transferUser as $k=>$v){
-                        // $option .='<option value="'.$v->id.'">'.$v->first_name.'</option>';
-                        $option .='<option value="">'.$v['first_name'].'</option>';
+                        $option .='<option value="'.$v->id.'">'.$v->first_name.'</option>';
+                        // $option .='<option value="">'.$v['first_name'].'</option>';
                     }
                 }
                 $tmpArr['trasferUser'] = $option;
@@ -442,22 +436,16 @@ class DefaultController extends BaseController {
                 $params = array();
                 $params['userId'] = $file_transfer_from;
                 $fromUserRoleData = $this->FilingAdminModel->getUserRoleByUserId($params);
-
-                // pr($fromUserRoleData);
-
-
                 $fromRole = !empty($fromUserRoleData[0]->file_type_id) ? explode(',',$fromUserRoleData[0]->file_type_id) : NULL;
                 $fromUserId = !empty($fromUserRoleData[0]->user_id) ? $fromUserRoleData[0]->user_id : NULL;
                 $arr = array();
                 $arr['userId'] = $file_transfer_to_user;
                 $toUserRoleData = $this->FilingAdminModel->getUserRoleByUserId($arr);
-                // pr($toUserRoleData);
                 $toRole = !empty($toUserRoleData[0]->file_type_id) ? explode(',',$toUserRoleData[0]->file_type_id) : NULL;
                 $toUserId = !empty($toUserRoleData[0]->user_id) ? $toUserRoleData[0]->user_id : NULL;
                 $regArr = array();
                 $regArr['registration_id'] = $registrationArr;
                 $fileType = $this->FilingAdminModel->getFileTypeByRegistrationId($regArr);
-                // pr($fileType);
                 $ctn=0;
                 $efilingDetails ='';
                 if(isset($fileType) && !empty($fileType)){

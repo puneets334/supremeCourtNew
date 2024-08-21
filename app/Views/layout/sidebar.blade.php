@@ -1,7 +1,6 @@
 <?php
 //$segment = App\Libraries\Slice();
 $segment = service('uri');
-//pr($segment);
 ?>
 <style>
     .dashboardLeftNav li ul.submenu li a:hover {
@@ -55,8 +54,8 @@ $segment = service('uri');
                         <?php } ?>
                     <?php } else if((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN  )) { ?>
                         <li class="premium"><a href="<?= base_url('filingAdmin') ?>" class="btn-link">Dashboard</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('FilingAdmin/userListing'); ?>" class="btn-link">User Listing</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('FilingAdmin/userFileTransferForm'); ?>" class="btn-link">User File Transfer</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('filingAdmin/userListing'); ?>" class="btn-link">User Listing</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('filingAdmin/userFileTransferForm'); ?>" class="btn-link">User File Transfer</a> </li>
                         <li class="premium"><a href="<?php echo base_url('adminReport/DefaultController/reportForm'); ?>" class="btn-link">Work Done Reports</a> </li>
                         <li class="premium"><a href="<?= base_url('report/search') ?>" class="btn-link">Reports</a> </li>
                         <li class="premium"><a href="<?php echo base_url('admin/noc_vakalatnama') ?>" class="btn-link">NOC Vakaltnama</a> </li>
