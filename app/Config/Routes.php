@@ -81,12 +81,14 @@ $routes->add('adminDashboard/stageList/(:any)', 'AdminDashboard\StageList::index
 $routes->match(['GET', 'POST'], 'superAdmin', 'SuperAdmin\DefaultController::index');
 $routes->match(['GET', 'POST'], 'customDashboard', 'defaultController::customDashboard');
 $routes->match(['GET', 'POST'], 'filingAdmin', 'FilingAdmin\DefaultController::index', ['as' => 'filingAdmin']);
+
 $routes->match(['GET', 'POST'], 'filingAdmin/userListing', 'FilingAdmin\DefaultController::userListing', ['as' => 'userListing']);
 $routes->match(['GET', 'POST'], 'filingAdmin/userFileTransferForm', 'FilingAdmin\DefaultController::userFileTransferForm');
 $routes->match(['GET', 'POST'], 'filingAdmin/getEmpDetailsByUserId', 'FilingAdmin\DefaultController::getEmpDetailsByUserId');
 $routes->match(['GET', 'POST'], 'filingAdmin/updateUserRole', 'FilingAdmin\DefaultController::updateUserRole');
 $routes->match(['GET', 'POST'], 'filingAdmin/DefaultController/getEmpCaseData', 'FilingAdmin\DefaultController::getEmpCaseData');
 $routes->match(['GET', 'POST'], 'filingAdmin/DefaultController/fileTransferToAnOtherUser', 'FilingAdmin\DefaultController::fileTransferToAnOtherUser');
+
 $routes->match(['GET', 'POST'], 'admin/noc_vakalatnama', 'Admin\NocVakalatnama::index');
 $routes->get('admin/noc_vakalatnama/get_transferred_cases', 'Admin\NocVakalatnama::get_transferred_cases');
 $routes->get('vacation/advance', 'Vacation\Advance::index');
@@ -337,3 +339,17 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/courtFee', 'OldCaseRefiling\Cou
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::index');
 
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index'); 
+
+
+// Appearance Routes  
+$routes->match(['GET', 'POST'], 'advocate/listed_cases', 'Advocate\AdvocateController::listed_cases');
+$routes->match(['GET', 'POST'], 'advocate/modal_appearance', 'Advocate\AdvocateController::modal_appearance');
+$routes->match(['GET', 'POST'], 'advocate/modal_appearance_save', 'Advocate\AdvocateController::modal_appearance_save');
+$routes->match(['GET', 'POST'], 'advocate/confirm_final_submit', 'Advocate\AdvocateController::confirm_final_submit');
+$routes->match(['GET', 'POST'], 'advocate/add_from_case_advocate_master_list', 'Advocate\AdvocateController::add_from_case_advocate_master_list');
+$routes->match(['GET', 'POST'], 'advocate/master_list_submit', 'Advocate\AdvocateController::master_list_submit');
+$routes->match(['GET', 'POST'], 'advocate/remove_advocate', 'Advocate\AdvocateController::remove_advocate');
+$routes->match(['GET', 'POST'], 'advocate/display_appearance_slip', 'Advocate\AdvocateController::display_appearance_slip');
+$routes->match(['GET', 'POST'], 'advocate', 'Advocate\AdvocateController::index');
+$routes->get('advocate/report', 'Advocate\AdvocateController::reportIndex');
+$routes->post('advocate/report', 'Advocate\AdvocateController::appearingReport');
