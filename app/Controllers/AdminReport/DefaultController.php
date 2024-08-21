@@ -310,7 +310,7 @@ class DefaultController extends BaseController
                 $tableData .= '</tr>';
             }
             $table = '';
-            $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" style="width: 1400px;">
+            $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0">
                         <thead>
                         <tr>
                             <th>Date<hr>
@@ -1348,7 +1348,7 @@ class DefaultController extends BaseController
                 $tableData .= '</tr>';
             }
             $table = '';
-            $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" style="width: 1400px;">
+            $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0">
                         <thead>
                         <tr>
                             <th>Date<hr>

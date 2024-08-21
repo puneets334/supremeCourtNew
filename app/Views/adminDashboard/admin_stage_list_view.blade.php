@@ -20,7 +20,7 @@
 				<h3><?= htmlentities($tabs_heading, ENT_QUOTES) ?> 
 				<span style="float:right;">  
 					 
-					<button class="btn btn-info" type="button" onclick="window.history.back();">Back</button>
+					<button class="btn btn-info" style="margin: 10px;" type="button" onclick="window.history.back();">Back</button>
 				</span>
 			 </h3>
 			</div>
@@ -39,7 +39,6 @@
                             <?php
                             $i = 1;
                             foreach ($result as $re) {
-								//pr($result);
                                 $fil_no = $reg_no = $case_details = $cnr_number = $cino = '';
                                 $fil_ia_no = $reg_ia_no = $cause_title = $fil_case_no = $reg_case_no = $dairy_no = $lbl_for_doc_no = $fil_misc_doc_ia_no = '';
 
@@ -194,7 +193,7 @@
                                         <td><?php echo $case_details; ?></td>
                                         <td width="12%"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                         <?php if (getSessionData('login')['userid'] != SC_ADMIN){
-                                        if ($re->is_register == 'Y' || $re->is_register == '') { ?>
+                                        if ((isset($re->is_register) && $re->is_register == 'Y') || (isset($re->is_register) && $re->is_register != '')) { ?>
                                             <td width="10%">  <a class="form-control btn-primary link_button" href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . New_Filing_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities('Action', ENT_QUOTES) ?></a></td>
                                         <?php } else {
                                             ?>
@@ -473,7 +472,7 @@
                              <?php if ($stages == HOLD) {
                                     ?>
                                     <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
-                                    <td><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                    <td><a href="<?php (isset($re->ia_cnr_num) && isset($re->efiling_for_id) && isset($re->efiling_for_type_id)) ? base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))) : ''; ?>"><?php echo $case_details; ?></a></td>
                                     <td width="12%"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                     <td width="12%"><?php echo $re->efiling_type; ?></td>
                                 <?php } ?>
@@ -562,7 +561,6 @@
                     $('#msg').html(responce[1]);
                 } else
                 {
-                    // pr('vkg');
                     window.location.href = '<?= base_url() ?>adminDashboard';
                 }
                 $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function (result) {

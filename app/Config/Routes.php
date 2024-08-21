@@ -81,12 +81,14 @@ $routes->add('adminDashboard/stageList/(:any)', 'AdminDashboard\StageList::index
 $routes->match(['GET', 'POST'], 'superAdmin', 'SuperAdmin\DefaultController::index');
 $routes->match(['GET', 'POST'], 'customDashboard', 'defaultController::customDashboard');
 $routes->match(['GET', 'POST'], 'filingAdmin', 'FilingAdmin\DefaultController::index', ['as' => 'filingAdmin']);
-$routes->match(['GET', 'POST'], 'FilingAdmin/userListing', 'FilingAdmin\DefaultController::userListing', ['as' => 'userListing']);
-$routes->match(['GET', 'POST'], 'FilingAdmin/userFileTransferForm', 'FilingAdmin\DefaultController::z');
-$routes->match(['GET', 'POST'], 'FilingAdmin/getEmpDetailsByUserId', 'FilingAdmin\DefaultController::getEmpDetailsByUserId');
-$routes->match(['GET', 'POST'], 'FilingAdmin/updateUserRole', 'FilingAdmin\DefaultController::updateUserRole');
-$routes->match(['GET', 'POST'], 'FilingAdmin/DefaultController/getEmpCaseData', 'FilingAdmin\DefaultController::getEmpCaseData');
-$routes->match(['GET', 'POST'], 'FilingAdmin/DefaultController/fileTransferToAnOtherUser', 'FilingAdmin\DefaultController::fileTransferToAnOtherUser');
+
+$routes->match(['GET', 'POST'], 'filingAdmin/userListing', 'FilingAdmin\DefaultController::userListing', ['as' => 'userListing']);
+$routes->match(['GET', 'POST'], 'filingAdmin/userFileTransferForm', 'FilingAdmin\DefaultController::userFileTransferForm');
+$routes->match(['GET', 'POST'], 'filingAdmin/getEmpDetailsByUserId', 'FilingAdmin\DefaultController::getEmpDetailsByUserId');
+$routes->match(['GET', 'POST'], 'filingAdmin/updateUserRole', 'FilingAdmin\DefaultController::updateUserRole');
+$routes->match(['GET', 'POST'], 'filingAdmin/DefaultController/getEmpCaseData', 'FilingAdmin\DefaultController::getEmpCaseData');
+$routes->match(['GET', 'POST'], 'filingAdmin/DefaultController/fileTransferToAnOtherUser', 'FilingAdmin\DefaultController::fileTransferToAnOtherUser');
+
 $routes->match(['GET', 'POST'], 'admin/noc_vakalatnama', 'Admin\NocVakalatnama::index');
 $routes->get('admin/noc_vakalatnama/get_transferred_cases', 'Admin\NocVakalatnama::get_transferred_cases');
 $routes->get('vacation/advance', 'Vacation\Advance::index');
@@ -316,7 +318,7 @@ $routes->get('case_details', 'CaseDetails\DefaultController::index');
 $routes->post('on_behalf_of/DefaultController/save_filing_for', 'OnBehalfOf\DefaultController::save_filing_for');
 $routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
 $routes->match(['GET', 'POST'], 'report/search/actionFiledon', 'Report\Search::actionFiledon');
-$routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)/(:any)', 'Report/Search/view/$1/$2/$3/$4/$5');
+$routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)/(:any)', 'Report\Search::view/$1/$2/$3/$4/$5');
 $routes->match(['GET', 'POST'], 'case/search/(:any)', 'Case\Search::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/view', 'MiscellaneousDocs\View::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee', 'MiscellaneousDocs\CourtFee::index');

@@ -138,7 +138,7 @@
                         CSRF_TOKEN: CSRF_TOKEN_VALUE,
                         userId: userId
                     },
-                    url: "<?php echo base_url('FilingAdmin/DefaultController/getEmpCaseData'); ?>",
+                    url: "<?php echo base_url('filingAdmin/DefaultController/getEmpCaseData'); ?>",
                     async: false,
                     cache: false,
                     dataType: 'json',
@@ -151,7 +151,7 @@
                             var result = '';
                             if (res.caseData && typeof res.caseData == 'string') {
                                 result = JSON.parse(res.caseData);
-                                console.log('k');
+                                // console.log('k');
                             } else {
                                 result = res.caseData;
                             }
@@ -161,7 +161,7 @@
                             var length = Object.keys(result).length;
                             var ctn = 1;
                             for (var i = 0; i < length; i++) {
-                                cons    
+                                // cons    
                                 var cause_title = (result[i].cause_title) ? result[i]
                                     .cause_title : '---';
                                 var diarydetails = (result[i].diarydetails) ? result[i]
@@ -266,7 +266,7 @@
                 $.ajax({
                     type: "POST",
                     data: JSON.stringify(postData),
-                    url: "<?php echo base_url('FilingAdmin/DefaultController/fileTransferToAnOtherUser'); ?>",
+                    url: "<?php echo base_url('filingAdmin/DefaultController/fileTransferToAnOtherUser'); ?>",
                     async: false,
                     cache: false,
                     dataType: 'json',
