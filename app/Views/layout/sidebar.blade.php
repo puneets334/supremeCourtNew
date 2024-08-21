@@ -76,6 +76,9 @@ $segment = service('uri');
                         <li class="premium"><a href="<?php echo base_url('e-resources') ?>" class="btn-link">Resources</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Physical Hearing</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('advocate/listed_cases') ?>" class="btn-link">Apearance</a> </li>
+
+
                         <?php if ($segment->getSegment(1) == 'superAdmin') { ?>
                         <?php } else if ($segment->getSegment(1) == 'profile') { ?>
                             <li class="health "><a href="<?= base_url('profile') ?>">Profile</a></li>
