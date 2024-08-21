@@ -291,7 +291,7 @@
                         userId: userId
                     },
                  
-                    url: "<?= base_url('FilingAdmin/getEmpDetailsByUserId') ?>",
+                    url: "<?= base_url('filingAdmin/getEmpDetailsByUserId') ?>",
                     async: false,
                     cache: false,
                     dataType: 'json',
@@ -408,7 +408,7 @@
                         attend: attend
                     },
                     
-                    url: "<?= base_url('FilingAdmin/updateUserRole') ?>",
+                    url: "<?= base_url('filingAdmin/updateUserRole') ?>",
                     async: false,
                     cache: false,
                     dataType: 'json',

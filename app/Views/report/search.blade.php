@@ -1,4 +1,4 @@
-    @extends('layout.app')
+@extends('layout.app')
 @section('content')
 <link rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/templates/uikit_scutum_2/assets/css/main.min.css" />
 <link type="text/css" rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css" />
@@ -8,23 +8,18 @@
     .add-new-area {
         display: none !important;
     }
-</style>
-<style>
     th {
         font-size: 13px;
         color: #000;
     }
-
     td {
         font-size: 13px;
         color: #000;
     }
-
     td .sci {
         font-size: 13px;
         color: #000;
     }
-
     div.box {
         height: 109px;
         /* padding: 10px; */
@@ -33,7 +28,6 @@
         /*background-color: #E5E5FF;*/
     }
 </style>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -42,12 +36,9 @@
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="dash-card">
-                            {{-- Page Title Start --}}
                             <div class="title-sec">
                                 <h5 class="unerline-title">Reports </h5>
                             </div>
-                            {{-- Page Title End --}}
-                            {{-- Main Start --}}
                             <div class="right_col" role="main">
                                 <!-- <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -56,14 +47,12 @@
                                             /*  if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
                                                 echo $_SESSION['MSG'];
                                             } unset($_SESSION['MSG']); */
-                                            ?></div>
+                                            ?>
+                                        </div>
                                     </div>
                                 </div> -->
-
                                 <div class="row">
-
                                     <div class="x_panel">
-
                                         <div class="x_title">
                                             <?php //if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) {
                                             if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || $_SESSION['login']['ref_m_usertype_id'] == USER_EFILING_ADMIN) { ?>
@@ -78,14 +67,12 @@
                                             $today = date('Y-m-d');
                                             $yesterday = date('Y-m-d', strtotime(' -1 day'));
                                             $daterange = $yesterday . ' to ' . $today;
-
                                             ?>
                                             <!--start akg-->
                                             <!-- <div id="widgets-container" ng-init="widgets.recentDocuments.byOthers.ifVisible=true;" class="" uk-grid="">
                                                 <div ng-show="widgets.recentDocuments.byOthers.ifVisible" class="uk-first-column">
                                                     <div class="uk-card-default uk-box-shadow-xlarge uk-border-rounded documents-widget">
                                                         <div class="uk-flex-middle uk-grid-medium uk-grid uk-grid-stack pointer" style="text-decoration:none;padding:0.6rem 0.5rem 0.2rem 1rem;" uk-grid="" class="tablink" onclick="openSearch('ShowCases', this, 'uk-label-primary')" id="defaultOpen"> -->
-
                                                             <!-- <div>
                                                                 <span class="uk-label uk-label-primary sc-padding sc-padding-small-ends uk-text-bold uk-text-large"><span class="glyphicon glyphicon-hand-right"></span></span>
                                                             </div> -->
@@ -93,9 +80,7 @@
                                                                 <div> -->
                                                                     <!--<span class="uk-text-bold uk-text-primary uk-text-uppercase">Cases <span class="uk-text-small">(Soon to be listed)</span></span>-->
                                                                     <!-- <span class="uk-text-bold uk-text-primary uk-text-uppercase">Search by Other Details</span> -->
-
                                                                 <!-- </div>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -108,7 +93,6 @@
                                                             </div> -->
                                                             <!-- <div class="uk-first-column">
                                                                 <span class="uk-text-bold uk-text-danger uk-text-uppercase">Search by E-filing Number</span>
-
                                                             </div>
                                                         </div>
                                                     </div>
@@ -121,13 +105,11 @@
                                                             </div> -->
                                                             <!-- <div class="uk-first-column">
                                                                 <span class="uk-text-bold uk-text-warning uk-text-uppercase">Search by Diary Number</span>
-
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div> -->
-
                                             <nav>
                                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                                     <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Search by Other Details</button>
@@ -139,7 +121,6 @@
                                                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                     <?php //if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) {
                                                     if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || $_SESSION['login']['ref_m_usertype_id'] == USER_EFILING_ADMIN) { ?>
-
                                                         <div class="row tabcontent" id="ShowCases">
                                                             <div class="row">
                                                                 @if(isset($pending_data))
@@ -164,29 +145,25 @@
                                                                                 <button type="button" class="quick-btn" data-bs-toggle="modal" data-bs-target="#myModal"> Pending With Registry <span class="badge">{{isset($pending_with_registry)?$pending_with_registry :''}}</span></button>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="container">
-
-                                                                        </div>
-
+                                                                        <div class="container"></div>
                                                                     </div>
                                                                 </div>
                                                                 <!-- <div class="col-sm-4 col-xs-12">
-                                                            <div class="form-group">
-                                                                <div class="col-sm-12 col-xs-12" style="margin-top: 30px;">
-                                                                    <div style="width: fit-content;padding-left: 10px;">
-                                                                        <label class="radio-inline"> Last Updated On : <span style="color: blue">
-                                                                                @if(isset($last_updated_on))
-                                                                                <?= $last_updated_on != '0' ? date('d-m-Y h:i:s A', strtotime($last_updated_on)) : date('d-m-Y h:i:s A') ?>
-                                                                            </span></label>
-                                                                        @endif
+                                                                    <div class="form-group">
+                                                                        <div class="col-sm-12 col-xs-12" style="margin-top: 30px;">
+                                                                            <div style="width: fit-content;padding-left: 10px;">
+                                                                                <label class="radio-inline"> Last Updated On : <span style="color: blue">
+                                                                                        @if(isset($last_updated_on))
+                                                                                        <?= $last_updated_on != '0' ? date('d-m-Y h:i:s A', strtotime($last_updated_on)) : date('d-m-Y h:i:s A') ?>
+                                                                                    </span></label>
+                                                                                @endif
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="container">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="container">
-                                                                </div>
-                                                            </div>
-                                                        </div> -->
+                                                                </div> -->
                                                                 <br />
-
                                                                 <!-- Modal -->
                                                                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="casesPendingSinceHMDays" aria-hidden="true">
                                                                     <div class="modal-dialog modal-lg" role="document">
@@ -202,14 +179,13 @@
                                                                                 <span id="customErrorMessage" style="text-align: center">
                                                                                     <h3>Daywise Pendency Bifurcation</h3>
                                                                                     <!--<ul style="font-weight: bold;">
-                                                                                   <li>Total : <?/*=$day_wise_pending[0]->total*/ ?></li>
-                                                                                   <li><1 Day : <?/*=$day_wise_pending[0]->zero_day*/ ?></li>
-                                                                                   <li>1 Day : <?/*=$day_wise_pending[0]->one_day*/ ?></li>
-                                                                                   <li>2 Days : <?/*=$day_wise_pending[0]->two_day*/ ?></li>
-                                                                                   <li>3 Days : <?/*=$day_wise_pending[0]->three_day*/ ?></li>
-                                                                                   <li>>3 Days : <?/*=$day_wise_pending[0]->more_than_three_day*/ ?></li>
-                            
-                                                                               </ul>-->
+                                                                                        <li>Total : <?/*=$day_wise_pending[0]->total*/ ?></li>
+                                                                                        <li><1 Day : <?/*=$day_wise_pending[0]->zero_day*/ ?></li>
+                                                                                        <li>1 Day : <?/*=$day_wise_pending[0]->one_day*/ ?></li>
+                                                                                        <li>2 Days : <?/*=$day_wise_pending[0]->two_day*/ ?></li>
+                                                                                        <li>3 Days : <?/*=$day_wise_pending[0]->three_day*/ ?></li>
+                                                                                        <li>>3 Days : <?/*=$day_wise_pending[0]->more_than_three_day*/ ?></li>
+                                                                                    </ul>-->
                                                                                     <table border="1" width="100%">
                                                                                         <th style="text-align: center">Pending Since</th>
                                                                                         <th style="text-align: center">Total</th>
@@ -240,11 +216,8 @@
                                                                                             <td> <?= $day_wise_pending[0]->more_than_three_day ?></td>
                                                                                         </tr>
                                                                                         @endif
-
                                                                                     </table>
-
                                                                                 </span>
-
                                                                                 <span id="stageWiseBifurcation" style="text-align: center">
                                                                                     <h3>Stagewise Pendency Bifurcation</h3>
                                                                                     <table border="1" width="100%">
@@ -253,17 +226,13 @@
                                                                                         <!--<ul style="font-weight: bold;">-->
                                                                                         @if(isset($pendency_bifurcation))
                                                                                         <?php
-
                                                                                         foreach ($pendency_bifurcation as $data) {
                                                                                             echo "<tr><td>" . $data->admin_stage_name . "</td><td>  " . $data->total . "</td></tr>";
                                                                                         }
                                                                                         ?>
                                                                                         @endif
-
-
                                                                                         <!--</ul>-->
                                                                                     </table>
-
                                                                                 </span>
                                                                             </div>
                                                                             <div class="modal-footer">
@@ -273,30 +242,25 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
-
-
                                                             <div class="row">
                                                                 <div class="col-sm-2 col-xs-12">
                                                                     <div class="form-group">
                                                                         <!--<label class="control-label col-sm-2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>-->
                                                                         <!--<div class="col-sm-12">
-                                                                    <div class="input-group">
-                                                                        <center> <label class="control-label">Pending/Completed</label></center>
-                                                                        <select name="status" id="status" class="uk-select filter_select_dropdown ddlstatus">
-                                                                            <option value="P" title="Select">Pendinhg</option>
-                                                                            <option value="C" title="Select">Completed</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>-->
+                                                                            <div class="input-group">
+                                                                                <center> <label class="control-label">Pending/Completed</label></center>
+                                                                                <select name="status" id="status" class="uk-select filter_select_dropdown ddlstatus">
+                                                                                    <option value="P" title="Select">Pendinhg</option>
+                                                                                    <option value="C" title="Select">Completed</option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>-->
                                                                         <div class="col-sm-12 col-xs-12" style="margin-top: 30px;">
                                                                             <div style="width: fit-content;padding-left: 10px;">
                                                                                 <label class="radio-inline input-lg"><input type="radio" checked name="status_type" value="P"> Pending</label>
                                                                                 <label class="radio-inline input-lg"><input type="radio" name="status_type" value="C"> Completed</label>
-
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-3 col-xs-12">
@@ -317,7 +281,6 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-2 col-xs-12 divdaterange">
@@ -331,10 +294,8 @@
                                                                         <div class="col-sm-12">
                                                                             <input class="form-control cus-form-ctrl diary_date" tabindex="2" id="listing_date_range" name="listing_date_range" placeholder="DD/MM/YYYY-DD/MM/YYYY" type="text" value="">
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
-
                                                                 <div class="col-sm-2 col-xs-12">
                                                                     <div class="form-group">
                                                                         <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -351,7 +312,6 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-2 col-xs-12">
@@ -370,11 +330,9 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <br /><br />
                                                             <hr />
                                                             <div class="row">
@@ -390,13 +348,9 @@
                                                             </div>
                                                         </div>
                                                     <?php } ?>
-
-
-
-
                                                 </div>
                                                 <div class="tab-pane fade" id="nav-ShowEfilingRequests" role="tabpanel" aria-labelledby="nav-ShowEfilingRequests-tab">
-
+                                                    <br />
                                                     <div class="row">
                                                         <div class="col-md-5">
                                                             <div class="form-group">
@@ -407,9 +361,7 @@
                                                         <div class="col-md-1">
                                                             <div class="form-group">
                                                                 <label for="" class="form-label">Select Year</label>
-
                                                                 <select class="form-select cus-form-ctrl" aria-label="Default select example" id="efiling_year" name="efiling_year" style="width: 100%">
-
                                                                     <?php
                                                                     $end_year = 48;
                                                                     for ($i = 0; $i <= $end_year; $i++) {
@@ -456,13 +408,10 @@
                                                         <div style="width: fit-content;padding-left: 10px;">
                                                             <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="register"> Registration No</label>
                                                             <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="diary"> Diary Number</label>
-
                                                         </div>
                                                     </div>
-                                                    <!--</center>
-                                                            <br><hr>-->
-
-                                                    <div class="card-body diary box" style="display:none; block;background-color: #ffffff;border-color: #ffffff;">.
+                                                    <!--</center><br><hr>-->
+                                                    <div class="card-body diary box" style="display:none; block;background-color: #ffffff;border-color: #ffffff;">
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="form-group">
@@ -476,7 +425,6 @@
                                                                             <i class="fa fa-question-circle-o"></i>
                                                                         </span>
                                                                     </div>
-
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
@@ -485,39 +433,34 @@
                                                                     <label for="exampleInputEmail1">Diary Year <span style="color: red">*</span>:</label>
                                                                     <!--<label class="control-label col-md-3 col-sm-12 col-xs-12 input-lg">Diary Year <span style="color: red">*</span>:</label>-->
                                                                     <!--<div class="col-md-9 col-sm-12 col-xs-12">-->
-                                                                    <div class="input-group">
-                                                                        <!--<input id="diary_year" name="diary_year" maxlength=4" onblur="checkNumber(this.id)"   placeholder="Diary Year"  class="form-control input-lg age_calculate" type="text" required>
-                                                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Case year should be digits only.">
-                                                                                    <i class="fa fa-question-circle-o"  ></i>
-                                                                                </span>-->
-                                                                        <select class="form-control cus-form-ctrl filter_select_dropdown" id="diary_year" name="diary_year" style="width: 100%">
-                                                                            <option value="">Select Year</option>
-                                                                            <?php
-                                                                            $end_year = 48;
-                                                                            for ($i = 0; $i <= $end_year; $i++) {
-                                                                                $year = (int) date("Y") - $i;
-                                                                                $sel = ($year == ((int) date("Y"))) ? 'selected=selected' : '';
-                                                                                echo '<option ' . $sel . ' value=' . $year . '>' . $year . '</option>';
-                                                                            }
-                                                                            ?>
-                                                                        </select>
-                                                                    </div>
+                                                                        <div class="input-group">
+                                                                            <!--<input id="diary_year" name="diary_year" maxlength=4" onblur="checkNumber(this.id)" placeholder="Diary Year" class="form-control input-lg age_calculate" type="text" required>
+                                                                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Case year should be digits only.">
+                                                                                <i class="fa fa-question-circle-o"  ></i>
+                                                                            </span>-->
+                                                                            <select class="form-control cus-form-ctrl filter_select_dropdown" id="diary_year" name="diary_year" style="width: 100%">
+                                                                                <option value="">Select Year</option>
+                                                                                <?php
+                                                                                $end_year = 48;
+                                                                                for ($i = 0; $i <= $end_year; $i++) {
+                                                                                    $year = (int) date("Y") - $i;
+                                                                                    $sel = ($year == ((int) date("Y"))) ? 'selected=selected' : '';
+                                                                                    echo '<option ' . $sel . ' value=' . $year . '>' . $year . '</option>';
+                                                                                }
+                                                                                ?>
+                                                                            </select>
+                                                                        </div>
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-
                                                             <div class=" col-md-4 col-sm-6 col-xs-12 ">
-
                                                                 <div class="col-md-offset-5" id="submitBtn_dynamicalayDiary" style="display: none;margin-top: 25px;">
                                                                     <input type="submit" id="SearchDiaryNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchDiaryNumbersubmit">
-
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <!--width: 714px;margin-left: 675px;     padding-left: 335px;;margin-top: -46px;-->
-
                                                     <div class="card-body register box" style="display: block;background-color: #ffffff;border-color: #ffffff;">
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-6 col-xs-12">
@@ -525,20 +468,20 @@
                                                                     <label for="exampleInputEmail1"> Case Type <span style="color: red">*</span>:</label>
                                                                     <!--<label class="control-label col-md-4 col-sm-12 col-xs-12 input-lg"> Case Type <span style="color: red">*</span>:</label>-->
                                                                     <!--<div class="col-md-8 col-sm-12 col-xs-12">-->
-                                                                    <select name="sc_case_type" id="sc_case_type" class="form-control cus-form-ctrl filter_select_dropdown" style="width:100%;" required>
-                                                                        <option value="" title="Select">Select Case Type</option>
-                                                                        <?php
-                                                                        $sel = '';
-                                                                        if (isset($sc_case_type)) {
-                                                                            foreach ($sc_case_type as $dataRes) {
-                                                                                // $sel = ($new_case_details[0]['sc_case_type_id'] == (string) $dataRes->casecode ) ? "selected=selected" : '';
-                                                                        ?>
-                                                                                <option <?php echo $sel; ?> value="<?php echo_data(url_encryption(trim($dataRes->casecode))); ?>"><?php echo_data($dataRes->casename); ?> </option>;
-                                                                        <?php
+                                                                        <select name="sc_case_type" id="sc_case_type" class="form-control cus-form-ctrl filter_select_dropdown" style="width:100%;" required>
+                                                                            <option value="" title="Select">Select Case Type</option>
+                                                                            <?php
+                                                                            $sel = '';
+                                                                            if (isset($sc_case_type)) {
+                                                                                foreach ($sc_case_type as $dataRes) {
+                                                                                    // $sel = ($new_case_details[0]['sc_case_type_id'] == (string) $dataRes->casecode ) ? "selected=selected" : '';
+                                                                                    ?>
+                                                                                    <option <?php echo $sel; ?> value="<?php echo_data(url_encryption(trim($dataRes->casecode))); ?>"><?php echo_data($dataRes->casename); ?> </option>;
+                                                                                    <?php
+                                                                                }
                                                                             }
-                                                                        }
-                                                                        ?>
-                                                                    </select>
+                                                                            ?>
+                                                                        </select>
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
@@ -576,54 +519,31 @@
                                                             <div class="col-md-2 col-sm-3 col-xs-12  ">
                                                                 <div class="col-md-offset-5" id="submitBtn_dynamicalayCase" style="display: block;margin-top: 25px;">
                                                                     <input type="submit" id="SearchCaseNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchCaseNumbersubmit">
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
-
-
-
-
-
                                             <br /> <br /> <br />
                                             <!--end akg-->
-                                            <div class="col-sm-12 col-xs-12 tabcontent" id="ShowEfilingRequests">
-
-                                            </div>
+                                            <div class="col-sm-12 col-xs-12 tabcontent" id="ShowEfilingRequests"></div>
                                             <!--//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
-
                                             <div class="panel panel-default tabcontent" id="ShowDiaryRequests">
-
                                                 <?php
-                                                //$attribute = array('class' => 'form-horizontal', 'id' => 'search_case_details_pdf', 'name' => 'search_case_details_pdf', 'autocomplete' => 'off','novalidate'=>'novalidate');
-                                                //echo form_open('#', $attribute);
+                                                // $attribute = array('class' => 'form-horizontal', 'id' => 'search_case_details_pdf', 'name' => 'search_case_details_pdf', 'autocomplete' => 'off','novalidate'=>'novalidate');
+                                                // echo form_open('#', $attribute);
                                                 ?>
                                                 <!--<center>  <br>-->
-
-                                                <?php //echo form_close(); 
-                                                ?>
+                                                <?php // echo form_close(); ?>
                                             </div>
                                             <!--//XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX-->
                                         </div>
-
-
-
-
                                     </div>
                                 </div>
-
                                 <!------------Table--------------------->
-
                                 <div class="row">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-
                                         <div class="x_panel">
                                             <div class="x_title">
                                                 <h3 id="divTitle"></h3>
@@ -657,7 +577,6 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- Main End --}}
                     </div>
                 </div>
             </div>
@@ -666,18 +585,14 @@
 </div>
 </div>
 @endsection
-
 @push('script')
-<script src="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js"></script>
-<script src="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js"></script>
-<!-- Case Status modal-end-->
-
-
-<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-
-<s<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+    <script src="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js"></script>
+    <script src="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js"></script>
+    <!-- Case Status modal-end-->
+    <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
@@ -690,9 +605,8 @@
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/daterangepicker/daterangepicker.css">
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-
     <script>
-        function openSearch(cityName, elmnt, color) {
+        function openSearch(cityName,elmnt,color) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -706,30 +620,27 @@
             elmnt.style.backgroundColor = color;
         }
         // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
+        // document.getElementById("defaultOpen").click();
+        document.getElementById("nav-tab").click();
     </script>
     <script>
-        $('input[type="radio"][name="status_type"]').click(function() {
-
+        $('input[type="radio"][name="status_type"]').click(function () {
             var inputValue = $(this).attr("value");
-            if (inputValue == 'P') {
+            if(inputValue=='P'){
                 $(".divdaterange").hide();
-            } else if (inputValue == 'C') {
+            }
+            else if(inputValue=='C'){
                 $(".divdaterange").show();
             }
-
         });
-        $('input[type="radio"]').click(function() {
-
+        $('input[type="radio"]').click(function () {
             var inputValue = $(this).attr("value");
             //alert("rounak mishra" + inputValue);
-
             if (inputValue == 'diary') {
                 $('#diaryno').val('');
                 $('#diary_year').val('');
                 $('#submitBtn_dynamicalayCase').hide();
                 $('#submitBtn_dynamicalayDiary').show();
-
             } else if (inputValue == 'register') {
                 $('#sc_case_type').val('');
                 $('#case_number').val('');
@@ -739,60 +650,52 @@
                 /*var xx= '<input type="submit" id="SearchCaseNumbersubmit" name="add_notice" value="Searchfdhgfdh" class="btn btn-success SearchCaseNumbersubmit">';
                 $('#submitBtn_dynamicalayDiary').hide();
                 $('#submitBtn_dynamicalayCase').html(xx);*/
-
-
-            }
-            /*else if (inputValue == 'efilingNO'){
-                       $('#efiling_no').val('');
-
-                   }*/
+            } /*else if (inputValue == 'efilingNO'){
+                $('#efiling_no').val('');
+            }*/
             var targetBox = $("." + inputValue);
             $(".box").not(targetBox).hide();
             $(targetBox).show();
-
             /*if(inputValue == 'register'){
                 var xx= '<input type="submit" id="SearchCaseNumbersubmit" name="add_notice" value="Search" class="btn btn-success SearchCaseNumbersubmit">';
                 $('#submitBtn_dynamicalayDiary').hide();
                 $('#submitBtn_dynamicalayCase').html(xx);
-
             }*/
-
         });
     </script>
     <script>
         $(document).ready(function() {
-            /* $("#diary_no").autocomplete({
-                 source: "<//?php echo base_url();?>report/search/search_diary_no",
-                 minLength: 2,
-                 select: function(event, ui) {
-                     $("#diary_no").val(ui.item.value);
-                     var v=ui.item.value;
-                     if(v){
-                         $("#Reportsubmit").click();
-                     }
-
-                     }
-             });
-             $("#efiling_no").autocomplete({
-                 source: "<//?php echo base_url();?>report/search/search_efiling_no",
-                 minLength: 2,
-                 select: function(event, ui) {
-                     $("#efiling_no").val(ui.item.value);
-                     //$("#Reportsubmit").submit();
-                     }
-             });*/
-            $('.diary_date').daterangepicker({
-                /* autoclose: true,
-                 autoApply:true,
-                 showDropdowns: true,
-                 useCurrent: false,
-                 locale: {
-                     //format: 'YYYY-MM-DD HH:mm:ss',
-                     format: 'YYYY-MM-DD',
-                     separator: " to "
-                 }*/
+        /* $("#diary_no").autocomplete({
+                source: "<//?php echo base_url();?>report/search/search_diary_no",
+                minLength: 2,
+                select: function(event, ui) {
+                    $("#diary_no").val(ui.item.value);
+                    var v=ui.item.value;
+                    if(v){
+                        $("#Reportsubmit").click();
+                    }
+                }
+            });
+            $("#efiling_no").autocomplete({
+                source: "<//?php echo base_url();?>report/search/search_efiling_no",
+                minLength: 2,
+                select: function(event, ui) {
+                    $("#efiling_no").val(ui.item.value);
+                    //$("#Reportsubmit").submit();
+                }
+            });*/
+            $('.diary_date').daterangepicker ({
+            /* autoclose: true,
+                autoApply:true,
+                showDropdowns: true,
+                useCurrent: false,
+                locale: {
+                    //format: 'YYYY-MM-DD HH:mm:ss',
+                    format: 'YYYY-MM-DD',
+                    separator: " to "
+                }*/
                 autoclose: true,
-                autoApply: true,
+                autoApply:true,
                 showDropdowns: true,
                 //useCurrent: false,
                 timePicker: true,
@@ -800,507 +703,376 @@
                 //endDate: moment().startOf('hour').add(32, 'hour'),
                 endDate: moment().startOf('hour').add(24, 'hour'),
                 locale: {
-                    // format: 'YYYY-MM-DD hh:mm:ss',//
+                // format: 'YYYY-MM-DD hh:mm:ss',//
                     format: 'YYYY-MM-DD hh:mm:ss A',
                     separator: " to "
                 }
             });
-            $('#listing_date_range').val('<?= $daterange; ?>');
+            $('#listing_date_range').val('<?=$daterange;?>');
         });
     </script>
-
     <script>
-        $(document).ready(function() {
-            /* Code By Amit Mishra Start */
-            $("#ShowEfilingRequests").hide();
-            /* Code By Amit Mishra End */
-            $('#datatable-responsive').DataTable({
-                dom: 'lBfrtip',
-                buttons: [{
-                    extend: 'pdf',
-                    title: 'Report List',
-                    filename: 'Report_pdf_file_name',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL'
-                }, {
-                    extend: 'excel',
-                    title: 'Report List',
-                    filename: 'Report_excel_file_name'
-                }, {
-                    extend: 'csv',
-                    filename: 'Report_csv_file_name'
-                }, {
-                    extend: 'print',
-                    title: 'Report List',
-                    filename: 'Report_print_file_name'
-                }],
-                "pageLength": 50,
-
-            });
-        });
+        // $(document).ready(function() {
+        //     $('#datatable-responsive').DataTable({
+        //         dom: 'lBfrtip',
+        //         buttons: [{
+        //             extend: 'pdf',
+        //             title: 'Report List',
+        //             filename: 'Report_pdf_file_name',
+        //             orientation: 'landscape',
+        //             pageSize: 'LEGAL'
+        //         }, {
+        //             extend: 'excel',
+        //             title: 'Report List',
+        //             filename: 'Report_excel_file_name'
+        //         }, {
+        //             extend: 'csv',
+        //             filename: 'Report_csv_file_name'
+        //         }, {
+        //             extend: 'print',
+        //             title: 'Report List',
+        //             filename: 'Report_print_file_name'
+        //         }],
+        //         "pageLength": 50,
+        //     });
+        // });
     </script>
     <script type="text/javascript">
         $(function() {
             $(".divdaterange").hide();
             //$('#status_refresh').hide();
             //$('#loader_div').show();
-            var diary_no_Defult = 'All';
-            var diary_year_Defult = 'All';
-            var efiling_no_Defult = 'All';
-            var efiling_year_Defult = 'All';
-
+            var diary_no_Defult='All';
+            var diary_year_Defult='All';
+            var efiling_no_Defult='All';
+            var efiling_year_Defult='All';
             var ActionFiledOn = $("input[name='ActionFiledOn']:checked").val();
-            var listing_date = $('#listing_date_range').val();
+            var listing_date=$('#listing_date_range').val();
             var stage_id_Defult = $("#stage_id option:selected").val();
             var filing_type_id_Defult = $("#filing_type_id option:selected").val();
             var users_id_Defult = $("#users_id option:selected").val();
-            var search_type = 'efiling';
+            var search_type='efiling';
             //loadData(search_type,ActionFiledOn,listing_date,stage_id_Defult,filing_type_id_Defult,users_id_Defult,diary_no_Defult,diary_year_Defult,efiling_no_Defult,efiling_year_Defult);
             //$("#datatable-responsive").DataTable();
             $(".dictbldata").hide();
-
             //SearchDiaryNumbersubmit
             $(".SearchDiaryNumbersubmit").click(function(e) {
-
                 //alert("Rounak");
                 e.preventDefault();
                 //alert('welcome click =Search Diary Number submit');
-                var diary_no = $('#diary_no').val();
-                if (diary_no == null || diary_no == "") {
+                var diary_no=$('#diary_no').val();
+                if(diary_no == null || diary_no=="") {
                     alert('Please enter the diary number');
                     $('#diary_no').focus();
                     return false;
                 }
-                var diary_year = $('#diary_year').val();
-                if (diary_year == null || diary_year == "") {
+                var diary_year=$('#diary_year').val();
+                if(diary_year == null || diary_year=="") {
                     alert('Please enter the diary Year');
                     $('#diary_year').focus();
                     return false;
                 }
-                var efiling_no = 'All';
-                var efiling_year = 'All';
-                var ActionFiledOnGet = 'All';
-                var date = $('#listing_date_range').val();
-                var stage_id = 'All';
+                var efiling_no='All';
+                var efiling_year='All';
+                var ActionFiledOnGet ='All';
+                var date=$('#listing_date_range').val();
+                var stage_id ='All';
                 var filing_type_id = 'All';
                 var users_id = 'All';
-                var search_type = 'Diary';
-
-                loadData(search_type, ActionFiledOnGet, date, stage_id, filing_type_id, users_id, diary_no, diary_year, efiling_no, efiling_year);
+                var search_type='Diary';
+                loadData(search_type,ActionFiledOnGet,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year);
             });
-
             //SearchCaseNumbersubmit
             $(".SearchCaseNumbersubmit").click(function(e) {
                 //alert("jai bholenath");
                 e.preventDefault();
                 //alert('welcome click =Search Diary Number submit');
-                var sc_case_type_id = $('#sc_case_type').val();
-                if (sc_case_type_id == null || sc_case_type_id == "") {
+                var sc_case_type_id=$('#sc_case_type').val();
+                if(sc_case_type_id == null || sc_case_type_id=="") {
                     alert('Please Select the Case Type');
                     $('#sc_case_type').focus();
                     return false;
                 }
-                var case_number = $('#case_number').val();
-                if (case_number == null || case_number == "") {
+                var case_number=$('#case_number').val();
+                if(case_number == null || case_number=="") {
                     alert('Please Enter the Case Number');
                     $('#case_number').focus();
                     return false;
                 }
-                var case_year = $('#case_year').val();
-                if (case_year == null || case_year == "") {
+                var case_year=$('#case_year').val();
+                if(case_year == null || case_year=="") {
                     alert('Please Enter the Case year');
                     $('#case_year').focus();
                     return false;
                 }
-                var efiling_no = 'All';
-                var efiling_year = 'All';
-                var ActionFiledOnGet = 'All';
-                var date = $('#listing_date_range').val();
-                var stage_id = 'All';
+                var efiling_no='All';
+                var efiling_year='All';
+                var ActionFiledOnGet ='All';
+                var date=$('#listing_date_range').val();
+                var stage_id ='All';
                 var filing_type_id = 'All';
                 var users_id = 'All';
-                var search_type = 'Diary';
+                var search_type='Diary';
                 //XXXXXXXXXXXXXXXXXXX
-
                 var CSRF_TOKEN = 'CSRF_TOKEN';
                 var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
                 $.ajax({
                     type: "POST",
                     url: "<?php echo base_url('report/search/Get_search_case_details_rpt'); ?>",
-                    data: {
-                        CSRF_TOKEN: CSRF_TOKEN_VALUE,
-                        case_type: sc_case_type_id,
-                        caseNo: case_number,
-                        caseYr: case_year
-                    },
+                    data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, case_type:sc_case_type_id, caseNo:case_number, caseYr:case_year},
                     async: false,
                     /*beforeSend: function () {
                         $('#search_sc_case').val('Please wait...');
                         $('#search_sc_case').prop('disabled', true);
                     },*/
-                    success: function(resultData) {
+                    success: function (resultData) {
                         /*alert(resultData);
                         console.log(resultData);
                         return;*/
-
                         var rdata = JSON.parse(resultData);
                         //console.log(rdata[0]['diary_no']);return;
-
                         var diary_no = rdata[0]['diary_no'];
-                        var diary_year = rdata[0]['diary_year'];
-
-                        if (diary_no != '' && diary_year != '') {
-
-                            loadData(search_type, ActionFiledOnGet, date, stage_id, filing_type_id, users_id, diary_no, diary_year, efiling_no, efiling_year);
+                        var diary_year= rdata[0]['diary_year'];
+                        if(diary_no !='' && diary_year !=''){
+                            loadData(search_type,ActionFiledOnGet,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year);
                         }
-
-
-                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                         });
-
                     }
                 });
-
-
                 //XXXXXXXXXXXXXXXXXX
-
-
             });
-
             $(".SearchEfilingNumbersubmit").click(function(e) {
                 e.preventDefault();
                 //alert('welcome click =Search Efiling Number submit');
-                var efiling_no = $('#efiling_no').val();
-                var efiling_year = $('#efiling_year').val();
-
-                if (efiling_no == null || efiling_no == "") {
+                var efiling_no=$('#efiling_no').val();
+                var efiling_year=$('#efiling_year').val();
+                if(efiling_no == null || efiling_no=="") {
                     alert('Please enter the e-filing number');
                     return false;
                 }
-                var diary_no = 'All';
-                var diary_year = 'All';
-                var ActionFiledOnGet = 'All';
-                var date = $('#listing_date_range').val();
-                var stage_id = 'All';
+                var diary_no='All';
+                var diary_year='All';
+                var ActionFiledOnGet ='All';
+                var date=$('#listing_date_range').val();
+                var stage_id ='All';
                 var filing_type_id = 'All';
                 var users_id = 'All';
-                var search_type = 'efiling';
-
-                loadData(search_type, ActionFiledOnGet, date, stage_id, filing_type_id, users_id, diary_no, diary_year, efiling_no, efiling_year);
+                var search_type='efiling';
+                loadData(search_type,ActionFiledOnGet,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year);
             });
-
-
             //end loadDataReport_users_view
             // Premade test data, you can also use your own
-
             $(".loadDataReport").click(function(e) {
                 e.preventDefault();
                 $(".dictbldata").hide();
-
                 //var status_type = $("input[name='status_type']).val();
-                var status_type = $('input[type="radio"][name="status_type"]:checked').val();
-                var diary_no = $('#diary_no').val();
-                var efiling_no = $('#efiling_no').val();
+                var status_type=$('input[type="radio"][name="status_type"]:checked').val();
+                var diary_no=$('#diary_no').val();
+                var efiling_no=$('#efiling_no').val();
                 var ActionFiledOnGet = $("input[name='ActionFiledOn']:checked").val();
-                var date = $('#listing_date_range').val();
+                var date=$('#listing_date_range').val();
                 var stage_id = $("#stage_id option:selected").val();
                 var filing_type_id = $("#filing_type_id option:selected").val();
                 var users_id = $("#users_id option:selected").val();
-                var search_type = 'All';
-                loadData(search_type, ActionFiledOnGet, date, stage_id, filing_type_id, users_id, diary_no, diary_year, efiling_no, efiling_year, status_type);
+                var search_type='All';
+                loadData(search_type,ActionFiledOnGet,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year,status_type);
             });
-
-            function loadData(search_type, ActionFiledOn, date, stage_id, filing_type_id, users_id, diary_no, diary_year, efiling_no, efiling_year, status_type) {
-                if (date == null || date == "") {
+            function loadData(search_type,ActionFiledOn,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year,status_type) {
+                if(date == null || date=="") {
                     return false;
                 }
                 var datearray = date.split("to");
                 var fromDateGet = datearray[0];
                 var from_Date = fromDateGet.split("-");
-                var fromDate = from_Date[2] + '-' + from_Date[1] + '-' + from_Date[0];
-
+                var fromDate = from_Date[2]+'-'+from_Date[1]+'-'+from_Date[0];
                 var toDateGet = datearray[1];
                 var to_Date = toDateGet.split("-");
-                var toDate = to_Date[2] + '-' + to_Date[1] + '-' + to_Date[0];
+                var toDate = to_Date[2]+'-'+to_Date[1]+'-'+to_Date[0];
                 $('#divTitle').html('');
-                if (ActionFiledOn != 'All') {
+                if(ActionFiledOn !='All') {
                     //$('#divTitle').html('Report for Date :' + fromDate + ' TO ' + toDate);
                 }
-
                 $.ajax({
                     type: 'GET',
-                    url: "<?php echo base_url('report/search/actionFiledon'); ?>?DateRange=" + date + '&ActionFiledOn=' + ActionFiledOn + '&stage_id=' + stage_id + '&filing_type_id=' + filing_type_id + '&users_id=' + users_id + '&diary_no=' + diary_no + '&diary_year=' + diary_year + '&efiling_no=' + efiling_no + '&efiling_year=' + efiling_year + '&search_type=' + search_type + '&status_type=' + status_type,
+                    url:  "<?php echo base_url('report/search/actionFiledon'); ?>?DateRange="+date+'&ActionFiledOn=' + ActionFiledOn+'&stage_id=' + stage_id+'&filing_type_id=' + filing_type_id+'&users_id=' + users_id+'&diary_no=' + diary_no+'&diary_year=' + diary_year+'&efiling_no=' + efiling_no+'&efiling_year=' + efiling_year+'&search_type=' + search_type +'&status_type=' + status_type,
                     contentType: "text/plain",
                     dataType: 'json',
-                    beforeSend: function() {
+                    beforeSend: function(){
                         $('#divTitle').html('Loading...');
                     },
-                    success: function(data) {
-                        var Report_fromDate_toDate = data.status.Report_fromDate_toDate;
-                        if (ActionFiledOn != 'All') {
+                    success: function (data) {
+                        var Report_fromDate_toDate=data.status.Report_fromDate_toDate;
+                        if(ActionFiledOn !='All') {
                             //alert(Report_fromDate_toDate);
-
                         }
                         $('#divTitle').html(Report_fromDate_toDate);
                         myJsonData = data;
                         populateDataTable(myJsonData);
                     },
-                    error: function(e) {
+                    error: function (e) {
                         console.log("There was an error with your request...");
                         console.log("error: " + JSON.stringify(e));
                         $('#divTitle').html('There was an error with your request...');
                     }
                 });
             }
-
             // populate the data table with JSON data
             function populateDataTable(data) {
                 $(".dictbldata").show();
                 $("#datatable-responsive").DataTable().clear();
                 var table = $('#datatable-responsive').DataTable();
-
                 table
                     .clear()
                     .draw();
-                var diary_no_m = '';
-                var diary_year_m = '';
-                var open_case_status = '';
-                var reg_no = '';
+                var diary_no_m=''; var diary_year_m=''; var open_case_status=''; var reg_no='';
                 var length = Object.keys(data.customers).length;
-
-                var redirect_url = '';
-                var efiling_no = '';
-                var rd = '';
-                var v = '';
-                var res_name = '';
-                var pet_name = '';
-                var cause_title = '';
-                var cause_details = '';
-                var diary_no = '';
-                var diary_year = '';
-
-                for (var i = 0; i < length + 1; i++) {
-                    var sn = i + 1;
+                var redirect_url = ''; var efiling_no=''; var rd=''; var v=''; var res_name=''; var pet_name=''; var cause_title=''; var cause_details=''; var diary_no=''; var diary_year='';
+                for(var i = 0; i < length+1; i++) {
+                    var sn=i+1;
                     var report = data.customers[i];
-                    var stage_id = report['stage_id'];
-                    var documentIANumber = '';
-                    var caveatNumber = '';
-
-                    if (report['cause_title'] != null) {
-                        cause_title = report['cause_title'];
-                    } else if (report['ecase_cause_title'] != null) {
-                        cause_title = report['ecase_cause_title'];
-                    }
-
-                    if (report['pet_name'] != null) {
-                        pet_name = report['pet_name'] + 'Vs.';
-                    } else {
-                        pet_name = '';
-                    }
-
-                    if (report['res_name'] != null) {
-                        res_name = report['res_name'];
-                    } else {
-                        res_name = '';
-                    }
-                    diary_no = '';
-                    diary_year = '';
-                    reg_no = '';
+                    var stage_id=report.stage_id;
+                    var documentIANumber='';
+                    var caveatNumber='';
+                    if(report.cause_title!=null){cause_title=report.cause_title; }
+                    else if(report.ecase_cause_title!=null){cause_title=report.ecase_cause_title; }
+                    if(report.pet_name!=null){pet_name=report.pet_name+'Vs.';}else{ pet_name=''; }
+                    if(report.res_name!=null){res_name=report.res_name;} else{res_name='';}
+                    diary_no='';diary_year='';reg_no='';
                     /* if(report.diary_no!=null){diary_no='<b class="sci">Diary No: </b>'+report.diary_no+'/'; diary_no_m=report.diary_no;}else if(report.sc_diary_num!=null){diary_no='<b class="class="sci"">Diary No: </b>'+report.sc_diary_num+'/'; diary_no_m=report.sc_diary_num;}
-                     if(report.diary_year!=null){diary_year=report.diary_year+'<br/>'; diary_year_m=report.diary_year;}else if(report.sc_diary_year!=null){diary_year=report.sc_diary_year+'<br/>'; diary_year_m=report.sc_diary_year;}*/
-
-                    if (report['diary_no'] != null) {
-                        diary_no = '' + report['diary_no'] + '/';
-                        diary_no_m = report['diary_no'];
-                    } else if (report['sc_diary_num'] != null) {
-                        diary_no = '' + report['sc_diary_num'] + '/';
-                        diary_no_m = report['sc_diary_num'];
-                    }
-
-                    if (report['caveat_num'] != null) {
-                        caveatNumber = 'Caveat No.:' + report['caveat_num'] + '/';
-                        diary_no_m = report['caveat_num'];
-                    }
-                    if (report['icmis_docnum'] != null) {
-                        documentIANumber = '(ICMIS Doc./IA No.:' + report['icmis_docnum'] + '/';
-                        diary_no_m = report['icmis_docnum'];
-                    }
-
-
-
-                    if (report['diary_year'] != null) {
-                        diary_year = report['diary_year'] + '<br/>';
-                        diary_year_m = report['diary_year'];
-                    } else if (report['sc_diary_year'] != null) {
-                        diary_year = report['sc_diary_year'] + '<br/>';
-                        diary_year_m = report['sc_diary_year'];
-                    }
-
-                    if (report['caveat_year'] != null) {
-                        caveatNumber += report['caveat_year'] + '<br/>';
-                        diary_year_m = report['caveat_year'];
-                    }
-                    if (report['icmis_docyear'] != null && report['icmis_docnum'] != null) {
-                        documentIANumber += report['icmis_docyear'] + ')<br/>';
-                        diary_year_m = report['icmis_docyear'];
-                    }
-
-                    if (report['reg_no_display'] != '' && report['sc_display_num'] != null) {
-                        reg_no = '<b>Registration No.</b> : ' + report['sc_display_num'] + '<br/> ';
+                    if(report.diary_year!=null){diary_year=report.diary_year+'<br/>'; diary_year_m=report.diary_year;}else if(report.sc_diary_year!=null){diary_year=report.sc_diary_year+'<br/>'; diary_year_m=report.sc_diary_year;}*/
+                    if(report.diary_no!=null){diary_no=''+report.diary_no+'/'; diary_no_m=report.diary_no;}
+                    else if(report.sc_diary_num!=null){diary_no=''+report.sc_diary_num+'/'; diary_no_m=report.sc_diary_num;}
+                    if(report.caveat_num!=null){caveatNumber='Caveat No.:'+report.caveat_num+'/'; diary_no_m=report.caveat_num;}
+                    if(report.icmis_docnum!=null){documentIANumber='(ICMIS Doc./IA No.:'+report.icmis_docnum+'/'; diary_no_m=report.icmis_docnum;}
+                    if(report.diary_year!=null){diary_year=report.diary_year+'<br/>'; diary_year_m=report.diary_year;}
+                    else if(report.sc_diary_year!=null){diary_year=report.sc_diary_year+'<br/>'; diary_year_m=report.sc_diary_year;}
+                    if(report.caveat_year!=null){caveatNumber+=report.caveat_year+'<br/>'; diary_year_m=report.caveat_year;}
+                    if(report.icmis_docyear!=null && report.icmis_docnum!=null){documentIANumber+=report.icmis_docyear+')<br/>'; diary_year_m=report.icmis_docyear;}
+                    if (report.reg_no_display != '' && report.sc_display_num !=null) {
+                        reg_no = '<b>Registration No.</b> : ' +report.sc_display_num+ '<br/> ';
                     } else {
                         reg_no = '';
                     }
-                    if (diary_no_m != null && diary_year_m != null) {
-                        open_case_status = 'href="#" onClick="open_case_status()"';
-                    } else {
-                        open_case_status = '';
-                    }
+                    if(diary_no_m !=null && diary_year_m !=null){
+                        open_case_status='href="#" onClick="open_case_status()"';
+                    }else{ open_case_status='';}
                     //cause_details= '<a '+open_case_status+' data-diary_no="'+diary_no_m+'" data-diary_year="'+diary_year_m+'">'+'<span class="sci">'+diary_no + diary_year + reg_no + cause_title+'<br/>'+pet_name+res_name+'</span>'+'</a>';
-                    case_no = diary_no + diary_year + reg_no + documentIANumber + caveatNumber;
-                    if (report['efiling_type'] != 'CAVEAT') {
-                        cause_details = '<a ' + open_case_status + ' data-diary_no="' + diary_no_m + '" data-diary_year="' + diary_year_m + '">' + '<span class="sci">' + cause_title + '<br/>' + pet_name + res_name + '</span>' + '</a>';
-                    } else {
-                        cause_details = '';
+                    case_no=diary_no + diary_year + reg_no +documentIANumber+caveatNumber;
+                    if(report.efiling_type!='CAVEAT'){
+                        cause_details= '<a '+open_case_status+' data-diary_no="'+diary_no_m+'" data-diary_year="'+diary_year_m+'">'+'<span class="sci">'+cause_title+'<br/>'+pet_name+res_name+'</span>'+'</a>';
                     }
-
-
-                    if (report['efiling_type'] != '' && report['efiling_type'] == 'new_case') {
-                        rd = 'newcase.defaultController'; //. equal to / required
-                        v = '/' + report['registration_id'] + '/' + report['ref_m_efiled_type_id'] + '/' + report['stage_id'] + '/' + report['efiling_no'];
-                    } else if (report['efiling_type'] != '' && report['efiling_type'] == 'misc_document') {
-                        rd = 'miscellaneous_docs/DefaultController'; //. equal to / required
-                        v = '/' + report['registration_id'] + '/' + report['ref_m_efiled_type_id'] + '/' + report['stage_id'];
-                    } else if (report['efiling_type'] != '' && report['efiling_type'] == 'IA') {
-                        rd = 'IA.DefaultController'; //. equal to / required
-                        v = '/' + report['registration_id'] + '/' + report['ref_m_efiled_type_id'] + '/' + report['stage_id'];
-                    } else if (report['efiling_type'] != '' && report['efiling_type'] == 'CAVEAT') {
-                        rd = 'case.caveat.crud'; //. equal to / required
-                        v = '/' + report['registration_id'] + '/' + report['ref_m_efiled_type_id'] + '/' + report['stage_id'];
+                    else{
+                        cause_details='';
+                    }
+                    if(report.efiling_type !='' && report.efiling_type=='new_case') {
+                        rd='newcase.defaultController'; //. equal to / required
+                        v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id + '/' + report.efiling_no;
+                    }
+                    else if(report.efiling_type !='' && report.efiling_type=='misc_document') {
+                    rd='miscellaneous_docs.DefaultController'; //. equal to / required
+                    v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
+                    }
+                    else if(report.efiling_type !='' && report.efiling_type=='IA') {
+                    rd='IA.DefaultController'; //. equal to / required
+                    v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
+                    }
+                    else if(report.efiling_type !='' && report.efiling_type=='CAVEAT') {
+                    rd='case.caveat.crud'; //. equal to / required
+                    v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
                     }
                     /*redirect_url = "<//?=base_url('report/search/view/')?>"+rd+v;
                     efiling_no= '<a href="'+redirect_url+'">'+ report.efiling_no + '</a> <br>'+report.filed_on+'';*/
-
-                    var str_efiling_type = report['efiling_type'];
-                    var efiling_type = str_efiling_type.replace("_", " ");
-                    var filed_by = '';
-
-                    if (report['ref_m_usertype_id'] == 1) {
-                        filed_by = report['first_name'] + '<br>(AOR Code: ' + report['aor_code'] + ')';
-                    } else if (report['ref_m_usertype_id'] == 2) {
-                        filed_by = report['first_name'] + '<br>(Party in person)';
-                    }
-
-                    var allocated_to = '';
-
-                    //if(report['allocated_to_user']!='' && report['allocated_to_user']!=null && report['meant_for']!='C' ){allocated_to=report['allocated_to_user'] + '<br>(Emp Id: '+ report['emp_id'] + ')';}
-                    if (report['allocated_to_user'] != '' && report['allocated_to_user'] != null && report['meant_for'] != 'C') {
-                        allocated_to = report['allocated_to_user'];
-                    }
-
-                    var create_on = report['create_on'];
-                    var create_on_date = create_on.split(' ');
-                    var create_on_onlytime = create_on_date[1];
-
-                    var create_on_now = create_on_onlytime.split(':');
-                    var create_on_hours = create_on_now[0];
+                    var str_efiling_type=report.efiling_type;
+                    var efiling_type=str_efiling_type.replace("_"," ");
+                    var filed_by='';
+                    if(report.ref_m_usertype_id==1){filed_by=report.first_name + '<br>(AOR Code: '+ report.aor_code + ')';}else if(report.ref_m_usertype_id==2){filed_by=report.first_name + '<br>(Party in person)';}
+                    var allocated_to='';
+                    //if(report.allocated_to_user!='' && report.allocated_to_user!=null && report.meant_for!='C' ){allocated_to=report.allocated_to_user + '<br>(Emp Id: '+ report.emp_id + ')';}
+                    if(report.allocated_to_user!='' && report.allocated_to_user!=null && report.meant_for!='C' ){allocated_to=report.allocated_to_user ;}
+                    var create_on = report.create_on;
+                    var create_on_date = create_on.split(' '); var create_on_onlytime =create_on_date[1];
+                    var create_on_now = create_on_onlytime.split(':'); var create_on_hours = create_on_now[0];
                     var create_on_ampm = create_on_hours >= 12 ? 'pm' : 'am';
                     create_on = $.datepicker.formatDate("dd-mm-yy", $.datepicker.parseDate('yy-mm-dd', create_on));
-                    create_on = create_on + ' ' + create_on_onlytime;
-
-                    var date = report['activated_on'];
-                    var from_date = date.split(' ');
-                    var onlytime = from_date[1];
-
-                    var now = onlytime.split(':');
-                    var hours = now[0];
+                    create_on=create_on+' '+create_on_onlytime;
+                    var date = report.activated_on;
+                    var from_date = date.split(' '); var onlytime =from_date[1];
+                    var now = onlytime.split(':'); var hours = now[0];
                     var ampm = hours >= 12 ? 'pm' : 'am';
                     date = $.datepicker.formatDate("dd/mm/yy", $.datepicker.parseDate('yy-mm-dd', date));
-                    date = date + ' ' + onlytime;
-                    redirect_url = "<?= base_url('report/search/view/') ?>" + rd + v;
-                    var date_filed_on = "";
-                    if (report['filed_on'] == null) {
-
-                    } else {
-                        date_filed_on = report['filed_on'];
-                        var from_date = date_filed_on.split(' ');
-                        var onlytime = from_date[1];
-
-                        var now = onlytime.split(':');
-                        var hours = now[0];
+                    date=date+' '+onlytime;
+                    redirect_url = "<?=base_url('report/search/view/')?>"+rd+v;
+                    var date_filed_on="";
+                    if(report.filed_on==null){
+                    }
+                    else{
+                        date_filed_on = report.filed_on;
+                        var from_date = date_filed_on.split(' '); var onlytime =from_date[1];
+                        var now = onlytime.split(':'); var hours = now[0];
                         var ampm = hours >= 12 ? 'pm' : 'am';
                         date_filed_on = $.datepicker.formatDate("dd/mm/yy", $.datepicker.parseDate('yy-mm-dd', date_filed_on));
-                        date_filed_on = date_filed_on + ' ' + onlytime;
+                        date_filed_on=date_filed_on+' '+onlytime;
                     }
-
-
-                    //var filed_on = $.datepicker.formatDate("dd/mm/yy hh:ii", $.datepicker.parseDate('yy-mm-dd', report['filed_on']));
-                    efiling_no = '<a href="' + redirect_url + '">' + report['efiling_no'] + '</a> <br>' + date_filed_on + '';
-
+                    //var filed_on = $.datepicker.formatDate("dd/mm/yy hh:ii", $.datepicker.parseDate('yy-mm-dd', report.filed_on));
+                    efiling_no= '<a href="'+redirect_url+'">'+ report.efiling_no + '</a> <br>'+date_filed_on+'';
                     var current_dt = new Date();
-                    var diff = new Date(new Date(current_dt) - new Date(report['activated_on']));
+                    var diff = new Date(new Date(current_dt) - new Date(report.activated_on));
                     //alert(diff.getHours()+":"+diff.getMinutes());
-                    var peding_since = report['pending_since'];
-                    if (peding_since > 2) {
-                        peding_since = "<span style='color: red;'><b>" + peding_since + "</b></span>";
+                    var peding_since=report.pending_since;
+                    if(peding_since>2){
+                        peding_since="<span style='color: red;'><b>"+peding_since+"</b></span>";
                     }
-                    $('#datatable-responsive').DataTable().row.add([
-                        sn,
+                    $('#datatable-responsive').dataTable().fnAddData( [                            sn,
                         efiling_no,
                         efiling_type,
                         case_no,
                         cause_details,
                         filed_by,
-                        report['admin_stage_name'],
+                        report.admin_stage_name,
                         create_on,
                         date,
                         allocated_to,
                         peding_since,
-                        report['meant_for'],
-                        report['portal']
-                    ]).draw();
-
-                    if (sn == length) {
+                        report.meant_for,
+                        report.portal,
+                    ]);
+                    if(sn==length) {
                         console.log('Done data Table');
-
                         $('#loader_div').hide();
                         $('#status_refresh').show();
                     }
                 }
-
             }
-        })();
+        });
     </script>
     <script>
-        function open_case_status() {
-            var CSRF_TOKEN = 'CSRF_TOKEN';
-            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-            var diary_no = $("a:focus").attr('data-diary_no');
-            var diary_year = $("a:focus").attr('data-diary_year');
-            $.ajax({
-                type: "POST",
-                data: {
-                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
-                    diary_no: diary_no,
-                    diary_year: diary_year
-                },
-                beforeSend: function(xhr) {
-                    $("#view_case_status_data").html("<div style='margin:0 auto;margin-top:20px;width:100%;text-align: center;'><img src='<?= base_url() ?>/assets/images/loading-data1.gif'></div>");
-                },
-                url: "<?php echo base_url('report/search/showCaseStatusReport'); ?>",
-                success: function(data) {
-                    document.getElementById('view_case_status_data').innerHTML = data;
-                    $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                },
-                error: function(result) {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                }
-            });
-            UIkit.modal('#case_status').toggle();
-        }
+    function open_case_status(){
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var diary_no = $("a:focus").attr('data-diary_no');
+        var diary_year = $("a:focus").attr('data-diary_year');
+        $.ajax({
+            type: "POST",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE,diary_no:diary_no, diary_year:diary_year},
+            beforeSend: function (xhr) {
+                $("#view_case_status_data").html("<div style='margin:0 auto;margin-top:20px;width:100%;text-align: center;'><img src='<?=base_url()?>/assets/images/loading-data1.gif'></div>");
+            },
+            url: "<?php echo base_url('report/search/showCaseStatusReport'); ?>",
+            success: function (data) {
+                document.getElementById('view_case_status_data').innerHTML=data;
+                $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            },
+            error: function (result) {
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            }
+        });
+        UIkit.modal('#case_status').toggle();
+    }
     </script>
-    @endpush
+@endpush
