@@ -37,6 +37,7 @@ $routes->post('documentIndex/Ajaxcalls/get_index_type', 'DocumentIndex\Ajaxcalls
 $routes->post('newcase/Ajaxcalls/get_districts', 'NewCase\Ajaxcalls::get_districts');
 $routes->post('csrftoken/DefaultController/updateIsDeadMinorData', 'Csrftoken\DefaultController::updateIsDeadMinorData');
 $routes->match(['GET', 'POST'], 'newcase/view', 'NewCase\View::index');
+$routes->match(['GET', 'POST'], 'newcase/view/(:any)', 'NewCase\View::index/$1');
 $routes->match(['GET', 'POST'], 'documentIndex', 'DocumentIndex\DefaultController::index');
 $routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/load_document_index', 'DocumentIndex\Ajaxcalls::load_document_index');
 $routes->match(['GET', 'POST'], 'uploadDocuments/DefaultController/upload_pdf', 'UploadDocuments\DefaultController::upload_pdf');
@@ -242,7 +243,7 @@ $routes->get('resources/hand_book_old_efiling', 'Resources\HandBookOldEfiling::i
 $routes->get('resources/Three_PDF_user_manual', 'Resources\ThreePDFUserManual::index');
 $routes->get('resources/Three_PDF_user_manual', 'Resources\ThreePDFUserManual::index');
 $routes->get('resources/Three_PDF_user_manual', 'Resources\ThreePDFUserManual::index');
-$routes->match(['GET', 'POST'], 'miscellaneous_docs/defaultController/(:any)', 'MiscellaneousDocs\DefaultController::index/$1');
+$routes->match(['GET', 'POST'], 'miscellaneous_docs/DefaultController/(:any)', 'MiscellaneousDocs\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'case/document/crud', 'ResponsiveVariantRouteController::showCaseDocumentCrud');
 $routes->match(['GET', 'POST'], 'case/document/crud/(:any)', 'ResponsiveVariantRouteController::showCaseDocumentCrud/$1');
 $routes->match(['GET', 'POST'], 'case/document/crud_registration', 'ResponsiveVariantRouteController::showCaseDocumentCrudByRegistrationId');
