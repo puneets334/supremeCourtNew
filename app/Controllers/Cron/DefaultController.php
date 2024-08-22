@@ -1,20 +1,21 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\AdminDashboard\StageListModel;
+use App\Models\Cron\DefaultModel;
+use App\Models\GetCISStatus\GetCISStatusModel;
+use App\Libraries\webservices\Efiling_webservices;
 class DefaultController extends BaseController {
-
+    protected $Default_model;
+    protected $StageList_model;
+    protected $Get_CIS_Status_model;
+    protected $efiling_webservices;
     public function __construct() {
         parent::__construct();
-        $this->load->model('cron/Default_model');
-        $this->load->model('adminDashboard/StageList_model');
-        $this->load->model('getCIS_status/Get_CIS_Status_model');
-        $this->load->library('webservices/efiling_webservices');
-        $this->load->library('session');
-        $this->load->helper('form');
-        $this->load->helper('url');
-        $this->load->helper('html');
-        $this->load->helper('functions'); // loading custom functions
-        $this->load->database();
+        $this->Default_model = new DefaultModel();
+        $this->StageList_model = new StageListModel();
+        $this->Get_CIS_Status_model = new GetCISStatusModel();
+        $this->efiling_webservices = new Efiling_webservices();
     }
 
     public function index()
@@ -23,7 +24,6 @@ class DefaultController extends BaseController {
         //I_B_Approval_Pending_Admin_Stage
         $cronDetails= array("cron_type"=>'scrutiny_status','started_at'=>date('Y-m-d H:i:s'));
         $cronDetailsId=$this->Default_model->insertInDBwithInsertedId('efil.tbl_cron_details',$cronDetails);
-        //for ($i = 1; $i <= 2; $i++) { //Commented on 31-07-2023
         for ($i = 1; $i <= 1; $i++) {
             if ($i == 1) {
                 $loop_for_stage_flag = I_B_Approval_Pending_Admin_Stage; //scrutiny pending
@@ -33,19 +33,12 @@ class DefaultController extends BaseController {
             }
 
             $scrutiny_result = $this->Default_model->get_efiled_nums_stage_wise_list_admin_cron($loop_for_stage_flag, ADMIN_FOR_TYPE_ID, ADMIN_FOR_ID);
-            //var_dump($scrutiny_result);
 
             if ($scrutiny_result) {
-
                 $case_chunks=array_chunk($scrutiny_result, 100);
                 foreach($case_chunks as $index=>$chunk){
-                    echo "<br/> Chunk No. ".($index+1)." and Chunk size: ".sizeof($chunk);
-                    //var_dump($chunk);
                     $data = $this->efiling_webservices->get_new_case_efiling_scrutiny_cron_SCIS($chunk);
                     if ($data) {
-                        // echo "<br><br>";
-                        //$sno = 1;
-                       // var_dump($data);
                         $curr_dt = date('Y-m-d H:i:s');
                         foreach ($data->consumed_data as $response) {
                             var_dump($response);
@@ -88,20 +81,9 @@ class DefaultController extends BaseController {
                                         $cis_objections = $response->objections;
 
                                         $objections_status = $this->get_icmis_objections_status($response->registration_id, $cis_objections, $curr_dt);
-                                        // $objections_status => 0 -> objections pending; 1 -> objections insert; 2 -> update objections
                                     }
 
-                                    //$cis_documents = $response->doc_details;
-
-                                    //$documents_status = $this->get_icmis_documents_status($response->registration_id, $cis_documents, TRUE, FALSE, $curr_dt);
-                                    // $objections_status => 0 -> documents pending; 1 -> documents update status;
-                                    //print_r($documents_status);                die;
-
-                                    /* if ($documents_status[0]) {
-                                         $next_stage = I_B_Approval_Pending_Admin_Stage;
-                                     } else {*/
                                     $next_stage = E_Filed_Stage;
-                                    //}
                                 } else {
                                     $stage_update_timestamp = $this->Get_CIS_Status_model->get_stage_update_timestamp($response->registration_id, $loop_for_stage_flag);
 
@@ -121,8 +103,6 @@ class DefaultController extends BaseController {
                                     } else {
                                         $next_stage = I_B_Approval_Pending_Admin_Stage;
                                     }
-                                    //$cis_documents = $response->doc_details;
-                                    //$documents_status = $this->get_icmis_documents_status($response->registration_id, $cis_documents, TRUE, FALSE, $curr_dt);
                                 }
                                 echo "<br><br>" . "Reg id " . $response->registration_id;
                                 echo "<br>" . "next stage " . $next_stage;
