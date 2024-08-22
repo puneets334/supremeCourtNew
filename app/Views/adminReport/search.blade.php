@@ -1,4 +1,4 @@
-@extends('layout.advocateApp')
+@extends('layout.app')
 @section('content')
 <div class="container-fluid">
     <div class="row">
