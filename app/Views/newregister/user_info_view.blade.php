@@ -14,11 +14,12 @@
                                     <h5 class="unerline-title">
                                         <?= 'Profile' ?>
                                         <?php
-                                        if (!empty($profile)) {
+                                      
+                                        if (!empty($profile[0])) {
                                             $user_type = '';
-                                            if ($profile['ref_m_usertype_id'] == USER_ADVOCATE) {
+                                            if ($profile[0]['ref_m_usertype_id'] == USER_ADVOCATE) {
                                                 $user_type = '(Advocate)';
-                                            } elseif ($profile['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                            } elseif ($profile[0]['ref_m_usertype_id'] == USER_IN_PERSON) {
                                                 $user_type = '(Party-in-Person)';
                                             }
                                             echo htmlentities($user_type, ENT_QUOTES);
@@ -62,7 +63,7 @@
                                                             </div>
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
-                                                                    <?= strtoupper($profile['first_name']); ?>
+                                                                    <?= strtoupper($profile[0]['first_name']); ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -74,7 +75,7 @@
                                                             </div>
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
-                                                                    <?php echo strtoupper(htmlentities($profile['bar_reg_no'], ENT_QUOTES)); ?>
+                                                                    <?php echo strtoupper(htmlentities($profile[0]['bar_reg_no'], ENT_QUOTES)); ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -86,7 +87,7 @@
                                                             </div>
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
-                                                                    <?= $profile['gender']; ?>
+                                                                    <?= $profile[0]['gender']; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -99,18 +100,18 @@
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
                                                                     <?php
-                                                                    if ($profile['m_address1'] != '') {
-                                                                        $address1 = ', ' . $profile['m_address1'];
+                                                                    if ($profile[0]['m_address1'] != '') {
+                                                                        $address1 = ', ' . $profile[0]['m_address1'];
                                                                     }
 
 
-                                                                    if ($profile['m_pincode'] != '') {
-                                                                        $pincode = '- ' . $profile['m_pincode'];
+                                                                    if ($profile[0]['m_pincode'] != '') {
+                                                                        $pincode = '- ' . $profile[0]['m_pincode'];
                                                                     } else {
                                                                         $pincode = ', N/A';
                                                                     }
 
-                                                                    echo strtoupper(htmlentities(ucwords($profile['m_address1'] . ' , ' . $profile['m_city'] . $pincode), ENT_QUOTES));
+                                                                    echo strtoupper(htmlentities(ucwords($profile[0]['m_address1'] . ' , ' . $profile[0]['m_city'] . $pincode), ENT_QUOTES));
                                                                     ?>
                                                                 </div>
                                                             </div>
@@ -123,7 +124,7 @@
                                                             </div>
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
-                                                                    <?= !empty($profile['dob']) ? ucwords(htmlentities(date("d-m-Y", strtotime($profile['dob'])), ENT_QUOTES)) : 'N/A'; ?>
+                                                                    <?= !empty($profile[0]['dob']) ? ucwords(htmlentities(date("d-m-Y", strtotime($profile[0]['dob'])), ENT_QUOTES)) : 'N/A'; ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -136,8 +137,8 @@
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
                                                                     <?php
-                                                                    if ($profile['created_on']) {
-                                                                        echo ucwords(htmlentities(date("d-m-Y h:i:s A", strtotime($profile['created_on'])), ENT_QUOTES));
+                                                                    if ($profile[0]['created_on']) {
+                                                                        echo ucwords(htmlentities(date("d-m-Y h:i:s A", strtotime($profile[0]['created_on'])), ENT_QUOTES));
                                                                     } else {
                                                                         echo 'N/A';
                                                                     }
@@ -154,10 +155,10 @@
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
                                                                     <?php
-                                                                    if ($profile['moblie_number'] == '') {
+                                                                    if ($profile[0]['moblie_number'] == '') {
                                                                         $mobile = '<span style="color:red;">' . htmlentities('Update Your Mobile No.', ENT_QUOTES) . '</span>';
                                                                     } else {
-                                                                        $mobile = htmlentities($profile['moblie_number'], ENT_QUOTES);
+                                                                        $mobile = htmlentities($profile[0]['moblie_number'], ENT_QUOTES);
                                                                     }
                                                                     echo $mobile;
                                                                     ?>
@@ -173,8 +174,8 @@
                                                             <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                                 <div class="prof-outp">
                                                                     <?php
-                                                                    if (strpos($profile['emailid'], '@')) {
-                                                                        $email = htmlentities($profile['emailid'], ENT_QUOTES);
+                                                                    if (strpos($profile[0]['emailid'], '@')) {
+                                                                        $email = htmlentities($profile[0]['emailid'], ENT_QUOTES);
                                                                     } else {
                                                                         $email = '<span style="color:red;">' . htmlentities('Update Your Email ID ', ENT_QUOTES) . '</span>';
                                                                     }
@@ -192,10 +193,10 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="profile-status-div">
                                                 <?php
-                                                if ($profile['is_active'] == 0) { ?>
+                                                if ($profile[0]['is_active'] == 0) { ?>
                                                     <div class="alert alert-danger">DEACTIVATED</div>
                                                 <?php } ?>
-                                                <?php if ($profile['is_active'] == 1) { ?>
+                                                <?php if ($profile[0]['is_active'] == 1) { ?>
                                                     <div class="alert alert-success">ACTIVATED</div>
 
                                                 <?php } ?>

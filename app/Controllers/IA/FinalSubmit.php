@@ -1,15 +1,23 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\IA;
+use App\Controllers\BaseController;
+use App\Models\Common\CommonModel;
+use App\Models\NewCase\NewCaseModel;
+use App\Models\NewCase\DropdownListModel;
+use App\Models\NewCase\GetDetailsModel;
 
 class FinalSubmit extends BaseController {
+    protected $Common_model;
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('common/Common_model');
-
-        $this->load->model('newcase/New_case_model');
-        $this->load->model('newcase/Dropdown_list_model');
-        $this->load->model('newcase/Get_details_model');
+        // $this->load->model('common/Common_model');
+        $this->Common_model = new CommonModel();
+        // $this->load->model('newcase/New_case_model');
+        // $this->load->model('newcase/Dropdown_list_model');
+        // $this->load->model('newcase/Get_details_model');
+        // $this->Common_model = new CommonModel();
+        // $this->Share_docs_model = new ShareDocsModel();
     }
 
     public function index() {
@@ -43,7 +51,7 @@ class FinalSubmit extends BaseController {
         } elseif ($_SESSION['efiling_details']['stage_id'] == I_B_Rejected_Stage || $_SESSION['efiling_details']['stage_id'] == E_REJECTED_STAGE) {
             $next_stage = Initial_Defects_Cured_Stage;
         } else {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
+            getSessionData('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
             redirect('dashboard');
         }
 
@@ -53,7 +61,7 @@ class FinalSubmit extends BaseController {
             if ($result) {
 
                 $sentSMS = "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin. - Supreme Court of India";
-                log_message('CUSTOM', "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin. - Supreme Court of India");
+                // log_message('CUSTOM', "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been submitted and is pending for initial approval with efiling admin. - Supreme Court of India");
                 $subject = "Submitted : Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
 
                 $user_name = $_SESSION['login']['first_name'] . ' ' . $_SESSION['login']['last_name'];
@@ -61,18 +69,19 @@ class FinalSubmit extends BaseController {
                 send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS,SCISMS_Initial_Approval);
                 send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
 
-                $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
-                log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no'])." submitted successfully for approval of E-filing Admin.!");
+                getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                // log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no'])." submitted successfully for approval of E-filing Admin.!");
                 $_SESSION['efiling_details']['stage_id']=Initial_Approaval_Pending_Stage;
-                redirect('IA/view');
+                
+                return redirect('IA/view');
                 //redirect('dashboard');
-                exit(0);
+                // exit(0);
+
             } else {
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
-                log_message('CUSTOM', "Submition failed. Please try again!");
-                redirect('IA/view');
+                getSessionData('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
+                // log_message('CUSTOM', "Submition failed. Please try again!");
+                return redirect('IA/view');
                 //redirect('dashboard');
-                exit(0);
             }
         }
     }

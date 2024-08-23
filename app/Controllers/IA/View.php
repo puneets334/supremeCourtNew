@@ -58,7 +58,7 @@ class View extends BaseController
             }
             $data['filing_for_details'] = $this->ViewModel->get_filing_for_parties($registration_id);
             $data['efiled_docs_list'] = $this->ViewModel->get_index_items_list($registration_id);
-          //  pr($data['efiled_docs_list'] );
+           
 
 
             $data['payment_details'] = $this->ViewModel->get_payment_details($registration_id);
@@ -82,7 +82,7 @@ class View extends BaseController
                     }
                 }
             }
-            echo $this->render('IA.ia_preview', $data, TRUE);
+            return $this->render('IA.ia_preview', $data, TRUE);
             /*return render('IA/ia_preview');
             $this->load->view('templates/header');
             $this->load->view('IA/ia_preview', $data); 

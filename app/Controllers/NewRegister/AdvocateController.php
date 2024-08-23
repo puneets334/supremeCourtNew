@@ -39,8 +39,9 @@ class AdvocateController extends BaseController {
             exit(0);
         }
         // Decode the ID
-        // $hashids = new Hashids();
-        // $decodedId = $hashids->decode($id);
+        $hashids = new Hashids();
+        $decodedId = $hashids->decode($id);
+        $id = $decodedId[0];
         // Check if decoding was successful
         if (empty($id)) {
             return redirect()->to('error_page'); // Redirect to an error page if decoding fails

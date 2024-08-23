@@ -91,6 +91,30 @@ $hidepencilbtn = 'true';
                         </div>
                     </div>
                 </div>
+                <div class="col-md-12 text-end">
+
+
+                    <?php
+                    $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
+                            // if (in_array(MISC_BREAD_AFFIRMATION, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+                            //  var_dump($_SESSION['efiling_details']['breadcrumb_status']);
+                            $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                            if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+
+                                if (($_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
+                                    ($_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
+                                        ($_SESSION['efiling_details']['is_payment_defecit'] == 't' || $_SESSION['efiling_details']['is_payment_defective'] == 't')
+                                    )
+                                ) {
+                                    echo '<a href="' . base_url('oldCaseRefiling/FinalSubmit') . '" class="btn btn-success btn-sm text-center">Final Submit </a>';
+                                }
+                            }
+                        }
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
@@ -165,7 +189,7 @@ $hidepencilbtn = 'true';
             <a href="#demo_7" class="list-group-item" style="background: #EDEDED;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-plus" style="float: right;"></i><?php // if (!isset($subordinate_court_details) || empty($subordinate_court_details)) { 
                                                                                                                                                                                     ?><font style="color:orange;"> <b>Earlier Courts</b></font><?php // } else { 
                                                                                                                                                                                                                                                 ?> <b>Earlier Courts</b><?php // } 
-                                                                                                                                                                                                                                                                                                                                                                ?></a>
+                                                                                                                                                                                                                                                                        ?></a>
             <div class="collapse" id="demo_7">
                 <?php //render('newcase/subordinate_court_list'); 
                 ?>

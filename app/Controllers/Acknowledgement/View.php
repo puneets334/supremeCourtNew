@@ -259,6 +259,7 @@ class view extends BaseController
         //$img='<img src="@'.preg_replace('#^data:image/[^;]+;base64,#','',$img_encoded).'"';
         //$pdf->writeHTML($img);
         $pdf->writeHTML($content . '', true, false, false, false, '');
+        // $pdf->writeHTML(0, 10, $content, 0, 1, 'C');
 
         /*if( ($data['view_data']['cdeval'])==1)
         {

@@ -337,30 +337,30 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                             ?>
 
                             <?php
-                            // $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                            // if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
-                            //     if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-                            //         // if (in_array(MISC_BREAD_AFFIRMATION, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
-                            //         //  var_dump($_SESSION['efiling_details']['breadcrumb_status']);
+                            $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
+                                    // if (in_array(MISC_BREAD_AFFIRMATION, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+                                    //  var_dump($_SESSION['efiling_details']['breadcrumb_status']);
+                                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                                    if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
 
-                            //         if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
-
-                            //             if (($_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
-                            //                 ($_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
-                            //                     ($_SESSION['efiling_details']['is_payment_defecit'] == 't' || $_SESSION['efiling_details']['is_payment_defective'] == 't')
-                            //                 )
-                            //             ) {
-                            //                 echo '<a href="' . base_url('oldCaseRefiling/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit </a>';
-                            //             }
-                            //         }
+                                        if (($_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
+                                            ($_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
+                                                ($_SESSION['efiling_details']['is_payment_defecit'] == 't' || $_SESSION['efiling_details']['is_payment_defective'] == 't')
+                                            )
+                                        ) {
+                                            echo '<a href="' . base_url('oldCaseRefiling/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit </a>';
+                                        }
+                                    }
                             ?>
                                     <?php // if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { 
                                     ?>
                                         <a href="<?php /*echo base_url('userActions/trash'); */ ?>" class="btn btn-danger btn-sm" onclick="return confirm('This action is irreversible. Are you sure that you really want to trash this record?  .')" >Trash</a>-->
 <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
 <?php
-//         }
-//     }
+        }
+    }
 // }
 ?>
 <!-- </div>

@@ -725,7 +725,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showCaseDocumentCrud($diary_id = null)
     {
-
+        
         $direct_access_params = [];
         setSessionData('customEfil', 'misc');  // Use session service to set data
         setSessionData('efiling_type', 'misc');

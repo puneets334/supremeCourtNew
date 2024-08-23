@@ -44,12 +44,12 @@ class EfiledCase extends BaseController {
                 } elseif ($type == E_FILING_TYPE_NEW_CASE) {
 
                     $result = $this->History_model->get_new_case_details($regid);
-
+                   
                     $uploaded_docs = $this->Common_model->get_uploaded_documents($regid);
                     $created_by = $result[0]['created_by'];
                 }
                 // pr($created_by);
-
+                
                 $efiled_by_user = $this->History_model->get_efiled_by_user($created_by);
                 $stage = $this->History_model->get_stages($regid);
                 $payment_details = $this->History_model->get_court_fee_payment_history($regid);

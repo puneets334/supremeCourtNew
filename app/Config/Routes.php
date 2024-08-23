@@ -339,6 +339,7 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/defaultController/(:any)', 'Old
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/courtFee', 'OldCaseRefiling\CourtFee::index');
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::index');
 
+$routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\FinalSubmit::index');
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index'); 
 
 
@@ -354,3 +355,4 @@ $routes->match(['GET', 'POST'], 'advocate/display_appearance_slip', 'Advocate\Ad
 $routes->match(['GET', 'POST'], 'advocate', 'Advocate\AdvocateController::index');
 $routes->get('advocate/report', 'Advocate\AdvocateController::reportIndex');
 $routes->post('advocate/report', 'Advocate\AdvocateController::appearingReport');
+

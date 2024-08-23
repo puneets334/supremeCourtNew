@@ -281,8 +281,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
             <div class="row m-3 ">
                 <div class="col-md-12 text-end">
 
-                    <?php 
-                   /*  $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    <?php
+                    /*  $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                     $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
                     if($segment->getSegment(2) == 'view'){
                     if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
@@ -812,3 +812,86 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                             </div>
                                         </div>
                                     </div>
+                                    <script>
+                                        document.getElementById("copyButton").addEventListener("click", function() {
+                                            copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
+                                        });
+
+                                        document.getElementById("copyButton2").addEventListener("click", function() {
+                                            copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
+                                        });
+
+                                        document.getElementById("pasteTarget").addEventListener("mousedown", function() {
+                                            this.value = "";
+                                        });
+
+
+                                        function copyToClipboardMsg(elem, msgElem) {
+                                            var EfilingNumber = document.getElementById('copyTarget_EfilingNumber').innerHTML;
+                                            var succeed = copyToClipboard(elem);
+                                            var msg;
+                                            if (!succeed) {
+                                                msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+                                            } else {
+                                                //msg = 'E-Filing Number: ' +EfilingNumber+' Copied.';
+                                                msg = 'Copied';
+                                            }
+                                            if (typeof msgElem === "string") {
+                                                msgElem = document.getElementById(msgElem);
+                                            }
+                                            msgElem.innerHTML = msg;
+                                            /* setTimeout(function() {
+                                                 msgElem.innerHTML = "";
+                                             }, 5000);*/
+                                        }
+
+                                        function copyToClipboard(elem) {
+                                            // create hidden text element, if it doesn't already exist
+                                            var targetId = "_hiddenCopyText_";
+                                            var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA" || elem.tagName === "INPUT";
+                                            var origSelectionStart, origSelectionEnd;
+                                            if (isInput) {
+                                                // can just use the original source element for the selection and copy
+                                                target = elem;
+                                                origSelectionStart = elem.selectionStart;
+                                                origSelectionEnd = elem.selectionEnd;
+                                            } else {
+                                                // must use a temporary form element for the selection and copy
+                                                target = document.getElementById(targetId);
+                                                if (!target) {
+                                                    var target = document.createElement("textarea");
+                                                    target.style.position = "absolute";
+                                                    target.style.left = "-9999px";
+                                                    target.style.top = "0";
+                                                    target.id = targetId;
+                                                    document.body.appendChild(target);
+                                                }
+                                                target.textContent = elem.textContent;
+                                            }
+                                            // select the content
+                                            var currentFocus = document.activeElement;
+                                            target.focus();
+                                            target.setSelectionRange(0, target.value.length);
+
+                                            // copy the selection
+                                            var succeed;
+                                            try {
+                                                succeed = document.execCommand("copy");
+                                            } catch (e) {
+                                                succeed = false;
+                                            }
+                                            // restore original focus
+                                            if (currentFocus && typeof currentFocus.focus === "function") {
+                                                currentFocus.focus();
+                                            }
+
+                                            if (isInput) {
+                                                // restore prior selection
+                                                elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+                                            } else {
+                                                // clear temporary content
+                                                target.textContent = "";
+                                            }
+                                            return succeed;
+                                        }
+                                    </script>
