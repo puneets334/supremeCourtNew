@@ -80,6 +80,34 @@ class Database extends Config
         ],
     ];
 
+    public array $tertiary = [
+        'DSN'          => '',
+        'hostname'     => '10.25.80.170',
+        'username'     => 'postgres',
+        'password'     => 'postgres',
+        'database'     => 'e_services',
+        'DBDriver'     => 'Postgre',
+        'cacheOn'       => false,
+        'cacheDir' => '',
+        'DBPrefix'     => '',
+        'pConnect'     => false,
+        'DBDebug'      => (ENVIRONMENT !== 'development'),
+        'charset'      => 'utf8',
+        'DBCollat'     => 'utf8_general_ci',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => false,
+        'failover'     => [],
+        'port'         => 5432,
+        'numberNative' => false,
+        'dateFormat'   => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+    ];
+
     //    /**
     //     * Sample database connection for SQLite3.
     //     *

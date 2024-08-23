@@ -7,7 +7,7 @@
 <div class="modal-body">
 
 
-    @if(count($is_submitted)>0)
+    @if(count($data['is_submitted'])>0)
 
         <div class="row">
             <div class="col-12">
@@ -234,13 +234,13 @@
 @endif
 
 
-<div class="modal-footer justify-content-between ">
+<div class="modal-footer justify-content-between" style="float:right !important;">
 
     {{-- <h3 class="card-title">Add - Name of Advocates</h3>--}}
 
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 
-    @if(count($is_submitted)==0)
+    @if(count($data['is_submitted'])==0)
         <button type="button" class="btn btn-primary final-submit"
                 data-diary_no="{{$posted_data['diary_no']}}"
                 data-next_dt="{{$posted_data['next_dt']}}"

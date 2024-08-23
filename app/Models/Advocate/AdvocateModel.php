@@ -3,18 +3,18 @@
 namespace App\Models\Advocate;
 use CodeIgniter\Model;
 use Config\Database;
+use Config\Services;
 
 class AdvocateModel extends Model {
 
     protected $DBGroup = 'secondary'; 
+    protected $db3;
 
-    // function __construct() {
-    //     parent::__construct();
-    //     // $db = \Config\Database::connect();
-    //     // // $this->common_db = $this->load->database('common_db', TRUE);
-    // }
-
-
+    public function __construct()
+    {
+        parent::__construct();
+        $this->db3 = Database::connect('tertiary'); // Connect to the 'tertiary' database
+    }
 
     public function getListedCases($aor_code)
     {
@@ -40,36 +40,13 @@ class AdvocateModel extends Model {
                 // Output the last query error
                 return $this->db->error();
             }
-            
             return $query->getResultArray();
-    }
-    
+    } 
 
-
-
-
- 
-
-   
-
- 
-
-  
-
-  
-
-
-   
-
-    
-
- 
-
-   
 
     public function get_pending_reg_other_matters_data($aor_code) {
         // Subquery 1: Petitioner matters with other (neither Petitioner nor Respondent) status
-        $subquery1 = $this->db->table('main m1')
+            $subquery1 = $this->db->table('main m1')
             ->select('DISTINCT m1.diary_no, reg_no_display, pet_name, res_name, pno, rno')
             ->select('(CASE WHEN DATEDIFF(h1.next_dt, CURRENT_DATE()) BETWEEN 0 AND 60 THEN h1.next_dt ELSE "" END) AS next_date')
             ->join('heardt h1', 'm1.diary_no = h1.diary_no', 'left')
@@ -92,6 +69,57 @@ class AdvocateModel extends Model {
         } else {
             return false;
         }
+    }
+
+    public function getDiaryDetails($diary_no)
+    {
+        $builder = $this->db->table('main')
+            ->where('diary_no', $diary_no)
+            ->get();
+        return $builder->getRow(); // Return the first row (similar to Laravel's first())
+    }
+
+    
+
+    public function getAddedAdvocatesInDiary($data)
+    {
+        $session = \Config\Services::session(); // Correct namespace for Services
+        $builder = $this->db3->table('appearing_in_diary');        
+        $builder->where('diary_no', $data['diary_no']);
+        $builder->where('list_date', $data['next_dt']);
+        $builder->where('is_active', '1');
+        $builder->where('aor_code', getSessionData('login')['aor_code']); // Get session data
+        $builder->orderBy('priority');        
+        // $sql = $builder->getCompiledSelect();
+        // echo $sql; die;
+        $query = $builder->get();
+        if ($query === false) {
+            // Convert array error to string for logging
+            $error = $this->db3->error();
+            log_message('error', 'Query Error: ' . print_r($error, true)); // Use print_r to convert array to string
+            return false;
+        }
+        $result = $query->getResult();
+        // pr($result);
+    }
+
+
+
+
+    public function getSubmittedAdvocatesInDiary($data)
+    {
+
+        $session = \Config\Services::session(); // Correct namespace for Services
+        $builder = $this->db3->table('appearing_in_diary');        
+        $builder ->where('diary_no', $data['diary_no']);
+        $builder ->where('list_date', $data['next_dt']);
+        $builder ->where('is_active', '1');
+        $builder ->where('is_submitted', '1');
+        $builder->where('aor_code', getSessionData('login')['aor_code']); // Get session data
+        $builder ->orderBy('priority');
+        $value = $builder->get()->getResult(); // Execute the query and fetch results
+
+        return $value;
     }
 
 
