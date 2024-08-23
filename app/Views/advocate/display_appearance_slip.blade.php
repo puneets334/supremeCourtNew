@@ -5,18 +5,10 @@
     </button>
 </div>
 <div class="modal-body">
-
-
-
-
-
     <div class="container">
         <div class="card">
             <div class="card-header">
-
-
                 <span class="float-right"> <strong>Status:</strong> Submitted Successfully</span>
-
             </div>
             <div class="card-body mt-3">
                 <div class="row justify-content-center col-sm-12">I certify that following Senior Advocates/Advocates will appear/appeared in the below mentioned matter.</div>
@@ -30,7 +22,6 @@
                         <div>Appearing For : <strong>{{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}</strong></div>
                     </div>
                 </div>
-
 
                 <?php $sno = 1; ?>
                 @if($slip_data)
@@ -53,15 +44,10 @@
                         </tbody>
                     </table>
                 </div>
-
                 @else
                     No Records Found
                 @endif
-
-
                 <div class="row">
-
-
                     <div class="col-lg-4 col-sm-5 ml-auto">
                         <table class="table table-clear">
                             <tbody>
@@ -71,22 +57,14 @@
                                         <br>
                                         For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}</strong>
                                 </td>
-
                             </tr>
                             </tbody>
                         </table>
-
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
-
-
-
-
 </div>
 
 
