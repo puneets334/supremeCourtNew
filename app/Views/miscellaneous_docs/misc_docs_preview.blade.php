@@ -19,10 +19,15 @@
     <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
     @stack('style')
 </head>
+
+
 <?php
-if (!isset($efiling_search_header)) {
-    render('miscellaneous_docs.misc_docs_breadcrumb');
-}
+
+if (!isset($efiling_search_header)) { ?> 
+   
+    @include('miscellaneous_docs.misc_docs_breadcrumb')
+<?php }
+
 $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
 if (isset(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
     $hidepencilbtn = 'true';

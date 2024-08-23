@@ -1,15 +1,16 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Admin;
+use App\Controllers\BaseController;
 
 class EfilingAction extends BaseController {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('common/Common_model');
-        $this->load->library('encrypt');
-        $this->load->model('admin/Efiling_action_model');
-        $this->load->library('webservices/efiling_webservices');
-        $this->load->model('IA/View_model');
+        // $this->load->model('common/Common_model');
+        // $this->load->library('encrypt');
+        // $this->load->model('admin/Efiling_action_model');
+        // $this->load->library('webservices/efiling_webservices');
+        // $this->load->model('IA/View_model');
 
     }
 

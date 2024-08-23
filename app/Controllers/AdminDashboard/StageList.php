@@ -21,18 +21,18 @@ class StageList extends BaseController {
 		$this->StageList_model = new StageListModel();
         
 
-        unset($_SESSION['efiling_details']);
-        unset($_SESSION['estab_details']);
-        unset($_SESSION['case_table_ids']);
-        unset($_SESSION['search_case_data']);
-        unset($_SESSION['form_data']);
-        unset($_SESSION['efiling_user_detail']);
-        unset($_SESSION['pdf_signed_details']);
-        unset($_SESSION['matter_type']);
-        unset($_SESSION['crt_fee_and_esign_add']);
-        unset($_SESSION['mobile_no_for_updation']);
-        unset($_SESSION['email_id_for_updation']);
-        unset($_SESSION['search_key']);
+        // unset($_SESSION['efiling_details']);
+        // unset($_SESSION['estab_details']);
+        // unset($_SESSION['case_table_ids']);
+        // unset($_SESSION['search_case_data']);
+        // unset($_SESSION['form_data']);
+        // unset($_SESSION['efiling_user_detail']);
+        // unset($_SESSION['pdf_signed_details']);
+        // unset($_SESSION['matter_type']);
+        // unset($_SESSION['crt_fee_and_esign_add']);
+        // unset($_SESSION['mobile_no_for_updation']);
+        // unset($_SESSION['email_id_for_updation']);
+        // unset($_SESSION['search_key']);
     }
     
     /* public function _remap($param = NULL) {
