@@ -1,12 +1,18 @@
 <?php
-if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Adv_listing_model extends CI_Model
+// if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+namespace App\Models\PhysicalHearing;
+
+use CodeIgniter\Model;
+
+class AdvListingModel extends Model
 {
 
     function __construct()
     {
         //call model constructor
         parent::__construct();
+        $db = \Config\Database::connect();
     }
     
     public function list_number(){

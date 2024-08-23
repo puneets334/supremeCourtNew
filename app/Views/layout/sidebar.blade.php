@@ -74,7 +74,7 @@ $segment = service('uri');
                         <li class="premium"><a href="<?php echo base_url('support') ?>" class="btn-link">Support</a> </li>
                         <li class="premium"><a href="<?php echo base_url('e-resources') ?>" class="btn-link">Resources</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Physical Hearing</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('physical_hearing') ?>" class="btn-link">Physical Hearing</a> </li>
                         <li class="premium"><a href="<?php echo base_url('advocate/listed_cases') ?>" class="btn-link">Apearance</a> </li>
 
 

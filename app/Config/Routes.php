@@ -102,7 +102,6 @@ $routes->post('vacation/advance/declineVacationListCasesAOR', 'Vacation\Advance:
 $routes->match(['GET', 'POST'], 'dashboard', 'ResponsiveVariantRouteController::showDashboard');
 $routes->match(['GET', 'POST'], 'dashboard_alt', 'ResponsiveVariantRouteController::showDashboardAlt');
 $routes->match(['GET', 'POST'], 'cases', 'ResponsiveVariantRouteController::showCases');
-$routes->match(['GET', 'POST'], 'physical_hearing', 'ResponsiveVariantRouteController::showPhysicalHearing');
 $routes->match(['GET', 'POST'], 'causelist', 'ResponsiveVariantRouteController::showCauselist');
 $routes->match(['GET', 'POST'], 'case/crud/(:any)', 'ResponsiveVariantRouteController::showCaseCrud/$1');
 $routes->match(['GET', 'POST'], 'case/crud', 'ResponsiveVariantRouteController::showCaseCrud');
@@ -268,7 +267,6 @@ $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud/(:any)', 'Re
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud', 'ResponsiveVariantRouteController::showOldEfilingCasesCrud');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud_registration/(:any)', 'ResponsiveVariantRouteController::showOldEfilingCasesCrudByRegistrationId/$1');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud_registration', 'ResponsiveVariantRouteController::showOldEfilingCasesCrudByRegistrationId');
-
 $routes->match(['GET', 'POST'], 'mycases/update_case_contacts', 'Mycases\CitationNotes::update_case_contacts');
 $routes->match(['GET', 'POST'], 'mycases/aor_contact_list', 'Mycases\CitationNotes::aor_contact_list');
 $routes->match(['GET', 'POST'], 'mycases/case_contact', 'Mycases\CitationNotes::case_contact');
@@ -292,6 +290,11 @@ $routes->match(['GET', 'POST'], 'register/ArguingCounselRegister/senOtp', 'Regis
 $routes->match(['GET', 'POST'], 'captcha/index', 'Captcha\DefaultController::index');
 $routes->match(['GET', 'POST'], 'captcha_refresh', 'Captcha\DefaultController::index');
 $routes->match(['GET', 'POST'], 'captcha/DefaultController/get_code', 'Captcha\DefaultController::get_code');
+
+// Physical Hearing Routes
+$routes->match(['GET', 'POST'], 'physical_hearing', 'PhysicalHearing\ConsentVC::index');
+// $routes->match(['GET', 'POST'], 'auth', 'PhysicalHearing\Auth::index');
+
 /****end-Responsive variant routes refile old efiling cases ****/
 
 

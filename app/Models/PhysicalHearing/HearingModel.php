@@ -1,11 +1,17 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+// if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Hearing_model extends CI_Model
+namespace App\Models\PhysicalHearing;
+
+use CodeIgniter\Model;
+
+class HearingModel extends Model
 {
     function __construct()
     {
         // Call the Model constructor
         parent::__construct();
+        $db = \Config\Database::connect();
     }
 
     function get_master($table, $condition){
@@ -16,7 +22,8 @@ class Hearing_model extends CI_Model
         return $query->result_array();
     }
 
-    function save($table, $data){
+    function save($table=null, $data=null):bool
+    {
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         if($physical_hearing_db->insert($table, $data))
             return $physical_hearing_db->insert_id();
@@ -24,7 +31,8 @@ class Hearing_model extends CI_Model
             return 0;
     }
 
-    function update($table, $data, $condition_array){
+    function update($table=null, $data=null, $condition_array=null):bool
+    {
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         if($physical_hearing_db->where($condition_array)->update($table, $data))
             return 1;
