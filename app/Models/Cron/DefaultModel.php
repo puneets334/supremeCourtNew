@@ -160,7 +160,7 @@ class DefaultModel extends Model {
             $aor_code = trim($row->aor_code);
             $mobile = trim($row->mobile);
             $email = trim($row->email);
-            $enroll_date = trim($row->enroll_date) == '0000-00-00' || trim($row->enroll_date) == '0000-00-00 00:00:00'  || trim($row->enroll_date) == '1976-00-00' || trim($row->enroll_date) == '1982-05-00' || trim($row->enroll_date) == '1981-00-00' || trim($row->enroll_date) == '1972-01-00' || trim($row->enroll_date) == '1975-00-00' || trim($row->enroll_date) == '1975-11-00' || trim($row->enroll_date) == '1961-11-00' || trim($row->enroll_date) == '1994-09-00' || trim($row->enroll_date) == '1994-09-00' || trim($row->enroll_date) == '1996-08-00' || trim($row->enroll_date) == '2002-08-00' || trim($row->enroll_date) == '2005-08-00' ? NULL : $row->enroll_date;
+            $enroll_date = (trim($row->enroll_date) == '0000-00-00' || trim($row->enroll_date) == '0000-00-00 00:00:00'  || trim($row->enroll_date) == '1976-00-00' || trim($row->enroll_date) == '1982-05-00' || trim($row->enroll_date) == '1981-00-00' || trim($row->enroll_date) == '1972-01-00' || trim($row->enroll_date) == '1975-00-00' || trim($row->enroll_date) == '1975-11-00' || trim($row->enroll_date) == '1961-11-00' || trim($row->enroll_date) == '1994-09-00' || trim($row->enroll_date) == '1994-09-00' || trim($row->enroll_date) == '1996-08-00' || trim($row->enroll_date) == '2002-08-00' || trim($row->enroll_date) == '2005-08-00') ? NULL : $row->enroll_date;
             $update_data = array(
                 'name' => $row->name,
                 'fname' => $row->fname,
@@ -175,7 +175,7 @@ class DefaultModel extends Model {
                 'enroll_no' => $row->enroll_no,
                 'enroll_date' => $enroll_date,
                 'isdead' => $row->isdead,
-                'date_of_dead' => trim($row->date_of_dead) == '0000-00-00' || trim($row->date_of_dead) == '0000-00-00 00:00:00' ? NULL : $row->date_of_dead,
+                'date_of_dead' => (trim($row->date_of_dead) == '0000-00-00' || trim($row->date_of_dead) == '0000-00-00 00:00:00') ? NULL : $row->date_of_dead,
             );
             $insert_data = array(
                 'bar_id' => $bar_id,
@@ -184,7 +184,7 @@ class DefaultModel extends Model {
                 'rel' => $row->rel,
                 'fname' => $row->fname,
                 'mname' => $row->mname,
-                'dob' => trim($row->dob) == '0000-00-00' || trim($row->dob) == '0000-00-00 00:00:00' ? NULL : $row->dob,
+                'dob' => (trim($row->dob) == '0000-00-00' || trim($row->dob) == '0000-00-00 00:00:00') ? NULL : $row->dob,
                 'paddress' => $row->paddress,
                 'pcity' => $row->pcity,
                 'caddress' => $row->caddress,
@@ -196,20 +196,20 @@ class DefaultModel extends Model {
                 'mobile' => $row->mobile,
                 'email' => $row->email,
                 'enroll_no' => $row->enroll_no,
-                'enroll_date' => trim($row->enroll_date) == '0000-00-00' || trim($row->enroll_date) == '0000-00-00 00:00:00' ? NULL : $row->enroll_date,
+                'enroll_date' => (trim($row->enroll_date) == '0000-00-00' || trim($row->enroll_date) == '0000-00-00 00:00:00') ? NULL : $row->enroll_date,
                 'isdead' => $row->isdead,
-                'date_of_dead' => trim($row->date_of_dead) == '0000-00-00' || trim($row->date_of_dead) == '0000-00-00 00:00:00' ? NULL : $row->date_of_dead,
+                'date_of_dead' => (trim($row->date_of_dead) == '0000-00-00' || trim($row->date_of_dead) == '0000-00-00 00:00:00') ? NULL : $row->date_of_dead,
                 'passing_year' => $row->passing_year,
                 'if_aor' => $row->if_aor,
                 'state_id' => $row->state_id,
                 'bentuser' => $row->bentuser,
-                'bentdt' => trim($row->bentdt) == '0000-00-00' || trim($row->bentdt) == '0000-00-00 00:00:00' ? NULL : $row->bentdt,
+                'bentdt' => (trim($row->bentdt) == '0000-00-00' || trim($row->bentdt) == '0000-00-00 00:00:00') ? NULL : $row->bentdt,
                 'bupuser' => $row->bupuser,
-                'bupdt' => trim($row->bupdt) == '0000-00-00' || trim($row->bupdt) == '0000-00-00 00:00:00' ? NULL : $row->bupdt,
+                'bupdt' => (trim($row->bupdt) == '0000-00-00' || trim($row->bupdt) == '0000-00-00 00:00:00') ? NULL : $row->bupdt,
                 'aor_code' => $aor_code,
                 'if_sen' => $row->if_sen,
-                'sc_from_dt' => trim($row->sc_from_dt) == '0000-00-00' || trim($row->sc_from_dt) == '0000-00-00 00:00:00' ? NULL : $row->sc_from_dt,
-                'sc_to_date' => trim($row->sc_to_date) == '0000-00-00' || trim($row->sc_to_date) == '0000-00-00 00:00:00' ? NULL : $row->sc_to_date,
+                'sc_from_dt' => (trim($row->sc_from_dt) == '0000-00-00' || trim($row->sc_from_dt) == '0000-00-00 00:00:00') ? NULL : $row->sc_from_dt,
+                'sc_to_date' => (trim($row->sc_to_date) == '0000-00-00' || trim($row->sc_to_date) == '0000-00-00 00:00:00') ? NULL : $row->sc_to_date,
                 'cmis_state_id' => $row->cmis_state_id,
                 'agency_code' => $row->agency_code,
                 'if_other' => $row->if_other,
@@ -238,7 +238,7 @@ class DefaultModel extends Model {
                 'login_ip' => null,
                 'refresh_token' => null,
                 'gender' => $row->sex,
-                'dob' => trim($row->dob) == '0000-00-00' || trim($row->dob) == '0000-00-00 00:00:00' ? null : $row->dob,
+                'dob' => (trim($row->dob) == '0000-00-00' || trim($row->dob) == '0000-00-00 00:00:00') ? null : $row->dob,
                 'm_address1' => $row->paddress,
                 'm_address2' => null,
                 'm_city' => $row->pcity,

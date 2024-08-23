@@ -1,6 +1,7 @@
 @extends('layout.app')
 @section('content')
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-lg-12">
 
@@ -33,6 +34,109 @@
                                         <?php foreach ($tab_head as $tab_hd) { ?>
                                             <th><?php echo htmlentities($tab_hd, ENT_QUOTES); ?> </th>
                                         <?php } ?>
+
+ <div class="row" >
+	<div class="col-lg-12">
+
+    
+   
+    <div class="col-md-12 col-sm-12 col-xs-12 dash-card">
+
+        <div class="form-response" id="msg" >
+            <?php
+			 
+            if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
+                echo $_SESSION['MSG'];
+            } unset($_SESSION['MSG']);
+            ?></div>
+        <div class="x_panel">
+            <div class="x_title"> 
+				<h3><?= htmlentities($tabs_heading, ENT_QUOTES) ?> 
+				<span style="float:right;">  
+					 
+					<button class="btn btn-info" style="margin: 10px;" type="button" onclick="window.history.back();">Back</button>
+				</span>
+			 </h3>
+			</div>
+            <div class="x_content">  
+                <div class="table-wrapper-scroll-y my-custom-scrollbar ">
+                    <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%">
+                        <thead>
+                            <tr class="success input-sm" role="row" >
+                                <?php foreach ($tab_head as $tab_hd) { ?>
+                                    <th><?php echo htmlentities($tab_hd, ENT_QUOTES); ?> </th>
+                                <?php } ?>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i = 1;
+                            foreach ($result as $re) {
+                                $fil_no = $reg_no = $case_details = $cnr_number = $cino = '';
+                                $fil_ia_no = $reg_ia_no = $cause_title = $fil_case_no = $reg_case_no = $dairy_no = $lbl_for_doc_no = $fil_misc_doc_ia_no = '';
+
+                                $efiling_for_type_id = get_court_type($re->efiling_for_type_id);
+
+                                $efiling_types_array = array(E_FILING_TYPE_MISC_DOCS, E_FILING_TYPE_IA, E_FILING_TYPE_MENTIONING ,DEFICIT_COURT_FEE_PAID);
+
+                                if (in_array($re->ref_m_efiled_type_id, $efiling_types_array)) {
+                                   // echo "1";exit();
+
+                                    if ($re->ref_m_efiled_type_id == E_FILING_TYPE_MISC_DOCS) {
+                                        $type = 'Misc. Docs';
+                                        $button_label="Register Documents";
+                                        $lbl_for_doc_no = '<b>Misc. Doc. No.</b> : ';
+                                        $redirect_url = base_url('miscellaneous_docs/DefaultController');
+                                    } elseif($re->ref_m_efiled_type_id == E_FILING_TYPE_IA) {
+                                        
+                                        $type = 'Interim Application';
+                                        $button_label="Register IA";
+                                        $lbl_for_doc_no = '<b>IA Diary No.</b> : ';
+                                        $redirect_url = base_url('IA/DefaultController');
+                                    }else {
+                                        $type = 'Mentioning';
+                                        $lbl_for_doc_no = '';
+                                        $redirect_url = base_url('mentioning/DefaultController');
+                                    }
+
+                                    if (!empty($re->loose_doc_no) && $re->loose_doc_year != '') {
+                                        $fil_misc_doc_ia_no = $lbl_for_doc_no . escape_data($re->loose_doc_no) . ' / ' . escape_data($re->loose_doc_year) . '<br/> ';
+                                    } else {
+                                        $fil_misc_doc_ia_no = '';
+                                    }
+
+                                    if ($re->diary_no != '' && $re->diary_year != '') {
+                                        $dairy_no = '<b>Diary No.</b> : ' . escape_data($re->diary_no) . ' / ' . escape_data($re->diary_year) . '<br/> ';
+                                    } else {
+                                        $dairy_no = '';
+                                    }
+
+                                    if ($re->reg_no_display != '') {
+                                        $reg_no = '<b>Registration No.</b> : ' . escape_data($re->reg_no_display) . '<br/> ';
+                                    } else {
+                                        $reg_no = '';
+                                    }
+
+                                    $case_details = $fil_ia_no . '<b>Filed In</b> <br>' . $dairy_no . $reg_no . $re->cause_title;
+                                    if ($dairy_no != '') {
+                                       // $case_details= '<a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="'.$re->diary_no.'" data-diary_year="'.$re->diary_year.'">'.$case_details.'</a>';
+                                    }
+                                }
+                                elseif ($re->ref_m_efiled_type_id == E_FILING_TYPE_NEW_CASE || $re->ref_m_efiled_type_id==E_FILING_TYPE_JAIL_PETITION) {
+                                    //echo "2";exit();
+
+                                    $type = 'New Case';
+                                    $button_label="Generate Diary Number";
+                                    $cause_title = escape_data(strtoupper($re->ecase_cause_title));
+                                    $cause_title = str_replace('VS.', '<b>Vs.</b>', $cause_title);
+
+                                    if ($re->sc_diary_num != '') {
+                                            $dairy_no = '<b>Diary No.</b> : ' . escape_data($re->sc_diary_num).'/'.escape_data($re->sc_diary_year).  '<br/> ';
+                                        } else {
+                                            $dairy_no = '';
+                                        }
+
 
                                     </tr>
                                 </thead>
@@ -221,6 +325,7 @@
                                             if ($stages == Initial_Defected_Stage) {
                                             ?>
 
+
                                                 <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
                                                 <td width="12%"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
                                                 <td><?php echo $case_details; ?></td>
@@ -229,6 +334,94 @@
                                             }
                                             //-----------------Dashboard -- Get CIS Status---------------//
                                             if ($stages == Transfer_to_CIS_Stage) {
+
+                                        $case_details =  $dairy_no . $reg_no . $cause_title;
+                                        if ($dairy_no != '') {
+                                           // $case_details = '<a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="\'.$re->diary_no.\'" data-diary_year="\'.$re->diary_year.\'">\'.$case_details.\'</a>\'';
+                                        }
+                                        // vkg
+                                    if($re->ref_m_efiled_type_id == E_FILING_TYPE_NEW_CASE)
+                                   $redirect_url = base_url('newcase/defaultController');
+                                 //  $redirect_url = base_url('newcase');
+                               
+                                
+                                    else if($re->ref_m_efiled_type_id==E_FILING_TYPE_JAIL_PETITION)
+                                        $redirect_url = base_url('jailPetition/defaultController');
+
+                                }
+                                elseif ($re->ref_m_efiled_type_id == E_FILING_TYPE_CAVEAT) {
+                                    //echo "3";exit();
+                                    $type = 'Caveat';
+                                    $button_label="Generate Caveat Number";
+                                    $caveator_name ='';
+                                    $caveatee_name ='';
+                                    if(isset($re->pet_name) && !empty($re->pet_name)){
+                                        $caveator_name = $re->pet_name;
+                                    }
+                                    else if(isset($re->orgid) && !empty($re->orgid) && $re->orgid == 'D1'){
+                                        $caveator_name = 'State Department';
+                                    }
+                                    else if(isset($re->orgid) && !empty($re->orgid) && $re->orgid == 'D2'){
+                                        $caveator_name = 'Central Department';
+                                    }
+                                    else if(isset($re->orgid) && !empty($re->orgid) && $re->orgid == 'D3'){
+                                        $caveator_name = 'Other Organisation';
+                                    }
+                                    if(isset($re->res_name) && !empty($re->res_name)){
+                                        $caveatee_name = $re->res_name;
+                                    }
+                                    else if(isset($re->resorgid) && !empty($re->resorgid) && $re->resorgid == 'D1'){
+                                        $caveatee_name = 'State Department';
+                                    }
+                                    else if(isset($re->resorgid) && !empty($re->resorgid) && $re->resorgid == 'D2'){
+                                        $caveatee_name = 'Central Department';
+                                    }
+                                    else if(isset($re->resorgid) && !empty($re->resorgid) && $re->resorgid == 'D3'){
+                                        $caveatee_name = 'Other Organisation';
+                                    }
+                                    $cause_title = strtoupper($caveator_name.'<b> Vs. </b>'. $caveatee_name);
+                                    $case_details =   $cause_title;
+                                    if ($dairy_no != '') {
+                                        $case_details = '<a href="'.CASE_STATUS_API.'?d_no=' . $re->sc_diary_num . '&d_yr=' . $re->sc_diary_year . '" target="_blank">' . $case_details . '</a>';
+                                    }
+                                        $redirect_url = base_url('caveat/defaultController/processing');
+                                }
+                                //START DIFICIT COURT FEE..DEFICIT_COURT_FEE_E_FILED
+                               /* elseif ($re->stage_id == DEFICIT_COURT_FEE_PAID){*/
+                                elseif ($re->stage_id == DEFICIT_COURT_FEE_E_FILED){
+                                    //echo "hulalalalaal";exit();
+                                    $type = 'Deficit Court Fee Paid';
+                                    $button_label="Generate Diary Number";
+
+                                    if ($re->diary_no != '' && $re->diary_year != '') {
+                                        $dairy_no = '<b>Diary No./ Diary Year.</b> : ' . escape_data($re->diary_no) . ' / ' . escape_data($re->diary_year) . '<br/> ';
+                                    } else {
+                                        $dairy_no = '';
+                                    }
+                                    if ($re->reg_no_display != '') {
+                                        $reg_no = '<b>Registration No.</b> : ' . escape_data($re->reg_no_display) . '<br/> ';
+                                    } else {
+                                        $reg_no = '';
+                                    }
+                                    $case_details =  '<b>Filed In</b> <br>' . $dairy_no . $reg_no . $re->cause_title;
+                                    $redirect_url = base_url('deficitCourtFee/DefaultController/get_view_paid_deficitCourt');
+                                }
+                                ?>
+                                <tr>
+                                    <td width="4%" class="sorting_1" tabindex="0"><?php echo htmlentities($i++, ENT_QUOTES); ?> </td>
+                                    <?php
+                                    //-----------------Final Submited List------------------------------//
+                                    if ($stages == New_Filing_Stage) {
+                                        ?>
+                                        <td width="14%"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></td>
+                                        <td width="12%"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        <td><?php echo $case_details; ?></td>
+                                        <td width="12%"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                        <?php if (getSessionData('login')['userid'] != SC_ADMIN){
+                                        if ((isset($re->is_register) && $re->is_register == 'Y') || (isset($re->is_register) && $re->is_register != '')) { ?>
+                                            <td width="10%">  <a class="form-control btn-primary link_button" href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . New_Filing_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities('Action', ENT_QUOTES) ?></a></td>
+                                        <?php } else {
+
                                             ?>
 
                                                 <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
@@ -466,6 +659,7 @@
 
                                     <?php if ($stages == MENTIONING_E_FILED) {
                                     ?>
+
                                         <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . MENTIONING_E_FILED . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
                                         <td><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
                                         <td width="12%"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
@@ -478,6 +672,14 @@
                                         <td width="12%"><?php echo $re->efiling_type; ?></td>
                                     <?php } ?>
                                     <?php if ($stages == DISPOSED) {
+
+                                    <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
+                                    <td><a href="<?php (isset($re->ia_cnr_num) && isset($re->efiling_for_id) && isset($re->efiling_for_type_id)) ? base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))) : ''; ?>"><?php echo $case_details; ?></a></td>
+                                    <td width="12%"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                    <td width="12%"><?php echo $re->efiling_type; ?></td>
+                                <?php } ?>
+                                <?php if ($stages == DISPOSED) {
+
                                     ?>
                                         <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
                                         <td><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
@@ -565,8 +767,13 @@
                 } else if (responce[0] == 'ERROR') {
                     $('#msg').show();
                     $('#msg').html(responce[1]);
+
                 } else {
                     // pr('vkg');
+
+                } else
+                {
+
                     window.location.href = '<?= base_url() ?>adminDashboard';
                 }
                 $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {

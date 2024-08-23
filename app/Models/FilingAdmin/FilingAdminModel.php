@@ -111,112 +111,112 @@ class FilingAdminModel extends Model
         return $output;
     }
 
-    // public function getAssignedUserByUserId($params = array())
-    // {
-    //     $output = false;
-    //     $type = (!empty($params['type'])) ? (int)$params['type'] : NULL;
-    //     if (isset($type) && !empty($type)) {
-    //         switch ($type) {
-    //             case 1:
-    //                 if (isset($params['user_type']) && !empty($params['user_type']) && isset($params['not_in_user_id']) && !empty($params['not_in_user_id'])) {
-    //                     $builder = $this->db->table('efil.tbl_users tu');
-                       
-    //                     $builder->SELECT('tu.first_name,tu.emp_id,tu.attend,tu.pp_a,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id ,
-    //                           trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
-    //                     // $builder->FROM('efil.tbl_users tu');
-    //                     $builder->JOIN('efil.tbl_filing_admin_assigned_file tfaaf', 'tu.id=tfaaf.user_id', 'left');
-    //                     $builder->JOIN('efil.m_tbl_efiling_type mtet', 'tfaaf.file_type_id=mtet.id', 'left');
-    //                     $builder->WHERE('tu.is_active', '1');
-    //                     $builder->WHERE('tfaaf.is_active', '1');
-    //                     $builder->WHERE('tfaaf.user_id', (int)$params['userId']);
-    //                     $builder->WHERE('tu.ref_m_usertype_id', $params['user_type']);
-    //                     $builder->whereNotIn('tu.id', $params['not_in_user_id']);
-    //                     $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
-    //                     $builder->orderBy('tfaaf.user_id', 'DESC');
-    //                     $sql = $builder->getCompiledSelect();
-    //                     echo $sql;
-
-    //                     $query = $builder->get();
-    //                     $output = $query->getResult();
-    //                 }
-    //                 break;
-    //             case 2:
-                    
-    //                 if (isset($params['user_type']) && !empty($params['user_type']) && isset($params['not_in_user_id']) && !empty($params['not_in_user_id'])) {
-    //                     $builder = $this->db->table('efil.tbl_users tu');
-    //                     $builder->SELECT('tu.first_name,tu.first_name,tu.emp_id,tu.attend,tu.pp_a,tfaaf.user_id,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id ,
-    //                           trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
-    //                     // $builder->FROM('efil.tbl_users tu');
-    //                     $builder->join('efil.tbl_filing_admin_assigned_file tfaaf', 'tu.id=tfaaf.user_id', 'left');
-    //                     $builder->join('efil.m_tbl_efiling_type mtet', 'tfaaf.file_type_id=mtet.id', 'left');
-    //                     $builder->where('tu.is_active', '1');
-    //                     $builder->where('tu.attend', 'P');
-    //                     $builder->where('tfaaf.is_active', '1');
-    //                     $builder->where('tfaaf.user_id', (int)$params['userId']);
-    //                     $builder->where('tu.ref_m_usertype_id', $params['user_type']);
-    //                     $builder->whereNotIn('tu.id', $params['not_in_user_id']);
-    //                     $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
-    //                     $builder->orderBy('tfaaf.user_id', 'DESC');
-    //                     $sql = $builder->getCompiledSelect();
-    //                     // echo $sql;
-    //                     $query = $builder->get();
-    //                     $output = $query->getResult();
-    //                 }
-    //                 break;
-    //             default:
-    //                 $output = false;
-    //         }
-    //     }
-
-    //    return $output;
-    // }
-
-    
- 
-    public function getAssignedUserByUserId($params = []) {
+    public function getAssignedUserByUserId($params = array())
+    {
         $output = false;
-        $type = $params['type'] ? $params['type'] : null;
-        if ($type) {
-            if ($type == 1) {
-                if (!empty($params['user_type']) && !empty($params['not_in_user_id'])) {
-                    $builder = $this->db->table('efil.tbl_users tu');
-                    $builder->select('tu.first_name,tu.emp_id,tu.attend,tu.pp_a,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id , trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
-                    $builder->join('efil.tbl_filing_admin_assigned_file tfaaf','tu.id=tfaaf.user_id','left');
-                    $builder->join('efil.m_tbl_efiling_type mtet','tfaaf.file_type_id=mtet.id','left');
-                    $builder->where('tu.is_active', '1');
-                    $builder->where('tfaaf.is_active', '1');
-                    $builder->where('tfaaf.user_id', (int)$params['userId']);
-                    $builder->where('tu.ref_m_usertype_id', $params['user_type']);
-                    $builder->whereNotIn('tu.id', $params['not_in_user_id']);
-                    $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
-                    $builder->orderBy('tfaaf.user_id','DESC');
-                    $query = $builder->get();
-                    $output = $query->getResultArray();
+        $type = (!empty($params['type'])) ? (int)$params['type'] : NULL;
+        if (isset($type) && !empty($type)) {
+            switch ($type) {
+                case 1:
+                    if (isset($params['user_type']) && !empty($params['user_type']) && isset($params['not_in_user_id']) && !empty($params['not_in_user_id'])) {
+                        $builder = $this->db->table('efil.tbl_users tu');
                        
-                }
-            } elseif ($type == 2)
-            {
-                if (!empty($params['user_type']) && !empty($params['not_in_user_id'])) {
-                            $builder = $this->db->table('efil.tbl_users tu');
-                            $builder->select('tu.first_name,tu.emp_id,tu.attend,tu.pp_a,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id , trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
-                            $builder->join('efil.tbl_filing_admin_assigned_file tfaaf','tu.id=tfaaf.user_id','left');
-                            $builder->join('efil.m_tbl_efiling_type mtet','tfaaf.file_type_id=mtet.id','left');
-                            $builder->where('tu.is_active', '1');
-                            $builder->where('tu.attend','P');
-                            $builder->where('tfaaf.is_active', '1');
-                            $builder->where('tfaaf.user_id', (int)$params['userId']);
-                            $builder->where('tu.ref_m_usertype_id', $params['user_type']);
-                            $builder->whereNotIn('tu.id', $params['not_in_user_id']);
-                            $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
-                            $builder->orderBy('tfaaf.user_id','DESC');
-                            $query = $builder->get();
-                            $output = $query->getResultArray();
-                }
+                        $builder->SELECT('tu.first_name,tu.emp_id,tu.attend,tu.pp_a,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id ,
+                              trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
+                        // $builder->FROM('efil.tbl_users tu');
+                        $builder->JOIN('efil.tbl_filing_admin_assigned_file tfaaf', 'tu.id=tfaaf.user_id', 'left');
+                        $builder->JOIN('efil.m_tbl_efiling_type mtet', 'tfaaf.file_type_id=mtet.id', 'left');
+                        $builder->WHERE('tu.is_active', '1');
+                        $builder->WHERE('tfaaf.is_active', '1');
+                        $builder->WHERE('tfaaf.user_id', (int)$params['userId']);
+                        $builder->WHERE('tu.ref_m_usertype_id', $params['user_type']);
+                        $builder->whereNotIn('tu.id', $params['not_in_user_id']);
+                        $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
+                        $builder->orderBy('tfaaf.user_id', 'DESC');
+                        // $sql = $builder->getCompiledSelect();
+                        // echo $sql;
+
+                        $query = $builder->get();
+                        $output = $query->getResult();
+                    }
+                    break;
+                case 2:
+                    
+                    if (isset($params['user_type']) && !empty($params['user_type']) && isset($params['not_in_user_id']) && !empty($params['not_in_user_id'])) {
+                        $builder = $this->db->table('efil.tbl_users tu');
+                        $builder->SELECT('tu.first_name,tu.first_name,tu.emp_id,tu.attend,tu.pp_a,tfaaf.user_id,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id ,
+                              trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
+                        // $builder->FROM('efil.tbl_users tu');
+                        $builder->join('efil.tbl_filing_admin_assigned_file tfaaf', 'tu.id=tfaaf.user_id', 'left');
+                        $builder->join('efil.m_tbl_efiling_type mtet', 'tfaaf.file_type_id=mtet.id', 'left');
+                        $builder->where('tu.is_active', '1');
+                        $builder->where('tu.attend', 'P');
+                        $builder->where('tfaaf.is_active', '1');
+                        $builder->where('tfaaf.user_id', (int)$params['userId']);
+                        $builder->where('tu.ref_m_usertype_id', $params['user_type']);
+                        $builder->whereNotIn('tu.id', $params['not_in_user_id']);
+                        $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
+                        $builder->orderBy('tfaaf.user_id', 'DESC');
+                        $sql = $builder->getCompiledSelect();
+                        // echo $sql;
+                        $query = $builder->get();
+                        $output = $query->getResult();
+                    }
+                    break;
+                default:
+                    $output = false;
             }
         }
 
-        return $output;
+       return $output;
     }
+
+    
+ 
+    // public function getAssignedUserByUserId($params = []) {
+    //     $output = false;
+    //     $type = $params['type'] ? $params['type'] : null;
+    //     if ($type) {
+    //         if ($type == 1) {
+    //             if (!empty($params['user_type']) && !empty($params['not_in_user_id'])) {
+    //                 $builder = $this->db->table('efil.tbl_users tu');
+    //                 $builder->select('tu.first_name,tu.emp_id,tu.attend,tu.pp_a,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id , trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
+    //                 $builder->join('efil.tbl_filing_admin_assigned_file tfaaf','tu.id=tfaaf.user_id','left');
+    //                 $builder->join('efil.m_tbl_efiling_type mtet','tfaaf.file_type_id=mtet.id','left');
+    //                 $builder->where('tu.is_active', '1');
+    //                 $builder->where('tfaaf.is_active', '1');
+    //                 $builder->where('tfaaf.user_id', (int)$params['userId']);
+    //                 $builder->where('tu.ref_m_usertype_id', $params['user_type']);
+    //                 $builder->whereNotIn('tu.id', $params['not_in_user_id']);
+    //                 $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
+    //                 $builder->orderBy('tfaaf.user_id','DESC');
+    //                 $query = $builder->get();
+    //                 $output = $query->getResultArray();
+                       
+    //             }
+    //         } elseif ($type == 2)
+    //         {
+    //             if (!empty($params['user_type']) && !empty($params['not_in_user_id'])) {
+    //                         $builder = $this->db->table('efil.tbl_users tu');
+    //                         $builder->select('tu.first_name,tu.emp_id,tu.attend,tu.pp_a,trim(array_agg(tfaaf.file_type_id)::text, \'{}\') file_type_id , trim(array_agg(mtet.efiling_type)::text, \'{}\') efiling_type');
+    //                         $builder->join('efil.tbl_filing_admin_assigned_file tfaaf','tu.id=tfaaf.user_id','left');
+    //                         $builder->join('efil.m_tbl_efiling_type mtet','tfaaf.file_type_id=mtet.id','left');
+    //                         $builder->where('tu.is_active', '1');
+    //                         $builder->where('tu.attend','P');
+    //                         $builder->where('tfaaf.is_active', '1');
+    //                         $builder->where('tfaaf.user_id', (int)$params['userId']);
+    //                         $builder->where('tu.ref_m_usertype_id', $params['user_type']);
+    //                         $builder->whereNotIn('tu.id', $params['not_in_user_id']);
+    //                         $builder->groupBy('tu.first_name,tu.emp_id,tu.attend,tu.moblie_number,tu.emailid,tu.pp_a,tfaaf.user_id');
+    //                         $builder->orderBy('tfaaf.user_id','DESC');
+    //                         $query = $builder->get();
+    //                         $output = $query->getResultArray();
+    //             }
+    //         }
+    //     }
+
+    //     return $output;
+    // }
   
     
 

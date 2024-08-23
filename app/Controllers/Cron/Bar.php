@@ -1,18 +1,15 @@
 <?php
 namespace App\Controllers;
 
+use App\Models\Cron\DefaultModel;
+use App\Libraries\webservices\Efiling_webservices;
 class Bar extends BaseController {
-
+    protected $Default_model;
+    protected $efiling_webservices;
     public function __construct() {
         parent::__construct();
-        $this->load->model('cron/Default_model');
-        $this->load->library('webservices/efiling_webservices');
-        $this->load->library('session');
-        $this->load->helper('form');
-        $this->load->helper('url');
-        $this->load->helper('html');
-        $this->load->helper('functions'); // loading custom functions
-        $this->load->database();
+        $this->Default_model = new DefaultModel();
+        $this->efiling_webservices = new Efiling_webservices();
     }
 
     public function index() {
