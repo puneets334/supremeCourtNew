@@ -243,7 +243,7 @@ $routes->get('resources/hand_book_old_efiling', 'Resources\HandBookOldEfiling::i
 $routes->get('resources/Three_PDF_user_manual', 'Resources\ThreePDFUserManual::index');
 $routes->get('resources/Three_PDF_user_manual', 'Resources\ThreePDFUserManual::index');
 $routes->get('resources/Three_PDF_user_manual', 'Resources\ThreePDFUserManual::index');
-$routes->match(['GET', 'POST'], 'miscellaneous_docs/DefaultController/(:any)', 'MiscellaneousDocs\DefaultController::index/$1');
+$routes->match(['GET', 'POST'], 'miscellaneous_docs/defaultController/(:any)', 'MiscellaneousDocs\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'case/document/crud', 'ResponsiveVariantRouteController::showCaseDocumentCrud');
 $routes->match(['GET', 'POST'], 'case/document/crud/(:any)', 'ResponsiveVariantRouteController::showCaseDocumentCrud/$1');
 $routes->match(['GET', 'POST'], 'case/document/crud_registration', 'ResponsiveVariantRouteController::showCaseDocumentCrudByRegistrationId');
