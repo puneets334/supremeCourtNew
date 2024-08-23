@@ -1,12 +1,18 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+// if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Audit_model extends CI_Model
+namespace App\Models\PhysicalHearing;
+
+use CodeIgniter\Model;
+
+class AuditModel extends Model
 {
     function __construct()
     {
         parent::__construct();
-		$this->load->database(); // Load default database
-		$this->db = $this->load->database('physical_hearing', TRUE);
+        $db = \Config\Database::connect();
+		// $this->load->database(); // Load default database
+		// $this->db = $this->load->database('physical_hearing', TRUE);
     }
 	public function log($action,$user_id, $data = null) {
 		// Ensure the default database is being used

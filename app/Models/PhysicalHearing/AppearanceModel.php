@@ -1,14 +1,23 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+// if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Consent_VC_model extends CI_Model
+namespace App\Models\PhysicalHearing;
+
+use CodeIgniter\Model;
+
+class AppearanceModel extends Model
 {
+    // protected $DBGroup = 'physical_hearing';
+    
     function __construct()
     {
         // Call the Model constructor
         parent::__construct();
+        $db = \Config\Database::connect();
     }
 
-    function save($table, $data){
+    function save($table=null, $data=null):bool
+    {
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         if($physical_hearing_db->insert($table, $data))
             return 1;
@@ -16,13 +25,25 @@ class Consent_VC_model extends CI_Model
             return 0;
     }
 
-    function update($table, $data, $condition_array){
+    function update($table=null, $data=null, $condition_array=null):bool
+    {
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         //$physical_hearing_db->where($condition_array)->update($table, $data);
         if($physical_hearing_db->where($condition_array)->update($table, $data))
             return 1;
         else
             return 0;
+        // $builder = $this->db->table($table); // Get the query builder instance for the specified table
+        // // Apply the condition
+        // foreach ($condition_array as $key => $value) {
+        //     $builder->where($key, $value);
+        // }
+        // // Perform the update operation
+        // if ($builder->update($data)) {
+        //     return 1; // Update successful
+        // } else {
+        //     return 0; // Update failed
+        // }
     }
 
     function get_master($table, $condition){
@@ -124,7 +145,7 @@ and is_deleted='f' and consent='V'";
         $physical_hearing_db->where('ad.list_number',$list_no);
         $physical_hearing_db->where('ad.list_year',$list_year);
         $physical_hearing_db->where('ad.display','Y');
-       # $physical_hearing_db->group_by("mobile,email_id,court_no,list_number,list_year");
+        # $physical_hearing_db->group_by("mobile,email_id,court_no,list_number,list_year");
         $physical_hearing_db->order_by("ad.court_no,diary_no");
 
         if(!empty($list_date))
@@ -176,41 +197,16 @@ and is_deleted='f' and consent='V'";
               working_date>=(SELECT case when DAYOFWEEK(curdate())<=4 then DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) 
               else date(curdate() - interval weekday(curdate()) day + interval 1 week) end) order by working_date asc limit 1";
         $query = $this->db->query($sql);
-       // echo $this->db->last_query();//exit(0);
+        // echo $this->db->last_query();//exit(0);
 
         return $query->result_array();
+
     }
-
-    function getNextMDWorkingDayOfWeek($show_next_misc_date_cases=null,$isListingWithinSummerVacation=null)
-    {
-        $icmis_db = $this->load->database('icmis', TRUE);
-        if(!empty($show_next_misc_date_cases))
-            $condition=' working_date > date(now()) ';
-        else
-            $condition=' working_date >= date(now()) ';
-
-        //TODO FOR VACATION LISTING DATE
-        if(!empty($isListingWithinSummerVacation))
-            $condition1=" 1=1 and holiday_description like '%SUMMER VACATION%' ";
-        else
-            $condition1=" is_nmd=0 and is_holiday=0 ";
-
-        /*$sql="select working_date from sc_working_days where is_nmd=0 and is_holiday=0 and display='Y' and
-              working_date>=(SELECT case when DAYOFWEEK(curdate())<=5 then DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) 
-              else date(curdate() - interval weekday(curdate()) day + interval 1 week) end) AND  working_date >= date(now()) order by working_date asc limit 1";*/
-
-         $sql="select working_date from sc_working_days where $condition1 and display='Y' and $condition order by working_date asc limit 1";
-        $query = $icmis_db->query($sql);
-         //echo $this->db->last_query();exit(0);
-
-        return $query->result_array();
-    }
-
 
     function available_court_list($listing_days)
     {
-		$listing_days=implode(',',$listing_days);
-         $sql="select  distinct case when courtno>=60 then courtno-60  when courtno>=30 then courtno-30 else courtno end as court_no
+        $listing_days=implode(',',$listing_days);
+        $sql="select  distinct case when courtno>=60 then courtno-60  when courtno>=30 then courtno-30 else courtno end as court_no
                 from heardt h 
                 left join cl_printed p on p.next_dt = h.next_dt AND p.m_f = h.mainhead AND p.part = h.clno AND p.roster_id = h.roster_id AND p.display = 'Y'
                  inner join roster r on h.roster_id=r.id and r.display='Y' 
@@ -239,12 +235,9 @@ and is_deleted='f' and consent='V'";
     }
 
 
-    function getListedAdvocateMatters($advocateId,$listingDate,$court=null,$requestFor=null){
-        $listing_date_condition="";
-        if(empty($requestFor))
-           $listing_date_condition=" and h.next_dt in (". implode(',',$listingDate).")";
+    function getListedAdvocateMatters($advocateId,$listingDate,$court=null){
 
-
+        $listingDate=implode(',',$listingDate);
         $where_condition=(!empty($court))?'courtno in (?,?,?)':'1=1';
         $sql="select next_dt, (case when courtno>=60 then courtno-60 when courtno>=30 then courtno-30 else courtno end) as court_no_display, count(1) as total_cases, courtno
 from(
@@ -266,7 +259,7 @@ h.diary_no, m.conn_key,CASE
                 AS cause_title from main m 
 inner join heardt h on m.diary_no = h.diary_no 
 where 
-(h.next_dt >=curdate() $listing_date_condition) and h.main_supp_flag in (1,2) 
+(h.next_dt >=curdate() and h.next_dt in ($listingDate)) and h.main_supp_flag in (1,2) 
 union 
 select 
  h.diary_no, m.conn_key,CASE
@@ -284,7 +277,7 @@ h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_fl
                 Concat(m.pet_name, ' Vs. ', m.res_name)
                 AS cause_title from main m 
 inner join last_heardt h on m.diary_no = h.diary_no 
-where (h.next_dt >=curdate() $listing_date_condition)
+where (h.next_dt >=curdate() and h.next_dt in ($listingDate))
 and h.main_supp_flag in (1,2) 
 and (h.bench_flag = '' or h.bench_flag is null) 
 ) h
@@ -299,18 +292,19 @@ group by next_dt, court_no_display order by next_dt, court_no_display;";
         $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
 
         $query = $this->db->query($sql,$condition);
-       //  echo $this->db->last_query();exit();
+        // echo $this->db->last_query();exit(0);
 
         return $query->result_array();
 
     }
 
     function getFutureListedMatters($advocateId,$listingDate,$court=null){
+
         $listingDate=implode(',',$listingDate);
         $where_condition=(!empty($court))?'courtno in (?,?,?)':'1=1';
 
         $sql="select distinct main_case_diary_no as diary_no, group_concat(concat(case_no,' (',CAST(main_connected AS CHAR CHARACTER SET utf8) ), ')') as case_no,
-cause_title,n1.courtno as court_no,n1.brd_slno as item_no, count(1) as case_count,n1.next_dt,n1.roster_id, n1.main_connected,n1.reg_no_display as main_case_reg_no, group_concat(n1.diary_no) as consent_diaries,
+cause_title,n1.courtno as court_no, count(1) as case_count,n1.next_dt,n1.roster_id, n1.main_connected,n1.reg_no_display as main_case_reg_no, group_concat(n1.diary_no) as consent_diaries,
 (case when courtno>=60 then courtno-60 when courtno>=30 then courtno-30 else courtno end) as court_no_display
 from(
 select h.*,mb.board_type_mb,r.courtno 
@@ -364,7 +358,7 @@ group by main_case_diary_no
                 ";
         $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
         $query = $this->db->query($sql,$condition);
-         //echo $this->db->last_query();
+        //echo $this->db->last_query();
         return $query->result_array();
 
     }

@@ -1,40 +1,61 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+// defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_Controller {
-    public function __construct()
-    {
+namespace App\Controllers\PhysicalHearing;
+
+use App\Controllers\BaseController;
+// use CodeIgniter\HTTP\ResponseInterface;
+// use App\Models\PhysicalHearing\ConsentVCModel;
+use App\Models\PhysicalHearing\AppearanceModel;
+use App\Models\PhysicalHearing\AuthModel;
+use App\Models\PhysicalHearing\HearingModel;
+
+class Home extends BaseController {
+    
+	// protected $consent_VC_model;
+	protected $appearance_model;
+	protected $auth_model;
+	protected $hearing_model;
+
+    public function __construct() {
         parent::__construct();
-		if (!isset($_SESSION['loginData']) && empty($_SESSION['loginData'])) {
-			redirect('auth');
-		}else{
-			is_user_status();
-		}
-        $this->load->helper('common');
-        $this->load->helper('encryptdecrypt');
-        $this->load->helper('myarray');
-        $this->load->helper('curl');
-        $this->load->helper('url');
-        $this->load->helper('form');
-        $this->load->database('icmis');
-        $this->load->model('consent_VC_model');
-       // $this->getTodayData(); exit;
+        $dbs = \Config\Database::connect();
+        $this->db = $dbs->connect();
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
+        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            return response()->redirect(base_url('adminDashboard'));
+            exit(0);
+        }
+		// if (!isset($_SESSION['loginData']) && empty($_SESSION['loginData'])) {
+		// 	return redirect()->to(base_url('auth'));
+		// } else {
+		// 	is_user_status();
+		// }
+        // $this->load->helper('common');
+        // $this->load->helper('encryptdecrypt');
+        // $this->load->helper('myarray');
+        // $this->load->helper('curl');
+        // $this->load->helper('url');
+        // $this->load->helper('form');
+        // $this->load->database('icmis');
+        // $this->load->model('consent_VC_model');
+		helper(['common', 'encryptdecrypt', 'myarray', 'curl', 'url', 'form']); 
+        // $this->consent_VC_model = new ConsentVCModel(); 
+        $this->appearance_model = new AppearanceModel();
+		$this->auth_model = new AuthModel();
+		$this->hearing_model = new HearingModel();
+       	// $this->getTodayData(); exit;
     }
 
-    public function index(){
-
-        if(!isset($this->session->loginData)){
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
+    public function index() {
+        if(!isset($this->session->loginData)) {
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
             unset($this->session->loginData);
-            redirect('auth');
-        }
-        else{
-
-
+            return redirect()->to(base_url('auth'));
+        } else {
 			$type = !empty($this->session->userdata('loginData')['dec_type']) ? (int)$this->session->userdata('loginData')['dec_type']  : NULL;
-			if(!empty($type)){
-
-				switch ($type){
+			if(!empty($type)) {
+				switch ($type) {
 					case 1:
 							$data['page_title']='Case List';
 							if(isset($_POST['list_date']))
@@ -51,7 +72,7 @@ class Home extends CI_Controller {
 							$params = array();
 							$params['current_date'] = date('Y-m-d');
 							$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
-							$this->load->model('auth_model');
+							// $this->load->model('auth_model');
 							//today exist data
 							$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
 							$data['todayData'] = !empty($todayData) ? $todayData: NULL;
@@ -65,7 +86,7 @@ class Home extends CI_Controller {
 
 			}
 			else{
-				redirect('auth');
+				return redirect()->to(base_url('auth'));
 			}
         }
     }
@@ -74,7 +95,7 @@ class Home extends CI_Controller {
 		if(!isset($this->session->loginData)){
 			$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
 			unset($this->session->loginData);
-			redirect('auth');
+			return redirect()->to(base_url('auth'));
 		}
 		else {
 			//echo '<pre>'; print_r($this->session->loginData); exit;
@@ -82,7 +103,7 @@ class Home extends CI_Controller {
 				$params = array();
 				$params['current_date'] = date('Y-m-d');
 				$params['mobile'] = (int)$this->session->userdata('loginData')['mobile'];
-				$this->load->model('auth_model');
+				// $this->load->model('auth_model');
 				//today exist data
 				$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
 				$data['todayData'] = !empty($todayData) ? $todayData: NULL;
@@ -93,7 +114,7 @@ class Home extends CI_Controller {
 		}
 	}
     public function getAttendeeList(){
-    	$this->load->model('hearing_model');
+    	// $this->load->model('hearing_model');
 		$result=$this->hearing_model->getAttendee();
 		$attendeeArr = array();
 		if(isset($result) && !empty($result)){
@@ -116,7 +137,7 @@ class Home extends CI_Controller {
 //		if(!isset($this->session->loginData)){
 //		$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
 //		unset($this->session->loginData);
-//		redirect('auth');
+//		return redirect()->to(base_url('auth'));
 //	}
 //	else {
 //			$data['page_title'] = 'Supreme Court Of India Self Declaration Form (For Entrants In the High Security Zone)';
@@ -125,7 +146,7 @@ class Home extends CI_Controller {
 //		}
 	}
 	public function getEmpSelfDeclarationData(){
-		$this->load->model('auth_model');
+		// $this->load->model('auth_model');
 		$params =array();
 		$params['current_date'] = date('Y-m-d');
 		$res = $this->auth_model->getSelfDeclarationTodayData($params);
@@ -147,7 +168,7 @@ class Home extends CI_Controller {
 		if(isset($postData['toDate']) && !empty($postData['toDate'])){
 			$params['toDate'] = trim($postData['toDate']);
 		}
-		$this->load->model('auth_model');
+		// $this->load->model('auth_model');
 		$res ='';
 		$res = $this->auth_model->getSelfDeclarationTodayData($params);
 		if(isset($res) && !empty($res)){
@@ -164,7 +185,7 @@ class Home extends CI_Controller {
 			$params = array();
 			$params['current_date'] = date('Y-m-d');
 			$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
-			$this->load->model('auth_model');
+			// $this->load->model('auth_model');
 			$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
 			$todayUserData = !empty($todayData) ? $todayData[0] : null;
 			echo json_encode(array('success'=>true,'todayData'=>$todayUserData));
@@ -173,31 +194,31 @@ class Home extends CI_Controller {
 			$params = array();
 			$params['current_date'] = date('Y-m-d');
 			$params['mobile'] = (int)$this->session->userdata('loginData')['mobile'];
-			$this->load->model('auth_model');
+			// $this->load->model('auth_model');
 			$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
 			$todayUserData = !empty($todayData) ? $todayData[0] : null;
 			echo json_encode(array('success'=>true,'todayData'=>$todayUserData));
 		}
 	}
-    public function welcomePage()
-	{
+
+    public function welcomePage() {
 		if(!isset($this->session->loginData)){
 			$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
 			unset($this->session->loginData);
-			redirect('auth');
+			return redirect()->to(base_url('auth'));
+		} else {
+			$data = array();
+			$data['page_title'] = "Dashboard";
+			if (!empty($this->session->userdata('loginData')['post_mobile'])) {
+				$params = array();
+				$params['current_date'] = date('Y-m-d');
+				$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
+				// $this->load->model('auth_model');
+				$res = $this->auth_model->getSelfDeclarationTodayData($params);
+				$data['empData'] = !empty($res) ? $res[0] : NULL;
+			}
+			$this->load->view('physical_hearing/dashboard', $data);
 		}
-		else {
-		$data = array();
-		$data['page_title'] = "Dashboard";
-		if (!empty($this->session->userdata('loginData')['post_mobile'])) {
-			$params = array();
-			$params['current_date'] = date('Y-m-d');
-			$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
-			$this->load->model('auth_model');
-			$res = $this->auth_model->getSelfDeclarationTodayData($params);
-			$data['empData'] = !empty($res) ? $res[0] : NULL;
-		}
-		$this->load->view('physical_hearing/dashboard', $data);
 	}
-	}
+
 }

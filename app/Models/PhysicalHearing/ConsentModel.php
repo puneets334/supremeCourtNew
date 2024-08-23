@@ -1,11 +1,17 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+// if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Consent_model extends CI_Model
+namespace App\Models\PhysicalHearing;
+
+use CodeIgniter\Model;
+
+class ConsentModel extends Model
 {
     function __construct()
     {
         // Call the Model constructor
         parent::__construct();
+        $db = \Config\Database::connect();
     }
 
     function get_master($table, $condition){
