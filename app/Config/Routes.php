@@ -340,7 +340,9 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/courtFee', 'OldCaseRefiling\Cou
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::index');
 
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\FinalSubmit::index');
-$routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index'); 
+$routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
+$routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::index');
+
 
 
 // Appearance Routes  

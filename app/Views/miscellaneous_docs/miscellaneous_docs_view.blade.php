@@ -1,6 +1,7 @@
 <?php
 $segment = service('uri');
 ?>
+
 @include('miscellaneous_docs.misc_docs_breadcrumb')
 <?php if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex') {
 
@@ -23,6 +24,7 @@ $segment = service('uri');
     @include('miscellaneous_docs.misc_docs_preview');
 <?php }
 ?>
+@include('modals')
 </div>
 </div>
 </div>

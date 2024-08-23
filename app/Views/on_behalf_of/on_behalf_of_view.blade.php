@@ -1,4 +1,5 @@
 <?php
+
 // pr('sdfds');
 $segment = service('uri');        
 if ($segment->getSegment(2) != 'view') {

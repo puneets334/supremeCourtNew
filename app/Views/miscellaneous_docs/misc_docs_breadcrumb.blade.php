@@ -43,8 +43,8 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             <div class="col-12">
                                 <div class="form-response" id="msg">
                                     <?php
-                                    if (!empty(getSessionData('MSG'))) {
-                                        echo getSessionData('MSG');
+                                    if (!empty(getSessionData('msg'))) {
+                                        echo getSessionData('msg');
                                     }
                                     ?>
                                 </div>
@@ -72,8 +72,27 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     </div>
                 </div>
                 <div class="ryt-dash-breadcrumb">
+                    <?php
+                    $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
+                    $ArrayHOLD = array(HOLD);
+                    $ArrayDISPOSED = array(DISPOSED);
+                    if (($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ACTION_ADMIN) && in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
+                        if ($details['details'][0]['c_status'] != 'D') {
+                            if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
+                                echo '<a data-bs-toggle="modal" href="#approveModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Approve</a>
+                                      <a data-bs-toggle="modal" href="#disapproveModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Disapprove</a>';
+                                if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayHOLD))) {
+                                    echo '<a data-bs-toggle="modal" href="#holdModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Hold</a>';
+                                }
+                                echo '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>';
+                            }
+                        }
+                        if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
+                            echo $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
+                        }
+                    }
+                    ?>
                     <div class="btns-sec">
-
                         <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
@@ -142,24 +161,6 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                 }
             } else {
                 $reditectUrl = $this->uri->uri_string;
-            }
-            $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
-            $ArrayHOLD = array(HOLD);
-            $ArrayDISPOSED = array(DISPOSED);
-            if (($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ACTION_ADMIN) && in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-                if ($details['details'][0]['c_status'] != 'D') {
-                    if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
-                        echo '<a data-toggle="modal" href="#approveModal" class="btn btn-success btn-sm">Approve</a>
-                              <a data-toggle="modal" href="#disapproveModal" class="btn btn-danger btn-sm">Disapprove</a>';
-                        if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayHOLD))) {
-                            echo '<a data-toggle="modal" href="#holdModal" class="btn btn-danger btn-sm">Hold</a>';
-                        }
-                        echo '<a data-toggle="modal" href="#disposedModal" class="btn btn-success btn-sm">Disposed</a>';
-                    }
-                }
-                if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
-                    echo $details['details'][0]['c_status'] == 'D' ? '<a data-toggle="modal" href="#disposedModal" class="btn btn-success btn-sm" >Disposed</a>' : '';
-                }
             }
             ?>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
