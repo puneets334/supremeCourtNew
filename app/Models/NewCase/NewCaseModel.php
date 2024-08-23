@@ -844,7 +844,7 @@ class NewCaseModel extends Model {
             if ($query->getNumRows() >= 1) {
                 $result = $query->getResult();
                 $data = array('est_code' => $result[0]->hc_code);
-                $this->session->set_userdata(array('national_code' => $data));
+                $this->session->set(array('national_code' => $data));
                 return $result;
             } else {
                 return false;
@@ -857,7 +857,7 @@ class NewCaseModel extends Model {
             if ($query->getNumRows() >= 1) {
                 $result = $query->getResult();
                 $data = array('est_code' => $result[0]->est_code);
-                $this->session->set_userdata(array('national_code' => $data));
+                $this->session->set(array('national_code' => $data));
                 return $result;
             } else {
                 return false;
@@ -1739,7 +1739,7 @@ class NewCaseModel extends Model {
             if (isset($result['registration_id']) && !empty($result['registration_id'])) {
                 $data['ref_m_efiling_nums_registration_id'] = $result['registration_id'];
                 $session_data = array('registration_id' => $result['registration_id'], 'efiling_no' => $efiling_num);
-                $this->session->set_userdata('efiling_details', $session_data);
+                $this->session->set('efiling_details', $session_data);
                 $cis_masters_values['filcase_type_name'] = $_SESSION['efiling_for_details']['case_type_name'];
                 $cis_masters_values['bench_name'] = $_SESSION['efiling_for_details']['benchName'];
                 $builder = $this->db->table('tbl_efiling_civil')->insert($data);
