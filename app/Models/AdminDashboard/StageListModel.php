@@ -22,7 +22,7 @@ class StageListModel extends Model
         $builder->SELECT(array(
             'en.efiling_for_type_id', 'en.efiling_for_id', 'en.ref_m_efiled_type_id',
             'en.efiling_no', 'en.efiling_year', 'en.registration_id', 'en.allocated_on',
-            'et.efiling_type',
+            'et.efiling_type','users.account_status',
             'cs.stage_id', 'cs.activated_on', 'en.sub_created_by',
             'new_case_cd.cause_title ecase_cause_title', 'new_case_cd.sc_diary_num', 'new_case_cd.sc_diary_year', 'new_case_cd.sc_diary_date', 'new_case_cd.sc_display_num', 'new_case_cd.sc_reg_date',
             'sc_case.diary_no', 'sc_case.diary_year', 'sc_case.reg_no_display', 'sc_case.cause_title', 'mdia.diary_no icmis_diary_no', 'mdia.diary_year icmis_diary_year'/* , 'ec.pet_name', 'ec.res_name', 'ec.fil_case_type_name', 'ec.fil_no', 'ec.fil_year',
@@ -44,7 +44,7 @@ class StageListModel extends Model
         $builder->JOIN('efil.tbl_users users', 'users.id=en.created_by', 'left');
         $builder->WHERE('cs.is_active', 'TRUE');
         $builder->WHERE('en.is_active', 'TRUE');
-        if ($this->session->get('login')['AllUserCount'] != 1) {
+        if (getSessionData('login')['AllUserCount'] != 1) {
             //22/01/2021
             //$this->db->WHERE('en.efiling_for_type_id', $admin_for_type_id);
 
@@ -52,8 +52,8 @@ class StageListModel extends Model
             $where = '(en.efiling_for_type_id=' . $admin_for_type_id . ' or en.efiling_for_type_id = ' . E_FILING_TYPE_CAVEAT . ')';
             $builder->WHERE($where);
             $builder->WHERE('en.efiling_for_id', $admin_for_id);
-            if (!in_array(LODGING_STAGE, $stage_ids) && !in_array(DELETE_AND_LODGING_STAGE, $stage_ids) && $this->session->get('login')['userid'] != SC_ADMIN) {
-                $builder->WHERE('en.allocated_to', $this->session->get('login')['id']);
+            if (!in_array(LODGING_STAGE, $stage_ids) && !in_array(DELETE_AND_LODGING_STAGE, $stage_ids) && getSessionData('login')['userid'] != SC_ADMIN) {
+                $builder->WHERE('en.allocated_to', getSessionData('login')['id']);
             }
         }
         $builder->whereIn('cs.stage_id', $stage_ids);

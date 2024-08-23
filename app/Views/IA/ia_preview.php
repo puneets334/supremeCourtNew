@@ -148,7 +148,7 @@ if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
 </div>
 
 
-<?php $this->load->view('modals.php'); ?>
+<?php render('modals'); ?>
 <?php include 'idle_del_modals.php'; ?>
 
 
@@ -183,4 +183,90 @@ if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
             }
         });
     });
+</script>
+<script>
+    document.getElementById("copyButton").addEventListener("click", function() {
+        alert('test     ');
+        copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
+    });
+
+    document.getElementById("copyButton2").addEventListener("click", function() {
+        copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
+    });
+
+    document.getElementById("pasteTarget").addEventListener("mousedown", function() {
+        this.value = "";
+    });
+
+
+    function copyToClipboardMsg(elem, msgElem) {
+        var EfilingNumber=document.getElementById('copyTarget_EfilingNumber').innerHTML;
+        var succeed = copyToClipboard(elem);
+        var msg;
+        if (!succeed) {
+            msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+        } else {
+            //msg = 'E-Filing Number: ' +EfilingNumber+' Copied.';
+            msg = 'Copied';
+        }
+        if (typeof msgElem === "string") {
+            msgElem = document.getElementById(msgElem);
+        }
+        msgElem.innerHTML = msg;
+       /* setTimeout(function() {
+            msgElem.innerHTML = "";
+        }, 5000);*/
+    }
+
+    function copyToClipboard(elem) {
+        // create hidden text element, if it doesn't already exist
+        var targetId = "_hiddenCopyText_";
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA" || elem.tagName === "INPUT";
+        var origSelectionStart, origSelectionEnd;
+        if (isInput) {
+            // can just use the original source element for the selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // must use a temporary form element for the selection and copy
+            target = document.getElementById(targetId);
+            if (!target) {
+                var target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.style.top = "0";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.textContent = elem.textContent;
+        }
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch(e) {
+            succeed = false;
+        }
+        // restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // restore prior selection
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // clear temporary content
+            target.textContent = "";
+        }
+        return succeed;
+    }
+
+
 </script>

@@ -48,7 +48,18 @@ class AdvocateModel extends Model
 
     public function get_details_by_id($id)
     {
-        return $this->where('id', $id)->first();
+        $builder = $this->db->table('efil.tbl_users');
+        $builder->SELECT('*');
+        $builder->WHERE('id',$id);
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            return $result;
+        } else {
+            return false;
+        }
+
+        // return $this->where('id', $id)->first();
     }
 
 

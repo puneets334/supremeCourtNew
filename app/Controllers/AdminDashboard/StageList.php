@@ -2,7 +2,7 @@
 namespace App\Controllers\AdminDashboard;
 
 use App\Controllers\BaseController;
-use App\Models\AdminDashboard\StageList_model;
+use App\Models\AdminDashboard\StageListModel;
 use \Hermawan\DataTables\DataTable;
 
 class StageList extends BaseController {
@@ -15,7 +15,7 @@ class StageList extends BaseController {
 		
         //$this->load->model('dashboard/Dashboard_model');
        // $this->load->model('adminDashboard/StageList_model');
-		$this->StageList_model = new StageList_model();
+		$this->StageList_model = new StageListModel();
         
         unset($_SESSION['efiling_details']);
         unset($_SESSION['estab_details']);
@@ -44,7 +44,7 @@ class StageList extends BaseController {
 
     public function index($stages) {
       
-       
+      
         $users_array = array(USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
         if (!in_array($this->session->get('login')['ref_m_usertype_id'], $users_array)) {
             redirect('login');

@@ -149,13 +149,13 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
                 send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS,SCISMS_Initial_Approval);
                 send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
 
-                $this->session->set('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 $_SESSION['efiling_details']['stage_id']=Initial_Approaval_Pending_Stage;
                 return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
                 // exit(0);
             } else {
-                $this->session->set('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
+                getSessionData('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
                 // log_message('CUSTOM', "Miscellaneous Docs- Submition failed. Please try again!");
                return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
