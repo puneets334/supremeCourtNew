@@ -153,6 +153,7 @@ $routes->match(['GET', 'POST'], 'case/arguingCounsel/(:num)', 'ResponsiveVariant
 $routes->match(['GET', 'POST'], 'case/iamiscdocshare', 'ResponsiveVariantRouteController::iaMiscDocShare');
 $routes->match(['GET', 'POST'], 'case/ancillary/Indexdocuments', 'ResponsiveVariantRouteController::prefilled_index_docs');
 $routes->match(['GET', 'POST'], 'vakalatnama/dashboard/action(:any)', 'vakalatnama/dashboard/action/$1');
+
 // $routes->match(['GET', 'POST'],'e-resources/(:any)','Resources\DefaultController::index/$1');
 // $routes->match(['GET', 'POST'],'e-resources','Resources\DefaultController::index');
 
@@ -319,6 +320,7 @@ $routes->match(['GET', 'POST'], 'IA/courtFee', 'IA\CourtFee::index');
 $routes->get('on_behalf_of', 'OnBehalfOf\DefaultController::index');
 $routes->get('appearing_for', 'AppearingFor\DefaultController::index');
 $routes->get('case_details', 'CaseDetails\DefaultController::index');
+$routes->get('shareDoc', 'ShareDoc\DefaultController::index');
 $routes->post('on_behalf_of/DefaultController/save_filing_for', 'OnBehalfOf\DefaultController::save_filing_for');
 $routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
 $routes->match(['GET', 'POST'], 'report/search/actionFiledon', 'Report\Search::actionFiledon');
@@ -345,6 +347,8 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::i
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\FinalSubmit::index');
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
 $routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::index');
+
+
 
 
 

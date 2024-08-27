@@ -158,7 +158,7 @@ $parties_details=$data['parties_details'];
                             $petitioner_user_type_disabled = '';
                             $respondent_user_type_disabled = '';
                         } else {
-
+                            pr($appearing_for_details);
                             if($appearing_for_details[0]['partytype'] == 'P')
                             {
                                 $petitioner_user_type_disabled='';

@@ -10,7 +10,7 @@ class ShareDocsModel extends Model {
 
     function update_breadcrumbs($registration_id, $step_no) {
 
-        $sessionBreadcrumbs = $this->session->get('login')['efiling_details']['breadcrumb_status'] ?? '';
+        $sessionBreadcrumbs = getSessionData('login')['efiling_details']['breadcrumb_status'] ?? '';
         $oldBreadcrumbs = $sessionBreadcrumbs . ',' . $step_no;
         $oldBreadcrumbsArray = explode(',', $oldBreadcrumbs);
         $newBreadcrumbsArray = array_unique($oldBreadcrumbsArray);
@@ -22,11 +22,12 @@ class ShareDocsModel extends Model {
         $_SESSION['efiling_details']['breadcrumb_status'] = $newBreadcrumbs;
     
         // Update database
-        $builder = $this->$db->table('efil.tbl_efiling_nums');
+        $builder = $this->db->table('efil.tbl_efiling_nums');
         $builder->where('registration_id', $registration_id);
         $builder->update(['breadcrumb_status' => $newBreadcrumbs]);
-    
-        if ($builder->affectedRows() > 0) {
+        $query = $builder->get(); 
+   
+        if ($this->db->affectedRows() > 0) {
             return true;
         } else {
             return false;
@@ -34,7 +35,7 @@ class ShareDocsModel extends Model {
     }
     function remove_breadcrumb($registration_id, $breadcrumb_to_remove) {
 
-        $sessionBreadcrumbs = $session->get('login')['efiling_details']['breadcrumb_status'] ?? '';
+        $sessionBreadcrumbs = getSessionData('login')['efiling_details']['breadcrumb_status'] ?? '';
         $breadcrumbsArray = explode(',', $sessionBreadcrumbs);
     
         if (in_array($breadcrumb_to_remove, $breadcrumbsArray)) {
@@ -50,11 +51,11 @@ class ShareDocsModel extends Model {
     
             // Update database
             
-            $builder = $this->$db->table('efil.tbl_efiling_nums');
+            $builder = $this->db->table('efil.tbl_efiling_nums');
             $builder->where('registration_id', $registration_id);
             $builder->update(['breadcrumb_status' => $newBreadcrumbs]);
     
-            if ($builder->affectedRows() > 0) {
+            if ($this->db->affectedRows() > 0) {
                 return true;
             } else {
                 return false;
@@ -65,7 +66,7 @@ class ShareDocsModel extends Model {
     }
     function add_update_adv_details($registration_id, $data) {
 
-    $builder = $this->$db->table('efil.tbl_case_advocates');
+    $builder = $this->db->table('efil.tbl_case_advocates');
     $builder->insert($data);
 
     if ($builder->insertID() > 0) {
@@ -77,7 +78,7 @@ class ShareDocsModel extends Model {
 
     function add_doc_share_email($data) {
 
-        $builder = $this->$db->table('efil.tbl_doc_share_email');   
+        $builder = $this->db->table('efil.tbl_doc_share_email');   
         $builder->insert($data);    
         if ($builder->insertID() > 0) {
             return true;
@@ -89,10 +90,10 @@ class ShareDocsModel extends Model {
     //XXXXXXXXXXXXXXXXXXX START XXXXXXXXXXXXXXXXXXXX
     function add_doc_share_email_updated($userId,$data) {
 
-        $builder = $this->$db->table('efil.tbl_doc_share_email');    
+        $builder = $this->db->table('efil.tbl_doc_share_email');    
         $builder->where('id', $userId);
         $builder->update($data);    
-        if ($builder->affectedRows() == 1) {
+        if ($this->db->affectedRows() == 1) {
             return true;
         } else {
             return false;
@@ -101,7 +102,7 @@ class ShareDocsModel extends Model {
     //XXXXXXXXXXXXXXXXXXXX END XXXXXXXXXXXXXXX
     function get_aor_contact() {
 
-        $builder = $this->$db->table('icmis.bar');   
+        $builder = $this->db->table('icmis.bar');   
         $builder->select('*');
         $builder->where('email IS NOT NULL', null, false); // This replaces WHERE "email !=", ''
         $query = $builder->get();        
@@ -114,7 +115,7 @@ class ShareDocsModel extends Model {
 
     public function get_email_details($regId) {
 
-    $builder = $this->$db->table('efil.tbl_doc_share_email');
+    $builder = $this->db->table('efil.tbl_doc_share_email');
     $builder->select('*');
     $builder->where('is_active', true); // Assuming 't' indicates true in your database
     $builder->where('registration_id', $regId);   
@@ -128,7 +129,7 @@ class ShareDocsModel extends Model {
 
     public function get_contact() {
 
-        $builder = $this->$db->table('efil.tbl_case_contacts');
+        $builder = $this->db->table('efil.tbl_case_contacts');
     
         $builder->select('*');
         $builder->where('p_email IS NOT NULL');
@@ -144,7 +145,7 @@ class ShareDocsModel extends Model {
     }
     function get_case_aor_contacts($registration_id){
 
-        $builder = $this->$db->table('efil.tbl_misc_docs_ia tmdi');
+        $builder = $this->db->table('efil.tbl_misc_docs_ia tmdi');
     
         $builder->select('b.name, b.email');
         $builder->join('efil.tbl_appearing_for taf', 'tmdi.diary_no = taf.diary_num AND tmdi.diary_year = taf.diary_year');
@@ -171,12 +172,12 @@ class ShareDocsModel extends Model {
         }
 
         $this->db->transStart();
-		$builder = $this->$db->table('efil.tbl_doc_share_email');
+		$builder = $this->db->table('efil.tbl_doc_share_email');
         $data = array('is_active' => 'f', 'deleted_by' =>$_SESSION['login']['id'], 'deleted_on' => date('Y-m-d H:i:s'), 'deleted_ip' => getClientIP());
         $builder->WHERE('registration_id', $reg_id);
         $builder->WHERE('id', $user_id);
         $builder->UPDATE($data);
-        if($builder->affectedRows() == 1) {
+        if($this->db->affectedRows() == 1) {
             $email_details=$this->get_email_details($reg_id);
             if (empty($email_details)){
                 $status = $this->remove_breadcrumb($reg_id, MISC_BREAD_SHARE_DOC);

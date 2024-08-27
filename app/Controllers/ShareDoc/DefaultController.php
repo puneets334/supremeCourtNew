@@ -8,7 +8,6 @@ use App\Libraries\webservices\Efiling_webservices;
 
 
 class DefaultController extends BaseController {
-
     protected $Share_docs_model;
     protected $efiling_webservices;
 
@@ -23,7 +22,7 @@ class DefaultController extends BaseController {
     }
 
     public function index() {
-        pr('test');
+
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
@@ -39,7 +38,6 @@ class DefaultController extends BaseController {
         $data['aor_contact'] = $this->Share_docs_model->get_aor_contact();
         //var_dump($date['case_aor_contacts']);
         return $this->render('shareDoc.share_document',$data);
-    
     }
 
 }

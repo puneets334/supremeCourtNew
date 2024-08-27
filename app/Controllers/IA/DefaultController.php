@@ -36,6 +36,7 @@ class DefaultController extends BaseController
 
     public function index($id = NULL)
     {
+        
         if ($id) {
             $id = url_decryption($id);
             
@@ -59,7 +60,7 @@ class DefaultController extends BaseController
 
             }
         } else {
-
+pr('tesf');
             // SETS $_SESSION['estab_details']
             $estab_details = $this->CommonModel->get_establishment_details();
             if ($estab_details) {
