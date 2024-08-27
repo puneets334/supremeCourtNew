@@ -15,7 +15,7 @@
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
                                 <div class="uk-margin-small-top uk-border-rounded">
-                                    <iframe style="width: 100%;" name="case-ia-crud-iframe" class="uk-width internal-content-iframe" src="{{(empty(@$registration_id) ? base_url((@$tab == 'affirmation' ? @$tab : (@$tab == 'courtFee'?'IA/'.@$tab:'newcase/'.@$tab) )) : base_url('IA/defaultController/'.($registration_id)))}}"></iframe>
+                                    <iframe style="width: 100%; height:100rem;" name="case-ia-crud-iframe" class="uk-width internal-content-iframe" src="{{(empty(@$registration_id) ? base_url((@$tab == 'affirmation' ? @$tab : (@$tab == 'courtFee'?'IA/'.@$tab:'newcase/'.@$tab) )) : base_url('IA/defaultController/'.($registration_id)))}}"></iframe>
                                 </div>
                                 {{-- Main End --}}
                             </div>

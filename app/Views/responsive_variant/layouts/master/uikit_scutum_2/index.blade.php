@@ -126,6 +126,7 @@
                                                             id="sc_case_type" aria-label="Default select example">
                                                             <option value="">Case Type</option>;
                                                             <?php
+                                                            if(isset($sc_case_type)){
                                                                 if (count($sc_case_type)) {
                                                                     foreach ($sc_case_type as $dataRes) {
 
@@ -139,6 +140,7 @@
                                                                         <?php
                                                                     }
                                                                 }
+                                                            }
                                                         ?>
                                                         </select>
 

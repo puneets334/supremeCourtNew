@@ -51,12 +51,13 @@ class AppearingForModel extends Model
         // die;
         $query = $builder->get();
 
-        if ($query === false) {
-            // Log or handle the error
-            log_message('error', 'Query failed: ' . $this->db->getLastQuery());
-            return false;
-        }
+        // if ($query === false) {
+        //     // Log or handle the error
+        //     log_message('error', 'Query failed: ' . $this->db->getLastQuery());
+        //     return false;
+        // }
 
+        
 
         //echo  $this->db->last_query();die;
         if ($query->getNumRows() >= 1) {
