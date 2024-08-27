@@ -1,14 +1,13 @@
 <?php
 namespace App\Controllers;
 
-class Replication_check extends BaseController {
+class ReplicationCheck extends BaseController {
 
     public function __construct() {
         parent::__construct();
     }
 
     public function index() {
-        echo "Hello";
        $servers=array('10.249.44.169','10.249.44.170');
        foreach ($servers as $server_ip){
            echo $server_ip;
