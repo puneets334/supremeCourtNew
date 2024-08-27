@@ -1,17 +1,13 @@
 <?php
 namespace App\Controllers;
-require_once APPPATH.'controllers/Shilclient_Controller.php';
-class FeelockController extends Shilclient_Controller {
+use App\Controllers\ShilclientController;
+use App\Models\Cron\DefaultModel;
 
+class FeelockController extends ShilclientController {
+    protected $Default_model;
     public function __construct() {
         parent::__construct();
-        $this->load->model('cron/Default_model');
-        $this->load->library('session');
-        $this->load->helper('form');
-        $this->load->helper('url');
-        $this->load->helper('html');
-        $this->load->helper('functions'); // loading custom functions
-        $this->load->database();
+        $this->Default_model = new DefaultModel();
     }
 
     public function index()
