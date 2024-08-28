@@ -15,6 +15,7 @@ class AppearingForModel extends Model
 
     function get_case_parties_list($registration_id)
     {
+        $this->db->transStart();
         $builder = $this->db->table('efil.tbl_efiling_nums en');
         $builder->SELECT("en.*,sc.*, misc_ia.p_r_type, misc_ia.intervenor_name, misc_ia.filing_for_parties");
         $builder->JOIN('efil.tbl_misc_docs_ia misc_ia', 'en.registration_id = misc_ia.registration_id');
@@ -71,7 +72,7 @@ class AppearingForModel extends Model
     public function add_appearing_for($appearing_party_detail, $contact_details, $registration_id)
     {
 
-        $this->db->transStart();
+        
         $builder = $this->db->table('efil.tbl_appearing_for');
         $builder->INSERT($appearing_party_detail);
 

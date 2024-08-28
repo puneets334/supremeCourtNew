@@ -131,7 +131,7 @@ $parties_details=$data['parties_details'];
                                 <tr>
                                     <td><input class="form-control" name="party_name[]" type="text" value="<?php echo_data($value); ?>"></td>
                                     <td><input class="form-control" name="party_email[]" type="email" placeholder="Email" value="<?php echo ($email); ?>"></td>
-                                    <td><input class="form-control" name="party_mob[]" placeholder="Mobile" value="<?php echo_($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
+                                    <td><input class="form-control" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
                                     <td class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>" <?php echo $selected; ?>></td>
                                 </tr>
                         <?php
@@ -158,14 +158,14 @@ $parties_details=$data['parties_details'];
                             $petitioner_user_type_disabled = '';
                             $respondent_user_type_disabled = '';
                         } else {
-                            pr($appearing_for_details);
-                            if($appearing_for_details[0]['partytype'] == 'P')
+                            
+                            if(isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'P')
                             {
                                 $petitioner_user_type_disabled='';
                                 $respondent_user_type_disabled='disabled';
 
                             }
-                            elseif($appearing_for_details[0]['partytype'] == 'R')
+                            elseif(isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'R')
                             {
                                 $petitioner_user_type_disabled='disabled';
                                 $respondent_user_type_disabled='';
@@ -179,8 +179,8 @@ $parties_details=$data['parties_details'];
                             }
                         }
 
-                        $pet_default_checked = ($appearing_for_details[0]['partytype'] == 'P') ? 'checked' : NULL;
-                        $res_checked = ($appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
+                        $pet_default_checked = (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'P') ? 'checked' : NULL;
+                        $res_checked = (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
                         ?>
                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?>  <?php echo $pet_default_checked;?>><strong>Petitioner / Complainant</strong></label>
                         <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?>  <?php echo $res_checked;?>><strong>Respondent / Accused</strong></label>
@@ -196,14 +196,14 @@ $parties_details=$data['parties_details'];
 
                         $parties_list = array_combine($party_sr_no_array, $party_name_array);
 
-                        if (($appearing_for_details[0]['partytype'] == 'P') || ($appearing_for_details[0]['partytype'] == 'R')) {
-                            $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
+                        if (isset($appearing_for_details[0]) && ($appearing_for_details[0]['partytype'] == 'P') || isset($appearing_for_details[0]) && ($appearing_for_details[0]['partytype'] == 'R')) {
+                            $saved_appearing_for = isset($appearing_for_details[0]) && $appearing_for_details[0]['appearing_for'];
                             $saved_appearing_for = explode('$$', $saved_appearing_for);
 
-                            $saved_appearing_for_email = $appearing_for_details[0]['p_email'];
+                            $saved_appearing_for_email = isset($appearing_for_details[0]) && $appearing_for_details[0]['p_email'];
                             $saved_appearing_for_email = explode('$$', $saved_appearing_for_email);
 
-                            $saved_appearing_for_mobile = $appearing_for_details[0]['p_mobile'];
+                            $saved_appearing_for_mobile =  isset($appearing_for_details[0]) && $appearing_for_details[0]['p_mobile'];
                             $saved_appearing_for_mobile = explode('$$', $saved_appearing_for_mobile);
                         } else {
                             $saved_appearing_for = NULL;
@@ -231,8 +231,8 @@ $parties_details=$data['parties_details'];
                             $i = 1;
 
                             foreach ($parties_list as $key => $value) {
-                                $selected = (in_array($key, $saved_appearing_for)) ? 'checked' : NULL;
-                                $saved_sr_no = array_search($key, $saved_appearing_for);
+                                $selected = isset($saved_appearing_for) && (in_array($key, $saved_appearing_for)) ? 'checked' : NULL;
+                                $saved_sr_no = isset($saved_appearing_for) && array_search($key, $saved_appearing_for);
                                 // $selected = NULL;
                             // echo "<pre>"; print_r($parties_list); die;
 

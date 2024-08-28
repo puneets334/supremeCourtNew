@@ -49,14 +49,16 @@
                                         <div class="row">
                                         <div class="col-6">
                                             <div class="card custom-card">
-                                            <?php render('uploadDocuments.upload_document',['uploaded_docs' => @$uploaded_docs]);?>
+                                            <?php  //render('uploadDocuments.upload_document',['uploaded_docs' => @$uploaded_docs]);?>
+                                            
+                                            @include('uploadDocuments.upload_document')
                                         </div>
                                         </div>
                                         <div class="col-6">
                                         <div class="card custom-card">
                                             <?php 
                                                 $segment = service('uri');
-                                                if (!empty($uploaded_docs) && !empty($uploaded_pdf)){ ?>
+                                                if (isset($uploaded_docs) && !empty($uploaded_pdf)){ ?>
                                             <?= ASTERISK_RED_MANDATORY ?>
                                             <h5 style="text-align: left;">For computation of court fees, please use the options below carefully for all documents, interim application(s), if any, uploaded. </h5>
                                             <?php
