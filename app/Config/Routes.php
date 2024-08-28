@@ -321,7 +321,7 @@ $routes->get('on_behalf_of', 'OnBehalfOf\DefaultController::index');
 $routes->get('appearing_for', 'AppearingFor\DefaultController::index');
 $routes->get('case_details', 'CaseDetails\DefaultController::index');
 $routes->get('shareDoc', 'ShareDoc\DefaultController::index');
-$routes->post('on_behalf_of/DefaultController/save_filing_for', 'OnBehalfOf\DefaultController::save_filing_for');
+$routes->match(['GET', 'POST'],'on_behalf_of/DefaultController/save_filing_for', 'OnBehalfOf\DefaultController::save_filing_for');
 $routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
 $routes->match(['GET', 'POST'], 'report/search/actionFiledon', 'Report\Search::actionFiledon');
 $routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)/(:any)', 'Report\Search::view/$1/$2/$3/$4/$5');

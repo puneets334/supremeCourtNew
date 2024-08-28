@@ -111,12 +111,11 @@ class UploadDocsModel extends Model
        $session = session();
        // pr($session);
        
-       
         $builder = $this->db->table('efil.tbl_uploaded_pdfs docs');
         $builder->select('docs.doc_id, docs.doc_title, docs.file_name, docs.page_no, docs.uploaded_by, docs.uploaded_on, docs.upload_ip_address, docs.file_path, docs.doc_title, docs.doc_hashed_value
         ');
         // pr(USER_ADMIN);
-                if (getSessionData('login.ref_m_usertype_id') == USER_ADMIN) {
+                if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) {
                 $subquery = $this->db->table('efil.tbl_efiling_num_status')
                     ->select('*')
                     ->where('registration_id', $registration_id)
@@ -127,7 +126,7 @@ class UploadDocsModel extends Model
         $builder->where('docs.registration_id', $registration_id);
         $builder->where('docs.is_deleted', false);
 
-            if (getSessionData('login.ref_m_usertype_id') == USER_ADMIN) {
+            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) {
                 $builder->where('docs.uploaded_on <=', 'tensf.activated_on', false);
             }
         $builder->orderBy('docs.doc_id');

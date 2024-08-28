@@ -17,14 +17,14 @@ class DefaultController extends BaseController {
         }else{
             is_user_status();
         }
-        unset($_SESSION['estab_details']);
-        unset($_SESSION['efiling_details']);
-        unset($_SESSION['estab_details']);
-        unset($_SESSION['case_table_ids']);
-        unset($_SESSION['parties_list']);
-        unset($_SESSION['efiling_type']);
-        unset($_SESSION['pg_request_payment_details']);
-        unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
+        // unset($_SESSION['estab_details']);
+        // unset($_SESSION['efiling_details']);
+        // unset($_SESSION['estab_details']);
+        // unset($_SESSION['case_table_ids']);
+        // unset($_SESSION['parties_list']);
+        // unset($_SESSION['efiling_type']);
+        // unset($_SESSION['pg_request_payment_details']);
+        // unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
     }
 
     public function _remap($param = NULL) {
@@ -37,7 +37,6 @@ class DefaultController extends BaseController {
     }
 
     public function index($id = NULL) {
-
         if ($id) {
 
             $id = url_decryption($id);

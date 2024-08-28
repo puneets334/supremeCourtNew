@@ -72,7 +72,8 @@ class OnBehalfOfModel extends Model
     public function update_breadcrumbs($registrationId, $stepNo)
     {
         $session = session();
-        $efilingDetails = $session->get('efiling_details');
+        $efilingDetails = getSessionData('efiling_details');
+        
         $oldBreadcrumbs = $efilingDetails['breadcrumb_status'] . ',' . $stepNo;
         $oldBreadcrumbsArray = explode(',', $oldBreadcrumbs);
         $newBreadcrumbsArray = array_unique($oldBreadcrumbsArray);
@@ -85,6 +86,7 @@ class OnBehalfOfModel extends Model
         $builder = $this->db->table('efil.tbl_efiling_nums');
         $builder->where('registration_id', $registrationId);
         $builder->update(['breadcrumb_status' => $newBreadcrumbs]);
+        // pr($registrationId);
         if ($this->db->affectedRows() > 0)
         {
             return TRUE;
