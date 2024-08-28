@@ -56,7 +56,6 @@ class view extends BaseController
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
             $payment_type = $this->Acknowledgement_model->get_payment_status($registration_id);
         }
-
         $count_number_of_fee_pay = !empty($payment_type) ? count($payment_type) : 0;
         $fee_payment_mode_and_fee = '';
         $total_fee_paid = 0;
@@ -64,10 +63,10 @@ class view extends BaseController
             foreach ($payment_type as $dataRes) {
 
                 if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
-                    if ($dataRes['payment_type'] == PAYMENT_THROUGH_RECEIPT) {
+                    if (isset($dataRes['payment_type']) && $dataRes['payment_type'] == PAYMENT_THROUGH_RECEIPT) {
                         $fee_payment_mode = 'Offline';
 
-                        if (!empty($dataRes['payment_method_name'])) {
+                        if (isset($dataRes['payment_method_name']) && !empty($dataRes['payment_method_name'])) {
                             $payment_method = '( ' . $dataRes['payment_method_name'] . ' )';
                         }
                         if ($dataRes['payment_method_code'] == PAYMENT_METHOD_CODE_STAMP || empty($dataRes['payment_method_code'])) {
@@ -77,9 +76,10 @@ class view extends BaseController
                         }
                         $total_fee_paid += $dataRes['received_amt'];
                     } elseif ($dataRes['payment_mode'] == 'online') {
-
-                        if (!empty($dataRes['payment_mode_name'])) {
-                            $payment_method = '( ' . $dataRes['payment_method_name'] . ' )';
+                        
+                        if (isset($dataRes['payment_mode_name']) && !empty($dataRes['payment_mode_name'])) {
+                            // $payment_method = '( ' . $dataRes['payment_method_name' ?? ''] . ' )';
+                            $payment_method = '( ' . $dataRes['payment_mode_name' ?? ''] . ' )';
                         }
 
                         if (!empty($dataRes['txnDate'])) {
@@ -115,9 +115,9 @@ class view extends BaseController
                 'res_name' => $title[1],
                 'total_ia' => !empty($get_IA) ? $get_IA : '',
                 'ref_file_no' => 'NA',
-                'payment_type' => !empty($payment_type) ? $payment_type[0]['payment_type'] : '',
-                'payment_method_code' => !empty($payment_type) ? $payment_type[0]['payment_method_code'] : '',
-                'payment_details' => !empty($payment_type) ? $fee_payment_mode_and_fee : '',
+                'payment_type' => $payment_type[0]['payment_type'] ?? '',
+                'payment_method_code' => $payment_type[0]['payment_method_code'] ?? '',
+                'payment_details' => isset($payment_type) ? $fee_payment_mode_and_fee : '',
                 'count_number_of_fee_pay' => $count_number_of_fee_pay,
                 'total_amount' => $total_fee_paid,
                 'urgent' => isset($efiling_civil_data) ? $efiling_civil_data[0]['urgent'] : '',

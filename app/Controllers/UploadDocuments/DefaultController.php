@@ -156,7 +156,6 @@ class DefaultController extends BaseController {
     }
 
     public function upload_pdf() {
-pr('sdafsdf chr');
         $this->check_login();
 
         if (!empty(getSessionData('efiling_details'))) {
