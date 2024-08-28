@@ -52,12 +52,12 @@ class Database extends Config
         ],
     ];
 
-    public array $secondary = [
+    public array $sci_cmis_final = [
         'DSN'          => '',
         'hostname'     => '10.25.80.170',
         'username'     => 'postgres',
         'password'     => 'postgres',
-        'database'     => 'sci_cmis_final',
+        'database'     => 'sci_cmis_final_09_08',
         'DBDriver'     => 'Postgre',
         'cacheOn'       => false,
         'cacheDir' => '',

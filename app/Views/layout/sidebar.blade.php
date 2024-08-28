@@ -77,7 +77,19 @@ $segment = service('uri');
                         <li class="premium"><a href="<?php echo base_url('physical_hearing') ?>" class="btn-link">Physical Hearing</a> </li>
                         <li class="premium"><a href="<?php echo base_url('advocate/listed_cases') ?>" class="btn-link">Apearance</a> </li>
 
-
+                        <li class="premium">
+                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">eCopying</a>
+                            <ul id="collapse6" class="submenu accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
+                                <li><a class="btn-link" href="#">Track</a></li>
+                                <li><a class="btn-link" href="#">Application</a></li>
+                                <li><a class="btn-link" href="#">Address</a></li>
+                                <li><a class="btn-link" href="#">FAQ's</a></li>
+                                <li><a class="btn-link" href="#">Screen Reader</a></li>
+                                <li><a class="btn-link" href="#">Manual</a></li>
+                                <li><a class="btn-link" href="#">Contact Us</a></li>
+                            </ul>
+                        </li>
                         <?php if ($segment->getSegment(1) == 'superAdmin') { ?>
                         <?php } else if ($segment->getSegment(1) == 'profile') { ?>
                             <li class="health "><a href="<?= base_url('profile') ?>">Profile</a></li>

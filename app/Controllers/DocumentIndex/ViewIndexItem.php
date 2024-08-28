@@ -31,7 +31,10 @@ class ViewIndexItem extends BaseController {
 //     }
 
     public function index($doc_id) {
-
+        $uri = service('uri');
+        if ($uri->getTotalSegments() >= 3) {
+            $doc_id = $uri->getSegment(3);
+        }
         $this->check_login();
 
         $doc_id = url_decryption($doc_id);
