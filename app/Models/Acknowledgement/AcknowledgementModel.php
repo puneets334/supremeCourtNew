@@ -166,6 +166,7 @@ class AcknowledgementModel extends Model {
     }
 
     public function get_payment_status($regid) {
+        
         $builder = $this->db->table('efil.tbl_court_fee_payment');
         $builder->SELECT('*');
         $builder->WHERE('registration_id', $regid);

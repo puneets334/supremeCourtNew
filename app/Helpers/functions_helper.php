@@ -2820,7 +2820,8 @@ function getPendingCourtFee()
             } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) {
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
                 $case_nature = (!empty($court_fee_calculation_param3)) ? $court_fee_calculation_param3[0]['nature'] : null;
-                if (empty($case_nature)) {
+                if (isset($case_nature)&& empty($case_nature)) {
+                    // pr($case_nature);
                     $diary_no = (int)$court_fee_calculation_param3[0]['diary_no'] . (int)$court_fee_calculation_param3[0]['diary_year'];
                     $case_nature = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 }

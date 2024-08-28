@@ -64,10 +64,10 @@ class view extends BaseController
             foreach ($payment_type as $dataRes) {
 
                 if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
-                    if ($dataRes['payment_type'] == PAYMENT_THROUGH_RECEIPT) {
+                    if (isset($dataRes['payment_type']) && $dataRes['payment_type'] == PAYMENT_THROUGH_RECEIPT) {
                         $fee_payment_mode = 'Offline';
 
-                        if (!empty($dataRes['payment_method_name'])) {
+                        if (isset($dataRes['payment_method_name']) && !empty($dataRes['payment_method_name'])) {
                             $payment_method = '( ' . $dataRes['payment_method_name'] . ' )';
                         }
                         if ($dataRes['payment_method_code'] == PAYMENT_METHOD_CODE_STAMP || empty($dataRes['payment_method_code'])) {
@@ -78,7 +78,7 @@ class view extends BaseController
                         $total_fee_paid += $dataRes['received_amt'];
                     } elseif ($dataRes['payment_mode'] == 'online') {
 
-                        if (!empty($dataRes['payment_mode_name'])) {
+                        if (isset($dataRes['payment_method_name']) && !empty($dataRes['payment_mode_name'])) {
                             $payment_method = '( ' . $dataRes['payment_method_name'] . ' )';
                         }
 
