@@ -6,7 +6,6 @@ use Config\Database;
 use Config\Services;
 
 class AdvocateModel extends Model {
-
     protected $DBGroup = 'secondary'; 
     protected $db3;
 
@@ -79,8 +78,6 @@ class AdvocateModel extends Model {
         return $builder->getRow(); // Return the first row (similar to Laravel's first())
     }
 
-    
-
     public function getAddedAdvocatesInDiary($data)
     {
         $session = \Config\Services::session(); // Correct namespace for Services
@@ -100,7 +97,8 @@ class AdvocateModel extends Model {
             return false;
         }
         $result = $query->getResult();
-        // pr($result);
+        return $result;
+        //  pr($result);
     }
 
 
