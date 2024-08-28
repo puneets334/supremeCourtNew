@@ -699,6 +699,8 @@
     <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
     <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
     {{-- @endsection --}}
+    <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css">
     <script>
         var pending_court_fee="<?=$pending_court_fee; ?>";
         if (pending_court_fee > 0){
@@ -727,4 +729,50 @@
                 $('.pay_fee_next').show();
             }
         }
+
+        function ActionToTrash(trash_type) {
+        event.preventDefault();
+        var trash_type =trash_type;
+        var url="";
+        if (trash_type==''){
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }else if (trash_type=='UAT'){
+            url="<?php echo base_url('userActions/trash'); ?>";
+        }else if (trash_type=='SLT'){
+            url="<?php echo base_url('stage_list/trash'); ?>";
+        }else if (trash_type=='EAT'){
+            url="<?php echo base_url('userActions/trash'); ?>";
+        }else{
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }
+    //    alert('trash_type'+trash_type+'url='+url);//return false;
+        swal({
+                title: "Do you really want to trash this E-Filing,",
+                text: "once it will be trashed you can't restore the same.",
+                type: "warning",
+                position: "top",
+                showCancelButton: true,
+                confirmButtonColor: "green",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                buttons: ["Make Changes", "Yes!"],
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+            function(isConfirm){
+                if (isConfirm) {  // submitting the form when user press yes
+                    var link = document.createElement("a");
+                    link.href = url;
+                    link.target = "_self";
+                    link.click();
+                    swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
+
+                } else {
+                    //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+                }
+
+            });
+    }
     </script>

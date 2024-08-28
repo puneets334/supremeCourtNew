@@ -365,3 +365,12 @@ $routes->match(['GET', 'POST'], 'advocate', 'Advocate\AdvocateController::index'
 $routes->get('advocate/report', 'Advocate\AdvocateController::reportIndex');
 $routes->post('advocate/report', 'Advocate\AdvocateController::appearingReport');
 
+// cron routes
+$routes->match(['GET', 'POST'], 'cron/bar/', 'Cron\Bar::index');
+$routes->match(['GET', 'POST'], 'cron/scrutiny_status', 'Cron\DefaultController::index');
+$routes->match(['GET', 'POST'], 'cron/fee_lock', 'Cron\FeelockController::index');
+$routes->match(['GET', 'POST'], 'cron/replication_check', 'Cron\ReplicationCheck::index');
+$routes->match(['GET', 'POST'], 'cron/stage_check', 'Cron\StageController::index');
+
+// online copying
+$routes->match(['GET', 'POST'], 'online_copying/copy_search', 'OnlineCopying\DefaultController::copySearch');
