@@ -80,7 +80,7 @@ class Database extends Config
         ],
     ];
 
-    public array $tertiary = [
+    public array $e_services = [
         'DSN'          => '',
         'hostname'     => '10.25.80.170',
         'username'     => 'postgres',
