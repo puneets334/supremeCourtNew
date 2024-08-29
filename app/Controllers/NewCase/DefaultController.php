@@ -22,13 +22,13 @@ class DefaultController extends BaseController
 
         $this->Common_model = new CommonModel();
 
-        // unset($_SESSION['efiling_details']);
-        // unset($_SESSION['estab_details']);
-        // unset($_SESSION['case_table_ids']);
-        // unset($_SESSION['parties_list']);
-        // unset($_SESSION['efiling_type']);
-        // unset($_SESSION['pg_request_payment_details']);
-        // unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
+        unset($_SESSION['efiling_details']);
+        unset($_SESSION['estab_details']);
+        unset($_SESSION['case_table_ids']);
+        unset($_SESSION['parties_list']);
+        unset($_SESSION['efiling_type']);
+        unset($_SESSION['pg_request_payment_details']);
+        unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
     }
 
     // public function _remap($param = NULL)

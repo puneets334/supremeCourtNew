@@ -5,6 +5,7 @@ use \App\Models\Common\CommonModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\Caveat\ViewModel;
 use GuzzleHttp\Client;
+use Config\Database;
 helper('view');
 
 use eftec\bladeone\BladeOne;
@@ -3266,4 +3267,28 @@ function message_show($type, $msg) {
         $preTable = "<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp;$msg  <span class='close' onclick=hideMessageDiv()>X</span></p>";
     }
     return $preTable;
+}
+
+function article_tracking_offline($articlenumber){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('post_tracking');
+    $builder->select('office, event_type, event_date, event_time');
+    $builder->where('barcode', $articlenumber);
+    $builder->orderBy('event_date','asc');
+    $builder->orderBy('event_time','asc');
+    $query = $builder->get();
+    if ($query->getNumRows() > 0){
+        $status = 'success';
+        $rows = array();
+        $selected_data = $query->getResultArray();
+        foreach($selected_data as $r) {
+            $rows[] = $r;   
+        }
+    }
+    else{
+        $status = 'Consignment Number Not Found.';
+        $rows = array();
+    }
+    //return $rate;
+    return json_encode(array("Status" => $status, "DataValue" => $rows));
 }
