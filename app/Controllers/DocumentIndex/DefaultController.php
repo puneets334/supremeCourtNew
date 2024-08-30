@@ -294,7 +294,13 @@ class DefaultController extends BaseController
                 }else{
                     $no_of_petitioner_appellant=NULL;
                 }
-
+                $getFileDetails = $this->DocumentIndex_Select_model->get_path_size_name($registration_id);
+                
+                $file_path = explode($getFileDetails[0]['file_name'],$getFileDetails[0]['file_path']);
+                $file_path = $file_path[0];
+                $file_name = $getFileDetails[0]['file_name'];
+                $file_size = $getFileDetails[0]['file_size'];
+             
                 $data = array(
                     'registration_id' => getSessionData('efiling_details')['registration_id'],
                     'efiled_type_id' => getSessionData('efiling_details')['ref_m_efiled_type_id'],
@@ -310,9 +316,9 @@ class DefaultController extends BaseController
                     'uploaded_on' => date('Y-m-d H:i:s'),
                     'upload_ip_address' => getClientIP(),
                     'doc_hashed_value' => null,
-                    'file_name' => null,
-                    'file_path' => null,
-                    'file_size' => null,
+                    'file_name' => $file_name,
+                    'file_path' => $file_path,
+                    'file_size' => $file_size,
                     'file_type' => 'application/pdf',
                     'index_no' => null,
                     'upload_stage_id' => getSessionData('efiling_details')['stage_id'],
@@ -353,8 +359,7 @@ class DefaultController extends BaseController
 
                 }else{
                     $no_of_petitioner_appellant=NULL;
-                }
-
+                } 
                 $data = array(
                     'registration_id' => getSessionData('efiling_details')['registration_id'],
                     'efiled_type_id' => getSessionData('efiling_details')['ref_m_efiled_type_id'],
