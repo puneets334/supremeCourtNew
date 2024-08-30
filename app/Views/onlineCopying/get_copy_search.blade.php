@@ -1,31 +1,20 @@
 <?php
 $track_horizonal_timeline = array();
 $disposed_flag = array('F', 'R', 'D', 'C', 'W');
-    if (count($results) > 0) {
+    if (is_array($results) && count($results) > 0) {
         $row = $results;
-        pr($row);
         $case_no = "";
         $request_received_f = '<strong class="text-success">Received</strong>';
         array_push($track_horizonal_timeline, array("flag_type" => 'Request', "flag_description" => $request_received_f . ' ' . date("d-m-Y H:i:s", strtotime($row['application_receipt']))));
 
         if ($row['application_request'] == 'request') {
-            if ($row['allowed_request'] == 'request_to_available') {
-                //section movement
-                //   array_push($track_horizonal_timeline, array("flag_type"=>'Disposed',"flag_description"=>date("d-m-Y H:i:s", strtotime($row['dispatch_delivery_date']))));
-            } else {
-
-                $sql_asset = "select * from (select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text from user_assets u inner join user_asset_type_master a on a.id = u.asset_type left join id_proof_master i on i.id = u.id_proof_type and i.display = 'Y' where u.mobile ='" . $row['mobile'] . "' and u.email = '" . $row['email'] . "' and u.asset_type in (1) and u.diary_no = 0 order by ent_time desc limit 1) a
-union
-select * from (select u.verify_remallowed_requestark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text from user_assets u inner join user_asset_type_master a on a.id = u.asset_type left join id_proof_master i on i.id = u.id_proof_type and i.display = 'Y' where u.mobile = '" . $row['mobile'] . "' and u.email = '" . $row['email'] . "' and u.asset_type in (2) and u.diary_no = 0 order by ent_time desc limit 1) b
-union
-select * from (select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text from user_assets u inner join user_asset_type_master a on a.id = u.asset_type left join id_proof_master i on i.id = u.id_proof_type and i.display = 'Y' where u.mobile = '" . $row['mobile'] . "' and u.email = '" . $row['email'] . "' and u.asset_type in (3) and u.diary_no = 0 order by ent_time desc limit 1) c";
-                $sql_asset = $dbo->prepare($sql_asset);
-                $sql_asset->execute();
-                if ($sql_asset->rowCount() > 0) {
-                    while ($data_asset = $sql_asset->fetch(PDO::FETCH_ASSOC)) {
+                $sqRes = getCopySearchResult($row);
+                $data_asset_string = '';
+                if (count($sqRes) > 0) {
+                    foreach ($sqRes as $data_asset) {
                         if ($data_asset['verify_status'] == 1) {
                             $data_asset_status = ' <strong class="text-primary">Pending</strong>';
-                        }allowed_request
+                        }
                         if ($data_asset['verify_status'] == 2) {
                             $data_asset_status = ' <strong class="text-success">Accepted</strong>';
                         }
@@ -35,41 +24,36 @@ select * from (select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_pr
                         $data_asset_string .= $data_asset['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])) . ')<br>';
                     }
                 }
-
+                $asset_type_flag = '';
                 if ($row['filed_by'] == 2) {
                     $asset_type_flag = 5;
                 } //party
                 if ($row['filed_by'] == 3) {
-                    $asset_type_flallowed_requestag = 6;
+                    $asset_type_flag = 6;
                 } //appearing counsel
                 if ($row['filed_by'] == 4) {
                     $asset_type_flag = 4;
                 } //affidavit
 
-                $sql_asset = "select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text from user_assets u
-                            inner join user_asset_type_master a on a.id = u.asset_type
-                            left join id_proof_master i on i.id = u.id_proof_type and i.display = 'Y'
-                        where u.mobile = '" . $row['mobile'] . "' and u.email = '" . $row['email'] . "' and u.asset_type = $asset_type_flag
-                                and u.diary_no = " . $row['diary'] . " order by ent_time desc limit 1";
-                $sql_asset = $dbo->prepare($sql_asset);
-                $sql_asset->executallowed_requeste();
-                if ($sql_asset->rowCount() > 0) {
-                    while ($data_asset = $sql_asset->fetch(PDO::FETCH_ASSOC)) {
-                        if ($data_asset['verify_status'] == 1) {
+
+                $statusResult = getCopyStatusResult($row, $asset_type_flag);
+
+                if (count($statusResult) > 0) {
+                    foreach ($statusResult as $data) {
+                        if ($data['verify_status'] == 1) {
                             $data_asset_status = ' <strong class="text-primary">Pending</strong>';
                         }
-                        if ($data_asset['verify_status'] == 2) {
+                        if ($data['verify_status'] == 2) {
                             $data_asset_status = ' <strong class="text-success">Accepted</strong>';
                         }
-                        if ($data_asset['verify_status'] == 3) {
+                        if ($data['verify_status'] == 3) {
                             $data_asset_status = ' <strong class="text-danger">Rejected</strong>';
                         }
                         //array_push($track_horizonal_timeline, array("flag_type"=> 'Verify '.$data_asset['asset_name'] ,"flag_description"=>$data_asset_status.' ('.date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])).')'));
-                        $data_asset_string .= $data_asset['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])) . ')';
+                        $data_asset_string .= $data['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data['verify_on'])) . ')';
                     }
                 }
                 array_push($track_horizonal_timeline, array("flag_type" => 'Verification', "flag_description" => $data_asset_string));
-            }allowed_request
         }
 
 
@@ -85,69 +69,65 @@ select * from (select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_pr
 ?>
 
         <div class="card mt-2">
-            <div class="card-header bg-info text-white font-weight-bolder">Details</div>
+            <div class="card-header bg-primary text-white font-weight-bolder">Details</div>
             <div class="card-body">
                 <div style="border-radius: 15px 15px 15px 15px;" class="p-2 m-1">
                     <div class="row">
-                        <div class="col-md-4">Application No.: <span class="font-weight-bold text-gray"><?= $row['application_request'] == 'application' ? $row['application_number_display'] : 'NA'; ?></span>
+                        <div class="col-md-4">Application No.: <span class="font-weight-bold text-gray"><?= ($row['application_request'] == 'application') ? $row['application_number_display'] : 'NA'; ?></span>
                         </div>
                         <div class="col-md-4">CRN: <span class="font-weight-bold text-gray"><?= $row['crn'] == '0' ? '' : $row['crn']; ?></span></div>
                         <div class="col-md-4">Date: <span class="font-weight-bold text-gray"><?= date("d-m-Y", strtotime($row['application_receipt'])); ?></span>
                         </div>
-
                     </div>
                     <div class="row">
                         <div class="col-md-4">Source: <span class="font-weight-bold text-gray"><?= $row['description']; ?></span></div>
-                        <div class="col-md-4">Applied By: <span class="font-weight-bold text-gray"><?php
-                                                                                                    if ($row['filed_by'] == 1) {
-                                                                                                        echo "AOR";
-                                                                                                    }
-                                                                                                    if ($row['filed_by'] == 2) {
-                                                                                                        echo "Party";
-                                                                                                    }
-                                                                                                    if ($row['filed_by'] == 3) {
-                                                                                                        echo "Appearing Counsel";
-                                                                                                    }
-                                                                                                    if ($row['filed_by'] == 4) {
-                                                                                                        echo "Third Party";
-                                                                                                    }
-                                                                                                    if ($row['filed_by'] == 6) {
-                                                                                                        echo "Authenticated By AOR";
-                                                                                                    }
-                                                                                                    ?></span></div>
+                        <div class="col-md-4">Applied By: 
+                            <span class="font-weight-bold text-gray">
+                                <?php
+                                    if ($row['filed_by'] == 1) {
+                                        echo "AOR";
+                                    }
+                                    if ($row['filed_by'] == 2) {
+                                        echo "Party";
+                                    }
+                                    if ($row['filed_by'] == 3) {
+                                        echo "Appearing Counsel";
+                                    }
+                                    if ($row['filed_by'] == 4) {
+                                        echo "Third Party";
+                                    }
+                                    if ($row['filed_by'] == 6) {
+                                        echo "Authenticated By AOR";
+                                    }
+                                ?>
+                            </span>
+                        </div>
                         <div class="col-md-4">Applicant Name: <span class="font-weight-bold text-gray"><?= $row['name']; ?></span></div>
-
-
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">Application Status: <span class="font-weight-bold text-gray"><?= (in_array($row['application_status'], $disposed_flag)) ?  "Action Completed" : "Pending" ?></span></div>
-                        <div class="col-md-4">Delivery Mode: <span class="font-weight-bold text-gray"><?php
-                                                                                                        if ($row['delivery_mode'] == 1) {
-                                                                                                            echo "Post";
-                                                                                                            $sql_barcode = "select group_concat(barcode) as barcode from post_bar_code_mapping where copying_application_id = :id group by copying_application_id having barcode is not null";
-                                                                                                            $prepared_array = array('id' => $row['id']);
-                                                                                                            //echo $sql;
-                                                                                                            $rs_barcode = $dbo2->prepare($sql_barcode);
-                                                                                                            $rs_barcode->execute($prepared_array);
-                                                                                                            if ($rs_barcode->rowCount() > 0) {
-                                                                                                                $row_barocode = $rs_barcode->fetch(PDO::FETCH_ASSOC);
-                                                                                                                $explode_barcode = explode(",", $row_barocode['barcode']);
-                                                                                                        ?>
-                                        <a href="#" onclick="mytrack_record()" id='myBtn'>Click to Track</a>
-                                <?php
-                                                                                                            }
-                                                                                                        }
-                                                                                                        if ($row['delivery_mode'] == 2) {
-                                                                                                            echo "Counter";
-                                                                                                        }
-                                                                                                        if ($row['delivery_mode'] == 3) {
-                                                                                                            echo "Email";
-                                                                                                        }
-                                ?></span>
+                        <div class="col-md-4">Delivery Mode: <span class="font-weight-bold text-gray">
+                            <?php
+                            if ($row['delivery_mode'] == 1) {
+                                echo 'Post';
+                                $resBarcode = getCopyBarcode($row);
+                                if (count($resBarcode) > 0) {
+                                    $explode_barcode = explode(",", $resBarcode['barcode']);
+                            ?>
+                                <a href="#" onclick="mytrack_record()" id='myBtn'>Click to Track</a>
+                            <?php
+                                }
+                            }
+                            if ($row['delivery_mode'] == 2) {
+                                echo "Counter";
+                            }
+                            if ($row['delivery_mode'] == 3) {
+                                echo "Email";
+                            }
+                            ?></span>
                         </div>
                         <?php
-                        if ($row['application_request'] == 'application' && $row['delivery_mode'] != 3) {
+                        if (($row['application_request'] == 'application')  && $row['delivery_mode'] != 3) {
                         ?>
                             <div class="col-md-4">Fee: <span class="font-weight-bold text-gray">Rs. <?= $row['court_fee'] + $row['postal_fee']; ?></span>
                             </div>
@@ -164,27 +144,17 @@ select * from (select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_pr
 
 
                 <?php
-
-                if ($row['application_request'] == 'application') {
-                    $sql1 = "select b.sent_to_applicant_on, b.pdf_embed_on, b.pdf_digital_signature_on, r.order_type order_name, '' as reject_cause, b.* from copying_application_documents b
-                    left join ref_order_type r on b.order_type = r.id
-                    where b.copying_order_issuing_application_id = :id ";
+                $rs = array();
+                if (($row['application_request'] == 'application') ) {
+                    $rs = getCopyApplication($row);
                 }
-                if ($row['application_request'] == 'request') {
-                    $sql1 = "select b.path, r.order_type order_name, b.reject_cause, b.* from copying_request_verify_documents b
-                    left join ref_order_type r on b.order_type = r.id
-                    where b.copying_order_issuing_application_id = :id ";
+                if (($row['application_request'] == 'request') ) {
+                    $rs = getCopyRequest($row);
                 }
 
-                $rs1 = $dbo2->prepare($sql1);
-                $rs1->execute(array('id' => $row['id']));
-                if ($rs1->rowCount() > 0) {
+                if (count($rs) > 0) {
                     $sno = 1;
-                    //$row1 = $rs1->fetch(PDO::FETCH_ASSOC);
-
                 ?>
-
-
                     <div class="table-responsive fixed-table-body row m-1 p-1 application_document">
                         <table class="table table-bordered table-hover table-striped">
                             <thead>
@@ -197,26 +167,13 @@ select * from (select u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_pr
                             </thead>
                             <tbody>
                                 <?php
-                                while ($row1 = $rs1->fetch(PDO::FETCH_ASSOC)) {
-                                    // echo "<pre>";
-                                    // print_r($row);
-                                    // exit;
-
-
+                                foreach ($rs as $row1) {
                                     if ($row['application_request'] == 'request' && $row['allowed_request'] == 'request_to_available') {
+                                        $recv_from_sec = copyFormSentOn($row1);
 
-                                        $recv_from_sec = "select c.from_section_sent_on, us.section_name as from_section1, us2.section_name as to_section1 
-from copying_request_movement c 
-left join usersection us on us.id = c.from_section 
-left join usersection us2 on us2.id = c.to_section 
-where c.copying_request_verify_documents_id = :id and c.display = 'Y' 
-and from_section_sent_by != 0 order by c.from_section_sent_on";
-                                        $recv_from_sec = $dbo->prepare($recv_from_sec);
-                                        $recv_from_sec->execute(array('id' => $row1['id']));
-
-                                        if ($recv_from_sec->rowCount() > 0) {
+                                        if (count($recv_from_sec) > 0) {
                                             $section_data_avl = 'YES';
-                                            while ($row_section = $recv_from_sec->fetch(PDO::FETCH_ASSOC)) {
+                                            foreach ($recv_from_sec as $row_section) {
 
                                                 $snoo2++;
                                                 $section_movement .= $snoo2 . ". Section " . $row_section['from_section1'] . " -> " . $row_section['to_section1'] . '<br>(' . date("d-m-Y H:i:s", strtotime($row_section['from_section_sent_on'])) . ")";
@@ -276,37 +233,32 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
 
 
     <?php
-                    if ($section_data_avl == 'YES' && $row['application_request'] == 'request' && $row['allowed_request'] == 'request_to_available') {
-                        array_push($track_horizonal_timeline, array("flag_type" => 'Movement', "flag_description" => $section_movement));
-                    }
-                }
-                //
+            if ($section_data_avl == 'YES' && $row['application_request'] == 'request' && $row['allowed_request'] == 'request_to_available') {
+                array_push($track_horizonal_timeline, array("flag_type" => 'Movement', "flag_description" => $section_movement));
+            }
+        }
+        //
 
 
-                if (in_array($row['application_status'], $disposed_flag)) {
+        if (in_array($row['application_status'], $disposed_flag)) {
 
-                    //$data_disposed_content = "<strong class='text-danger'>".$row['status_description']."</strong>";
-                    $data_disposed_content = "<strong class='text-danger'>Action Completed</strong>";
+            //$data_disposed_content = "<strong class='text-danger'>".$row['status_description']."</strong>";
+            $data_disposed_content = "<strong class='text-danger'>Action Completed</strong>";
 
-                    if ($row['application_status'] == 'D')
-                        array_push($track_horizonal_timeline, array("flag_type" => 'Disposed', "flag_description" => $data_disposed_content . ' ' . date("d-m-Y H:i:s", strtotime($row['dispatch_delivery_date']))));
-                    else
-                        array_push($track_horizonal_timeline, array("flag_type" => 'Disposed', "flag_description" => $data_disposed_content . ' ' . date("d-m-Y H:i:s", strtotime($row['updated_on']))));
-                }
+            if ($row['application_status'] == 'D')
+                array_push($track_horizonal_timeline, array("flag_type" => 'Disposed', "flag_description" => $data_disposed_content . ' ' . date("d-m-Y H:i:s", strtotime($row['dispatch_delivery_date']))));
+            else
+                array_push($track_horizonal_timeline, array("flag_type" => 'Disposed', "flag_description" => $data_disposed_content . ' ' . date("d-m-Y H:i:s", strtotime($row['updated_on']))));
+        }
 
     ?>
-
-
     <!--START HORIZONTAL TIMELINE -->
-
-
-
-    
+    </div>
     <div class="card mt-2">
-        <div class="card-header bg-info text-white font-weight-bolder">Timeline
+        <div class="card-header bg-primary text-white font-weight-bolder">Timeline
         </div>
         <div class="card-body">
-            <div class="container my-2" id="show_tracking">
+            <div class="my-2" id="show_tracking">
                 <div class="row">
                     <div class="col-md-12 ">
 
@@ -338,7 +290,7 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
         </div>
     </div>
     <!--END HORIZONTAL TIMELINE -->
-
+                        </div>
     <style>
     ul.timeline {
         list-style-type: none;
@@ -356,7 +308,7 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
     }
     ul.timeline > li {
         margin: 20px 0;
-        padding-left: 20px;
+        padding-left: 35px;
     }
     ul.timeline > li:before {
         content: ' ';
@@ -364,7 +316,7 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
         display: inline-block;
         position: absolute;
         border-radius: 50%;
-        border: 3px solid #22c0e8;
+        border: 3px solid #124cbf;
         left: 20px;
         width: 20px;
         height: 20px;
@@ -494,7 +446,7 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
         <!-- Modal content -->
 
         <?php
-
+        if(isset($explode_barcode) && is_array($explode_barcode)){
         for ($k = 0; $k < count($explode_barcode); $k++) {
             $postage_response = article_tracking_offline($explode_barcode[$k]);
             $postage_response = json_decode($postage_response, true);
@@ -507,7 +459,7 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
                     <button type="button" class="close" data-dismiss="modal">×</button>
                 </div>
 
-                <div class="container my-2" id="show_tracking">
+                <div class="my-2" id="show_tracking">
                     <div class="row">
                         <div class="col-md-12 ">
 
@@ -534,7 +486,7 @@ and from_section_sent_by != 0 order by c.from_section_sent_on";
                     </div>
                 </div>
             </div><!--END OF DIV class="modal-content" -->
-        <?php } ?>
+        <?php } } ?>
     </div><!--END OF DIV class="modal" -->
 
 <?php

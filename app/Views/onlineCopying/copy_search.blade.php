@@ -133,7 +133,7 @@
                                                     <label for="inputPassword6" class="col-form-label">CRN</label>
                                                 </div>
                                                 <div class="col-7 pe-0">
-                                                    <input class="form-control cus-form-ctrl" id="crn" name="crn" maxlength="10" placeholder="CRN" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
+                                                    <input class="form-control cus-form-ctrl" id="crn" name="crn" maxlength="15" placeholder="CRN" placeholder="Diary No" type="text">
                                                 </div>
                                             </div>
                                         </div>

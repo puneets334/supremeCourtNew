@@ -26,9 +26,10 @@ class DefaultController extends BaseController
 
     public function copySearch()
     {
-        $category = $this->Common_modedb2l->getCategory();
+        $category = $this->Common_model->getCategory();
         return $this->render('onlineCopying.copy_search', compact('category'));
     }
+    
     
     public function getCopySearch()
     {
@@ -37,7 +38,7 @@ class DefaultController extends BaseController
         $preparedArray = [];
         $flag = $this->request->getVar('flag');
         $builder = $this->db2->table('public.copying_order_issuing_application_new a')
-            ->select("m.reg_no_display, m.c_status, a.id, a.application_number_display, a.diary, a.crn, a.application_receipt, a.updated_on, 
+            ->select("'application' application_request, m.reg_no_display, m.c_status, a.id, a.application_number_display, a.diary, a.crn, a.application_receipt, a.updated_on, 
                       a.name, a.mobile, a.email, a.allowed_request, a.dispatch_delivery_date, a.application_status, a.filed_by, a.court_fee, a.postal_fee, a.delivery_mode, 
                       r.description, s.status_description")
             ->join('public.main m', 'CAST(m.diary_no AS BIGINT) = CAST(a.diary AS BIGINT)', 'left')
@@ -58,7 +59,7 @@ class DefaultController extends BaseController
             $builder->where('crn', $this->request->getVar('crn'))
                           ->where('crn !=', '0')
                           ->unionAll(function($builder) {
-                              $builder->select("m.reg_no_display, m.c_status, a.id, a.application_number_display, a.diary, a.crn, a.application_receipt, a.updated_on, 
+                              $builder->select("'request' application_request, m.reg_no_display, m.c_status, a.id, a.application_number_display, a.diary, a.crn, a.application_receipt, a.updated_on, 
                                                 a.name, a.mobile, a.email, a.allowed_request, a.dispatch_delivery_date, a.application_status, a.filed_by, a.court_fee, a.postal_fee, a.delivery_mode, 
                                                 r.description, s.status_description")
                                       ->from('public.copying_request_verify a')
@@ -76,6 +77,15 @@ class DefaultController extends BaseController
         // Execute the query
         $results = $this->db2->query($query, $preparedArray)->getRowArray();
         return $this->render('onlineCopying.get_copy_search', compact('results'));
+    }
+
+    public function trackConsignment()
+    {
+        return $this->render('onlineCopying.track');
+    }
+    public function getConsignmentStatus()
+    {
+        return $this->render('onlineCopying.get_consignment_status');
     }
     
 }
