@@ -42,7 +42,24 @@ class DocumentIndexSelectModel extends Model {
             return FALSE;
         }
     }
+    function get_path_size_name($registration_id) {
 
+        //$this->db->SELECT('ed.*,tup.page_no,tup.doc_title as pdf,tup.file_size,tup.doc_hashed_value,dm.docdesc'); //,sub_dm.docdesc
+        $builder = $this->db->table('efil.tbl_uploaded_pdfs ed');
+        $builder->SELECT('file_name,file_path,doc_title,doc_hashed_value,file_size');  
+        $builder->WHERE('ed.registration_id', $registration_id);
+        $builder->WHERE('ed.is_active', TRUE);
+        $builder->WHERE('ed.is_deleted', FALSE); 
+        $builder->orderBy('ed.doc_id', 'desc'); 
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            //var_dump(json_encode($result));exit();
+            return $result;
+        } else {
+            return FALSE;
+        }
+    }
     function get_index_items_list($registration_id) {
 
         //$this->db->SELECT('ed.*,tup.page_no,tup.doc_title as pdf,tup.file_size,tup.doc_hashed_value,dm.docdesc'); //,sub_dm.docdesc
