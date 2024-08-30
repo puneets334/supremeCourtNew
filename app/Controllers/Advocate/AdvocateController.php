@@ -64,7 +64,7 @@ class AdvocateController extends BaseController
     {
         $postedData = $this->request->getPost();
      
-        $data['slip_data'] = Advocate::getSubmittedAdvocatesInDiary($postedData);
+        $data['slip_data'] = $this->AdvocateModel->getSubmittedAdvocatesInDiary($postedData);
         return $this->render('advocate.display_appearance_slip', @compact('data'));        
 
     }
