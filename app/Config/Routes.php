@@ -384,3 +384,5 @@ $routes->match(['GET', 'POST'], 'cron/stage_check', 'Cron\StageController::index
 // online copying
 $routes->match(['GET', 'POST'], 'online_copying/copy_search', 'OnlineCopying\DefaultController::copySearch');
 $routes->match(['GET', 'POST'], 'online_copying/get_copy_search', 'OnlineCopying\DefaultController::getCopySearch');
+$routes->match(['GET', 'POST'], 'online_copying/track_consignment', 'OnlineCopying\DefaultController::trackConsignment');
+$routes->match(['GET', 'POST'], 'online_copying/get_consignment_status', 'OnlineCopying\DefaultController::getConsignmentStatus');
