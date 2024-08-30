@@ -4,14 +4,22 @@
 namespace App\Models\PhysicalHearing;
 
 use CodeIgniter\Model;
+use Config\Database;
 
 class ConsentModel extends Model
 {
+
+    protected $DBGroup = 'default';
+    protected $sci_cmis_final;
+    protected $physical_hearing;
+
     function __construct()
     {
         // Call the Model constructor
         parent::__construct();
         $db = \Config\Database::connect();
+        $this->sci_cmis_final = Database::connect('sci_cmis_final');
+        $this->physical_hearing = Database::connect('physical_hearing');
     }
 
     function get_master($table, $condition){
@@ -40,18 +48,20 @@ class ConsentModel extends Model
         $insert_id = $physical_hearing_db->insert_id();
         return $insert_id;
     }
-    function save($table, $data){
-        $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
-        if($physical_hearing_db->insert($table, $data))
+    function save($table=null, $data=null):bool
+    {
+        // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
+        if($this->physical_hearing->insert($table, $data))
             return 1;
         else
             return 0;
     }
 
-    function update($table, $data, $condition_array){
-        $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
+    function update($table=null, $data=null, $condition_array=null):bool
+    {
+        // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         //$physical_hearing_db->where($condition_array)->update($table, $data);
-        if($physical_hearing_db->where($condition_array)->update($table, $data))
+        if($this->physical_hearing->where($condition_array)->update($table, $data))
             return 1;
         else
             return 0;

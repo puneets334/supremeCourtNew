@@ -1,6 +1,8 @@
 <?php
 
 use App\Models\PhysicalHearing\ConsentVCModel;
+use App\Models\PhysicalHearing\AuditModel;
+use App\Models\PhysicalHearing\HearingModel;
 
 /**
  * Created by PhpStorm.
@@ -121,11 +123,12 @@ if(!function_exists('sendOtp')){
 
 function sendOtp($params=array())
 	{
-		$CI = &get_instance();
+		// $CI = &get_instance();
 		$mobile = '';
 		$otp = rand(10000, 99999);
 		$msg = false;
-		$CI->load->library('session');
+		// $CI->load->library('session');
+        $session = \Config\Services::session();
 		//$CI->session->set_userdata('otp', $otp);
 		if (isset($params['mobile']) && !empty($params['mobile'])) {
 			$_SESSION['otp']=$otp;
@@ -144,12 +147,13 @@ function sendOtp($params=array())
 			$max_requests = 1; // Maximum number of requests
 			$time_period = 5; // Time period in seconds (e.g., 1 hour)
 			$request_time_time_period=date('Y-m-d H:i:s', time() - $time_period);
-			$CI->load->model('Audit_model');
-			$request_count = $CI->Audit_model->check_efiling_sms_mobile_no_log($mobile,$request_time_time_period,$ip_address);
+			// $CI->load->model('Audit_model');
+            $Audit_model = new AuditModel();
+			$request_count = $Audit_model->check_efiling_sms_mobile_no_log($mobile,$request_time_time_period,$ip_address);
 			if ($request_count >= $max_requests) {
 				// Too many requests, show an error message
 				$text_msg = 'Please wait ' . env('SMS_RESEND_LIMIT') . ' seconds and then try again!!'; // code to stop sms flooding
-				$CI->session->set_flashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">' . $text_msg . '</p> </div>');
+				$session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">' . $text_msg . '</p> </div>');
 				return FALSE;
 			}
 				$url = "http://10.0.0.0/eAdminSCI/a-push-sms-gw?mobileNos=" . trim($mobile) . "&message=" . rawurlencode("OTP for Login is $otp. - Supreme Court of India") . "&typeId=14&templateId=" . PHYSICAL_HEARING_LOGIN_OTP . "&myUserId=NIC001001&myAccessId=root";
@@ -164,7 +168,7 @@ function sendOtp($params=array())
 					'ip_address' => get_client_ip(),
 					'mobile_no' => $mobile
 				);
-				$db_response_sms = $CI->Audit_model->insert_efiling_sms_email_dtl($data_email);
+				$db_response_sms = $Audit_model->insert_efiling_sms_email_dtl($data_email);
 			} else {
 				//return "error";
 				$msg = false;
@@ -208,27 +212,27 @@ function sendOtp($params=array())
 
     function case_listed_in_daily_list_status($diary_no)
     {
-        $ci = &get_instance();
-        $ci->load->model('hearing_model');
-
-        $case_listed_in_daily_list_date=$ci->hearing_model->get_case_listed_in_daily_list($diary_no);
-
-        if(!empty($case_listed_in_daily_list_date))
-        {
+        // $ci = &get_instance();
+        // $ci->load->model('hearing_model');
+        $hearing_model = new HearingModel();
+        $case_listed_in_daily_list_date=$hearing_model->get_case_listed_in_daily_list($diary_no);
+        // pr($case_listed_in_daily_list_date);
+        if(!empty($case_listed_in_daily_list_date)) {
             $aud_nomination_status=checkEntryWithinAllowDateAndTime($case_listed_in_daily_list_date[0]['next_dt']);
-        }
-        else
+        } else {
             $aud_nomination_status=1;
-
+        }
         return  $aud_nomination_status;
     }
+    
     function case_listed_in_daily_list_next_date($diary_no)
     {
         $case_next_date=null;
-        $ci = &get_instance();
-        $ci->load->model('hearing_model');
+        // $ci = &get_instance();
+        // $ci->load->model('hearing_model');
+        $hearing_model = new HearingModel();
 
-        $case_listed_in_daily_list_date=$ci->hearing_model->get_case_listed_in_daily_list($diary_no);
+        $case_listed_in_daily_list_date=$hearing_model->get_case_listed_in_daily_list($diary_no);
 
         if(!empty($case_listed_in_daily_list_date))
         {
@@ -271,8 +275,9 @@ function send_email($to_email,$subject, $message,$attendee_mail=null,$attachment
     $attachment=json_decode($attachment);
     $attachment=$attachment[0]->url;
 
-        $ci = &get_instance();
-        $ci->load->library('email');
+        // $ci = &get_instance();
+        // $ci->load->library('email');
+        $email = \Config\Services::email();
         $config = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.mail.gov.in',
@@ -283,28 +288,28 @@ function send_email($to_email,$subject, $message,$attendee_mail=null,$attachment
             'charset' => 'utf-8'
         );
         
-        $ci->email->initialize($config);
-        $ci->email->set_mailtype("html");
-        $ci->email->set_newline("\r\n");
-        $ci->email->to($to_email);
-        $ci->email->from('causelists@nic.in', "Supreme Court of India");
-        $ci->email->subject($subject);
+        $email->initialize($config);
+        $email->set_mailtype("html");
+        $email->set_newline("\r\n");
+        $email->to($to_email);
+        $email->from('causelists@nic.in', "Supreme Court of India");
+        $email->subject($subject);
 
         $data = array(
             'message' => $message
         );
 
         if(is_null($attendee_mail))
-            $ci->email->message($ci->load->view('email/html_mail',$data, true));
+            $email->message(render('email.html_mail',$data, true));
         else if($attendee_mail==1)
-            $ci->email->message($ci->load->view('email/attendee_list_mail',$data, true));
+            $email->message(render('email.attendee_list_mail',$data, true));
 
         if(!empty($attachment)) {
             $mail_subject=$subject.'.pdf';
-            $ci->email->attach($attachment,'attachment', $mail_subject);
+            $email->attach($attachment,'attachment', $mail_subject);
         }
         
-        $response = $ci->email->send();
+        $response = $email->send();
 
         if ($response) {
             $result = 'success';
@@ -410,17 +415,20 @@ function checkEntryWithinAllowDateAndTime($list_date)
 //New method copied on 23-05-2022
 function isListDateWithinSummerVacation()
 {
-    //TODO - listing date check for summer vacation 2022
-    $toDayDate = strtotime(date("Y-m-d H:i:s"));
-    /*$toDayDate = strtotime('2022-05-23 01:00:00');*/
-    $vacationDateBegin = strtotime("2022-05-22 24:00:00");
-    $vacationDateEnd = strtotime("2022-07-08 23:59:00");
-
-    if($toDayDate > $vacationDateBegin && $toDayDate < $vacationDateEnd) {
-        return 1;
-    } else {
-        return 0;
-    }
+    // //TODO - listing date check for summer vacation 2022
+    // $toDayDate = strtotime(date("Y-m-d H:i:s"));
+    // /*$toDayDate = strtotime('2022-05-23 01:00:00');*/
+    // // $vacationDateBegin = strtotime("2022-05-22 24:00:00");
+    // // $vacationDateEnd = strtotime("2022-07-08 23:59:00");
+    // // Added for current year By Ashutosh Gupta
+    // $vacationDateBegin = strtotime("2024-05-20 00:00:00");
+    // $vacationDateEnd = strtotime("2024-07-08 23:59:59");
+    // if($toDayDate > $vacationDateBegin && $toDayDate < $vacationDateEnd) {
+    //     return 1;
+    // } else {
+    //     return 0;
+    // }
+    return 1;
 }
 
 function getNextMiscDayOfHearing()
@@ -429,30 +437,27 @@ function getNextMiscDayOfHearing()
     // $ci->load->model('consent_VC_model');
     $consent_VC_model = new ConsentVCModel();
     $isTodayFallWithinSummerVacation=isListDateWithinSummerVacation();
-    if($isTodayFallWithinSummerVacation){ // if list date fall within summer vacation 2022
+    // pr($isTodayFallWithinSummerVacation);
+    if($isTodayFallWithinSummerVacation) // if list date fall within summer vacation 2022
         $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek(null,$isTodayFallWithinSummerVacation);
-    } else {
-        $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek(null, null);
-        pr($firstWorkingMiscDay);
-    }
-    $next_misc_working_date=$firstWorkingMiscDay[0]['working_date'];
-
+    else
+        $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek();
+    $next_misc_working_date = isset($firstWorkingMiscDay) ? $firstWorkingMiscDay[0]['working_date'] : NULL;
     $aud_nomination_status=checkEntryWithinAllowDateAndTime($next_misc_working_date);
-
-    if($aud_nomination_status!=1)
-    {
+    if($aud_nomination_status!=1) {
         if($isTodayFallWithinSummerVacation)
             $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek($show_next_misc_date_cases='show',$isTodayFallWithinSummerVacation);
         else
             $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek($show_next_misc_date_cases='show');
     }
-    $next_misc_working_date=$firstWorkingMiscDay[0]['working_date'];
+    // echo 'Hello'; pr($firstWorkingMiscDay);
+    $next_misc_working_date = isset($firstWorkingMiscDay) ? $firstWorkingMiscDay[0]['working_date'] : NULL;
     //echo $next_misc_working_date;
     //$next_misc_working_date='2024-04-18';
-    //echo $next_misc_working_date;
- 
+    //echo $next_misc_working_date; 
     return $next_misc_working_date;
 }
+
 function set_cookie_with_samesite($name, $value = '', $expire = '', $domain = '', $path = '/', $prefix = '', $secure = FALSE, $httponly = FALSE, $samesite = 'Lax')
 {
 	//set_cookie_with_samesite('PHPSESSID', $_COOKIE['PHPSESSID'], time() + 3600, '', '', FALSE, TRUE,TRUE, 'Lax'); // call by controller testing pending
@@ -508,42 +513,44 @@ function set_cookie_with_samesite($name, $value = '', $expire = '', $domain = ''
 // }
 function audit_trail_log($action,$data=null,$user_id=null)
 {
-	$ci = &get_instance();
-	$ci->load->model('Audit_model');
-	$ci->load->library('session');
+	// $ci = &get_instance();
+	// $ci->load->model('Audit_model');
+	// $ci->load->library('session');
 	//$ci->load->database('physical_hearing');
+    $Audit_model = new AuditModel();
 	if (!empty($user_id) && $user_id != null) {
 		$user_id = $user_id;
 	} else {
 		$user_id = $_SESSION['loginData']['user_id'];
 	}
-	$result = $ci->Audit_model->log($action,$user_id,$data);
+	$result = $Audit_model->log($action,$user_id,$data);
 }
 function audit_logUser($action,$data)
 {
-	$ci = &get_instance();
-	$ci->load->model('Audit_model');
-	$ci->load->library('session');
+	// $ci = &get_instance();
+	// $ci->load->model('Audit_model');
+	// $ci->load->library('session');
 	//$ci->load->database('physical_hearing');
-	$result = $ci->Audit_model->logUser($action,$data);
+    $Audit_model = new AuditModel();
+	$result = $Audit_model->logUser($action,$data);
 }
 
 function check_session_timeout()
 {
-	$ci = &get_instance();
-	$ci->load->library('session');
+	// $ci = &get_instance();
+	// $ci->load->library('session');
 	$timeout =session_expiration_time_inseconds;
 	$current_time = time();
 	if ($_SESSION['loginData']['login_time_inseconds']) {
 		$last_activity = $_SESSION['loginData']['login_time_inseconds'];
 		if (($current_time - $last_activity) > $timeout) {
 			audit_trail_log('logout','User logged session out');
-			redirect(base_url('index.php/auth/logout'));
+			return redirect()->to(base_url('index.php/auth/logout'));
 		} else {
 			$_SESSION['loginData']['login_time_inseconds'] = $current_time;
 		}
 	} else {
 		//header('Location:'.base_url('index.php/auth/logout'));
-		redirect(base_url('index.php/auth/logout'));
+		return redirect()->to(base_url('index.php/auth/logout'));
 	}
 }

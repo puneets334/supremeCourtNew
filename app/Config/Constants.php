@@ -933,3 +933,16 @@ define('ADMIN_AUTO_DIARY_USER_ID_FOR_EFM',7087);
 define('ADMIN_AUTO_DIARY_ICMIS_USER_CODE',10531);
 define('ADMIN_AUTO_DIARY_EMP_ID',9999);
 define('ADMIN_AUTO_DIARY_FIRST_NAME',"AUTO GENERATE eFM");
+
+// for physical hearing common helper
+define('session_expiration_time_inseconds', 60);
+define('PHYSICAL_HEARING_LOGIN_OTP', '1107161242971352833');
+define('CASES_ALLOWD_MAX_LIMIT_OF_AOR',5000000000);
+define('SMS_TO_CONCERN','9711475023,9891713636,8920463959');
+//define('EMAIL_TO_CONCERN','sec.control@sci.nic.in, admn.gen@sci.nic.in, caretaking.sc@sci.nic.in,sca.mohitjain@sci.nic.in, sca.kbpujari@sci.nic.in,adreg.hsjaggi@sci.nic.in,ppavan.sc@nic.in,sca.garvit@sci.nic.in,reception.office@sci.nic.in'); // for production
+
+define('EMAIL_TO_CONCERN','sca.mohitjain@sci.nic.in,sca.kbpujari@sci.nic.in,'); //for development
+
+define('APP_NAME_L1','Physical Hearing');
+define('APP_NAME_L2','(with Hybrid Option)');
+define('APP_NAME_IN_HEADER',APP_NAME_L1);
