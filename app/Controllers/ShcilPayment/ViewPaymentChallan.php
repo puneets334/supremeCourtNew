@@ -1,21 +1,20 @@
 <?php
+namespace App\Controllers\ShcilPayment;
+use App\Controllers\BaseController;
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
-
-class ViewPaymentChallan extends CI_Controller {
+class ViewPaymentChallan extends BaseController {
 
     public function __construct() {
         parent::__construct();
         //$this->load->model('shcilPayment/Payment_model');
     }
     
-    public function _remap($param = NULL) {
+    // public function _remap($param = NULL) {
         
-        if($this->uri->total_segments()== 3){             
-             $this->index($this->uri->segment(3));
-        }
-    }
+    //     if($this->uri->total_segments()== 3){             
+    //          $this->index($this->uri->segment(3));
+    //     }
+    // }
 
     public function index() {
 
@@ -28,8 +27,10 @@ class ViewPaymentChallan extends CI_Controller {
             redirect('login');
             exit(0);
         }*/
-
-        $shcilrefno = explode('$$',url_decryption($this->uri->segment(3)));
+        $segment = service('uri');
+        // pr(url_decryption($segment->getSegment(3)));
+        // pr(explode('$$',url_decryption($segment->getSegment(3))));
+        $shcilrefno = explode('$$',url_decryption($segment->getSegment(3)));
         //  0 => order_no , 1 => received_amt
         if (empty($shcilrefno[0]) || empty($shcilrefno[1])) {
             echo 'ERROR|Data tempered';
@@ -44,10 +45,10 @@ class ViewPaymentChallan extends CI_Controller {
             'EST_NAME' => 'SUPREME COURT OF INDIA');
 
         $addInfo = json_encode($otherInfo);
-
         $post_param = "userid=" . STOCK_HOLDING_LOGIN . "&shcilrefno=" . trim($shcilrefno[0]) . "&amt=" . trim($shcilrefno[1]) . "&addInfo=" . $addInfo;
         $url = STOCK_HOLDING_PAYMENT_CHALLAN_URL.'?'.$post_param;
-        header('Location: '.$url);
+        return redirect()->to($url);
+        // header('Location: '.$url);
         //echo '<script>window.open("''")</script>';
 
         /*$ch = curl_init($url);

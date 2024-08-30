@@ -77,7 +77,8 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     $ArrayHOLD = array(HOLD);
                     $ArrayDISPOSED = array(DISPOSED);
                     if (($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ACTION_ADMIN) && in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-                        if ($details['details'][0]['c_status'] != 'D') {
+                        
+                        if (isset($details['details'][0]['c_status']) && $details['details'][0]['c_status'] != 'D') {
                             if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
                                 echo '<a data-bs-toggle="modal" href="#approveModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Approve</a>
                                       <a data-bs-toggle="modal" href="#disapproveModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Disapprove</a>';
@@ -88,7 +89,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             }
                         }
                         if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
-                            echo $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
+                            echo $details['details'][0]['c_status'] ?? $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
                         }
                     }
                     ?>

@@ -100,7 +100,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             }
                         }
                         $idle_Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage);
-                        if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $idle_Array) && $this->uri->segment(3) == url_encryption('idle')) {
+                        if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $idle_Array) && $segment->getSegment(3) == url_encryption('idle')) {
                             ?>
                             <a data-toggle="modal" href="#lodges_cases" class="btn quick-btn btn-success btn-sm">Make Idle</a>
                             <a data-toggle="modal" href="#delete_lodges_cases" class="btn quick-btn btn-danger btn-sm">Make Idle & Delete</a>

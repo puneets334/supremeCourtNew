@@ -44,7 +44,6 @@ class StageList extends BaseController {
     } */
 
     public function index($stages) {
-
         $users_array = array(USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) {
             return redirect()->to(base_url('login'));

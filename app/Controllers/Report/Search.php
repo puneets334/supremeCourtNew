@@ -117,12 +117,23 @@ class Search extends BaseController {
         }
     }
     function view() {
-        
-       $uris= $this->uri->segment(4); $muri= str_replace('.','/',$uris);
-       $registration_id= $this->uri->segment(5); $type= $this->uri->segment(6); $stage= $this->uri->segment(7); $efiling_no= $this->uri->segment(8);
+        $segment = service('uri');
+       $uris= $segment->getSegment(4); 
+       $muri= str_replace('.','/',$uris);
+    //   pr($muri);
+       $registration_id= $segment->getSegment(5); 
+       $type= $segment->getSegment(6); 
+       $stage= $segment->getSegment(7); 
+       $efiling_no = $segment->getSegment(8);
        $ids= $registration_id.'#'.$type.'#'.$stage.'#'.$efiling_no;
+    
        $idss = url_encryption($ids);
-       if (!empty($registration_id) && !empty($type) && !empty($stage)){ redirect($muri.'/'.$idss); }else{ redirect('report/search');}
+       if (!empty($registration_id) && !empty($type) && !empty($stage)){ 
+        // pr($muri.'/'.$idss);
+        return redirect()->to($muri.'/'.$idss); 
+    }else{ 
+        redirect('report/search');
+    }
     }
     public function showCaseStatusReport()
     {
