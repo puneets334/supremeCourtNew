@@ -1,15 +1,11 @@
-@extends('layout.advocateApp')
+@extends('layout.app')
 @section('content')
-
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-
 <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
@@ -22,12 +18,6 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
-
-
-
-
-
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -38,8 +28,9 @@
                             <div class="dash-card">
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
-                                    <h5 class="unerline-title">CAUSE LIST</h5>
+                                    <h5 class="unerline-title"> Cause List </h5>
                                 </div>
+
                                 <div class="table-sec">
                                     <div class="table-responsive">
                                         <table class="table table-striped custom-table first-th-left dt-responsive nowrap" id="datatable-responsive">
@@ -113,6 +104,18 @@
                                         </table>
                                     </div>
                                 </div>
+
+                                <div class="modal fade" id="modal-lg">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content myModal_content">
+
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                    <!-- /.modal-dialog -->
+                                </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -120,32 +123,10 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content myModal_content">
-
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/sha256.js"></script>
-    <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
-    <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
-    <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
+    @push('script')
+   
+    <script src="<?=base_url();?>assets/js/sweetalert2@11.js"></script>
+    <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert2.min.css"> 
     <script>
 
         // var token = $("meta[name='csrf-token']").attr("content");
@@ -160,6 +141,20 @@
         //     showConfirmButton: false,
         //     timer: 3000
         // });
+
+
+        function printErrorMsg (msg) {
+            //$(".print-error-msg").find("ul").html('');
+            //$(".print-error-msg").css('display','block');
+            $.each( msg, function( key, value ) {
+                Swal.fire({
+                    icon: 'error',
+                    title: value
+                })
+                return false;
+                //$(".print-error-msg").find("ul").append('<li>'+value+'</li>');
+            });
+        }
 
         $(document).on("click", ".btn_click", function () {
             var CSRF_TOKEN = 'CSRF_TOKEN';
@@ -216,18 +211,18 @@
             cache: false,
             dataType: "json",
             success: function (data) {
-                alert("Data is:  " + data);
+                // alert("Data is:  " + data);
                 $('.btn_save').attr('disabled', false);
                 $(".load_process").html('');
 
                 if (data.status == 'timeout') {
-                    Toast.fire({
+                    Swal.fire({
                         icon: 'error',
                         title: 'Time Out'
                     });
 
                     setTimeout(function() {
-                        window.location.href = "/welcome";
+                        window.location.href = "/";
                     }, 2000);
 
                 } else if (data.status == 'success') {
@@ -237,7 +232,9 @@
                     $("#advocate_title").attr('disabled', false);
                     $("#advocate_name").prop("readonly", false);
 
-                    Toast.fire({
+                    // alert("Record Added Successfully.");
+
+                    Swal.fire({
                         icon: 'success',
                         title: 'Record Added Successfully.'
                     });
@@ -281,7 +278,7 @@
             //dataType: "json",
             success: function (data) {
                 if (data.status == 'timeout') {
-                    Toast.fire({
+                    Swal.fire({
                         icon: 'error',
                         title: 'Time Out'
                     })
@@ -290,7 +287,7 @@
                     }, 2000);
                 }
                 else if(data.status == 'success') {
-                    Toast.fire({
+                    Swal.fire({
                         icon: 'success',
                         title: data.msg
                     })
@@ -299,7 +296,7 @@
                     $('.advocate_remove_'+data.id).closest("tr").remove();
                 }
                 else{
-                    Toast.fire({
+                    Swal.fire({
                         icon: 'error',
                         title: 'No Changes.'
                     })
@@ -321,8 +318,6 @@
         var cause_title = $(this).data('cause_title');
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-
-
         if ($("#certify_check_box").prop('checked')==false){
 
             Swal.fire({
@@ -330,20 +325,12 @@
             title: 'Check Box Required',
             text: 'I certify check box must be checked',
             confirmButtonText: 'OK'
-        });
-        return false;
-
-
-
-        //    alert("I certify check box must be checked");
-        //     return false;
+            });
+            return false;
         }
-
-
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('advocate/confirm_final_submit'); ?>",
-
             data: {
             CSRF_TOKEN: CSRF_TOKEN_VALUE,
             case_no:case_no,
@@ -360,15 +347,15 @@
             success: function (data) {
 
                 if(data.status == 'timeout') {
-                    Toast.fire({
+                    Swal.fire({
                         icon: 'error',
                         title: 'Time Out'
-                    })
+                    })       
                     setTimeout(function(){window.location.href = "/welcome";}, 2000);
                 }
                 else if(data.status == 'success') {
-                    alert("Submitted Successfully");
-                    Toast.fire({
+                    // alert("Submitted Successfully");
+                    Swal.fire({
                         icon: 'success',
                         title: 'Submitted Successfully.'
                     })
@@ -376,17 +363,13 @@
 
                     $(".myModal_content").html("");
                     display_appearance_slip(data.case_no,data.cause_title,data.diary_no,data.next_dt,data.appearing_for,data.brd_slno,data.courtno);
-
-
-
                 }
                 else if(data.status == 'checkbox'){
                     console.log(data.data);
                     printErrorMsg(data.data);
                 }
                 else{
-                    alert("No Changes");
-                    Toast.fire({
+                    Swal.fire({
                         icon: 'error',
                         title: 'No Changes.'
                     })
@@ -396,7 +379,20 @@
         });
     });
 
+    function display_appearance_slip(case_no,cause_title,diary_no,next_dt,appearing_for,brd_slno,courtno){
 
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('advocate/display_appearance_slip'); ?>",
+            data: {case_no:case_no, cause_title:cause_title, diary_no:diary_no,next_dt:next_dt, appearing_for: appearing_for,brd_slno: brd_slno, courtno: courtno},
+            cache: false,
+            //dataType: "text",
+            success: function (data) {
+                $(".myModal_content").html(data);
+            }
+        });
+
+    }
 
 
 
@@ -408,9 +404,5 @@
 
     </script>
 
-
-
-
-
-
+    @endpush
 @endsection

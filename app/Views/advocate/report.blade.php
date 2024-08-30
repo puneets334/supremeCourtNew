@@ -1,39 +1,47 @@
-@extends('admin.master')
-
+@extends('layout.app')
 @section('content')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style>
-        .form-group.required .control-label:after {
-            content:"*";
-            color:red;
-        }
 
-    </style>
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-12">
-                        <h1 class="m-0">{{$heading}}</h1>
-                    </div><!-- /.col -->
 
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-section dashboard-tiles-area"></div>
+                <div class="dashboard-section">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card">
+                                {{-- Page Title Start --}}
+                                <div class="title-sec">
+                                    <h5 class="unerline-title"> Advocates Appearing </h5>
+                                </div>
+                                <div class="page-title">
+                                    <h5>Search</h5>
+                                </div>
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <div class='row '>
-                    <!-- Message -->
-                    @if (session('status'))
-                        <div class="col-12 alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>{{ session('status') }}</strong></div>
-                    @elseif(session('failed'))
-                        <div class="col-12 alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>{{ session('failed') }}</strong></div>
-                    @endif
+                                <div class="table-sec">
+                                <div class='row '>
+                                    <!-- Message -->
+                                    @if (session('status'))
+                                        <div class="col-12 alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>{{ session('status') }}</strong></div>
+                                    @elseif(session('failed'))
+                                        <div class="col-12 alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>{{ session('failed') }}</strong></div>
+                                    @endif
                     <div class="col-md-12">
                         <div class="card card-primary">
                             <div class="card-header">
@@ -41,7 +49,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form class="form-horizontal" method="POST" action="{{ route('advocate::report') }}">
+                            <form class="form-horizontal" method="POST" action="<?php echo base_url('advocate/report'); ?>">
                                 @csrf
                                 <div class="card-body">
                                     <div class="row">
@@ -101,60 +109,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                @php
-                                                    $sno = 1;
-                                                @endphp
-                                                @foreach($list as $advocate)
-
-
-
-                                                    @if($advocate['diary_details']->pno == 2)
-                                                        @php $pet_name = $advocate['diary_details']->pet_name." AND ANR."; @endphp
-                                                    @elseif($advocate['diary_details']->pno > 2)
-                                                        @php $pet_name = $advocate['diary_details']->pet_name." AND ORS."; @endphp
-                                                    @else
-                                                        @php $pet_name = $advocate['diary_details']->pet_name; @endphp
-                                                    @endif
-
-                                                    @if($advocate['diary_details']->rno == 2)
-                                                        @php $res_name = $advocate['diary_details']->res_name." AND ANR."; @endphp
-                                                    @elseif($advocate['diary_details']->rno > 2)
-                                                        @php $res_name = $advocate['diary_details']->res_name." AND ORS."; @endphp
-                                                    @else
-                                                        @php $res_name = $advocate['diary_details']->res_name; @endphp
-                                                    @endif
-
-                                                    <tr>
-                                                        <td>{{ $sno++ }}</td>
-                                                        <td>{{ date('d-m-Y', strtotime($advocate['list_date'])) }}</td>
-
-                                                        <td>{{ $advocate['court_no'] }}</td>
-                                                        <td>{{ $advocate['item_no'] }}</td>
-                                                        <td> {{ $advocate['diary_details']->reg_no_display ?: $advocate['diary_details']->diary_no; }} </td>
-                                                        <td>
-                                                            {{ $pet_name }}<br>
-                                                            Vs.
-                                                            <br>
-                                                            {{ $res_name }}
-                                                        </td>
-                                                        <td>
-                                                            <div>
-                                                                @if( $advocate['appearing_for'] == 'P')
-                                                                    <u><b>For Petitioner</b></u>
-                                                                @else
-                                                                    <u><b>For Respondent</b></u>
-                                                                @endif
-                                                            </div>
-
-                                                            <?php $sub_sno = 1; ?>
-                                                            @foreach($advocate['advocate_name'] as $key => $adv_name)
-                                                                <div>{{ $sub_sno++.'. '.$adv_name->advocate_title.' '.$adv_name->advocate_name.', '.$adv_name->advocate_type.''; }}</div>
-                                                            @endforeach
-
-                                                        </td>
-
-                                                    </tr>
-                                                @endforeach
+                                               
                                                 </tbody>
                                             </table>
 
@@ -172,19 +127,35 @@
 
 
                 </div>
-            </div><!-- /.container-fluid -->
-        </section>
+                                </div>
 
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- /.content-wrapper -->
+    @push('script')
+   
+    <script src="<?=base_url();?>assets/js/sweetalert2@11.js"></script>
+    <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert2.min.css"> 
     <script>
-        $(function () {
-            bsCustomFileInput.init();
-            $('#cause_list_date').datetimepicker({
-                format: 'DD-MM-YYYY'
-            });
 
-        });
+  
+
+
+
+
+
+
+
+
 
     </script>
+
+    @endpush
 @endsection
