@@ -238,7 +238,8 @@
                         icon: 'success',
                         title: 'Record Added Successfully.'
                     });
-                    $('.table_added_advocates tr:last').after('<tr>'+
+                    // $('.table_added_advocates tr:last').after('<tr>'+
+                    $('.sortable').append('<tr>'+
                         '<td><span class="drag_to_sort fas fa-arrows-alt"></span>'+
                         '<input type="hidden" name="sortable_id[]" value="'+data.data.id+'" />'+
                         '</td>'+
