@@ -1,34 +1,53 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+// defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Consent extends CI_Controller {
+namespace App\Controllers\PhysicalHearing;
+
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\PhysicalHearing\ConsentVCModel;
+use App\Models\PhysicalHearing\ConsentModel;
+use App\Models\PhysicalHearing\HearingModel;
+// use App\Models\PutModel;
+
+class Consent extends BaseController {
+    
+    protected $consent_VC_model;
+    protected $consent_model;
+    protected $hearing_model;
+
     public function __construct()
     {
         parent::__construct();
-		if (!isset($_SESSION['loginData']) && empty($_SESSION['loginData'])) {
-			redirect('auth');
-		}else{
-			is_user_status();
-		}
-        $this->load->helper('common');
-        $this->load->helper('encryptdecrypt');
-        $this->load->helper('myarray');
-        $this->load->helper('curl');
-        $this->load->helper('url');
-        $this->load->helper('form');
-        $this->load->database('icmis');
-        $this->load->model('consent_model');
-        $this->load->model('hearing_model');
+		// if (!isset($_SESSION['loginData']) && empty($_SESSION['loginData'])) {
+		// 	redirect('auth');
+		// }else{
+		// 	is_user_status();
+		// }
+        // $this->load->helper('common');
+        // $this->load->helper('encryptdecrypt');
+        // $this->load->helper('myarray');
+        // $this->load->helper('curl');
+        // $this->load->helper('url');
+        // $this->load->helper('form');
+        // $this->load->database('icmis');
+        // $this->load->model('consent_model');
+        // $this->load->model('hearing_model');
+        helper(['common', 'encryptdecrypt', 'myarray', 'curl', 'url', 'form', 'session']); 
+        $this->consent_VC_model = new ConsentVCModel(); 
+        $this->consent_model = new ConsentModel(); 
+        $this->hearing_model = new HearingModel(); 
+        $session = session();
     }
 
     public function index($court=null){
        // echo $court;
 
-        if(!isset($this->session->loginData)){
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
-            unset($this->session->loginData);
-            redirect('auth');
-        }
+        // if(!isset($this->session->loginData)){
+        //     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
+        //     unset($this->session->loginData);
+        //     redirect('auth');
+        // }
         $data['page_title']='Choose mode of Hearing';
         //$unfreezed_court = $this->hearing_model->unfreezed_court_list();
         $unfreezed_court = $this->hearing_model->available_court_list_in_weekly();
