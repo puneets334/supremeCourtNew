@@ -463,7 +463,7 @@
                             ?>
 
 
-                            <?php if ($stages == IA_E_Filed) {
+                            <?php if ($stages == IA_E_Filed) { 
                                 ?>
                                 <td width="14%"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>                                  
                                 <td><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
