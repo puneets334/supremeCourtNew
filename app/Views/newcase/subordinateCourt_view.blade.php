@@ -78,6 +78,8 @@
                                                 </div>
                                             </div>
                                             <div class="row"
+                                                id="all_div">
+                                            <div class="row"
                                                 id="hc_entry_div">
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
                                                     <label for=""
@@ -824,6 +826,7 @@
                                                 <?php } ?>
                                             </div>
                                         </div>
+                                    </div>
                                     </div>
 
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
@@ -1677,9 +1680,9 @@
 
         function toggle_entry_div() {
             if ($("#chk_nohc").is(":checked")) {
-                $("#hc_entry_div").hide();
+                $("#all_div").hide();
             } else {
-                $("#hc_entry_div").show();
+                $("#all_div").show();
             }
         }
     </script>

@@ -55,12 +55,12 @@
                                 ?>
                                 <br>
                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Application No. &nbsp;</label><label class="radio-inline input-lg"><b>&nbsp;</b> </label>
-                                    <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="register">CRN</label>
+                                    <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" id="radio_ano" value="ANO"> Application No. &nbsp;</label><label class="radio-inline input-lg"><b>&nbsp;</b> </label>
+                                    <label class="radio-inline input-lg"><input type="radio" id="radio_crn" name="search_filing_type" value="CRN">CRN</label>
                                 </div>
                             </div>
                             <br>
-                            <div id="diarySec">
+                            <div id="search_application_no">
                                 <div class="row">
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
@@ -86,10 +86,10 @@
                                         <div class="row">
                                             <div class="row w-100 align-items-center">
                                                 <div class="col-5">
-                                                    <label for="inputPassword6" class="col-form-label">Diary No</label>
+                                                    <label for="inputPassword6" class="col-form-label">Application No</label>
                                                 </div>
                                                 <div class="col-7 pe-0">
-                                                    <input class="form-control cus-form-ctrl" id="diaryno" name="diaryno" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text" required>
+                                                    <input class="form-control cus-form-ctrl" id="application_no" name="application_no" maxlength="10" placeholder="Application No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,10 +98,10 @@
                                         <div class="row">
                                             <div class="row w-100 align-items-center">
                                                 <div class="col-5">
-                                                    <label for="inputPassword6" class="col-form-label"> Diary Year</label>
+                                                    <label for="inputPassword6" class="col-form-label"> Application Year</label>
                                                 </div>
                                                 <div class="col-7 pe-0">
-                                                    <select class="form-select cus-form-ctrl" aria-label="Default select example" id="diary_year" name="diary_year" style="width: 100%" required>
+                                                    <select class="form-select cus-form-ctrl" aria-label="Default select example" id="application_year" name="application_year" style="width: 100%" required>
                                                         <?php
                                                         $end_year = 48;
                                                         for ($i = 0; $i <= $end_year; $i++) {
@@ -118,57 +118,22 @@
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="save-form-details">
                                             <div class="save-btns">
-                                                <button type="submit" class="quick-btn gray-btn" id="search_sc_case" value="SEARCH">Search</button>
+                                                <button type="button" class="quick-btn gray-btn" id="sub" value="SEARCH">Search</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="RegSec">
+                            <div id="search_crn">
                                 <div class="row">
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
                                         <div class="row">
                                             <div class="row w-100 align-items-center">
                                                 <div class="col-5">
-                                                    <label for="inputPassword6" class="col-form-label">Case Type</label>
+                                                    <label for="inputPassword6" class="col-form-label">CRN</label>
                                                 </div>
                                                 <div class="col-7 pe-0">
-                                                    <select class="form-select cus-form-ctrl" name="sc_case_type" id="sc_case_type" aria-label="Default select example">
-                                                        <option value="">Case Type</option>;
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                        <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
-                                                    <label for="inputPassword6" class="col-form-label">Case No</label>
-                                                </div>
-                                                <div class="col-7 pe-0">
-                                                    <input class="form-control cus-form-ctrl" id="case_number" name="case_number" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                        <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
-                                                    <label for="inputPassword6" class="col-form-label">Case Year</label>
-                                                </div>
-                                                <div class="col-7 pe-0">
-                                                    <select class="form-select cus-form-ctrl" aria-label="Default select example" id="case_year" name="case_year" style="width: 100%">
-                                                        <?php
-                                                        $end_year = 48;
-                                                        for ($i = 0; $i <= $end_year; $i++) {
-                                                            $year = (int) date('Y') - $i;
-                                                            $sel = $year == ((int) date('Y')) ? 'selected=selected' : '';
-                                                            echo '<option ' . $sel . ' value=' . $year . '>' . $year . '</option>';
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                    <input class="form-control cus-form-ctrl" id="crn" name="crn" maxlength="10" placeholder="CRN" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
                                                 </div>
                                             </div>
                                         </div>
@@ -176,7 +141,7 @@
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="save-form-details">
                                             <div class="save-btns">
-                                                <button type="submit" class="quick-btn gray-btn">Search</button>
+                                                <button type="button" id="sub" class="quick-btn gray-btn">Search</button>
                                             </div>
                                         </div>
                                     </div>
@@ -185,11 +150,7 @@
                             <?php echo form_close(); ?>
 
                             <br>
-                            <div id="msg"></div>
-                            <div id="show_search_result_diary">
-
-                            </div>
-                            <div id="show_search_result"></div>
+                            <div id="result"></div>
 
                         </div>
                     </div>
@@ -199,120 +160,129 @@
     </div>
 @endsection
 @push('script')
-<script>
-            $(document).ready(function() {
-                var inputValue = $('input[type="radio"]:checked').val();
-                if (inputValue == 'register') {
-                    $('#diaryno').val('');
-                    $('#diary_year').val('');
-                    $("#show_search_result_diary").css("display", "none");
-                    $("#show_search_result").css("display", "block");
-                    $("#diarySec").css("display", "none");
-                    $("#RegSec").css("display", "block");
-                } else if (inputValue == 'diary') {
-                    $('#sc_case_type').val('');
-                    $('#case_number').val('');
-                    $('#case_year').val('');
-                    $("#show_search_result").css("display", "none");
-                    $("#show_search_result_diary").css("display", "block");
-                    $("#RegSec").css("display", "none");
-                    $("#diarySec").css("display", "block");
+<script type="text/javascript">
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+        $(document).ready(function(){
+            $("#search_crn").hide();
+        });
+$(document).on('click', '#radio_crn', function () {
+    $("#search_crn").show();
+    $("#search_application_no").hide();
+    $('#result').html('');
+});
+$(document).on('click', '#radio_ano', function () {
+    $("#search_application_no").show();
+    $("#search_crn").hide();
+    $('#result').html('');
+});
+
+
+$(document).on('click','#sub',function(){
+
+        var application_type= $("#application_type").val();
+        var application_no= $("#application_no").val();
+        var application_year= $("#application_year").val();
+        var crn = $("#crn").val();
+        var flag = '';
+        var regNum = new RegExp('^[0-9]+$');
+
+        if($("#radio_ano").is(':checked')){
+            flag = 'ano';
+            if(!regNum.test(application_type)){
+                alert("Please Select Type");
+                $("#application_type").focus();
+                return false;
+            }
+            if(!regNum.test(application_no)){
+                alert("Please Fill Application No. in Numeric");
+                $("#application_no").focus();
+                return false;
+            }
+            if(!regNum.test(application_year)){
+                alert("Please Fill Application Year in Numeric");
+                $("#application_year").focus();
+                return false;
+            }
+            if(application_no == 0){
+                alert("Application No. Can't be Zero");
+                $("#case_no").focus();
+                return false;
+            }
+            if(application_year == 0){
+                alert("Application Year Can't be Zero");
+                $("#case_yr").focus();
+                return false;
+            }
+        }
+         else{
+           flag = 'crn';
+           if(crn.length !=15){
+               alert("Please enter CRN");
+               $('#crn').focus();
+               return false;
+           }
+        }
+        
+        $.ajax({
+            url:'<?php echo base_url("online_copying/get_copy_search"); ?>',
+            cache: false,
+            async: true,
+            beforeSend: function () {
+                $('#result').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
+            },
+            data: {flag:flag, crn:crn, application_type:application_type,application_no:application_no,application_year:application_year},
+            type: 'GET',
+            success: function(data, status) {
+                $('#result').html(data);
+               // $('#user_input_captcha').val("");
+                //reload_captcha();
+                //load_re_captcha();
+            },
+            error: function(xhr) {
+                alert("Error: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+      });
+
+
+        function onloadCallback() {
+            var textarea = document.getElementById("g-recaptcha-response-100000");
+            textarea.setAttribute("aria-hidden", "true");
+            textarea.setAttribute("aria-label", "do not use");
+            textarea.setAttribute("aria-readonly", "true");
+        }
+
+        //XXXXXXXXX TRACK MODAL FUNCTION START XXXXXXXX
+
+        function mytrack_record(){
+            //alert("Rounak Mishra");
+            var modal = document.getElementById("myModal");
+            var btn = document.getElementById("myBtn");
+            var span = document.getElementsByClassName("close")[0];
+            modal.style.display = "block";
+            span.onclick = function() {
+
+                modal.style.display = "none";
+            };
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
                 }
-                var targetBox = $("." + inputValue);
-                $(".box").not(targetBox).hide();
-                $(targetBox).show();
-                $('input[type="radio"]').click(function() {
-                    var inputValue = $(this).attr("value");
-                    if (inputValue == 'register') {
-                        $('#diaryno').val('');
-                        $('#diary_year').val('');
-                        $("#show_search_result_diary").css("display", "none");
-                        $("#show_search_result").css("display", "block");
-                        $("#diarySec").css("display", "none");
-                        $("#RegSec").css("display", "block");
-                    } else if (inputValue == 'diary') {
-                        $('#sc_case_type').val('');
-                        $('#case_number').val('');
-                        $('#case_year').val('');
-                        $("#show_search_result").css("display", "none");
-                        $("#show_search_result_diary").css("display", "block");
-                        $("#RegSec").css("display", "none");
-                        $("#diarySec").css("display", "block");
-                    }
-                    var targetBox = $("." + inputValue);
-                    $(".box").not(targetBox).hide();
-                    $(targetBox).show();
-                });
-            });
-        </script>
-        <style>
-            .box {
-                display: none;
-                background-color: none;
             }
 
-            div.box {
-                height: 60px;
-                padding: 0;
-                overflow: unset;
-                border: #fff;
-                background-color: #fff;
-            }
-        </style>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#search_case_details').on('submit', function() {
-                    // if ($('#search_case_details').valid()) {
-                    var diary_no = $(this).val();
-                    var form_data = $(this).serialize();
-                    // console.log(form_data); exit;
-                    var CSRF_TOKEN = 'CSRF_TOKEN';
-                    var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-                    $('#show_search_result_diary').html('');
-                    $('#show_search_result').html('');
-                    $(".form-response").html('');
-                    $(".form-response").hide();
-                    $.ajax({
-                        type: "GET",
-                        url: "<?php echo base_url('case/search/search_case_details'); ?>",
-                        data: form_data,
-                        async: false,
-                        beforeSend: function() {
-                            $('#search_sc_case').val('Please wait...');
-                            $('#search_sc_case').prop('disabled', true);
-                        },
-                        success: function(data) {
+        }//End of function mytrack_record..
+
+        //XXXXXXXXXX TRACK MODAL FUNCTION END  XXXXXXX
 
 
-                            $('#search_sc_case').val('SEARCH');
-                            $('#search_sc_case').prop('disabled', false);
-                            var resArr = data.split('@@@');
-                            console.log(resArr[1]);
 
-                            if (resArr[0] == 1) {
-                                $('#show_search_result_diary').html(resArr[1]);
-                            } else if (resArr[0] == 2) {
-                                $('#show_search_result').html(resArr[1]);
-                            } else if (resArr[0] == 3) {
-                                $(".form-response").show();
-                                $('#msg').show();
-                                $(".form-response").html(
-                                    "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
-                                    resArr[1] +
-                                    "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
-                                );
-                            }
-                            $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                                $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                            });
-                        }
-                    });
-                    return false;
-                    // } else {
-                    //     alert("Form is invalid!");
-                    //     return false;
-                    // }
-                });
-            });
         </script>
         @endpush

@@ -53,7 +53,6 @@ if ($segment->getSegment(2) != 'view') {
             <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
                 <div class="form-group">
                     <?php
-                        
                     $lbl_appearing_for = $appearing_for_details[0]['partytype'] == 'P' ? 'Petitioner / Complainant' : 'Respondent / Accused';
                     ?>
                     <label class="radio-inline"><strong><?php echo $lbl_appearing_for; ?></strong></label>

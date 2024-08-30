@@ -211,8 +211,8 @@
                                                         <div class="title-sec">
                                                             <h5 class="unerline-title">Payment History</h5>
                                                         </div>
-                                                        <?php $this->load->view('shcilPayment/payment_list_view'); ?>
-
+                                                        <?php //$this->load->view('shcilPayment/payment_list_view'); ?>
+                                                        @include('shcilPayment.payment_list_view')
                                                     </div>
                                                 <?php } ?>
 

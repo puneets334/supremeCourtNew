@@ -5,6 +5,7 @@ use \App\Models\Common\CommonModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\Caveat\ViewModel;
 use GuzzleHttp\Client;
+use Config\Database;
 helper('view');
 
 use eftec\bladeone\BladeOne;
@@ -2820,7 +2821,8 @@ function getPendingCourtFee()
             } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) {
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
                 $case_nature = (!empty($court_fee_calculation_param3)) ? $court_fee_calculation_param3[0]['nature'] : null;
-                if (empty($case_nature)) {
+                if (isset($case_nature)&& empty($case_nature)) {
+                    // pr($case_nature);
                     $diary_no = (int)$court_fee_calculation_param3[0]['diary_no'] . (int)$court_fee_calculation_param3[0]['diary_year'];
                     $case_nature = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 }
@@ -3266,4 +3268,28 @@ function message_show($type, $msg) {
         $preTable = "<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp;$msg  <span class='close' onclick=hideMessageDiv()>X</span></p>";
     }
     return $preTable;
+}
+
+function article_tracking_offline($articlenumber){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('post_tracking');
+    $builder->select('office, event_type, event_date, event_time');
+    $builder->where('barcode', $articlenumber);
+    $builder->orderBy('event_date','asc');
+    $builder->orderBy('event_time','asc');
+    $query = $builder->get();
+    if ($query->getNumRows() > 0){
+        $status = 'success';
+        $rows = array();
+        $selected_data = $query->getResultArray();
+        foreach($selected_data as $r) {
+            $rows[] = $r;   
+        }
+    }
+    else{
+        $status = 'Consignment Number Not Found.';
+        $rows = array();
+    }
+    //return $rate;
+    return json_encode(array("Status" => $status, "DataValue" => $rows));
 }

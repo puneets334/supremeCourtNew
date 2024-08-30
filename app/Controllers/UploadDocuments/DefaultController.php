@@ -44,6 +44,7 @@ class DefaultController extends BaseController {
     }
 
     public function index($doc_id = NULL) {
+       
         $this->check_login();
         $docd_id = '';
         if (isset($doc_id) && !empty($doc_id)) {
@@ -55,6 +56,7 @@ class DefaultController extends BaseController {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Please enter every party details before moving to further tabs.</div>');
             return redirect()->to(base_url('newcase/extra_party'));
         }
+        
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
         if (!empty(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array) && getSessionData('efiling_details')['efiling_type'] == 'new_case'){
             return redirect()->to(base_url('newcase/view'));
@@ -70,6 +72,7 @@ class DefaultController extends BaseController {
             return redirect()->to(base_url('jail_dashboard'));
         }
         //get total is_dead_minor
+        
         $params = array();
         $params['registration_id'] = !empty(getSessionData('efiling_details')['registration_id']) ? getSessionData('efiling_details')['registration_id'] : NULL;
         $params['is_dead_minor'] = true;
@@ -86,6 +89,7 @@ class DefaultController extends BaseController {
         if (isset(getSessionData('efiling_details')['registration_id']) && !empty(getSessionData('efiling_details')['registration_id'])) {
 
             $registration_id = getSessionData('efiling_details')['registration_id'];
+
             $data['uploaded_docs'] = $this->UploadDocs_model->get_uploaded_pdfs($registration_id);
             $data['index_details'] = $this->DocumentIndex_Select_model->get_index_details($registration_id, $docd_id);
             $data['uploaded_pdf'] = $this->DocumentIndex_DropDown_model->get_uploaded_pdfs($registration_id);
@@ -109,6 +113,7 @@ class DefaultController extends BaseController {
                 }
                 $data['doc_type'] = $this->DocumentIndex_DropDown_model->get_document_type(NULL);
             }
+            
             if(!empty($data['index_details'])){
                 $data['doc_res'] = $this->DocumentIndex_DropDown_model->get_sub_document_type($data['index_details'][0]['doc_type_id']);
             }else{
@@ -151,7 +156,6 @@ class DefaultController extends BaseController {
     }
 
     public function upload_pdf() {
-
         $this->check_login();
 
         if (!empty(getSessionData('efiling_details'))) {
