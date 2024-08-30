@@ -461,7 +461,8 @@ class CommonModel extends Model
         $query = $builder->get(); //echo $this->db->last_query(); die;
         if ($query->getNumRows() >= 1) {
             $arr = $query->getRowArray();
-            return $arr[0];
+            
+            return $arr[0] ?? $arr;
         } else {
             return false;
         }

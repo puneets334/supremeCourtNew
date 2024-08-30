@@ -227,12 +227,9 @@ class DefaultController extends BaseController
 
     function get_view_data($id = null)
     {
-
-        //echo 'welcome to Default access';
         
         if ($id) {
             $id = url_decryption($id);
-            // echo '<pre>'; print_r($id);echo '<pre>';
             $InputArrray = explode('#', $id);
             $data['registration_id'] = $registration_id = $InputArrray[0];
             $data['ref_m_usertype_id'] = $type = $InputArrray[1];
@@ -301,7 +298,7 @@ class DefaultController extends BaseController
                     
 
                     $data['case_details'] = $this->IAGetDetailsModel->get_case_details($registration_id);
-
+                        
                     $data['filing_for_details'] = $this->IAViewModel->get_filing_for_parties($registration_id);
 
                     $data['efiled_docs_list'] = $this->IAViewModel->get_index_items_list($registration_id);
@@ -309,7 +306,6 @@ class DefaultController extends BaseController
                     $data['payment_details'] = $this->IAViewModel->get_payment_details($registration_id);
 
                     $data['esigned_docs_details'] = $this->AffirmationModel->get_esign_doc_details($registration_id);
-
                     return $this->render('IA.ia_preview',$data);
                     // $this->load->view('templates/user_header',$data_efiling_search);
                     // $this->load->view('IA/ia_preview', $data);

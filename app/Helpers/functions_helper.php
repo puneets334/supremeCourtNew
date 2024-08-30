@@ -1275,23 +1275,23 @@ function remark_preview($reg_id, $current_stage_id)
 
 
         return $msg;
-    } elseif (isset($result_initial) && !empty($result_initial)) {
+        
+    } elseif (isset($result_initial) && !empty($result_initial)) { 
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date(
             'd-m-Y H:i:s',
-            strtotime($result_initial->defect_date)
+            strtotime($result_initial->defect_date ?? $result_initial['defect_date'] )
         ) . '
                 <p>';
         $msg .= '
                 <p><strong>Defects :</strong>
                 <p>';
         $msg .= '
-                <p>' . script_remove($result_initial->defect_remark) . '
+                <p>' . script_remove($result_initial->defect_remark ?? $result_initial['defect_remark']) . '
                 <p>';
-
-        if ($result->defect_cured_date != NULL) {
-            $msg .= '
-                <p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
+        if ($result_initial->defect_cured_date ?? $result_initial['defect_cured_date'] != NULL) {
+            $msg .= '[
+                <p] align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
                 'd-m-Y H:i:s',
                 strtotime($result_initial->defect_cured_date)
             ), ENT_QUOTES) . '

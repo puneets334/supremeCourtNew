@@ -78,13 +78,13 @@
                                         $type = 'Misc. Docs';
                                         $button_label="Register Documents";
                                         $lbl_for_doc_no = '<b>Misc. Doc. No.</b> : ';
-                                        $redirect_url = base_url('miscellaneous_docs/DefaultController');
+                                        $redirect_url = base_url('miscellaneous_docs/defaultController');
                                     } elseif ($re->ref_m_efiled_type_id == E_FILING_TYPE_IA) {
                                         //echo "4"; exit();
                                         $type = 'Interim Application';
                                         $button_label="Register IA";
                                         $lbl_for_doc_no = '<b>IA Diary No.</b> : ';
-                                        $redirect_url = base_url('IA/DefaultController');
+                                        $redirect_url = base_url('IA/defaultController');
                                     }/* elseif ($re->ref_m_efiled_type_id == DEFICIT_COURT_FEE_PAID) { //Deficit Court Fee Paid
                                        // echo "5"; exit();
                                         /*$type = 'Interim Application';

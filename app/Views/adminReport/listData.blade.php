@@ -17,19 +17,19 @@
                         $file_type = !empty($typeDetails['file_type']) ? $typeDetails['file_type'] : '';
                         $dateLevel =  !empty($typeDetails['dateLevel']) ? $typeDetails['dateLevel'] : '';
                         ?>
-                        <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-md-12 col-sm-12 col-xs-12 row">
                             <?php
                             echo '<div class="col-md-3 col-sm-3 col-xs-3">
-                            <label>Dates :  </label> '.$from_date.' - '.$to_date.'
+                            <label><b>Dates :</b>  </label> '.$from_date.' - '.$to_date.'
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3">
-                            <label>File Action : </label> '.$type.' 
+                            <label><b>File Action :</b> </label> '.$type.' 
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3">
-                            <label>File Type : </label>  '.$file_type.'
+                            <label><b>File Type :</b> </label>  '.$file_type.'
                             </div>
                             <div class="col-md-3 col-sm-3 col-xs-3">
-                            <label>User Nmae :  </label> '.$user_type.'
+                            <label><b>User Nmae :</b>  </label> '.$user_type.'
                             </div>
                             ';
                             $fileCaseType = !empty($_GET['fileType']) ? $_GET['fileType'] : NULL;

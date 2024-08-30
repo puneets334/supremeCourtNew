@@ -57,7 +57,7 @@ $collapse_class = 'collapse in';
                             <?php } ?>
                             <?php
                             if (!isset($efiling_search_header)) {
-                                render('IA.ia_breadcrumb',$details);
+                                render('IA.ia_breadcrumb', $details);
                             }
 
                             $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
@@ -66,7 +66,6 @@ $collapse_class = 'collapse in';
                             } else {
                                 $hidepencilbtn = 'false';
                             }
-
                             ?>
                             <div class="center-content-inner comn-innercontent">
                                 <div class="tab-content">
@@ -107,7 +106,7 @@ $collapse_class = 'collapse in';
                                                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
                                                                     <div class="x_panel">
-                                                                        <?php render('case_details.case_details_view', ['case_details' => $case_details]); ?>
+                                                                        <?php render('case_details.case_details_view', ['case_details' => $case_details]);  ?>
 
                                                                     </div>
                                                                 </div>

@@ -971,11 +971,11 @@
                         v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id + '/' + report.efiling_no;
                     }
                     else if(report.efiling_type !='' && report.efiling_type=='misc_document') {
-                    rd='miscellaneous_docs.DefaultController'; //. equal to / required
+                    rd='miscellaneous_docs.defaultController'; //. equal to / required
                     v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
                     }
                     else if(report.efiling_type !='' && report.efiling_type=='IA') {
-                    rd='IA.DefaultController'; //. equal to / required
+                    rd='IA.defaultController'; //. equal to / required
                     v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
                     }
                     else if(report.efiling_type !='' && report.efiling_type=='CAVEAT') {
