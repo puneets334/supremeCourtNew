@@ -6,24 +6,26 @@ use Config\Database;
 use Config\Services;
 
 class AdvocateModel extends Model {
-    protected $DBGroup = 'secondary'; 
+    protected $DBGroup = 'sci_cmis_final'; 
     protected $db3;
+    protected $db2;
 
     public function __construct()
     {
         parent::__construct();
-        $this->db3 = Database::connect('tertiary'); // Connect to the 'tertiary' database
+        $this->db3 = Database::connect('e_services'); 
+        $this->db2 = Database::connect('sci_cmis_final'); 
     }
 
     public function getListedCases($aor_code)
     {
         // Use the model's database connection
-        $builder = $this->db->table('sci_cmis_final.main as m')
-            ->join('sci_cmis_final.heardt as h', 'h.diary_no = m.diary_no')
-            ->join('sci_cmis_final.cl_printed as c', 'c.next_dt = h.next_dt AND c.roster_id = h.roster_id AND c.part = h.clno')
-            ->join('sci_cmis_final.roster as r', 'r.id = h.roster_id')
-            ->join('sci_cmis_final.advocate as a', 'a.diary_no = m.diary_no')
-            ->join('sci_cmis_final.bar as b', 'b.bar_id = a.advocate_id')
+        $builder = $this->db2->table('main as m')
+            ->join('public.heardt as h', 'h.diary_no = m.diary_no')
+            ->join('public.cl_printed as c', 'c.next_dt = h.next_dt AND c.roster_id = h.roster_id AND c.part = h.clno')
+            ->join('master.roster as r', 'r.id = h.roster_id')
+            ->join('public.advocate as a', 'cast(a.diary_no as bigint) = cast(m.diary_no  as bigint)')
+            ->join('master.bar as b', 'b.bar_id = a.advocate_id')
             ->select('m.diary_no, m.reg_no_display, m.pet_name, m.res_name, h.next_dt, h.brd_slno, h.main_supp_flag, a.pet_res, r.courtno, m.pno, m.rno')
             ->where('b.aor_code', $aor_code)
             ->where('m.c_status', 'P')
@@ -34,10 +36,13 @@ class AdvocateModel extends Model {
             ->orderBy('r.courtno')
             ->orderBy('h.brd_slno')
             ->distinct();        
+
+            // $sql = $builder->getCompiledSelect();
+            // echo $sql; die;
             $query = $builder->get();        
             if (!$query) {
                 // Output the last query error
-                return $this->db->error();
+                return $this->db2->error();
             }
             return $query->getResultArray();
     } 
@@ -106,7 +111,7 @@ class AdvocateModel extends Model {
 
     public function getSubmittedAdvocatesInDiary($data)
     {
-
+// pr($data);
         $session = \Config\Services::session(); // Correct namespace for Services
         $builder = $this->db3->table('appearing_in_diary');        
         $builder ->where('diary_no', $data['diary_no']);

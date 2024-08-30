@@ -15,7 +15,7 @@ class AdvocateController extends BaseController
     protected $session;
     protected $request;
     protected $validation;
-    protected $eservicesDB;
+    protected $e_services;
     public function __construct()
     {
         parent::__construct();
@@ -23,7 +23,7 @@ class AdvocateController extends BaseController
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
-        $this->eservicesDB = \Config\Database::connect('tertiary');
+        $this->e_services = \Config\Database::connect('e_services');
 
 
 
@@ -62,10 +62,10 @@ class AdvocateController extends BaseController
 
     public function display_appearance_slip() 
     {
-        $postedData = $this->request->getPost();
+        $posted_data = $this->request->getPost();
      
-        $data['slip_data'] = $this->AdvocateModel->getSubmittedAdvocatesInDiary($postedData);
-        return $this->render('advocate.display_appearance_slip', @compact('data'));        
+        $data['slip_data'] = $this->AdvocateModel->getSubmittedAdvocatesInDiary($posted_data);
+        return $this->render('advocate.display_appearance_slip', @compact('data','posted_data','slip_data'));        
 
     }
 
@@ -162,13 +162,13 @@ class AdvocateController extends BaseController
                 $session->set('appear_priority', 1);
             }
             $data['priority'] = $session->get('appear_priority');
-            $builder = $this->eservicesDB->table('appearing_in_diary');
+            $builder = $this->e_services->table('appearing_in_diary');
             // $builder->set($data);
             // $sql = $builder->getCompiledInsert();  
             // echo $sql;
             // die;
             $builder->insert($data);
-            $insertID = $this->eservicesDB->insertID(); // Get the ID of the inserted row            
+            $insertID = $this->e_services->insertID(); // Get the ID of the inserted row            
             $data['entry_time'] = date('d-m-Y h:i:s A');
             $data['id'] = $insertID;
 
@@ -196,7 +196,7 @@ class AdvocateController extends BaseController
         $fas = "fa-trash-restore";
         $btnColor = "btn-warning";
         $msg = "Removed Successfully.";
-        $builder = $this->eservicesDB->table('appearing_in_diary');  
+        $builder = $this->e_services->table('appearing_in_diary');  
         $data = ['is_active' => $isActive];
 
         $value = $builder->where('id', $id)->update($data);
@@ -289,7 +289,7 @@ class AdvocateController extends BaseController
             $update['priority'] = $key;
             $update['is_submitted'] = '1';
 
-            $builder = $this->eservicesDB->table('appearing_in_diary');  
+            $builder = $this->e_services->table('appearing_in_diary');  
             $result = $builder->where('id', $value)->where('is_active', '1')->update($update);
             unset($update);
             if ($result) {

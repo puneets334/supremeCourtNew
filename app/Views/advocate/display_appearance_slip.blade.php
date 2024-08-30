@@ -24,7 +24,7 @@
                 </div>
 
                 <?php $sno = 1; ?>
-                @if($slip_data)
+                @if($data['slip_data'])
                 <div class="table-responsive-sm">
                     <table class="table table-striped">
                         <thead>
@@ -34,7 +34,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($slip_data as $added_data)
+                        @foreach($data['slip_data'] as $added_data)
                             <tr>
                                 <td class="center">{{$sno++}}
                                 </td>
