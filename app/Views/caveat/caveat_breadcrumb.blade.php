@@ -332,8 +332,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 </ul>
             @endif
         </form>
-    </div>
-</div>
+
 <div class="modal fade" id="FinalSubmitModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
