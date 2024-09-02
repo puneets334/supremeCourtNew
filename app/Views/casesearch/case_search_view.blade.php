@@ -330,13 +330,14 @@
                             } else if (resArr[0] == 2) {
                                 $('#show_search_result').html(resArr[1]);
                             } else if (resArr[0] == 3) {
-                                $(".form-response").show();
-                                $('#msg').show();
-                                $(".form-response").html(
-                                    "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
-                                    resArr[1] +
-                                    "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
-                                );
+                                alert(resArr[1]);
+                                // $(".form-response").show();
+                                // $('#msg').show();
+                                // $(".form-response").html(
+                                //     "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
+                                //     resArr[1] +
+                                //     "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
+                                // );
                             }
                             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
