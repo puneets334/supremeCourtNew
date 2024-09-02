@@ -28,4 +28,18 @@ class CommonModel extends Model
         return $result;
     }
 
+    function copyFaq(){
+        $builder = $this->db2->table('master.icmis_faqs');
+        $builder->where('main_menu', 'ecopying');
+        $builder->orderBy('created_on');
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $this->db2->error();
+            log_message('error', 'Query Error: ' . print_r($error, true)); // Use print_r to convert array to string
+            return false;
+        }
+        $result = $query->getResult();
+        return $result;
+    }
+
 }

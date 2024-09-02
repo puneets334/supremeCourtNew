@@ -87,5 +87,10 @@ class DefaultController extends BaseController
     {
         return $this->render('onlineCopying.get_consignment_status');
     }
+    public function faq()
+    {
+        $faqs = $this->Common_model->copyFaq();
+        return $this->render('onlineCopying.faq', compact('faqs'));
+    }
     
 }
