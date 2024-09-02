@@ -90,7 +90,7 @@ $segment = service('uri');
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/track_consignment'); ?>">Track</a></li>
                                 <li><a class="btn-link" href="#">Application</a></li>
                                 <li><a class="btn-link" href="#">Address</a></li>
-                                <li><a class="btn-link" href="#">FAQ's</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
                                 <li><a class="btn-link" href="#">Screen Reader</a></li>
                                 <li><a class="btn-link" href="#">Manual</a></li>
                                 <li><a class="btn-link" href="#">Contact Us</a></li>

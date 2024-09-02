@@ -325,12 +325,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <a href="<?= $url_case_detail ?>"
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#home"
-                            type="button"
-                            role="tab"
-                            aria-controls="home"
-                            aria-selected="true"><span class="tab-num"
+                            ><span class="tab-num"
                                 style="<?php echo $ColorCode; ?>">1</span>Case Detail</a>
                     </li>
                     <li class="nav-item"
@@ -352,15 +347,11 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         ?>
                         <a href="<?= $url_petitioner ?>"
                             class="nav-link <?php echo $status_color; ?>"
-                            id="home-tab"
-                            data-bs-toggle="tab"
                             style="<?php if (!in_array(NEW_CASE_CASE_DETAIL, $StageArray)) {
                                 echo $disabled_status;
                             } ?>"
                             data-bs-target="#home"
                             type="button"
-                            role="tab"
-                            aria-controls="home"
                             aria-selected="false"><span class="tab-num"
                                 style="<?php echo $ColorCode; ?>">2</span>Petitioner</a>
                     </li>
@@ -383,12 +374,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         ?>
                         <a href="<?= $url_respondent ?>"
                             class="nav-link <?php echo $status_color; ?>"
-                            id="home-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#home"
                             type="button"
-                            role="tab"
-                            aria-controls="home"
                             style="<?php if (!in_array(NEW_CASE_PETITIONER, $StageArray)) {
                                 echo $disabled_status;
                             } ?>"
@@ -415,11 +401,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <a href="<?= $url_subordinate_court ?>"
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#home"
                             type="button"
-                            role="tab"
-                            aria-controls="home"
                             style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) {
                                 echo $disabled_status1;
                             } ?>"
@@ -446,11 +428,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <a href="<?= $url_case_upload_docs ?>"
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#home"
                             type="button"
-                            role="tab"
-                            aria-controls="home"
                             style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) {
                                 echo $disabled_status1;
                             } ?>"
@@ -480,14 +458,10 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <a href="<?= $url_case_courtfee ?>"
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
-                            data-bs-toggle="tab"
                             style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) {
                                 echo $disabled_status1;
                             } ?>"
-                            data-bs-target="#home"
                             type="button"
-                            role="tab"
-                            aria-controls="home"
                             aria-selected="false"><span class="tab-num"
                                 style="<?php echo $ColorCode; ?>">6</span>Pay Court Fee</a>
                     </li>
@@ -511,11 +485,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <a href="<?= base_url('newcase/view') ?>"
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
-                            data-bs-toggle="tab"
-                            data-bs-target="#home"
                             type="button"
-                            role="tab"
-                            aria-controls="home"
                             style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) {
                                 echo $disabled_status1;
                             } ?>"
