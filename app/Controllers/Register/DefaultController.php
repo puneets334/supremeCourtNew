@@ -18,12 +18,14 @@ use ZipArchive;
 // if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class DefaultController extends BaseController {
+
     protected $Register_model;
     protected $slice;
     protected $form_validation;
     protected $session;
     protected $efiling_webservices;
     protected $encryption;
+    protected $upload;
 
     public function __construct() {
         parent::__construct();
@@ -41,7 +43,7 @@ class DefaultController extends BaseController {
         helper(['form']);
     }
 
-    public function index() {        
+    public function index() {
         unset($_SESSION['kyc_configData']);
         unset($_SESSION['adv_details']);
         unset($_SESSION['register_data']);
@@ -83,7 +85,7 @@ class DefaultController extends BaseController {
             $zip = new \ZipArchive();
             $zip->open($file_path);
             $is_valid_file='';
-            for( $i = 0; $i < $zip->numFiles; $i++ ){
+            for( $i = 0; $i < $zip->numFiles; $i++ ) {
                 $filename = $zip->getNameIndex($i);
                 // echo $filename.'<br>';
                 $imageExtention = pathinfo($filename, PATHINFO_EXTENSION);
@@ -217,99 +219,171 @@ class DefaultController extends BaseController {
                     }
                     //$DIR = 'assets/ekyc/dir';
                     //$config['upload_path'] = 'assets/ekyc/';
-                    $DIR = 'uploaded_docs/ekyc/dir';
-                    $config['upload_path'] = 'uploaded_docs/ekyc/';
-                    $config['allowed_types'] = array('zip','application/x-zip','application/x-zip-compressed','application/zip');
-                    $config['max_size'] = OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE; // max_size in kb (50 KB)
-                    $config['file_name'] = $_FILES["ekyc_zip_file"]['name'];
-                    $config['overwrite'] = TRUE;
-                    // Load upload library
-                    $imageExtention = pathinfo($_FILES["ekyc_zip_file"]["name"], PATHINFO_EXTENSION);
-                    // $this->load->library('upload', $config);
-                    Services::upload($config);
-                    //only ZIP file allowed
-                    if($imageExtention=='zip'){
-                        // File upload
-                        // if ($this->upload->do_upload('ekyc_zip_file')) {
-                        if($this->upload->doUpload('ekyc_zip_file')) {
-                            $file_path=$config['upload_path'].$_FILES["ekyc_zip_file"]['name'];
-                            $is_valid_files = $this->inspect_files_within_zip($file_path);
-                            if (!empty($is_valid_files)) {
-                                // Get data about the file
-                                $uploadData = $this->upload->data();
-                                $filename = $uploadData['file_name'];
-                                ## Extract the zip file ---- start
-                                $_SESSION['filename'] = str_replace('.zip', '', $filename);
+                    // $DIR = 'uploaded_docs/ekyc/dir';
+                    // $config['upload_path'] = 'uploaded_docs/ekyc/';
+                    // $config['allowed_types'] = array('zip','application/x-zip','application/x-zip-compressed','application/zip');
+                    // $config['max_size'] = OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE; // max_size in kb (50 KB)
+                    // $config['file_name'] = $_FILES["ekyc_zip_file"]['name'];
+                    // $config['overwrite'] = TRUE;
+                    // // Load upload library
+                    // $imageExtention = pathinfo($_FILES["ekyc_zip_file"]["name"], PATHINFO_EXTENSION);
+                    // // $this->load->library('upload', $config);
+                    // $this->upload = Services::upload($config);
+                    // //only ZIP file allowed
+                    // if($imageExtention=='zip'){
+                    //     // File upload
+                    //     // if ($this->upload->do_upload('ekyc_zip_file')) {
+                    //     if($this->upload->doUpload('ekyc_zip_file')) {
+                    //         $file_path=$config['upload_path'].$_FILES["ekyc_zip_file"]['name'];
+                    //         $is_valid_files = $this->inspect_files_within_zip($file_path);
+                    //         if (!empty($is_valid_files)) {
+                    //             // Get data about the file
+                    //             $uploadData = $this->upload->data();
+                    //             $filename = $uploadData['file_name'];
+                    //             ## Extract the zip file ---- start
+                    //             $_SESSION['filename'] = str_replace('.zip', '', $filename);
+                    //             $zip = new ZipArchive;
+                    //             //$res = $zip->open("assets/ekyc/" . $filename);
+                    //             $res = $zip->open("uploaded_docs/ekyc/" . $filename);
+                    //             $_SESSION['uploaded_file_name'] = $filename;
+                    //             if ($res === TRUE) {
+                    //                 $DIR2 = $DIR . '/' . $_SESSION['filename'] . '.xml';
+                    //                 if ($zip->setPassword($_POST['share_code'])) {
+                    //                     if (!$zip->extractTo($DIR)) {
+                    //                         $this->session->setFlashdata('msg', 'Extraction failed (wrong password?)');
+                    //                         return redirect()->to(base_url('register'));
+                    //                     }
+                    //                 }
+                    //                 $zip->close();
+                    //                 $xml = simplexml_load_file($DIR2);
+                    //                 $json = json_encode($xml);
+                    //                 $data_config = json_decode($json, true);
+                    //                 $_SESSION['kyc_configData'] = $data_config;
+                    //                 $data['configData'] = $_SESSION['kyc_configData'];
+                    //                 $data['mobile_addhar'] = $_POST['mobile'];
+                    //                 $data['email_addhar'] = $_POST['emailid'];
+                    //                 // $this->load->library('encryption');
+                    //                 //Check if mobile & email matched with aadhar data dated 29-12-2020
+                    //                 $reference_id = $data_config['@attributes']['referenceId'];
+                    //                 $get_adhar_last_digit = substr(substr($reference_id, 0 , 4),-1);
+                    //                 if($get_adhar_last_digit == 0){
+                    //                     $get_adhar_last_digit = 1;
+                    //                 }
+                    //                 $share_code = $_POST['share_code'];
+                    //                 $mobile_sha256_hash = $_POST['adv_mobile'].$share_code;
+                    //                 $email_sha256_hash = $_POST['adv_email'].$share_code;
+                    //                 for($i=1;$i<=$get_adhar_last_digit;$i++){
+                    //                     $mobile_sha256_hash = hash('sha256', $mobile_sha256_hash);
+                    //                     $email_sha256_hash = hash('sha256', $email_sha256_hash);
+                    //                 }
+                    //                 $Poi = $data_config['UidData']['Poi']['@attributes'];
+                    //                 //if($mobile_sha256_hash != $Poi['m'] || $email_sha256_hash != $Poi['e']){
+                    //                 if($mobile_sha256_hash != $Poi['m']){
+                    //                     $this->session->setFlashdata('msg', 'Mobile should be same as registered with Aadhar! ');
+                    //                     return redirect()->to(base_url('register'));
+                    //                 } else {
+                    //                     $responseString = file_get_contents($DIR2);
+                    //                     $signature_match = $this->offlineKycResponse($responseString);
+                    //                     if($signature_match != 'Signature validated') {
+                    //                         $this->session->setFlashdata('msg', 'Aadhar file tampered, please try with fresh offline aadhar! ');
+                    //                         return redirect()->to(base_url('register'));
+                    //                     }
+                    //                 }
+                    //                 $aadhar_no = $data['configData']['@attributes']['referenceId'];
+                    //                 $aadhar_last_disit_no = substr($aadhar_no, -18, -17);
+                    //                 // $this->load->library('encryption');
+                    //                 $share_code = '8976';
+                    //                 $mob = "9582551896";
+                    //                 $l_digit = "3";
+                    //                 $this->session->setFlashdata('msg', 'Upload & Extract successfully.');
+                    //             } else {
+                    //                 $this->session->setFlashdata('msg', 'Failed to extract.');
+                    //                 return redirect()->to(base_url('register'));
+                    //             }
+                    //         } else {
+                    //             unlink($file_path);
+                    //             $this->session->setFlashdata('msg', 'Pls. upload the original offline Aadhaar eKYC Zip file.');
+                    //             return redirect()->to(base_url('register'));
+                    //         }
+                    //     } else {
+                    //         $this->session->setFlashdata('msg', 'Failed to upload (only zip file upload allowed). Some problem');
+                    //         return redirect()->to(base_url('register'));
+                    //     }
+                    // } else {
+                    //     $this->session->setFlashdata('msg', 'Only zip file upload allowed.');
+                    //     return redirect()->to(base_url('register'));
+                    // }
+                    // Load the request object
+                    $request = \Config\Services::request();
+                    // Get the uploaded file
+                    $file = $request->getFile('ekyc_zip_file');
+                    // Check if the file is valid and not moved
+                    if ($file->isValid() && !$file->hasMoved()) {
+                        $uploadPath = WRITEPATH . 'uploads/ekyc/';
+                        // Ensure the upload path exists
+                        if (!is_dir($uploadPath)) {
+                            mkdir($uploadPath, 0777, true);
+                        }
+                        // Generate the destination path
+                        $fileName = $file->getName();
+                        $filePath = $uploadPath . $fileName;
+                        // Move the file to the desired location
+                        if ($file->move($uploadPath, $fileName)) {
+                            $isValidFiles = $this->inspect_files_within_zip($filePath);
+                            if ($isValidFiles) {
+                                // Process the zip file
                                 $zip = new ZipArchive;
-                                //$res = $zip->open("assets/ekyc/" . $filename);
-                                $res = $zip->open("uploaded_docs/ekyc/" . $filename);
-                                $_SESSION['uploaded_file_name'] = $filename;
-                                if ($res === TRUE) {
-                                    $DIR2 = $DIR . '/' . $_SESSION['filename'] . '.xml';
-                                    if ($zip->setPassword($_POST['share_code'])) {
-                                        if (!$zip->extractTo($DIR)) {
-                                            $this->session->setFlashdata('msg', 'Extraction failed (wrong password?)');
-                                            return redirect()->to(base_url('register'));
+                                if ($zip->open($filePath) === TRUE) {
+                                    $extractedPath = $uploadPath . $_SESSION['filename'] . '.xml';
+                                    if ($zip->setPassword($request->getPost('share_code'))) {
+                                        if (!$zip->extractTo($uploadPath)) {
+                                            $zip->close();
+                                            return redirect()->to(base_url('register'))->with('msg', 'Extraction failed (wrong password?)');
                                         }
                                     }
                                     $zip->close();
-                                    $xml = simplexml_load_file($DIR2);
+                                    $xml = simplexml_load_file($extractedPath);
                                     $json = json_encode($xml);
-                                    $data_config = json_decode($json, true);
-                                    $_SESSION['kyc_configData'] = $data_config;
+                                    $dataConfig = json_decode($json, true);
+                                    $_SESSION['kyc_configData'] = $dataConfig;
                                     $data['configData'] = $_SESSION['kyc_configData'];
-                                    $data['mobile_addhar'] = $_POST['mobile'];
-                                    $data['email_addhar'] = $_POST['emailid'];
-                                    // $this->load->library('encryption');
-                                    //Check if mobile & email matched with aadhar data dated 29-12-2020
-                                    $reference_id = $data_config['@attributes']['referenceId'];
-                                    $get_adhar_last_digit = substr(substr($reference_id, 0 , 4),-1);
-                                    if($get_adhar_last_digit == 0){
+                                    $data['mobile_addhar'] = $request->getPost('mobile');
+                                    $data['email_addhar'] = $request->getPost('emailid');
+                                    $reference_id = $dataConfig['@attributes']['referenceId'];
+                                    $get_adhar_last_digit = substr(substr($reference_id, 0, 4), -1);
+                                    if ($get_adhar_last_digit == 0) {
                                         $get_adhar_last_digit = 1;
                                     }
-                                    $share_code = $_POST['share_code'];
-                                    $mobile_sha256_hash = $_POST['adv_mobile'].$share_code;
-                                    $email_sha256_hash = $_POST['adv_email'].$share_code;
-                                    for($i=1;$i<=$get_adhar_last_digit;$i++){
+                                    $share_code = $request->getPost('share_code');
+                                    $mobile_sha256_hash = $request->getPost('adv_mobile') . $share_code;
+                                    $email_sha256_hash = $request->getPost('adv_email') . $share_code;
+                                    for ($i = 1; $i <= $get_adhar_last_digit; $i++) {
                                         $mobile_sha256_hash = hash('sha256', $mobile_sha256_hash);
                                         $email_sha256_hash = hash('sha256', $email_sha256_hash);
                                     }
-                                    $Poi = $data_config['UidData']['Poi']['@attributes'];
-                                    //if($mobile_sha256_hash != $Poi['m'] || $email_sha256_hash != $Poi['e']){
-                                    if($mobile_sha256_hash != $Poi['m']){
-                                        $this->session->setFlashdata('msg', 'Mobile should be same as registered with Aadhar! ');
-                                        return redirect()->to(base_url('register'));
+                                    $Poi = $dataConfig['UidData']['Poi']['@attributes'];
+                                    if ($mobile_sha256_hash != $Poi['m']) {
+                                        return redirect()->to(base_url('register'))->with('msg', 'Mobile should be the same as registered with Aadhar!');
                                     } else {
-                                        $responseString = file_get_contents($DIR2);
+                                        $responseString = file_get_contents($extractedPath);
                                         $signature_match = $this->offlineKycResponse($responseString);
-                                        if($signature_match != 'Signature validated') {
-                                            $this->session->setFlashdata('msg', 'Aadhar file tampered, please try with fresh offline aadhar! ');
-                                            return redirect()->to(base_url('register'));
+                                        if ($signature_match != 'Signature validated') {
+                                            return redirect()->to(base_url('register'))->with('msg', 'Aadhar file tampered, please try with a fresh offline Aadhar!');
                                         }
                                     }
-                                    $aadhar_no = $data['configData']['@attributes']['referenceId'];
-                                    $aadhar_last_disit_no = substr($aadhar_no, -18, -17);
-                                    // $this->load->library('encryption');
-                                    $share_code = '8976';
-                                    $mob = "9582551896";
-                                    $l_digit = "3";
-                                    $this->session->setFlashdata('msg', 'Upload & Extract successfully.');
+                                    return redirect()->to(base_url('register'))->with('msg', 'Upload & Extract successfully.');
                                 } else {
-                                    $this->session->setFlashdata('msg', 'Failed to extract.');
-                                    return redirect()->to(base_url('register'));
+                                    return redirect()->to(base_url('register'))->with('msg', 'Failed to open zip file.');
                                 }
                             } else {
-                                unlink($file_path);
-                                $this->session->setFlashdata('msg', 'Pls. upload the original offline Aadhaar eKYC Zip file.');
-                                return redirect()->to(base_url('register'));
+                                unlink($filePath);
+                                return redirect()->to(base_url('register'))->with('msg', 'Please upload the original offline Aadhaar eKYC Zip file.');
                             }
                         } else {
-                            $this->session->setFlashdata('msg', 'Failed to upload (only zip file upload allowed). Some problem');
-                            return redirect()->to(base_url('register'));
+                            return redirect()->to(base_url('register'))->with('msg', 'Failed to upload zip file.');
                         }
                     } else {
-                        $this->session->setFlashdata('msg', 'Only zip file upload allowed.');
-                        return redirect()->to(base_url('register'));
+                        return redirect()->to(base_url('register'))->with('msg', 'No file was uploaded or file is invalid.');
                     }
                 }
                 if(!empty($_POST['adv_mobile']))
@@ -348,13 +422,13 @@ class DefaultController extends BaseController {
                     'email_id'=>$_POST['adv_email'],
                     'email_otp'=>$email_otp_is,
                     'register_type'=>$_POST['register_type'],), $name_array);*/
-                if(!empty($_POST['adv_mobile'])){
+                if(!empty($_POST['adv_mobile'])) {
                     $typeId="38";
                     $mobileNo=trim($_POST['adv_mobile']);
                     $smsText="OTP for Registration SC-EFM password is: ".$mobile_otp_is." ,Please do not share it with any one. - Supreme Court of India";
                     sendSMS($typeId,$mobileNo,$smsText,SCISMS_Registration_OTP);
                 }
-                if(!empty($_POST['adv_email'])){
+                if(!empty($_POST['adv_email'])) {
                     $to_email=trim($_POST['adv_email']);
                     $subject="SC-EFM Registration password OTP";
                     $message="OTP for Registration SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
