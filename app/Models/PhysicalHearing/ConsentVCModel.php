@@ -156,7 +156,7 @@ class ConsentVCModel extends Model
         return $query->getResultArray();
     }
 
-    function getTentativeAttendeeListForMail($list_no,$list_year,$list_date=null,$daily_list_matters)
+    function getTentativeAttendeeListForMail($list_no,$list_year,$daily_list_matters,$list_date=null)
     {
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         $this->physical_hearing->select('.ad.id,ad.next_dt,ad.court_no,ad.diary_no, ad.case_number,ad.list_number,ad.list_year, ref_attendee_type_id,rat.description,rat.is_seat_allocated,ad.name,ad.email_id, ad.mobile, ad.created_on,ad.created_by_advocate_id,ad.secure_gate_visit_id,ad.secure_gate_visitor_passes');
