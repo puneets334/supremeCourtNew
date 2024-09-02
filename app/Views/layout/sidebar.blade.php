@@ -84,10 +84,10 @@ $segment = service('uri');
                         </li>
 
                         <li class="premium">
-                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">eCopying</a>
-                            <ul id="collapse6" class="submenu accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
+                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">eCopying</a>
+                            <ul id="collapse7" class="submenu accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
-                                <li><a class="btn-link" href="#">Track</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/track_consignment'); ?>">Track</a></li>
                                 <li><a class="btn-link" href="#">Application</a></li>
                                 <li><a class="btn-link" href="#">Address</a></li>
                                 <li><a class="btn-link" href="#">FAQ's</a></li>

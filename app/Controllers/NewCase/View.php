@@ -89,6 +89,8 @@ class View extends BaseController {
         $data['subordinate_court_details'] = $this->GetDetailsModel->get_subordinate_court_details($registration_id);
         $data['payment_details'] = $this->ViewModel->get_payment_details($registration_id);
         $data['efiled_docs_list'] = $this->ViewModel->get_index_items_list($registration_id);
+        // pr($data['efiled_docs_list']);
+
         // $data['esigned_docs_details'] = $this->Affirmation_model->get_esign_doc_details($registration_id);
         $creaedBy = !empty($data['new_case_details'][0]->created_by) ? $data['new_case_details'][0]->created_by : NULL;
         $data['uploaded_docs'] = $this->UploadDocsModel->get_uploaded_pdfs($registration_id);

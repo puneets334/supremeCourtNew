@@ -1275,23 +1275,23 @@ function remark_preview($reg_id, $current_stage_id)
 
 
         return $msg;
-    } elseif (isset($result_initial) && !empty($result_initial)) {
+        
+    } elseif (isset($result_initial) && !empty($result_initial)) { 
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date(
             'd-m-Y H:i:s',
-            strtotime($result_initial->defect_date)
+            strtotime($result_initial->defect_date ?? $result_initial['defect_date'] )
         ) . '
                 <p>';
         $msg .= '
                 <p><strong>Defects :</strong>
                 <p>';
         $msg .= '
-                <p>' . script_remove($result_initial->defect_remark) . '
+                <p>' . script_remove($result_initial->defect_remark ?? $result_initial['defect_remark']) . '
                 <p>';
-
-        if ($result->defect_cured_date != NULL) {
-            $msg .= '
-                <p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
+        if ($result_initial->defect_cured_date ?? $result_initial['defect_cured_date'] != NULL) {
+            $msg .= '[
+                <p] align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
                 'd-m-Y H:i:s',
                 strtotime($result_initial->defect_cured_date)
             ), ENT_QUOTES) . '
@@ -3292,4 +3292,169 @@ function article_tracking_offline($articlenumber){
     }
     //return $rate;
     return json_encode(array("Status" => $status, "DataValue" => $rows));
+}
+
+function getCopySearchResult($row){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets');
+
+    $subQuery1 = $builder
+        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
+        ->join('user_asset_type_master a', 'a.id = u.asset_type')
+        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
+        ->where('u.mobile', $row['mobile'])
+        ->where('u.email', $row['email'])
+        ->where('u.asset_type', 1)
+        ->where('u.diary_no', 0)
+        ->orderBy('u.ent_time', 'desc')
+        ->limit(1)
+        ->getCompiledSelect(); 
+
+    $subQuery2 = $builder
+        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
+        ->join('user_asset_type_master a', 'a.id = u.asset_type')
+        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
+        ->where('u.mobile', $row['mobile'])
+        ->where('u.email', $row['email'])
+        ->where('u.asset_type', 2)
+        ->where('u.diary_no', 0)
+        ->orderBy('u.ent_time', 'desc')
+        ->limit(1)
+        ->getCompiledSelect(); 
+
+    $subQuery3 = $builder
+        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
+        ->join('user_asset_type_master a', 'a.id = u.asset_type')
+        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
+        ->where('u.mobile', $row['mobile'])
+        ->where('u.email', $row['email'])
+        ->where('u.asset_type', 3)
+        ->where('u.diary_no', 0)
+        ->orderBy('u.ent_time', 'desc')
+        ->limit(1)
+        ->getCompiledSelect(); 
+
+    $finalQuery = $db2->query("
+        ($subQuery1)
+        UNION
+        ($subQuery2)
+        UNION
+        ($subQuery3)
+    ");
+
+    try {
+        $query = $db2->query($finalQuery);
+        if ($query) {
+            $result = $query->getResultArray();
+        } else {
+            throw new \Exception('Query failed to execute.');
+        }
+    } catch (\Exception $e) {
+        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
+        $result = [];
+    }
+
+    return $result;
+}
+
+function getCopyStatusResult($row, $asset_type_flag){
+    $db2 = \Config\Database::connect('e_services'); 
+    $builder = $db2->table('user_assets u');
+    try {
+        $builder->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
+                ->join('user_asset_type_master a', 'a.id = u.asset_type', 'inner')
+                ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
+                ->where('u.mobile', $row['mobile'])
+                ->where('u.email', $row['email'])
+                ->where('u.asset_type', $asset_type_flag)
+                ->where('u.diary_no', $row['diary'])
+                ->orderBy('u.ent_time', 'desc')
+                ->limit(1);
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            throw new \Exception('Database query error: ' . $error['message']);
+        }
+        $result = $query->getRowArray();
+    } catch (\Exception $e) {
+        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
+        $result = [];
+    }
+
+    return $result;
+}
+
+function getCopyBarcode($row){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('post_bar_code_mapping');
+
+    $builder->select('GROUP_CONCAT(barcode) as barcode')
+            ->where('copying_application_id', $row['id'])
+            ->groupBy('copying_application_id')
+            ->having('barcode IS NOT NULL');
+
+    $query = $builder->get();
+
+    return $result = $query->getRowArray();
+}
+
+function getCopyApplication($row){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_documents b');
+
+    try {
+        $builder->select('b.sent_to_applicant_on, b.pdf_embed_on, b.pdf_digital_signature_on, r.order_type AS order_name, "" AS reject_cause, b.*')
+                ->join('ref_order_type r', 'b.order_type = r.id', 'left')
+                ->where('b.copying_order_issuing_application_id', $row['id']);
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            throw new \Exception('Database query error: ' . $error['message']);
+        }
+        $result = $query->getResultArray();
+    } catch (\Exception $e) {
+        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
+        $result = [];
+    }
+    return $result;
+}
+
+function getCopyRequest($row){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_request_verify_documents b');
+
+    $builder->select('b.path, r.order_type AS order_name, b.reject_cause, b.*')
+            ->join('ref_order_type r', 'b.order_type = r.id', 'left')
+            ->where('b.copying_order_issuing_application_id', $row['id']);
+    $query = $builder->get();
+    if ($query === false) {
+        $error = $db2->error();
+        // echo "<pre>Error: " . $error['message'] . "</pre>";
+        $result = [];
+    } else {
+        $result = $query->getResultArray();
+    }
+    return $result;
+
+}
+
+function copyFormSentOn($row1){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_request_movement c');
+    $builder->select('c.from_section_sent_on, us.section_name AS from_section1, us2.section_name AS to_section1')
+            ->join('usersection us', 'us.id = c.from_section', 'left')
+            ->join('usersection us2', 'us2.id = c.to_section', 'left')
+            ->where('c.copying_request_verify_documents_id', $row1['id']) // Ensure $row['id'] contains a valid ID
+            ->where('c.display', 'Y')
+            ->where('c.from_section_sent_by !=', 0)
+            ->orderBy('c.from_section_sent_on');
+    $query = $builder->get();
+    if ($query === false) {
+        $error = $db2->error();
+        // echo "<pre>Error: " . $error['message'] . "</pre>";
+        $result = [];
+    } else {
+        $result = $query->getResultArray();
+    }
+    return $result;
 }

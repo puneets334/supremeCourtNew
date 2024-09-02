@@ -329,6 +329,7 @@ $routes->match(['GET', 'POST'],'on_behalf_of/DefaultController/save_filing_for',
 $routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
 $routes->match(['GET', 'POST'], 'report/search/actionFiledon', 'Report\Search::actionFiledon');
 $routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)/(:any)', 'Report\Search::view/$1/$2/$3/$4/$5');
+$routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)', 'Report\Search::view/$1/$2/$3/$4');
 $routes->match(['GET', 'POST'], 'case/search/(:any)', 'Case\Search::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/view', 'MiscellaneousDocs\View::index');
 $routes->match(['GET', 'POST'], 'miscellaneous_docs/courtFee', 'MiscellaneousDocs\CourtFee::index');
@@ -351,6 +352,10 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::i
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\FinalSubmit::index');
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
 $routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::index');
+$routes->match(['GET', 'POST'], 'shcilPayment/ViewPaymentChallan/(:any)', 'ShcilPayment\ViewPaymentChallan::index/$1');
+// $routes->match(['GET', 'POST'], 'report/search/view/miscellaneous_docs/defaultController/(:any)/(:any)/(:any)', 'MiscellaneousDocs\DefaultController::view/$1/$1/$1');
+
+
 
 
 
@@ -379,3 +384,5 @@ $routes->match(['GET', 'POST'], 'cron/stage_check', 'Cron\StageController::index
 // online copying
 $routes->match(['GET', 'POST'], 'online_copying/copy_search', 'OnlineCopying\DefaultController::copySearch');
 $routes->match(['GET', 'POST'], 'online_copying/get_copy_search', 'OnlineCopying\DefaultController::getCopySearch');
+$routes->match(['GET', 'POST'], 'online_copying/track_consignment', 'OnlineCopying\DefaultController::trackConsignment');
+$routes->match(['GET', 'POST'], 'online_copying/get_consignment_status', 'OnlineCopying\DefaultController::getConsignmentStatus');

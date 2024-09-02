@@ -84,7 +84,7 @@ class DefaultController extends BaseController {
             $efiling_details['registration_id'] = $registration_id;
             $session = session();
             // $session ->set('efiling_details', $result);
-            $session->set('efiling_details', $efiling_details);
+            setSessionData('efiling_details', $efiling_details);
             // session()->set('efiling_details.registration_id', $registration_id = $InputArray[0]);
             $this->Common_model->get_efiling_num_basic_details(trim($InputArray[0]));
             $this->Common_model->get_establishment_details();
