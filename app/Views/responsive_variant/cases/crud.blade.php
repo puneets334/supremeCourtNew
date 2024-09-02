@@ -2,6 +2,7 @@
 @section('content')
     {{-- <link rel="stylesheet" href="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/css/main.min.css')}}" />
     <link type="text/css" rel="stylesheet" href="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css')}}" /> --}}
+    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -86,7 +87,7 @@
                                         <?php 
                                         if(isset($srAdvocate) && !empty($srAdvocate) && isset($diaryDetails->diary_no) && !empty($diaryDetails->diary_no)) {
                                             echo '<div class="col-md-3">
-                                                <select class="form-control cus-form-ctrl col-sm-8"  id="srAdvocate" name="srAdvocate" >
+                                                <select class="form-control cus-form-ctrl col-sm-8 filter_select_dropdown"  id="srAdvocate" name="srAdvocate" >
                                                     <option value="">Select Sr. Advocate</option>';
                                                     $sradvocatelistIds = array_column($srAdvocate, 'id');
                                                     if(isset($srAdvocate) && !empty($srAdvocate)) {
@@ -183,7 +184,7 @@
                                             </div>';
                                         } else if(isset($diaryDetails->diary_no) && !empty($diaryDetails->diary_no)) {
                                             echo '<div class="col-md-3">
-                                                <select class="form-control cus-form-ctrl col-sm-8"  id="srAdvocate" name="srAdvocate" >
+                                                <select class="form-control cus-form-ctrl col-sm-8 filter_select_dropdown"  id="srAdvocate" name="srAdvocate" >
                                                     <option value="">Select Advocate</option>';
                                                     $sradvocatelistIds = array_column($arguingCounsel, 'id');
                                                     if(isset($arguingCounsel) && !empty($arguingCounsel)){
@@ -260,8 +261,14 @@
     </div>
 @endsection
 @push('script');
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script>
     $(document).ready(function() {
+        $(".filter_select_dropdown").select2().on('select2-focus', function() {
+            // debugger;
+            $(this).data('select2-closed', true)
+        });
         $("#msg").show();
         $(document).on('click','#addAdvocate',function(){
             var advocateId= $("#srAdvocate option:selected").val();
