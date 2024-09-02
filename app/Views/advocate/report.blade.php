@@ -1,5 +1,7 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
+
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -16,66 +18,98 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="dashboard-section dashboard-tiles-area"></div>
-            <div class="dashboard-section">
+
+<style>
+    .dateSymbol {
+        position: relative;float: right;top: -25px;right: 8px;
+    }
+</style>
+<div class="mainPanel ">
+    <div class="panelInner">
+        <div class="middleContent">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="dash-card">
-                            {{-- Page Title Start --}}
-                            <div class="title-sec">
-                                <h5 class="unerline-title"> Advocates Appearing </h5>
-                            </div>
-                            <div class="page-title">
-                                <h5>Search</h5>
-                            </div>
-                            <div class="table-sec">
-                                <div class='row '>
-                                    <!-- Message -->
-                                    @if (session('status'))
-                                        <div class="col-12 alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>{{ session('status') }}</strong></div>
-                                    @elseif(session('failed'))
-                                        <div class="col-12 alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>{{ session('failed') }}</strong></div>
-                                    @endif
-                                    <div class="col-md-12">
-                                        <div class="card card-primary">
-                                            <div class="card-header">
-                                                <h3 class="card-title">Search</h3>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+                            <div class="center-content-inner comn-innercontent">
+                            <div class="dash-card dashboard-section">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class=" dashboard-bradcrumb">
+                                            <div class="left-dash-breadcrumb">
+                                                <div class="page-title">
+                                                    
+                                                    <h5><i class="fa fa-file"></i> Advocates Appearing</h5>
+                                                </div>
+                                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
                                             </div>
-                                            <!-- /.card-header -->
-                                            <!-- form start -->
-                                            <form class="form-horizontal" method="POST" action="<?php echo base_url('advocate/report'); ?>">
-                                                @csrf
-                                                <div class="card-body">
+                                            <div class="ryt-dash-breadcrumb">
+                                                <div class="btns-sec">
+
+                                                    <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                                        <div class="crnt-page-head">
+                                            <div class="current-pg-title">
+                                                <h6>Search </h6>
+                                            </div>
+                                            <div class="current-pg-actions"> </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- tabs-section -start  -->
+                            <div class="msg" id="msg">
+                                <div style="text-align: center;">
+                                    <?php
+                                    if (!empty(getSessionData('MSG'))) {
+                                        echo getSessionData('MSG');
+                                    }
+                                    if (!empty(getSessionData('msg'))) {
+                                        echo getSessionData('msg');
+                                    }
+                                    ?>
+                                    <br>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="dash-card dashboard-section">
+                                <div class="row">
+                                    <div class="panel panel-default">
+                                    <form class="form-horizontal" method="POST" action="<?php echo base_url('advocate/report'); ?>">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                       
+                                       
+                                            <div class="row">
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
                                                     <div class="row">
-                                                        <div class="col-sm-3">
-                                                            <div class="form-group">
-                                                                <label class="control-label">List Date (dd-mm-yyyy)</label>
-                                                                <div class="input-group date" id="cause_list_date" data-target-input="nearest">
-                                                                    <input type="text" class="form-control datetimepicker-input @error('cause_list_date') is-invalid @enderror" value="{{old('cause_list_date')}}" name="cause_list_date" data-target="#cause_list_date"/>
-                                                                    <div class="input-group-append" data-target="#cause_list_date" data-toggle="datetimepicker">
-                                                                        <div class="input-group-text"><i class="far fa-calendar-alt"></i></div>
-                                                                    </div>
-                                                                    @error('cause_list_date')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                    <strong>{{ $message }}</strong>
-                                                                </span>
-                                                                    @enderror
-                                                                </div>
+                                                        <div class="row w-100 align-items-center">
+                                                            <div class="col-5">
+                                                                <label for="inputPassword6" class="col-form-label">List Date</label>
+                                                            </div>
+                                                            <div class="col-7 pe-0">
+                                                            <input class="form-control cus-form-ctrl  has-feedback-left" id="cause_list_date"  name="cause_list_date" placeholder="List Date" type="text" required />
+                                                             <span class="fa fa-calendar-o form-control-feedback left dateSymbol" aria-hidden="true" ></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- /.card-body -->
-                                                <div class="card-footer">
-                                                    <button type="submit" name="search" class="btn btn-primary">Search</button>
+                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                    <div class="save-form-details">
+                                                        <div class="save-btns">
+                                                            <button type="submit" class="quick-btn gray-btn" id="search_sc_case" value="SEARCH">Search</button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <!-- /.card-footer -->
-                                            </form>
-                                        </div>
-                                        <!-- /.card -->
+                                            </div>  
+                                        </form>
                                         @if(isset($list))
                                             <div class="row">
                                                 <div class="col-12">
@@ -83,33 +117,34 @@
                                                         <div class="card-header">
                                                             <h3 class="card-title">Advocates Appearing for List Date {{$cause_list_date}}</h3>
                                                         </div>
-                                                        <!-- /.card-header -->
                                                         <div class="card-body table-responsive p-0">
                                                             <table class="table table-hover table-striped ">
                                                                 <thead>
-                                                                    <tr>
-                                                                        <th>SNo.</th>
-                                                                        <th>Listed On</th>
-                                                                        <th>Court No.</th>
-                                                                        <th>Item No.</th>
-                                                                        <th>Case No.</th>
-                                                                        <th>Cause Title</th>
-                                                                        <th>Name of Advocates</th>
-                                                                    </tr>
+                                                                <tr>
+                                                                    <th>SNo.</th>
+                                                                    <th>Listed On</th>
+                                                                    <th>Court No.</th>
+                                                                    <th>Item No.</th>
+                                                                    <th>Case No.</th>
+                                                                    <th>Cause Title</th>
+                                                                    <th>Name of Advocates</th>
+                                                                </tr>
                                                                 </thead>
-                                                                <tbody></tbody>
+                                                                <tbody>
+                                                            
+                                                                </tbody>
                                                             </table>
+
                                                         </div>
-                                                        <!-- /.card-footer -->
-                                                        <!-- /.card-body -->
                                                     </div>
-                                                    <!-- /.card -->
                                                 </div>
                                             </div>
-                                        @endif
+                                        @endif                                     
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
                         </div>
                     </div>
                 </div>
@@ -117,16 +152,51 @@
         </div>
     </div>
 </div>
-@push('script')   
-<script src="<?=base_url();?>assets/js/sweetalert2@11.js"></script>
-<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert2.min.css"> 
-<script>
-    $(function () {
-        bsCustomFileInput.init();
-        $('#cause_list_date').datetimepicker({
-            format: 'DD-MM-YYYY'
+    @push('script')
+    <script>
+
+    $(document).ready(function() {
+        // alert("SC");
+        $('#cause_list_date').datepicker({
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100:-1",
+        dateFormat: "dd/mm/yy",
+        defaultDate: '-40y'
         });
-    });
-</script>
-@endpush
+
+        $(document).on('change','#cause_list_date', function(){
+            var value = $('#cause_list_date').val();
+            var parts = value.split("/");
+            var day = parts[0] && parseInt(parts[0], 10);
+            var month = parts[1] && parseInt(parts[1], 10);
+            var year = parts[2] && parseInt(parts[2], 10);
+            var str = day + '/' + month + '/' + year;
+            var today = new Date(),
+            dob = new Date(str),
+            age = new Date(today - dob).getFullYear() - 1970;
+            $('#pet_age').val(age);
+        });     
+
+    })
+    </script>   
+    <script src="<?=base_url();?>assets/js/sweetalert2@11.js"></script>
+    <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert2.min.css"> 
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/sha256.js"></script>
+    <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+    
+
+    @endpush
 @endsection
