@@ -176,7 +176,7 @@ class Search extends BaseController
                     } else {
                         // Handle the case where $listing_data->listed is not set or not as expected
                         $data['listing_details'] = null;
-                        echo "Error: 'listed' is not set or is not an array.";
+                        // echo "Error: 'listed' is not set or is not an array.";
                     }
                     $_SESSION['listing_details'] = $data['listing_details'];
                     $data['mentioning_request_details'] = $this->ListingModel->get_mentioning_request_details($diary_no, $diary_year);
@@ -199,7 +199,7 @@ class Search extends BaseController
                         }
                         //end check Mark All Defects Cured
                     } else {
-                        echo '3@@@   1111111    Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
+                        echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                         exit(0);
                     }
                     $data['searched_case_details'] = $web_service_result->case_details[0];
