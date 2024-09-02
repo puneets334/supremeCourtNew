@@ -257,7 +257,7 @@ $this->hearing_model = new HearingModel();
                                                         <th style="width: 20%">Total Cases</th>
                                                         <th style="width: 23%">VC Mode of Hearing</th>
                                                     </tr>
-                                                    <tr style="text-align: left">
+                                                    <tr style="text-align: center">
                                                         <?php
                                                         // $CI =&get_instance();
                                                         // $CI->load->model('Consent_VC_model');
