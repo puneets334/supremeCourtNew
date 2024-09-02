@@ -143,15 +143,16 @@ class ConsentVCModel extends Model
     }
 
     function getAdvocateVCConsentSummary($advocate_id, $next_dt, $court_no=null){
-        $next_dt=str_replace(array('\''), '',  (implode($next_dt)));
+        $next_dt=str_replace(array('\''), '',  (implode((array)$next_dt)));
+        // pr($next_dt);
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         // $sql = "select sum(case_count) as vc_count
         //     from physical_hearing.physical_hearing_advocate_vc_consent
         //     where next_dt=? and court_no = ? and advocate_id=? 
         //     and is_deleted='f' and consent='V'";
-        $sql = "select sum(case_count) as vc_count from physical_hearing.physical_hearing_advocate_vc_consent where next_dt=$next_dt and court_no = $court_no and advocate_id=$advocate_id and is_deleted='f' and consent='V'";
+        $sql = "select sum(case_count) as vc_count from physical_hearing.physical_hearing_advocate_vc_consent where next_dt= DATE '".$next_dt."' and court_no = $court_no and advocate_id=$advocate_id and is_deleted='f' and consent='V'";
         $query = $this->physical_hearing->query($sql, array($next_dt,$court_no,$advocate_id));
-        // echo $this->physical_hearing->getLastQuery();
+        // echo $this->physical_hearing->getLastQuery(); exit();
         return $query->getResultArray();
     }
 
