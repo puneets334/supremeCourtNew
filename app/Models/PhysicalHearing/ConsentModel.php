@@ -61,7 +61,7 @@ class ConsentModel extends Model
     {
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         //$physical_hearing_db->where($condition_array)->update($table, $data);
-        if($this->physical_hearing->where($condition_array)->update($table, $data))
+        if($this->physical_hearing->WHERE($condition_array)->update($table, $data))
             return 1;
         else
             return 0;
@@ -72,9 +72,9 @@ class ConsentModel extends Model
             FROM physical_hearing_consent_required phcr inner join advocate a on phcr.diary_no=a.diary_no
             inner join main m on phcr.diary_no=m.diary_no
             where phcr.is_deleted='f' and a.advocate_id=?;";
-        $query = $this->db->query($sql, array($aor_id));
+        $query = $this->physical_hearing->query($sql, array($aor_id));
         //echo $this->db->last_query();exit();
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function get_advocate_last_updated_consent($diary_no,$list_number,$list_year,$advocate_id, $court_no)
@@ -94,8 +94,8 @@ class ConsentModel extends Model
             case when phcr.consent='N' then true else false end as if_changeable
             FROM physical_hearing_consent_required phcr         
             where phcr.is_deleted=? and phcr.id=?";
-        $query = $this->db->query($sql, array('f',$id));
-        return $query->result_array();
+        $query = $this->physical_hearing->query($sql, array('f',$id));
+        return $query->getResultArray();
     }
     function getAORConsentDetails($diary_no,$list_number,$list_year,$advocateId, $court_no){
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
@@ -131,7 +131,7 @@ class ConsentModel extends Model
     }
 
 
-    function getTentativeAttendeeListForMail($list_no,$list_year,$list_date=null,$daily_list_matters)
+    function getTentativeAttendeeListForMail($list_no,$list_year,$daily_list_matters,$list_date=null)
     {
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         $physical_hearing_db->select('.ad.id,ad.next_dt,ad.court_no,ad.diary_no, ad.case_number,ad.list_number,ad.list_year,
@@ -172,8 +172,8 @@ class ConsentModel extends Model
     ad.list_number=last_list.list_number and ad.created_by_advocate_id=last_list.created_by_advocate_id 
     and ad.diary_no=last_list.diary_no
     where ad.diary_no = $diary_no and ad.created_by_advocate_id=$bar_id and ad.display='Y')attendee_data)";
-        $query = $this->db->query($sql);
-        return $query->result_array();
+        $query = $this->physical_hearing->query($sql);
+        return $query->getResultArray();
     }
 
     function getAorCode($advocate_id)

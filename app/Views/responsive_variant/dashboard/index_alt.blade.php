@@ -222,7 +222,7 @@
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive">
-                                                        <table class="table table-striped custom-table">
+                                                        <table id="datatable-responsive-sc_cases" class="table table-striped custom-table">
                                                             <thead>
                                                                 <tr class="uk-text-bold">
                                                                     <th class="uk-text-bold">Case</th>
@@ -992,6 +992,17 @@
 <script>
     $(document).ready(function() {
         $('#datatable-responsive-srAdv').DataTable();
+    });
+    $(document).ready(function() {
+        $('#datatable-responsive-sc_cases').DataTable({
+            // "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "bAutoWidth": false,
+            "pageLength": 5,
+            // "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
+        });
     });
 </script>
 <script>

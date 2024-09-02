@@ -22,6 +22,8 @@ class DefaultController extends BaseController {
     protected $slice;
     protected $form_validation;
     protected $session;
+    protected $efiling_webservices;
+    protected $encryption;
 
     public function __construct() {
         parent::__construct();
@@ -35,7 +37,7 @@ class DefaultController extends BaseController {
         $this->slice = new Slice();
         $this->efiling_webservices = new Efiling_webservices();
         $this->session = \Config\Services::session();
-        $this->encryption = Services::encryption();
+        $this->encryption = \Config\Services::encryption();
         helper(['form']);
     }
 
