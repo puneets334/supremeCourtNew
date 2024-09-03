@@ -216,9 +216,12 @@ class AdvocateController extends BaseController
         //     ]
         // );
         $cause_list_date = date('Y-m-d', strtotime($this->request->getPost('cause_list_date')));
+        // pr($cause_list_date);
         $cause_list_array = array();
         // $cause_list_array = new stdClass;
-        $cause_list = Advocate::getAppearingDiaryNosOnly($cause_list_date);
+        $cause_list= $this->AdvocateModel->getAppearingDiaryNosOnly($cause_list_date);
+        // pr($cause_list);
+
         // var_dump($cause_list);
         foreach($cause_list as $key => $cl){
             $cause_list_array[$key]['diary_no'] = $cl->diary_no;
@@ -226,8 +229,8 @@ class AdvocateController extends BaseController
             $cause_list_array[$key]['court_no'] = $cl->court_no;
             $cause_list_array[$key]['item_no'] = $cl->item_no;
             $cause_list_array[$key]['appearing_for'] = $cl->appearing_for;
-            $cause_list_array[$key]['diary_details'] = Advocate::getDiaryDetails($cl->diary_no);
-            $cause_list_array[$key]['advocate_name'] = Advocate::getAppearingAdvocates($cl);
+            $cause_list_array[$key]['diary_details'] = $this->AdvocateModel->getDiaryDetails($cl->diary_no);
+            $cause_list_array[$key]['advocate_name'] = $this->AdvocateModel->getAppearingAdvocates($cl);
         }
         $cause_list_date = $this->request->getPost('cause_list_date');
         $list = $cause_list_array;
