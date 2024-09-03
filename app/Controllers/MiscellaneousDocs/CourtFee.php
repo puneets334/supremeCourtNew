@@ -34,7 +34,7 @@ class CourtFee extends BaseController
 
     public function index()
     {
-        
+           
         //func added on 11 nov 2020
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
             $registration_id = $_SESSION['efiling_details']['registration_id'];
@@ -66,7 +66,8 @@ class CourtFee extends BaseController
                     }
                     
                     $data['uploaded_pages_count'] = $this->Court_Fee_model->get_uploaded_pages_count($registration_id);
-                    $data['payment_details'] = $this->Court_Fee_model->get_payment_details($registration_id);                    
+                    $data['payment_details'] = $this->Court_Fee_model->get_payment_details($registration_id);  
+              
                     //start new added by akg
                     $data['court_fee_bifurcation'] = $this->Common_model->get_court_fee_bifurcation($registration_id);
                     $data['court_fee_list1'] = $court_fee_calculation_param1 = $this->Common_model->get_subject_category_casetype_court_fee($registration_id);
