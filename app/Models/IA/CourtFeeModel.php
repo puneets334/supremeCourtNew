@@ -40,7 +40,7 @@ class CourtFeeModel extends Model {
         $query =  $builder->get();
         //echo $this->db->last_query();
         if ($query->getNumRows() >= 1) {
-            $result = $query->getResult();
+            $result = $query->getResultArray();
             return $result;
         } else {
             return FALSE;

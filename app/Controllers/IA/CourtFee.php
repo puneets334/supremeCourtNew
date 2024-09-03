@@ -9,10 +9,10 @@ use App\Models\DocumentIndex\DocumentIndexSelectModel;
 
 class CourtFee extends BaseController {
 
-    protected $CommonModel;
-    protected $PaymentModel;
-    protected $CourtFeeModel;
-    protected $DocumentIndexSelectModel;
+    protected $Common_model;
+    protected $Payment_model;
+    protected $Court_Fee_model;
+    protected $DocumentIndex_Select_model;
 
     public function __construct() {
         parent::__construct();
@@ -73,7 +73,6 @@ class CourtFee extends BaseController {
                     $data['uploaded_pages_count'] = $this->Court_Fee_model->get_uploaded_pages_count($registration_id);
                    
                     $data['payment_details'] = $this->Court_Fee_model->get_payment_details($registration_id);
-
                    
                     // $data['court_fee_bifurcation']=$this->Common_model->get_court_fee_bifurcation($registration_id);
 
