@@ -83,6 +83,9 @@ class AdvocateModel extends Model {
         return $builder->getRow(); // Return the first row (similar to Laravel's first())
     }
 
+
+    
+
     public function getAddedAdvocatesInDiary($data)
     {
         $session = \Config\Services::session(); // Correct namespace for Services
@@ -111,7 +114,6 @@ class AdvocateModel extends Model {
 
     public function getSubmittedAdvocatesInDiary($data)
     {
-// pr($data);
         $session = \Config\Services::session(); // Correct namespace for Services
         $builder = $this->db3->table('appearing_in_diary');        
         $builder ->where('diary_no', $data['diary_no']);
@@ -124,6 +126,66 @@ class AdvocateModel extends Model {
 
         return $value;
     }
+
+    public static function getAppearingDiaryNosOnly($cause_list_date)
+    {
+        // Create a new database connection instance
+        $db3 = \Config\Database::connect('e_services'); 
+        $session = \Config\Services::session();
+        $aor_code = $session->get('login')['aor_code']; 
+        // Prepare the query
+        $builder = $db3->table('appearing_in_diary');    
+        $builder->select('appearing_for, diary_no, item_no, court_no, list_date'); // Use a single string or array
+        $builder->where('is_active', '1');
+        $builder->where('is_submitted', '1');
+        $builder->where('list_date', $cause_list_date);
+        $builder->where('aor_code', $aor_code); // Use the retrieved session data
+        $builder->distinct();
+
+        // Execute the query and fetch results
+        $value = $builder->get()->getResult(); 
+
+        return $value;
+    }
+
+    public static function getAppearingAdvocates($raw_data)
+    {
+
+        $db3 = \Config\Database::connect('e_services'); 
+        $session = \Config\Services::session();
+        $aor_code = $session->get('login')['aor_code']; 
+        // Prepare the query
+        $builder = $db3->table('appearing_in_diary'); 
+        $builder->where('is_active', '1');
+        $builder->where('diary_no', $raw_data->diary_no);
+        $builder->where('list_date', $raw_data->list_date);
+        $builder->where('aor_code', $aor_code);
+        $builder->orderBy('priority');        
+       $sql = $builder->getCompiledSelect();
+        echo $sql; die;
+        $query = $builder->get();
+
+        if ($query === false) {           
+            return false;
+        }else {
+            $result = $query->getResult();           
+        }
+        return $result;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

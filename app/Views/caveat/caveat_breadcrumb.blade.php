@@ -233,7 +233,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $status_color = '';
                         }
                         ?>
-                        <a href="<?= $url_caveator ?>" class="nav-link <?php echo $status_color; ?> " id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><span class="tab-num" style="<?php echo $ColorCode; ?>">1</span>Caveator</a>
+                        <a href="<?= $url_caveator ?>" class="nav-link <?php echo $status_color; ?> "  data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><span class="tab-num" style="<?php echo $ColorCode; ?>">1</span>Caveator</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -251,7 +251,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_caveatee ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" style="<?php if(!in_array(NEW_CASE_CASE_DETAIL, $StageArray)){ echo $disabled_status; }?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span>Caveatee</a>
+                        <a href="<?= $url_caveatee ?>" class="nav-link <?php echo $status_color; ?>"  style="<?php if(!in_array(NEW_CASE_CASE_DETAIL, $StageArray)){ echo $disabled_status; }?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span>Caveatee</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -270,7 +270,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_PETITIONER, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts</a>
+                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_PETITIONER, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts</a>
                     </li>                        
                     <li class="nav-item" role="presentation">
                         <?php                        
@@ -288,7 +288,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
+                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -309,7 +309,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Pay Court Fee</a>
+                        <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>"  style="<?php if(!in_array(CAVEAT_BREAD_COURT_FEE, $StageArray)) { echo $disabled_status1; } ?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Pay Court Fee </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -327,7 +327,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= base_url('caveat/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">6</span>View</a>
+                        <a href="<?= base_url('caveat/view') ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">6</span>View</a>
                     </li>
                 </ul>
             @endif
