@@ -2,7 +2,7 @@
 namespace App\Models\Supplements;
 
 use CodeIgniter\Model;
-class Supplement_model extends Model {
+class SupplementModel extends Model {
 
     function __construct() {
         parent::__construct();
@@ -53,7 +53,7 @@ class Supplement_model extends Model {
     public function get_efiling_num_basic_Details_pdf($search_type,$efiling_no=null,$diary_no=null,$diary_year=null,$case_no=null,$case_year=null,$case_type_id=null,$response_type=null)
     {
 
-		$builder = $this->$db->table('efil.tbl_efiling_nums as en');
+		$builder = $this->db->table('efil.tbl_efiling_nums as en');
         $builder->SELECT(array('en.efiling_for_type_id', 'en.efiling_for_id', 'en.ref_m_efiled_type_id',
             'en.efiling_no', 'en.efiling_year', 'en.registration_id', 'en.allocated_on', 'en.create_on',
             'et.efiling_type','cs.stage_id', 'cs.activated_on', 'en.sub_created_by',
@@ -79,7 +79,7 @@ class Supplement_model extends Model {
             if(!empty($case_type_id) && $case_type_id!=null) {
                 $builder->WHERE('lcd.case_type_id',$case_type_id);
             }
-            builder->WHERE('lcd.court_type','4');
+            $builder->WHERE('lcd.court_type','4');
             //$this->db->WHERE('cast(lcd.court_type as integer)',4);
 
         }else if(!empty($search_type) && $search_type!=null && $search_type=='diary' && $search_type!='efilingNO') {
@@ -124,7 +124,7 @@ class Supplement_model extends Model {
 
     public function get_efiling_num_basic_Details_pdf_bkp($efiling_NO) {
 
-		$builder = $this->$db->table('efil.tbl_efiling_nums as en');
+		$builder = $this->db->table('efil.tbl_efiling_nums as en');
 
         $builder->SELECT("en.registration_id, en.efiling_no, en.efiling_year, en.ref_m_efiled_type_id, et.efiling_type,
                 en.efiling_for_type_id, en.efiling_for_id, 
@@ -168,10 +168,10 @@ class Supplement_model extends Model {
 
     function upsert($data_array){
 		
-		$builder = $this->$db->table('efil.tbl_check_list');
+		$builder = $this->db->table('efil.tbl_check_list');
 
         $query = $builder->get('efil.tbl_check_list');
-        $row = $query->row_array();
+        $row = $query->getRowArray();
         if(!empty($row) && $row['is_signed']=='f'){
             $data_array['updated_on']=date('Y-m-d H:i:s');
             $data_array['updated_by']='1';
@@ -180,7 +180,7 @@ class Supplement_model extends Model {
             return $builder->update();
         }
         else if(empty($row)){
-			$builder = $this->$db->table('efil.tbl_check_list');
+			$builder = $this->db->table('efil.tbl_check_list');
             return $builder->insert($data_array);
         }
         else if($row['is_signed']=='t'){
@@ -191,22 +191,22 @@ class Supplement_model extends Model {
     }
 
     function get_data($registration_id){
-		$builder = $this->$db->table('efil.tbl_check_list');
+		$builder = $this->db->table('efil.tbl_check_list');
         $builder->where('registration_id', $registration_id);
 		$query = $builder->get();
         return $query->getResultArray();
     }
 
     function table_data($table, $condition='1=1'){
-		$builder = $this->$db->table($table);
+		$builder = $this->db->table($table);
         $builder->where($condition);
-		$builder->order_by(1);
+		$builder->orderBy(1);
 		$query = $builder->get();
         return $query->getResultArray();
     }
 
     function update_data($table, $data, $condition){
-		$builder = $this->$db->table($table);
+		$builder = $this->db->table($table);
         $builder->where($condition);
 		$builder->set($data);
 		$query = $builder->update();
@@ -215,7 +215,7 @@ class Supplement_model extends Model {
 
     function get_signers_list($registration_id){
 		
-		$builder = $this->$db->table('efil.tbl_case_parties cp');
+		$builder = $this->db->table('efil.tbl_case_parties cp');
         $builder->SELECT("cp.id,cp.registration_id,cp.m_a_type,cp.party_no,cp.p_r_type,cp.email_id,cp.address as party_address,cp.party_age,cp.relation,cp.relative_name,cp.pincode,d.deptname,
       st.agency_state state_name,
       case when trim(cp.party_type)!='' then cp.party_name
@@ -243,7 +243,7 @@ class Supplement_model extends Model {
     function insert_update_supplements($data,$sc_case_type_id,$deponent_type,$registration_id=null)
     {
         if(!empty($registration_id) && $registration_id!=null){
-			$builder = $this->$db->table('efil.tbl_affidavits');
+			$builder = $this->db->table('efil.tbl_affidavits');
             $is_update=$this->get_supplements($registration_id,$sc_case_type_id,$deponent_type,'is_update');
             if ($is_update[0]['is_deleted']=='f' && $is_update[0]['is_signed']=='f') {
                 $builder->WHERE('registration_id', $registration_id);
@@ -256,9 +256,9 @@ class Supplement_model extends Model {
         }else{
             $is_deleted=$this->get_supplements($_SESSION['efiling_details']['registration_id'],$sc_case_type_id,$deponent_type,'is_deleted');
             if (empty($is_deleted) || $is_deleted[0]['is_deleted']=='t'){
-				$builder = $this->$db->table('efil.tbl_affidavits');
+				$builder = $this->db->table('efil.tbl_affidavits');
                 $builder->insert('efil.tbl_affidavits',$data);
-                $last_id = $builder->insertId();
+                $last_id = $this->db->insertID();
                 return $last_id;
             }else{ return false; }
 
@@ -268,13 +268,13 @@ class Supplement_model extends Model {
 
     function get_supplements($registration_id,$sc_case_type_id,$deponent_type,$type=null)
     {  //only review and IA Court Type:Supreme Court=4
-		$builder = $this->$db->table('efil.tbl_affidavits ta');
+		$builder = $this->db->table('efil.tbl_affidavits ta');
         $builder->SELECT('ta.*,maf.id as m_id,maf.deponent_type,maf.sc_case_type_id,ct.casename,ct.nature,maf.header,maf.deponent,maf.description,maf.verification,maf.is_valid');
         $builder->JOIN('efil.m_affidavit_formats maf','ta.ref_affidavit_formats=maf.id');
         $builder->JOIN('icmis.casetype ct','maf.sc_case_type_id=ct.sc_case_type_code');
         $builder->WHERE('ta.registration_id',$registration_id);
         $builder->WHERE('maf.sc_case_type_id',$sc_case_type_id);
-        if (!empty($deponent_type) && $deponent_type !='check'){ $this->db->WHERE('maf.deponent_type',$deponent_type);}
+        if (!empty($deponent_type) && $deponent_type !='check'){ $builder->WHERE('maf.deponent_type',$deponent_type);}
         if(!empty($type) && $type!=null && $type=='pdf'){
             //$this->db->WHERE('ta.is_signed', 't');
             $builder->WHERE('ta.is_deleted', 'f');
@@ -298,7 +298,7 @@ class Supplement_model extends Model {
     }
 
     function affidavit_template($sc_case_type_id,$deponent_type){
-		$builder = $this->$db->table('efil.m_affidavit_formats maf');
+		$builder = $this->db->table('efil.m_affidavit_formats maf');
         $builder->SELECT("maf.*,ct.casename,ct.nature");
         $builder->JOIN('icmis.casetype ct','maf.sc_case_type_id=ct.sc_case_type_code');
         $builder->WHERE('maf.sc_case_type_id',$sc_case_type_id);
@@ -315,7 +315,7 @@ class Supplement_model extends Model {
     }
 
     function check_case_number_year_by_registration_id($registration_id,$slp_type_civil_criminal_id){
-		$builder = $this->$db->table('efil.tbl_lower_court_details lcd');
+		$builder = $this->db->table('efil.tbl_lower_court_details lcd');
         $builder->SELECT("ct.casename,ct.nature,lcd.casetype_name as slp_name,lcd.court_type,lcd.case_type_id,lcd.case_num,lcd.case_year");
         $builder->JOIN('icmis.casetype ct','lcd.case_type_id=ct.sc_case_type_code');
         $builder->WHERE('lcd.registration_id',$registration_id);
@@ -333,7 +333,7 @@ class Supplement_model extends Model {
     }
     
     function get_affidavits_filled_data($registration_id, $sc_case_type_id){
-        $builder = $this->$db->table('efil.tbl_affidavits ta');
+        $builder = $this->db->table('efil.tbl_affidavits ta');
         $builder->JOIN('efil.m_affidavit_formats maf','maf.id=ta.ref_affidavit_formats', 'left');
         $builder->WHERE('ta.registration_id',$registration_id);
         $builder->WHERE('maf.sc_case_type_id',$sc_case_type_id);
@@ -344,7 +344,7 @@ class Supplement_model extends Model {
     }
     
     function case_details($registration_id){
-		$builder = $this->$db->table('efil.tbl_case_details tcd');
+		$builder = $this->db->table('efil.tbl_case_details tcd');
         $builder->JOIN('icmis.casetype c','c.casecode =tcd.sc_case_type_id ', 'left');
         $builder->WHERE('tcd.registration_id',$registration_id);
         $query = $builder->get();
@@ -353,13 +353,13 @@ class Supplement_model extends Model {
 
     function cancel_pdfdata_checklist($reg_ID,$data_cancel){
         //rounak mishra
-		$builder = $this->$db->table('efil.tbl_check_list');
+		$builder = $this->db->table('efil.tbl_check_list');
 
         $builder->WHERE('registration_id', $reg_ID);
         $builder->WHERE('is_deletd', false);
         $builder->UPDATE($data_cancel);
 
-        if ($builder->affectedRows() > 0) {
+        if ($this->db->affectedRows() > 0) {
 
             return TRUE;
         } else {

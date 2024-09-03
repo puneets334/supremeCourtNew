@@ -27,7 +27,7 @@
         <div class="mngmntUserSection">
             <div class="top-right-nav">
                 <ul>
-                    <li><a href="javascript:void(0)" class="hide skiptomain">Skip To Main Content</a></li>
+                    <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
                     <li><a class="hide" href="javascript:void(0)">Screen Reader Access</a></li>
                     <li class="text-size">
                     <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-ixon.png" alt="" class="txt-icon"></a>
@@ -47,6 +47,7 @@
                     </li>
                 </ul>
             </div>
+            <div id="SkipContent" tabindex="-1"></div>
             <?php
                 $profile_model = new \App\Models\Profile\ProfileModel();
                 $profile = $profile_model->getProfileDetail(getSessionData('login')['userid']);

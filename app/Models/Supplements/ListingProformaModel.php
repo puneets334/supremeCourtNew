@@ -11,39 +11,34 @@ class Listing_proforma_model extends Model {
     }
 
     function insert_pdf_data($array) {
-
-        $builder = $this->$db->table('efil.tbl_listing_proforma_pdf_gen');
+        $builder = $this->db->table('efil.tbl_listing_proforma_pdf_gen');
         $builder->insert($array);
-
         // Check if insertion was successful and return boolean
-        if ($builder->insertID()) {
+        if ($this->db->insertID()) {
             return true;
         } else {
             return false;
         }
-    }//End of function insert_pdf_data()..
+    }
+    //End of function insert_pdf_data()..
 
     function update_pdf_data($reg_ID,$data_update) {
-
-        $builder = $this->$db->table('efil.tbl_listing_proforma_pdf_gen');
+        $builder = $this->db->table('efil.tbl_listing_proforma_pdf_gen');
         $builder->where('registration_id', $reg_ID);
         $builder->where('is_active', true);
         $builder->update($data_update);
-    
         // Check if update was successful and return boolean
-        if ($builder->affectedRows() > 0) {
+        if ($this->db->affectedRows() > 0) {
             return true;
         } else {
             return false;
         }
-    }//END of function update_pdf_data()..
-
-
+    }
+    //END of function update_pdf_data()..
 
     public function get_pdf_store_data($registration_id)
     {
-        
-        $builder = $this->$db->table('efil.tbl_case_details tcd');
+        $builder = $this->db->table('efil.tbl_case_details tcd');
         $builder->select("
             tcd.*, tcp.party_name as pet_party_name, tcp.email_id as pet_email,
             tcp.mobile_num as pet_mobile, tcp2.party_name as res_party_name,
@@ -89,10 +84,8 @@ class Listing_proforma_model extends Model {
             'mthcb.bench_id' => null,
             'mthcb.est_code' => null
         ]);
-    
         $query = $builder->get();
-    
-        if ($query->numRows() > 0) {
+        if ($query->getNumRows() > 0) {
             return $query->getResultArray();
         } else {
             return false;
@@ -100,19 +93,14 @@ class Listing_proforma_model extends Model {
     }
     //END of function get_pdf_store_data ()..
 
-
     public function get_pdf_data_check($pdf_registration_id)
     {
-       
-    
-        $builder = $this->$db->table('efil.tbl_listing_proforma_pdf_gen tlppg');
+        $builder = $this->db->table('efil.tbl_listing_proforma_pdf_gen tlppg');
         $builder->select('tlppg.*');
         $builder->where('tlppg.registration_id', $pdf_registration_id);
         $builder->where('tlppg.is_active', true);
-    
         $query = $builder->get();
-    
-        if ($query->numRows() > 0) {
+        if ($query->getNumRows() > 0) {
             return $query->getResultArray();
         } else {
             return false;
@@ -122,9 +110,7 @@ class Listing_proforma_model extends Model {
 
     public function get_listing_proforma_list_pdf($registration_id)
     {
-       
-
-        $builder = $this->$db->table('efil.tbl_case_details tcd');
+        $builder = $this->db->table('efil.tbl_case_details tcd');
         $builder->select("
             tcd.*, tcp.party_name as pet_party_name, tcp.email_id as pet_email,
             tcp.mobile_num as pet_mobile, tcp2.party_name as res_party_name,
@@ -168,93 +154,72 @@ class Listing_proforma_model extends Model {
             'mthcb.bench_id' => null,
             'mthcb.est_code' => null
         ]);
-
         $query = $builder->get();
-
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();
         } else {
             return false;
         }
     }
-//End of function get_listing_proforma_list_pdf()..
-//and tcd.sc_case_type_id=tlcd.case_type_id
+    // End of function get_listing_proforma_list_pdf()..
+    // and tcd.sc_case_type_id=tlcd.case_type_id
 
     public function get_act_list_pdf($registration_id)
     {
-        
-
-        $builder = $this->$db->table('efil.tbl_act_sections act');
+        $builder = $this->db->table('efil.tbl_act_sections act');
         $builder->select('act.id, act.act_id, act_m.act_name, act_m.year as act_year, act.act_section, act_m.is_approved, act_m.state_id, act_m.actno');
         $builder->join('icmis.act_master act_m', 'act.act_id = act_m.id');
         $builder->where('act.registration_id', $registration_id);
         $builder->where('act.is_deleted', false);
         $builder->where('act_m.display', 'Y');
         $builder->orderBy('act.id', 'asc');
-
         $query = $builder->get();
-
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();
         } else {
             return false;
         }
     }
-//End of function get_act_list_pdf()..
-
+    //End of function get_act_list_pdf()..
 
     //XXXXXXXXXXXXXXXXXXXXXXXX
     function get_data_proforma($registration_id){
-        $builder = $this->$db->table('efil.tbl_listing_proforma_pdf_gen');
+        $builder = $this->db->table('efil.tbl_listing_proforma_pdf_gen');
         $builder->where('registration_id', $registration_id);
         $query = $builder->get();
-    
         return $query->getRowArray();
-    }//End of function get_data_proforma()..
+    }
+    //End of function get_data_proforma()..
 
-
-    function update_data_signaftr($table, $data, $condition){
-
-        $builder = $this->$db->table($table);
+    function update_data_signaftr($table, $data, $condition)
+    {
+        $builder = $this->db->table($table);
         $builder->where($condition);
         $builder->set($data);
-
         return $builder->update();
     }
 
     public function table_data_signpdf($table, $condition = '1=1')
     {
-        
-
-        $builder = $this->$db->table($table);
+        $builder = $this->db->table($table);
         $builder->where($condition);
         $builder->orderBy('1'); // Assuming you want to order by the first column
-
         $query = $builder->get();
-
         return $query->getResultArray();
     }
 
-
-
-
     //XXXXXXXXXXXXXXXXXXXXXXX
-
     public function pdf_data_cancel_listingproforma($reg_ID, $data_cancel)
     {
-       
-    
-        $builder = $this->$db->table('efil.tbl_listing_proforma_pdf_gen');
+        $builder = $this->db->table('efil.tbl_listing_proforma_pdf_gen');
         $builder->where('registration_id', $reg_ID);
         $builder->where('is_active', true);
         $builder->update($data_cancel);
-    
-        if ($builder->affectedRows() > 0) {
+        if ($this->db->affectedRows() > 0) {
             return true;
         } else {
             return false;
         }
     }
-   
 
 }

@@ -51,7 +51,8 @@ class ConsentModel extends Model
     function save($table=null, $data=null):bool
     {
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
-        if($this->physical_hearing->insert($table, $data))
+        $builder = $this->physical_hearing->table($table);
+        if($builder->insert($data))
             return 1;
         else
             return 0;
@@ -61,7 +62,8 @@ class ConsentModel extends Model
     {
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         //$physical_hearing_db->where($condition_array)->update($table, $data);
-        if($this->physical_hearing->WHERE($condition_array)->update($table, $data))
+        $builder = $this->physical_hearing->table($table);
+        if($builder->WHERE($condition_array)->update($data))
             return 1;
         else
             return 0;
@@ -178,15 +180,13 @@ class ConsentModel extends Model
 
     function getAorCode($advocate_id)
     {
-        $this->db->from('bar b');
-        $this->db->where('bar_id',$advocate_id);
-        $this->db->where('if_aor','Y');
-        $this->db->where('if_sen','N');
-        $this->db->where('isdead','N');
-        $query=$this->db->get();
-        return $query->result_array();
-
+        $builder = $this->db->table('bar b');
+        $builder->where('bar_id',$advocate_id);
+        $builder->where('if_aor','Y');
+        $builder->where('if_sen','N');
+        $builder->where('isdead','N');
+        $query=$builder->get();
+        return $query->getResultArray();
     }
-
 
 }

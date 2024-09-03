@@ -29,7 +29,7 @@ $security = service('security');
                     <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown"></div>
                     <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
                         <ul>
-                            <li><a href="javascript:void(0)" class="hide skiptomain">Skip To Main Content</a></li>
+                            <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
                             <li><a class="hide" href="javascript:void(0)">Screen Reader Access</a></li>
                             <li class="text-size">
                                 <img src="<?= base_url() . 'assets/newDesign/' ?>images/text-ixon.png" alt=""
@@ -54,6 +54,7 @@ $security = service('security');
             </div>
         </div>
         <!-- Top Header Section End -->
+        <div id="SkipContent" tabindex="-1"></div>
         <!-- Logo Section Header Start -->
         <div class="logo-sec-wraper">
             <div class="container">

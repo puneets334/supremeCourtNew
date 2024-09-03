@@ -51,6 +51,7 @@ class SubordinateCourtModel extends Model {
     }
 
     function update_breadcrumbs($registration_id, $breadcrumb_step) {
+        $session = \Config\Services::session();
         $old_breadcrumbs = getSessionData('efiling_details')['breadcrumb_status'] . ',' . $breadcrumb_step;
         $old_breadcrumbs_array = explode(',', $old_breadcrumbs);
         $new_breadcrumbs_array = array_unique($old_breadcrumbs_array);

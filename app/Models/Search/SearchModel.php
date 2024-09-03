@@ -32,7 +32,7 @@ class Search_model extends Model {
         }
     }
 
-    $builder = $this->$db->table('efil.tbl_efiling_nums as en');
+    $builder = $this->db->table('efil.tbl_efiling_nums as en');
     
     $builder->select([
         'en.efiling_for_type_id', 'en.efiling_for_id', 'en.registration_id', 'en.efiling_no', 'en.efiling_year', 'en.ref_m_efiled_type_id',
@@ -90,7 +90,7 @@ class Search_model extends Model {
     }
 
     
-    $builder = $this->$db->table('efil.tbl_efiling_nums as en');
+    $builder = $this->db->table('efil.tbl_efiling_nums as en');
 
     $builder->select([
         'en.efiling_for_type_id', 'en.efiling_for_id', 'en.registration_id', 'en.efiling_no', 'en.efiling_year', 'en.ref_m_efiled_type_id',
@@ -128,7 +128,7 @@ class Search_model extends Model {
 
     function get_reason_list() {
         
-        $builder = $this->$db->table('efil.m_tbl_allocation_reason');
+        $builder = $this->db->table('efil.m_tbl_allocation_reason');
 
         $builder->select("reason");
         $builder->where('is_active', TRUE);

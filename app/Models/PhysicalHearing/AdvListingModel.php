@@ -4,24 +4,23 @@
 namespace App\Models\PhysicalHearing;
 
 use CodeIgniter\Model;
-
 class AdvListingModel extends Model
 {
-
     function __construct()
     {
         //call model constructor
         parent::__construct();
         $db = \Config\Database::connect();
     }
-    
-    public function list_number(){
+
+    public function list_number()
+    {
         $icmis_db = $this->load->database('icmis', TRUE);
         $query = $icmis_db->where('is_active','t')->order_by('list_year DESC, list_number DESC')->limit(1)->get('hybrid_physical_hearing_consent_freeze');
         //echo $icmis_db->last_query();
         return $query->row_array();
     }
-    
+
     function cases_listed_in_daily_list($current_date=null)
     {
         $icmis_db = $this->load->database('icmis', TRUE);
@@ -34,7 +33,6 @@ class AdvListingModel extends Model
         $query = $icmis_db->query($sql, array($current_date));
         //echo $icmis_db->last_query();
         return $query->result_array();
-        
     }
 
     function case_details($diary_nos)
@@ -50,9 +48,7 @@ class AdvListingModel extends Model
     and c_status='P'
     )x";
         $query = $icmis_db->query($sql);
-
         return $query->result();
-
     }
 
     public function adv_data()
@@ -72,8 +68,9 @@ WHERE ad.`list_number` = ? AND ad.`list_year` = ? AND `created_by_advocate_id` =
 AND ad.`display` = 'Y' ";
         $query = $this->db->query($sql, array($list['list_number'], $list['list_year'], $this->session->loginData['bar_id']));
        // echo $this->db->last_query();
-        return $query->result_array();
+        return $query->getResultArray();
     }
+
     public function adv_data_vc($list_date)
     {
 
@@ -83,21 +80,21 @@ AND ad.`display` = 'Y' ";
  and updated_by=? ";
         $query = $this->db->query($sql, array($list_date, $this->session->loginData['bar_id']));
        //  echo $this->db->last_query();
-        return $query->result_array();
+        return $query->getResultArray();
     }
+
     public function adv_data_search($srch_date)
     {
-        $srchdate=date("Y-m-d", strtotime($srch_date));
-        $this->db->select('attendee_details.id,court_no,item_number,case_number,name,ref_attendee_type_id,mobile,email_id,ref_attendee_type.description');
-        $this->db->from('attendee_details');
-        $this->db->join('ref_attendee_type', 'ref_attendee_type.id = attendee_details.ref_attendee_type_id','left');
-
-        $this->db->where('next_dt', $srchdate);
-        $this->db->where('attendee_details.display', 'Y');
-        $query = $this->db->get();
+        $srchdate = date("Y-m-d", strtotime($srch_date));
+        $builder = $this->db->table('attendee_details');
+        $builder->select('attendee_details.id,court_no,item_number,case_number,name,ref_attendee_type_id,mobile,email_id,ref_attendee_type.description');
+        $builder->join('ref_attendee_type', 'ref_attendee_type.id = attendee_details.ref_attendee_type_id','left');
+        $builder->where('next_dt', $srchdate);
+        $builder->where('attendee_details.display', 'Y');
+        $query = $builder->get();
         //echo $this->db->last_query();
-        return $query->result_array();
+        return $query->getResultArray();
     }
-}//end of class Senior_advocate_list ..
 
-?>
+}
+//end of class Senior_advocate_list ..

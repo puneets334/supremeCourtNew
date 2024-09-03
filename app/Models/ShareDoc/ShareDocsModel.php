@@ -69,7 +69,7 @@ class ShareDocsModel extends Model {
     $builder = $this->db->table('efil.tbl_case_advocates');
     $builder->insert($data);
 
-    if ($builder->insertID() > 0) {
+    if ($this->db->insertID() > 0) {
         return true;
     } else {
         return false;
@@ -80,7 +80,7 @@ class ShareDocsModel extends Model {
 
         $builder = $this->db->table('efil.tbl_doc_share_email');   
         $builder->insert($data);    
-        if ($builder->insertID() > 0) {
+        if ($this->db->insertID() > 0) {
             return true;
         } else {
             return false;
