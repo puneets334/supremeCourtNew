@@ -387,3 +387,5 @@ $routes->match(['GET', 'POST'], 'online_copying/get_copy_search', 'OnlineCopying
 $routes->match(['GET', 'POST'], 'online_copying/track_consignment', 'OnlineCopying\DefaultController::trackConsignment');
 $routes->match(['GET', 'POST'], 'online_copying/get_consignment_status', 'OnlineCopying\DefaultController::getConsignmentStatus');
 $routes->match(['GET', 'POST'], 'online_copying/faq', 'OnlineCopying\DefaultController::faq');
+$routes->match(['GET', 'POST'], 'online_copying/screen_reader', 'OnlineCopying\DefaultController::screenReader');
+$routes->match(['GET', 'POST'], 'online_copying/contact_us', 'OnlineCopying\DefaultController::contactUs');

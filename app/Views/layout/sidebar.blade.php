@@ -91,9 +91,9 @@ $segment = service('uri');
                                 <li><a class="btn-link" href="#">Application</a></li>
                                 <li><a class="btn-link" href="#">Address</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
-                                <li><a class="btn-link" href="#">Screen Reader</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader</a></li>
                                 <li><a class="btn-link" href="#">Manual</a></li>
-                                <li><a class="btn-link" href="#">Contact Us</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
                             </ul>
                         </li>
                         <?php if ($segment->getSegment(1) == 'superAdmin') { ?>

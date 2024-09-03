@@ -946,3 +946,7 @@ define('EMAIL_TO_CONCERN','sca.mohitjain@sci.nic.in,sca.kbpujari@sci.nic.in,'); 
 define('APP_NAME_L1','Physical Hearing');
 define('APP_NAME_L2','(with Hybrid Option)');
 define('APP_NAME_IN_HEADER',APP_NAME_L1);
+
+define('ANU_GOV_IN', 'https://anu.sci.gov.in/');
+define('SCI_GOV_IN', 'https://sci.gov.in');
+define('MAIN_SCI_GOV_IN', 'https://main.sci.gov.in');

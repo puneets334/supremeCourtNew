@@ -92,5 +92,13 @@ class DefaultController extends BaseController
         $faqs = $this->Common_model->copyFaq();
         return $this->render('onlineCopying.faq', compact('faqs'));
     }
+    public function screenReader()
+    {
+        return $this->render('onlineCopying.screen_reader');
+    }
+    public function contactUs()
+    {
+        return $this->render('onlineCopying.contact_us');
+    }
     
 }
