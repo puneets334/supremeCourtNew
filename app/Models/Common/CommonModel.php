@@ -1136,6 +1136,7 @@ class CommonModel extends Model
                 FROM icmis.docmaster d  WHERE  d.display!='N'
                 and d.doccode=$doccode and d.doccode1=$doccode1 ";
         }
+        // pr($sql);
         $query = $this->db->query($sql);
         if ($query->getNumRows() >= 1) {
             $result = $query->getResultArray();
@@ -2174,7 +2175,7 @@ class CommonModel extends Model
             $builder = $this->db->table('efil.tbl_sr_advocate_engage sar')->select('sar.diary_no');
             $builder->join('efil.tbl_sr_advocate_engage_history as saeh ', 'sar.diary_no =saeh.diary_no');
             $builder->where('sar.is_active', $params['is_active']);
-            $builder->where('saeh.is_active', $params['is_active']);
+            $builder->where('saeh.is_active', $params['is_active']);getResultArray
             $builder->groupBy('sar.diary_no');
             $query = $builder->get();
             $output = $query->getResultArray();

@@ -361,6 +361,7 @@
                         </div>
                         <div class="col-lg-12 ccol-md-12 col-sm-12 col-xs-12">
                         <div class="form-group">
+                            
                             <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Court Fee ( <i class="fa fa-rupee"></i> )<br>(To Pay)
                                 <span style="color: red">*</span></label>
                             <div class="col-md-8 col-sm-12 col-xs-12">
@@ -368,6 +369,7 @@
                                     <!--<label style="width: 70px;" class="form-control input-sm " <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Total Court Fee "><?/*=$court_fee;*/?></label>-->
                                     <?php
                                     $court_fee_already_paid=0; $user_declared_extra_fee=0; $user_declared_court_fee=0; $uploaded_pages=0;$printing_cost_already_paid=0;
+                                    
                                     if(is_array($payment_details) && count($payment_details) > 0)
                                     {
 
