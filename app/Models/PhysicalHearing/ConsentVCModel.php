@@ -25,29 +25,31 @@ class ConsentVCModel extends Model
 
     function save($table=null, $data=null):bool
     {
-        // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
-        if($this->physical_hearing->insert('physical_hearing'.$table, $data))
-            return 1;
-        else
-            return 0;
+      // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
+      $builder = $this->physical_hearing->table($table);
+      if($builder->insert($data))
+        return 1;
+      else
+        return 0;
     }
 
     function update($table=null, $data=null, $condition_array=null):bool
     {
-        // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
-        //$physical_hearing_db->where($condition_array)->update($table, $data);
-        $this->physical_hearing->where($condition_array)->update('physical_hearing'.$table, $data);
-        if($this->physical_hearing->where($condition_array)->update('physical_hearing'.$table, $data))
-            return 1;
-        else
-            return 0;
+      // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
+      //$physical_hearing_db->where($condition_array)->update($table, $data);
+      $builder = $this->physical_hearing->table($table);
+      if($builder->where($condition_array)->update($data))
+        return 1;
+      else
+        return 0;
     }
 
     function get_master($table, $condition)
     {
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
-        $query = $this->physical_hearing->get_where($table, $condition);
-        return $query->result_array();
+        $builder = $this->db->table($table);
+        $query = $builder->getWhere($condition);
+        return $query->getResultArray();
     }
 
     function dbInsert($data,$tablename)
@@ -55,8 +57,9 @@ class ConsentVCModel extends Model
         $output = false;
         // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         if(isset($data) && !empty($data) && isset($tablename) && !empty($tablename)){
-            $this->physical_hearing->insert($tablename, $data);
-            $output =  $this->physical_hearing->insertId();
+          $builder = $this->db->table($tablename);
+          $builder->insert($data);
+          $output =  $this->physical_hearing->insertId();
         }
         return $output;
     }
@@ -158,21 +161,21 @@ class ConsentVCModel extends Model
 
     function getTentativeAttendeeListForMail($list_no,$list_year,$daily_list_matters,$list_date=null)
     {
-        // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
-        $this->physical_hearing->select('.ad.id,ad.next_dt,ad.court_no,ad.diary_no, ad.case_number,ad.list_number,ad.list_year, ref_attendee_type_id,rat.description,rat.is_seat_allocated,ad.name,ad.email_id, ad.mobile, ad.created_on,ad.created_by_advocate_id,ad.secure_gate_visit_id,ad.secure_gate_visitor_passes');
-        $this->physical_hearing->from('attendee_details ad');
-        $this->physical_hearing->JOIN('ref_attendee_type rat', 'ad.ref_attendee_type_id = rat.id', 'left');
-        $this->physical_hearing->where('ad.list_number',$list_no);
-        $this->physical_hearing->where('ad.list_year',$list_year);
-        $this->physical_hearing->where('ad.display','Y');
-        # $this->physical_hearing->group_by("mobile,email_id,court_no,list_number,list_year");
-        $this->physical_hearing->order_by("ad.court_no,diary_no");
-        if(!empty($list_date))
-            $this->physical_hearing->where('ad.next_dt',$list_date);
-        $this->physical_hearing->where_in('ad.diary_no', $daily_list_matters);
-        $query=$this->physical_hearing->get();
-        // echo $this->physical_hearing->last_query(); exit();
-        return $query->getResultArray();
+      // $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
+      $builder = $this->physical_hearing->table('attendee_details ad');
+      $builder->select('.ad.id,ad.next_dt,ad.court_no,ad.diary_no, ad.case_number,ad.list_number,ad.list_year, ref_attendee_type_id,rat.description,rat.is_seat_allocated,ad.name,ad.email_id, ad.mobile, ad.created_on,ad.created_by_advocate_id,ad.secure_gate_visit_id,ad.secure_gate_visitor_passes');
+      $builder->JOIN('ref_attendee_type rat', 'ad.ref_attendee_type_id = rat.id', 'left');
+      $builder->where('ad.list_number',$list_no);
+      $builder->where('ad.list_year',$list_year);
+      $builder->where('ad.display','Y');
+      # $this->physical_hearing->group_by("mobile,email_id,court_no,list_number,list_year");
+      $builder->orderBy("ad.court_no,diary_no");
+      if(!empty($list_date))
+          $builder->where('ad.next_dt',$list_date);
+      $builder->whereIn('ad.diary_no', $daily_list_matters);
+      $query=$builder->get();
+      // echo $this->physical_hearing->last_query(); exit();
+      return $query->getResultArray();
     }
 
     function copy_attendee($diary_no, $bar_id, $new_list_no, $new_list_yr, $new_court_no){
@@ -190,18 +193,18 @@ class ConsentVCModel extends Model
     and ad.diary_no=last_list.diary_no
     where ad.diary_no = $diary_no and ad.created_by_advocate_id=$bar_id and ad.display='Y')attendee_data)";
         $query = $this->db->query($sql);
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function getAorCode($advocate_id)
     {
-        $this->db->from('bar b');
-        $this->db->where('bar_id',$advocate_id);
-        $this->db->where('if_aor','Y');
-        $this->db->where('if_sen','N');
-        $this->db->where('isdead','N');
-        $query=$this->db->get();
-        return $query->result_array();
+      $builder = $this->db->table('bar b')
+        ->where('bar_id',$advocate_id)
+        ->where('if_aor','Y')
+        ->where('if_sen','N')
+        ->where('isdead','N');
+        $query = $builder->get();
+        return $query->getResultArray();
     }
 
     function getFirstNMDWorkingDayOfWeek()
@@ -211,7 +214,7 @@ class ConsentVCModel extends Model
               else date(curdate() - interval weekday(curdate()) day + interval 1 week) end) order by working_date asc limit 1";
         $query = $this->db->query($sql);
        // echo $this->db->last_query();//exit(0);
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function getNextMDWorkingDayOfWeek($show_next_misc_date_cases=null,$isListingWithinSummerVacation=null) {

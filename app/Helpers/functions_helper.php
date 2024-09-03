@@ -1,9 +1,12 @@
 <?php
 
 use App\Models\Affirmation\AffirmationModel;
+use App\Models\AppearingFor\AppearingForModel;
 use \App\Models\Common\CommonModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\Caveat\ViewModel;
+use App\Models\Supplements\SupplementModel;
+use App\Models\Vacation\VacationAdvanceModel;
 use GuzzleHttp\Client;
 use Config\Database;
 helper('view');
@@ -521,7 +524,7 @@ function relay_mail_api_through_60_server($to_email, $subject, $message, $to_use
             exit();*/
 
             $email_message = view('templates/email/citation_mail', $case_data_info);
-        } elseif (getSessionData('adv_details') != '' && getSessionData('adv_details')['first_name'] != '' && getSessionData('adv_details')['last_name'] != '') {
+        } elseif (!empty(getSessionData('adv_details')) && !empty(getSessionData('adv_details')['first_name']) && !empty(getSessionData('adv_details')['last_name'])) {
             $data = array(
                 'first_name' => $_SESSION['adv_details']['first_name'],
                 'last_name' => getSessionData('adv_details')['last_name'],
@@ -630,14 +633,14 @@ function relay_mail_api($to_email, $subject, $message, $to_user_name = "")
             /*print_r($case_data_info);
             exit();*/
 
-            $email->setMessage($ci->load->view('templates/email/citation_mail', $case_data_info, true));
+            $email->setMessage(render('templates/email/citation_mail', $case_data_info, true));
         } elseif (getSessionData('adv_details') != '' && getSessionData('adv_details')['first_name'] != '' && getSessionData('adv_details')['last_name'] != '') {
             $data = array(
                 'first_name' => getSessionData('adv_details')['first_name'],
                 'last_name' => getSessionData('adv_details')['last_name'],
                 'message' => $message
             );
-            $email->setMessage($ci->load->view('templates/email/password_reset', $data, true));
+            $email->setMessage(render('templates/email/password_reset', $data, true));
         } elseif ($to_user_name == 'adjournment') {
             $email->setMessage($message);
         } elseif ($to_user_name == 'arguing_counsel') {
@@ -648,7 +651,7 @@ function relay_mail_api($to_email, $subject, $message, $to_user_name = "")
                 'last_name' => getSessionData('login')['last_name'],
                 'message' => $message
             );
-            $email->setMessage($ci->load->view('templates/email/html_mail', $data, true));
+            $email->setMessage(render('templates/email/html_mail', $data, true));
         } else {
             $email->setMessage($message);
         }
@@ -665,9 +668,9 @@ function relay_mail_api($to_email, $subject, $message, $to_user_name = "")
 
 function relay_doc_mail_api($to_email, $subject, $message)
 {
-
-    $ci = &get_instance();
-    $ci->load->library('email');
+    // $ci = &get_instance();
+    // $ci->load->library('email');
+    $email = \Config\Services::email();
     $config = array(
         'protocol' => 'smtp',
         'smtp_host' => 'ssl://smtp.mail.gov.in',
@@ -677,16 +680,14 @@ function relay_doc_mail_api($to_email, $subject, $message)
         'mailtype' => 'html',
         'charset' => 'utf-8'
     );
-
-    $ci->email->initialize($config);
-    $ci->email->set_mailtype("text");
-    $ci->email->set_newline("\r\n");
-    $ci->email->to($to_email);
-    $ci->email->from('causelists@nic.in', "Supreme Court of India");
-    $ci->email->subject($subject);
-    $ci->email->message($message);
-
-    $response = $ci->email->send();
+    $email->initialize($config);
+    $email->setMailType("text");
+    $email->setNewline("\r\n");
+    $email->setTo($to_email);
+    $email->setFrom('causelists@nic.in', "Supreme Court of India");
+    $email->setSubject($subject);
+    $email->setMessage($message);
+    $response = $email->send();
     if ($response) {
         $result = 'success';
     } else {
@@ -1372,8 +1373,9 @@ function curl_get_contents($url, $headers = [], $if_return_metadata = false)
 
 function captcha_generate()
 {
-    $ci = &get_instance();
-    $ci->load->library('session');
+    // $ci = &get_instance();
+    // $ci->load->library('session');
+    $session = \Config\Services::session();
     $random_number = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
     $vals = array(
         'word' => $random_number,
@@ -1395,17 +1397,15 @@ function captcha_generate()
         )
     );
     $captcha = create_captcha($vals);
-
-    $ci->session->set_userdata('captchaWord', $captcha['word']);
-
+    $session->set('captchaWord', $captcha['word']);
     return $captcha;
 }
 
 function captcha_generate2()
 {
-    $ci = &get_instance();
-    $ci->load->library('session');
-
+    // $ci = &get_instance();
+    // $ci->load->library('session');
+    $session = \Config\Services::session();
     $random_number = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
     $vals = array(
         'word' => $random_number,
@@ -1427,7 +1427,7 @@ function captcha_generate2()
         )
     );
     $captcha2 = create_captcha($vals);
-    $ci->session->set_userdata('captchaWord2', $captcha2['word']);
+    $session->set('captchaWord2', $captcha2['word']);
     return $captcha2;
 }
 
@@ -1666,10 +1666,11 @@ function send_otp($text, $type_id = 38, $send_otp_mail = 0, $control_flag = 0)
         'end_time' => $endTime,
         'validate_status' => 'A'
     );
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $ci->load->library('session');
-    $db_response = $ci->Common_model->insert_otp($otp_details);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    // $ci->load->library('session');
+    $Common_model = new CommonModel();
+    $db_response = $Common_model->insert_otp($otp_details);
     if (!$db_response)
         echo "2@@@Some Error ! Please try after some time.";
     //    else
@@ -1684,12 +1685,13 @@ function resend_otp($type_id, $text, $send_otp_mail = 0)
     $updated_by = $_SESSION['login']['id'];
     $mobile = $_SESSION['login']['mobile_number'];
     $efiling_num = $_SESSION['efiling_details']['registration_id'];
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $ci->load->library('session');
-    $otp_data = $ci->Common_model->get_otp_details($type_id, $updated_by, $mobile, $efiling_num);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    // $ci->load->library('session');
+    $Common_model = new CommonModel();
+    $otp_data = $Common_model->get_otp_details($type_id, $updated_by, $mobile, $efiling_num);
     if ($time1 >= $otp_data[0]['end_time']) {
-        $response = $ci->Common_model->update_otp_details($type_id, $updated_by, $mobile, $efiling_num, 'E');
+        $response = $Common_model->update_otp_details($type_id, $updated_by, $mobile, $efiling_num, 'E');
         if ($response)
             send_otp($type_id, $text, $send_otp_mail);
     } else {
@@ -1705,15 +1707,16 @@ function validate_otp($type_id, $otp)
     $efiling_num = $_SESSION['efiling_details']['registration_id'];
     date_default_timezone_set('Asia/Kolkata');
     $time1 = date("H:i");
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $ci->load->library('session');
-    $otp_data = $ci->Common_model->get_otp_details($type_id, $updated_by, $mobile, $efiling_num);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    // $ci->load->library('session');
+    $Common_model = new CommonModel();
+    $otp_data = $Common_model->get_otp_details($type_id, $updated_by, $mobile, $efiling_num);
     if ($time1 > $otp_data[0]['end_time'])
         return false;
     else {
         if ($otp_data[0]['captcha'] == $otp) {
-            $response = $ci->Common_model->update_otp_details($type_id, $updated_by, $mobile, $efiling_num, 'V');
+            $response = $Common_model->update_otp_details($type_id, $updated_by, $mobile, $efiling_num, 'V');
             return true;
         } else if ($otp_data[0]['captcha'] != $otp)
             return false;
@@ -1734,9 +1737,10 @@ function showEfilingData($request = [])
     $warning = array();
     $data['errors'] = $error;
     $data['warnings'] = $warning;
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $details = $ci->Common_model->showEfilingData($advocateIds, $filingDateRange, $pendingFilingStages, $documentTypes, $diaryIds);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    $Common_model = new CommonModel();
+    $details = $Common_model->showEfilingData($advocateIds, $filingDateRange, $pendingFilingStages, $documentTypes, $diaryIds);
     if (count($details)) {
         /* for($i=0;$i<count($details);$i++) {
             // echo "Status   ".$details[$i]['breadcrumb_status'];
@@ -1750,9 +1754,10 @@ function showEfilingData($request = [])
 function showEfiledDocuments($diaryNos)
 {
     $data = array();
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $details = $ci->Common_model->showEfilingDocuments($diaryNos);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    $Common_model = new CommonModel();
+    $details = $Common_model->showEfilingDocuments($diaryNos);
     $data['data'] = $details;
     echo json_encode($data);
 }
@@ -1770,9 +1775,10 @@ function mentioningRequests()
     $warning = array();
     $data['errors'] = $error;
     $data['warnings'] = $warning;
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $details = $ci->Common_model->mentioningRequests($advocateIds, $filingDateRange, $status, $diaryIds);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    $Common_model = new CommonModel();
+    $details = $Common_model->mentioningRequests($advocateIds, $filingDateRange, $status, $diaryIds);
     if (count($details)) {
         $data['data'] = $details;
     }
@@ -2462,19 +2468,19 @@ function check_party($type_id = null)
 {
     return true;
     $registration_id = $_SESSION['efiling_details']['registration_id'];
-    $ci = &get_instance();
-    $ci->load->model('newcase/Get_details_model');
-    $ci->load->library('session');
-
+    // $ci = &get_instance();
+    // $ci->load->model('newcase/Get_details_model');
+    // $ci->load->library('session');
+    $Get_details_model = new GetDetailsModel();
     $StageArray = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);
     $total_petitioners = 0;
     $total_respondents = 0;
     $breadcrumb_status = count($StageArray);
     $step = 11;
 
-    $total_petitioners = $ci->Get_details_model->get_no_of_extra_party($registration_id, 'P');
+    $total_petitioners = $Get_details_model->get_no_of_extra_party($registration_id, 'P');
 
-    $total_respondents = $ci->Get_details_model->get_no_of_extra_party($registration_id, 'R');
+    $total_respondents = $Get_details_model->get_no_of_extra_party($registration_id, 'R');
     if (!empty($type_id) && $type_id != null && $type_id = 'P') {
         return $total_petitioners;
     } else if (!empty($type_id) && $type_id != null && $type_id = 'R') {
@@ -2487,7 +2493,7 @@ function check_party($type_id = null)
     }
 
 
-    return $ci->Get_details_model->get_no_of_extra_party($registration_id, $type_id);
+    return $Get_details_model->get_no_of_extra_party($registration_id, $type_id);
 }
 
 function compare_multi_Arrays($array1, $array2)
@@ -2614,18 +2620,21 @@ function getPspdfkitPageContentsJson($pspdfkit_document_id, $page_index)
 //Anshu on 28 May 21
 function get_affidavit_pdf_details($sc_case_type_id)
 {
-    $ci = &get_instance();
-    $ci->load->model('newcase/Get_details_model');
-    $ci->load->model('appearing_for/Appearing_for_model');
-    $ci->load->library('session');
+    // $ci = &get_instance();
+    // $ci->load->model('newcase/Get_details_model');
+    // $ci->load->model('appearing_for/Appearing_for_model');
+    // $ci->load->library('session');
+    $Appearing_for_model = new AppearingForModel();
+    $supplement_model = new SupplementModel();
+    $session = \Config\Services::session();
     $registration_id = $_SESSION['efiling_details']['registration_id'];
-    $parties = $ci->supplement_model->get_signers_list($registration_id);
+    $parties = $supplement_model->get_signers_list($registration_id);
     $data = array();
     if (!empty($sc_case_type_id)) {
         if ($_SESSION['efiling_details']['database_type'] == 'E') {
             if ($sc_case_type_id == 12 || $sc_case_type_id == 13) {
                 //echo 'area parties IA';
-                $parties = $ci->Appearing_for_model->get_case_parties_list($registration_id);
+                $parties = $Appearing_for_model->get_case_parties_list($registration_id);
                 $data = array([
                     'petitioner_name' => $parties[0]['p_partyname'],
                     'respondent_name' => $parties[0]['r_partyname'],
@@ -2674,8 +2683,9 @@ function shareDocToEmail($params = array())
         $file_url = $params['file_url'];
         $subject = $params['subject'];
         $message = $params['message'];
-        $ci = &get_instance();
-        $ci->load->library('email');
+        // $ci = &get_instance();
+        // $ci->load->library('email');
+        $email = \Config\Services::email();
         $config = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.mail.gov.in',
@@ -2685,14 +2695,14 @@ function shareDocToEmail($params = array())
             'mailtype' => 'html',
             'charset' => 'utf-8'
         );
-        $ci->email->initialize($config);
-        $ci->email->set_mailtype("html");
-        $ci->email->set_newline("\r\n");
-        $ci->email->to($to_email);
-        $ci->email->from('causelists@nic.in', "Supreme Court of India");
-        $ci->email->subject($subject);
-        $ci->email->message($message);
-        $response = $ci->email->send();
+        $email->initialize($config);
+        $email->setMailType("html");
+        $email->setNewline("\r\n");
+        $email->setTo($to_email);
+        $email->setFrom('causelists@nic.in', "Supreme Court of India");
+        $email->setSubject($subject);
+        $email->setMessage($message);
+        $response = $email->send();
         if ($response) {
             $result = 'success';
         } else {
@@ -2783,15 +2793,15 @@ function is_user_status($loginid = null)
 
 function getPendingCourtFee_old_working_till_101072023()
 {
-    $ci = &get_instance();
-
-    $ci->load->model('common/Common_model');
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    $Common_model = new CommonModel();
     $court_fee_part1 = calculate_court_fee(null, 1, null, 'O');
     $court_fee_part2 = calculate_court_fee(null, 2, null, null);
 
     $total_court_fee = (int)$court_fee_part1 + (int)$court_fee_part2;
 
-    $already_paid_payment = $ci->Common_model->get_already_paid_court_fee($_SESSION['efiling_details']['registration_id']);
+    $already_paid_payment = $Common_model->get_already_paid_court_fee($_SESSION['efiling_details']['registration_id']);
 
     if (!empty($already_paid_payment[0]['court_fee_already_paid']))
         $total_pending_court_fee = $total_court_fee - (int)$already_paid_payment[0]['court_fee_already_paid'];
@@ -2915,14 +2925,14 @@ function get_count_days_FromDate_Todate($from_date, $to_date)
 function isRefilingCompulsoryIADefect($reg_id, $current_stage_id)
 {
     // echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
-
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $ci->load->library('session');
-
-    $result_initial = $ci->Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
-    $result_icmis = $ci->Common_model->get_cis_defects_remarks($reg_id, FALSE);
-    $defects['pdfdefects'] = $ci->Common_model->get_pdf_defects_remarks($reg_id);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+    // $ci->load->library('session');
+    $Common_model = new CommonModel();
+    $session = \Config\Services::session();
+    $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
+    $result_icmis = $Common_model->get_cis_defects_remarks($reg_id, FALSE);
+    $defects['pdfdefects'] = $Common_model->get_pdf_defects_remarks($reg_id);
 
 
     foreach ($result_icmis as $re) {
@@ -2947,11 +2957,11 @@ function isRefilingCompulsoryIADefect($reg_id, $current_stage_id)
             return true;
         } else {
             //echo "beyond > 28 days  than .$max_allowable_defect_cured_date";exit();
-            $result = $ci->Common_model->isRefilingCompulsoryIADefect($reg_id, FALSE);
+            $result = $Common_model->isRefilingCompulsoryIADefect($reg_id, FALSE);
             if ($result != FALSE && !empty($result)) {
                 return true;
             } else {
-                $ci->session->set_flashdata('msg', '<div class="alert alert-danger text-center">This case is defective since more than 28 days so filing of IA i.e. Condonation of delay in refiling application is compulsory.</div>');
+                $session->setFlashdata('msg', '<div class="alert alert-danger text-center">This case is defective since more than 28 days so filing of IA i.e. Condonation of delay in refiling application is compulsory.</div>');
                 redirect('documentIndex');
                 exit();
             }
@@ -2962,7 +2972,7 @@ function isRefilingCompulsoryIADefect($reg_id, $current_stage_id)
         /*$get_total_days=get_count_days_FromDate_Todate($from_date,$to_date);
 
         if($get_total_days > $defect_date_was_more_than28days){
-            $result = $ci->Common_model->isRefilingCompulsoryIADefect($reg_id, FALSE);
+            $result = $Common_model->isRefilingCompulsoryIADefect($reg_id, FALSE);
             if($result !=FALSE && !empty($result)){
                 return true;
             }else{
@@ -3142,10 +3152,11 @@ function is_vacation_advance_list_duration()
 }
 function is_vacation_advance_list_duration_m()
 {
-    $ci = &get_instance();
-    $ci->load->model('vacation/Vacation_advance_model_m');
-    $ci->load->library('session');
-    $is_vacation_advance_list_duration = $ci->Vacation_advance_model_m->is_vacation_advance_list_duration();
+    // $ci = &get_instance();
+    // $ci->load->model('vacation/Vacation_advance_model_m');
+    // $ci->load->library('session');
+    $Vacation_advance_model_m = new VacationAdvanceModel();
+    $is_vacation_advance_list_duration = $Vacation_advance_model_m->is_vacation_advance_list_duration();
     return $is_vacation_advance_list_duration;
 }
 

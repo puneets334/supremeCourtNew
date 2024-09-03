@@ -81,7 +81,7 @@ class AppearanceModel extends Model
             where phcr.is_deleted='f' and a.advocate_id=?;";
         $query = $this->db->query($sql, array($aor_id));
         //echo $this->db->last_query();exit();
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function get_advocate_last_updated_consent($diary_no,$next_dt,$roster_id,$advocate_id, $court_no)
@@ -102,7 +102,7 @@ class AppearanceModel extends Model
             FROM physical_hearing_consent_required phcr         
             where phcr.is_deleted=? and phcr.id=?";
         $query = $this->db->query($sql, array('f',$id));
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
 
@@ -176,18 +176,18 @@ and is_deleted='f' and consent='V'";
     and ad.diary_no=last_list.diary_no
     where ad.diary_no = $diary_no and ad.created_by_advocate_id=$bar_id and ad.display='Y')attendee_data)";
         $query = $this->db->query($sql);
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function getAorCode($advocate_id)
     {
-        $this->db->from('bar b');
-        $this->db->where('bar_id',$advocate_id);
-        $this->db->where('if_aor','Y');
-        $this->db->where('if_sen','N');
-        $this->db->where('isdead','N');
-        $query=$this->db->get();
-        return $query->result_array();
+        $builder = $this->db->table('bar b');
+        $builder->where('bar_id',$advocate_id);
+        $builder->where('if_aor','Y');
+        $builder->where('if_sen','N');
+        $builder->where('isdead','N');
+        $query = $builder->get();
+        return $query->getResultArray();
     }
 
 
@@ -199,7 +199,7 @@ and is_deleted='f' and consent='V'";
         $query = $this->db->query($sql);
         // echo $this->db->last_query();//exit(0);
 
-        return $query->result_array();
+        return $query->getResultArray();
 
     }
 
@@ -216,7 +216,7 @@ and is_deleted='f' and consent='V'";
         $query = $this->db->query($sql);
         //echo $this->db->last_query();exit(0);
 
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function freezed_court_list($listing_days){
@@ -231,7 +231,7 @@ and is_deleted='f' and consent='V'";
         $query = $this->db->query($sql);
         //echo $this->db->last_query();exit(0);
 
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
 
@@ -294,7 +294,7 @@ group by next_dt, court_no_display order by next_dt, court_no_display;";
         $query = $this->db->query($sql,$condition);
         // echo $this->db->last_query();exit(0);
 
-        return $query->result_array();
+        return $query->getResultArray();
 
     }
 
@@ -359,16 +359,8 @@ group by main_case_diary_no
         $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
         $query = $this->db->query($sql,$condition);
         //echo $this->db->last_query();
-        return $query->result_array();
+        return $query->getResultArray();
 
     }
-
-
-
-
-
-
-
-
 
 }

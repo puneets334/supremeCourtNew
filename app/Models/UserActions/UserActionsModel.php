@@ -13,7 +13,7 @@ class UserActionsModel extends Model {
     function finalSubmit($registration_id, $next_stage) {
         $curr_time = date('Y-m-d H:i:s');
         $status = FALSE;
-        $this->db->trans_start();
+        $this->db->transStart();
         if ($next_stage == Initial_Approaval_Pending_Stage) {
             $status = $this->assignEfilingNumber($registration_id, session()->get('estab_details')['efiling_for_type_id'], session()->get('estab_details')['efiling_for_id'], $curr_time);
         }
@@ -26,10 +26,10 @@ class UserActionsModel extends Model {
         if ($status) {
             $status = $this->update_EfilingNum_NextStage($registration_id, $next_stage, $curr_time);
             if ($status) {
-                $this->db->trans_complete();
+                $this->db->transComplete();
             }
         }
-        if ($this->db->trans_status() === FALSE) {
+        if ($this->db->transStatus() === FALSE) {
             return FALSE;
         } else {
             return TRUE;
@@ -59,7 +59,7 @@ class UserActionsModel extends Model {
         $builder->WHERE('registration_id', $registration_id);
         $builder->WHERE('is_active', TRUE);
         $builder->UPDATE($update_def);
-        if ($builder->affectedRows() > 0) {
+        if ($this->db->affectedRows() > 0) {
             return TRUE;
         } else {
             return FALSE;
@@ -117,7 +117,7 @@ class UserActionsModel extends Model {
             $builder->WHERE('registration_id', $registration_id);
             $builder->WHERE('is_active', TRUE);
             $builder->UPDATE($nums_data_update);
-            if ($builder->affectedRows() > 0) {
+            if ($this->db->affectedRows() > 0) {
                 $data = array(
                     'registration_id' => $registration_id,
                     'admin_id' => $assign_to[0]['id'],
@@ -128,7 +128,7 @@ class UserActionsModel extends Model {
                     'reason_to_allocate' => NULL
                 );
                 $builder->INSERT($data);
-                if ($builder->insertId()) {
+                if ($this->db->insertId()) {
                     return TRUE;
                 } else {
                     return FALSE;

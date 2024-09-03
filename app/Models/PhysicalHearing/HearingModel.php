@@ -246,7 +246,7 @@ class HearingModel extends Model
 
         //group_concat(concat(case_no,'<style="color:green;">(',CAST(main_connected AS CHAR CHARACTER SET utf8) ), ')</style><br>') as case_no
 
-        $sub_sql = $this->db->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->order_by('list_year DESC, list_number DESC')->get_compiled_select('hybrid_physical_hearing_consent_freeze');
+        $sub_sql = $this->db->table('hybrid_physical_hearing_consent_freeze')->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->orderBy('list_year DESC, list_number DESC')->getCompiledSelect();
 
          $sql="select distinct main_case_diary_no as diary_no, group_concat(concat(case_no,' (',CAST(main_connected AS CHAR CHARACTER SET utf8) ), ')') as case_no,
 Concat(mm.pet_name, ' Vs. ', mm.res_name)
@@ -317,7 +317,7 @@ group by main_case_diary_no order by zz.court_no";
         //and hphcf.to_date >='".date('Y-m-d')."'
 
         // echo $this->db->last_query();
-        return $query->result_array();
+        return $query->getResultArray();
 
 
         /*if(!empty($query_result)){
@@ -368,13 +368,12 @@ group by main_case_diary_no order by zz.court_no";
     }
 
     function freezed_court_list(){
-        $sql = $this->db->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->order_by('list_year DESC, list_number DESC')->get_compiled_select('hybrid_physical_hearing_consent_freeze');
-        $this->db->select('distinct(ci.court_no)')->from('court_ip ci')->join("($sql) freeze", "ci.court_no=freeze.court_no", "left");
-        $this->db->where('ci.court_no<20')->where('freeze.is_active','t')->order_by('ci.court_no');
-        $query_result = $this->db->get();
+        $sql = $this->db->table('hybrid_physical_hearing_consent_freeze')->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->orderBy('list_year DESC, list_number DESC')->getCompiledSelect();
+        $builder = $this->db->table('court_ip ci')->select('distinct(ci.court_no)')->join("($sql) freeze", "ci.court_no=freeze.court_no", "left")->where('ci.court_no<20')->where('freeze.is_active','t')->orderBy('ci.court_no');
+        $query_result = $builder->get();
         //echo $this->db->last_query();exit(0);
         if(!empty($query_result)){
-            return $query_result->result_array();
+            return $query_result->getResultArray();
         }
         else{
             return null;
@@ -382,10 +381,9 @@ group by main_case_diary_no order by zz.court_no";
     }
 
     function unfreezed_court_list(){
-        $sql = $this->db->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->order_by('list_year DESC, list_number DESC')->get_compiled_select('hybrid_physical_hearing_consent_freeze');
-        $this->db->select('ci.court_no')->from('court_ip ci')->join("($sql) freeze", "ci.court_no=freeze.court_no", "left");
-        $this->db->where('ci.court_no<20')->where('freeze.id is null')->order_by('ci.court_no');
-        $query_result = $this->db->get();
+        $sql = $this->db->table('hybrid_physical_hearing_consent_freeze')->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->orderBy('list_year DESC, list_number DESC')->getCompiledSelect();
+        $builder = $this->db->table('court_ip ci')->select('ci.court_no')->join("($sql) freeze", "ci.court_no=freeze.court_no", "left")->where('ci.court_no<20')->where('freeze.id is null')->orderBy('ci.court_no');
+        $query_result = $$builder->get();
         if(!empty($query_result)){
             return $query_result->result_array();
         }
@@ -403,7 +401,7 @@ group by main_case_diary_no order by zz.court_no";
         $query = $this->db->query($sql);
         //echo $this->db->last_query();//exit(0);
 
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function weekly_list_number(){
@@ -411,8 +409,8 @@ group by main_case_diary_no order by zz.court_no";
         /*SELECT max(weekly_no) max_weekly_no, max(weekly_year) max_weekly_year FROM weekly_list
         where (year(curdate()) = weekly_year OR (year(curdate()) + 1) = weekly_year)*/
 
-        $sql = $this->db->where("to_dt>='".date('Y-m-d')."'")->order_by('weekly_year DESC, weekly_no DESC')->limit('1')->get('weekly_list');
-        return $sql->result_array();
+        $sql = $this->db->table('weekly_list')->where("to_dt>='".date('Y-m-d')."'")->orderBy('weekly_year DESC, weekly_no DESC')->limit('1')->get();
+        return $sql->getResultArray();
         // echo $this->db->last_query();exit(0);
     }
 
@@ -469,7 +467,7 @@ group by main_case_diary_no order by zz.court_no";
       }*/
 
     function getListedAdvocateMatters($advocateId,$court=null){
-        $sub_sql = $this->db->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->order_by('list_year DESC, list_number DESC')->get_compiled_select('hybrid_physical_hearing_consent_freeze');
+        $sub_sql = $this->db->table('hybrid_physical_hearing_consent_freeze')->where(array('is_active'=>'t'))->where("to_date>='".date('Y-m-d')."'")->orderBy('list_year DESC, list_number DESC')->getCompiledSelect();
         $where_condition=(!empty($court))?'f.courtno=?':'1=1';
         $sql="select	 f.courtno as court_no,f.weekly_no as list_number,
 				f.weekly_year as  list_year,
@@ -531,7 +529,7 @@ group by main_case_diary_no order by zz.court_no";
         $query = $this->db->query($sql,$condition);
         // echo $this->db->last_query();exit(0);
 
-        return $query->result_array();
+        return $query->getResultArray();
 
     }
     function get_court_directed_last_updated_consent($diary_no,$list_number,$list_year, $court_no)
@@ -549,7 +547,7 @@ group by main_case_diary_no order by zz.court_no";
             where  hphc.diary_no=? and hphc.list_number=? and hphc.list_year=?  and hphc.court_no=?";
         $query = $this->db->query($sql, array($diary_no,$list_number,$list_year,$court_no));
         //echo $this->db->last_query();exit();
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function get_consent_received_from_advocate_all_cases($list_number,$list_year,$next_date,$today_listed_main_cases)
@@ -585,7 +583,7 @@ group by main_case_diary_no order by zz.court_no";
                 where b.if_sen='N' and b.if_aor='Y' and b.isdead='N'
                 and a.display='Y'  and a.advocate_id in ($consent_pending_from_advocates)";
         $query = $this->db->query($sql);
-        return $query->result_array();
+        return $query->getResultArray();
     }
 
     function get_consent_received_from_advocate_main_cases($list_number,$list_year,$next_date=null)
@@ -629,7 +627,7 @@ from advocate a inner join bar b on a.advocate_id=b.bar_id
                 group by a.diary_no,a.advocate_id)all_adv";
         $query = $this->db->query($sql);
         //echo $this->db->last_query();exit();
-        return $query->result_array();
+        return $query->getResultArray();
 
     }
 

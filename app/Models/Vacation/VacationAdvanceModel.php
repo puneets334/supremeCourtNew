@@ -217,7 +217,7 @@ ORDER BY
         $builder->where('is_deleted', 'f');
         $builder->where('aor_code', $aor_code);
         $builder->orderBy("aor_code", "asc");
-        $query = $a->get();
+        $query = $builder->get();
         return $query->getResult();
     }
 

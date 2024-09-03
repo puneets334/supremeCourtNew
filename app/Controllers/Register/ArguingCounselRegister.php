@@ -14,6 +14,7 @@ class ArguingCounselRegister extends BaseController {
     protected $slice;
     protected $form_validation;
     protected $session;
+    protected $efiling_webservices;
 
     public function __construct() {
         parent::__construct();
@@ -88,19 +89,19 @@ class ArguingCounselRegister extends BaseController {
                 $mobile_arguing_counsel_exist = $this->Register_model->check_already_reg_mobile_arguing_counsel($_POST['adv_mobile']);
                 $email_arguing_counsel_exist = $this->Register_model->check_already_reg_email_arguing_counsel($_POST['adv_email']);
                 if ($_POST['register_type'] == 'Advocate') {
-                    if (isset($mobile_already_exist) && $mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
+                    if (isset($mobile_already_exist) && !empty($mobile_already_exist) && $mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
                         $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if (isset($email_already_exist) && $email_already_exist[0]['emailid'] == $_POST['adv_email']) {
+                    if (isset($email_already_exist) && !empty($email_already_exist) && $email_already_exist[0]['emailid'] == $_POST['adv_email']) {
                         $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if (isset($mobile_arguing_counsel_exist) && $mobile_arguing_counsel_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
+                    if (isset($mobile_arguing_counsel_exist) && !empty($mobile_arguing_counsel_exist) && $mobile_arguing_counsel_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
                         $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if (isset($email_arguing_counsel_exist) && $email_arguing_counsel_exist[0]['emailid'] == $_POST['adv_email']) {
+                    if (isset($email_arguing_counsel_exist) && !empty($email_arguing_counsel_exist) && $email_arguing_counsel_exist[0]['emailid'] == $_POST['adv_email']) {
                         $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('arguingCounselRegister'));
                     }
