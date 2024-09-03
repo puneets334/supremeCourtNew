@@ -125,7 +125,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         if (!empty(getSessionData('MSG'))) {
                             echo getSessionData('MSG');
                         }
-                        ?>
+                        ?> 
                     </div>
                 </div>
             </div>
