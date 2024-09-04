@@ -1,14 +1,17 @@
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
 <style>
     .callout-danger{border-left-color:#bd2130}
 
     .callout{border-radius:.25rem;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);background-color:#fff;border-left:5px solid #e9ecef;margin-bottom:1rem;padding:1rem}.callout a{color:#495057;text-decoration:underline}.callout a:hover{color:#e9ecef}.callout p:last-child{margin-bottom:0}.callout.callout-danger{border-left-color:#bd2130}.callout.callout-warning{border-left-color:#d39e00}.callout.callout-info{border-left-color:#117a8b}.callout.callout-success{border-left-color:#1e7e34}.dark-mode .callout{background-color:#3f474e}.dark-mode .callout.callout-danger{border-left-color:#ed7669}.dark-mode .callout.callout-warning{border-left-color:#f5b043}.dark-mode .callout.callout-info{border-left-color:#5faee3}.dark-mode .callout.callout-success{border-left-color:#00efb2}
     a {text-decoration: none;color: #393939;}
-
-
-
     .badge-light{color:#1f2d3d;background-color:#f8f9fa}a.badge-light:focus,a.badge-light:hover{color:#1f2d3d;background-color:#dae0e5}a.badge-light.focus,a.badge-light:focus{outline:0;box-shadow:0 0 0 .2rem rgba(248,249,250,.5)}.badge-dark{color:#fff;background-color:#343a40}a.badge-dark:focus,a.badge-dark:hover{color:#fff;background-color:#1d2124}a.badge-dark.focus,a.badge-dark:focus{outline:0;box-shadow:0 0 0 .2rem rgba(52,58,64,.5)}.jumbotron{padding:2rem 1rem;margin-bottom:2rem;background-color:#e9ecef;border-radius:.3rem}@media (min-width:576px){.jumbotron{padding:4rem 2rem}}.jumbotron-fluid{padding-right:0;padding-left:0;border-radius:0}.alert{position:relative;padding:.75rem 1.25rem;margin-bottom:1rem;border:1px solid transparent;border-radius:.25rem}.alert-heading{color:inherit}
     
-    
+    .fontIcon {
+        float: right; color: #393939 !important; font-size: 25px; position: relative; bottom: 30px;
+    }
 </style>
 <div class="modal-header">
     <h4 class="modal-title"><b>Appearance Slip</b></h4>
@@ -76,7 +79,7 @@
                 <div class="col-md-12">
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Add - Name of Advocates </h3>
+                            <h3 class="card-title">Add - Name of Advocates </h3>                          
                             <div class="card-tools">
                                 <span title="Master List - You may add previously added name of advocates"  >
                                     <a href="#"
@@ -85,7 +88,7 @@
                                     data-appearing_for="{{$posted_data['appearing_for']}}"
                                     data-courtno="{{$posted_data['courtno']}}"
                                     data-brd_slno="{{$posted_data['brd_slno']}}"
-                                    class="fas fa-address-book add_from_case_advocate_master_list text-white" ></a>
+                                    class="fa-solid fa-address-book add_from_case_advocate_master_list text-dark fontIcon" ></a>
                                 </span>
                             </div>
                         </div>
