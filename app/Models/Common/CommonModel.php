@@ -1126,7 +1126,7 @@ class CommonModel extends Model
 
     public function get_ia_or_misc_doc_court_fee($registration_id, $doccode, $doccode1)
     {
-        // echo $registration_id;
+        // echo $registration_id; die;
         if (!empty($registration_id)) {
             $sql = "select ud.doc_id,ud.doc_title,ud.doc_type_id,ud.court_fee_calculation_helper_flag,d.doccode,d.doccode1,d.docdesc,d.docfee,d.kntgrp,c.nature,ud.no_of_affidavit_copies,ud.no_of_petitioner_appellant, null as submit_with_affidavit_flag,(select count(1) from  efil.tbl_lower_court_details lcd where lcd.registration_id=ud.registration_id and lcd.is_deleted='false' and lcd.is_judgment_challenged ='true') as order_challanged, (select count(1) from  efil.tbl_case_parties cp  where cp.registration_id=ud.registration_id and cp.p_r_type='P') as total_petitioners, (select count(1) from public.etrial_lower_court elc where elc.registration_id=ud.registration_id and elc.is_deleted='false') as trial_court_order_challanged_for_caveat, mdi.diary_no,mdi.diary_year,cd.sc_diary_num,cd.sc_diary_year from efil.tbl_efiled_docs ud inner join icmis.docmaster d on (ud.doc_type_id=d.doccode and ud.sub_doc_type_id=d.doccode1 and  d.display!='N') left join efil.tbl_misc_docs_ia mdi on ud.registration_id =mdi.registration_id left join efil.tbl_case_details cd  on ud.registration_id =cd.registration_id left join icmis.casetype c on cd.sc_case_type_id =c.casecode where ud.registration_id =$registration_id and ud.is_active='TRUE' and ud.is_deleted='FALSE' ";
             //and mdi.is_deleted ='false'
@@ -2175,7 +2175,7 @@ class CommonModel extends Model
             $builder = $this->db->table('efil.tbl_sr_advocate_engage sar')->select('sar.diary_no');
             $builder->join('efil.tbl_sr_advocate_engage_history as saeh ', 'sar.diary_no =saeh.diary_no');
             $builder->where('sar.is_active', $params['is_active']);
-            $builder->where('saeh.is_active', $params['is_active']);getResultArray
+            $builder->where('saeh.is_active', $params['is_active']);
             $builder->groupBy('sar.diary_no');
             $query = $builder->get();
             $output = $query->getResultArray();
