@@ -30,11 +30,9 @@
                                 <div class="title-sec">
                                     <h5 class="unerline-title"> Cause List </h5>
                                 </div>
-
                                 <div class="table-sec">
                                     <div class="table-responsive">
-                                        <table class="table table-striped custom-table first-th-left dt-responsive nowrap" id="datatable-responsive">
-                                    
+                                        <table class="table table-striped custom-table first-th-left dt-responsive nowrap" id="datatable-responsive">                                    
                                             <thead>
                                                 <tr>
                                                     <th>SNo.</th>
@@ -67,7 +65,6 @@
                                                     @else
                                                         @php $res_name = $advocate['res_name']; @endphp
                                                     @endif
-
                                                 <tr>
                                                     <td><?php  echo $sno; ?></td>
                                                     <td>{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
@@ -104,18 +101,13 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div class="modal fade" id="modal-lg">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content myModal_content">
 
                                         </div>
-                                        <!-- /.modal-content -->
                                     </div>
-                                    <!-- /.modal-dialog -->
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
@@ -394,6 +386,34 @@
         });
 
     }
+
+    $(document).on("click", ".add_from_case_advocate_master_list", function () {
+        var diary_no = $(this).data('diary_no');
+        var next_dt = $(this).data('next_dt');
+        var appearing_for = $(this).data('appearing_for');
+        var brd_slno = $(this).data('brd_slno');
+        var courtno = $(this).data('courtno');
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        $(".display_master_list").toggle(800);
+        // $(".myModal_content2").html("");
+
+        // $("#modal-adv").modal({backdrop: true});
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('advocate/add_from_case_advocate_master_list'); ?>",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, appearing_for: appearing_for,brd_slno: brd_slno, courtno: courtno,diary_no: diary_no,next_dt: next_dt},
+            cache: false,
+            //dataType: "json",
+            success: function (data) {
+
+                $(".display_master_list").html(data);
+
+            }
+        });
+    });
+
 
 
 

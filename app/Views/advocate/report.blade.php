@@ -1,5 +1,7 @@
-@extends('layout.advocateApp')
+@extends('layout.app')
 @section('content')
+
+
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -24,63 +26,28 @@
         position: relative;float: right;top: -25px;right: 8px;
     }
 </style>
-<div class="mainPanel ">
-    <div class="panelInner">
-        <div class="middleContent">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
-                            <div class="center-content-inner comn-innercontent">
-                            <div class="dash-card dashboard-section">
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class=" dashboard-bradcrumb">
-                                            <div class="left-dash-breadcrumb">
-                                                <div class="page-title">
-                                                    
-                                                    <h5><i class="fa fa-file"></i> Advocates Appearing</h5>
-                                                </div>
-                                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
-                                            </div>
-                                            <div class="ryt-dash-breadcrumb">
-                                                <div class="btns-sec">
-
-                                                    <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
-                                        <div class="crnt-page-head">
-                                            <div class="current-pg-title">
-                                                <h6>Search </h6>
-                                            </div>
-                                            <div class="current-pg-actions"> </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- tabs-section -start  -->
-                            <div class="msg" id="msg">
-                                <div style="text-align: center;">
-                                    <?php
-                                    if (!empty(getSessionData('MSG'))) {
-                                        echo getSessionData('MSG');
-                                    }
-                                    if (!empty(getSessionData('msg'))) {
-                                        echo getSessionData('msg');
-                                    }
-                                    ?>
-                                    <br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="dashboard-section dashboard-tiles-area"></div>
+                <div class="dashboard-section">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card">
+                                {{-- Page Title Start --}}
+                                <div class="title-sec">
+                                    <h5 class="unerline-title">Advocates Appearing</h5>
                                     
                                 </div>
-                            </div>
-
-                            <div class="dash-card dashboard-section">
+                                <h6>Search </h6>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                                    <div class="crnt-page-head">
+                                        <div class="current-pg-title">
+                                           
+                                        </div>
+                                        <div class="current-pg-actions"> </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="panel panel-default">
                                     <form class="form-horizontal" method="POST" action="<?php echo base_url('advocate/report'); ?>">
@@ -92,7 +59,7 @@
                                                     <div class="row">
                                                         <div class="row w-100 align-items-center">
                                                             <div class="col-5">
-                                                                <label for="inputPassword6" class="col-form-label">List Date</label>
+                                                                <label for="inputPassword6" class="col-form-label" style="position:relative; top:-8px !important;">List Date</label>
                                                             </div>
                                                             <div class="col-7 pe-0">
                                                             <input class="form-control cus-form-ctrl  has-feedback-left" id="cause_list_date"  name="cause_list_date" placeholder="List Date" type="text" required />
@@ -118,7 +85,7 @@
                                                             <h3 class="card-title">Advocates Appearing for List Date {{$cause_list_date}}</h3>
                                                         </div>
                                                         <div class="card-body table-responsive p-0">
-                                                            <table class="table table-hover table-striped ">
+                                                        <table class="table table-striped custom-table first-th-left dt-responsive nowrap">
                                                                 <thead>
                                                                 <tr>
                                                                     <th>SNo.</th>
@@ -131,7 +98,54 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                            
+                                                                    @php
+                                                                        $sno = 1;
+                                                                    @endphp
+                                                                    @foreach($list as $advocate)     
+                                                                        @if(isset($advocate['diary_details']->pno ) && $advocate['diary_details']->pno == 2)
+                                                                            @php $pet_name = $advocate['diary_details']->pet_name." AND ANR."; @endphp
+                                                                        @elseif(isset($advocate['diary_details']->pno ) && $advocate['diary_details']->pno > 2)
+                                                                            @php $pet_name = $advocate['diary_details']->pet_name." AND ORS."; @endphp
+                                                                        @else
+                                                                            @php $pet_name = isset($advocate['diary_details']->pet_name)?$advocate['diary_details']->pet_name:''; @endphp
+                                                                        @endif
+
+                                                                        @if(isset($advocate['diary_details']->rno) && $advocate['diary_details']->rno == 2)
+                                                                            @php $res_name = $advocate['diary_details']->res_name." AND ANR."; @endphp
+                                                                        @elseif(isset($advocate['diary_details']->rno) &&  $advocate['diary_details']->rno > 2)
+                                                                            @php $res_name = $advocate['diary_details']->res_name." AND ORS."; @endphp
+                                                                        @else
+                                                                            @php $res_name = isset($advocate['diary_details']->res_name)?$advocate['diary_details']->res_name:''; @endphp
+                                                                        @endif
+                                                                        <tr>
+                                                                            <td>{{ $sno++ }}</td>
+                                                                            <td>{{ date('d-m-Y', strtotime($advocate['list_date'])) }}</td>
+
+                                                                            <td>{{ $advocate['court_no'] }}</td>
+                                                                            <td>{{ $advocate['item_no'] }}</td>
+                                                                            <td> <?php  echo isset($advocate['diary_details']->reg_no_display)? $advocate['diary_details']->diary_no:''; ?></td>                                                                          
+                                                                            <td>
+                                                                                {{ $pet_name }}<br>
+                                                                                Vs.
+                                                                                <br>
+                                                                                {{ $res_name }}
+                                                                            </td>
+                                                                            <td>
+                                                                                <div>
+                                                                                    @if( $advocate['appearing_for'] == 'P')
+                                                                                        <u><b>For Petitioner</b></u>
+                                                                                    @else
+                                                                                        <u><b>For Respondent</b></u>
+                                                                                    @endif
+                                                                                </div>
+
+                                                                                <?php $sub_sno = 1; ?>
+                                                                                @foreach($advocate['advocate_name'] as $key => $adv_name)
+                                                                                    <div>{{ $sub_sno++.'. '. $adv_name->advocate_title .' '.$adv_name->advocate_name.', '.$adv_name->advocate_type.'' }}</div>                                                                                  
+                                                                                @endforeach
+                                                                            </td>
+                                                                        </tr>                                                                                  
+                                                                    @endforeach
                                                                 </tbody>
                                                             </table>
 
@@ -141,62 +155,48 @@
                                             </div>
                                         @endif                                     
                                     </div>
-                                </div>
+                                </div>   
                             </div>
                         </div>
                     </div>
-                        </div>
+
+                    <div class="row">
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    @push('script')
+    @push('script')  
     <script>
 
-    $(document).ready(function() {
-        // alert("SC");
-        $('#cause_list_date').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
-        });
+$(document).ready(function() {
+    // alert("SC");
+    $('#cause_list_date').datepicker({
+    changeMonth: true,
+    changeYear: true,
+    yearRange: "-100:-1",
+    dateFormat: "dd/mm/yy",
+    defaultDate: '-40y'
+    });
 
-        $(document).on('change','#cause_list_date', function(){
-            var value = $('#cause_list_date').val();
-            var parts = value.split("/");
-            var day = parts[0] && parseInt(parts[0], 10);
-            var month = parts[1] && parseInt(parts[1], 10);
-            var year = parts[2] && parseInt(parts[2], 10);
-            var str = day + '/' + month + '/' + year;
-            var today = new Date(),
-            dob = new Date(str),
-            age = new Date(today - dob).getFullYear() - 1970;
-            $('#pet_age').val(age);
-        });     
+    $(document).on('change','#cause_list_date', function(){
+        var value = $('#cause_list_date').val();
+        var parts = value.split("/");
+        var day = parts[0] && parseInt(parts[0], 10);
+        var month = parts[1] && parseInt(parts[1], 10);
+        var year = parts[2] && parseInt(parts[2], 10);
+        var str = day + '/' + month + '/' + year;
+        var today = new Date(),
+        dob = new Date(str),
+        age = new Date(today - dob).getFullYear() - 1970;
+        $('#pet_age').val(age);
+    });     
 
-    })
-    </script>   
-    <script src="<?=base_url();?>assets/js/sweetalert2@11.js"></script>
-    <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert2.min.css"> 
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/sha256.js"></script>
-    <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
-    
+})
+</script>   
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> 
 
     @endpush
 @endsection
