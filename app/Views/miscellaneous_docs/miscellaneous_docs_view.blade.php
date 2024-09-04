@@ -15,13 +15,13 @@ $segment = service('uri');
     @include('affirmation.affirmation_view')
 <?php } elseif ($segment->getSegment(2) == 'courtFee') {
     if(getSessionData('efiling_details')['doc_govt_filing']==1) { ?>
-    @include('newcase.courtFee_govt_view');
+    @include('newcase.courtFee_govt_view')
     <?php }else{ ?>
-        @include('miscellaneous_docs.courtFee_view');
+        @include('miscellaneous_docs.courtFee_view')
 <?php }
 } elseif ($segment->getSegment(2) == 'view') { ?>
 
-    @include('miscellaneous_docs.misc_docs_preview');
+    @include('miscellaneous_docs.misc_docs_preview')
 <?php }
 ?>
 @include('modals')
