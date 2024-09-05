@@ -150,12 +150,12 @@ $session = service('session');
                             </div>
                         @endif
                         @if(isset($validation) && !empty($validation->getError('adv_mobile')))
-                            <div class="alert alert-dismissible text-center flashmessage">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <b>{{ $validation->getError('adv_mobile')}}</b>
                             </div>
                         @endif
                         @if(isset($validation) && !empty($validation->getError('adv_email')))
-                            <div class="alert alert-dismissible text-center flashmessage">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <b>{{ $validation->getError('adv_email')}}</b>
                             </div>
                         @endif
