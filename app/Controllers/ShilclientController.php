@@ -4,8 +4,8 @@ namespace App\Controllers;
 use DOMDocument;
 use PHPUnit\Framework\Exception;
 use SimpleXMLElement;
-use SoapClient;
-
+use SoapClient; 
+use Config\Database;
 class ShilclientController extends BaseController
 {
     //private $wsdl = "https://www.shcilestamp.com/SecfDHWS/EcfSWS?wsdl";  //URL given by NIC
@@ -15,6 +15,7 @@ class ShilclientController extends BaseController
     private $locking_username = 'dlecfsupco';
     private $password = '96563666E69637377739';
     public function __construct(){
+        ini_set('max_execution_time', -1); 
         parent::__construct();
        //$this->load->library("Nusoap_library");
 
@@ -140,7 +141,7 @@ class ShilclientController extends BaseController
     public function getStatus($certificate_number){
         $cert_response = $this->get_response('request', array('certificate_number'=>$certificate_number));
         //libxml_use_internal_errors(true);
-        $xml = simplexml_load_string($cert_response, "SimpleXMLElement", LIBXML_NOCDATA);
+        $xml = @simplexml_load_string($cert_response, "SimpleXMLElement", LIBXML_NOCDATA);
         if($xml === false){
             return 0;
             //$errors = libxml_get_errors();
@@ -175,9 +176,10 @@ class ShilclientController extends BaseController
             'verification_status'=>$status,
             'verified_on'=>date('Y-m-d H:i:s'),
             );
-            $builder = $this->db->table('efil.tbl_court_fee_payment');
+            $db = Database::connect();
+            $builder = $db->table('efil.tbl_court_fee_payment');
             $builder->WHERE('transaction_num', $certificate_number);
-            $result= $this->db->UPDATE($dataFee);
+            $result= $builder->UPDATE($dataFee);
             if($result){
                 return true;
             }else{
@@ -217,10 +219,12 @@ class ShilclientController extends BaseController
                 'locking_status'=>$RPSTATUS,
                 'locked_on'=>date('Y-m-d H:i:s'),
             );
-            $builder = $this->db->table('efil.tbl_court_fee_payment');
+
+            $db = Database::connect();
+            $builder = $db->table('efil.tbl_court_fee_payment');
             $builder->WHERE('transaction_num', $receipt_number);
             $result= $builder->UPDATE($dataFee);
-            if($this->db->affectedRows() > 0){
+            if($db->affectedRows() > 0){
                 return true;
             }else{
                 return FALSE;

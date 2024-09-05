@@ -1,12 +1,16 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Cron;
+use App\Controllers\BaseController; 
 use App\Controllers\ShilclientController;
 use App\Models\Cron\DefaultModel;
 
 class FeelockController extends ShilclientController {
-    protected $Default_model;
+    protected $Default_model; 
+    protected $session; 
     public function __construct() {
         parent::__construct();
+        $this->session = \Config\Services::session(); 
+                helper(['form', 'url', 'html', 'functions']);
         $this->Default_model = new DefaultModel();
     }
 
