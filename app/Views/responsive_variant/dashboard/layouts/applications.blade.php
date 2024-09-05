@@ -108,7 +108,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    {{$application->activated_on}}
+                                    {{date('d-m-Y H:i:s', strtotime($application->activated_on))}}
                                     @if(!empty($application->dept_file))
                                         <b><br>{{$application->dept_file}}</b>
                                     @endif

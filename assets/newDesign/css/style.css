@@ -148,6 +148,7 @@ nav.navbar{padding:0}
 h6.htsmall {
     font-size: 18px;
     font-family: 'noto_sanssemibold';
+    text-align: center;
 }
 .regester-txts .regester-links {
     display: flex;
