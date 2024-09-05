@@ -268,14 +268,15 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
 
 
 
-                    <li class="nav-item" role="presentation">
+                    <li class="nav-item" role="presentation"> 
                         <?php
-                        //  pr($breadCrumbsArray);
+                        // echo "<pre>";
+                        //   print_r($breadCrumbsArray);
                         if ($segment->getSegment(2) == 'subordinate_court') {
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                             $disabled_status='';
-                        } elseif (in_array(CAVEAT_BREAD_SUBORDINATE_COURT, $breadCrumbsArray)) {
+                        } elseif (in_array(CAVEAT_BREAD_SUBORDINATE_COURT, $StageArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
                             $status_color = '';
                             $disabled_status='';
@@ -296,7 +297,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                             $disabled_status='';
-                        } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadCrumbsArray)) {
+                        } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
                             $status_color = '';
                             $disabled_status='';
@@ -306,7 +307,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
+                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="<?php if(!in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -314,7 +315,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                             $disabled_status='';
-                        } elseif (in_array(CAVEAT_BREAD_COURT_FEE, $breadCrumbsArray)) {
+                        } elseif (in_array(CAVEAT_BREAD_COURT_FEE, $StageArray)) {
                             
                             $bgcolor='background-color: #169F85;';
                             $ColorCode = $bgcolor . ";color:#ffffff";
@@ -335,7 +336,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'first active';
                             $disabled_status='';
-                        } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray) && in_array(CAVEAT_BREAD_CAVEATEE, $breadCrumbsArray)  && in_array(CAVEAT_BREAD_DOC_INDEX, $breadCrumbsArray)) {
+                        } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $StageArray) && in_array(CAVEAT_BREAD_CAVEATEE, $breadCrumbsArray)  && in_array(CAVEAT_BREAD_DOC_INDEX, $breadCrumbsArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff';
                             $status_color = '';
                             $disabled_status='';
