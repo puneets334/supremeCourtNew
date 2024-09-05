@@ -16,8 +16,9 @@
         margin-top: 125px !important;
     }
 
-    span .select2-container{
-        width: 575px !important;
+    span.select2 {
+        width : 100% !important;
+
     }
 </style>
 <div class="center-content-inner comn-innercontent">
@@ -64,7 +65,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Cause Title Petitioner <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" type="text" required><?php echo_data(@$cause_title[0]); ?></textarea>
+                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" type="text" style="text-transform: capitalize" required><?php echo_data(@$cause_title[0]); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>)." title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -72,8 +73,10 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label for="" class="form-label">Cause Title Repondent <span style="color: red" class="astriks">*</span></label>
+
+                            <label for="" class="form-label">Cause Title Respondent <span style="color: red" class="astriks">*</span></label>
                             <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" type="text" required><?php echo_data(@$cause_title[1]); ?></textarea>
+
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -120,8 +123,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="dtsign">
                         <div class="mb-3 icon-input">
-                            <label for="" class="form-label">Date of signature of jail
-                                incharge</label>
+                            <label for="" class="form-label">Date of signature of jail incharge</label>
                             <input tabindex='5' class="form-control cus-form-ctrl" id="datesignjail" name="datesignjail" value="<?php echo @$new_case_details[0]->jail_signature_date; ?>" type="text">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
@@ -155,7 +157,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label for="" class="form-label">Sub-Category</label>
+                            <label for="" class="form-label">Sub Category</label>
                             <select tabindex='7' name="subj_sub_cat_1" id="subj_sub_cat_1" class="form-control cus-form-ctrl filter_select_dropdown subj_sub_cat_1">
                                 <option value="" title="Select">Select Sub Category </option>
                             </select>
@@ -194,21 +196,22 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Number of Petitioner (s) <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex="10" id="no_of_petitioners" name="no_of_petitioners" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_petitioners; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Petitioner" type="number">
+                            <input min="0" tabindex="10" id="no_of_petitioners" name="no_of_petitioners" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_petitioners; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Petitioner" type="number">
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Number of Repondent (s) <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex="11" id="no_of_respondents" name="no_of_respondents" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_respondents; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Respondent" type="number" required>
+                            <input min="0" tabindex="11" id="no_of_respondents" name="no_of_respondents" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_respondents; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Respondent" type="number" required>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="radio-btns-inp mb-3">
                             <div class="form-check form-check-inline">
-                                <label class="form-check-label" for="inlineRadio1">Earlier Court Details <span class="pink-text"> (Order
-                                        Challenged)</span></label>
+                                
+                                <label class="form-label" for="inlineRadio1">Earlier Court Details <span class="pink-text"> (Order Challenged)</span></label>
+
                                 <input tabindex="8" class="cus-form-check" type="checkbox" name="Earlier_not_court_type" id="Earlier_not_court_type" value="4" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 4 ? 'checked' : ''; ?>>No Earlier Court</label>
                             </div>
                         </div>
@@ -252,8 +255,7 @@
                     <?php } ?>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="supreme_court1" <?php echo !empty($supreme_court_bench) && isset($supreme_court_bench) ? 'style="display:block"' : 'style="display:none"'; ?>>
                         <div class="mb-3">
-                            <label class="form-label">State
-                                Name <span style="color: red" class="astriks">*</span></label>
+                            <label class="form-label">State Name <span style="color: red" class="astriks">*</span></label>
                             <select id="supreme_state_name" name="supreme_state_name" class="form-control cus-form-ctrl filter_select_dropdown" readonly="readonly">
                                 <option value="">Select State Name</option>
                                 <?php
@@ -787,6 +789,7 @@
 
 
     function getdtmodel() {
+       
         var spcasetype_id = $('#sc_sp_case_type_id').val();
         if (spcasetype_id == 6) {
             $('#dtsign').show();
@@ -796,10 +799,14 @@
     }
 
     $('#datesignjail').datepicker({
+        
         changeMonth: true,
         changeYear: true,
-        dateFormat: "dd/mm/yy",
-        maxDate: new Date()
+        dateFormat: "dd/mm/YY",
+        // maxDate: new Date
+    });
+    $(function() {
+        $("#datesignjail").datepicker({maxDate: 0});
     });
 </script>
 

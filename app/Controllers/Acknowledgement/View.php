@@ -200,19 +200,19 @@ class view extends BaseController
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) {
             $case_details = $this->Get_details_model->get_case_details($registration_id);
             $title = explode('VS.', $case_details[0]['cause_title']);
-            $ref_file_no = ($_SESSION['cnr_details']['efiling_case_reg_id']) ? efile_preview($_SESSION['cnr_details']['cnr_num']) : cin_preview($_SESSION['cnr_details']['cnr_num']);
+            // $ref_file_no = ($_SESSION['cnr_details']['efiling_case_reg_id']) ? efile_preview($_SESSION['cnr_details']['cnr_num']) : cin_preview($_SESSION['cnr_details']['cnr_num']);
             $data['view_data'] = array(
                 'efiling_name' => $_SESSION['efiling_details']['efiling_for_name'] ?? '',
                 'efiling_type' => 'I.A.',
                 'sc_case' => $case_details[0]['reg_no_display'] ? $case_details[0]['reg_no_display'] : 'D. No.: ' . $case_details[0]['diary_no'] . '/' . $case_details[0]['diary_year'],
                 'efiling_no' => efile_preview($_SESSION['efiling_details']['efiling_no']),
-                'create_on' => date('d-m-Y', strtotime($_SESSION['efiling_details']['create_on'])),
+                'create_on' => isset($_SESSION['efiling_details']['create_on']) ?? date('d-m-Y', strtotime($_SESSION['efiling_details']['create_on'])),
                 'pet_name' => $title[0],
                 'res_name' =>  $title[1],
                 'total_ia' => 'NA',
-                'ref_file_no' => $ref_file_no,
-                'payment_type' => $payment_type[0]['payment_type'],
-                'payment_method_code' => $payment_type[0]['payment_method_code'],
+                // 'ref_file_no' => $ref_file_no,
+                'payment_type' => $payment_type[0]['payment_type'] ?? '',
+                'payment_method_code' => $payment_type[0]['payment_method_code'] ?? '',
                 'payment_details' => $fee_payment_mode_and_fee,
                 'count_number_of_fee_pay' => $count_number_of_fee_pay,
                 'total_amount' => $total_fee_paid,

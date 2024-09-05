@@ -1,7 +1,7 @@
 					<div class="tab-form-inner">
 
 					    <?= ASTERISK_RED_MANDATORY ?>
-					    <h5 style="text-align: left;">All documents, Interlocutory Applications, if any, other than main petition are to be uploaded using this feature.. </h5>
+					    <h5 style="text-align: left;">All documents, Interlocutory Applications, if any, other than main petition are to be uploaded using this feature. </h5>
 					    <?php
                         
                         $attribute = array('class' => 'form-horizontal', 'name' => 'uploadDocument', 'id' => 'uploadDocument', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');

@@ -3,6 +3,8 @@
 use SebastianBergmann\Type\FalseType;
 
 $segment = service('uri');
+
+
 $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
 ?>
 <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
@@ -212,20 +214,30 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 $case_type_res_title = htmlentities('Caveatee', ENT_QUOTES);
             }
             ?>
-            @if(!empty(getSessionData('efiling_details')['stage_id']) && (getSessionData('efiling_details')['stage_id']==I_B_Defected_Stage || getSessionData('efiling_details')['stage_id']==I_B_Defects_Cured_Stage))
-                {{-- @include('newcase/refile_case_appeal_ci_breadcrumb', $data) --}}
-            @else
-                <?php 
+         
+                <?php              
+
+
                 $breadCrumbsArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
+                
+               // echo "Amit ". CAVEAT_BREAD_CAVEATOR ;
+                
                 ?>
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <?php 
+                   //  echo "Breadcum Status is = ".getSessionData('efiling_details')['breadcrumb_status'];
+                    
+                    ?>
                     <li class="nav-item" role="presentation">
                         <?php
-                        //  echo $segment->getTotalSegments() ;                        
+                        //   echo $segment->getTotalSegments() ;    
+                        //  echo $segment->getSegment(1). "<br>";                    
+                        //  echo $segment->getSegment(2);                    
                         if ($segment->getTotalSegments()== '1') {
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
-                        } elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray)) {
+                        }
+                         elseif (in_array(CAVEAT_BREAD_CAVEATOR, $breadCrumbsArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
                             $status_color = '';
                         } else {
@@ -237,7 +249,29 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
-                        if ($segment->getSegment(2) == 'caveatee') {
+                        if ($segment->getSegment(2) == 'caveatee') {  
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'active';
+                            $disabled_status='';
+                        } elseif (in_array(CAVEAT_BREAD_CAVEATEE, $breadCrumbsArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                            $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $url_caveatee ?>" class="nav-link <?php echo $status_color; ?>"  style="<?php if(!in_array(NEW_CASE_CASE_DETAIL, $StageArray)){ echo $disabled_status; }?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span>Caveatee</a>
+                    </li>
+
+
+
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        //  pr($breadCrumbsArray);
+                        if ($segment->getSegment(2) == 'subordinate_court') {
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                             $disabled_status='';
@@ -251,30 +285,14 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_caveatee ?>" class="nav-link <?php echo $status_color; ?>"  style="<?php if(!in_array(NEW_CASE_CASE_DETAIL, $StageArray)){ echo $disabled_status; }?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span>Caveatee</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <?php
-                        //  pr($breadCrumbsArray);
-                        if ($segment->getSegment(2) == 'subordinate_court') {
-                            $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'active';
-                            $disabled_status='';
-                        } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadCrumbsArray)) {
-                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
-                            $status_color = '';
-                            $disabled_status='';
-                        } else {
-                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
-                            $status_color = '';
-                            $disabled_status='pointer-events: none; cursor: default;';
-                        }
-                        ?>
-                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_PETITIONER, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts</a>
+                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(CAVEAT_BREAD_SUBORDINATE_COURT, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts </a>
                     </li>                        
                     <li class="nav-item" role="presentation">
-                        <?php                        
+                        <?php               
+                            
                         if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(2) == 'documentIndex') {
+
+                            // print_r($breadCrumbsArray);
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                             $disabled_status='';
@@ -288,7 +306,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
+                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index</a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -330,7 +348,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         <a href="<?= base_url('caveat/view') ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">6</span>View</a>
                     </li>
                 </ul>
-            @endif
+         
         </form>
 
 <div class="modal fade" id="FinalSubmitModal" role="dialog">

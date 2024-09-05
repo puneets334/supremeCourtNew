@@ -33,11 +33,11 @@ class CourtFee extends BaseController {
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {  
 
             $registration_id = $_SESSION['efiling_details']['registration_id'];
-            // pr($index_pdf_details);
+            
 
             //$index_pdf_details = $this->DocumentIndex_Select_model->unfilled_pdf_pages_for_index($registration_id);
             $index_pdf_details = $this->DocumentIndex_Select_model->is_index_created($registration_id);
-
+            // pr($index_pdf_details);
             if(!empty($index_pdf_details)) {
 
                 $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
@@ -56,9 +56,10 @@ class CourtFee extends BaseController {
 
 
                 //    Commentted By Amit Mishra
-                    // $pending_court_fee=getPendingCourtFee();
+                    $pending_court_fee=getPendingCourtFee();
+                    // pr($pending_court_fee);
 
-                    $pending_court_fee=0;
+                    // $pending_court_fee=0;
                     
 
                     $breadcrumb_to_update = IA_BREAD_COURT_FEE;
