@@ -229,7 +229,7 @@ class NewCaseModel extends Model {
             $this->db->transStart();
             $this->update_breadcrumbs($registration_id, $breadcrumb_step);
             $builder = $this->db->table('efil.tbl_case_parties');
-            $builder->insert( $data);
+            $builder->insert($data);
             if (isset($data['parent_id']) && $data['parent_id'] != NULL) {
                 $this->update_party_lr_status($registration_id, $data['parent_id'], $data['create_on']);
             }

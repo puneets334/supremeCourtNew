@@ -261,7 +261,7 @@ class Petitioner extends BaseController {
         } else {
             $party_dob = NULL;
         }
-        $party_age = !empty($_POST["party_age"]) ? $_POST["party_age"] : NULL;
+        $party_age = (!empty($_POST["party_age"]) && $_POST["party_age"] != 'NaN') ? $_POST["party_age"] : NULL;
         $party_gender = !empty($_POST["party_gender"]) ? $_POST["party_gender"] : '';
 
         if ($party_as != 'I') {
@@ -345,7 +345,7 @@ class Petitioner extends BaseController {
             'party_name' => $party_name,
             'relation' => $party_relation,
             'relative_name' => $relative_name,
-            'party_age' => $party_age,
+            'party_age' => ($party_age == 'NaN') ? $party_age : null,
             'party_dob' => $party_dob,
             'gender' => $party_gender,
             'is_dead_minor'=>$is_dead_minor,
