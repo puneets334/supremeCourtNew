@@ -60,7 +60,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Cause Title Petitioner <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" type="text" required><?php echo_data(@$cause_title[0]); ?></textarea>
+                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" type="text" style="text-transform: capitalize" required><?php echo_data(@$cause_title[0]); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>)." title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -69,7 +69,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Cause Title Repondent <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" type="text" required><?php echo_data(@$cause_title[1]); ?></textarea>
+                            <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" type="text" style="text-transform: capitalize" required><?php echo_data(@$cause_title[1]); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -788,6 +788,7 @@
 
 
     function getdtmodel() {
+       
         var spcasetype_id = $('#sc_sp_case_type_id').val();
         if (spcasetype_id == 6) {
             $('#dtsign').show();
@@ -797,10 +798,11 @@
     }
 
     $('#datesignjail').datepicker({
+        
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd/mm/yy",
-        maxDate: new Date
+        maxDate: new Date()
     });
 </script>
 
