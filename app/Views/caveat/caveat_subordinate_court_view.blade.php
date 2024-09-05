@@ -50,7 +50,7 @@ body.loading .overlay{
 </style>
 <style>
     .datepicker-dropdown {
-        margin-top: 30% !important;
+        margin-top: 30% !important;   background-color: #fff;
     }
 </style>
 
@@ -604,12 +604,14 @@ body.loading .overlay{
 <script>
 
  $(document).ready(function() {
+        var today = new Date();
         $('#order_date').datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: "-100:-1",
         dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
+        defaultDate: '-40y',
+         endDate: today  
         });
     });  
 

@@ -34,8 +34,9 @@ body.loading .overlay{
 </style>
 <style>
     .datepicker-dropdown {
-        margin-top: 125px !important;
+        margin-top: 125px !important; background-color: #fff;
     }
+   
 </style>
     <div class="center-content-inner comn-innercontent">
         <div class="tab-content">
@@ -546,12 +547,15 @@ body.loading .overlay{
 <script>
     $(document).ready(function() {
         // alert("SC");
+        var today = new Date();
         $('#pet_dob').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:-1",
+            dateFormat: "dd/mm/yy",
+            defaultDate: '-40y',
+            endDate: today 
+            
         });
 
         $(document).on('change','#pet_dob', function(){
