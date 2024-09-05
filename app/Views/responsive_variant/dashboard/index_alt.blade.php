@@ -441,7 +441,7 @@
                                         <div class="col-12 col-sm-12 col-md-9 col-lg-9">
                                             <div class="dash-card">
                                                 <div class="title-sec">
-                                                    <h5 class="unerline-title">e-Filled Cases</h5>
+                                                    <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive">
