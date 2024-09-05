@@ -19,6 +19,14 @@
 $segment = service('uri');
 $session = service('session');
 ?>
+<style>
+    .regester-links {
+        margin: 0px 100px;
+    }
+    label {
+        color: black;
+    }
+</style>
 <body class="login-page">
     <header>
         <!-- Top Header Section End -->
@@ -183,9 +191,9 @@ $session = service('session');
                                 <!--<input hidden id="user_login_type" name="adv_type1" value="<?php /*echo htmlentities(stringEncreption('1'), ENT_QUOTES); */?>">-->
                                 <input hidden id="user_login_type" name="adv_type1" value="<?php echo integerEncreption($adv_type_select); ?>">
                                 <p class="">
-                                    <a style="width: 100%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
-                                    <!-- <span style="padding: 0px; font-size: 40px; margin-top: -10px;" class="uk-button uk-button-default" uk-tooltip="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
-                                    The Zip file containing the digitally signed XML will be downloaded to device wherein the above mentioned steps have been performed.">?</span> -->
+                                    <a style="width: 90%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
+                                    <button type="button" class="btn btn-primary" data-toggle="tooltip" data-html="true" title="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
+                                    The Zip file containing the digitally signed XML will be downloaded to device wherein the above mentioned steps have been performed.">?</button>
                                 </p>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
