@@ -298,6 +298,9 @@ $routes->match(['GET', 'POST'], 'Consent_VC', 'PhysicalHearing\ConsentVC::index'
 $routes->match(['GET', 'POST'], 'Consent_VC/index/(:any)', 'PhysicalHearing\ConsentVC::index/$1');
 $routes->match(['GET', 'POST'], 'consent_VC/save', 'PhysicalHearing\ConsentVC::save');
 $routes->match(['GET', 'POST'], 'consent/case_listed_in_daily_status/(:any)', 'PhysicalHearing\Consent::case_listed_in_daily_status/$1');
+$routes->match(['GET', 'POST'], 'physical_hearing/reports', 'PhysicalHearing\AdvocateListing::advocate_rpt_srch');
+$routes->match(['GET', 'POST'], 'Advocate_listing/advocate_rpt_srch', 'PhysicalHearing\AdvocateListing::advocate_rpt_srch');
+
 // $routes->match(['GET', 'POST'], 'auth', 'PhysicalHearing\Auth::index');
 
 /****end-Responsive variant routes refile old efiling cases ****/

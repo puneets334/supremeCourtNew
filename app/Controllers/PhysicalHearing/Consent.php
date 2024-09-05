@@ -11,7 +11,7 @@ use App\Models\PhysicalHearing\HearingModel;
 // use App\Models\PutModel;
 
 class Consent extends BaseController {
-    
+
     protected $consent_VC_model;
     protected $consent_model;
     protected $hearing_model;
@@ -33,16 +33,16 @@ class Consent extends BaseController {
         // $this->load->database('icmis');
         // $this->load->model('consent_model');
         // $this->load->model('hearing_model');
-        helper(['common', 'encryptdecrypt', 'myarray', 'curl', 'url', 'form', 'session']); 
-        $this->consent_VC_model = new ConsentVCModel(); 
-        $this->consent_model = new ConsentModel(); 
-        $this->hearing_model = new HearingModel(); 
+        helper(['common', 'encryptdecrypt', 'myarray', 'curl', 'url', 'form', 'session']);
+        $this->consent_VC_model = new ConsentVCModel();
+        $this->consent_model = new ConsentModel();
+        $this->hearing_model = new HearingModel();
         $session = session();
     }
 
-    public function index($court=null){
-       // echo $court;
-
+    public function index($court=null)
+    {
+        // echo $court;
         // if(!isset($this->session->loginData)){
         //     $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
         //     unset($this->session->loginData);
@@ -52,67 +52,53 @@ class Consent extends BaseController {
         //$unfreezed_court = $this->hearing_model->unfreezed_court_list();
         $unfreezed_court = $this->hearing_model->available_court_list_in_weekly();
         $freezed_court = $this->hearing_model->freezed_court_list();
-
         $list = array();
         foreach ($unfreezed_court as $key => $value) {
             $list[] = $value['court_no'];
         }
-
         $list1 = array();
         foreach ($freezed_court as $key => $value) {
             $list1[] = $value['court_no'];
         }
         $unfreezed_court_list=array_diff($list,$list1);
-
         $data['display_message'] = 'List awaiting for Court Numbers : '.implode(', ',$unfreezed_court_list);
         $data['display_message1'] = 'List available for Court Numbers : '.implode(', ',$list1);
         $data['freezed_court']=isset($freezed_court)?$freezed_court:null;
-
         $data['weekly_list'] = $this->hearing_model->weekly_list_number();
-
         $data['advocate_cases_summary'] = $this->hearing_model->getListedAdvocateMatters($this->session->loginData['bar_id']);
         if(!empty($court))
             $data['cases']=$this->hearing_model->getFutureListedMatters($this->session->loginData['bar_id'], $court);
         else
-        {
             //$data['cases']=$this->hearing_model->getFutureListedMatters($this->session->loginData['bar_id'], null);//for all court option
             $data['cases']=null;
-        }
-
-        //$data['cases']=null;
-        
-        $this->load->view('physical_hearing/menu');
-        $this->load->view('physical_hearing/consent', $data);
+        // $data['cases']=null;
+        // $this->load->view('physical_hearing/menu');
+        $this->render('physical_hearing.consent', $data);
     }
+
     public  function case_listed_in_daily_status($diary_no)
     {
        $aud_nomination_status=case_listed_in_daily_list_status($diary_no);
-
        echo $aud_nomination_status;
     }
 
-    public function save(){
-
+    public function save()
+    {
         extract($_POST);
-               //echo $_POST['row_20'];
-       // var_dump($hearingModeConsent);
-       // echo $selected_court;
-
-
+        // echo $_POST['row_20'];
+        // var_dump($hearingModeConsent);
+        // echo $selected_court;
         $cases=$this->hearing_model->getFutureListedMatters($this->session->loginData['bar_id'],$court_no);
-
         $list_number=$cases[0]['list_number'];
         $list_year=$cases[0]['list_year'];
         $court_no=$cases[0]['court_no'];
-
         //echo $list_number.'#'.$list_year;
         foreach($hearingModeConsent as $diary_no=>$aor_consent){
             //$data=explode('_',$aor_consent);
             //echo 'Diary No:'.$diary_no.' value : '.$aor_consent;
             $aud_consent_status=case_listed_in_daily_list_status($diary_no);
             $case_next_dt=case_listed_in_daily_list_next_date($diary_no);
-            if($aud_consent_status==1)
-            {
+            if($aud_consent_status==1) {
                 $already_updated_data=$this->consent_model->getAORConsentDetails($diary_no,$list_number,$list_year,$this->session->loginData['bar_id'], $court_no);
                 $condition=array('diary_no' => $diary_no,'list_number' => $list_number, 'list_year' => $list_year, 'court_no'=>$court_no, 'advocate_id'=>$this->session->loginData['bar_id']);
                 if(count($already_updated_data)>0){
@@ -124,12 +110,10 @@ class Consent extends BaseController {
                         $insert_result=$this->consent_model->InsertLog("physical_hearing_advocate_consent","physical_hearing_advocate_consent_log",$diary_no,$list_number,$list_year, $court_no);
                         //echo $insert_result;
                     }
-                    
                     if($aor_consent=='V' && $already_updated_data[0]['consent']=='P'){
                         //Send SMS & Email only if consent was changed from P to V. If consent was previously V and again updated as V in that case SMS/Email will not be sent.
                         $this->status_change_info_to_nominees($already_updated_data);
                     }
-
                     //Update
                     $data=array(
                         'updated_by' => $this->session->loginData['bar_id'],
@@ -141,14 +125,12 @@ class Consent extends BaseController {
                         'case_count' => $case_count[$diary_no]
                     );
                     $update_result=$this->consent_model->update('physical_hearing_advocate_consent',$data,$condition);
-
-                    if($this->db->trans_status() === FALSE || !isset($insert_result) || !isset($update_result)){
-                        $this->db->trans_rollback();
-                    }else{
-                        $this->db->trans_commit();
+                    if($this->db->transStatus() === FALSE || !isset($insert_result) || !isset($update_result)){
+                        $this->db->transRollback();
+                    } else {
+                        $this->db->transCommit();
                     }
-                }
-                else{
+                } else {
                     //Insert
                     $data=array(
                         'updated_by' => $this->session->loginData['bar_id'],
@@ -164,34 +146,27 @@ class Consent extends BaseController {
                         'case_count' => $case_count[$diary_no],
                         'next_dt' =>$case_next_dt
                     );
-
-
                     $this->consent_model->save('physical_hearing_advocate_consent',$data);
                     /* if($aor_consent=='V'){
-                         //Send SMS & Email only if consent was changed from P to V.
-                         $this->status_change_info_to_nominees(array('diary_no'=>$diary_no,'list_number'=>$list_number,'list_year'=>$list_year,'court_no'=>$court_no));
-                     }*/
+                        //Send SMS & Email only if consent was changed from P to V.
+                        $this->status_change_info_to_nominees(array('diary_no'=>$diary_no,'list_number'=>$list_number,'list_year'=>$list_year,'court_no'=>$court_no));
+                    }*/
                 }
-
-            }
-            else
-            {
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center text-bold">You cannot add/modify Consent after 8 am of hearing date of Diary No.'.$diary_no.'</div>');
+            } else {
+                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center text-bold">You cannot add/modify Consent after 8 am of hearing date of Diary No.'.$diary_no.'</div>');
                 redirect("Consent");
             }
         }
-        $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center text-bold">Consent Updated Successfully</div>');
+        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center text-bold">Consent Updated Successfully</div>');
         redirect("Consent");
     }
-    
-    
-    private function status_change_info_to_nominees($already_updated_data){
 
+    private function status_change_info_to_nominees($already_updated_data)
+    {
         $diary_no = $already_updated_data[0]['diary_no'];
         $list_number = $already_updated_data[0]['list_number'];
         $list_year = $already_updated_data[0]['list_year'];
         $court_no = $already_updated_data[0]['court_no'];
-    
         $attendees = $this->hearing_model->get_master('attendee_details', "diary_no='$diary_no' and
             list_number=$list_number and
             list_year=$list_year and
@@ -202,10 +177,6 @@ class Consent extends BaseController {
             send_sms($attendee['mobile'], $message, INVALID_PYSICAL_APPEARANCE);
             send_email($attendee['email_id'], "Regarding physical hearing for ".$attendee['case_number'], $message);
         }
-
     }
 
-
-
 }
-

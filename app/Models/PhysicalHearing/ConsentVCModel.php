@@ -277,309 +277,210 @@ class ConsentVCModel extends Model
            $listing_date_condition=" and h.next_dt IN (DATE '". implode(',',$listingDate)."')";
         $where_condition=(!empty($court))?'courtno IN ('.$court.')':'1=1';
         // pr($listing_date_condition);
-//         $sql="select next_dt, (case when courtno>=60 then courtno-60 when courtno>=30 then courtno-30 else courtno end) as court_no_display, count(1) as total_cases, courtno
-// from(
-// select h.*,mb.board_type_mb,r.courtno 
-// from 
-// (select 
-// h.diary_no, m.conn_key,CASE
-//                   WHEN ( m.diary_no = m.conn_key
-//                           OR m.conn_key = ''
-//                           OR m.conn_key IS NULL
-//                           OR m.conn_key = '0' ) THEN m.diary_no
-//                   ELSE m.conn_key
-//                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected,  h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display  ,h.board_type
-// ,m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
-//                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
-//                 Substring(m.diary_no, -4))) AS
-//                 case_no,
-//                 Concat(m.pet_name, ' Vs. ', m.res_name)
-//                 AS cause_title from main m 
-// inner join heardt h on m.diary_no = h.diary_no 
-// where 
-// (h.next_dt >=curdate() $listing_date_condition) and h.main_supp_flag in (1,2) 
-// union 
-// select 
-//  h.diary_no, m.conn_key,CASE
-//                   WHEN ( m.diary_no = m.conn_key
-//                           OR m.conn_key = ''
-//                           OR m.conn_key IS NULL
-//                           OR m.conn_key = '0' ) THEN m.diary_no
-//                   ELSE m.conn_key
-//                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected, 
-// h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display ,h.board_type
-// , m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
-//                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
-//                 Substring(m.diary_no, -4))) AS
-//                 case_no,
-//                 Concat(m.pet_name, ' Vs. ', m.res_name)
-//                 AS cause_title from main m 
-// inner join last_heardt h on m.diary_no = h.diary_no 
-// where (h.next_dt >=curdate() $listing_date_condition)
-// and h.main_supp_flag in (1,2) 
-// and (h.bench_flag = '' or h.bench_flag is null) 
-// ) h
-// left join cl_printed p on p.next_dt = h.next_dt AND p.m_f = h.mainhead AND p.part = h.clno AND p.roster_id = h.roster_id AND p.display = 'Y'
-//  inner join roster r on h.roster_id=r.id and r.display='Y' 
-//  inner join roster_bench rb on r.bench_id=rb.id 
-//  inner join master_bench mb on rb.bench_id=mb.id inner join advocate a on h.diary_no=a.diary_no and a.display='Y'
-// where p.id is not null and a.advocate_id=? and $where_condition
-// group by diary_no, roster_id 
-// )n1
-// group by next_dt, court_no_display order by next_dt, court_no_display;";
-//         $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
-//         $query = $this->sci_cmis_final->query($sql,$condition);
-//         echo $this->sci_cmis_final->getLastQuery(); exit();
+        //         $sql="select next_dt, (case when courtno>=60 then courtno-60 when courtno>=30 then courtno-30 else courtno end) as court_no_display, count(1) as total_cases, courtno
+        // from(
+        // select h.*,mb.board_type_mb,r.courtno 
+        // from 
+        // (select 
+        // h.diary_no, m.conn_key,CASE
+        //                   WHEN ( m.diary_no = m.conn_key
+        //                           OR m.conn_key = ''
+        //                           OR m.conn_key IS NULL
+        //                           OR m.conn_key = '0' ) THEN m.diary_no
+        //                   ELSE m.conn_key
+        //                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected,  h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display  ,h.board_type
+        // ,m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
+        //                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
+        //                 Substring(m.diary_no, -4))) AS
+        //                 case_no,
+        //                 Concat(m.pet_name, ' Vs. ', m.res_name)
+        //                 AS cause_title from main m 
+        // inner join heardt h on m.diary_no = h.diary_no 
+        // where 
+        // (h.next_dt >=curdate() $listing_date_condition) and h.main_supp_flag in (1,2) 
+        // union 
+        // select 
+        //  h.diary_no, m.conn_key,CASE
+        //                   WHEN ( m.diary_no = m.conn_key
+        //                           OR m.conn_key = ''
+        //                           OR m.conn_key IS NULL
+        //                           OR m.conn_key = '0' ) THEN m.diary_no
+        //                   ELSE m.conn_key
+        //                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected, 
+        // h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display ,h.board_type
+        // , m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
+        //                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
+        //                 Substring(m.diary_no, -4))) AS
+        //                 case_no,
+        //                 Concat(m.pet_name, ' Vs. ', m.res_name)
+        //                 AS cause_title from main m 
+        // inner join last_heardt h on m.diary_no = h.diary_no 
+        // where (h.next_dt >=curdate() $listing_date_condition)
+        // and h.main_supp_flag in (1,2) 
+        // and (h.bench_flag = '' or h.bench_flag is null) 
+        // ) h
+        // left join cl_printed p on p.next_dt = h.next_dt AND p.m_f = h.mainhead AND p.part = h.clno AND p.roster_id = h.roster_id AND p.display = 'Y'
+        //  inner join roster r on h.roster_id=r.id and r.display='Y' 
+        //  inner join roster_bench rb on r.bench_id=rb.id 
+        //  inner join master_bench mb on rb.bench_id=mb.id inner join advocate a on h.diary_no=a.diary_no and a.display='Y'
+        // where p.id is not null and a.advocate_id=? and $where_condition
+        // group by diary_no, roster_id 
+        // )n1
+        // group by next_dt, court_no_display order by next_dt, court_no_display;";
+        //         $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
+        //         $query = $this->sci_cmis_final->query($sql,$condition);
+        //         echo $this->sci_cmis_final->getLastQuery(); exit();
+        // $sql = "SELECT 
+        //     next_dt, 
+        //     CASE WHEN courtno >= 60 THEN courtno - 60 WHEN courtno >= 30 THEN courtno - 30 ELSE courtno END AS court_no_display, 
+        //     COUNT(*) AS total_cases, 
+        //     courtno 
+        //     FROM 
+        //     (
+        //         SELECT 
+        //         h.next_dt, 
+        //         r.courtno 
+        //         FROM 
+        //         (
+        //             SELECT 
+        //             h.diary_no, 
+        //             m.conn_key, 
+        //             CASE WHEN m.diary_no = m.conn_key 
+        //             OR m.conn_key = '' 
+        //             OR m.conn_key IS NULL 
+        //             OR m.conn_key = '0' THEN CAST(m.diary_no as BIGINT) ELSE CAST(m.conn_key AS bigint) END AS main_case_diary_no, 
+        //             CASE WHEN m.diary_no = m.conn_key 
+        //             OR m.conn_key = '' 
+        //             OR m.conn_key IS NULL 
+        //             OR m.conn_key = '0' THEN 'M' ELSE 'C' END AS main_connected, 
+        //             h.next_dt, 
+        //             h.mainhead, 
+        //             h.brd_slno, 
+        //             h.clno, 
+        //             h.roster_id, 
+        //             h.judges, 
+        //             h.main_supp_flag, 
+        //             m.reg_no_display, 
+        //             CAST(h.board_type AS text) AS board_type, 
+        //             m.active_casetype_id, 
+        //             CONCAT(
+        //                 COALESCE(m.reg_no_display, ''), 
+        //                 ' @ ', 
+        //                 CONCAT(
+        //                 LEFT(
+        //                     m.diary_no :: text, 
+        //                     LENGTH(m.diary_no :: text) -4
+        //                 ), 
+        //                 '/', 
+        //                 SUBSTRING(
+        //                     m.diary_no :: text 
+        //                     FROM 
+        //                     LENGTH(m.diary_no :: text) -3 FOR 4
+        //                 )
+        //                 )
+        //             ) AS case_no, 
+        //             CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
+        //             FROM 
+        //             public.main m 
+        //             INNER JOIN public.heardt h ON m.diary_no = h.diary_no 
+        //             WHERE h.next_dt >= CURRENT_DATE $listing_date_condition 
+        //             AND h.main_supp_flag IN (1, 2) 
+        //             UNION 
+        //             SELECT 
+        //             cast(h.diary_no as TEXT), 
+        //             m.conn_key, 
+        //             CASE WHEN cast(m.diary_no as BIGINT) = CAST(m.conn_key AS bigint) 
+        //             OR m.conn_key = '' 
+        //             OR m.conn_key IS NULL 
+        //             OR m.conn_key = '0' THEN cast(m.diary_no as BIGINT) ELSE CAST(m.conn_key AS bigint) END AS main_case_diary_no, 
+        //             CASE WHEN cast(m.diary_no as BIGINT) = CAST(m.conn_key AS bigint) 
+        //             OR m.conn_key = '' 
+        //             OR m.conn_key IS NULL 
+        //             OR m.conn_key = '0' THEN 'M' ELSE 'C' END AS main_connected, 
+        //             h.next_dt, 
+        //             h.mainhead, 
+        //             h.brd_slno, 
+        //             h.clno, 
+        //             h.roster_id, 
+        //             h.judges, 
+        //             h.main_supp_flag, 
+        //             m.reg_no_display, 
+        //             CAST(h.board_type AS text) AS board_type, 
+        //             m.active_casetype_id, 
+        //             CONCAT(
+        //                 COALESCE(m.reg_no_display, ''), 
+        //                 ' @ ', 
+        //                 CONCAT(
+        //                 LEFT(
+        //                     m.diary_no :: text, 
+        //                     LENGTH(m.diary_no :: text) -4
+        //                 ), 
+        //                 '/', 
+        //                 SUBSTRING(
+        //                     m.diary_no :: text 
+        //                     FROM 
+        //                     LENGTH(m.diary_no :: text) -3 FOR 4
+        //                 )
+        //                 )
+        //             ) AS case_no, 
+        //             CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
+        //             FROM 
+        //             public.main m 
+        //             INNER JOIN public.last_heardt h ON cast(m.diary_no as BIGINT) = cast(h.diary_no as BIGINT) 
+        //             WHERE h.next_dt >= CURRENT_DATE $listing_date_condition 
+        //             AND h.main_supp_flag IN (1, 2) 
+        //             AND (
+        //                 h.bench_flag = '' 
+        //                 OR h.bench_flag IS NULL
+        //             )
+        //         ) h 
+        //         LEFT JOIN public.cl_printed p ON p.next_dt = h.next_dt 
+        //         AND p.m_f = h.mainhead 
+        //         AND p.part = h.clno 
+        //         AND p.roster_id = h.roster_id 
+        //         AND p.display = 'Y' 
+        //         INNER JOIN master.roster r ON h.roster_id = r.id 
+        //         AND r.display = 'Y' 
+        //         INNER JOIN master.roster_bench rb ON r.bench_id = rb.id 
+        //         INNER JOIN master.master_bench mb ON rb.bench_id = mb.id 
+        //         INNER JOIN public.advocate a ON cast(h.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
+        //         AND a.display = 'Y' 
+        //         WHERE 
+        //         p.id IS NOT NULL 
+        //         AND a.advocate_id = $advocateId
+        //         AND $where_condition
+        //     ) n1 
+        //     GROUP BY 
+        //     next_dt, 
+        //     court_no_display, 
+        //     courtno 
+        //     ORDER BY 
+        //     next_dt, 
+        //     court_no_display, 
+        //     courtno;";
         $sql = "SELECT 
-            next_dt, 
-            CASE WHEN courtno >= 60 THEN courtno - 60 WHEN courtno >= 30 THEN courtno - 30 ELSE courtno END AS court_no_display, 
-            COUNT(*) AS total_cases, 
-            courtno 
-            FROM 
-            (
-                SELECT 
-                h.next_dt, 
-                r.courtno 
-                FROM 
-                (
-                    SELECT 
-                    h.diary_no, 
-                    m.conn_key, 
-                    CASE WHEN m.diary_no = m.conn_key 
-                    OR m.conn_key = '' 
-                    OR m.conn_key IS NULL 
-                    OR m.conn_key = '0' THEN CAST(m.diary_no as BIGINT) ELSE CAST(m.conn_key AS bigint) END AS main_case_diary_no, 
-                    CASE WHEN m.diary_no = m.conn_key 
-                    OR m.conn_key = '' 
-                    OR m.conn_key IS NULL 
-                    OR m.conn_key = '0' THEN 'M' ELSE 'C' END AS main_connected, 
-                    h.next_dt, 
-                    h.mainhead, 
-                    h.brd_slno, 
-                    h.clno, 
-                    h.roster_id, 
-                    h.judges, 
-                    h.main_supp_flag, 
-                    m.reg_no_display, 
-                    CAST(h.board_type AS text) AS board_type, 
-                    m.active_casetype_id, 
-                    CONCAT(
-                        COALESCE(m.reg_no_display, ''), 
-                        ' @ ', 
-                        CONCAT(
-                        LEFT(
-                            m.diary_no :: text, 
-                            LENGTH(m.diary_no :: text) -4
-                        ), 
-                        '/', 
-                        SUBSTRING(
-                            m.diary_no :: text 
-                            FROM 
-                            LENGTH(m.diary_no :: text) -3 FOR 4
-                        )
-                        )
-                    ) AS case_no, 
-                    CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
-                    FROM 
-                    public.main m 
-                    INNER JOIN public.heardt h ON m.diary_no = h.diary_no 
-                    WHERE h.next_dt >= CURRENT_DATE $listing_date_condition 
-                    AND h.main_supp_flag IN (1, 2) 
-                    UNION 
-                    SELECT 
-                    cast(h.diary_no as TEXT), 
-                    m.conn_key, 
-                    CASE WHEN cast(m.diary_no as BIGINT) = CAST(m.conn_key AS bigint) 
-                    OR m.conn_key = '' 
-                    OR m.conn_key IS NULL 
-                    OR m.conn_key = '0' THEN cast(m.diary_no as BIGINT) ELSE CAST(m.conn_key AS bigint) END AS main_case_diary_no, 
-                    CASE WHEN cast(m.diary_no as BIGINT) = CAST(m.conn_key AS bigint) 
-                    OR m.conn_key = '' 
-                    OR m.conn_key IS NULL 
-                    OR m.conn_key = '0' THEN 'M' ELSE 'C' END AS main_connected, 
-                    h.next_dt, 
-                    h.mainhead, 
-                    h.brd_slno, 
-                    h.clno, 
-                    h.roster_id, 
-                    h.judges, 
-                    h.main_supp_flag, 
-                    m.reg_no_display, 
-                    CAST(h.board_type AS text) AS board_type, 
-                    m.active_casetype_id, 
-                    CONCAT(
-                        COALESCE(m.reg_no_display, ''), 
-                        ' @ ', 
-                        CONCAT(
-                        LEFT(
-                            m.diary_no :: text, 
-                            LENGTH(m.diary_no :: text) -4
-                        ), 
-                        '/', 
-                        SUBSTRING(
-                            m.diary_no :: text 
-                            FROM 
-                            LENGTH(m.diary_no :: text) -3 FOR 4
-                        )
-                        )
-                    ) AS case_no, 
-                    CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
-                    FROM 
-                    public.main m 
-                    INNER JOIN public.last_heardt h ON cast(m.diary_no as BIGINT) = cast(h.diary_no as BIGINT) 
-                    WHERE h.next_dt >= CURRENT_DATE $listing_date_condition 
-                    AND h.main_supp_flag IN (1, 2) 
-                    AND (
-                        h.bench_flag = '' 
-                        OR h.bench_flag IS NULL
-                    )
-                ) h 
-                LEFT JOIN public.cl_printed p ON p.next_dt = h.next_dt 
-                AND p.m_f = h.mainhead 
-                AND p.part = h.clno 
-                AND p.roster_id = h.roster_id 
-                AND p.display = 'Y' 
-                INNER JOIN master.roster r ON h.roster_id = r.id 
-                AND r.display = 'Y' 
-                INNER JOIN master.roster_bench rb ON r.bench_id = rb.id 
-                INNER JOIN master.master_bench mb ON rb.bench_id = mb.id 
-                INNER JOIN public.advocate a ON cast(h.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
-                AND a.display = 'Y' 
-                WHERE 
-                p.id IS NOT NULL 
-                AND a.advocate_id = $advocateId
-                AND $where_condition
-            ) n1 
-            GROUP BY 
-            next_dt, 
-            court_no_display, 
-            courtno 
-            ORDER BY 
-            next_dt, 
-            court_no_display, 
-            courtno;";
-        $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
-        $query = $this->sci_cmis_final->query($sql,$condition);
-        // echo $this->sci_cmis_final->getLastQuery(); exit();
-        return $query->getResultArray();
-
-    }
-
-    function getFutureListedMatters($advocateId,$listingDate,$court=null){
-        $listingDate=implode(',',$listingDate);
-        $where_condition=(!empty($court))?'courtno IN ('.$court.')':'1=1';
-        // pr($where_condition);
-//         $sql="select distinct main_case_diary_no as diary_no, group_concat(concat(case_no,' (',CAST(main_connected AS CHAR CHARACTER SET utf8) ), ')') as case_no,
-// cause_title,n1.courtno as court_no,n1.brd_slno as item_no, count(1) as case_count,n1.next_dt,n1.roster_id, n1.main_connected,n1.reg_no_display as main_case_reg_no, group_concat(n1.diary_no) as consent_diaries,
-// (case when courtno>=60 then courtno-60 when courtno>=30 then courtno-30 else courtno end) as court_no_display
-// from(
-// select h.*,mb.board_type_mb,r.courtno 
-// from 
-// (select 
-// h.diary_no, m.conn_key,CASE
-//                   WHEN ( m.diary_no = m.conn_key
-//                           OR m.conn_key = ''
-//                           OR m.conn_key IS NULL
-//                           OR m.conn_key = '0' ) THEN m.diary_no
-//                   ELSE m.conn_key
-//                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected,  h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display  ,h.board_type
-// ,m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
-//                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
-//                 Substring(m.diary_no, -4))) AS
-//                 case_no,
-//                 Concat(m.pet_name, ' Vs. ', m.res_name)
-//                 AS cause_title from main m 
-// inner join heardt h on m.diary_no = h.diary_no 
-// where 
-// (h.next_dt >=curdate() and h.next_dt in ($listingDate)) and h.main_supp_flag in (1,2) 
-// union 
-// select 
-//  h.diary_no, m.conn_key,CASE
-//                   WHEN ( m.diary_no = m.conn_key
-//                           OR m.conn_key = ''
-//                           OR m.conn_key IS NULL
-//                           OR m.conn_key = '0' ) THEN m.diary_no
-//                   ELSE m.conn_key
-//                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected, 
-// h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display ,h.board_type
-// , m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
-//                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
-//                 Substring(m.diary_no, -4))) AS
-//                 case_no,
-//                 Concat(m.pet_name, ' Vs. ', m.res_name)
-//                 AS cause_title from main m 
-// inner join last_heardt h on m.diary_no = h.diary_no 
-// where (h.next_dt >=curdate() and h.next_dt in ($listingDate))
-// and h.main_supp_flag in (1,2) 
-// and (h.bench_flag = '' or h.bench_flag is null) 
-// ) h
-// left join cl_printed p on p.next_dt = h.next_dt AND p.m_f = h.mainhead AND p.part = h.clno AND p.roster_id = h.roster_id AND p.display = 'Y'
-//  inner join roster r on h.roster_id=r.id and r.display='Y' 
-//  inner join roster_bench rb on r.bench_id=rb.id 
-//  inner join master_bench mb on rb.bench_id=mb.id inner join advocate a on h.diary_no=a.diary_no and a.display='Y'
-// where p.id is not null and a.advocate_id=? and $where_condition
-// group by diary_no, roster_id 
-// )n1
-// group by main_case_diary_no
-//                 ";
-        $sql = "SELECT 
-  DISTINCT main_case_diary_no AS diary_no, 
-  STRING_AGG(
-    CONCAT(
-      case_no, 
-      ' (', 
-      main_connected, 
-      ')'
-    ),
-    ', '
-  ) AS case_no, 
-          cause_title, 
-          n1.courtno AS court_no, 
-          n1.brd_slno AS item_no, 
-          COUNT(1) AS case_count, 
-          n1.next_dt, 
-          n1.roster_id, 
-          n1.main_connected, 
-          n1.reg_no_display AS main_case_reg_no, 
-          STRING_AGG(n1.diary_no, ', ') AS consent_diaries, 
-          (
-            CASE 
-              WHEN courtno >= 60 THEN courtno - 60 
-              WHEN courtno >= 30 THEN courtno - 30 
-              ELSE courtno 
-            END
-          ) AS court_no_display 
+          next_dt, 
+          CASE WHEN courtno >= 60 THEN courtno - 60 WHEN courtno >= 30 THEN courtno - 30 ELSE courtno END AS court_no_display, 
+          COUNT(*) AS total_cases, 
+          courtno 
         FROM 
           (
             SELECT 
-              h.*, 
-              mb.board_type_mb, 
+              h.next_dt, 
               r.courtno 
             FROM 
               (
                 SELECT 
                   h.diary_no, 
                   m.conn_key, 
-                  CASE 
-                    WHEN (
-                      m.diary_no = m.conn_key 
-                      OR m.conn_key = '' 
-                      OR m.conn_key IS NULL 
-                      OR m.conn_key = '0'
-                    ) 
-                    THEN m.diary_no 
-                    ELSE m.conn_key 
-                  END AS main_case_diary_no, 
-                  CASE 
-                    WHEN (
-                      m.diary_no = m.conn_key 
-                      OR m.conn_key = '' 
-                      OR m.conn_key IS NULL 
-                      OR m.conn_key = '0'
-                    ) 
-                    THEN 'M' 
-                    ELSE 'C' 
-                  END AS main_connected, 
+                  CASE WHEN cast(m.diary_no as BIGINT) = cast(m.conn_key as BIGINT) 
+                  OR m.conn_key = '' 
+                  OR m.conn_key IS NULL 
+                  OR m.conn_key = '0' THEN CAST(m.diary_no as BIGINT) ELSE CAST(m.conn_key AS bigint) END AS main_case_diary_no, 
+                  CASE WHEN cast(m.diary_no as BIGINT) = cast(m.conn_key as BIGINT) 
+                  OR m.conn_key = '' 
+                  OR m.conn_key IS NULL 
+                  OR m.conn_key = '0' THEN 'M' ELSE 'C' END AS main_connected, 
                   h.next_dt, 
                   h.mainhead, 
                   h.brd_slno, 
@@ -588,51 +489,44 @@ class ConsentVCModel extends Model
                   h.judges, 
                   h.main_supp_flag, 
                   m.reg_no_display, 
-                  h.board_type, 
+                  CAST(h.board_type AS text) AS board_type, 
                   m.active_casetype_id, 
                   CONCAT(
                     COALESCE(m.reg_no_display, ''), 
                     ' @ ', 
                     CONCAT(
-                      LEFT(m.diary_no, LENGTH(m.diary_no) - 4), 
+                      LEFT(
+                        m.diary_no :: text, 
+                        LENGTH(m.diary_no :: text) -4
+                      ), 
                       '/', 
-                      SUBSTRING(m.diary_no, -4)
+                      SUBSTRING(
+                        m.diary_no :: text 
+                        FROM 
+                          LENGTH(m.diary_no :: text) -3 FOR 4
+                      )
                     )
                   ) AS case_no, 
                   CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
                 FROM 
-                  main m 
-                  INNER JOIN heardt h ON m.diary_no = h.diary_no 
+                  public.main m 
+                  INNER JOIN public.heardt h ON m.diary_no = h.diary_no 
                 WHERE 
-                  (
-                    h.next_dt >= CURRENT_DATE 
-                    AND h.next_dt = DATE '".$listingDate."'
-                  ) 
+                  h.next_dt >= CURRENT_DATE 
+                  and h.next_dt IN (DATE '2024-09-05') 
                   AND h.main_supp_flag IN (1, 2) 
                 UNION 
                 SELECT 
-                  h.diary_no::TEXT, 
+                  cast(h.diary_no as BIGINT), 
                   m.conn_key, 
-                  CASE 
-                    WHEN (
-                      m.diary_no = m.conn_key 
-                      OR m.conn_key = '' 
-                      OR m.conn_key IS NULL 
-                      OR m.conn_key = '0'
-                    ) 
-                    THEN m.diary_no 
-                    ELSE m.conn_key 
-                  END AS main_case_diary_no, 
-                  CASE 
-                    WHEN (
-                      m.diary_no = m.conn_key 
-                      OR m.conn_key = '' 
-                      OR m.conn_key IS NULL 
-                      OR m.conn_key = '0'
-                    ) 
-                    THEN 'M' 
-                    ELSE 'C' 
-                  END AS main_connected, 
+                  CASE WHEN cast(m.diary_no as BIGINT) = CAST(m.conn_key AS bigint) 
+                  OR m.conn_key = '' 
+                  OR m.conn_key IS NULL 
+                  OR m.conn_key = '0' THEN cast(m.diary_no as BIGINT) ELSE CAST(m.conn_key AS bigint) END AS main_case_diary_no, 
+                  CASE WHEN cast(m.diary_no as BIGINT) = CAST(m.conn_key AS bigint) 
+                  OR m.conn_key = '' 
+                  OR m.conn_key IS NULL 
+                  OR m.conn_key = '0' THEN 'M' ELSE 'C' END AS main_connected, 
                   h.next_dt, 
                   h.mainhead, 
                   h.brd_slno, 
@@ -641,33 +535,38 @@ class ConsentVCModel extends Model
                   h.judges, 
                   h.main_supp_flag, 
                   m.reg_no_display, 
-                  h.board_type::TEXT, 
+                  CAST(h.board_type AS text) AS board_type, 
                   m.active_casetype_id, 
                   CONCAT(
                     COALESCE(m.reg_no_display, ''), 
                     ' @ ', 
                     CONCAT(
-                      LEFT(m.diary_no, LENGTH(m.diary_no) - 4), 
+                      LEFT(
+                        m.diary_no :: text, 
+                        LENGTH(m.diary_no :: text) -4
+                      ), 
                       '/', 
-                      SUBSTRING(m.diary_no, -4)
+                      SUBSTRING(
+                        m.diary_no :: text 
+                        FROM 
+                          LENGTH(m.diary_no :: text) -3 FOR 4
+                      )
                     )
                   ) AS case_no, 
                   CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
                 FROM 
-                  main m 
-                  INNER JOIN last_heardt h ON cast(m.diary_no as BIGINT) = cast(h.diary_no as BIGINT) 
+                  public.main m 
+                  INNER JOIN public.last_heardt h ON cast(m.diary_no as BIGINT) = cast(h.diary_no as BIGINT) 
                 WHERE 
-                  (
-                    h.next_dt >= CURRENT_DATE 
-                    AND h.next_dt = DATE '".$listingDate."'
-                  ) 
+                  h.next_dt >= CURRENT_DATE 
+                  and h.next_dt IN (DATE '2024-09-05') 
                   AND h.main_supp_flag IN (1, 2) 
                   AND (
                     h.bench_flag = '' 
                     OR h.bench_flag IS NULL
                   )
               ) h 
-              LEFT JOIN cl_printed p ON p.next_dt = h.next_dt 
+              LEFT JOIN public.cl_printed p ON p.next_dt = h.next_dt 
               AND p.m_f = h.mainhead 
               AND p.part = h.clno 
               AND p.roster_id = h.roster_id 
@@ -676,46 +575,468 @@ class ConsentVCModel extends Model
               AND r.display = 'Y' 
               INNER JOIN master.roster_bench rb ON r.bench_id = rb.id 
               INNER JOIN master.master_bench mb ON rb.bench_id = mb.id 
-              INNER JOIN advocate a ON cast(h.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
+              INNER JOIN public.advocate a ON cast(h.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
               AND a.display = 'Y' 
             WHERE 
               p.id IS NOT NULL 
-              AND a.advocate_id =$advocateId
-              AND $where_condition 
-            GROUP BY 
-              h.diary_no, 
-              h.conn_key,
-              h.main_case_diary_no,
-              h.main_connected,
-              h.mainhead,
-              h.brd_slno,
-              h.clno,
-              h.roster_id,
-              h.judges,
-              h.main_supp_flag,
-              h.reg_no_display,
-              h.board_type,
-              h.active_casetype_id,
-              h.case_no,
-              h.cause_title,
-              h.next_dt,
-              mb.board_type_mb, 
-              r.courtno, 
-              p.roster_id
+              AND a.advocate_id = $advocateId 
+              AND 1 = 1
           ) n1 
         GROUP BY 
-          n1.main_case_diary_no, 
-          n1.cause_title, 
-          n1.courtno, 
-          n1.brd_slno, 
-          n1.next_dt, 
-          n1.roster_id, 
-          n1.main_connected, 
-          n1.reg_no_display";
+          next_dt, 
+          court_no_display, 
+          courtno 
+        ORDER BY 
+          next_dt, 
+          court_no_display, 
+          courtno
+        ";
         $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
         $query = $this->sci_cmis_final->query($sql,$condition);
         // echo $this->sci_cmis_final->getLastQuery(); exit();
         return $query->getResultArray();
+
     }
 
+  function getFutureListedMatters($advocateId,$listingDate,$court=null){
+    $listingDate=implode(',',$listingDate);
+    $where_condition=(!empty($court))?'courtno IN ('.$court.')':'1=1';
+    // pr($where_condition);
+    //         $sql="select distinct main_case_diary_no as diary_no, group_concat(concat(case_no,' (',CAST(main_connected AS CHAR CHARACTER SET utf8) ), ')') as case_no,
+    // cause_title,n1.courtno as court_no,n1.brd_slno as item_no, count(1) as case_count,n1.next_dt,n1.roster_id, n1.main_connected,n1.reg_no_display as main_case_reg_no, group_concat(n1.diary_no) as consent_diaries,
+    // (case when courtno>=60 then courtno-60 when courtno>=30 then courtno-30 else courtno end) as court_no_display
+    // from(
+    // select h.*,mb.board_type_mb,r.courtno 
+    // from 
+    // (select 
+    // h.diary_no, m.conn_key,CASE
+    //                   WHEN ( m.diary_no = m.conn_key
+    //                           OR m.conn_key = ''
+    //                           OR m.conn_key IS NULL
+    //                           OR m.conn_key = '0' ) THEN m.diary_no
+    //                   ELSE m.conn_key
+    //                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected,  h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display  ,h.board_type
+    // ,m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
+    //                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
+    //                 Substring(m.diary_no, -4))) AS
+    //                 case_no,
+    //                 Concat(m.pet_name, ' Vs. ', m.res_name)
+    //                 AS cause_title from main m 
+    // inner join heardt h on m.diary_no = h.diary_no 
+    // where 
+    // (h.next_dt >=curdate() and h.next_dt in ($listingDate)) and h.main_supp_flag in (1,2) 
+    // union 
+    // select 
+    //  h.diary_no, m.conn_key,CASE
+    //                   WHEN ( m.diary_no = m.conn_key
+    //                           OR m.conn_key = ''
+    //                           OR m.conn_key IS NULL
+    //                           OR m.conn_key = '0' ) THEN m.diary_no
+    //                   ELSE m.conn_key
+    //                 END as main_case_diary_no,case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0') then 'M' else 'C' end as main_connected, 
+    // h.next_dt, h.mainhead, h.brd_slno, h.clno, h.roster_id, h.judges, h.main_supp_flag, m.reg_no_display ,h.board_type
+    // , m.active_casetype_id,Concat(Ifnull(m.reg_no_display, ''), ' @ ', Concat(
+    //                 Left(m.diary_no, Length(m.diary_no) - 4), '/',
+    //                 Substring(m.diary_no, -4))) AS
+    //                 case_no,
+    //                 Concat(m.pet_name, ' Vs. ', m.res_name)
+    //                 AS cause_title from main m 
+    // inner join last_heardt h on m.diary_no = h.diary_no 
+    // where (h.next_dt >=curdate() and h.next_dt in ($listingDate))
+    // and h.main_supp_flag in (1,2) 
+    // and (h.bench_flag = '' or h.bench_flag is null) 
+    // ) h
+    // left join cl_printed p on p.next_dt = h.next_dt AND p.m_f = h.mainhead AND p.part = h.clno AND p.roster_id = h.roster_id AND p.display = 'Y'
+    //  inner join roster r on h.roster_id=r.id and r.display='Y' 
+    //  inner join roster_bench rb on r.bench_id=rb.id 
+    //  inner join master_bench mb on rb.bench_id=mb.id inner join advocate a on h.diary_no=a.diary_no and a.display='Y'
+    // where p.id is not null and a.advocate_id=? and $where_condition
+    // group by diary_no, roster_id 
+    // )n1
+    // group by main_case_diary_no
+    //                 ";
+    //       $sql = "SELECT 
+    // DISTINCT main_case_diary_no AS diary_no, 
+    // STRING_AGG(
+    //   CONCAT(
+    //     case_no, 
+    //     ' (', 
+    //     main_connected, 
+    //     ')'
+    //   ),
+    //   ', '
+    // ) AS case_no, 
+    //         cause_title, 
+    //         n1.courtno AS court_no, 
+    //         n1.brd_slno AS item_no, 
+    //         COUNT(1) AS case_count, 
+    //         n1.next_dt, 
+    //         n1.roster_id, 
+    //         n1.main_connected, 
+    //         n1.reg_no_display AS main_case_reg_no, 
+    //         STRING_AGG(n1.diary_no, ', ') AS consent_diaries, 
+    //         (
+    //           CASE 
+    //             WHEN courtno >= 60 THEN courtno - 60 
+    //             WHEN courtno >= 30 THEN courtno - 30 
+    //             ELSE courtno 
+    //           END
+    //         ) AS court_no_display 
+    //       FROM 
+    //         (
+    //           SELECT 
+    //             h.*, 
+    //             mb.board_type_mb, 
+    //             r.courtno 
+    //           FROM 
+    //             (
+    //               SELECT 
+    //                 h.diary_no, 
+    //                 m.conn_key, 
+    //                 CASE 
+    //                   WHEN (
+    //                     m.diary_no = m.conn_key 
+    //                     OR m.conn_key = '' 
+    //                     OR m.conn_key IS NULL 
+    //                     OR m.conn_key = '0'
+    //                   ) 
+    //                   THEN m.diary_no 
+    //                   ELSE m.conn_key 
+    //                 END AS main_case_diary_no, 
+    //                 CASE 
+    //                   WHEN (
+    //                     m.diary_no = m.conn_key 
+    //                     OR m.conn_key = '' 
+    //                     OR m.conn_key IS NULL 
+    //                     OR m.conn_key = '0'
+    //                   ) 
+    //                   THEN 'M' 
+    //                   ELSE 'C' 
+    //                 END AS main_connected, 
+    //                 h.next_dt, 
+    //                 h.mainhead, 
+    //                 h.brd_slno, 
+    //                 h.clno, 
+    //                 h.roster_id, 
+    //                 h.judges, 
+    //                 h.main_supp_flag, 
+    //                 m.reg_no_display, 
+    //                 h.board_type, 
+    //                 m.active_casetype_id, 
+    //                 CONCAT(
+    //                   COALESCE(m.reg_no_display, ''), 
+    //                   ' @ ', 
+    //                   CONCAT(
+    //                     LEFT(m.diary_no, LENGTH(m.diary_no) - 4), 
+    //                     '/', 
+    //                     SUBSTRING(m.diary_no, -4)
+    //                   )
+    //                 ) AS case_no, 
+    //                 CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
+    //               FROM 
+    //                 main m 
+    //                 INNER JOIN heardt h ON m.diary_no = h.diary_no 
+    //               WHERE 
+    //                 (
+    //                   h.next_dt >= CURRENT_DATE 
+    //                   AND h.next_dt = DATE '".$listingDate."'
+    //                 ) 
+    //                 AND h.main_supp_flag IN (1, 2) 
+    //               UNION 
+    //               SELECT 
+    //                 h.diary_no::TEXT, 
+    //                 m.conn_key, 
+    //                 CASE 
+    //                   WHEN (
+    //                     m.diary_no = m.conn_key 
+    //                     OR m.conn_key = '' 
+    //                     OR m.conn_key IS NULL 
+    //                     OR m.conn_key = '0'
+    //                   ) 
+    //                   THEN m.diary_no 
+    //                   ELSE m.conn_key 
+    //                 END AS main_case_diary_no, 
+    //                 CASE 
+    //                   WHEN (
+    //                     m.diary_no = m.conn_key 
+    //                     OR m.conn_key = '' 
+    //                     OR m.conn_key IS NULL 
+    //                     OR m.conn_key = '0'
+    //                   ) 
+    //                   THEN 'M' 
+    //                   ELSE 'C' 
+    //                 END AS main_connected, 
+    //                 h.next_dt, 
+    //                 h.mainhead, 
+    //                 h.brd_slno, 
+    //                 h.clno, 
+    //                 h.roster_id, 
+    //                 h.judges, 
+    //                 h.main_supp_flag, 
+    //                 m.reg_no_display, 
+    //                 h.board_type::TEXT, 
+    //                 m.active_casetype_id, 
+    //                 CONCAT(
+    //                   COALESCE(m.reg_no_display, ''), 
+    //                   ' @ ', 
+    //                   CONCAT(
+    //                     LEFT(m.diary_no, LENGTH(m.diary_no) - 4), 
+    //                     '/', 
+    //                     SUBSTRING(m.diary_no, -4)
+    //                   )
+    //                 ) AS case_no, 
+    //                 CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
+    //               FROM 
+    //                 main m 
+    //                 INNER JOIN last_heardt h ON cast(m.diary_no as BIGINT) = cast(h.diary_no as BIGINT) 
+    //               WHERE 
+    //                 (
+    //                   h.next_dt >= CURRENT_DATE 
+    //                   AND h.next_dt = DATE '".$listingDate."'
+    //                 ) 
+    //                 AND h.main_supp_flag IN (1, 2) 
+    //                 AND (
+    //                   h.bench_flag = '' 
+    //                   OR h.bench_flag IS NULL
+    //                 )
+    //             ) h 
+    //             LEFT JOIN cl_printed p ON p.next_dt = h.next_dt 
+    //             AND p.m_f = h.mainhead 
+    //             AND p.part = h.clno 
+    //             AND p.roster_id = h.roster_id 
+    //             AND p.display = 'Y' 
+    //             INNER JOIN master.roster r ON h.roster_id = r.id 
+    //             AND r.display = 'Y' 
+    //             INNER JOIN master.roster_bench rb ON r.bench_id = rb.id 
+    //             INNER JOIN master.master_bench mb ON rb.bench_id = mb.id 
+    //             INNER JOIN advocate a ON cast(h.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
+    //             AND a.display = 'Y' 
+    //           WHERE 
+    //             p.id IS NOT NULL 
+    //             AND a.advocate_id =$advocateId
+    //             AND $where_condition 
+    //           GROUP BY 
+    //             h.diary_no, 
+    //             h.conn_key,
+    //             h.main_case_diary_no,
+    //             h.main_connected,
+    //             h.mainhead,
+    //             h.brd_slno,
+    //             h.clno,
+    //             h.roster_id,
+    //             h.judges,
+    //             h.main_supp_flag,
+    //             h.reg_no_display,
+    //             h.board_type,
+    //             h.active_casetype_id,
+    //             h.case_no,
+    //             h.cause_title,
+    //             h.next_dt,
+    //             mb.board_type_mb, 
+    //             r.courtno, 
+    //             p.roster_id
+    //         ) n1 
+    //       GROUP BY 
+    //         n1.main_case_diary_no, 
+    //         n1.cause_title, 
+    //         n1.courtno, 
+    //         n1.brd_slno, 
+    //         n1.next_dt, 
+    //         n1.roster_id, 
+    //         n1.main_connected, 
+    //         n1.reg_no_display";
+    $sql = "SELECT 
+      DISTINCT main_case_diary_no AS diary_no, 
+      STRING_AGG(
+        CONCAT(
+          cast(case_no AS TEXT), 
+          ' (', 
+          main_connected, 
+          ')'
+        ), 
+        ', '
+      ) AS case_no, 
+      cause_title, 
+      n1.courtno AS court_no, 
+      n1.brd_slno AS item_no, 
+      COUNT(1) AS case_count, 
+      n1.next_dt, 
+      n1.roster_id, 
+      n1.main_connected, 
+      n1.reg_no_display AS main_case_reg_no, 
+      STRING_AGG(
+        cast(n1.diary_no AS TEXT), 
+        ', '
+      ) AS consent_diaries, 
+      (
+        CASE WHEN courtno >= 60 THEN courtno - 60 WHEN courtno >= 30 THEN courtno - 30 ELSE courtno END
+      ) AS court_no_display 
+    FROM 
+      (
+        SELECT 
+          h.*, 
+          mb.board_type_mb, 
+          r.courtno 
+        FROM 
+          (
+            SELECT 
+              h.diary_no, 
+              m.conn_key, 
+              CASE WHEN (
+                cast(m.diary_no AS BIGINT) = cast(m.conn_key AS BIGINT) 
+                OR m.conn_key = '' 
+                OR m.conn_key IS NULL 
+                OR m.conn_key = '0'
+              ) THEN cast(m.diary_no AS BIGINT) ELSE cast(m.conn_key AS BIGINT) END AS main_case_diary_no, 
+              CASE WHEN (
+                cast(m.diary_no AS BIGINT) = cast(m.conn_key AS BIGINT) 
+                OR m.conn_key = '' 
+                OR m.conn_key IS NULL 
+                OR m.conn_key = '0'
+              ) THEN 'M' ELSE 'C' END AS main_connected, 
+              h.next_dt, 
+              h.mainhead, 
+              h.brd_slno, 
+              h.clno, 
+              h.roster_id, 
+              h.judges, 
+              h.main_supp_flag, 
+              m.reg_no_display, 
+              h.board_type, 
+              m.active_casetype_id, 
+              CONCAT(
+                COALESCE(m.reg_no_display, ''), 
+                ' @ ', 
+                CONCAT(
+                  LEFT(
+                    CAST(m.diary_no AS TEXT), 
+                    LENGTH(
+                      CAST(m.diary_no AS TEXT)
+                    ) -4
+                  ), 
+                  '/', 
+                  SUBSTRING(
+                    CAST(m.diary_no AS TEXT), 
+                    -4
+                  )
+                )
+              ) AS case_no, 
+              CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
+            FROM 
+              main m 
+              INNER JOIN heardt h ON m.diary_no = h.diary_no 
+            WHERE 
+              (
+                h.next_dt >= CURRENT_DATE 
+                AND h.next_dt = DATE '".$listingDate."'
+              ) 
+              AND h.main_supp_flag IN (1, 2) 
+            UNION 
+            SELECT 
+              cast(h.diary_no AS BIGINT), 
+              m.conn_key, 
+              CASE WHEN (
+                cast(m.diary_no AS BIGINT) = cast(m.conn_key AS BIGINT) 
+                OR m.conn_key = '' 
+                OR m.conn_key IS NULL 
+                OR m.conn_key = '0'
+              ) THEN cast(m.diary_no AS BIGINT) ELSE cast(m.conn_key AS BIGINT) END AS main_case_diary_no, 
+              CASE WHEN (
+                cast(m.diary_no AS BIGINT) = cast(m.conn_key AS BIGINT) 
+                OR m.conn_key = '' 
+                OR m.conn_key IS NULL 
+                OR m.conn_key = '0'
+              ) THEN 'M' ELSE 'C' END AS main_connected, 
+              h.next_dt, 
+              h.mainhead, 
+              h.brd_slno, 
+              h.clno, 
+              h.roster_id, 
+              h.judges, 
+              h.main_supp_flag, 
+              m.reg_no_display, 
+              h.board_type :: TEXT, 
+              m.active_casetype_id, 
+              CONCAT(
+                COALESCE(m.reg_no_display, ''), 
+                ' @ ', 
+                CONCAT(
+                  LEFT(
+                    CAST(m.diary_no AS TEXT), 
+                    LENGTH(
+                      CAST(m.diary_no AS TEXT)
+                    ) -4
+                  ), 
+                  '/', 
+                  SUBSTRING(
+                    CAST(m.diary_no AS TEXT), 
+                    -4
+                  )
+                )
+              ) AS case_no, 
+              CONCAT(m.pet_name, ' Vs. ', m.res_name) AS cause_title 
+            FROM 
+              main m 
+              INNER JOIN last_heardt h ON cast(m.diary_no AS BIGINT) = cast(h.diary_no AS BIGINT) 
+            WHERE 
+              (
+                h.next_dt >= CURRENT_DATE 
+                AND h.next_dt = DATE '".$listingDate."'
+              ) 
+              AND h.main_supp_flag IN (1, 2) 
+              AND (
+                h.bench_flag = '' 
+                OR h.bench_flag IS NULL
+              )
+          ) h 
+          LEFT JOIN cl_printed p ON p.next_dt = h.next_dt 
+          AND p.m_f = h.mainhead 
+          AND p.part = h.clno 
+          AND p.roster_id = h.roster_id 
+          AND p.display = 'Y' 
+          INNER JOIN master.roster r ON h.roster_id = r.id 
+          AND r.display = 'Y' 
+          INNER JOIN master.roster_bench rb ON r.bench_id = rb.id 
+          INNER JOIN master.master_bench mb ON rb.bench_id = mb.id 
+          INNER JOIN advocate a ON cast(h.diary_no AS BIGINT) = cast(a.diary_no AS BIGINT) 
+          AND a.display = 'Y' 
+        WHERE 
+          p.id IS NOT NULL 
+          AND a.advocate_id = $advocateId
+          AND courtno IN (1) 
+        GROUP BY 
+          h.diary_no, 
+          h.conn_key, 
+          h.main_case_diary_no, 
+          h.main_connected, 
+          h.mainhead, 
+          h.brd_slno, 
+          h.clno, 
+          h.roster_id, 
+          h.judges, 
+          h.main_supp_flag, 
+          h.reg_no_display, 
+          h.board_type, 
+          h.active_casetype_id, 
+          h.case_no, 
+          h.cause_title, 
+          h.next_dt, 
+          mb.board_type_mb, 
+          r.courtno, 
+          p.roster_id
+      ) n1 
+    GROUP BY 
+      n1.main_case_diary_no, 
+      n1.cause_title, 
+      n1.courtno, 
+      n1.brd_slno, 
+      n1.next_dt, 
+      n1.roster_id, 
+      n1.main_connected, 
+      n1.reg_no_display";
+    $condition=(!empty($court))?array($advocateId, $court,($court+30),($court+60)):array($advocateId);
+    $query = $this->sci_cmis_final->query($sql,$condition);
+    // echo $this->sci_cmis_final->getLastQuery(); exit();
+    return $query->getResultArray();
+  }
 }
