@@ -95,7 +95,7 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-right">
                                 <div class="mb-3">
-                                    <label class="form-label gray-txt">Forget Password ? <a href="<?php echo base_url('Register/ForgetPassword'); ?>" class="blue-txt"> Click Here</a></label>
+                                    <label class="form-label gray-txt">Forgot Password ? <a href="<?php echo base_url('Register/ForgetPassword'); ?>" class="blue-txt"> Click Here</a></label>
                                 </div>
                             </div>
                         </div>

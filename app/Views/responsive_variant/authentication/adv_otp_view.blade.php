@@ -147,7 +147,7 @@
                         if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                             $title = 'Advocate On Record';
                         } elseif ($segment->getSegment(2) == 'ForgetPassword') {
-                            $title = 'Forget Password';
+                            $title = 'Forgot Password';
                         } else {
                             $title = 'Party In Person';
                         }
