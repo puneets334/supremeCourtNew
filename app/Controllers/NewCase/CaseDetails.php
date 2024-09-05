@@ -323,7 +323,7 @@ class CaseDetails extends BaseController
             $cause_title .= (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper(escape_data($_POST["cause_res"])) : '';
 
             $subj_cat_main = (isset($_POST['subj_cat_main']) && !empty($_POST['subj_cat_main'])) ? explode('##', url_decryption(escape_data($this->request->getPost("subj_cat_main")))) : '';
-            $subject_cat = $subj_cat_main[0];
+            $subject_cat = is_array($subj_cat_main) ? $subj_cat_main[0] : '';
 
             $subj_sub_cat_1 = (isset($_POST['subj_sub_cat_1']) && !empty($_POST['subj_sub_cat_1'])) ? explode('##', url_decryption(escape_data($this->request->getPost("subj_sub_cat_1")))) : '';
             $subject_cat = isset($subj_sub_cat_1[0]) && !empty($subj_sub_cat_1[0]) ? $subj_sub_cat_1[0] : $subject_cat;

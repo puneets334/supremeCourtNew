@@ -23,6 +23,9 @@
     .datepicker-dropdown{
         background-color: #fff;
     }
+    .error{
+        color: red;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -68,7 +71,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Cause Title Petitioner <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" oninput="validateInput(event)" type="text" style="text-transform: capitalize" required><?php echo_data(@$cause_title[0]); ?></textarea>
+                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" oninput="validateInput(event)" type="text" style="text-transform: uppercase" required><?php echo_data(@$cause_title[0]); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>)." title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -78,7 +81,7 @@
                         <div class="mb-3">
 
                             <label for="" class="form-label">Cause Title Respondent <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" oninput="validateInput(event)" type="text" required><?php echo_data(@$cause_title[1]); ?></textarea>
+                            <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" style="text-transform: uppercase" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" oninput="validateInput(event)" type="text" required><?php echo_data(@$cause_title[1]); ?></textarea>
 
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
@@ -137,7 +140,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Main Category <span style="color: red" class="astriks">*</span></label>
-                            <select tabindex='6' name="subj_cat_main" id="subj_cat_main" class="form-control cus-form-ctrl filter_select_dropdown">
+                            <select tabindex='6' name="subj_cat_main" id="subj_cat_main" class="form-control cus-form-ctrl filter_select_dropdown" required>
                                 <option value="" title="Select">Select Main Category </option>
                                 <?php
                                 if (count($main_subject_cat)) {
@@ -199,14 +202,14 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Number of Petitioner (s) <span style="color: red" class="astriks">*</span></label>
-                            <input min="0" tabindex="10" id="no_of_petitioners" name="no_of_petitioners" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_petitioners; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Petitioner" type="number">
+                            <input min="0" tabindex="10" max="9999" maxlength="4" pattern="\d*" id="no_of_petitioners" name="no_of_petitioners" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_petitioners; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Petitioner" type="text" required>
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label for="" class="form-label">Number of Repondent (s) <span style="color: red" class="astriks">*</span></label>
-                            <input min="0" tabindex="11" id="no_of_respondents" name="no_of_respondents" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_respondents; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Respondent" type="number" required>
+                            <label for="" class="form-label">Number of Respondent (s) <span style="color: red" class="astriks">*</span></label>
+                            <input min="0" tabindex="11" max="9999" maxlength="4" pattern="\d*" id="no_of_respondents" name="no_of_respondents" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_respondents; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Respondent" type="text" required>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -428,7 +431,7 @@
                         </div>
                         <div class="save-btns text-center">
                             <?php if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) { ?>
-                                <button type="submit" tabindex='15' class="quick-btn gray-btn" value="">UPDATE
+                                <button type="submit" tabindex='15' class="quick-btn gray-btn btn-success" value="">UPDATE
                                 </button>
                                 <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
                             <?php } else { ?>
@@ -1556,6 +1559,8 @@
             });
     }
     </script>
+
+<?php } ?>
 <script>
         function validateInput(event) {
             const input = event.target.value;
@@ -1565,4 +1570,3 @@
             }
         }
     </script>
-<?php } ?>

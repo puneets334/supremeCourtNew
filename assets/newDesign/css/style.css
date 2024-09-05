@@ -31,10 +31,10 @@ body{font-family: 'noto_sansregular';font-weight:500;padding:0;margin:0;font-siz
 
 a:hover, a{text-decoration:none}
 .txt-bold{font-weight: 600;}
-.blue-txt{color:#110458!important;}
+.blue-txt{color:#5e89e0!important;}
 .gray-txt{color: #747474 !important;}
 .yellow-txt{color:#FF572E;}
-a.blue-txt:hover, a.blue-txt:focus{color: #0D48BE !important;}
+a.blue-txt:hover, a.blue-txt:focus{color: #5e89e0 !important;}
 button.btn:hover, button.btn:hover{background: #110474;}
 .quick-btn{display:inline-block;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s;border-radius:100px;position:relative;overflow:hidden;background-color: #110458;color: #FFF;border: none;}
 .quick-btn:before{left:-20px;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%)}
