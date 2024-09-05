@@ -972,12 +972,13 @@
         }
     });
 
-    $('#party_dob').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
+    $(function() {
+        $("#datepicker").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-40:+0", // Allow selection from 84 years ago to the current year
+            defaultDate: "-40y" // Set the default date to 84 years ago
+        });
     });
 
     $(document).on('change','#party_dob', function(){

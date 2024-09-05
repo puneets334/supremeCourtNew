@@ -15,8 +15,10 @@
     .datepicker-dropdown {
         margin-top: 125px !important;
     }
+
     span.select2 {
         width : 100% !important;
+
     }
 </style>
 <div class="center-content-inner comn-innercontent">
@@ -207,8 +209,9 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="radio-btns-inp mb-3">
                             <div class="form-check form-check-inline">
-                                {{-- <input class="form-check-input cus-form-check" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> --}}
+                                
                                 <label class="form-label" for="inlineRadio1">Earlier Court Details <span class="pink-text"> (Order Challenged)</span></label>
+
                                 <input tabindex="8" class="cus-form-check" type="checkbox" name="Earlier_not_court_type" id="Earlier_not_court_type" value="4" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 4 ? 'checked' : ''; ?>>No Earlier Court</label>
                             </div>
                         </div>
@@ -799,13 +802,11 @@
         
         changeMonth: true,
         changeYear: true,
-
         dateFormat: "dd/mm/YY",
         // maxDate: new Date
     });
     $(function() {
         $("#datesignjail").datepicker({maxDate: 0});
-
     });
 </script>
 

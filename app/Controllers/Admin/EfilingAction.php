@@ -1,23 +1,36 @@
 <?php
 namespace App\Controllers\Admin;
 use App\Controllers\BaseController;
+use App\Libraries\webservices\Efiling_webservices;
+use App\Models\Admin\EfilingActionModel;
+use App\Models\Common\CommonModel;
+use App\Models\IA\ViewModel;
+use stdClass;
 
 class EfilingAction extends BaseController {
 
+    protected $Efiling_action_model;
+    protected $Common_model;
+    protected $efiling_webservices;
+    protected $View_model;
+    protected $request;
+    protected $validation;
+    protected $encrypt;
     public function __construct() {
         parent::__construct();
-        // $this->load->model('common/Common_model');
-        // $this->load->library('encrypt');
-        // $this->load->model('admin/Efiling_action_model');
-        // $this->load->library('webservices/efiling_webservices');
-        // $this->load->model('IA/View_model');
-
+        $this->Efiling_action_model = new EfilingActionModel();
+        $this->Common_model = new CommonModel();
+        $this->efiling_webservices = new Efiling_webservices();
+        $this->View_model = new ViewModel();
+        $this->request = \Config\Services::request();
+        $this->validation = \Config\Services::validation();
+        $this->encrypt = \Config\Services::encrypter();
     }
 
     public function index() {
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage,HOLD,DISPOSED);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -29,7 +42,7 @@ class EfilingAction extends BaseController {
         }
 
         if (empty($_SESSION['efiling_details']) || empty($_SESSION['estab_details'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -56,12 +69,12 @@ class EfilingAction extends BaseController {
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS,SCISMS_Efiling_Acceptance); //Commented till SMS facility not available in Admin Server.
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
 
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Approved successfully !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Approved successfully !</div>');
             log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
             redirect('adminDashboard');
             exit(0);
         } else {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Approval Failded. Please try again!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Approval Failded. Please try again!</div>');
             log_message('CUSTOM', "Approval Failded. Please try again!");
             if ($filing_type == E_FILING_TYPE_NEW_CASE) {
                 $redirectURL = 'newcase/view';
@@ -94,13 +107,13 @@ class EfilingAction extends BaseController {
         $result=$this->Efiling_action_model->transferCase($registration_id);
         if ($result) {
             log_message('CUSTOM', "E-filing number". efile_preview($_SESSION['efiling_details']['efiling_no']) . "successfully transferred to Section-X!");
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' successfully transferred to Section-X!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' successfully transferred to Section-X!</div>');
             redirect('adminDashboard');
             exit(0);
         } else {
             echo "error";
 
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Transfer failed. Please try again!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Transfer failed. Please try again!</div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -116,7 +129,7 @@ class EfilingAction extends BaseController {
             exit(0);
         }
         if (empty($_SESSION['efiling_details'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
         }
@@ -131,7 +144,7 @@ class EfilingAction extends BaseController {
         $_POST['remark'] = trim($_POST['remark']);
 
         if (empty($_POST['remark'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Orders on Mentioning Required.</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Orders on Mentioning Required.</div>');
             redirect($redirectURL);
             exit(0);
         }
@@ -139,19 +152,19 @@ class EfilingAction extends BaseController {
 
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
         }
 
         $regid = $this->session->userdata['efiling_details']['registration_id'];
 
-        $remark = script_remove($this->input->post('remark'));
+        $remark = script_remove($this->request->getPost('remark'));
         $remark_length = strip_tags($remark);
 
 
         if (strlen($remark_length) > DISAPPROVE_REMARK_LENGTH) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Orders length should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Orders length should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
             redirect($redirectURL);
             exit(0);
         }
@@ -166,7 +179,7 @@ class EfilingAction extends BaseController {
 
 
             if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
-                $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully !</div>');
+                $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully !</div>');
 
                 //$sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been approved.";
                 //$subject = "Approved : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
@@ -176,7 +189,7 @@ class EfilingAction extends BaseController {
                 $subject = "Initially accepted : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
 
             } else {
-                $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
+                $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
                 $sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been disapproved. Please cure the notified defects through eFiling portal. - Supreme Court of India";
                 $templateId=SCISMS_Efiling_Disapproved;
                 $subject = "Disapproved : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
@@ -197,7 +210,7 @@ class EfilingAction extends BaseController {
         }
 
         if (empty($_SESSION['efiling_details'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
         }
@@ -225,7 +238,7 @@ class EfilingAction extends BaseController {
 
             if (empty($_POST['remark'])) {
                 log_message('CUSTOM', "Reason for disapproval required.");
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Reason for disapproval required.</div>');
+                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Reason for disapproval required.</div>');
                 redirect($redirectURL);
                 exit(0);
             }
@@ -234,7 +247,7 @@ class EfilingAction extends BaseController {
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage,HOLD);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
             log_message('CUSTOM', "Invalid Action in the process of disapprove case");
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
         }
@@ -244,18 +257,18 @@ class EfilingAction extends BaseController {
 
         if ($filing_type == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway'] && $_SESSION['efiling_details']['efiling_type'] !='caveat') {
             // when payment gateway is enabled and fees is being filed then disapproval of it is not allowed.
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Action you have requested is not allowed.</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Action you have requested is not allowed.</div>');
             log_message('CUSTOM', "Action you have requested is not allowed.");
             redirect('admin');
             exit(0);
         }
 
-        $remark = script_remove($this->input->post('remark'));
+        $remark = script_remove($this->request->getPost('remark'));
         $remark_length = strip_tags($remark);
 
         if (strlen($remark_length) > DISAPPROVE_REMARK_LENGTH) {
             log_message('CUSTOM', "Remark should be max ".DISAPPROVE_REMARK_LENGTH."characters!");
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Remark should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Remark should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
             redirect($redirectURL);
             exit(0);
         }
@@ -275,7 +288,7 @@ class EfilingAction extends BaseController {
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS,SCISMS_Efiling_Disapproved);  //Commented on 05-08-2023
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
             log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ." disapproved successfully !");
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -287,7 +300,7 @@ class EfilingAction extends BaseController {
             exit(0);
         }
         if (empty($_SESSION['efiling_details'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
         }
@@ -313,28 +326,28 @@ class EfilingAction extends BaseController {
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE ||$_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_JAIL_PETITION ) {
 
             if (empty($_POST['remark'])) {
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Reason for disapproval required.</div>');
+                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Reason for disapproval required.</div>');
                 redirect($redirectURL);
                 exit(0);
             }
         }
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
         }
         $regid = $this->session->userdata['efiling_details']['registration_id'];
         if ($filing_type == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway'] && $_SESSION['efiling_details']['efiling_type'] !='caveat') {
             // when payment gateway is enabled and fees is being filed then disapproval of it is not allowed.
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Action you have requested is not allowed.</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Action you have requested is not allowed.</div>');
             redirect('admin');
             exit(0);
         }
-        $remark = script_remove($this->input->post('remark'));
+        $remark = script_remove($this->request->getPost('remark'));
         $remark_length = strip_tags($remark);
         if (strlen($remark_length) > DISAPPROVE_REMARK_LENGTH) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Remark should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Remark should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
             redirect($redirectURL);
             exit(0);
         }
@@ -348,7 +361,7 @@ class EfilingAction extends BaseController {
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS);
            // send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
             log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ."marked as error successfully !");
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' marked as error successfully !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' marked as error successfully !</div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -360,7 +373,7 @@ class EfilingAction extends BaseController {
             echo 'ERROR||||<div class="alert alert-danger text-center">Invalid access.</div>';
             exit(0);
         }
-        $id = $this->input->post('form_submit');
+        $id = $this->request->getPost('form_submit');
         $id = url_decryption($id);
         $InputArrray = explode('#', $id);   //0=>registration_id,1=>type,2=>stage
 
@@ -403,7 +416,7 @@ class EfilingAction extends BaseController {
         $result = $this->Efiling_action_model->transfer_to_section($registration_id, $stage_id);
 
         if ($result) {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-success text-center">Efiling number transfered to filing section successfully!</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Efiling number transfered to filing section successfully!</div>');
             echo 'SUCCESS||||' . url_encryption(Transfer_to_IB_Stage);
         } else {
 
@@ -420,7 +433,7 @@ class EfilingAction extends BaseController {
             exit(0);
         }
 
-        $diary = $this->input->get('diaryno');
+        $diary = $this->request->getGet('diaryno');
         $diary= url_decryption($diary);
         $diary=explode('#', $diary);
         $diaryno=$diary[0];
@@ -470,9 +483,9 @@ class EfilingAction extends BaseController {
             redirect('login');
             exit(0);
         }
-        $doc_id= !empty($this->input->post('doc_id')) ? $this->input->post('doc_id') : NULL;
-        $diary_no= !empty($this->input->post('diary_no')) ? $this->input->post('diary_no') : NULL;
-        $remarks=!empty($this->input->post('Remarks_data')) ? $this->input->post('Remarks_data') : NULL;
+        $doc_id= !empty($this->request->getPost('doc_id')) ? $this->request->getPost('doc_id') : NULL;
+        $diary_no= !empty($this->request->getPost('diary_no')) ? $this->request->getPost('diary_no') : NULL;
+        $remarks=!empty($this->request->getPost('Remarks_data')) ? $this->request->getPost('Remarks_data') : NULL;
         $efiling_data=$this->Common_model->getDocDetailsById($doc_id);
         $registration_id = !empty($efiling_data[0]->registration_id) ? (int)$efiling_data[0]->registration_id : NULL;
         if(isset($registration_id) && !empty($registration_id)){
@@ -500,8 +513,10 @@ class EfilingAction extends BaseController {
             'printing_fee'=>!empty($docFeeDetails[0]->printing_total) ? $docFeeDetails[0]->printing_total : 0,
         );
         $doc_details_data=json_encode($doc_details_data);
-                $key=$this->config->item( 'encryption_key' );
-                $encrypted_string = $this->encrypt->encode($doc_details_data, $key);
+                // $key=$this->config->item( 'encryption_key' );
+                // $encrypted_string = $this->encrypt->encode($doc_details_data, $key);
+            $key = config('Encryption')->key;
+            $encrypted_string = $this->encrypt->encrypt($doc_details_data);
 
         $docnum=$this->efiling_webservices->registerDoc($encrypted_string);
         echo json_encode($docnum);
@@ -519,9 +534,9 @@ class EfilingAction extends BaseController {
               redirect('login');
               exit(0);
           }
-          $doc_id= !empty($this->input->post('doc_id')) ? $this->input->post('doc_id') : NULL;
-          $diary_no= !empty($this->input->post('diary_no')) ? $this->input->post('diary_no') : NULL;
-          $attach_with_doc_id= !empty($this->input->post('attach_with_doc_id')) ? $this->input->post('attach_with_doc_id') : NULL;
+          $doc_id= !empty($this->request->getPost('doc_id')) ? $this->request->getPost('doc_id') : NULL;
+          $diary_no= !empty($this->request->getPost('diary_no')) ? $this->request->getPost('diary_no') : NULL;
+          $attach_with_doc_id= !empty($this->request->getPost('attach_with_doc_id')) ? $this->request->getPost('attach_with_doc_id') : NULL;
           $result=$this->Efiling_action_model->attach_doc($diary_no,$doc_id,$attach_with_doc_id);
           if($result){
               echo json_encode(array('status'=>'SUCCESS','message'=>'Doc attached successfully!'));
@@ -537,9 +552,9 @@ class EfilingAction extends BaseController {
               exit(0);
           }
           $registration_id = !empty($_SESSION['efiling_details']['registration_id']) ? (int)$_SESSION['efiling_details']['registration_id'] : NULL;
-          $doc_id= !empty($this->input->post('doc_id')) ? $this->input->post('doc_id') : NULL;
-          $doc_number= !empty($this->input->post('doc_number')) ? $this->input->post('doc_number') : NULL;
-          $remaining= !empty($this->input->post('remaining')) ? $this->input->post('remaining') : NULL;
+          $doc_id= !empty($this->request->getPost('doc_id')) ? $this->request->getPost('doc_id') : NULL;
+          $doc_number= !empty($this->request->getPost('doc_number')) ? $this->request->getPost('doc_number') : NULL;
+          $remaining= !empty($this->request->getPost('remaining')) ? $this->request->getPost('remaining') : NULL;
           $efiling_data=$this->Common_model->getDocDetailsById($doc_id);
           $filed_type = (!empty($efiling_data[0]->doc_type_id) && isset($efiling_data[0]->doc_type_id)) ? $efiling_data[0]->doc_type_id : NULL ;
           $stage_id = 0;
@@ -687,8 +702,10 @@ class EfilingAction extends BaseController {
 
         $assoc_arr = array('diary_id' => $diary_id, 'efiling_no' => $efiling_no,'pet_adv_id'=>$pet_adv_id,'documents' => $documents);
         $assoc_json = json_encode($assoc_arr);
-        $key = $this->config->item('encryption_key');
-        $encrypted_string = $this->encrypt->encode($assoc_json, $key);
+        // $key = $this->config->item('encryption_key');
+        // $encrypted_string = $this->encrypt->encode($assoc_json, $key);
+        $key = config('Encryption')->key;
+        $encrypted_string = $this->encrypt->encrypt($assoc_json);
         $this->efiling_webservices->setReturnedByAdvocate($encrypted_string);
         $output = $this->efiling_webservices->saveRefiledIAData($encrypted_string);
         return $output;
@@ -697,11 +714,10 @@ class EfilingAction extends BaseController {
     public function hold() {
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage,HOLD,DISPOSED);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('adminDashboard');
             exit(0);
         }
-
         $allowed_users_array = array(USER_ADMIN);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('dashboard');
@@ -709,7 +725,7 @@ class EfilingAction extends BaseController {
         }
 
         if (empty($_SESSION['efiling_details']) || empty($_SESSION['estab_details'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -736,12 +752,12 @@ class EfilingAction extends BaseController {
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS,SCISMS_Efiling_Acceptance); //Commented till SMS facility not available in Admin Server.
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
 
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Hold successfully !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Hold successfully !</div>');
             log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
             redirect('adminDashboard');
             exit(0);
         } else {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Hold Failded. Please try again!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Hold Failded. Please try again!</div>');
             log_message('CUSTOM', "Approval Failded. Please try again!");
             if ($filing_type == E_FILING_TYPE_NEW_CASE) {
                 $redirectURL = 'newcase/view';
@@ -768,7 +784,7 @@ class EfilingAction extends BaseController {
             redirect('login');
             exit(0);
         }
-        $doc_id= !empty($this->input->post('doc_id')) ? $this->input->post('doc_id') : NULL;
+        $doc_id= !empty($this->request->getPost('doc_id')) ? $this->request->getPost('doc_id') : NULL;
         $result=$this->Efiling_action_model->no_action($doc_id);
         if($result){
             echo json_encode(array('status'=>'SUCCESS','message'=>'Updated successfully!'));
@@ -781,7 +797,7 @@ class EfilingAction extends BaseController {
     public function disposed() {//print_r($_SESSION['efiling_details']);exit();
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage,HOLD,DISPOSED);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -793,7 +809,7 @@ class EfilingAction extends BaseController {
         }
 
         if (empty($_SESSION['efiling_details']) || empty($_SESSION['estab_details'])) {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('adminDashboard');
             exit(0);
         }
@@ -820,12 +836,12 @@ class EfilingAction extends BaseController {
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS,SCISMS_Efiling_Acceptance); //Commented till SMS facility not available in Admin Server.
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
 
-            $this->session->set_flashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Disposed successfully !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Disposed successfully !</div>');
             log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
             redirect('adminDashboard');
             exit(0);
         } else {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Disposed Failded. Please try again!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Disposed Failded. Please try again!</div>');
             log_message('CUSTOM', "Approval Failded. Please try again!");
             if ($filing_type == E_FILING_TYPE_NEW_CASE) {
                 $redirectURL = 'newcase/view';

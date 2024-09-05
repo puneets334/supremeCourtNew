@@ -524,8 +524,8 @@
                                                                             }
                                                                         } elseif ($re->ref_m_efiled_type_id == E_FILING_TYPE_NEW_CASE) {
                                                                             $type = 'New Case';
-                                                                            $cause_title = escape_data(strtoupper($re->ecase_cause_title));
-                                                                            $cause_title = str_replace('VS.', '<b>Vs.</b>', $cause_title);
+                                                                            $cause_title = !empty($re->ecase_cause_title) ? escape_data(strtoupper($re->ecase_cause_title)) : '';
+                                                                            $cause_title = !empty($cause_title) ? str_replace('VS.', '<b>Vs.</b>', $cause_title) : '';
                                                                             if ($re->sc_diary_num != '') {
                                                                                 $diary_no = '<b>Diary No.</b> : ' . escape_data($re->sc_diary_num) . '/' . escape_data($re->sc_diary_year) . '<br/> ';
                                                                             } else {
