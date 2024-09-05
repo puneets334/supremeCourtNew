@@ -54,7 +54,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 logo-sec wow fadeInUp">
-                        <a class="logo-align" href="index.html">
+                        <a class="logo-align" href="<?= base_url(); ?>">
                             <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" alt="emblem">
                             <div class="brand-text">
                                 <h4>भारत का सर्वोच्च न्यायालय
@@ -146,7 +146,7 @@
                                 if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                                     $title = 'Advocate On Record';
                                 } elseif ($segment->getSegment(2) == 'ForgetPassword') {
-                                    $title = 'Forget Password';
+                                    $title = 'Forgot Password';
                                 } else {
                                     $title = 'Party In Person';
                                 }
