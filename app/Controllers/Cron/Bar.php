@@ -1,6 +1,6 @@
 <?php
-namespace App\Controllers;
-
+namespace App\Controllers\Cron;
+use App\Controllers\BaseController; 
 use App\Models\Cron\DefaultModel;
 use App\Libraries\webservices\Efiling_webservices;
 class Bar extends BaseController {

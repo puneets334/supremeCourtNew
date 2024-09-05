@@ -3,13 +3,12 @@
 namespace App\Models\Cron;
 
 use CodeIgniter\Model;
-
+use Config\Database;
 class DefaultModel extends Model {
 
     function __construct() {
         // Call the Model constructor
         parent::__construct();
-        $db = \Config\Database::connect();
     }
 
     public function get_efiled_nums_stage_wise_list_admin_cron($stage_ids, $admin_for_type_id, $admin_for_id) {
@@ -28,9 +27,10 @@ class DefaultModel extends Model {
         $builder->WHERE('en.is_active', 'TRUE');
         $builder->WHERE('en.efiling_for_type_id', $admin_for_type_id);
         $builder->WHERE('en.efiling_for_id', $admin_for_id);
-        $builder->whereIn('cs.stage_id', $stage_ids);
+        $builder->where('cs.stage_id', $stage_ids);
         #$builder->WHERE('en.registration_id', '3999'); //todo::remove this line
         $builder->orderBy('cs.activated_on', 'DESC');
+        // print_r($builder->getCompiledSelect()); die;
         $query = $builder->get();
         if ($query->getNumRows() >= 1) {
             return $query->getResult();
@@ -41,11 +41,25 @@ class DefaultModel extends Model {
 
     function update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_insert, $objections_update, $efiling_type = null) {
         // $this->db->trans_start();
-        $builder = $this->db->table('efil.tbl_case_details');
-        $builder->WHERE('registration_id', $registration_id);
-        $builder->updateBatch($case_details, 'registration_id');
+        $db = Database::connect();
+        $builder = $db->table('efil.tbl_case_details');
+        // $builder->WHERE('registration_id', $registration_id);
+        foreach($case_details as $case_detail){
+            // print_r($case_detail); die;
+            $registration_id_arr = $case_detail['registration_id'];
+            $builder->WHERE('registration_id', $registration_id_arr);
+            $builder->update($case_detail, 'registration_id');
+        }
         if (isset($objections_insert) && !empty($objections_insert)) {
-            $builder->insertBatch($objections_insert);
+            foreach($objections_insert as $objection_insert){
+                // $this->db->insertID()
+                $builder->insert($objection_insert);
+            }
+            // $db = Database::connect();
+            // $builder = $db->table('efil.tbl_case_details');
+            // $builder->insertBatch($objections_insert);
+            // $builder = $this->db->table('efil.tbl_case_details'); 
+            // $builder->insertBatch($objections_insert);
         }
         if (isset($objections_update) && !empty($objections_update)) {
             $builder->updateBatch($objections_update, 'id');
@@ -53,9 +67,12 @@ class DefaultModel extends Model {
         $current_stage = $this->get_current_stage($registration_id);
         if ($current_stage) {
             if ($current_stage[0]['stage_id'] == $next_stage) {
+
                 return FALSE;
             } else {
-                if ($next_stage) {
+
+                if($next_stage) {
+
                     $res = $this->update_next_stage($registration_id, $next_stage, $curr_dt);
                 }
             }
@@ -76,7 +93,7 @@ class DefaultModel extends Model {
         $builder->WHERE('registration_id', $registration_id);
         $query = $builder->get();
         if ($query->getNumRows() >= 1) {
-            $result = $query->getResult();
+            $result = $query->getResultArray();
             return $result;
         } else {
             return false;
@@ -104,6 +121,8 @@ class DefaultModel extends Model {
         );
         $builder = $this->db->table('efil.tbl_efiling_num_status');
         $builder->INSERT($insert_data);
+        print_r($this->db->insertID()); die;
+
         if ($this->db->insertID()) {
             return TRUE;
         } else {
@@ -113,8 +132,9 @@ class DefaultModel extends Model {
 
     function insertInDBwithInsertedId($tablename, $data) {
         $builder = $this->db->table($tablename);
-        $builder->insert($tablename, $data);
+        $builder->insert($data);
         $insertId = $this->db->insertID();
+
         return  $insertId;
     }
 
