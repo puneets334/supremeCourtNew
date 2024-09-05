@@ -220,7 +220,7 @@ class AdvocateController extends BaseController
         $cause_list_array = array();
         // $cause_list_array = new stdClass;
         $cause_list= $this->AdvocateModel->getAppearingDiaryNosOnly($cause_list_date);
-        // pr($cause_list);
+        //  pr($cause_list);
 
         // var_dump($cause_list);
         foreach($cause_list as $key => $cl){
@@ -283,17 +283,17 @@ class AdvocateController extends BaseController
         }
     }
 
-//     public function add_from_case_advocate_master_list(Request $request) {
-//         $data = $request->all();
-//         $previous_list_date = Advocate::getPreviousListingDate($data);
-//         if($previous_list_date){
-//             $previous_list_advocates = Advocate::getPreviousListAdvocates($data, $previous_list_date);
-//         }
-//         else{
-//             $previous_list_advocates = "";
-//         }
-//         return $this->render('advocate.master_advocates_page', @compact('data','previous_list_advocates'));
-//     }
+    public function add_from_case_advocate_master_list() {
+        $data = $this->request->getPost();
+        $previous_list_date= $this->AdvocateModel->getPreviousListingDate($data);
+        if($previous_list_date){
+            $previous_list_advocates= $this->AdvocateModel->getPreviousListAdvocates($data,$previous_list_date);
+        }
+        else{
+            $previous_list_advocates = "";
+        }
+        return $this->render('advocate.master_advocates_page', @compact('data','previous_list_advocates'));
+    }
 
 //     public function master_list_submit(Request $request) {
 //         $timout_validation = $this->timeout_validation($this->request->getPost('next_dt'));

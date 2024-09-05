@@ -267,6 +267,7 @@ function send_sms($mobile, $message, $templateId=''){
     }
     return $msg;
 }
+
 function send_email($to_email,$subject, $message,$attendee_mail=null,$attachment=null) {
     //$to_email = "sca.mohitjain@sci.nic.in, sca.kbpujari@sci.nic.in"; //for development
 	//$to_email='';
@@ -274,50 +275,44 @@ function send_email($to_email,$subject, $message,$attendee_mail=null,$attachment
     $attachment= str_replace('\/', '/', rawurldecode($attachment));
     $attachment=json_decode($attachment);
     $attachment=$attachment[0]->url;
-
-        // $ci = &get_instance();
-        // $ci->load->library('email');
-        $email = \Config\Services::email();
-        $config = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.mail.gov.in',
-            'smtp_port' => 465,
-            'smtp_user' => '',
-            'smtp_pass' => '',
-            'mailtype' => 'html',
-            'charset' => 'utf-8'
-        );
-        
-        $email->initialize($config);
-        $email->set_mailtype("html");
-        $email->set_newline("\r\n");
-        $email->to($to_email);
-        $email->from('causelists@nic.in', "Supreme Court of India");
-        $email->subject($subject);
-
-        $data = array(
-            'message' => $message
-        );
-
-        if(is_null($attendee_mail))
-            $email->message(render('email.html_mail',$data, true));
-        else if($attendee_mail==1)
-            $email->message(render('email.attendee_list_mail',$data, true));
-
-        if(!empty($attachment)) {
-            $mail_subject=$subject.'.pdf';
-            $email->attach($attachment,'attachment', $mail_subject);
-        }
-        
-        $response = $email->send();
-
-        if ($response) {
-            $result = 'success';
-        } else {
-            $result = 'error';
-        }
-        return $result;
+    // $ci = &get_instance();
+    // $ci->load->library('email');
+    $email = \Config\Services::email();
+    $config = array(
+        'protocol' => 'smtp',
+        'smtp_host' => 'ssl://smtp.mail.gov.in',
+        'smtp_port' => 465,
+        'smtp_user' => '',
+        'smtp_pass' => '',
+        'mailtype' => 'html',
+        'charset' => 'utf-8'
+    );
+    $email->initialize($config);
+    $email->setMailType("html");
+    $email->setNewLine("\r\n");
+    $email->setTo($to_email);
+    $email->setFrom('causelists@nic.in', "Supreme Court of India");
+    $email->setSubject($subject);
+    $data = array(
+        'message' => $message
+    );
+    if(is_null($attendee_mail))
+        $email->setMessage(render('email.html_mail',$data, true));
+    else if($attendee_mail==1)
+        $email->setMessage(render('email.attendee_list_mail',$data, true));
+    if(!empty($attachment)) {
+        $mail_subject=$subject.'.pdf';
+        $email->attach($attachment,'attachment', $mail_subject);
+    }
+    $response = $email->send();
+    if ($response) {
+        $result = 'success';
+    } else {
+        $result = 'error';
+    }
+    return $result;
 }
+
 function case_listed_on_tuesday_aud_status($listing_dates)
 {
     $listing_dates=(is_array($listing_dates))?$listing_dates:array($listing_dates);
@@ -451,7 +446,7 @@ function getNextMiscDayOfHearing()
             $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek($show_next_misc_date_cases='show');
     }
     // echo 'Hello'; pr($firstWorkingMiscDay);
-    $next_misc_working_date = isset($firstWorkingMiscDay) ? $firstWorkingMiscDay[0]['working_date'] : NULL;
+    $next_misc_working_date = isset($firstWorkingMiscDay) && !empty($firstWorkingMiscDay) ? $firstWorkingMiscDay[0]['working_date'] : date('Y-m-d');
     //echo $next_misc_working_date;
     //$next_misc_working_date='2024-04-18';
     //echo $next_misc_working_date; 
