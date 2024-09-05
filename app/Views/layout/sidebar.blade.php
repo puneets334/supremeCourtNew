@@ -74,7 +74,13 @@ $segment = service('uri');
                         <li class="premium"><a href="<?php echo base_url('support') ?>" class="btn-link">Support</a> </li>
                         <li class="premium"><a href="<?php echo base_url('e-resources') ?>" class="btn-link">Resources</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('physical_hearing') ?>" class="btn-link">Physical Hearing</a> </li>
+                        <li class="premium">                    
+                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">Physical Hearing</a>
+                            <ul id="collapse5" class="submenu accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
+                                <li><a class="btn-link" href="<?php echo base_url('physical_hearing') ?>">Consent for VC</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('physical_hearing/reports') ?>">Reports</a></li>                                
+                            </ul>                        
+                        </li>
                         <li class="premium">                    
                             <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">Apearance</a>
                             <ul id="collapse6" class="submenu accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">

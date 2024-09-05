@@ -120,7 +120,7 @@ $this->hearing_model = new HearingModel();
                                 $court_from_uri = $segment->getSegment(2);
                                 if(isset($cases) && sizeof($cases)>0) {
                                     echo '<div class="box-body no-padding">
-                                        <table class="table table-striped">
+                                        <table id="datatable-responsive" class="table table-striped">
                                             <tbody>
                                                 <tr>
                                                     <th style="width: 20px">#</th>       
@@ -249,7 +249,7 @@ $this->hearing_model = new HearingModel();
                                             </div>
                                         </div>
                                         <div class="box-body no-padding">
-                                            <table class="table table-striped">
+                                            <table id="datatable-responsive" class="table table-striped">
                                                 <tbody>
                                                     <tr style="text-align: center">
                                                         <th style="width: 10%">List Date</th>
