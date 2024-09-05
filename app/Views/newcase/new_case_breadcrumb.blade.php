@@ -106,7 +106,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     <div class="btns-sec">
 
                         <a href="javascript:void(0)"
-                            class="quick-btn gray-btn"
+                            class="btn-primary quick-btn gray-btn"
                             onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>

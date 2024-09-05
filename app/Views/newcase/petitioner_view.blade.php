@@ -15,6 +15,9 @@
     .datepicker-dropdown {
         margin-top: 231px !important;
     }
+    .datepicker-dropdown{
+        background-color: #fff;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -973,11 +976,18 @@
     });
 
     $(function() {
-        $("#datepicker").datepicker({
+        var today = new Date();
+        var startYear = 1984;
+        var startDate = new Date(startYear, 1, 1);
+        $("#party_dob").datepicker({
             changeMonth: true,
             changeYear: true,
-            yearRange: "-40:+0", // Allow selection from 84 years ago to the current year
-            defaultDate: "-40y" // Set the default date to 84 years ago
+            yearRange: "-100:-1",
+            dateFormat: "dd-mm-yy",
+            setDate: startDate,
+            endDate: today ,
+            "autoclose": true
+            // startDate: startDate, 
         });
     });
 

@@ -16,10 +16,10 @@
                 <div class="logo"><a href="#"><img src="<?= base_url().'assets/newAdmin/'?>images/logo.png" alt="  " title=" "></a></div>
                 <div class="logoSubtitle">
                     <div class="brand-text">
-                        <h4>भारत का सर्वोच्च न्यायालय
+                    <a href="{{ base_url('redirect_on_login') }}"><h4>भारत का सर्वोच्च न्यायालय
                             <span> Supreme Court of India </span>
                             <span class="logo-sm-txt">|| यतो धर्मस्ततो जय: ||</span>
-                        </h4>
+                        </h4></a>
                     </div>
                 </div>
             </div>

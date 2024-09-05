@@ -174,12 +174,12 @@ $session = service('session');
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
                                             <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
-                                            <a class="">
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo stringEncreption('not_register_ekyc'); ?>" checked> Offline</label>
-                                            </a>
-                                            <a class="">
+                                            <!-- </a> -->
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user" id="ekyc" onclick="showHideDiv('ekyc_upload_share')" value="<?php echo htmlentities(stringEncreption('not_register_other'), ENT_QUOTES); ?>" > Paperless KYC </label>
-                                            </a>
+                                            <!-- </a> -->
                                         </div>
                                     </div>
                                 </div>
@@ -253,12 +253,12 @@ $session = service('session');
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
                                             <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
-                                            <a class="">
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo htmlentities(stringEncreption('not_register_ekyc'), ENT_QUOTES); ?>" checked> Offline</label>
-                                            </a>
-                                            <a class="">
+                                            <!-- </a> -->
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user" id="ekyc" onclick="showHideDiv('ekyc_upload_share')" value="<?php echo htmlentities(stringEncreption('not_register_other'), ENT_QUOTES); ?>" > Paperless KYC </label>
-                                            </a>
+                                            <!-- </a> -->
                                         </div>
                                     </div>
                                 </div>
