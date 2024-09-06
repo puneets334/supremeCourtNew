@@ -437,7 +437,7 @@ function getNextMiscDayOfHearing()
         $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek(null,$isTodayFallWithinSummerVacation);
     else
         $firstWorkingMiscDay=$consent_VC_model->getNextMDWorkingDayOfWeek();
-    $next_misc_working_date = isset($firstWorkingMiscDay) ? $firstWorkingMiscDay[0]['working_date'] : NULL;
+    $next_misc_working_date = isset($firstWorkingMiscDay) && !empty($firstWorkingMiscDay) ? $firstWorkingMiscDay[0]['working_date'] : date('Y-m-d');
     $aud_nomination_status=checkEntryWithinAllowDateAndTime($next_misc_working_date);
     if($aud_nomination_status!=1) {
         if($isTodayFallWithinSummerVacation)

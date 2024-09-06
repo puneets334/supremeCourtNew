@@ -49,6 +49,12 @@
     td {
         line-height: normal !important;
     }
+    .fc-event-main {
+        text-align: center;
+    }
+    #calendar-cases {
+        text-align: center;
+    }
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -948,7 +954,7 @@
                                                 </div>
                                                 <div id='efiling-details'>
                                                     <div class="table-responsive">
-                                                        <table class="table table-striped custom-table" style="text-align: center;">
+                                                        <table id="calendar-cases" class="table table-striped custom-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th>eFiling No.</th>
