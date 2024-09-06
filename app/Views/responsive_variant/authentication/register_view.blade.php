@@ -252,7 +252,7 @@ $session = service('session');
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
-                                            <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
+                                            <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo htmlentities(integerEncreption($adv_type_select), ENT_QUOTES); ?>">
                                             <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo htmlentities(stringEncreption('not_register_ekyc'), ENT_QUOTES); ?>" checked> Offline</label>
                                             <!-- </a> -->

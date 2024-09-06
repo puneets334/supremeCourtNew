@@ -948,3 +948,23 @@ define('APP_NAME_IN_HEADER',APP_NAME_L1);
 define('ANU_GOV_IN', 'https://anu.sci.gov.in/');
 define('SCI_GOV_IN', 'https://sci.gov.in');
 define('MAIN_SCI_GOV_IN', 'https://main.sci.gov.in');
+
+
+/* Apearance Constants */
+define('CURRENT_DATE', date('Y-m-d'));
+define('APPEARANCE_ALLOW_TIME', '11:30:00');
+define('APPEARANCE_ALLOW_TIME_STRING', '11:30 A.M.');
+
+define('KEY_TO_SEND_EMAIL', 'A0Oldkflkd31');
+define('EMAIL_API_URL', 'http://127.0.0.1/supreme_court/Copying/index.php/Api/eMailSend');
+
+// SMS API settings
+define('KEY_TO_SEND_SMS', 'kjuy@98123_-fgbvgAD');
+define('SMS_API_URL', 'http://127.0.0.1/eAdminSCI/a-push-sms-gw');
+
+// SMS Template IDs
+define('SMS_TEMPLATE_ID_OTP', '1107161242971352833');
+define('SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED', '1107167091697162626');
+
+// Message settings
+define('MSG_TIME_OUT', 'Time Out');

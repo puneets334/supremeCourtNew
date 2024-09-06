@@ -9,7 +9,6 @@ use Config\Database;
 
 class AdvocateController extends BaseController
 {
-
     // protected $AdminReportModel;
     protected $AdvocateModel;
     protected $db;
@@ -17,7 +16,6 @@ class AdvocateController extends BaseController
     protected $request;
     protected $validation;
     protected $e_services;
-
     public function __construct()
     {
         parent::__construct();
@@ -239,11 +237,11 @@ class AdvocateController extends BaseController
 
     public function confirm_final_submit() {
         $box = $this->request->getPost();
-        // $timout_validation = $this->timeout_validation($box['next_dt']);
-        // if ($timout_validation) {
-        //     return response()->json(array('status' => 'timeout'));
-        //     exit;
-        // }
+        $timout_validation = $this->timeout_validation($box['next_dt']);
+        if ($timout_validation) {
+            return response()->json(array('status' => 'timeout'));
+            exit;
+        }
         $myValue = array();
         parse_str($box['array_id'], $myValue);
         $total_updated = 0;
@@ -285,6 +283,7 @@ class AdvocateController extends BaseController
 
     public function add_from_case_advocate_master_list() {
         $data = $this->request->getPost();
+        // pr($data);
         $previous_list_date= $this->AdvocateModel->getPreviousListingDate($data);
         if($previous_list_date){
             $previous_list_advocates= $this->AdvocateModel->getPreviousListAdvocates($data,$previous_list_date);
@@ -295,65 +294,95 @@ class AdvocateController extends BaseController
         return $this->render('advocate.master_advocates_page', @compact('data','previous_list_advocates'));
     }
 
-//     public function master_list_submit(Request $request) {
-//         $timout_validation = $this->timeout_validation($this->request->getPost('next_dt'));
-//         if($timout_validation){
-//             return response()->json( 'timeout');
-//             exit;
-//         }
-//   //      $request->session()->regenerate();
-//         $data = $this->request->getPost('array');
-//         $a = Advocate::getAdvocateMasterList($data);
-//         $display = array();
-//         foreach($a as $a_value){
-//             $insert['diary_no'] = $this->request->getPost('diary_no');
-//             $insert['list_date'] = $this->request->getPost('next_dt');
-//             $insert['appearing_for'] = $this->request->getPost('appearing_for');
-//             $insert['item_no'] = $this->request->getPost('brd_slno');
-//             $insert['court_no'] = $this->request->getPost('courtno');
-//             $insert['advocate_type'] = $a_value->advocate_type;
-//             $insert['advocate_title'] = $a_value->advocate_title;
-//             $insert['advocate_name'] = $a_value->advocate_name;
-//             $insert['aor_code'] = session('aor_code');
+    public function master_list_submit()
+    {
+        $request = service('request');
 
-//             if(Session::has('diary_no')){
-//                 if(session('diary_no') == $this->request->getPost('diary_no')){
-//                     $request->session()->put('appear_priority', session('appear_priority') + 1);
-//                 }
-//                 else{
-//                     $request->session()->put('diary_no', $this->request->getPost('diary_no'));
-//                     $request->session()->put('appear_priority', 1);
-//                 }
-//             }
-//             else{
-//                 $request->session()->put('diary_no', $this->request->getPost('diary_no'));
-//                 $request->session()->put('appear_priority', 1);
-//             }
-//             $insert['priority'] = session('appear_priority');
-//             $value = DB::connection('eservices')->table('appearing_in_diary')->insertGetId($insert);
-//             /*$display['id'] = $value;
-//             $display['advocate_type'] = $a_value->advocate_type;
-//             $display['advocate_title'] = $a_value->advocate_title;
-//             $display['advocate_name'] = $a_value->advocate_name;*/
+        // Timeout validation
+        $timeoutValidation = $this->timeout_validation($request->getPost('next_dt'));
+        if ($timeoutValidation) {
+            return $this->response->setJSON('timeout');
+        }
 
-//             array_push($display, array('id' =>$value,
-//                 'next_dt' => $this->request->getPost('next_dt'),
-//                 'advocate_type' => $a_value->advocate_type,
-//                 'advocate_title' => $a_value->advocate_title,
-//                 'advocate_name' => $a_value->advocate_name,
-//                 'entry_time' => date('d-m-Y h:i:s A') ));
-//             unset($insert);
-//         }
-//         return response()->json($display);
-//     }
+        $data = $request->getPost('array');
+        $advocateModel = new AdvocateModel();
+        $a = $advocateModel->getAdvocateMasterList($data);        
+        $display = [];
 
-//     public function timeout_validation($list_date) {
-//         //echo config("constants.CURRENT_DATE");
-//         if($list_date == config("constants.CURRENT_DATE") && date('H:i:s') > config("constants.APPEARANCE_ALLOW_TIME")){
-//             return true;
-//         } else{
-//             return false;
-//         }
-//     }   
+        foreach ($a as $a_value) {
+            $insert = [
+                'diary_no'        => $request->getPost('diary_no'),
+                'list_date'       => $request->getPost('next_dt'),
+                'appearing_for'  => $request->getPost('appearing_for'),
+                'item_no'        => $request->getPost('brd_slno'),
+                'court_no'       => $request->getPost('courtno'),
+                'advocate_type'  => $a_value->advocate_type,
+                'advocate_title' => $a_value->advocate_title,
+                'advocate_name'  => $a_value->advocate_name,
+                'aor_code'       => session()->get('aor_code')
+            ];
+
+            $session = session();
+
+            if ($session->has('diary_no')) {
+                if ($session->get('diary_no') == $request->getPost('diary_no')) {
+                    $session->set('appear_priority', $session->get('appear_priority') + 1);
+                } else {
+                    $session->set('diary_no', $request->getPost('diary_no'));
+                    $session->set('appear_priority', 1);
+                }
+            } else {
+                $session->set('diary_no', $request->getPost('diary_no'));
+                $session->set('appear_priority', 1);
+            }
+
+            $insert['priority'] = $session->get('appear_priority');
+            $db3 = \Config\Database::connect('e_services'); 
+            $session = \Config\Services::session();
+            $builder = $db3->table('appearing_in_diary');
+            $value = $builder->insert($insert, true);
+
+            $display[] = [
+                'id'             => $value,
+                'next_dt'        => $request->getPost('next_dt'),
+                'advocate_type'  => $a_value->advocate_type,
+                'advocate_title' => $a_value->advocate_title,
+                'advocate_name'  => $a_value->advocate_name,
+                'entry_time'     => date('d-m-Y h:i:s A')
+            ];
+        }
+
+        return $this->response->setJSON($display);
+    }  
+
+    public function timeout_validation($list_date)
+    {
+        // Directly use the constants
+        if ($list_date == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
  
 }
