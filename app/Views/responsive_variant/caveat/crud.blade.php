@@ -7,7 +7,7 @@
 <?php
 
 $var = (empty(@$registration_id) ? base_url((@$tab == 'case/caveat/crud/' ? @$tab : 'caveat/'.@$tab)) : base_url('caveat/defaultController/processing/'.($registration_id)));
-// echo $var;die;
+// zecho $var;die;
 ?>
 
 <div class="mainPanel ">
