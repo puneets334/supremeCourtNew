@@ -54,7 +54,7 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Main Petitioner Name
                                 <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"><?= @$party_details[0]['party_name']; ?></textarea>
+                            <textarea tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name"><?= @$party_details[0]['party_name']; ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -81,7 +81,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3">
                             <label for="" class="form-label">Parent/Spouse Name <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?= @$party_details[0]['relative_name']; ?>" class="form-control cus-form-ctrl sci_validation" type="text">
+                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?= @$party_details[0]['relative_name']; ?>" class="form-control cus-form-ctrl sci_validation relative_name" type="text">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -147,7 +147,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required>
+                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required disabled     >
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -161,7 +161,7 @@
                             $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
                             $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
                             ?>
-                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?> required>Male</label>
+                            <label class="radio-inline"><input tabindex='7' type="radio" class="party_gender1" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?>>Male</label>
                             <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?>>Female</label>
                             <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>>Other</label>
                         </div>
@@ -225,7 +225,7 @@
                         <div class="mb-3">
                             <label class="form-label">Email <span style="color: red" class="astriks">*</span></label>
                             <input id="party_email" name="party_email" placeholder="Email" tabindex='16' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
+                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -234,7 +234,7 @@
                         <div class="mb-3">
                             <label class="form-label">Mobile <span style="color: red" class="astriks">*</span></label>
                             <input id="party_mobile" name="party_mobile" tabindex='17' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Mobile" value="<?php echo (@$party_details[0]['mobile_num']); ?>" class="form-control cus-form-ctrl" type="text" minlength="10" maxlength="10">
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
+                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -431,13 +431,31 @@
             $(this).val($(this).val().replace(/[^0-9]/g, ''));
         });
     });
+    $(document).ready(function() {
+        $('.party_name').bind('keyup blur', function() {
+            var node = $(this);
+            node.val(node.val().replace(/[^a-z]/g, ''));
+        })
+        $('.relative_name').bind('keyup blur', function() {
+            var node = $(this);
+            node.val(node.val().replace(/[^a-z]/g, ''));
+        })
+    });
 
+    $('.party_gender1').attr('required','required');
+    $('.party_name').attr('required','required');
+    $('.relative_name').attr('required','required');
+
+    
     function get_party_as(value) {
         var party_as = value;
         if (party_as == 'I') {
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
+            $('.party_gender1').attr('required','required');
+            $('.party_name').attr('required','required');
+            $('.relative_name').attr('required','required');
             // $('#org_state').val('');
             // $('#org_dept').val('');
             // $('#org_post').val('');
@@ -452,8 +470,11 @@
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
-                $('#org_dept').attr('required', 'required');
+                $('.org_dept').attr('required', 'required');
                 $('.org_post').attr('required', 'required');
+                $('.party_gender1').removeAttr('required','required');
+                $('.party_name').removeAttr('required','required');
+                $('.relative_name').removeAttr('required','required');
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
@@ -466,6 +487,9 @@
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
+                $('.party_gender1').removeAttr('required','required');
+                $('.party_name').removeAttr('required','required');
+                $('.relative_name').removeAttr('required','required');
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
@@ -986,8 +1010,7 @@
 
     $(function() {
         var today = new Date();
-        var startYear = 1984;
-        var startDate = new Date(startYear, 1, 1);
+
         $("#party_dob").datepicker({
             changeMonth: true,
             changeYear: true,

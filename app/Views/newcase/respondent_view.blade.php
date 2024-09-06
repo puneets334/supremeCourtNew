@@ -15,6 +15,9 @@
     .datepicker-dropdown {
         margin-top: 231px !important;
     }
+    .datepicker-dropdown{
+        background-color: #fff;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -52,7 +55,7 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Main Respondent Name
                                 <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
+                            <textarea tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -68,7 +71,7 @@
                             $selectWife = @$party_details[0]['relation'] == 'W' ? 'selected=selected' : '';
                             $selectNotAvailable = @$party_details[0]['relation'] == 'N' ? 'selected=selected' : '';
                             ?>
-                            <select tabindex='3' name="relation" id="relation" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%">
+                            <select tabindex='3' name="relation" id="relation" class="form-control cus-form-ctrl filter_select_dropdown relation" style="width: 100%">
                                 <option value="" title="Select">Select Relation</option>
                                 <option <?php echo $selectSon; ?> value="S">Son Of</option>
                                 <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
@@ -80,7 +83,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3" id="rel_name">
                             <label for="" class="form-label">Parent/Spouse Name <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" required>
+                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation relative_name" type="text">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -150,7 +153,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text">
+                            <input id="party_age" tabindex='6' name="party_age" min="0" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" disabled>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -181,7 +184,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
+                            <textarea tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_state_name" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -190,14 +193,14 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Department Name <span style="color: red" class="astriks">*</span></label>
-                            <select name="org_dept" tabindex='12' id="org_dept" class="form-control cus-form-ctrl filter_select_dropdown org_dept">
+                            <select name="org_dept" tabindex='12' id="org_dept" class="form-control cus-form-ctrl filter_select_dropdown org_dept org_dept">
                             </select>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
                         <div class="mb-3">
                             <label for="" class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
-                            <textarea id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
+                            <textarea id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_dept_name" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -281,7 +284,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">City <span id="city_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
-                            <input id="party_city" tabindex='21' name="party_city" placeholder="City" value="<?php echo (@$party_details[0]['city']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49">
+                            <input id="party_city" tabindex='21' name="party_city" placeholder="City" value="<?php echo (@$party_details[0]['city']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49" required>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -290,7 +293,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">State <span id="state_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
-                            <select name="party_state" id="party_state" tabindex='22' class="form-control cus-form-ctrl filter_select_dropdown">
+                            <select name="party_state" id="party_state" tabindex='22' class="form-control cus-form-ctrl filter_select_dropdown" required>
                                 <option value="" title="Select">Select State</option>
                                 <?php
                                 $sel = '';
@@ -317,7 +320,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">District <span id="district_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
-                            <select name="party_district" id="party_district" tabindex='23' class="form-control cus-form-ctrl filter_select_dropdown party_district">
+                            <select name="party_district" id="party_district" tabindex='23' class="form-control cus-form-ctrl filter_select_dropdown party_district" required>
                                 <option value="" title="Select">Select District</option>
                                 <?php
                                 if (!empty($district_list)) {
@@ -424,6 +427,18 @@
             }
         });
     });
+
+
+    $(document).ready(function() {
+        $('.party_name').bind('keyup blur', function() {
+            var node = $(this);
+            node.val(node.val().replace(/[^a-z]/g, ''));
+        })
+        $('.relative_name').bind('keyup blur', function() {
+            var node = $(this);
+            node.val(node.val().replace(/[^a-z]/g, ''));
+        })
+    });
     //---------- Hide and show Individual and Org form----------------------//
     $(document).ready(function() {
         <?php $party_id = !empty($party_details) ? $party_details[0]['party_type'] : ''; ?>
@@ -432,6 +447,9 @@
             get_party_as(party_as_sel); //--call to selected
         }
     });
+    $('.party_name').attr('required', 'required');
+    $('.relation').attr('required', 'required');
+    $('.relative_name').attr('required', 'required');
 
     function get_party_as(value) {
         var party_as = value;
@@ -445,6 +463,11 @@
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
+            $('.party_name').attr('required', 'required');
+            $('.relation').attr('required', 'required');
+            $('.relative_name').attr('required', 'required');
+            $('.org_state_name').removeAttr('required', 'required');
+            $('.org_post').removeAttr('required', 'required');
         } else {
             get_departments(party_as);
             get_posts();
@@ -453,6 +476,11 @@
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
+                $('.org_state_name').removeAttr('required', 'required');
+                $('.org_post').attr('required', 'required');
+                $('.party_name').removeAttr('required', 'required');
+                $('.relation').removeAttr('required', 'required');
+                $('.relative_name').removeAttr('required', 'required');
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
@@ -462,6 +490,11 @@
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
+                $('.org_post').attr('required', 'required');
+                $('.party_name').removeAttr('required', 'required');
+                $('.relation').removeAttr('required', 'required');
+                $('.relative_name').removeAttr('required', 'required');
+                $('.org_state_name').attr('required', 'required');
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
@@ -470,14 +503,14 @@
             }
         }
     }
-    $(document).ready(function() {
-        $("input[name='party_name']").on('input', function(e) {
-            $(this).val($(this).val().replace(/[^0-9]/g, ''));
-        });
-        $("input[name='relative_name']").on('input', function(e) {
-            $(this).val($(this).val().replace(/[^0-9]/g, ''));
-        });
-    });
+    // $(document).ready(function() {
+    //     $("input[name='party_name']").on('input', function(e) {
+    //         $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    //     });
+    //     $("input[name='relative_name']").on('input', function(e) {
+    //         $(this).val($(this).val().replace(/[^0-9]/g, ''));
+    //     });
+    // });
     //---------- Organisation State Name----------------------//
     $('#org_state').change(function() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
@@ -993,15 +1026,18 @@
             });
         }
     });
-
+    var today = new Date();
+        var startYear = 1984;
+        var startDate = new Date(startYear, 1, 1);
     $('#party_dob').datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
+        format: "dd/mm/yyyy",
+        // defaultDate: '-40y',
+        endDate: today ,
+        "autoclose": true
     });
-
     $(document).on('change', '#party_dob', function() {
         var value = $('#party_dob').val();
         var parts = value.split("/");
@@ -1009,9 +1045,11 @@
         var month = parts[1] && parseInt(parts[1], 10);
         var year = parts[2] && parseInt(parts[2], 10);
         var str = day + '/' + month + '/' + year;
-        var today = new Date(),
-            dob = new Date(str),
-            age = new Date(today - dob).getFullYear() - 1970;
+        
+        var today = new Date();
+        var dob = new Date(str);
+        // var age = new Date(today - dob).getFullYear() - 1970;
+        var age = today.getFullYear() - year;
         $('#party_age').val(age);
     });
 

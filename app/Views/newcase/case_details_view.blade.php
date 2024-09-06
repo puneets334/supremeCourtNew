@@ -17,16 +17,19 @@
     }
 
     span.select2 {
-        width : 100% !important;
+        width: 100% !important;
 
     }
-    .datepicker-dropdown{
+
+    .datepicker-dropdown {
         background-color: #fff;
     }
-    .error{
+
+    .error {
         color: red;
     }
-    .datepicker-days{
+
+    .datepicker-days {
         background-color: #ffffff;
     }
 </style>
@@ -135,7 +138,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="dtsign">
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of signature of jail incharge</label>
-                            <input tabindex='5' class="form-control cus-form-ctrl" id="datesignjail" name="datesignjail" value="<?php echo @$new_case_details[0]->jail_signature_date; ?>" type="text">
+                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value="<?php echo @$new_case_details[0]->jail_signature_date; ?>" type="text">
                             <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -220,7 +223,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="radio-btns-inp mb-3">
                             <div class="form-check form-check-inline">
-                                
+
                                 <label class="form-label" for="inlineRadio1">Earlier Court Details <span class="pink-text"> (Order Challenged)</span></label>
 
                                 <input tabindex="8" class="cus-form-check" type="checkbox" name="Earlier_not_court_type" id="Earlier_not_court_type" value="4" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 4 ? 'checked' : ''; ?>>No Earlier Court</label>
@@ -805,7 +808,7 @@
 
 
     function getdtmodel() {
-       
+
         var spcasetype_id = $('#sc_sp_case_type_id').val();
         if (spcasetype_id == 6) {
             $('#dtsign').show();
@@ -815,14 +818,17 @@
     }
 
     var today = new Date();
-    $('#datesignjail').datepicker({
-        dateFormat: "dd/mm/yy",
+    $('.datesignjail').datepicker({
+        format: "dd/mm/yyyy",
         showOtherMonths: true,
         selectOtherMonths: true,
         changeMonth: true,
         changeYear: true,
         endDate: today,
-        "autoclose": true
+        autoclose: true
+    });
+    $(".date").mousedown(function() {
+        $(".ui-datepicker").addClass("active");
     });
     // $(function() {
     //     $("#datesignjail").datepicker({maxDate: 0});
@@ -1522,59 +1528,64 @@
         });
 
         function ActionToTrash(trash_type) {
-        event.preventDefault();
-        var trash_type =trash_type;
-        var url="";
-        if (trash_type==''){
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
-            return false;
-        }else if (trash_type=='UAT'){
-            url="<?php echo base_url('userActions/trash'); ?>";
-        }else if (trash_type=='SLT'){
-            url="<?php echo base_url('stage_list/trash'); ?>";
-        }else if (trash_type=='EAT'){
-            url="<?php echo base_url('userActions/trash'); ?>";
-        }else{
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
-            return false;
+            event.preventDefault();
+            var trash_type = trash_type;
+            var url = "";
+            if (trash_type == '') {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                return false;
+            } else if (trash_type == 'UAT') {
+                url = "<?php echo base_url('userActions/trash'); ?>";
+            } else if (trash_type == 'SLT') {
+                url = "<?php echo base_url('stage_list/trash'); ?>";
+            } else if (trash_type == 'EAT') {
+                url = "<?php echo base_url('userActions/trash'); ?>";
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                return false;
+            }
+            //    alert('trash_type'+trash_type+'url='+url);//return false;
+            swal({
+                    title: "Do you really want to trash this E-Filing,",
+                    text: "once it will be trashed you can't restore the same.",
+                    type: "warning",
+                    position: "top",
+                    showCancelButton: true,
+                    confirmButtonColor: "green",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    buttons: ["Make Changes", "Yes!"],
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) { // submitting the form when user press yes
+                        var link = document.createElement("a");
+                        link.href = url;
+                        link.target = "_self";
+                        link.click();
+                        swal({
+                            title: "Deleted!",
+                            text: "E-Filing has been deleted.",
+                            type: "success",
+                            timer: 2000
+                        });
+
+                    } else {
+                        //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+                    }
+
+                });
         }
-    //    alert('trash_type'+trash_type+'url='+url);//return false;
-        swal({
-                title: "Do you really want to trash this E-Filing,",
-                text: "once it will be trashed you can't restore the same.",
-                type: "warning",
-                position: "top",
-                showCancelButton: true,
-                confirmButtonColor: "green",
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                buttons: ["Make Changes", "Yes!"],
-                closeOnConfirm: false,
-                closeOnCancel: true
-            },
-            function(isConfirm){
-                if (isConfirm) {  // submitting the form when user press yes
-                    var link = document.createElement("a");
-                    link.href = url;
-                    link.target = "_self";
-                    link.click();
-                    swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
-
-                } else {
-                    //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
-                }
-
-            });
-    }
     </script>
 
 <?php } ?>
 <script>
-        function validateInput(event) {
-            const input = event.target.value;
-            const regex = /^[a-zA-Z@_ ]*$/;
-            if (!regex.test(input)) {
-                event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
-            }
+    function validateInput(event) {
+        const input = event.target.value;
+        const regex = /^[a-zA-Z@_ ]*$/;
+        if (!regex.test(input)) {
+            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
         }
-    </script>
+    }
+</script>
