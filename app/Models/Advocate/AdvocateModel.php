@@ -165,8 +165,8 @@ class AdvocateModel extends Model {
         $builder->where('list_date', $raw_data->list_date);
         $builder->where('aor_code', $aor_code);
         $builder->orderBy('priority');        
-    //    $sql = $builder->getCompiledSelect();
-    //     echo $sql; die;
+        // $sql = $builder->getCompiledSelect();
+        // echo $sql; die;
         $query = $builder->get();
 
         if ($query === false) {           
@@ -181,6 +181,7 @@ class AdvocateModel extends Model {
 
     public static function getPreviousListingDate($p)
     {
+
         // $value = DB::connection('eservices')->table('appearing_in_diary')
         $db3 = \Config\Database::connect('e_services'); 
         $session = \Config\Services::session();
@@ -188,11 +189,13 @@ class AdvocateModel extends Model {
         // Prepare the query
         $builder = $db3->table('appearing_in_diary'); 
         $builder ->select('list_date');
-        $builder ->where('is_active', 1);
+        $builder ->where('is_active', '1');
         $builder ->where('diary_no', $p['diary_no']);
-        $builder   ->where('list_date', '<', $p['next_dt']);
+        $builder->where('list_date <', $p['next_dt']);
         $builder  ->where('aor_code', $aor_code);
         $builder   ->orderBy('list_date', 'DESC');
+        // $sql = $builder->getCompiledSelect();
+        // echo $sql; die;
         $query = $builder->get();
         if ($query === false) {           
             return false;
@@ -210,7 +213,7 @@ class AdvocateModel extends Model {
         $aor_code = $session->get('login')['aor_code']; 
         // Prepare the query
         $builder = $db3->table('appearing_in_diary'); 
-        $builder  ->where('is_active', 1);
+        $builder  ->where('is_active', '1');
         $builder  ->where('diary_no', $a['diary_no']);
         $builder   ->where('list_date', $b->list_date);
         $builder  ->where('aor_code', $aor_code);
@@ -219,7 +222,7 @@ class AdvocateModel extends Model {
         if ($query === false) {           
             return false;
         }else {
-            $result = $query->getRow();           
+            $result = $query->getResult();           
         }
         return $result;
     }
@@ -231,7 +234,7 @@ class AdvocateModel extends Model {
         $aor_code = $session->get('login')['aor_code']; 
         // Prepare the query
         $builder = $db3->table('appearing_in_diary'); 
-        $builder   ->where('is_active', 1);
+        $builder   ->where('is_active', '1');
         $builder   ->whereIn('id', $a);
         $builder   ->where('aor_code', $aor_code);
         $builder    ->orderBy('priority', 'ASC');
@@ -239,8 +242,10 @@ class AdvocateModel extends Model {
             if ($query === false) {           
                 return false;
             }else {
-                $result = $query->getRow();           
+                $result = $query->getResult();           
             }
+            // pr($result);
+
             return $result;
     }
 
