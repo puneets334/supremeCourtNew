@@ -31,7 +31,7 @@ body{font-family: 'noto_sansregular';font-weight:500;padding:0;margin:0;font-siz
 
 a:hover, a{text-decoration:none}
 .txt-bold{font-weight: 600;}
-.blue-txt{color:#5e89e0!important;}
+.blue-txt{color:#0d6efd !important;}
 .gray-txt{color: #747474 !important;}
 .yellow-txt{color:#FF572E;}
 a.blue-txt:hover, a.blue-txt:focus{color: #5e89e0 !important;}

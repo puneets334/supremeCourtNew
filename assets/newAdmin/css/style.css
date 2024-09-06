@@ -7644,6 +7644,7 @@ textarea.form-control.cus-form-ctrl {
     top: 29px;
     padding: 15px 0 0;
     background: #fff0;
+    width: 300% !important;
 }
 
 .tiles-comnts .tile-comnt {
@@ -8099,10 +8100,6 @@ div#calendar {
 
 .custom-table tbody td a {
     /* color: #110458; */
-}
-
-.title-comnt-bref {
-    width: max-content !important;
 }
 
 .tiles-comnts .tile-comnt:hover .title-comnt-bref .table-responsive {
