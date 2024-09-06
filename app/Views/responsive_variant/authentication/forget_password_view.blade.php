@@ -54,7 +54,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 logo-sec wow fadeInUp">
-                        <a class="logo-align" href="index.html">
+                        <a class="logo-align" href="<?= base_url(); ?>">
                             <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" alt="emblem">
                             <div class="brand-text">
                                 <h4>भारत का सर्वोच्च न्यायालय
@@ -119,7 +119,7 @@
                     <div class="login-s-inner">
                         <?php $session = session(); ?>
                         @if($session->getFlashdata('msg'))
-                            <div class="alert alert-danger">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 {{ esc($session->getFlashdata('msg')) }}
                             </div>
                         @endif
@@ -129,12 +129,12 @@
                         </div>
                         @endif
                         @if(isset($validation) && !empty($validation->getError('txt_username')))
-                        <div class="uk-text-danger">
+                        <div class="alert alert-danger text-center flashmessage" role="alert">
                             <b>{{ $validation->getError('txt_username')}}</b>
                         </div>
                         @endif
                         @if(isset($validation) && !empty($validation->getError('txt_password')))
-                        <div class="uk-text-danger">
+                        <div class="alert alert-danger text-center flashmessage" role="alert">
                             <b>{{ $validation->getError('txt_password')}}</b>
                         </div>
                         @endif
@@ -146,7 +146,7 @@
                                 if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                                     $title = 'Advocate On Record';
                                 } elseif ($segment->getSegment(2) == 'ForgetPassword') {
-                                    $title = 'Forget Password';
+                                    $title = 'Forgot Password';
                                 } else {
                                     $title = 'Party In Person';
                                 }
@@ -156,19 +156,19 @@
                                 </div>
                                 <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                                 <?php if (session()->getFlashdata('msg')) : ?>
-                                    <div class="alert alert-dismissible text-center flashmessage">
+                                    <div class="alert alert-danger text-center flashmessage" role="alert">
                                         <div class="flas-msg-inner">
                                             <?= session()->getFlashdata('msg') ?>
                                         </div>
                                     </div>
                                 <?php endif; ?>
                                 @if(isset($validation) && !empty($validation->getError('adv_email')))
-                                <div class="uk-text-danger">
+                                <div class="alert alert-danger text-center flashmessage" role="alert">
                                     <b>{{ $validation->getError('adv_email')}}</b>
                                 </div>
                                 @endif
                                 @if(isset($validation) && !empty($validation->getError('adv_mobile')))
-                                <div class="uk-text-danger">
+                                <div class="alert alert-danger text-center flashmessage" role="alert">
                                     <b>{{ $validation->getError('adv_mobile')}}</b>
                                 </div>
                                 @endif

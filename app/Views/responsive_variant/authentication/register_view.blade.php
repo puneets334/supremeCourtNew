@@ -19,6 +19,14 @@
 $segment = service('uri');
 $session = service('session');
 ?>
+<style>
+    .regester-links {
+        margin: 0px 100px;
+    }
+    label {
+        color: black;
+    }
+</style>
 <body class="login-page">
     <header>
         <!-- Top Header Section End -->
@@ -59,7 +67,7 @@ $session = service('session');
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-6 col-lg-4 logo-sec wow fadeInUp">
-                        <a class="logo-align" href="index.html">
+                        <a class="logo-align" href="<?= base_url(); ?>">
                             <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" alt="emblem">
                             <div class="brand-text">
                                 <h4>भारत का सर्वोच्च न्यायालय
@@ -142,12 +150,12 @@ $session = service('session');
                             </div>
                         @endif
                         @if(isset($validation) && !empty($validation->getError('adv_mobile')))
-                            <div class="alert alert-dismissible text-center flashmessage">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <b>{{ $validation->getError('adv_mobile')}}</b>
                             </div>
                         @endif
                         @if(isset($validation) && !empty($validation->getError('adv_email')))
-                            <div class="alert alert-dismissible text-center flashmessage">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <b>{{ $validation->getError('adv_email')}}</b>
                             </div>
                         @endif
@@ -166,12 +174,12 @@ $session = service('session');
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
                                             <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
-                                            <a class="">
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo stringEncreption('not_register_ekyc'); ?>" checked> Offline</label>
-                                            </a>
-                                            <a class="">
+                                            <!-- </a> -->
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user" id="ekyc" onclick="showHideDiv('ekyc_upload_share')" value="<?php echo htmlentities(stringEncreption('not_register_other'), ENT_QUOTES); ?>" > Paperless KYC </label>
-                                            </a>
+                                            <!-- </a> -->
                                         </div>
                                     </div>
                                 </div>
@@ -183,9 +191,9 @@ $session = service('session');
                                 <!--<input hidden id="user_login_type" name="adv_type1" value="<?php /*echo htmlentities(stringEncreption('1'), ENT_QUOTES); */?>">-->
                                 <input hidden id="user_login_type" name="adv_type1" value="<?php echo integerEncreption($adv_type_select); ?>">
                                 <p class="">
-                                    <a style="width: 100%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
-                                    <!-- <span style="padding: 0px; font-size: 40px; margin-top: -10px;" class="uk-button uk-button-default" uk-tooltip="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
-                                    The Zip file containing the digitally signed XML will be downloaded to device wherein the above mentioned steps have been performed.">?</span> -->
+                                    <a style="width: 90%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
+                                    <button type="button" class="btn btn-primary" data-toggle="tooltip" data-html="true" title="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
+                                    The Zip file containing the digitally signed XML will be downloaded to device wherein the above mentioned steps have been performed.">?</button>
                                 </p>
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -245,12 +253,12 @@ $session = service('session');
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
                                             <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
-                                            <a class="">
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo htmlentities(stringEncreption('not_register_ekyc'), ENT_QUOTES); ?>" checked> Offline</label>
-                                            </a>
-                                            <a class="">
+                                            <!-- </a> -->
+                                            <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user" id="ekyc" onclick="showHideDiv('ekyc_upload_share')" value="<?php echo htmlentities(stringEncreption('not_register_other'), ENT_QUOTES); ?>" > Paperless KYC </label>
-                                            </a>
+                                            <!-- </a> -->
                                         </div>
                                     </div>
                                 </div>

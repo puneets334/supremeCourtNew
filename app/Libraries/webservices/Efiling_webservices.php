@@ -1527,6 +1527,7 @@ class Efiling_webservices {
         $context  = stream_context_create($opts);
 
        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/BulkGetScrutinyStatus", false, $context);
+
         if ($data != false) {
             return json_decode($data);
         } else {

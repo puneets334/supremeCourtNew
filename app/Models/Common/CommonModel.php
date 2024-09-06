@@ -1174,273 +1174,9 @@ class CommonModel extends Model
         }*/
     }
 
-    // public function getCaveatDataByRegistrationId($arr = array())
-    // {
-    //     $output = false;
-    //     $query = '';
-    //     //echo '<pre>'; print_r($arr); exit;
-    //     if (isset($arr) && !empty($arr) && is_array($arr)) {
-    //         if (isset($arr['registration_id']) && !empty($arr['registration_id']) && !empty($arr['step']) && isset($arr['step'])) {
-    //             $step = (int)trim($arr['step']);
-    //             $registration_id = (int)trim($arr['registration_id']);
-    //             switch ($step) {
-    //                 case 1:
-    //                     $this->db->select('id,case_type_id,ref_m_efiling_nums_registration_id,pet_inperson,orgid,pet_name,lpet_name,pet_sex,pet_gender,pet_father_name,lpet_father_name,
-    //                     pet_father_flag,pet_dob,pet_age,pet_email,pet_mobile,petadd,state_id,dist_code,pet_pincode,org_state,org_state_name,org_dept_name,org_dept,org_post,
-    //                     org_post_name,pet_city,pet_extracount,is_govt_filing');
-    //                     $this->db->from('public.tbl_efiling_caveat');
-    //                     $this->db->where('ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $query = $this->db->get();
-    //                     $output = $query->result_array();
-    //                     break;
-    //                 case 2:
-    //                     $this->db->select('id,case_type_id,ref_m_efiling_nums_registration_id,res_name,resorgid,res_sex,res_gender,res_father_flag,res_father_name,res_age,res_dob,
-    //                     res_email,res_mobile,resadd,res_pincode,res_state_id,res_dist,res_city,res_org_state,res_org_state_name,res_org_dept,res_org_dept_name,
-    //                     res_org_post,res_org_post_name,res_extracount,is_govt_filing');
-    //                     $this->db->from('public.tbl_efiling_caveat');
-    //                     $this->db->where('ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $query = $this->db->get();
-    //                     $output = $query->result_array();
-    //                     break;
-    //                 case 3:
-    //                     $this->db->select(" 'P' as p_r_type, 'M' as m_a_type,1 as party_id,1 as party_no,
-    //                                        ec.id, ec.ref_m_efiling_nums_registration_id,ec.createdby,ec.case_type_id,
-    //                                        ec.orgid as party_type, 
-    //                                        ec.pet_name as party_name, 
-    //                                        ec.pet_gender as gender, ec.pet_father_flag as relation,ec.pet_father_name as relative_name,
-    //                                         ec.pet_dob as party_dob,
-    //                                        ec.pet_age as party_age, ec.pet_email as email_id, ec.pet_mobile as mobile_num,
-    //                                        ec.petadd as address, ec.state_id, ec.dist_code as district_id, 
-    //                                        ec.pet_pincode as pincode, ec.org_state as org_state_id, ec.org_state_name as org_state_name,
-    //                                        ec.org_dept_name as org_dept_name, ec.org_dept as org_dept_id, ec.org_post as org_post_id,
-    //                                        ec.org_post_name as org_post_name, ec.pet_city as city, dist.name addr_dist_name, 
-    //                                        a.authdesc, d.deptname, st.agency_state addr_state_name, 
-    //                                        vst.deptname fetch_org_state_name, ec.is_govt_filing");
-    //                     $this->db->from('public.tbl_efiling_caveat ec');
-    //                     $this->db->JOIN('icmis.ref_agency_state st', 'ec.state_id = st.cmis_state_id', 'left');
-    //                     $this->db->JOIN('icmis.view_state_in_name vst', 'ec.org_state = vst.deptcode', 'left');
-    //                     $this->db->JOIN('icmis.state dist', 'ec.dist_code = dist.id_no', 'left');
-    //                     $this->db->JOIN('icmis.deptt d', 'ec.org_dept=d.deptcode', 'left');
-    //                     $this->db->JOIN('icmis.authority a', 'ec.org_post=a.authcode', 'left');
-    //                     $this->db->where('ec.ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $query = $this->db->get();
-    //                     $output = $query->result();
-    //                     break;
-    //                 case 4:
-    //                     $this->db->select(" 'R' as p_r_type, 'M' as m_a_type,1 as party_id,1 as party_no,
-    //                             ec.id, ec.ref_m_efiling_nums_registration_id, resorgid as party_type, ec.res_name as party_name, 
-    //                             ec.res_gender as gender, ec.res_father_flag as relation, ec.res_father_name as relative_name,
-    //                             ec.res_dob as party_dob,ec.res_age as  party_age,  ec.res_email as  email_id, 
-    //                             ec.res_mobile as mobile_num, ec.resadd as  address,ec.res_state_id as state_id, ec.res_dist as district_id,
-    //                             ec.res_pincode as pincode,ec.res_org_state as org_state_id, ec.res_org_state_name as org_state_name,  
-    //                              ec.res_org_dept as org_dept_id,
-    //                             ec.res_org_dept_name as org_dept_name, ec.res_org_post as org_post_id, ec.res_org_post_name as org_post_name,
-    //                             ec.res_city as city,
-    //                             dist.name addr_dist_name, a.authdesc, d.deptname, st.agency_state addr_state_name, vst.deptname fetch_org_state_name, ec.is_govt_filing");
-    //                     $this->db->FROM('public.tbl_efiling_caveat ec');
-    //                     $this->db->JOIN('icmis.ref_agency_state st', 'ec.state_id = st.cmis_state_id', 'left');
-    //                     $this->db->JOIN('icmis.view_state_in_name vst', 'ec.org_state = vst.deptcode', 'left');
-    //                     $this->db->JOIN('icmis.state dist', 'ec.dist_code = dist.id_no', 'left');
-    //                     $this->db->JOIN('icmis.deptt d', 'ec.org_dept=d.deptcode', 'left');
-    //                     $this->db->JOIN('icmis.authority a', 'ec.org_post=a.authcode', 'left');
-    //                     $this->db->WHERE('ec.ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $query = $this->db->get();
-    //                     $output = $query->result();
-    //                     break;
-    //                 case 5:
-    //                     $this->db->SELECT("case when eparty.type=1 then 'P' else 'R' end as p_r_type, 
-    //                             'A' as m_a_type,
-    //                             eparty.party_id,eparty.party_no,
-    //                            eparty.id, eparty.ref_m_efiling_nums_registration_id,
-    //                            eparty.orgid as party_type, 
-    //                            eparty.name as party_name, 
-    //                            eparty.pet_gender as gender, eparty.father_flag as relation,eparty.father_name as relative_name,
-    //                             eparty.pet_dob as party_dob,
-    //                            eparty.pet_age as party_age, eparty.pet_email as email_id, eparty.pet_mobile as mobile_num,
-    //                            eparty.address as address, eparty.state_id, eparty.dist_code as district_id, 
-    //                            eparty.pincode as pincode, eparty.extra_party_org_state as org_state_id, eparty.extra_party_org_state_name as org_state_name,
-    //                            eparty.extra_party_org_dept_name as org_dept_name, eparty.extra_party_org_dept as org_dept_id, eparty.extra_party_org_post as org_post_id,
-    //                            eparty.extra_party_org_post_name as org_post_name, eparty.pet_city as city, dist.name addr_dist_name, 
-    //                            a.authdesc, d.deptname, st.agency_state addr_state_name, 
-    //                            vst.deptname fetch_org_state_name");
-    //                     $this->db->FROM('public.tbl_efiling_civil_extra_party as eparty');
-    //                     $this->db->JOIN('icmis.ref_agency_state st', 'eparty.state_id = st.cmis_state_id', 'left');
-    //                     $this->db->JOIN('icmis.ref_agency_state altst', 'eparty.altstate_id = altst.cmis_state_id', 'left');
-    //                     $this->db->JOIN('icmis.view_state_in_name vst', 'eparty.extra_party_org_state = vst.deptcode', 'left');
-    //                     $this->db->JOIN('icmis.state dist', 'eparty.dist_code = dist.id_no', 'left');
-    //                     $this->db->JOIN('icmis.state altdist', 'eparty.altdist_code = altdist.id_no', 'left');
-    //                     $this->db->JOIN('icmis.deptt d', 'eparty.extra_party_org_dept=d.deptcode', 'left');
-    //                     $this->db->JOIN('icmis.authority a', 'eparty.extra_party_org_post=a.authcode', 'left');
-    //                     $this->db->WHERE('eparty.ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $this->db->WHERE('eparty.parentid', NULL);
-    //                     $this->db->WHERE('eparty.display', 'Y');
-    //                     $this->db->ORDER_BY("eparty.type", "asc");
-    //                     $this->db->ORDER_BY("eparty.party_id", "asc");
-    //                     $query = $this->db->get();
-    //                     $output = $query->result();
-    //                     break;
-    //                 case 6:
-    //                     $this->db->select('id,case_type_id,c.nature,ref_m_efiling_nums_registration_id,pet_inperson,orgid,pet_name,lpet_name,pet_sex,pet_gender,pet_father_name,lpet_father_name,
-    //                     pet_father_flag,pet_dob,pet_age,pet_email,pet_mobile,petadd,state_id,dist_code,pet_pincode,org_state,org_state_name,org_dept_name,org_dept,org_post,
-    //                     org_post_name,pet_city, tec.is_govt_filing');
-    //                     $this->db->from('public.tbl_efiling_caveat tec');
-    //                     $this->db->JOIN('icmis.casetype c', 'tec.case_type_id = c.casecode', 'left');
-    //                     $this->db->where('ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $query = $this->db->get();
-    //                     $output = $query->result_array();
-    //                     break;
-    //                 default:
-    //                     $output = false;
-    //             }
-    //         }
-    //     }
-    //     return $output;
-    // }
+   
 
-    // public function getCaveatDataByRegistrationId($arr = array())
-    // {
-    //     $output = false;
-    //     $builder = $this->db->table('public.tbl_efiling_caveat');
-    //     if (!empty($arr) && is_array($arr)) {
-    //         if (isset($arr['registration_id']) && isset($arr['step'])) {
-    //             $step = (int)trim($arr['step']);
-    //             $registration_id = (int)trim($arr['registration_id']);
-    //             switch ($step) {
-    //                 case 1:
-    //                 case 2:
-    //                     $columns = 'id, case_type_id, ref_m_efiling_nums_registration_id, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'name, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'sex, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'gender, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'father_flag as relation, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'father_name as relative_name, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'dob as party_dob, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'age as party_age, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'email, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'mobile, ';
-    //                     $columns .= ($step == 1) ? 'pet' : 'res';
-    //                     $columns .= 'add as address, ';
-    //                     $columns .= 'state_id, dist_code as district_id, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'pincode, ';
-    //                     $columns .= ($step == 1) ? 'org_' : 'res_org_';
-    //                     $columns .= 'state as org_state_id, ';
-    //                     $columns .= ($step == 1) ? 'org_' : 'res_org_';
-    //                     $columns .= 'state_name as org_state_name, ';
-    //                     $columns .= ($step == 1) ? 'org_' : 'res_org_';
-    //                     $columns .= 'dept_name as org_dept_name, ';
-    //                     $columns .= ($step == 1) ? 'org_' : 'res_org_';
-    //                     $columns .= 'dept as org_dept_id, ';
-    //                     $columns .= ($step == 1) ? 'org_' : 'res_org_';
-    //                     $columns .= 'post as org_post_id, ';
-    //                     $columns .= ($step == 1) ? 'org_' : 'res_org_';
-    //                     $columns .= 'post_name as org_post_name, ';
-    //                     $columns .= ($step == 1) ? 'pet_' : 'res_';
-    //                     $columns .= 'city, ';
-    //                     $columns .= 'dist.name addr_dist_name, a.authdesc, d.deptname, st.agency_state addr_state_name, vst.deptname fetch_org_state_name, ';
-    //                     $columns .= ($step == 1) ? 'is_govt_filing' : 'ec.is_govt_filing';
-    //                     $builder->select($columns);
-    //                     $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
-    //                     $query = $builder->get();
-    //                     $output = $query->getResultArray();
-    //                     break;
-    //                 case 3:
-    //                 case 4:
-    //                 case 5:
-    //                 case 6:
-    //                     // Similar implementation for other steps
-    //                     break;
-    //                 default:
-    //                     $output = false;
-    //             }
-    //         }
-    //     }
-    //     return $output;
-    // }
-
-    public function getCaveatDataByRegistrationId($arr = array())
-    {
-        $output = false;
-        $builder = $this->db->table('public.tbl_efiling_caveat');
-        if (!empty($arr) && is_array($arr)) {
-            if (isset($arr['registration_id']) && isset($arr['step'])) {
-                $step = (int)trim($arr['step']);
-                $registration_id = (int)trim($arr['registration_id']);
-                switch ($step) {
-                    case 1:
-                    case 2:
-                        $columns = 'id, case_type_id, ref_m_efiling_nums_registration_id,orgid,resorgid,';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'name, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'sex, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'gender, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'father_flag as relation, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'father_name as relative_name, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'dob as party_dob, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'age as party_age, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'email, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'mobile, ';
-                        $columns .= ($step == 1) ? 'pet' : 'res';
-                        $columns .= 'add as address, ';
-                        $columns .= 'state_id, dist_code as district_id, ';
-                        $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        $columns .= 'pincode, ';
-                        $columns .= ($step == 1) ? 'org_' : 'res_org_';
-                        $columns .= 'state as org_state_id, ';
-                        $columns .= ($step == 1) ? 'org_' : 'res_org_';
-                        $columns .= 'state_name as org_state_name, ';
-                        $columns .= ($step == 1) ? 'org_' : 'res_org_';
-                        $columns .= 'dept_name as org_dept_name, ';
-                        $columns .= ($step == 1) ? 'org_' : 'res_org_';
-                        $columns .= 'dept as org_dept_id, ';
-                        $columns .= ($step == 1) ? 'org_' : 'res_org_';
-                        $columns .= 'post as org_post_id, ';
-                        $columns .= ($step == 1) ? 'org_' : 'res_org_';
-                        $columns .= 'post_name as org_post_name, ';
-                        $columns .= 'org_dept,org_post,pet_city,res_city,res_state_id,res_dist,res_dob,res_father_flag, ';
-                       // $columns .= ($step == 1) ? 'pet_' : 'res_';
-                        //$columns .= 'city, ';
-                       // $columns .= 'dist.name addr_dist_name, a.authdesc, d.deptname, st.agency_state addr_state_name, vst.deptname fetch_org_state_name, ';
-                        $columns .= ($step == 1) ? 'is_govt_filing' : 'is_govt_filing';
-                        $builder->select($columns);
-                        $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
-                       // $sqlQuery = $builder->getCompiledSelect();
-                        // Output the SQL query
-                       // echo "Compiled SQL Query: " . $sqlQuery;die;
-                        $query = $builder->get();
-                        $output = $query->getResultArray();
-                     
-                     
-                        break;
-                    case 3:
-                    case 4:
-                    case 5:
-                    case 6:
-                        break;
-                    default:
-                        $output = false;
-                }
-            }
-        }
-        return $output;
-    }
+   
 
     public function fetchCaveatDetails($table, $registration_id)
     {
@@ -2266,5 +2002,136 @@ class CommonModel extends Model
         } else {
             return array();
         }
+    }
+
+
+    public function getCaveatDataByRegistrationId($arr = array())
+    {
+        $output = false;
+        $query = '';
+        //echo '<pre>'; print_r($arr); exit;
+
+        if (isset($arr) && !empty($arr) && is_array($arr)) {
+            if (isset($arr['registration_id']) && !empty($arr['registration_id']) && !empty($arr['step']) && isset($arr['step'])) {
+                $step = (int)trim($arr['step']);
+                $registration_id = (int)trim($arr['registration_id']);
+                switch ($step) {
+                    case 1:
+                        $builder = $this->db->table('public.tbl_efiling_caveat');
+                        $builder->select('id,case_type_id,ref_m_efiling_nums_registration_id,pet_inperson,orgid,pet_name,lpet_name,pet_sex,pet_gender,pet_father_name,lpet_father_name,
+                        pet_father_flag,pet_dob,pet_age,pet_email,pet_mobile,petadd,state_id,dist_code,pet_pincode,org_state,org_state_name,org_dept_name,org_dept,org_post,
+                        org_post_name,pet_city,pet_extracount,is_govt_filing');
+                        // $builder->from('public.tbl_efiling_caveat');
+                        $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
+                        $query = $builder->get();
+                        $output = $query->getResultArray();
+                        break;
+                    case 2:
+                        $builder = $this->db->table('public.tbl_efiling_caveat');
+                        $builder->select('id,case_type_id,ref_m_efiling_nums_registration_id,res_name,resorgid,res_sex,res_gender,res_father_flag,res_father_name,res_age,res_dob,
+                        res_email,res_mobile,resadd,res_pincode,res_state_id,res_dist,res_city,res_org_state,res_org_state_name,res_org_dept,res_org_dept_name,
+                        res_org_post,res_org_post_name,res_extracount,is_govt_filing');
+                        // $this->db->from('public.tbl_efiling_caveat');
+                        $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
+                        $query = $builder->get();
+                        $output = $query->getResultArray();
+                        break;
+                    case 3:
+                        $builder = $this->db->table('public.tbl_efiling_caveat ec');
+                        $builder->select(" 'P' as p_r_type, 'M' as m_a_type,1 as party_id,1 as party_no,
+                                           ec.id, ec.ref_m_efiling_nums_registration_id,ec.createdby,ec.case_type_id,
+                                           ec.orgid as party_type, 
+                                           ec.pet_name as party_name, 
+                                           ec.pet_gender as gender, ec.pet_father_flag as relation,ec.pet_father_name as relative_name,
+                                            ec.pet_dob as party_dob,
+                                           ec.pet_age as party_age, ec.pet_email as email_id, ec.pet_mobile as mobile_num,
+                                           ec.petadd as address, ec.state_id, ec.dist_code as district_id, 
+                                           ec.pet_pincode as pincode, ec.org_state as org_state_id, ec.org_state_name as org_state_name,
+                                           ec.org_dept_name as org_dept_name, ec.org_dept as org_dept_id, ec.org_post as org_post_id,
+                                           ec.org_post_name as org_post_name, ec.pet_city as city, dist.name addr_dist_name, 
+                                           a.authdesc, d.deptname, st.agency_state addr_state_name, 
+                                           vst.deptname fetch_org_state_name, ec.is_govt_filing");
+                        $builder->JOIN('icmis.ref_agency_state st', 'ec.state_id = st.cmis_state_id', 'left');
+                        $builder->JOIN('icmis.view_state_in_name vst', 'ec.org_state = vst.deptcode', 'left');
+                        $builder->JOIN('icmis.state dist', 'ec.dist_code = dist.id_no', 'left');
+                        $builder->JOIN('icmis.deptt d', 'ec.org_dept=d.deptcode', 'left');
+                        $builder->JOIN('icmis.authority a', 'ec.org_post=a.authcode', 'left');
+                        $builder->where('ec.ref_m_efiling_nums_registration_id', $registration_id);
+                        $query = $builder->get();
+                        $output = $query->getResult();
+                        break;
+                    case 4:
+                        $builder = $this->db->table('public.tbl_efiling_caveat ec');
+
+                        $builder->select(" 'R' as p_r_type, 'M' as m_a_type,1 as party_id,1 as party_no,
+                                ec.id, ec.ref_m_efiling_nums_registration_id, resorgid as party_type, ec.res_name as party_name, 
+                                ec.res_gender as gender, ec.res_father_flag as relation, ec.res_father_name as relative_name,
+                                ec.res_dob as party_dob,ec.res_age as  party_age,  ec.res_email as  email_id, 
+                                ec.res_mobile as mobile_num, ec.resadd as  address,ec.res_state_id as state_id, ec.res_dist as district_id,
+                                ec.res_pincode as pincode,ec.res_org_state as org_state_id, ec.res_org_state_name as org_state_name,  
+                                 ec.res_org_dept as org_dept_id,
+                                ec.res_org_dept_name as org_dept_name, ec.res_org_post as org_post_id, ec.res_org_post_name as org_post_name,
+                                ec.res_city as city,
+                                dist.name addr_dist_name, a.authdesc, d.deptname, st.agency_state addr_state_name, vst.deptname fetch_org_state_name, ec.is_govt_filing");
+                        $builder->JOIN('icmis.ref_agency_state st', 'ec.state_id = st.cmis_state_id', 'left');
+                        $builder->JOIN('icmis.view_state_in_name vst', 'ec.org_state = vst.deptcode', 'left');
+                        $builder->JOIN('icmis.state dist', 'ec.dist_code = dist.id_no', 'left');
+                        $builder->JOIN('icmis.deptt d', 'ec.org_dept=d.deptcode', 'left');
+                        $builder->JOIN('icmis.authority a', 'ec.org_post=a.authcode', 'left');
+                        $builder->WHERE('ec.ref_m_efiling_nums_registration_id', $registration_id);
+                        $query = $builder->get();
+                        $output = $query->getResult();
+                        break;
+                    case 5:
+                        $builder = $this->db->table('public.tbl_efiling_civil_extra_party as eparty');
+                        $builder->SELECT("case when eparty.type=1 then 'P' else 'R' end as p_r_type, 
+                                'A' as m_a_type,
+                                eparty.party_id,eparty.party_no,
+                               eparty.id, eparty.ref_m_efiling_nums_registration_id,
+                               eparty.orgid as party_type, 
+                               eparty.name as party_name, 
+                               eparty.pet_gender as gender, eparty.father_flag as relation,eparty.father_name as relative_name,
+                                eparty.pet_dob as party_dob,
+                               eparty.pet_age as party_age, eparty.pet_email as email_id, eparty.pet_mobile as mobile_num,
+                               eparty.address as address, eparty.state_id, eparty.dist_code as district_id, 
+                               eparty.pincode as pincode, eparty.extra_party_org_state as org_state_id, eparty.extra_party_org_state_name as org_state_name,
+                               eparty.extra_party_org_dept_name as org_dept_name, eparty.extra_party_org_dept as org_dept_id, eparty.extra_party_org_post as org_post_id,
+                               eparty.extra_party_org_post_name as org_post_name, eparty.pet_city as city, dist.name addr_dist_name, 
+                               a.authdesc, d.deptname, st.agency_state addr_state_name, 
+                               vst.deptname fetch_org_state_name");
+                        $builder->JOIN('icmis.ref_agency_state st', 'eparty.state_id = st.cmis_state_id', 'left');
+                        $builder->JOIN('icmis.ref_agency_state altst', 'eparty.altstate_id = altst.cmis_state_id', 'left');
+                        $builder->JOIN('icmis.view_state_in_name vst', 'eparty.extra_party_org_state = vst.deptcode', 'left');
+                        $builder->JOIN('icmis.state dist', 'eparty.dist_code = dist.id_no', 'left');
+                        $builder->JOIN('icmis.state altdist', 'eparty.altdist_code = altdist.id_no', 'left');
+                        $builder->JOIN('icmis.deptt d', 'eparty.extra_party_org_dept=d.deptcode', 'left');
+                        $builder->JOIN('icmis.authority a', 'eparty.extra_party_org_post=a.authcode', 'left');
+                        $builder->WHERE('eparty.ref_m_efiling_nums_registration_id', $registration_id);
+                        $builder->WHERE('eparty.parentid', NULL);
+                        $builder->WHERE('eparty.display', 'Y');
+                        $builder->ORDER_BY("eparty.type", "asc");
+                        $builder->ORDER_BY("eparty.party_id", "asc");
+                        $query = $builder->get();
+                        $output = $query->getResult();
+                        break;
+                    case 6:
+                       $builder= $this->db->table('public.tbl_efiling_caveat tec');
+
+                        $builder->select('id,case_type_id,c.nature,ref_m_efiling_nums_registration_id,pet_inperson,orgid,pet_name,lpet_name,pet_sex,pet_gender,pet_father_name,lpet_father_name,
+                        pet_father_flag,pet_dob,pet_age,pet_email,pet_mobile,petadd,state_id,dist_code,pet_pincode,org_state,org_state_name,org_dept_name,org_dept,org_post,
+                        org_post_name,pet_city, tec.is_govt_filing');
+                        $builder->JOIN('icmis.casetype c', 'tec.case_type_id = c.casecode', 'left');
+                        $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
+                            // $sql = $builder->getCompiledSelect();
+                            //  echo $sql; die;
+                        $query = $builder->get();
+                        $output = $query->getResultArray();
+                        break;
+                    default:
+                        $output = false;
+                }
+            }
+        }
+        return $output;
     }
 }

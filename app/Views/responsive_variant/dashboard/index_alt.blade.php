@@ -43,6 +43,12 @@
     .md-bg-red-700 {
         background-color: #d32f2f !important;
     }
+    #calendar {
+        cursor: pointer;
+    }
+    td {
+        line-height: normal !important;
+    }
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -441,7 +447,7 @@
                                         <div class="col-12 col-sm-12 col-md-9 col-lg-9">
                                             <div class="dash-card">
                                                 <div class="title-sec">
-                                                    <h5 class="unerline-title">e-Filled Cases</h5>
+                                                    <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive">
@@ -520,12 +526,12 @@
                                                                             }
                                                                             $case_details = $fil_ia_no . '<b>Filed In</b> <br>' . $diary_no . $reg_no . $re->cause_title;
                                                                             if ($diary_no != '') {
-                                                                                $case_details = '<a onClick="open_case_statusStop()"  href=""  title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
+                                                                                $case_details = '<a onClick="open_case_statusStop()" title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
                                                                             }
                                                                         } elseif ($re->ref_m_efiled_type_id == E_FILING_TYPE_NEW_CASE) {
                                                                             $type = 'New Case';
-                                                                            $cause_title = escape_data(strtoupper($re->ecase_cause_title));
-                                                                            $cause_title = str_replace('VS.', '<b>Vs.</b>', $cause_title);
+                                                                            $cause_title = !empty($re->ecase_cause_title) ? escape_data(strtoupper($re->ecase_cause_title)) : '';
+                                                                            $cause_title = !empty($cause_title) ? str_replace('VS.', '<b>Vs.</b>', $cause_title) : '';
                                                                             if ($re->sc_diary_num != '') {
                                                                                 $diary_no = '<b>Diary No.</b> : ' . escape_data($re->sc_diary_num) . '/' . escape_data($re->sc_diary_year) . '<br/> ';
                                                                             } else {
@@ -538,7 +544,7 @@
                                                                             }
                                                                             $case_details =  $diary_no . $reg_no . $cause_title;
                                                                             if ($diary_no != '') {
-                                                                                $case_details = '<a onClick="open_case_statusStop()"  href=""  title="show CaseStatus"  data-diary_no="' . $re->sc_diary_num . '" data-diary_year="' . $re->sc_diary_year . '">' . $case_details . '</a>';
+                                                                                $case_details = '<a onClick="open_case_statusStop()" title="show CaseStatus"  data-diary_no="' . $re->sc_diary_num . '" data-diary_year="' . $re->sc_diary_year . '">' . $case_details . '</a>';
                                                                             }
                                                                             $redirect_url = base_url('newcase/defaultController');
                                                                             $recheck_url = 'case/crud';
@@ -611,7 +617,7 @@
                                                                             }
                                                                             $case_details =  $caveat_no . $diary_no . $reg_no . $cause_title;
                                                                             if ($diary_no != '') {
-                                                                                $case_details = '<a href="#">' . $case_details . '</a>';
+                                                                                $case_details = '<a>' . $case_details . '</a>';
                                                                             }
                                                                             $recheck_url = 'case/caveat/crud';
                                                                             $redirect_url = base_url('case/caveat/crud');
@@ -641,7 +647,7 @@
                                                                             }
                                                                             $case_details = $fil_ia_no . '<b>Filed In</b> <br>' . $diary_no . $reg_no . $re->cause_title;
                                                                             if ($diary_no != '') {
-                                                                                $case_details = '<a onClick="open_case_statusStop()"  href=""  title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
+                                                                                $case_details = '<a onClick="open_case_statusStop()" title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
                                                                             }
                                                                         }
                                                                         ?>
@@ -661,7 +667,7 @@
                                                                             <?php
                                                                             $arrayStage = array(Initial_Approaval_Pending_Stage, Initial_Defects_Cured_Stage, TRASH_STAGE);
                                                                             /*if ($stages == Initial_Approaval_Pending_Stage) {*/
-                                                                            $case_details = '<a onClick="open_case_statusStop()"  href="#"  title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
+                                                                            $case_details = '<a onClick="open_case_statusStop()" title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
                                                                             if (in_array($stages, $arrayStage)) { ?>
                                                                                 <td width="14%">
                                                                                     <a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Approaval_Pending_Stage)) ?>"> <?php echo "<b>" . htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) . "</b>" . "<br>"; ?><?php if (isset($re->efiling_for_name) && !empty($re->efiling_for_name) && ($re->efiling_for_name) != NULL) { echo htmlentities($re->efiling_for_name, ENT_QUOTES); } ?></a>

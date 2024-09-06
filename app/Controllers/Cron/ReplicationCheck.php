@@ -1,6 +1,6 @@
 <?php
-namespace App\Controllers;
-
+namespace App\ControllersCron;
+use App\Controllers\BaseController; 
 class ReplicationCheck extends BaseController {
 
     public function __construct() {

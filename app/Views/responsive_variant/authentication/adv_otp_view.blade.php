@@ -126,7 +126,7 @@
                         </div>
                         <h5 class="mt-4 text-center" style="color: green; margin: 0;"> OTP Send (Verify)</h5> <br />
                         <?php if (session()->getFlashdata('msg')) : ?>
-                            <div class="alert alert-dismissible text-center flashmessage">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <div class="flas-msg-inner">
                                     <?= session()->getFlashdata('msg') ?>
                                 </div>
@@ -147,7 +147,7 @@
                         if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                             $title = 'Advocate On Record';
                         } elseif ($segment->getSegment(2) == 'ForgetPassword') {
-                            $title = 'Forget Password';
+                            $title = 'Forgot Password';
                         } else {
                             $title = 'Party In Person';
                         }
@@ -155,7 +155,7 @@
                         <h4> <strong><?php // echo $title; ?></strong></h4>
                         <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                         <?php if (session()->getFlashdata('msg')) : ?>
-                            <div class="alert alert-dismissible text-center flashmessage">
+                            <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <div class="flas-msg-inner">
                                     <?= session()->getFlashdata('msg') ?>
                                 </div>

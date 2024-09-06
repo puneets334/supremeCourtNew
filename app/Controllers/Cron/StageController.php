@@ -1,5 +1,6 @@
 <?php
-namespace App\Controllers;
+namespace App\Controllers\Cron;
+use App\Controllers\BaseController; 
 
 use App\Libraries\webservices\Efiling_webservices;
 use App\Models\AdminDashboard\StageListModel;
@@ -25,6 +26,7 @@ class StageController extends BaseController {
         $scrutiny_result = $this->Default_model->get_efiled_nums_stage_wise_list_admin_cron($loop_for_stage_flag, ADMIN_FOR_TYPE_ID, ADMIN_FOR_ID);
         if ($scrutiny_result) {
             $data = $this->efiling_webservices->get_new_case_efiling_scrutiny_cron_SCIS($scrutiny_result);
+
             if ($data) {
                 $curr_dt = date('Y-m-d H:i:s');
                 foreach ($data->consumed_data as $response) {

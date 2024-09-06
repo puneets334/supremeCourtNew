@@ -36,8 +36,9 @@ body.loading .overlay{
 </style>
 <style>
     .datepicker-dropdown {
-        margin-top: 125px !important;
+        margin-top: 125px !important;background-color: #fff;
     }
+    
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -149,10 +150,12 @@ body.loading .overlay{
                                 <label for="" class="form-label">Relation</label>
                                 <?php
                                 if (isset($caveator_details)) {
-                                    $selectSon = $caveator_details[0]['relation'] == 'S' ? 'selected=selected' : '';
-                                    $selectDaughter = $caveator_details[0]['relation'] == 'D' ? 'selected=selected' : '';
-                                    $selectWife = $caveator_details[0]['relation'] == 'W' ? 'selected=selected' : '';
-                                    $selectNotAvailable = $caveator_details[0]['relation'] == 'N' ? 'selected=selected' : '';
+                                    $selectSon='';
+                                    // pr($caveator_details);
+                                    // $selectSon = $caveator_details[0]['relation'] == 'S' ? 'selected=selected' : '';
+                                    // $selectDaughter = $caveator_details[0]['relation'] == 'D' ? 'selected=selected' : '';
+                                    // $selectWife = $caveator_details[0]['relation'] == 'W' ? 'selected=selected' : '';
+                                    // $selectNotAvailable = $caveator_details[0]['relation'] == 'N' ? 'selected=selected' : '';
                                 }
                                 
                                 ?>
@@ -769,12 +772,15 @@ body.loading .overlay{
 
 
       $(document).ready(function () {   
+        var today = new Date();
         $('#pet_dob').datepicker({
             changeMonth: true,
             changeYear: true,
             yearRange: "-100:-1",
             dateFormat: "dd/mm/yy",
-            defaultDate: '-40y'
+            defaultDate: '-40y',
+            endDate: today 
+            
         });
 
         $(document).on('change','#pet_dob', function(){

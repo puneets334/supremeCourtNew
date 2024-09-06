@@ -16,10 +16,10 @@
                 <div class="logo"><a href="{{ base_url('redirect_on_login') }}"><img src="<?= base_url().'assets/newAdmin/'?>images/logo.png" alt="  " title=" "></a></div>
                 <div class="logoSubtitle">
                     <div class="brand-text">
-                        <h4>भारत का सर्वोच्च न्यायालय
+                    <a href="{{ base_url('redirect_on_login') }}"><h4>भारत का सर्वोच्च न्यायालय
                             <span> Supreme Court of India </span>
                             <span class="logo-sm-txt">|| यतो धर्मस्ततो जय: ||</span>
-                        </h4>
+                        </h4></a>
                     </div>
                 </div>
             </div>
@@ -70,7 +70,9 @@
                     <!--userDetail-->
                     <div class="userDetail" id="usr-action-btn">
                         <div class="userName"> <?= getSessionData('login')['first_name']; ?> <i class="fas fa-chevron-down"></i>
-                            <span class="division"><?= '<strong>Last Login Details</strong>' . "<br>" . "Date : " . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '') . "<br>" . "IP : " . (!empty($login_time) ? htmlentities($login_time->ip_address, ENT_QUOTES) : ''); ?></span>
+                            <span class="division"><?= '<strong>Last Login Details</strong>' . "<br>" . "Date : " . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '');
+                            // . "<br>" . "IP : " . (!empty($login_time) ? htmlentities($login_time->ip_address, ENT_QUOTES) : '')
+                            ?></span>
                         </div>
                         <div class="user-action-sec">
                             <ul>
@@ -88,7 +90,7 @@
                     <!--userImg-->
                     <div class="userImgWrap">
                         <div class="userImg">
-                            <a href="#"><img src="<?= $profile_photo ?>" alt="Admin" title="admin" width="56" height="56"></a>
+                            <a href="#"><img src="<?= $profile_photo ?>" alt="Admin" width="56" height="56"></a>
                             {{-- <a href="#"><img src="<?= base_url().'assets/newAdmin/'?>images/user.jpg" alt="Admin" title="admin" width="56" height="56"></a> --}}
                         </div>
                     </div>

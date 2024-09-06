@@ -378,10 +378,10 @@ $routes->get('advocate/report', 'Advocate\AdvocateController::reportIndex');
 $routes->post('advocate/report', 'Advocate\AdvocateController::appearingReport');
 
 // cron routes
-$routes->match(['GET', 'POST'], 'cron/bar/', 'Cron\Bar::index');
-$routes->match(['GET', 'POST'], 'cron/scrutiny_status', 'Cron\DefaultController::index');
-$routes->match(['GET', 'POST'], 'cron/fee_lock', 'Cron\FeelockController::index');
-$routes->match(['GET', 'POST'], 'cron/replication_check', 'Cron\ReplicationCheck::index');
+$routes->match(['GET', 'POST'], 'cron/bar/', 'Cron\Bar::index');  
+$routes->match(['GET', 'POST'], 'cron/scrutiny_status', 'Cron\DefaultController::index'); 
+$routes->match(['GET', 'POST'], 'cron/fee_lock', 'Cron\FeelockController::index'); //  -- In progress 
+$routes->match(['GET', 'POST'], 'cron/replication_check', 'Cron\ReplicationCheck::index');// -- In progress 
 $routes->match(['GET', 'POST'], 'cron/stage_check', 'Cron\StageController::index');
 
 // online copying

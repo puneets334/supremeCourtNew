@@ -15,6 +15,9 @@
     .datepicker-dropdown {
         margin-top: 231px !important;
     }
+    .datepicker-dropdown{
+        background-color: #fff;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -981,12 +984,20 @@
         }
     });
 
-    $('#party_dob').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
+    $(function() {
+        var today = new Date();
+        var startYear = 1984;
+        var startDate = new Date(startYear, 1, 1);
+        $("#party_dob").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:-1",
+            dateFormat: "dd-mm-yy",
+            setDate: startDate,
+            endDate: today ,
+            "autoclose": true
+            // startDate: startDate, 
+        });
     });
 
     $(document).on('change', '#party_dob', function() {

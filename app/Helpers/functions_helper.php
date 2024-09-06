@@ -2816,19 +2816,26 @@ function getPendingCourtFee()
     $Common_model = new CommonModel();
     $registration_id = getSessionData('efiling_details')['registration_id'];
     $total_pending_court_fee = 0;
-    if (!empty($registration_id)) {
+    if (!empty($registration_id))
+    {
         $if_sclsc = (!empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] == 1)) ? getSessionData('efiling_details')['if_sclsc'] : 0; //Code added for to make 0 court fee for SCLSC cases on 25072023 by Anshu and KBP
-        if (!empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] == 1)) {
+        if (!empty(getSessionData('efiling_details')['if_sclsc']) && (getSessionData('efiling_details')['if_sclsc'] == 1))
+        {
             $total_pending_court_fee = 0;
-        } else {
-            if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
+        }
+        else
+        {
+            if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) 
+            {
                 $arr = array();
                 $arr['registration_id'] = $registration_id;
                 $arr['step'] = 6;
                 $caveat_details = $Common_model->getCaveatDataByRegistrationId($arr);
                 if (!empty($caveat_details[0]))
                     $case_nature = $caveat_details[0]['nature'];
-            } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) {
+                // pr($case_nature);
+                 } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)
+                 {
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
                 // pr($court_fee_calculation_param3);
                 $case_nature = (!empty($court_fee_calculation_param3)) ? $court_fee_calculation_param3[0]['nature'] : null;
@@ -2841,11 +2848,13 @@ function getPendingCourtFee()
                 $court_fee_calculation_param1 = $Common_model->get_subject_category_casetype_court_fee($registration_id);
                 $case_nature = !empty($court_fee_calculation_param1) ? $court_fee_calculation_param1[0]['nature'] : '';
             }
-
+            // echo "Case Nature is ";
+            // pr($case_nature);
           
             if (( isset($case_nature)  &&  $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || ( isset($case_nature)  &&    $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || ( isset($case_nature)  &&      $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || ( isset($case_nature)  &&  $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)) // CHNAGE BY KBPUJARI ON 10072023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
             {
 
+               
 
 
 
