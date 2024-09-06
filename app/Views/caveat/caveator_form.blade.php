@@ -33,13 +33,19 @@ body.loading .overlay{
 .error {
     color:red !important;
 }
+input,
+select,
+textarea {
+    text-transform: uppercase;
+}
+.datepicker-dropdown {
+    margin-top: 125px !important;background-color: #fff;
+}
+
+
+
 </style>
-<style>
-    .datepicker-dropdown {
-        margin-top: 125px !important;background-color: #fff;
-    }
-    
-</style>
+
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
         <div class="tab-pane Active " id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -48,8 +54,13 @@ body.loading .overlay{
                 echo form_open('#', $attribute);
                
             ?>
+
             <div class="tab-form-inner">
+            <div class="row">
+                    <h6 class="text-center fw-bold">Caveator Information</h6>
+            </div>
                 <?= ASTERISK_RED_MANDATORY ?>
+               
                 <div class="row">
                     <!-- I Field Start-->
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -409,7 +420,7 @@ body.loading .overlay{
                             <div class="mb-3">
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
                                 <textarea tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
-                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="99" required> <?php echo isset($caveator_details[0]['address']) ? $caveator_details[0]['address'] : ''; ?></textarea>
+                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="99" required><?php echo isset($caveator_details[0]['petadd']) ? $caveator_details[0]['petadd'] : ''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                     title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o"></i>
