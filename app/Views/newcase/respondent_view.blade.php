@@ -80,7 +80,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3" id="rel_name">
                             <label for="" class="form-label">Parent/Spouse Name <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation" type="text">
+                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" required>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -169,15 +169,15 @@
                             <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>>Other</label>
                         </div>
                     </div>
-                    </div>
-                    <div class="row" id="org_form" style="display: none">
+                </div>
+                <div class="row" id="org_form" style="display: none">
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row">
                         <div class="mb-3">
                             <label for="" class="form-label">State Name <span style="color: red" class="astriks">*</span></label>
                             <select tabindex='10' name="org_state" id="org_state" class="form-control cus-form-ctrl filter_select_dropdown org_state">
                             </select>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
@@ -219,8 +219,8 @@
                             </span>
                         </div>
                     </div>
-                    </div>
-                    <div class="row">
+                </div>
+                <div class="row">
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Email </label>
@@ -384,8 +384,8 @@
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-<script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
-<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css">
+<script src="<?= base_url(); ?>assets/js/sweetalert.min.js"></script>
+<link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert.css">
 <script>
     $(".sci_validation").keyup(function() {
         var initVal = $(this).val();
@@ -470,6 +470,14 @@
             }
         }
     }
+    $(document).ready(function() {
+        $("input[name='party_name']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+        $("input[name='relative_name']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
     //---------- Organisation State Name----------------------//
     $('#org_state').change(function() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
@@ -917,69 +925,68 @@
         return typeof value === 'number';
     }
 
-    $('#party_pincode').blur(function(){
+    $('#party_pincode').blur(function() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
         var pincode = $("#party_pincode").val();
-        if(pincode){
+        if (pincode) {
             var stateObj = JSON.parse(state_Arr);
             var options = '';
-            options +='<option value="">Select State</option>';
-            stateObj.forEach((response)=>
-            options +='<option value="'+response.id+'">'+response.state_name+'</option>');
+            options += '<option value="">Select State</option>';
+            stateObj.forEach((response) =>
+                options += '<option value="' + response.id + '">' + response.state_name + '</option>');
             $('#party_state').html(options).select2().trigger("change");
             $.ajax({
                 type: "POST",
-                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, pincode : pincode},
+                data: {
+                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
+                    pincode: pincode
+                },
                 url: "<?php echo base_url('newcase/Ajaxcalls/getAddressByPincode'); ?>",
-                success: function (response)
-                {
+                success: function(response) {
                     var taluk_name;
                     var district_name;
                     var state;
-                    if(response){
+                    if (response) {
                         var resData = JSON.parse(response);
-                        if(resData){
+                        if (resData) {
                             taluk_name = resData[0]['taluk_name'].trim().toUpperCase();
                             district_name = resData[0]['district_name'].trim().toUpperCase();
                             state = resData[0]['state'].trim().toUpperCase();
                         }
-                        if(taluk_name){
+                        if (taluk_name) {
                             $("#party_city").val('');
                             $("#party_city").val(taluk_name);
-                        }
-                        else{
+                        } else {
                             $("#party_city").val('');
                         }
-                        if(state){
+                        if (state) {
                             var stateObj = JSON.parse(state_Arr);
-                            if(stateObj){
+                            if (stateObj) {
                                 var singleObj = stateObj.find(
                                     item => item['state_name'] === state
                                 );
                             }
-                            if(singleObj){
+                            if (singleObj) {
                                 $('#party_state').val('');
                                 $('#party_state').val(singleObj.id).select2().trigger("change");
-                            }
-                            else{
+                            } else {
                                 $('#party_state').val('');
                             }
-                            if(district_name){
+                            if (district_name) {
                                 var stateId = $('#party_state').val();
-                                setSelectedDistrict(stateId,district_name);
+                                setSelectedDistrict(stateId, district_name);
                             }
-                        }
-                        else{
+                        } else {
                             $('#party_state').val('');
                         }
                     }
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
                 },
-                error: function () {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                error: function() {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
                 }
@@ -995,7 +1002,7 @@
         defaultDate: '-40y'
     });
 
-    $(document).on('change','#party_dob', function(){
+    $(document).on('change', '#party_dob', function() {
         var value = $('#party_dob').val();
         var parts = value.split("/");
         var day = parts[0] && parseInt(parts[0], 10);
@@ -1003,42 +1010,43 @@
         var year = parts[2] && parseInt(parts[2], 10);
         var str = day + '/' + month + '/' + year;
         var today = new Date(),
-                dob = new Date(str),
-                age = new Date(today - dob).getFullYear() - 1970;
+            dob = new Date(str),
+            age = new Date(today - dob).getFullYear() - 1970;
         $('#party_age').val(age);
     });
-    function setSelectedDistrict(stateId,district_name){
-        if(stateId && district_name){
+
+    function setSelectedDistrict(stateId, district_name) {
+        if (stateId && district_name) {
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
             $.ajax({
                 type: "POST",
-                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: stateId},
+                data: {
+                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
+                    state_id: stateId
+                },
                 url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
-                success: function (resData)
-                {
-                    if(resData){
+                success: function(resData) {
+                    if (resData) {
                         var districtObj = JSON.parse(resData);
                         var singleObj = districtObj.find(
                             item => item['district_name'] === district_name
                         );
-                        if(singleObj){
+                        if (singleObj) {
                             $('#party_district').val('');
                             $('#party_district').val(singleObj.id).select2().trigger("change");
-                        }
-                        else{
+                        } else {
                             $('#party_district').val('');
                         }
-                    }
-                    else{
+                    } else {
                         $('#party_district').val('');
                     }
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
                 },
-                error: function () {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                error: function() {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
                 }
@@ -1048,22 +1056,22 @@
 
     function ActionToTrash(trash_type) {
         event.preventDefault();
-        var trash_type =trash_type;
-        var url="";
-        if (trash_type==''){
+        var trash_type = trash_type;
+        var url = "";
+        if (trash_type == '') {
             swal("Cancelled", "Your imaginary file is safe :)", "error");
             return false;
-        }else if (trash_type=='UAT'){
-            url="<?php echo base_url('userActions/trash'); ?>";
-        }else if (trash_type=='SLT'){
-            url="<?php echo base_url('stage_list/trash'); ?>";
-        }else if (trash_type=='EAT'){
-            url="<?php echo base_url('userActions/trash'); ?>";
-        }else{
+        } else if (trash_type == 'UAT') {
+            url = "<?php echo base_url('userActions/trash'); ?>";
+        } else if (trash_type == 'SLT') {
+            url = "<?php echo base_url('stage_list/trash'); ?>";
+        } else if (trash_type == 'EAT') {
+            url = "<?php echo base_url('userActions/trash'); ?>";
+        } else {
             swal("Cancelled", "Your imaginary file is safe :)", "error");
             return false;
         }
-    //    alert('trash_type'+trash_type+'url='+url);//return false;
+        //    alert('trash_type'+trash_type+'url='+url);//return false;
         swal({
                 title: "Do you really want to trash this E-Filing,",
                 text: "once it will be trashed you can't restore the same.",
@@ -1077,13 +1085,18 @@
                 closeOnConfirm: false,
                 closeOnCancel: true
             },
-            function(isConfirm){
-                if (isConfirm) {  // submitting the form when user press yes
+            function(isConfirm) {
+                if (isConfirm) { // submitting the form when user press yes
                     var link = document.createElement("a");
                     link.href = url;
                     link.target = "_self";
                     link.click();
-                    swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
+                    swal({
+                        title: "Deleted!",
+                        text: "E-Filing has been deleted.",
+                        type: "success",
+                        timer: 2000
+                    });
 
                 } else {
                     //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});

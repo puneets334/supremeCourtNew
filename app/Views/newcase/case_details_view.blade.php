@@ -18,6 +18,9 @@
     span.select2 {
         width : 100% !important;
     }
+    .datepicker-days{
+        background-color: #ffffff;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -73,7 +76,7 @@
                         <div class="mb-3">
 
                             <label for="" class="form-label">Cause Title Respondent <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" type="text" required><?php echo_data(@$cause_title[1]); ?></textarea>
+                            <textarea tabindex='2' id="cause_res" name="cause_res" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" type="text" style="text-transform: capitalize" required><?php echo_data(@$cause_title[1]); ?></textarea>
 
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
@@ -123,7 +126,7 @@
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of signature of jail incharge</label>
                             <input tabindex='5' class="form-control cus-form-ctrl" id="datesignjail" name="datesignjail" value="<?php echo @$new_case_details[0]->jail_signature_date; ?>" type="text">
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
+                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -494,14 +497,14 @@
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd/mm/yy",
-        maxDate: new Date
+        maxDate: new Date()
 
     });
     $('#filing_date,#order_date').datepicker({
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd/mm/yy",
-        maxDate: new Date
+        maxDate: new Date()
     });
     $('#decision_date,#cc_applied_date,#cc_ready_date,#offence_date,#charge_sheet_date,#accident_date,#fir_file_date,\n\
                    #trial_decision_date,#trial_cc_applied_date,#trial_cc_ready_date,#hc_decision_date,#hc_cc_applied_date,\n\
@@ -794,15 +797,21 @@
             $('#dtsign').hide();
         }
     }
+    
+
 
     $('#datesignjail').datepicker({
-        
+            
         changeMonth: true,
         changeYear: true,
 
         dateFormat: "dd/mm/YY",
-        // maxDate: new Date
+        // maxDate: new Date(),
+        // format: 'dd/mm/yyyy',
+        endDate: '+0d',
+        // autoclose: true
     });
+    
     $(function() {
         $("#datesignjail").datepicker({maxDate: 0});
 
