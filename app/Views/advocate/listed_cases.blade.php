@@ -78,8 +78,12 @@
                                                     </td>
                                                     <td>
 
-                                                        @if($advocate['next_dt'] == config("constants.CURRENT_DATE") && date('H:i:s') > config("constants.APPEARANCE_ALLOW_TIME"))
-                                                            <span data-courtno="{{$advocate['courtno']}}" data-toggle="modal" data-target="#modal-lg" class="badge badge-danger time_out_msg">{{config("constants.MSG_TIME_OUT")}}</span>
+                                                        @if($advocate['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME)
+                                                            <span   data-courtno="{{$advocate['courtno']}}"
+                                                                    data-toggle="modal"
+                                                                     data-target="#modal-lg"
+                                                                     class="badge badge-danger time_out_msg" style="padding:10px;">
+                                                                     {{ MSG_TIME_OUT }}</span>
                                                         @else
                                                             <button data-toggle="modal" data-target="#modal-lg"
                                                                     type="button"
@@ -413,6 +417,114 @@
             }
         });
     });
+    function chkall1(e){
+        var elm=e.name;
+        if(document.getElementById(elm).checked)
+        {
+            $('input[type=checkbox]').each(function () {
+                if($(this).attr("name")=="chk_master_list_id")
+                    this.checked=true;
+            });
+        }
+        else
+        {
+            $('input[type=checkbox]').each(function () {
+                if($(this).attr("name")=="chk_master_list_id")
+                    this.checked=false;
+            });
+        }
+
+    }
+
+    $(document).on("click", ".master_list_submit", function () {
+        var diary_no = $(this).data('diary_no');
+        var next_dt = $(this).data('next_dt');
+        var appearing_for = $(this).data('appearing_for');
+        var brd_slno = $(this).data('brd_slno');
+        var courtno = $(this).data('courtno');
+        var array = [];
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        $("input:checkbox[name=chk_master_list_id]:checked").each(function() {
+            array.push($(this).val());
+        });
+        if (array.length === 0) {
+            // Display an alert if no checkboxes are checked
+            // alert("Please check at least one checkbox.");
+            Swal.fire({
+            icon: 'warning',
+            title: 'Check Box Required',
+            text: 'I certify check box must be checked',
+            confirmButtonText: 'OK'
+            });
+            return false;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('advocate/master_list_submit'); ?>",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, appearing_for: appearing_for,brd_slno: brd_slno, courtno: courtno, diary_no: diary_no,next_dt: next_dt, array: array },
+            cache: false,
+            dataType: "json",
+            success: function (data) {
+                if (data == 'timeout') {
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Time Out'
+                    })
+                    setTimeout(function () {
+                        window.location.href = "/";
+                    }, 2000);
+                }
+                else{
+                    swal.fire({
+                        icon: 'success',
+                        title: 'Success'
+                    })
+                    $.each(data, function (i, item) {
+                        $('.table_added_advocates tr:last').after('<tr>' +
+                            '<td><span class="drag_to_sort fas fa-arrows-alt"></span>' +
+                            '<input type="hidden" name="sortable_id[]" value="' + data[i].id + '" />' +
+                            '</td>' +
+                            '<td>' + data[i].advocate_title + ' ' + data[i].advocate_name + ', ' + data[i].advocate_type + '</td>' +
+                            '<td class="text-right py-0 align-middle">' +
+                            '<span class="badge badge-light">' + data[i].entry_time + '</span>' +
+                            '<div class="btn-group btn-group-sm advocate_remove_' + data[i].id + '">' +
+                            '<a href="#" data-next_dt="' + data[i].next_dt + '" data-id="' + data[i].id + '" data-is_active="1" class="btn btn-danger advocate_remove" title="Remove"><i class="fas fa-trash"></i></a>' +
+                            '</div>' +
+                            '</td>' +
+                            '</tr>');
+
+                    });
+                    $(".display_master_list").toggle(800);
+                }
+            }
+        });
+    });
+
+    $(document).on("click", ".time_out_msg", function () {
+        $(".myModal_content").html("");
+        $("#modal-lg").modal({backdrop: true});
+        var courtno = $(this).data('courtno');
+        var html = '';
+        html += '<div class="modal-header">'+
+            '<h4 class="modal-title">Appearance Slip - Time Out</h4>'+
+            '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
+            '<span aria-hidden="true">&times;</span>'+
+            '</button>'+
+            '</div>'+
+            '<div class="modal-body">Please contact court master of court room no. '+courtno+'.</div>' +
+            '<div class="modal-footer justify-content-between " >'+
+            '<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>'+
+            '</div>';
+        $(".myModal_content").html(html);
+    });
+
+
+
+
+
+
 
 
 
