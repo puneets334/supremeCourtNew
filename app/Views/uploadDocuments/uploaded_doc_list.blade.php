@@ -9,12 +9,12 @@ use App\Models\Common\CommonModel;
         <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="table-sec">
                     <div class="table-responsive">
-                        <table id="datatable-responsive" class="table table-striped custom-table">
+                        <table id="datatable-responsive datatableresponsive" class="table table-striped custom-table">
             <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                 <thead>
                     <tr class="success">
                         <th>#</th>
-                        <th>Uploaded Documents(s) </th>
+                        <th>Uploaded Documents(s) sfd</th>
                         <th>Uploaded On </th>
                         <th>Pages</th>
                         <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
