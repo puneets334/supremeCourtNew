@@ -37,23 +37,17 @@
                                                 <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                                     <div class="tab-form-inner">
                                                         <div class="row">
-                                                            <h6 class="text-center"> Advance Summer Vacation List
-                                                                @php echo date("Y") @endphp</h6>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-9"> </div>
-                                                            
+                                                            <div class="col-9">
+                                                                <h6 class="text-center"> Advance Summer Vacation List @php echo date("Y") @endphp</h6>
+                                                            </div>
                                                             <div class="col-3">
-                                                                <button id="declineButton" type="button"
-                                                                    class="btn btn-sm btn-success text-right"
-                                                                    onclick="javascript:confirmBeforeDecline();"><strong>Decline
-                                                                        Selected Case(s)</strong></button>
+                                                                <button id="declineButton" type="button" class="btn btn-primary btn-success text-center pull-right" onclick="javascript:confirmBeforeDecline();"><strong>Decline Selected Case(s)</strong></button>
                                                             </div>
                                                         </div>
                                                         <div class="row">
                                                             <div class="table-sec">
                                                                 <div class="table-responsive">
-                                                                    <table class="table table-striped custom-table" id="datatable-responsive">
+                                                                    <table class="table table-striped custom-table text-left" id="datatable-responsive">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th>#</th>

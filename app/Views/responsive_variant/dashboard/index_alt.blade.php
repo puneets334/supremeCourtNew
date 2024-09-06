@@ -230,7 +230,7 @@
                                         <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                                             <div class="dash-card">
                                                 <div class="title-sec">
-                                                    <h5 class="unerline-title">My cases <small class="uk-text-muted">soon to be listed</small></h5>
+                                                    <h5 class="unerline-title">My Cases <small class="uk-text-muted">soon to be listed</small></h5>
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive">
