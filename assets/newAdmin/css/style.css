@@ -8178,6 +8178,10 @@ div#calendar {
     animation: spin 1.5s linear infinite;
 }
 
+.btn-primary {
+    border-radius: 100px;
+}
+
 @-webkit-keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);
