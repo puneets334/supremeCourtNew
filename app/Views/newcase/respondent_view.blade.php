@@ -498,7 +498,7 @@
                 $('.party_name').removeAttr('required', 'required');
                 $('.relation').removeAttr('required', 'required');
                 $('.relative_name').removeAttr('required', 'required');
-                $('.org_state_name').attr('required', 'required');
+                // $('.org_state_name').attr('required', 'required');
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
