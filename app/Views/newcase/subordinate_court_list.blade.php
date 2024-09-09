@@ -15,7 +15,9 @@ $court_type_details = '';
             <?php if(isset($subordinate_court_details[0]->is_hc_exempted) && $subordinate_court_details[0]->is_hc_exempted=='t'){?>
                 <p> No Earlier Court Details</p>
             <?php }else{?>
-            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
+            <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
+            
                 <thead>
                 <tr class="success">
                     <th>#</th>

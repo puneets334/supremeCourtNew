@@ -79,12 +79,9 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                             } ?>
                             <div class="center-content-inner comn-innercontent">
                                 <div class="tab-content">
-                                    <div class="tab-pane active"
-                                        id="home"
-                                        role="tabpanel"
-                                        aria-labelledby="home-tab">
-                                        <div class="row">
-                                            <h6 class="text-center fw-bold">View </h6>
+                                    <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <div class="row">
+                                            <h6 class="text-center fw-bold">View</h6>
                                         </div>
                                         <div class="tab-form-inner">
                                             <div class="row">
@@ -99,7 +96,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                     target="_blank"
                                                                     href="<?php echo base_url('acknowledgement/view'); ?>">
                                                                     <i class="fa fa-download blink"></i> eFiling Acknowledgement
-                                                                </a>
+                                                                </a> 
                                                         <?php
                                                             }
                                                         }
@@ -125,7 +122,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                         href="javascript:void(0);"
                                                         class="btn btn-outline btn-info btn-sm closeall"
                                                         style="float: right; ">
-                                                        <span class="fa fa-eye-slash"></span> Close All
+                                                        <span class="fa fa-eye-slash"></span> Close All 
                                                     </a>
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -153,24 +150,23 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label
-                                                                                        class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">Cause Title :
+                                                                                        class="control-label col-md-6 text-right"
+                                                                                        for="filing_no"><b>Cause Title :</b> <?= echo_data($new_case_details[0]->cause_title);?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
                                                                                         <p> <?php
-                                                                                            //echo_data($filedByData);
-                                                                                            echo_data($new_case_details[0]->cause_title); ?> </p>
+                                                                                            //echo_data($filedByData); echo_data($new_case_details[0]->cause_title); ?> </p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label
-                                                                                        class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">Case Type :
+                                                                                        class="control-label col-md-6 text-right"
+                                                                                        for="filing_no"><b>Case Type :</b> <?= echo_data(strtoupper($sc_case_type[0]->casename));?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
-                                                                                        <p> <?php echo_data(strtoupper($sc_case_type[0]->casename)); ?> </p>
+                                                                                        <p> <?php // echo_data(strtoupper($sc_case_type[0]->casename)); ?> </p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -179,14 +175,16 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
                                                                                     <label
-                                                                                        class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">Subject Category
-                                                                                        :
+                                                                                        class="control-label col-md-6 text-right"
+                                                                                        for="filing_no"><b>Subject Category :</b>  <?php
+                                                                                            echo_data(strtoupper($main_subject_cat[0]->sub_name1));
+                                                                                            echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '');
+                                                                                            ?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
                                                                                         <p> <?php
-                                                                                            echo_data(strtoupper($main_subject_cat[0]->sub_name1));
-                                                                                            echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '');
+                                                                                            // echo_data(strtoupper($main_subject_cat[0]->sub_name1));
+                                                                                            // echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '');
                                                                                             ?> </p>
                                                                                     </div>
                                                                                 </div>
@@ -209,10 +207,8 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                 }
                                                                                 $filed = '<div class="col-md-6">
                                                                                     <div class="form-group">
-                                                                                        <label class="control-label col-md-4 text-right" for="filed_by">Filed By: </label>
+                                                                                        <label class="control-label col-md-4 text-right" for="filed_by"><b> Filed By:</b> ' . $filedByData . ' '.$filedByData_contact_emailid.' '.$vakalat_advocate.' </label>
                                                                                         <div class="col-md-8">
-                                                                                            <p>' . $filedByData . '</p>
-                                                                                            <p>' . $filedByData_contact_emailid . '</p>' . $vakalat_advocate . '
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>';
@@ -221,13 +217,10 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                             ?>
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
-                                                                                    <label
-                                                                                        class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">No. of
-                                                                                        Petitioner :
+                                                                                    <labe class="control-label col-md-4 text-right" for="filing_no"><b>No. of Petitioner : </b><?= echo_data($new_case_details[0]->no_of_petitioners); ?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
-                                                                                        <p><?php echo_data($new_case_details[0]->no_of_petitioners); ?></p>
+                                                                                        <p><?php //echo_data($new_case_details[0]->no_of_petitioners); ?></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -235,11 +228,11 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                 <div class="form-group">
                                                                                     <label
                                                                                         class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">No. of
-                                                                                        Respondent :
+                                                                                        for="filing_no"><b> No. of
+                                                                                        Respondent :</b> <?= echo_data($new_case_details[0]->no_of_respondents);?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
-                                                                                        <p><?php echo_data($new_case_details[0]->no_of_respondents); ?></p>
+                                                                                        <p><?php // echo_data($new_case_details[0]->no_of_respondents); ?></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -247,10 +240,10 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                 <div class="form-group">
                                                                                     <label
                                                                                         class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">IF SCLSC :
+                                                                                        for="filing_no"><b>IF SCLSC :</b> <?= !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
-                                                                                        <p><?php echo !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?></p>
+                                                                                        <p><?php // echo !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -258,11 +251,11 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                 <div class="form-group">
                                                                                     <label
                                                                                         class="control-label col-md-4 text-right"
-                                                                                        for="filing_no">Special
-                                                                                        Category :
+                                                                                        for="filing_no"><b>Special
+                                                                                        Category :</b> <?= !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
-                                                                                        <p><?php echo !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?></p>
+                                                                                        <p><?php // echo !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
