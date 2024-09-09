@@ -12,6 +12,9 @@
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 @stack('style')
 <style>
+
+    html {overflow-x: hidden; }
+    
 .overlay{
     display: none;
     position: fixed;
@@ -22,6 +25,7 @@
     z-index: 999;
     background: rgba(255,255,255,0.8) url("loader.gif") center no-repeat;
 }
+
 /* Turn off scrollbar when body element has the loading class */
 body.loading{
     overflow: hidden;   
@@ -39,7 +43,7 @@ textarea {
     text-transform: uppercase;
 }
 .datepicker-dropdown {
-    margin-top: 125px !important;background-color: #fff;
+    margin-top: 260px; !important;background-color: #fff;
 }
 
 
@@ -54,6 +58,7 @@ textarea {
                 echo form_open('#', $attribute);
                
             ?>
+            <div id="msg"></div>
 
             <div class="tab-form-inner">
             <div class="row">
@@ -160,27 +165,18 @@ textarea {
                             <div class="mb-3">
                                 <label for="" class="form-label">Relation</label>
                                 <?php
-                                if (isset($caveator_details)) {
-                                    $selectSon='';
-                                    // pr($caveator_details);
-                                    // $selectSon = $caveator_details[0]['relation'] == 'S' ? 'selected=selected' : '';
-                                    // $selectDaughter = $caveator_details[0]['relation'] == 'D' ? 'selected=selected' : '';
-                                    // $selectWife = $caveator_details[0]['relation'] == 'W' ? 'selected=selected' : '';
-                                    // $selectNotAvailable = $caveator_details[0]['relation'] == 'N' ? 'selected=selected' : '';
-                                }
-                                
+                                    $selectSon = $caveator_details[0]['pet_father_flag'] == 'S' ? 'selected=selected' : '';
+                                    $selectDaughter = $caveator_details[0]['pet_father_flag'] == 'D' ? 'selected=selected' : '';
+                                    $selectWife = $caveator_details[0]['pet_father_flag'] == 'W' ? 'selected=selected' : '';
+                                    $selectNotAvailable = $caveator_details[0]['pet_father_flag'] == 'N' ? 'selected=selected' : '';
                                 ?>
                                 <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
                                     class="form-control cus-form-ctrl filter_select_dropdown" >
                                     <option value="">Select Relation</option>
-                                    <option <?php echo isset($selectSon) ? $selectSon : '';
-                                    $selectSon; ?> value="S">Son Of</option>
-                                    <option <?php echo isset($selectDaughter) ? $selectDaughter : ''; ?> value="D">Daughter Of
-                                    </option>
-                                    <option <?php echo isset($selectWife) ? $selectWife : ''; ?> value="W">Spouse Of
-                                    </option>
-                                    <option <?php echo isset($selectNotAvailable) ? $selectNotAvailable : ''; ?> value="N">Not Available
-                                    </option>
+                                    <option <?php echo $selectSon; ?> value="S">Son Of</option>
+                                    <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
+                                    <option <?php echo $selectWife; ?> value="W">Spouse Of</option>
+                                    <option <?php echo $selectNotAvailable; ?> value="N">Not Available</option>
                                 </select>
 
                             </div>
@@ -275,7 +271,7 @@ textarea {
                                                     $select_organization = '';
                                                     if (isset($state_list) && !empty($state_list)) {
                                                         foreach ($state_list as $k => $v) {
-                                                            if (!empty($caveator_details[0]['org_state_id']) && trim($caveator_details[0]['org_state_id']) == $v->cmis_state_id) {
+                                                            if (!empty($caveator_details[0]['org_state']) && trim($caveator_details[0]['org_state']) == $v->cmis_state_id) {
                                                                 $select_organization = 'selected="selected"';
                                                             } else {
                                                                 $select_organization = '';
@@ -498,7 +494,7 @@ textarea {
                                     <?php
                                     if (!empty($district_list)) {
                                         foreach ($district_list as $dataRes) {
-                                            $sel = (isset($caveator_details[0]['district_id']) && $caveator_details[0]['district_id'] == $dataRes->id_no) ? 'selected=selected' : '';
+                                            $sel = (isset($caveator_details[0]['dist_code']) && $caveator_details[0]['dist_code'] == $dataRes->id_no) ? 'selected=selected' : '';
                                             ?>
                                             <option <?php echo $sel; ?>
                                                     value="<?php echo_data(url_encryption(trim($dataRes->id_no))); ?>"><?php echo_data(strtoupper($dataRes->name)); ?></option>
@@ -921,6 +917,8 @@ textarea {
                             var resArr = data.split('@@@');
                             if (resArr[0] == 1) {
                                 $('#msg').show();
+
+
                                 //   alert('hello');
                                 $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                             } else if (resArr[0] == 2) {
