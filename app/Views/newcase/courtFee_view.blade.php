@@ -36,16 +36,16 @@
             echo form_open('newcase/courtFee/add_court_fee_details', $attribute);
             ?>
             <div class="tab-form-inner">
-            <div class="row">
+                <div class="row">
                     <h6 class="text-center fw-bold">Pay Court Fee</h6>
                 </div>
-            
+
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                         <!-- <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%"> -->
                         <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
-                        
+
                             <thead>
                                 <tr class="success">
                                     <th>Cost Per Page ( <i class="fa fa-rupee"></i> )</th>
@@ -75,7 +75,9 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-12 col-xs-12">
-                        <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <!-- <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
+                        <table id="datatable-responsive1" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
+                        
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
