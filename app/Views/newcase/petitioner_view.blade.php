@@ -15,7 +15,8 @@
     .datepicker-dropdown {
         margin-top: 231px !important;
     }
-    .datepicker-dropdown{
+
+    .datepicker-dropdown {
         background-color: #fff;
     }
 </style>
@@ -27,6 +28,9 @@
             echo form_open('#', $attribute);
             ?>
             <div class="tab-form-inner">
+                <div class="row">
+                    <h6 class="text-center fw-bold">Petitioner</h6>
+                </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
@@ -69,7 +73,7 @@
                             $selectWife = @$party_details[0]['relation'] == 'W' ? 'selected' : '';
                             $selectNotAvailable = @$party_details[0]['relation'] == 'N' ? 'selected' : '';
                             ?>
-                            <select tabindex='3' name="relation" id="relation" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%" required>
+                            <select tabindex='3' name="relation" id="relation" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%">
                                 <option value="">Select Relation</option>
                                 <option <?php echo $selectSon; ?> value="S">Son Of</option>
                                 <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
@@ -110,9 +114,9 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of Birth</label>
-                            <input tabindex='5' class="form-control cus-form-ctrl" id="party_dob" name="party_dob" value="<?php echo (!empty(@$party_details[0]['party_dob'])) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
+                            <input tabindex='5' class="form-control cus-form-ctrl party_dob" id="party_dob" name="party_dob" value="<?php echo (!empty(@$party_details[0]['party_dob'])) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
+                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -147,7 +151,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required disabled     >
+                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required disabled>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -243,7 +247,7 @@
                         <div class="mb-3">
                             <label class="form-label">Address <span id="address_span" <?php echo $style; ?> class="astriks"><?php echo $astrik; ?></span></label>
                             <textarea tabindex='18' name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3"><?php echo (@$party_details[0]['address']); ?></textarea>
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -282,7 +286,7 @@
                         <div class="mb-3">
                             <label class="form-label">City <span id="city_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
                             <input id="party_city" tabindex='21' name="party_city" placeholder="City" value="<?php echo (@$party_details[0]['city']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49" required>
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
+                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -442,20 +446,24 @@
         })
     });
 
-    $('.party_gender1').attr('required','required');
-    $('.party_name').attr('required','required');
-    $('.relative_name').attr('required','required');
+    $('.party_gender1').attr('required', 'required');
+    $('.party_name').attr('required', 'required');
+    $('.relative_name').attr('required', 'required');
+    $('#relation').attr('required', 'required');
+    $('#org_state').removeAttr('required', 'required'); 
 
-    
+
     function get_party_as(value) {
         var party_as = value;
         if (party_as == 'I') {
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
-            $('.party_gender1').attr('required','required');
-            $('.party_name').attr('required','required');
-            $('.relative_name').attr('required','required');
+            $('.party_gender1').attr('required', 'required');
+            $('.party_name').attr('required', 'required');
+            $('.relative_name').attr('required', 'required');
+            $('#relation').attr('required', 'required');
+            $('#org_state').removeAttr('required', 'required');
             // $('#org_state').val('');
             // $('#org_dept').val('');
             // $('#org_post').val('');
@@ -472,9 +480,11 @@
                 $('#otherOrgState').hide();
                 $('.org_dept').attr('required', 'required');
                 $('.org_post').attr('required', 'required');
-                $('.party_gender1').removeAttr('required','required');
-                $('.party_name').removeAttr('required','required');
-                $('.relative_name').removeAttr('required','required');
+                $('.party_gender1').removeAttr('required', 'required');
+                $('.party_name').removeAttr('required', 'required');
+                $('.relative_name').removeAttr('required', 'required');
+                $('#relation').removeAttr('required', 'required');
+                $('#org_state').removeAttr('required', 'required');
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
@@ -487,9 +497,12 @@
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
-                $('.party_gender1').removeAttr('required','required');
-                $('.party_name').removeAttr('required','required');
-                $('.relative_name').removeAttr('required','required');
+                $('.party_gender1').removeAttr('required', 'required');
+                $('.party_name').removeAttr('required', 'required');
+                $('.relative_name').removeAttr('required', 'required');
+                $('#relation').removeAttr('required', 'required');
+                $('#org_state').attr('required', 'required');
+
                 // $('#party_name').val('');
                 // $('#relation').val('');
                 // $('#relative_name').val('');
@@ -1010,14 +1023,17 @@
 
     $(function() {
         var today = new Date();
+        var today = new Date();
+        var startYear = 1984;
+        var startDate = new Date(startYear, 1, 1);
 
-        $("#party_dob").datepicker({
+        $(".party_dob").datepicker({
             changeMonth: true,
             changeYear: true,
             yearRange: "-100:-1",
-            dateFormat: "dd-mm-yy",
+            format: "dd/mm/yyyy",
             setDate: startDate,
-            endDate: today ,
+            endDate: today,
             "autoclose": true
             // startDate: startDate, 
         });
@@ -1030,9 +1046,10 @@
         var month = parts[1] && parseInt(parts[1], 10);
         var year = parts[2] && parseInt(parts[2], 10);
         var str = day + '/' + month + '/' + year;
-        var today = new Date(),
-            dob = new Date(str),
-            age = new Date(today - dob).getFullYear() - 1970;
+        var today = new Date();
+        var dob = new Date(str);
+        // age = new Date(today - dob).getFullYear() - 1970;
+        var age = today.getFullYear() - year;
         $('#party_age').val(age);
 
     });
