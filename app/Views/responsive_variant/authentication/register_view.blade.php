@@ -173,7 +173,7 @@ $session = service('session');
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
-                                            <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
+                                            <input type="hidden" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo integerEncreption($adv_type_select); ?>">
                                             <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo stringEncreption('not_register_ekyc'); ?>" checked> Offline</label>
                                             <!-- </a> -->
@@ -189,7 +189,7 @@ $session = service('session');
                                 <?php echo $session->setFlashdata('msg'); ?>
                                 <input hidden id="user_login_type" name="adv_search1" value="<?php echo htmlentities(stringEncreption('new_advocate_register'), ENT_QUOTES); ?>">
                                 <!--<input hidden id="user_login_type" name="adv_type1" value="<?php /*echo htmlentities(stringEncreption('1'), ENT_QUOTES); */?>">-->
-                                <input hidden id="user_login_type" name="adv_type1" value="<?php echo integerEncreption($adv_type_select); ?>">
+                                <input type="hidden" style="display: none;" id="user_login_type" name="adv_type1" value="<?php echo integerEncreption($adv_type_select); ?>">
                                 <p class="">
                                     <a style="width: 90%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
                                     <button type="button" class="btn btn-primary" data-toggle="tooltip" data-html="true" title="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
@@ -252,7 +252,7 @@ $session = service('session');
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
                                             <label for="" class="form-label"></label>
-                                            <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo htmlentities(integerEncreption($adv_type_select), ENT_QUOTES); ?>">
+                                            <input type="hidden" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo htmlentities(integerEncreption($adv_type_select), ENT_QUOTES); ?>">
                                             <!-- <a class=""> -->
                                                 <label><input class="form-check-input" type="radio" name="not_register_type_user"  id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo htmlentities(stringEncreption('not_register_ekyc'), ENT_QUOTES); ?>" checked> Offline</label>
                                             <!-- </a> -->
