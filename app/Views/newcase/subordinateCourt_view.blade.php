@@ -25,8 +25,7 @@
     rel="stylesheet">
 @stack('style')
 <style>
-
-.datepicker-days{
+    .datepicker-days {
         background-color: #ffffff;
     }
 </style>
@@ -45,6 +44,9 @@
             $cause_title = !empty($new_case_details[0]['cause_title']) ? explode(' Vs. ', $new_case_details[0]['cause_title']) : [];
             ?>
             <div class="tab-form-inner">
+                <div class="row">
+                    <h6 class="text-center fw-bold">Earlier Courts</h6>
+                </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
