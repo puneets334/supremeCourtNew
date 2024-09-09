@@ -62,6 +62,11 @@ body.loading .overlay{
                 $attribute = array('class' => 'form-horizontal', 'name' => 'subordinate_court_details', 'id' => 'subordinate_court_details', 'autocomplete' => 'off');
                 echo form_open('#', $attribute);
                 ?>
+
+                <div class="row">
+                    <h6 class="text-center fw-bold">Earlier Courts</h6>
+                </div>
+
                 <?= ASTERISK_RED_MANDATORY ?>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
