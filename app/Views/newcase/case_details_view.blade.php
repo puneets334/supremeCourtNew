@@ -42,6 +42,9 @@
             $cause_title = explode(' Vs. ', @$new_case_details[0]->cause_title);
             ?>
             <div class="tab-form-inner">
+                <div class="row">
+                    <h6 class="text-center fw-bold">Case Details</h6>
+                </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
                     <?php if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_DEPARTMENT,])) {

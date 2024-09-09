@@ -15,7 +15,8 @@
     .datepicker-dropdown {
         margin-top: 231px !important;
     }
-    .datepicker-dropdown{
+
+    .datepicker-dropdown {
         background-color: #fff;
     }
 </style>
@@ -27,6 +28,9 @@
             echo form_open('#', $attribute);
             ?>
             <div class="tab-form-inner">
+                <div class="row">
+                    <h6 class="text-center fw-bold">Respondent</h6>
+                </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
@@ -274,8 +278,8 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Pin Code<span style="color: red" class="astriks">*</span></label>
-                            <input id="party_pincode" name="party_pincode" tabindex='20' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Pincode" value="<?php echo (@$party_details[0]['pincode']); ?>" class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6">
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Pincode should be 6 digits only.">
+                            <input id="party_pincode" name="party_pincode" tabindex='20' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Pincode" value="<?php echo (@$party_details[0]['pincode']); ?>" class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6" required>
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Pincode should be 6 digits only." >
                                 <i class="fa fa-question-circle-o"></i>
                                 <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank" class="pin-code-loc">Pin Code Locator</a>
                             </span>
@@ -1027,15 +1031,15 @@
         }
     });
     var today = new Date();
-        var startYear = 1984;
-        var startDate = new Date(startYear, 1, 1);
+    var startYear = 1984;
+    var startDate = new Date(startYear, 1, 1);
     $('#party_dob').datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: "-100:-1",
         format: "dd/mm/yyyy",
         // defaultDate: '-40y',
-        endDate: today ,
+        endDate: today,
         "autoclose": true
     });
     $(document).on('change', '#party_dob', function() {
@@ -1045,7 +1049,7 @@
         var month = parts[1] && parseInt(parts[1], 10);
         var year = parts[2] && parseInt(parts[2], 10);
         var str = day + '/' + month + '/' + year;
-        
+
         var today = new Date();
         var dob = new Date(str);
         // var age = new Date(today - dob).getFullYear() - 1970;
@@ -1064,7 +1068,7 @@
                     state_id: stateId
                 },
                 url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
-                success: function(resData) {    
+                success: function(resData) {
                     if (resData) {
                         var districtObj = JSON.parse(resData);
                         var singleObj = districtObj.find(
