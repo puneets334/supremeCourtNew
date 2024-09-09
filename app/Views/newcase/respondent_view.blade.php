@@ -1064,7 +1064,7 @@
                     state_id: stateId
                 },
                 url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
-                success: function(resData) {
+                success: function(resData) {    
                     if (resData) {
                         var districtObj = JSON.parse(resData);
                         var singleObj = districtObj.find(
