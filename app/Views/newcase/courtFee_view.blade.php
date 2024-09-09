@@ -43,7 +43,9 @@
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
-                        <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%">
+                        <!-- <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%"> -->
+                        <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
+                        
                             <thead>
                                 <tr class="success">
                                     <th>Cost Per Page ( <i class="fa fa-rupee"></i> )</th>
