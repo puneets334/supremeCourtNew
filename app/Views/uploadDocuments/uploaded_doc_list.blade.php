@@ -1,5 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-body">
+        
         <?php
 
 use App\Models\Common\CommonModel;
@@ -14,7 +15,7 @@ use App\Models\Common\CommonModel;
                 <thead>
                     <tr class="success">
                         <th>#</th>
-                        <th>Uploaded Documents(s) sfd</th>
+                        <th>Uploaded Documents(s) </th>
                         <th>Uploaded On </th>
                         <th>Pages</th>
                         <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
