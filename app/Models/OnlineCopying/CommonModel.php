@@ -42,4 +42,20 @@ class CommonModel extends Model
         return $result;
     }
 
+    function getCaseType(){
+        $builder = $this->db2->table('master.casetype');
+
+        // Build the query
+        $results = $builder->select('casecode, skey, casename, short_description')
+            ->where('display', 'Y')
+            ->where('casecode !=', 9999)
+            ->whereNotIn('casecode', [15, 16])
+            ->orderBy('casecode')
+            ->orderBy('short_description')
+            ->get()
+            ->getResult();
+
+        return $results;
+    }
+
 }

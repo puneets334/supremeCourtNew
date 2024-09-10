@@ -273,7 +273,8 @@ class Respondent extends BaseController {
         } else {
             $party_dob = NULL;
         }
-        $party_age = !empty($_POST["party_age"]) ? $_POST["party_age"] : NULL;
+        // $party_age = !empty($_POST["party_age"]) ? $_POST["party_age"] : NULL;
+        $party_age = (!empty($_POST["party_age"]) && $_POST["party_age"] != 'NaN') ? $_POST["party_age"] : NULL;
         $party_gender = !empty($_POST["party_gender"]) ? $_POST["party_gender"] : '';
 
         if ($party_as != 'I') {
@@ -356,13 +357,19 @@ class Respondent extends BaseController {
             'org_post_name' => $org_post_name,
             'org_post_not_in_list' => $org_post_not_in_list
         );
+        $party_dob = trim($party_dob); // Remove any extra whitespace
 
+        if ($party_dob && strtotime($party_dob) !== false) {
+            $formatted_date = date('Y-m-d', strtotime($party_dob));
+        } else {
+            $formatted_date = null;
+        }
         $party_individual = array(
             'party_name' => $party_name,
             'relation' => $party_relation,
             'relative_name' => $relative_name,
-            'party_age' => $party_age,
-            'party_dob' => $party_dob,
+            'party_age' => ($party_age != 'NaN') ? $party_age : null,
+            'party_dob' => $formatted_date,
             'gender' => $party_gender,
             'is_dead_minor'=>$is_dead_minor,
             'is_dead_file_status'=>$is_dead_file_status
@@ -381,7 +388,7 @@ class Respondent extends BaseController {
 
         $registration_id = getSessionData('efiling_details')['registration_id'];
         $curr_dt_time = date('Y-m-d H:i:s');
-        if (isset($registration_id) && !empty($registration_id) && !empty(getSessionData('case_table_ids')->m_petitioner_id) && isset(getSessionData('case_table_ids')->m_petitioner_id)) {
+        if (isset($registration_id) && !empty($registration_id) && !empty(getSessionData('case_table_ids')->m_respondent_id) && isset(getSessionData('case_table_ids')->m_respondent_id)) {
 
             $party_update_data = array(
                 'registration_id' => $registration_id,
@@ -408,7 +415,7 @@ class Respondent extends BaseController {
             $party_create_data = array(
                 'registration_id' => $registration_id,
                 'created_on' => $curr_dt_time,
-                'created_by' => $this->session->userdata['login']['id'],
+                'created_by' => getSessionData('login')['id'],
                 'created_by_ip' => getClientIP()
             );
             $party_details = array_merge($party_details, $party_create_data);
@@ -416,7 +423,7 @@ class Respondent extends BaseController {
 
             if ($inserted_party_id) {
 
-                $_SESSION['case_table_ids']['m_respondent_id'] = $inserted_party_id;
+                $_SESSION['case_table_ids']->m_respondent_id = $inserted_party_id;
                 echo '2@@@' . htmlentities('Respondent details added successfully', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . Draft_Stage)));
             } else {
                 echo '1@@@' . htmlentities('Some error ! Please Try again.', ENT_QUOTES);

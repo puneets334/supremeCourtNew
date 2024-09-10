@@ -338,8 +338,6 @@
                     $('.save_spinner').show();
                     $('#save_doc').prop('disabled', true);
                     $.ajax({
-                        <?php
-                        $ur = ''; ?>
                         type: "POST",
                         url: "<?php echo base_url('documentIndex/DefaultController/add_index_items'); ?>",
                         data: $(this).serialize() + '&caveatDocNum=' + caveatDocNum,
@@ -573,7 +571,6 @@
         }
 
         function delete_index(value) {
-            alert(value);
             var a = confirm("Are you sure that you really want to delete this record?");
             if (a == true) {
                 var CSRF_TOKEN = 'CSRF_TOKEN';

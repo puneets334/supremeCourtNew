@@ -31,10 +31,15 @@ body.loading{
 body.loading .overlay{
     display: block;
 }
+input,
+select,
+textarea {
+    text-transform: uppercase;
+}
 </style>
 <style>
     .datepicker-dropdown {
-        margin-top: 125px !important; background-color: #fff;
+        margin-top: 260px !important; background-color: #fff;
     }
    
 </style>
@@ -48,6 +53,9 @@ body.loading .overlay{
                 $attribute = array('class' => 'form-horizontal', 'name' => 'add_caveatee', 'id' => 'add_caveatee', 'autocomplete' => 'off');
                 echo form_open('#', $attribute);
                 ?>
+                <div class="row">
+                    <h6 class="text-center fw-bold">Caveatee Information</h6>
+                </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -90,7 +98,7 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                <textarea  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  type="text" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
+                                <textarea  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
@@ -100,29 +108,11 @@ body.loading .overlay{
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Relation <span style="color: red" class="astriks">*</span></label>
-                                <?php 
-                                $selectSon=$selectDaughter=$selectWife=$selectNotAvailable=$selectNotAvailable='';
-                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'S')
-                                {
-                                    $selectSon="selected";
-                                }
-                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'D')
-                                {
-                                    $selectDaughter="selected";
-                                }
-                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'W')
-                                {
-                                    $selectWife="selected";
-                                }
-                                if(isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'N')
-                                {
-                                    $selectNotAvailable="selected";
-                                }
-
-                                // $selectSon = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'S') ? 'selected' : '';
-                                // $selectDaughter = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'D') ? 'selected' : '';
-                                // $selectWife = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag'] == 'W') ? 'selected' : '';
-                                // $selectNotAvailable = (isset($caveatee_details[0]['res_father_flag']) && $caveatee_details[0]['res_father_flag']) == 'N' ? 'selected' : '';
+                                <?php
+                                $selectSon = $caveatee_details[0]['res_father_flag'] == 'S' ? 'selected=selected' : '';
+                                $selectDaughter = $caveatee_details[0]['res_father_flag'] == 'D' ? 'selected=selected' : '';
+                                $selectWife = $caveatee_details[0]['res_father_flag'] == 'W' ? 'selected=selected' : '';
+                                $selectNotAvailable = $caveatee_details[0]['res_father_flag'] == 'N' ? 'selected=selected' : '';
                                 ?>
                                 
                                 <select tabindex='3' name="pet_rel_flag" id="pet_rel_flag"
@@ -144,7 +134,7 @@ body.loading .overlay{
 
                                 <input tabindex="4" id="relative_name" name="relative_name"
                                     minlength="3" maxlength="99" placeholder="Relative Name"
-                                    value="<?php   echo isset($caveatee_details[0]['relative_name'])?$caveatee_details[0]['relative_name']:''; ?>"
+                                    value="<?php   echo isset($caveatee_details[0]['res_father_name'])?$caveatee_details[0]['res_father_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="text" >
                             </div>
@@ -169,12 +159,12 @@ body.loading .overlay{
                                 <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                 $res_age = '';
-                                if(isset($caveatee_details[0]['party_age']))
+                                if(isset($caveatee_details[0]['res_age']))
                                 {
-                                if ($caveatee_details[0]['party_age'] == 0 || $caveatee_details[0]['party_age'] == '' || $caveatee_details[0]['party_age'] == NULL) {
+                                if ($caveatee_details[0]['res_age'] == 0 || $caveatee_details[0]['res_age'] == '' || $caveatee_details[0]['res_age'] == NULL) {
                                     $res_age = '';
                                 } else {
-                                    $res_age = $caveatee_details[0]['party_age'];
+                                    $res_age = $caveatee_details[0]['res_age'];
                                 }
                                     }
                                 ?>
@@ -372,7 +362,7 @@ body.loading .overlay{
                             <div class="mb-3">
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
                                 <textarea tabindex='16' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
-                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['address']) ? $caveatee_details[0]['address'] : ''; ?></textarea>
+                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['resadd']) ? $caveatee_details[0]['resadd'] : ''; ?></textarea>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o" ></i>
                                     </span>
@@ -547,6 +537,7 @@ body.loading .overlay{
 <script>
     $(document).ready(function() {
         // alert("SC");
+
         var today = new Date();
         $('#pet_dob').datepicker({
             changeMonth: true,

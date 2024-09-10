@@ -215,6 +215,7 @@ class DefaultController extends BaseController {
                 echo $this->validation->getError('doc_title');
                 exit(0);
             }
+            
             switch ($ref_m_efiled_type_id) {
                 case E_FILING_TYPE_NEW_CASE : $breadcrumb_step_no = NEW_CASE_UPLOAD_DOCUMENT;
                     break;

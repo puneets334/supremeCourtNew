@@ -25,6 +25,7 @@ class FeelockController extends ShilclientController {
                     if(!empty($fee['sc_diary_num']) && !empty($fee['sc_diary_year'])){
                         echo '<br/>'.$fee['transaction_num'].'<br/>';
                         $result = $this->getStatus($fee['transaction_num']);
+                        // print_r($result); die;
                         if($result === 0) continue;
                         $result = $this->lockCertificate($fee['sc_diary_num'],$fee['transaction_num'],$fee['sc_diary_year']);
                         var_dump($result);

@@ -401,10 +401,10 @@
                                 <?php
                                 if (isset($state_agency_list) && !empty($state_agency_list)) {
                                     foreach ($state_agency_list as $dataRes) {
-                                        if (isset($new_case_details[0]->state_id) && !empty($new_case_details[0]->state_id) && $new_case_details[0]->state_id == $dataRes['cmis_state_id']) {
-                                            echo '<option selected="selected" value="' . escape_data(url_encryption($dataRes['cmis_state_id'] . '#$' . $dataRes['agency_state'])) . '">' . escape_data(strtoupper($dataRes['agency_state'])) . '</option>';
+                                        if (isset($new_case_details[0]->state_id) && !empty($new_case_details[0]->state_id) && $new_case_details[0]->state_id == $dataRes->cmis_state_id) {
+                                            echo '<option selected="selected" value="' . escape_data(url_encryption($dataRes->cmis_state_id . '#$' . $dataRes->agency_state)) . '">' . escape_data(strtoupper($dataRes->agency_state)) . '</option>';
                                         } else {
-                                            echo '<option value="' . escape_data(url_encryption($dataRes['cmis_state_id'] . '#$' . $dataRes['agency_state'])) . '">' . escape_data(strtoupper($dataRes['agency_state'])) . '</option>';
+                                            echo '<option value="' . escape_data(url_encryption($dataRes->cmis_state_id . '#$' . $dataRes->agency_state)) . '">' . escape_data(strtoupper($dataRes->agency_state)) . '</option>';
                                         }
                                     }
                                 }
@@ -1590,5 +1590,51 @@
         if (!regex.test(input)) {
             event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
         }
+    }
+
+    function ActionToTrash(trash_type) {
+        event.preventDefault();
+        var trash_type =trash_type;
+        var url="";
+        if (trash_type==''){
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }else if (trash_type=='UAT'){
+            url="<?php echo base_url('userActions/trash'); ?>";
+        }else if (trash_type=='SLT'){
+            url="<?php echo base_url('stage_list/trash'); ?>";
+        }else if (trash_type=='EAT'){
+            url="<?php echo base_url('userActions/trash'); ?>";
+        }else{
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }
+    //    alert('trash_type'+trash_type+'url='+url);//return false;
+        swal({
+                title: "Do you really want to trash this E-Filing,",
+                text: "once it will be trashed you can't restore the same.",
+                type: "warning",
+                position: "top",
+                showCancelButton: true,
+                confirmButtonColor: "green",
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                buttons: ["Make Changes", "Yes!"],
+                closeOnConfirm: false,
+                closeOnCancel: true
+            },
+            function(isConfirm){
+                if (isConfirm) {  // submitting the form when user press yes
+                    var link = document.createElement("a");
+                    link.href = url;
+                    link.target = "_self";
+                    link.click();
+                    swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
+
+                } else {
+                    //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+                }
+
+            });
     }
 </script>

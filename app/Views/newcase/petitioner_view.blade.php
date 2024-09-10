@@ -13,7 +13,7 @@
 @stack('style')
 <style>
     .datepicker-dropdown {
-        margin-top: 231px !important;
+        margin-top: 305px !important;
     }
 
     .datepicker-dropdown {
@@ -113,7 +113,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3 icon-input">
-                            <label for="" class="form-label">Date of Birth</label>
+                            <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
                             <input tabindex='5' class="form-control cus-form-ctrl party_dob" id="party_dob" name="party_dob" value="<?php echo (!empty(@$party_details[0]['party_dob'])) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
@@ -463,6 +463,7 @@
             $('.party_name').attr('required', 'required');
             $('.relative_name').attr('required', 'required');
             $('#relation').attr('required', 'required');
+            $('#party_dob').attr('required', 'required');
             $('#org_state').removeAttr('required', 'required');
             // $('#org_state').val('');
             // $('#org_dept').val('');
@@ -1021,7 +1022,7 @@
         }
     });
 
-    $(function() {
+    // $(function() {
         var today = new Date();
         var today = new Date();
         var startYear = 1984;
@@ -1037,7 +1038,7 @@
             "autoclose": true
             // startDate: startDate, 
         });
-    });
+    // });
 
     $(document).on('change', '#party_dob', function() {
         var value = $('#party_dob').val();

@@ -1,0 +1,853 @@
+<?php
+//var_dump($_SESSION['user_address'][0]['first_name']);
+if ($_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"]) ) {
+if ($_SESSION['is_user_address_found'] != 'YES') {
+    //add your address *
+    ?>
+    <script type='text/javascript'>window.location.href = 'user_address.php'</script>
+    <?php
+}
+
+$OLD_ROP = OLD_ROP_DB;
+if($_REQUEST['chk_status']==1)
+{
+    $ct = $_REQUEST['ct']; 
+    $cn = $_REQUEST['cn']; 
+    $cy = $_REQUEST['cy'];
+    
+    $sql_dno = eCopyingGetDiaryNo($ct, $cn, $cy);
+
+    if(count($sql_dno) > 0){
+        $diary_no = $sql_dno['dn'].$sql_dno['dy'];
+        $_SESSION['session_d_no'] = $sql_dno['dn'];
+        $_SESSION['session_d_year'] = $sql_dno['dy'];
+    }
+    else{
+        $sql_dno = eCopyingCheckDiaryNo($ct, $cn, $cy);
+        if(count($sql_dno) > 0){
+            $diary_no = $sql_dno['dn'].$sql_dno['dy'];
+            $_SESSION['session_d_no'] = $sql_dno['dn'];
+            $_SESSION['session_d_year'] = $sql_dno['dy'];
+        }
+    }
+}
+else{
+    $diary_no=$_REQUEST['d_no'].$_REQUEST['d_yr'];
+    $_SESSION['session_d_no'] = $_REQUEST['d_no'];
+    $_SESSION['session_d_year'] = $_REQUEST['d_yr'];
+}
+
+$res_fil_det = eCopyingGetFileDetails($diary_no);
+if(count($res_fil_det) > 0){
+   if($res_fil_det['pno']!=0)
+    {
+        if($res_fil_det['pno']==2)
+            $pno=" AND ANOTHER";
+        else if($res_fil_det['pno']>2)
+            $pno=" AND OTHERS";
+    }
+    if($res_fil_det['rno']!=0)
+    {
+        if($res_fil_det['rno']==2)
+            $rno=" AND ANOTHER";
+        else if($res_fil_det['rno']>2)
+            $rno=" AND OTHERS";
+    }
+   if($res_fil_det['reg_no_display']!='')
+    {
+        $case_no = $res_fil_det['reg_no_display'];
+    }
+    $case_no .= '  Diary No. '.substr($diary_no,0,-4).' - '.substr($diary_no,-4);
+
+    $_SESSION['session_case_no'] = $case_no;
+    $_SESSION['session_cause_title'] = $res_fil_det['pet_name'] . $pno . " Vs " . $res_fil_det['res_name'] . $rno;
+    $_SESSION['session_c_status'] = $res_fil_det['c_status'] ;
+?>
+
+<!--    <div id="show_error"></div>  This Segment Displays The Validation Rule -->
+    <div class="card mt-2" >
+<div class="card-header bg-info text-white font-weight-bolder mt-0 mb-0">            
+                                        Case Info    
+                                    </div>        
+        <div class="card-body">
+            <div class="text-center diary_no_class" data-diary-no="<?=$diary_no;?>" data-case-no="<?=$case_no;?>" data-cause_title="<?=$res_fil_det['pet_name'] . $pno . " Vs " . $res_fil_det['res_name'] . $rno;?>" >
+                <p><?= $res_fil_det['pet_name'] . $pno . " Vs " . $res_fil_det['res_name'] . $rno; ?></p>
+                <strong><?= $case_no; ?> (<?= $res_fil_det['c_status']=='P' ? '<span style="color: #0554DB;">Pending</span>' : '<span class="text-danger">Disposed</span>'; ?>)</strong>
+                <p class="text-left">
+                    Applying as :<b> 
+                    <?php   if($_SESSION["session_filed"] == 1){ echo "AOR";}
+                            else if($_SESSION["session_filed"] == 2){ echo "Party of the case"; }
+                            else if($_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
+                            else if($_SESSION["session_filed"] == 4){ echo "Third Party"; }
+                            else if($_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
+                            ?>
+                    </b>
+                    <i class="fa fa-user text-info ml-5 " aria-hidden="true"></i> <?=$_SESSION['user_address'][0]['second_name'].' '.$_SESSION['user_address'][0]['first_name'];?> <i class="fa fa-phone-square text-info" aria-hidden="true"></i> <?=$_SESSION["applicant_mobile"];?> <i class="fa fa-envelope text-info" aria-hidden="true"></i> : <?=$_SESSION["applicant_email"];?></b>
+                </p>
+            </div>
+        </div>
+    </div>        
+    <?php 
+    if($_SESSION["session_filed"] == 2){
+        $check_asset_type = 5; //for party
+    }
+    if($_SESSION["session_filed"] == 3){
+        $check_asset_type = 6; //for appearing counsel
+    }
+    if($_SESSION["session_filed"] == 4){
+        $check_asset_type = 4; //for affidaivt filed by third party
+    }
+
+    if($_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4){
+        $stmt_video = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 3 order by ent_time desc limit 1");
+        $stmt_video->bindParam(':mobile', $_SESSION["applicant_mobile"]);
+        $stmt_video->bindParam(':email', $_SESSION["applicant_email"]);
+        $stmt_video->execute();
+        if ($stmt_video->rowCount() == 0) {
+            ?>
+            <div class="alert alert-danger alert-dismissible">
+                Please <a class='btn btn-danger' href='user_video.php'>Click here</a> to record your 10 seconds video. (It's mandatory)
+            </div>
+            <?php
+            exit();
+        }
+
+        $stmt_image = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 2 order by ent_time desc limit 1");
+        $stmt_image->bindParam(':mobile', $_SESSION["applicant_mobile"]);
+        $stmt_image->bindParam(':email', $_SESSION["applicant_email"]);
+        $stmt_image->execute();
+        if ($stmt_image->rowCount() == 0) {
+            ?>
+            <div class="alert alert-danger alert-dismissible">
+                Please <a class='btn btn-danger' href='user_image.php'>Click here</a> to capture your photo. (It's mandatory)
+            </div>
+            <?php
+            exit();
+        }
+
+        $stmt_id_proof = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 1 order by ent_time desc limit 1");
+        $stmt_id_proof->bindParam(':mobile', $_SESSION["applicant_mobile"]);
+        $stmt_id_proof->bindParam(':email', $_SESSION["applicant_email"]);
+        $stmt_id_proof->execute();
+        if ($stmt_id_proof->rowCount() == 0) {
+            ?>
+            <div class="alert alert-danger alert-dismissible">
+                Please <a class='btn btn-danger' href='user_id_proof.php'>Click here</a> to upload you ID Proof. (It's mandatory)
+            </div>
+            <?php
+            exit();
+        }
+
+        //VERIFICATION OF CASES VALIDATE, MAX 10 REQUEST per day ALLOWED
+    $stmt_check = $dbo->prepare("SELECT id FROM user_assets where mobile = :mobile and email = :email and diary_no != 0 and date(ent_time) = curdate()");
+    $stmt_check->bindParam(':mobile', $_SESSION["applicant_mobile"]);
+    $stmt_check->bindParam(':email', $_SESSION["applicant_email"]);
+    $stmt_check->execute();
+    if ($stmt_check->rowCount() > 0) {
+
+                $_SESSION['max_cases_verify_per_day'] = $stmt_check->rowCount();
+                if($_SESSION['max_cases_verify_per_day'] >=10){
+                    ?>
+                        <div class="alert alert-danger alert-dismissible">
+                            Max 10 requests reached for verification per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                        </div>                  
+                    <?php                
+                    exit();
+                }
+    }    
+    else{
+        $_SESSION['max_cases_verify_per_day'] = 0;
+    }
+
+
+       //DIGITAL COPY, MAX 10 REQUEST ALLOWED
+    $stmt_check2 = $dbo->prepare("SELECT id FROM copying_application_online where allowed_request = 'digital_copy' and mobile = :mobile and email = :email and date(application_receipt) = curdate()");
+    $stmt_check2->bindParam(':mobile', $_SESSION["applicant_mobile"]);
+    $stmt_check2->bindParam(':email', $_SESSION["applicant_email"]);
+    $stmt_check2->execute();
+    if ($stmt_check2->rowCount() > 0) {
+                $_SESSION['max_digital_copy_per_day'] = $stmt_check2->rowCount();
+                if($_SESSION['max_digital_copy_per_day'] >=10){
+                    ?>
+                        <div class="alert alert-danger alert-dismissible">
+                            Max 10 digital copy request reached per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                        </div>                  
+                    <?php
+                    exit();
+                }                
+
+    }
+    else{
+        $_SESSION['max_digital_copy_per_day'] = 0;
+    }
+
+        
+    $sqlv = $dbo->prepare("SELECT asset_type, verify_status, verify_remark FROM user_assets where diary_no = :diary_no and asset_type = :check_asset_type and mobile = :mobile and email = :email order by ent_time desc limit 1");
+    $sqlv->bindParam(':email', trim($_SESSION["applicant_email"]));
+    $sqlv->bindParam(':mobile', $_SESSION["applicant_mobile"]);
+    $sqlv->bindParam(':check_asset_type', $check_asset_type);
+    $sqlv->bindParam(':diary_no', $diary_no);
+    $sqlv->execute();
+    if ($sqlv->rowCount() > 0) {
+            $data_sqlv = $sqlv->fetch(PDO::FETCH_ASSOC);
+            if($data_sqlv['verify_status'] == 1){
+                //pending
+                $_SESSION['diary_filed_user_verify_status'] = 'pending';
+                ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        Your Verification for case no. <?=$case_no?> is under process, wait till completion of verification process. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                    </div>                  
+                <?php
+
+                exit();
+            }
+            if($data_sqlv['verify_status'] == 2){
+                //success verified
+                $_SESSION['diary_filed_user_verify_status'] = 'success';
+            }
+            if($data_sqlv['verify_status'] == 3){
+                //verification required
+                $_SESSION['diary_filed_user_verify_status'] = 'apply_for_verification';
+                //rejected
+//                $_SESSION['diary_filed_user_verify_status'] = 'rejected';
+                                ?>
+                    <!--<div class="alert alert-danger alert-dismissible">
+                        Your Verification for case no. <?/*=$case_no*/?> is rejected due to <?/*=$data_sqlv['verify_remark']*/?>. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                    </div>-->
+                <?php                
+                /*exit();*/
+            }
+    }
+    else{
+        //verification required
+        $_SESSION['diary_filed_user_verify_status'] = 'apply_for_verification';
+    }
+    
+    }
+
+        if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+            if($_SESSION["session_filed"] == 1){
+                $applicant_aor_mobile = $_SESSION["applicant_mobile"];
+            }
+            if($_SESSION["session_filed"] == 6){
+                $applicant_aor_mobile = $_SESSION["aor_mobile"];
+            }
+            $sql_verify = "select bar.bar_id from advocate adv
+                inner join bar bar on adv.advocate_id=bar.bar_id 
+                where diary_no=:diary_no and bar.mobile = :mobile and adv.display = 'Y' and bar.if_aor = 'Y' and bar.isdead = 'N' limit 1";
+            $sql_verify=$dbo2->prepare($sql_verify);
+            //$sql_verify->bindParam(':email', trim($_SESSION["applicant_email"]));
+            $sql_verify->bindParam(':mobile', $applicant_aor_mobile);
+            $sql_verify->bindParam(':diary_no', $diary_no);
+            $sql_verify->execute();
+            if($sql_verify->rowCount() > 0){
+                 $_SESSION['diary_filed_user_verify_status'] = 'success';
+            }
+            else{
+                 $_SESSION['diary_filed_user_verify_status'] = 'unregistered';
+            ?>
+                    <div class="alert alert-danger alert-dismissible">
+                        You are not registered in case no. <?=$case_no?>. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                    </div>                  
+                <?php                
+                exit();
+            }        
+        }    
+        
+    if($_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification'){
+        ?>
+        <div class="ml-2"><div class="alert alert-info alert-dismissible p-1 m-1"><strong>Verification Required :</strong></div>
+        </div>
+        <!--<input type="button" name="btn_party_verification" id="btn_party_verification" value="Submit Request" class="btn btn-primary" />-->
+        <?php
+       // exit();
+    }
+    ?>
+    
+        <!-- REQUEST DETAILS -->
+        <div class="form-row note_unavailable_doc_request <?= $_SESSION["session_filed"] == 2 && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification' ? 'd-none' : ''; ?>">
+            <div class="col-md-12 ">
+                <p class="font-weight-bolder text-right">Note : Click to request for unavailable documents in software
+                    <a class="unavailable_doc_request btn btn-warning" href="unavailable_request.php">Request Add</a>
+                </p>
+            </div>    
+        </div>
+
+<?php
+
+    //APPLICANT DETAILS
+    if(isset($_SESSION['user_address'])){
+        ?>
+        <div class="card col-md-12 mt-2 applicant_details_toggle">
+            <div class="card-header bg-info text-white font-weight-bolder">Applicant Details
+                    </div>
+                    <div class="card-body">
+                        <div class="row applicant_address">
+        <?php
+        $address_array = 1;
+        foreach($_SESSION['user_address'] as $data_address) {
+
+
+    ?>
+    <div class="col-md-4 p-2 address_toggle_<?=$address_array?> <?=$address_array == 1 ? '' : 'd-none'?>" >
+        <div class="col-md-12 shadow p-3 mb-3 bg-white rounded">
+
+            <div class="card">
+                <div class="card-header bg-white pb-1 pt-1">
+                    <div class="row pl-1">
+                        <div class=" col-6 text-left d-inline font-weight-bold text-black">
+                            <?=$data_address['first_name']." ".$data_address['second_name'];?>
+                        </div>
+                        <div class="col-6 text-right d-inline font-weight-bold text-black">
+                            <label class="radio-inline text-black ml-1 mt-0 mb-0">
+                                <input type="radio" name="address_type_radio" data-address_id="<?=$data_address['id']?>" data-pincode="<?=$data_address['pincode']?>" id="radio_address_type_<?=$address_array?>" value="<?=$data_address['address_type']?>" <?=$address_array == 1 ? 'checked' : '' ?> > <?=$data_address['address_type']?>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body pb-1 pt-1">
+                    <p>
+                        <?=$data_address['address'].", ".$data_address['city'].", "?>
+                        <br>
+                        <?=$data_address['district'].", ".$data_address['state']?>
+                        <br>
+                        <?=$data_address['pincode'].", ".$data_address['country']?>
+                    </p>
+                </div>
+
+                <?php if($address_array == 1){ ?>
+                <div class="row text-right pl-2">
+                    <button type="button" style="color: #0554DB;" class="btn btn_more_address">more...</button>
+                </div>
+                <?php } ?>
+            </div>
+
+        </div>
+    </div>
+    <?php
+            $address_array++;
+}
+?>
+                        </div>
+        </div>
+        </div>
+<?php
+    }
+
+    ?>
+
+    <?php
+        if($_SESSION["session_filed"] == 4){
+    ?>
+    <div class="card col-md-12 mt-2 attach_documents">
+
+
+                    <div class="card-header bg-info text-white font-weight-bolder">Upload attested affidavit on stamp of &#x20b9; 20/- <sub> (Max 100 kb & Only PDF File Allowed)</sub>
+                    </div>
+                    <div class="card-body">
+
+        <form method='post'  action='' enctype="multipart/form-data">
+
+        <div class="form-row">
+        <div class="col-md-12">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="affidavit_addon">Upload Affidavit *</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input affidavt_class" name="affidavit" id="affidavit" data-toggle="tooltip" data-placement="top" title="Upload an Original Affidavit on stamp paper of Rs. 20/- duly attested by the Notary specifying the good cause, ground or reason for which the copy is required and stating how he/she is interested in obtaining the same." accept="application/pdf" aria-labelledby="affidavit_addon">
+                    <label class="custom-file-label" title="affidavit" for="affidavit"></label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-default d-none uploaded_affidavit_result" type="button" id="affidavit"></button>
+                </div>
+            </div>
+        </div>
+        </form>
+            
+        </div>
+
+        <!--<input type="button" name="btn_third_party_affidavit_verification" id="btn_third_party_affidavit_verification" value="Submit Request" class="btn btn-primary" />-->
+
+            
+
+                    
+    </div>
+            <?php } ?>
+    
+    
+    <?php
+    if($_SESSION["session_filed"] == 2 && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification') {
+    }
+    else{
+    ?>
+    <div class="card col-md-12 mt-2 copying_dedtails_toggle_request">
+                    <div class="card-header bg-info text-white font-weight-bolder">Copying Details</div>
+                    <div class="card-body">
+
+<!--TODO:
+ 1. Display only if first time applying (Don't allow if already applied)
+ 2. First time no payment check
+ -->
+
+<?php
+if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+    $is_bail_applied = getBailApplied($diary_no, $_SESSION['applicant_mobile'], $_SESSION['applicant_email']);
+    if($is_bail_applied == 'NO'){
+    ?>
+        <style>
+            #radioBtn .notActive{
+                color: #3276b1;
+                background-color: #fff;
+            }
+        </style>
+    <div class="form-row mb-3">
+<!--        <label for="happy" class="col-12 control-label text-left">Are you applying for Bail Order ?</label>-->
+        <div class="col-sm-12 col-md-12">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="bail_order">Are you applying first time for Bail Order ?</span>
+                <div id="radioBtn" class="btn-group">
+                    <a class="btn btn-primary btn-sm notActive" data-toggle="bail_order" data-title="Y">YES</a>
+                    <a class="btn btn-primary btn-sm active" data-toggle="bail_order" data-title="N">NO</a>
+                </div>
+<!--                    <input type="hidden" name="happy" id="happy">-->
+                </div>
+            </div>
+        </div>
+    </div>
+<?php
+    }
+}
+?>
+
+
+
+
+
+    <div class="form-row">
+
+
+        <div class="col-md-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="app_type_addon">Application Category *</span>
+                </div>
+                <?php
+                $app_category = "Select id,code,description from copy_category";
+                $app_category = $dbo2->prepare($app_category);
+                $app_category->execute();
+                                               
+                ?>
+                <select class="form-control" id="app_type" name="app_type" aria-labelledby="app_type_addon" required>
+                <option value="">-Select-</option>
+                  <?php
+                                  while ($row = $app_category->fetch(PDO::FETCH_ASSOC)) {
+                                      ?>
+                    <option value="<?php echo $row['id']; ?>"><?php echo $row['code'].'-'.$row['description']; ?></option>
+                    <?php
+                                  }
+                  ?>
+                </select>              
+            </div>
+        </div>
+        <div class="col-md-4">                                
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="cop_mode_addon">Delivery Mode *</span>
+                </div>
+                <select class="form-control" id="cop_mode" name="cop_mode" aria-labelledby="cop_mode_addon" required>
+                    <option value="">Select</option>
+                    <option value="1">By Speed Post</option>
+                    <option value="2">Counter</option>
+                    <option value="3">Email</option>                    
+                </select>
+            </div>
+        </div>
+
+         <div class="col-md-4">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="num_copy_addon">No. of Copies *</span>
+                </div>
+                               
+                <select class="form-control" id="num_copy" name="num_copy" aria-labelledby="num_copy_addon" required>
+                        <?php
+                        $currently_selected = date('Y');
+                        $earliest_year = 1;
+                        if($_SESSION["session_filed"] == 4){
+                            //third party
+                            $latest_year = 1;//third party allow only one copy
+                        }
+                        else{
+                            $latest_year = 5;    //other than third party allowed max 5 copy
+                        }
+
+                        foreach (range($earliest_year,$latest_year) as $i) {
+                            print '<option value="' . $i . '"' . ($i === $currently_selected ? ' selected="selected"' : '') . '>' . $i . '</option>';
+                        }
+                        ?>
+                </select>
+                
+            </div>
+        </div>
+
+        
+        
+    </div>
+
+    <div class="form-row" style="color:#186329;">
+        <div class="col-md-12">
+            <span id="sp_app_charge"></span>
+        </div>
+    </div>
+     
+    <div class="form-row">
+
+        <div class="row m-1">
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning :</strong> While applying for Record of Proceedings (ROP), Please remember a possibility that Record of Proceedings can be clubbed with Judgements/Orders passed that day. If page count and cost is shown more than your expectations, please click and apply through unavailable documents.
+            </div>
+        </div>
+
+        <div class="row m-1">
+            <div class="alert alert-warning alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning :</strong> When you are applying for Judgements/Orders and it is found that Record of Proceedings (ROP) is clubbed with such Judgements/Orders, in such case certified copy of the requested document will be issued where as unathenticated copy will be issued for other clubbed documents.
+            </div>
+        </div>
+
+
+
+        <div class="col-md-12">                                
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="applied_for_addon">Applied For *</span>
+                </div>
+
+
+
+
+                <div class="table-responsive form-radio ml-2 applied_check_boxes" aria-labelledby="applied_for_addon" style="max-height:200px; overflow:auto;">
+<?php
+        if($res_fil_det['main_case'] !='' && $res_fil_det['main_case'] != null && $res_fil_det['main_case'] != '0'){
+            $dbo2->query("SET SESSION group_concat_max_len = 10000000000");
+
+            $sql_conn_list = "select group_concat(diary_no) as conn_list from main where conn_key=:main_case";
+            $sql_conn_list = $dbo2->prepare($sql_conn_list);
+            $sql_conn_list->bindParam(':main_case', $res_fil_det['main_case']);
+            $sql_conn_list->execute();
+            if($sql_conn_list->rowCount() > 0){
+                    $res_diary_data = $sql_conn_list->fetch(PDO::FETCH_ASSOC);
+                    $condition = $res_diary_data['conn_list'];
+            }
+            else{
+                $condition = $diary_no;
+            }
+        }
+        else{
+            $condition = $diary_no;
+        }
+
+        //third party and appearing council allowed only judgemnet orders proceedings
+                            if($_SESSION["applicant_mobile"] != '9630100950' && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
+                                $third_party_sub_qry = " and ot.id in (36,8,3,20,1,2,4) ";    
+                            }
+                            else{
+                                $third_party_sub_qry = "";    
+                            }
+$jud_order="select zz.* from (
+select vd.path as pdfname, vd.order_date as orderdate, 0 as s, ot.order_type judgement_order, ot.id judgement_order_code, vd.order_type_remark,
+vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages
+from copying_request_verify u
+inner join copying_request_verify_documents vd on u.id = vd.copying_order_issuing_application_id
+inner join ref_order_type ot on ot.id = vd.order_type
+where u.diary in ($condition) 
+$third_party_sub_qry
+and u.application_status != 'P' and vd.request_status = 'D' and vd.path != '' and vd.path is not null 
+and ot.is_deleted = 'f' and u.allowed_request = 'request_to_available'         
+union
+Select pdfname, orderdate, '1' s, case when type='O' then 'Record of Proceedings' when type='J' then 'Judgement' END as judgement_order,
+    case when type='O' then 1 when type='J' then 3 END as judgement_order_code, '' as order_type_remark,
+'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
+        from ordernet where date(orderdate) > '2014-05-31' and diary_no in ($condition) and display='Y' 
+union 
+Select jm pdfname,dated orderdate,'2' s, case when jt='rop' then 'Record of Proceedings' when jt='judgment' then 'Judgement' END as judgement_order,
+case when jt='rop' then 1 when jt='judgment' then 3 END as judgement_order_code, '' as order_type_remark,
+'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
+from tempo where date(dated) > '2014-05-31' and diary_no in ($condition) and (jt='rop' or jt='judgment') 
+union 
+Select concat('ropor/rop/all/',pno,'.pdf') pdfname,orderDate orderdate,'3' s, 'Record of Proceedings' judgement_order, '1' as judgement_order_code, '' as order_type_remark, 
+'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
+from $OLD_ROP.old_rop where date(orderDate) > '2014-05-31' and dn in ($condition)
+union 
+Select concat('judis/',filename,'.pdf') pdfname,juddate orderdate,'4' s, 'Judgement' judgement_order, '3' as judgement_order_code, '' as order_type_remark,
+'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
+from scordermain where date(juddate) > '2014-05-31' and dn in ($condition) 
+union 
+Select concat('bosir/orderpdf/',pno,'.pdf') pdfname,orderdate orderdate,'5' s, 'Record of Proceedings' judgement_order, '1' as judgement_order_code, '' as order_type_remark,
+'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
+from $OLD_ROP.ordertext where date(orderdate) > '2014-05-31' and dn in ($condition)
+union
+Select concat('bosir/orderpdfold/',pno,'.pdf') pdfname,orderdate orderdate,'6' s, 'Record of Proceedings' judgement_order, '1' as judgement_order_code, '' as order_type_remark, 
+'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
+from $OLD_ROP.oldordtext where date(orderdate) > '2014-05-31' and dn in ($condition)
+) zz order by orderdate ";
+
+            $jud_order = $dbo2->prepare($jud_order);           
+            $jud_order->execute();
+
+   if($jud_order->rowCount() > 0){
+
+      ?>
+
+
+
+
+
+
+
+<table class="table table-bordered  table-striped" >
+<thead>
+    <tr>
+       <th>Checkbox</th>
+       <th>
+           Document Details
+       </th>
+       <th>
+           Order/File Date
+       </th>
+       <th>
+           No. of Pages
+       </th>
+</tr>
+</thead>
+<tbody>
+                       
+                       
+                  
+                   <?php
+                   $sno=1;$tot_pages=0;$tot_amt=0;
+       //while ($row1 = mysqli_fetch_array($jud_order)) {
+       while($row1 = $jud_order->fetch(PDO::FETCH_ASSOC)){
+
+           $t_pages_x='';
+           $pdfname_exploded=explode("/",$row1['pdfname']);
+           //Requested documents
+           if($row1['s']==0){
+               //$path = "http://localhost/".$row1['pdfname'];
+               $path = "http://".GET_SERVER_IP."/".$row1['pdfname'];
+               $rop_public_path = MAIN_SCI_GOV_IN."/".$row1['pdfname'];
+               $path_to_save = $row1['pdfname'];
+           }
+           else{
+               if( $pdfname_exploded[0]=='supremecourt') {
+                   $path = "http://".GET_SERVER_IP."/supreme_court/".$row1['pdfname'];
+                   $rop_public_path = MAIN_SCI_GOV_IN."/".$row1['pdfname'];
+                   $path_to_save = "supreme_court/".$row1['pdfname'];
+               }
+               else{
+                   $path = "http://".GET_SERVER_IP."/supreme_court/judgment/".$row1['pdfname'];
+                   $rop_public_path = MAIN_SCI_GOV_IN."/judgment/".$row1['pdfname'];
+                   $path_to_save = "/supreme_court/judgment/".$row1['pdfname'];
+               }
+           }
+
+
+           if($row1['s']==0 && $row1['judgement_order_code'] == 37){ //Data in Digital Format
+               $NumberOfPages = 1;
+           }
+           else{
+               $nm_s=  exec ('pdftk '.$path. ' dump_data | grep NumberOfPages');
+               $NumberOfPages = str_replace('NumberOfPages: ','', $nm_s);
+           }
+       ?>
+                       <tr>
+                           <td class="pt-0">
+                               <label class="d-none" title="Checkbox <?=$sno?>" for="chkdocjo_<?=$sno?>"><?=$sno?></label>
+                               <input type="checkbox" name="chkdocjo_<?php echo $sno; ?>" id="chkdocjo_<?php echo $sno; ?>" data-order_type_id="<?=$row1['judgement_order_code']?>" class="cl_checks"/>
+
+                               <?php
+                               $isChargable = "";// echo $row1['judgement_order_code'].",".date('Y-m-d',strtotime($row1['orderdate']));
+                               $isChargable = getIsPreviuslyApplied(5, $diary_no, $_SESSION["applicant_mobile"], $_SESSION["applicant_email"], $row1['judgement_order_code'], date('Y-m-d',strtotime($row1['orderdate'])));
+                               if($isChargable == 'YES'){
+                                   ?>
+                                   <span class="text-danger d-none is_chargable" id="ischargable_<?php echo $sno; ?>">Chargeable</span>
+                                   <?php
+                               }
+                               else{
+                                   ?>
+                                   <span class="text-success d-none is_chargable" id="ischargable_<?php echo $sno; ?>">Free</span>
+                                   <?php
+                               }
+                               ?>
+
+
+                           </td>
+                           <td>
+                                <span style="display:none;" id="spjudgementordercode_<?php echo $sno; ?>"><?=$row1['judgement_order_code'];?></span>                               
+                                <span id="spjudgementorder_<?php echo $sno; ?>"><?php
+                                    if($row1['judgement_order'] == "Record of Proceedings" || $row1['judgement_order'] == "Judgement"){
+                                        ?>
+                                        <a target="_blank" href="<?=$rop_public_path?>"><?=$row1['judgement_order']?></a> <i class="fa fa-info-circle text-secondary" aria-hidden="true" title="Please click & verify pdf documents."></i>
+                                        <?php
+                                    }
+                                    else{
+                                        echo $row1['judgement_order'];
+                                    }
+
+                                   if($row1['judgement_order_code'] == 37){echo ' -'.$row1['order_type_remark'];}
+                                   if($row1['fee_clc_for_certification_no_doc'] > 0){ echo "<span class='text-primary'> (Number of Certified Documents ".($row1['fee_clc_for_certification_no_doc']).")</span>";}
+                                   ?>
+                                </span>
+                           </td>
+                           <td>
+                               <?php
+
+                               $hide_order_dt = "";
+                               if($row1['orderdate'] == '1970-01-01 00:00:00' OR $row1['orderdate'] == '0000-00-00 00:00:00'){
+                                   $hide_order_dt = "class='d-none'";
+                               }
+                               ?>
+                               <span <?=$hide_order_dt?> id="sporderdate_<?php echo $sno; ?>"><?php echo date('d-m-Y',strtotime($row1['orderdate'])); ?></span>
+                           </td>
+                           <td>
+                               <?php
+                               //vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages
+
+                               ?>
+                           <span id="sptotalpages_<?php echo $sno; ?>"><?=$NumberOfPages?></span>
+                           <span id="spfilepath_<?php echo $sno; ?>" style="display:none;"><?php echo $path_to_save; ?></span>
+
+
+
+                               <span id="sp_certi_number_of_docs_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_certification_no_doc']; ?></span>
+                               <span id="sp_certi_number_of_pages_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_certification_pages']; ?></span>
+                               <span id="sp_uncerti_number_of_docs_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_uncertification_no_doc']; ?></span>
+                               <span id="sp_uncerti_number_of_pages_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_uncertification_pages']; ?></span>
+                           </td>
+
+                       </tr>   
+                       <?php
+                       $sno++;
+       }
+       ?>
+
+</tbody>
+</table>
+<?php
+   }
+   else 
+   {
+       ?>
+                   <div style="text-align: center"><b>No Record Found</b></div>       
+       <?php
+   }
+                   ?>
+                </div>
+
+
+
+
+
+
+                
+            </div>
+        </div>
+    </div>
+
+                  
+                        
+                        
+
+        </div>
+    </div>
+        <div class="table-responsive" id="tb_added_doc"></div>
+    <?php } ?>
+        
+    <?php
+    if(($_SESSION['diary_filed_user_verify_status'] == 'success' && $_SESSION["session_filed"] == 2) || $_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+    ?>    
+    <div class="row col-md-12">
+            <div class="col-md-6">
+
+                <div class="form-row confirm_validate_toggle">
+                    <div class="form-check mb-3">
+                        <label class="form-check-label text-danger">
+                            <input class="form-check-input" id="confirm_validate" name="confirm_validate" value="confirm" type="checkbox"> I agree to 
+                            <a style="color: #0554DB;" href="#" data-toggle="modal" id="terms_conditions" data-target="#exampleModalLong"><u>terms and conditions</u></a>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="col-md-6 form-row tm-btn-right">
+               <input type="button" name="btn_payment" id="btn_payment" value="Click To Confirm" class="btn btn-primary" />
+            </div>
+    </div>
+    <?php } 
+    else{
+?>
+            <div class="row col-md-12">            
+               <input type="button" name="btn_case_verify" id="btn_case_verify" value="Submit for Verification" class="btn btn-primary" />
+            </div>
+<?php        
+    }
+    ?>
+        
+        
+<div class="row col-md-12">
+    <div class="above_error"></div>
+</div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Terms and Conditions</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        The eCopying S/w designed and developed by Supreme Court of India and Payment Gateway API shared by NTRP. In case of any issues during or after payment, user may contact to NTRP https://bharatkosh.gov.in
+                        <br><br>Supreme Court of India will not be responsible in any way for non-payment, non-receipt, issue that may arise while paying the amount online for any kind of payments made through this portal. Though all efforts have been made to ensure the accuracy and correctness of the contents on this website, the same should not be construed as a statement of law or used for any legal purposes.
+                        <br><br>
+                        In case of any variance between what is stated and that contained in the relevant Acts, Rules, Regulations, Policy, Statements, etc, the latter shall prevail. Under no circumstances will Supreme Court of India for any expense, loss or damage including, without limitation, indirect or consequential loss or damage, or any expense, loss or damage whatsoever arising from use, or loss of use, of data, arising out of or in connection with the use of this website.
+                        <br><br>These terms and conditions shall be governed by and construed in accordance with the Indian Laws. Any dispute arising under these terms and conditions shall be subject to the delhi jurisdiction.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+<script>
+
+$(document).ready(function() {
+$('[data-toggle="popover"]').popover();
+$('[data-toggle="tooltip"]').tooltip();
+});
+
+</script>
+<?php 
+  }
+  else{
+      echo "Case Number Not Found.";
+  }
+
+}
+else{
+    echo "Session Expired";
+    ?>
+       <script type='text/javascript'>window.location.href='logout.php'</script>
+    <?php
+}
+?>
