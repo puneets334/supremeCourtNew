@@ -324,7 +324,7 @@ class CommonModel extends Model
         // $builder->where('en.is_active', 'TRUE');
         // $builder->where('en.is_deleted', 'FALSE');
         // $builder->where('en.registration_id', $registration_id);
-        
+
         $sql = "SELECT 
             tcd.if_sclsc, 
             en.registration_id, 
@@ -451,8 +451,12 @@ class CommonModel extends Model
         if (in_array($current_stage_id, array(Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE, LODGING_STAGE, DELETE_AND_LODGING_STAGE))) {
             $builder->WHERE('is_defect_cured', FALSE);
         } elseif (in_array($current_stage_id, array(
-            Initial_Approaval_Pending_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID,
-            I_B_Approval_Pending_Stage, I_B_Approval_Pending_Admin_Stage, I_B_Defects_Cured_Stage
+            Initial_Approaval_Pending_Stage,
+            Initial_Defects_Cured_Stage,
+            DEFICIT_COURT_FEE_PAID,
+            I_B_Approval_Pending_Stage,
+            I_B_Approval_Pending_Admin_Stage,
+            I_B_Defects_Cured_Stage
         ))) {
             $builder->WHERE('is_defect_cured', TRUE);
         }
@@ -461,7 +465,7 @@ class CommonModel extends Model
         $query = $builder->get(); //echo $this->db->last_query(); die;
         if ($query->getNumRows() >= 1) {
             $arr = $query->getRowArray();
-            
+
             return $arr[0] ?? $arr;
         } else {
             return false;
@@ -1174,9 +1178,9 @@ class CommonModel extends Model
         }*/
     }
 
-   
 
-   
+
+
 
     public function fetchCaveatDetails($table, $registration_id)
     {
@@ -1216,8 +1220,8 @@ class CommonModel extends Model
                     case 2:
                         $builder = $this->db->table('efil.m_tbl_high_courts_bench mthcb');
                         $builder->select('mthcb.*');
-                        $builder->where('mthcb.bench_id IS NULL');
-                        $builder->where('mthcb.est_code IS NULL');
+                        // $builder->where('mthcb.bench_id IS NULL');
+                        // $builder->where('mthcb.est_code IS NULL');
                         if (isset($params['hc_id']) && !empty($params['hc_id'])) {
                             $builder->where('mthcb.hc_id', (int)$params['hc_id']);
                         }
@@ -2115,15 +2119,15 @@ class CommonModel extends Model
                         $output = $query->getResult();
                         break;
                     case 6:
-                       $builder= $this->db->table('public.tbl_efiling_caveat tec');
+                        $builder = $this->db->table('public.tbl_efiling_caveat tec');
 
                         $builder->select('id,case_type_id,c.nature,ref_m_efiling_nums_registration_id,pet_inperson,orgid,pet_name,lpet_name,pet_sex,pet_gender,pet_father_name,lpet_father_name,
                         pet_father_flag,pet_dob,pet_age,pet_email,pet_mobile,petadd,state_id,dist_code,pet_pincode,org_state,org_state_name,org_dept_name,org_dept,org_post,
                         org_post_name,pet_city, tec.is_govt_filing');
                         $builder->JOIN('icmis.casetype c', 'tec.case_type_id = c.casecode', 'left');
                         $builder->where('ref_m_efiling_nums_registration_id', $registration_id);
-                            // $sql = $builder->getCompiledSelect();
-                            //  echo $sql; die;
+                        // $sql = $builder->getCompiledSelect();
+                        //  echo $sql; die;
                         $query = $builder->get();
                         $output = $query->getResultArray();
                         break;
