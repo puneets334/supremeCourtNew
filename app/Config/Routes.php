@@ -393,3 +393,4 @@ $routes->match(['GET', 'POST'], 'online_copying/faq', 'OnlineCopying\DefaultCont
 $routes->match(['GET', 'POST'], 'online_copying/screen_reader', 'OnlineCopying\DefaultController::screenReader');
 $routes->match(['GET', 'POST'], 'online_copying/contact_us', 'OnlineCopying\DefaultController::contactUs');
 $routes->match(['GET', 'POST'], 'online_copying/case_search', 'OnlineCopying\DefaultController::caseSearch');
+$routes->match(['GET', 'POST'], 'online_copying/get_case_details', 'OnlineCopying\DefaultController::getCaseDetails');
