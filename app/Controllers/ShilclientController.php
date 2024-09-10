@@ -140,8 +140,10 @@ class ShilclientController extends BaseController
     }
     public function getStatus($certificate_number){
         $cert_response = $this->get_response('request', array('certificate_number'=>$certificate_number));
+
         //libxml_use_internal_errors(true);
         $xml = @simplexml_load_string($cert_response, "SimpleXMLElement", LIBXML_NOCDATA);
+
         if($xml === false){
             return 0;
             //$errors = libxml_get_errors();
