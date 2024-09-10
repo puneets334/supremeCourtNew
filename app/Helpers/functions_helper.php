@@ -1281,20 +1281,20 @@ function remark_preview($reg_id, $current_stage_id)
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date(
             'd-m-Y H:i:s',
-            strtotime($result_initial->defect_date ?? $result_initial['defect_date'] )
+            strtotime($result_initial['defect_date'] ?? $result_initial['defect_date'] )
         ) . '
                 <p>';
         $msg .= '
                 <p><strong>Defects :</strong>
                 <p>';
         $msg .= '
-                <p>' . script_remove($result_initial->defect_remark ?? $result_initial['defect_remark']) . '
+                <p>' . script_remove($result_initial['defect_remark'] ?? $result_initial['defect_remark']) . '
                 <p>';
-        if ($result_initial->defect_cured_date ?? $result_initial['defect_cured_date'] != NULL) {
+        if ($result_initial['defect_cured_date'] ?? $result_initial['defect_cured_date'] != NULL) {
             $msg .= '[
                 <p] align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
                 'd-m-Y H:i:s',
-                strtotime($result_initial->defect_cured_date)
+                strtotime($result_initial['defect_cured_date'])
             ), ENT_QUOTES) . '
                 <p>';
         }
@@ -3478,4 +3478,55 @@ function copyFormSentOn($row1){
         $result = $query->getResultArray();
     }
     return $result;
+}
+
+function eCopyingGetDiaryNo($ct, $cn, $cy){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder = $db2->table('public.main');
+
+    $results = $builder->select("SUBSTRING(diary_no, 1, LENGTH(diary_no) - 4) AS dn, SUBSTRING(diary_no, -4) AS dy")
+        ->where("SUBSTRING_INDEX(fil_no, '-', 1) =", $ct)
+        ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(fil_no, '-', 2), '-', -1) AND SUBSTRING_INDEX(fil_no, '-', -1)")
+        ->where("(IF(reg_year_mh = 0 OR DATE(fil_dt) > DATE('2017-05-10'), 
+                    YEAR(fil_dt) = {$cy}, 
+                    reg_year_mh = {$cy}))")
+        ->get()
+        ->getResult();
+        return $results;
+}
+
+function eCopyingCheckDiaryNo($ct, $cn, $cy){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder = $db2->table('public.main_casetype_history h');
+
+
+    $results = $builder->select("SUBSTRING(h.diary_no, 1, LENGTH(h.diary_no) - 4) AS dn, SUBSTRING(h.diary_no, -4) AS dy, IF(h.new_registration_number != '',  SUBSTRING_INDEX(h.new_registration_number, '-', 1), '') AS ct1, IF(h.new_registration_number != '', SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1), '') AS crf1, IF(h.new_registration_number != '', SUBSTRING_INDEX(h.new_registration_number, '-', -1), '') AS crl1")
+        ->groupStart()
+            ->where("SUBSTRING_INDEX(h.new_registration_number, '-', 1) =", $ct)
+            ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1) AND SUBSTRING_INDEX(h.new_registration_number, '-', -1)")
+            ->where("h.new_registration_year", $cy)
+        ->groupEnd()
+        ->groupStart()
+            ->where("SUBSTRING_INDEX(h.old_registration_number, '-', 1) =", $ct)
+            ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(h.old_registration_number, '-', 2), '-', -1) AND SUBSTRING_INDEX(h.old_registration_number, '-', -1)")
+            ->where("h.old_registration_year", $cy)
+            ->where("h.is_deleted", 't')
+        ->groupEnd()
+        ->where("h.is_deleted", 'f')
+        ->get()
+        ->getResult();
+        return $results;
+}
+
+function eCopyingGetFileDetails($diary_no){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder = $db2->table('public.main a');
+
+    $results = $builder->select('a.diary_no, reg_no_display, pet_name, res_name, pno, rno, c_status, a.conn_key AS main_case')
+        ->where('diary_no', $diary_no)
+        ->where('diary_no >', 0)
+        ->get()
+        ->getResult();
+
+    return $results;
 }

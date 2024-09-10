@@ -108,5 +108,9 @@ class DefaultController extends BaseController
         $caseType = $this->Common_model->getCaseType();
         return $this->render('onlineCopying.case_search', compact('caseType'));
     }
+    public function getCaseDetails()
+    {
+        return $this->render('onlineCopying.get_case_details');
+    }
     
 }

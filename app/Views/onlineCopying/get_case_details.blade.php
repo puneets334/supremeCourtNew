@@ -11,61 +11,23 @@ if ($_SESSION['is_user_address_found'] != 'YES') {
 $OLD_ROP = OLD_ROP_DB;
 if($_REQUEST['chk_status']==1)
 {
-    $ct = $_REQUEST['ct']; $cn = $_REQUEST['cn']; $cy = $_REQUEST['cy'];
+    $ct = $_REQUEST['ct']; 
+    $cn = $_REQUEST['cn']; 
+    $cy = $_REQUEST['cy'];
     
-    $sql_dno = "SELECT substr( diary_no, 1, length( diary_no ) -4 ) as dn, substr( diary_no , -4 ) as dy
-    FROM main
-    WHERE (SUBSTRING_INDEX(fil_no, '-', 1) = ".$ct." AND CAST(".$cn." AS UNSIGNED) 
-    BETWEEN (SUBSTRING_INDEX(SUBSTRING_INDEX(fil_no, '-', 2),'-',-1)) 
-    AND (SUBSTRING_INDEX(fil_no, '-', -1)) AND  if((reg_year_mh=0 OR DATE(fil_dt)>DATE('2017-05-10')), YEAR(fil_dt)=".$cy.", reg_year_mh=".$cy.") )";
+    $sql_dno = eCopyingGetDiaryNo($ct, $cn, $cy);
 
-$sql_dno=$dbo2->prepare($sql_dno);
-$sql_dno->execute();
-    if($sql_dno->rowCount() > 0){
-        $get_dno=$sql_dno->fetch(PDO::FETCH_ASSOC);
-
-        $diary_no = $get_dno['dn'].$get_dno['dy'];
-        $_SESSION['session_d_no'] = $get_dno['dn'];
-        $_SESSION['session_d_year'] = $get_dno['dy'];
+    if(count($sql_dno) > 0){
+        $diary_no = $sql_dno['dn'].$sql_dno['dy'];
+        $_SESSION['session_d_no'] = $sql_dno['dn'];
+        $_SESSION['session_d_year'] = $sql_dno['dy'];
     }
     else{
-        $sql_dno = "SELECT 
-SUBSTR( h.diary_no, 1, LENGTH( h.diary_no ) -4 ) AS dn, 
-SUBSTR( h.diary_no , -4 ) AS dy,
-if(h.new_registration_number!='',SUBSTRING_INDEX(h.new_registration_number, '-', 1),'') as ct1, 
-            if(h.new_registration_number!='',SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1 ),'') as crf1, 
-            if(h.new_registration_number!='',SUBSTRING_INDEX(h.new_registration_number, '-', -1),'') as crl1 FROM
- main_casetype_history h 
-WHERE 
-((SUBSTRING_INDEX(h.new_registration_number, '-', 1) = ".$ct." AND 
-CAST(".$cn." AS UNSIGNED) BETWEEN (SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2),'-',-1)) AND (SUBSTRING_INDEX(h.new_registration_number, '-', -1)) AND h.new_registration_year=".$cy.") OR
-  (
-    SUBSTRING_INDEX(h.old_registration_number, '-', 1) = ".$ct."  
-    AND CAST(".$cn." AS UNSIGNED) BETWEEN (
-      SUBSTRING_INDEX(
-        SUBSTRING_INDEX(h.old_registration_number, '-', 2),
-        '-',
-        - 1
-      )
-    ) 
-    AND (
-      SUBSTRING_INDEX(
-        h.old_registration_number,
-        '-',
-        - 1
-      )
-    ) 
-    AND h.old_registration_year = ".$cy." 
-   AND h.is_deleted='t'
-)) AND h.is_deleted='f'";
-        $sql_dno=$dbo2->prepare($sql_dno);
-        $sql_dno->execute();
-        if($sql_dno->rowCount() > 0){
-            $get_dno=$sql_dno->fetch(PDO::FETCH_ASSOC);
-
-            $diary_no = $get_dno['dn'].$get_dno['dy'];
-            $_SESSION['session_d_no'] = $get_dno['dn'];
-            $_SESSION['session_d_year'] = $get_dno['dy'];
+        $sql_dno = eCopyingCheckDiaryNo($ct, $cn, $cy);
+        if(count($sql_dno) > 0){
+            $diary_no = $sql_dno['dn'].$sql_dno['dy'];
+            $_SESSION['session_d_no'] = $sql_dno['dn'];
+            $_SESSION['session_d_year'] = $sql_dno['dy'];
         }
     }
 }
@@ -75,13 +37,8 @@ else{
     $_SESSION['session_d_year'] = $_REQUEST['d_yr'];
 }
 
-$fil_det = "SELECT a.diary_no, reg_no_display, pet_name, res_name, pno, rno, c_status, a.conn_key as main_case FROM main a WHERE diary_no = :diary_no and diary_no > 0";
-$fil_det=$dbo2->prepare($fil_det);
-$fil_det->bindParam(':diary_no', $diary_no);
-$fil_det->execute();
-if($fil_det->rowCount() > 0){
-    $res_fil_det = $fil_det->fetch(PDO::FETCH_ASSOC);
-
+$res_fil_det = eCopyingGetFileDetails($diary_no);
+if(count($res_fil_det) > 0){
    if($res_fil_det['pno']!=0)
     {
         if($res_fil_det['pno']==2)
@@ -99,7 +56,6 @@ if($fil_det->rowCount() > 0){
    if($res_fil_det['reg_no_display']!='')
     {
         $case_no = $res_fil_det['reg_no_display'];
-
     }
     $case_no .= '  Diary No. '.substr($diary_no,0,-4).' - '.substr($diary_no,-4);
 
@@ -131,16 +87,7 @@ if($fil_det->rowCount() > 0){
             </div>
         </div>
     </div>        
-    <?php //third party not allowed in pending cases to request any copy
-/*        if($res_fil_det['c_status']=='P' && ($_SESSION["session_filed"] == 4)){
-            */?><!--
-                    <div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert">&times;</button><strong>Pending Case! </strong>
-                        As per copying rules no copy is given to strangers in pending case.
-                    </div>                  
-            --><?php
-/*            exit();
-        }*/
-        
+    <?php 
     if($_SESSION["session_filed"] == 2){
         $check_asset_type = 5; //for party
     }
@@ -152,8 +99,6 @@ if($fil_det->rowCount() > 0){
     }
 
     if($_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4){
-
-
         $stmt_video = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 3 order by ent_time desc limit 1");
         $stmt_video->bindParam(':mobile', $_SESSION["applicant_mobile"]);
         $stmt_video->bindParam(':email', $_SESSION["applicant_email"]);
