@@ -285,6 +285,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $status_color = '';
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
+                        //  
                         ?>
                         <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>"  data-bs-target="#home" type="button" role="tab" aria-controls="home" style="<?php if(!in_array(CAVEAT_BREAD_SUBORDINATE_COURT, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>Earlier Courts </a>
                     </li>                        
@@ -293,7 +294,8 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             
                         if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(2) == 'documentIndex') {
 
-                            // print_r($breadCrumbsArray);
+                            // print_r($StageArray);
+                            // echo CAVEAT_BREAD_UPLOAD_DOC; 
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                             $disabled_status='';

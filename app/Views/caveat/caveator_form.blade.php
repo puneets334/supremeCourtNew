@@ -165,10 +165,10 @@ textarea {
                             <div class="mb-3">
                                 <label for="" class="form-label">Relation</label>
                                 <?php
-                                    $selectSon = $caveator_details[0]['pet_father_flag'] == 'S' ? 'selected=selected' : '';
-                                    $selectDaughter = $caveator_details[0]['pet_father_flag'] == 'D' ? 'selected=selected' : '';
-                                    $selectWife = $caveator_details[0]['pet_father_flag'] == 'W' ? 'selected=selected' : '';
-                                    $selectNotAvailable = $caveator_details[0]['pet_father_flag'] == 'N' ? 'selected=selected' : '';
+                                    $selectSon = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'S' ? 'selected=selected' : '';
+                                    $selectDaughter = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'D' ? 'selected=selected' : '';
+                                    $selectWife = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'W' ? 'selected=selected' : '';
+                                    $selectNotAvailable =isset($caveator_details[0]) &&  $caveator_details[0]['pet_father_flag'] == 'N' ? 'selected=selected' : '';
                                 ?>
                                 <select tabindex='4' name="pet_rel_flag" id="pet_rel_flag"
                                     class="form-control cus-form-ctrl filter_select_dropdown" >

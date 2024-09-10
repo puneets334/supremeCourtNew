@@ -49,9 +49,9 @@ body.loading .overlay{
 }
 </style>
 <style>
-    .datepicker-dropdown {
-        margin-top: 30% !important;   background-color: #fff;
-    }
+ .datepicker-dropdown {
+    margin-top: 850px; !important;background-color: #fff;
+}
 </style>
 
 <div class="center-content-inner comn-innercontent">
