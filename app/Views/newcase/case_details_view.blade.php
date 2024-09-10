@@ -311,9 +311,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="high_court_div1" <?php echo (!empty($high_court_bench) && isset($high_court_bench)) || $high_court_drop_down ? 'style="display:block"' : 'style="display:none"'; ?>>
                         <div class="mb-3">
-                            <label class="form-label">High
-                                Court Name
-                                <span style="color: red" class="astriks">*</span></label>
+                            <label class="form-label">High Court Name <span style="color: red" class="astriks">*</span></label>
                             <select id="high_courtname" name="high_courtname" class="form-control cus-form-ctrl filter_select_dropdown">
                                 <option value="">Select High Court</option>
                                 <?php
@@ -332,12 +330,13 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="high_court_div2" <?php echo (!empty($high_court_bench) && isset($high_court_bench)) || $high_court_drop_down ? 'style="display:block"' : 'style="display:none"'; ?>>
                         <div class="mb-3">
-                            <label class="form-label">Bench
-                                Name
+                            
+                            <label class="form-label">Bench Name
                                 <span style="color: red" class="astriks">*</span></label>
                             <select id="high_court_bench_name" name="high_court_bench_name" class="form-control cus-form-ctrl filter_select_dropdown">
                                 <option value="">Select Bench Name</option>
                                 <?php
+
                                 if (isset($high_court_bench) && !empty($high_court_bench)) {
                                     foreach ($high_court_bench as $k => $bench) {
                                         if ($bench['est_code'] == @$new_case_details[0]->estab_code) {
@@ -1112,6 +1111,7 @@
                 },
                 url: "<?php echo base_url('newcase/Ajaxcalls_subordinate_court/get_hc_bench_list'); ?>",
                 success: function(data) {
+                console.log(data);
                     $('#high_court_bench_name').html(data);
                     $('#high_court_bench_name').select2();
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {

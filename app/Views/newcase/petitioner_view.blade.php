@@ -246,7 +246,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Address <span id="address_span" <?php echo $style; ?> class="astriks"><?php echo $astrik; ?></span></label>
-                            <textarea tabindex='18' name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3"><?php echo (@$party_details[0]['address']); ?></textarea>
+                            <textarea tabindex='18' name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3" required><?php echo (@$party_details[0]['address']); ?></textarea>
                             <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>

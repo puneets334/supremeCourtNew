@@ -2,15 +2,16 @@
 
 @section('content')
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Include Multiselect CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+<!-- Include Multiselect CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 <style>
     .add-new-area {
         display: none !important;
     }
+
     .form-switch {
-    padding-left: 2.8em !important;
-}
+        padding-left: 2.8em !important;
+    }
 </style>
 
 <div class="container-fluid">
@@ -30,7 +31,7 @@
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
-                                
+
                                     <table class="table table-striped custom-table first-th-left" id="datatable-responsive">
                                         <thead>
                                             <tr class="success input-sm" role="row">
@@ -54,19 +55,19 @@
                                             $emp_id = !empty($v->emp_id) ? $v->emp_id : '';
                                             $attend = (!empty($v->attend) && $v->attend == 'P') ? 'Present' : 'Absent';
                                             $pp_a = (!empty($v->pp_a) && $v->pp_a == 'P') ? 'Party In Person' : 'Advocate';
-                                           
+
                                             $efiling_type = !empty($v->efiling_type) ? $v->efiling_type : '';
                                             $user_id = !empty($v->id) ? $v->id : '';
 
                                             if (isset($efiling_type) && $efiling_type != 'NULL') {
-                                                $fileType = explode(',', $efiling_type);
-                                                $roleText = '';
+                                            $fileType = explode(',', $efiling_type);
+                                            $roleText = '';
 
-                                                foreach ($fileType as $key => $value) {
-                                                    $roleText .= str_replace('_', ' ', strtoupper($value)) . '</br>';
-                                                }
+                                            foreach ($fileType as $key => $value) {
+                                            $roleText .= str_replace('_', ' ', strtoupper($value)) . '</br>';
+                                            }
                                             } elseif ($efiling_type == 'NULL') {
-                                                $roleText = '---';
+                                            $roleText = '---';
                                             }
 
                                             @endphp
@@ -78,7 +79,7 @@
                                                 <td>{{ strtoupper($pp_a) }}</td>
                                                 <td>{{ strtoupper($attend) }}</td>
                                                 <td><a title="Update Role" href="javaScript:void(0)" class="editRole" data-userid="{{ $user_id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                                                
+
 
                                             </tr>
                                             @endforeach
@@ -104,70 +105,70 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            <h5 class="modal-title">Update User Role</h5>
+                <h5 class="modal-title">Update User Role</h5>
                 <div class="panel-body" id="editUserDiv">
-                   
+
                     <?php
-                   $attribute = array('class' => 'form_horizontal', 'name' => 'editsciuser', 'id' => 'editsciuser', 'accept-charset' => 'utf-8', 'autocomplete' => 'off');
-                   echo form_open(base_url('#'), $attribute);
+                    $attribute = array('class' => 'form_horizontal', 'name' => 'editsciuser', 'id' => 'editsciuser', 'accept-charset' => 'utf-8', 'autocomplete' => 'off');
+                    echo form_open(base_url('#'), $attribute);
                     ?>
                     <!-- <div class="row">
                         <div class="col-md-6 col-sm-6 col-xs-12"> -->
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Name</label>
-                                        <input type="text" autocomplete="off" name="emp_name" id="emp_name" placeholder="Name" maxlength="35" class="form-control cus-form-ctrl" />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Emp.No. </label>
-                                        <input type="text" autocomplete="off" name="empid" id="empid" placeholder="Emp.No." maxlength="15" class="form-control cus-form-ctrl" />
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label col-12 ps-0">Filing Type</label>
-                                        <select id="filing_type" name="filing_type" class="form-select input-sm" multiple="multiple" required >
-                                                    <option value="">Select Filing Type</option>
-                                                    <?php
-                                                    if (isset($filingType) && !empty($filingType)) {
-                                                        foreach ($filingType as $k => $v) {
-                                                            echo '<option value="' . $v->id . '">' . str_replace('_', ' ', strtoupper($v->efiling_type)) . '</option>';
-                                                        }
-                                                    }
-                                                    ?>
-                                                </select>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">Party In Person / Advocate</label>
-                                        <select id="pp_a" name="pp_a" class="form-select cus-form-ctrl" required>
-                                                    <option value="">Select Party In Person / Advocate</option>
-                                                    <option value="P">Party In Person</option>
-                                                    <option value="A">Advocate</option>
-                                                </select>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label">User Absent/Present</label>
-                                        <div class="form-check form-switch ">
-											<input class="form-check-input" type="checkbox" id="attend" name="attend" required>
-										</div>
-                                    </div>
-                                </div>
-                               
-                               
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Name</label>
+                                <input type="text" autocomplete="off" name="emp_name" id="emp_name" placeholder="Name" maxlength="35" class="form-control cus-form-ctrl" />
                             </div>
-                            <div class="center-buttons">
-                                <input type="submit" name="editUserRole" value="Update User Role" id="editUserRole" class="btn quick-btn" />
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Emp.No. </label>
+                                <input type="text" autocomplete="off" name="empid" id="empid" placeholder="Emp.No." maxlength="15" class="form-control cus-form-ctrl" />
                             </div>
-                            <input type="hidden" name="userId" id="userId" />
-                            </form>
-                        
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label col-12 ps-0">Filing Type</label>
+                                <select id="filing_type" name="filing_type" class="form-select input-sm" multiple="multiple" required>
+                                    <!-- <option value="">Select Filing Type</option> -->
+                                    <?php
+                                    if (isset($filingType) && !empty($filingType)) {
+                                        foreach ($filingType as $k => $v) {
+                                            echo '<option value="' . $v->id . '">' . str_replace('_', ' ', strtoupper($v->efiling_type)) . '</option>';
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">Party In Person / Advocate</label>
+                                <select id="pp_a" name="pp_a" class="form-select cus-form-ctrl" required>
+                                    <option value="">Select Party In Person / Advocate</option>
+                                    <option value="P">Party In Person</option>
+                                    <option value="A">Advocate</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                            <div class="mb-3">
+                                <label for="" class="form-label">User Absent/Present</label>
+                                <div class="form-check form-switch ">
+                                    <input class="form-check-input" type="checkbox" id="attend" name="attend" required>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="center-buttons">
+                        <input type="submit" name="editUserRole" value="Update User Role" id="editUserRole" class="btn quick-btn" />
+                    </div>
+                    <input type="hidden" name="userId" id="userId" />
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -266,23 +267,21 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
 
 <script>
-    $(document).ready(function()
-    {
-       // $('#filing_type').multiselect();
-        $(document).on('click', '.editRole', function()
-        {
-            
+    $(document).ready(function() {
+        // $('#filing_type').multiselect();
+        $(document).on('click', '.editRole', function() {
+
             var userId = $(this).attr('data-userid');
-           
+
             $("#userId").val(userId);
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-           
+
             if (userId) {
                 $.ajax({
                     type: "POST",
@@ -290,13 +289,13 @@
                         CSRF_TOKEN: CSRF_TOKEN_VALUE,
                         userId: userId
                     },
-                 
+
                     url: "<?= base_url('filingAdmin/getEmpDetailsByUserId') ?>",
                     async: false,
                     cache: false,
                     dataType: 'json',
                     success: function(res) {
-                        
+
                         if (res && typeof res == 'string') {
                             res = JSON.parse(res);
                         }
@@ -314,16 +313,16 @@
                                 $("#attend").prop('checked', false);
                             }
                             var $ids = res.file_type_id.split(',');
-                           
-                                // $('#filing_type').val($ids);
-                                $('#filing_type').val($ids).trigger('change');
-                                $('#filing_type').select2();
-                                var roleText = '';
-                        ids.forEach(function(id) {
-                            var text = $('#filing_type option[value="' + id + '"]').text();
-                            roleText += text.replace(/_/g, ' ').toUpperCase() + '<br>';
-                        });
-                        console.log(roleText);
+
+                            // $('#filing_type').val($ids);
+                            $('#filing_type').val($ids).trigger('change');
+                            $('#filing_type').select2();
+                            var roleText = '';
+                            ids.forEach(function(id) {
+                                var text = $('#filing_type option[value="' + id + '"]').text();
+                                roleText += text.replace(/_/g, ' ').toUpperCase() + '<br>';
+                            });
+                            console.log(roleText);
 
                         }
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
@@ -339,8 +338,7 @@
             }
         });
 
-        $(document).on('click', '#editUserRole', function(e)
-        {
+        $(document).on('click', '#editUserRole', function(e) {
             e.preventDefault();
             var userId = $("#userId").val();
             var emp_name = $.trim($("#emp_name").val());
@@ -407,7 +405,7 @@
                         pp_a: pp_a,
                         attend: attend
                     },
-                    
+
                     url: "<?= base_url('filingAdmin/updateUserRole') ?>",
                     async: false,
                     cache: false,
@@ -444,9 +442,8 @@
 <script>
     function ActionToAllUserCount() {
         var AllUserCount = document.querySelector('#AllUserCount').checked;
-       
+
         window.location.href =
             "<?= base_url('adminDashboard/DefaultController/ActionToAllUserCount?AllUserCount=') ?>" + AllUserCount;
     }
 </script>
-
