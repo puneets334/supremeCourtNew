@@ -207,7 +207,7 @@ class Ajaxcalls extends BaseController
 // DELETES INDEX ENTRY
         $this->check_login();
 
-        $input_array = explode('$$', url_decryption(escape_data($this->input->post("form_submit_val"))));
+        $input_array = explode('$$', url_decryption(escape_data($_POST["form_submit_val"])));
 
         if (count($input_array) != 2) {
             echo '1@@@Invalid Action';

@@ -22,6 +22,9 @@ class DefaultController extends BaseController
         }
         $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
         $this->Common_model = new CommonModel();
+
+        unset($_SESSION['MSG']);
+        unset($_SESSION['msg']);
     }
 
     public function copySearch()
@@ -99,6 +102,11 @@ class DefaultController extends BaseController
     public function contactUs()
     {
         return $this->render('onlineCopying.contact_us');
+    }
+    public function caseSearch()
+    {
+        $caseType = $this->Common_model->getCaseType();
+        return $this->render('onlineCopying.case_search', compact('caseType'));
     }
     
 }
