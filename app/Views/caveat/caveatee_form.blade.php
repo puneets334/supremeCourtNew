@@ -31,6 +31,11 @@ body.loading{
 body.loading .overlay{
     display: block;
 }
+input,
+select,
+textarea {
+    text-transform: uppercase;
+}
 </style>
 <style>
     .datepicker-dropdown {
