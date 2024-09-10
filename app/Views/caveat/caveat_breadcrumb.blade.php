@@ -215,7 +215,9 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
             }
             ?>
          
-                <?php              
+                <?php     
+                // print_r(getSessionData('efiling_details')['breadcrumb_status']);
+                // echo "<br><br><br>";         
 
 
                 $breadCrumbsArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
@@ -309,7 +311,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
 
                     <li class="nav-item" role="presentation">
                         <?php               
-                            
+                            // echo $segment->getSegment(1);
                         if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex') {
 
                             // print_r($StageArray);
@@ -327,7 +329,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="<?php if(!in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index </a>
+                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="z-index:4" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index </a>
                     </li>
 
                     <li class="nav-item" role="presentation">

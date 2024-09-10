@@ -343,8 +343,14 @@ class UploadDocsModel extends Model
         $builder->WHERE('registration_id', $registration_id);
         $builder->UPDATE(array('breadcrumb_status' => $new_breadcrumbs));
 
+        // echo CAVEAT_BREAD_UPLOAD_DOC;
+        // pr($new_breadcrumbs);
+
         if ($this->db->affectedRows() > 0) {
             getSessionData('efiling_details')['breadcrumb_status'] = $new_breadcrumbs;
+            $setD = getSessionData('efiling_details');
+            $setD['breadcrumb_status'] = $new_breadcrumbs;
+            setSessionData('efiling_details', $setD);
             return TRUE;
         } else {
             return FALSE;
@@ -365,6 +371,9 @@ class UploadDocsModel extends Model
             $builder = $this->db->table('efil.tbl_efiling_nums');
             $builder->WHERE('registration_id', $registration_id);
             $builder->UPDATE(array('breadcrumb_status' => $new_breadcrumbs));
+
+           
+
 
             if ($this->db->affectedRows() >  0) {
                 getSessionData('efiling_details')['breadcrumb_status'] = $new_breadcrumbs;
