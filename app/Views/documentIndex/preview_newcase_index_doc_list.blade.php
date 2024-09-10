@@ -30,7 +30,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                     $st_indx = 1;
                     $end_indx = 0;
                     $segment = service('uri');
-
+                    if(!empty($efiled_docs_list)){
                     foreach ($efiled_docs_list as $doc_list) {
                         $end_indx = $end_indx + $doc_list->page_no;
                         $indx = $st_indx . ' - ' . $end_indx;
@@ -81,7 +81,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                                 ?>
                             <?php } ?>
                         </tr>
-                    <?php } ?>
+                    <?php } } ?>
 
                 </tbody>
             </table>

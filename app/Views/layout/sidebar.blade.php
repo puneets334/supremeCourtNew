@@ -94,7 +94,7 @@ $segment = service('uri');
                             <ul id="collapse7" class="submenu accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/track_consignment'); ?>">Track</a></li>
-                                <li><a class="btn-link" href="#">Application</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/case_search'); ?>">Application</a></li>
                                 <li><a class="btn-link" href="#">Address</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader</a></li>

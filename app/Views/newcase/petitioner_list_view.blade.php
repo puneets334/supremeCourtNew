@@ -16,12 +16,12 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                         <th>#</th>
                         <th>Type</th>
                 
-                        <?php if ($petitioner_details[0]['party_type'] == 'I') { ?>
+                        <?php if (!empty($petitioner_details) && $petitioner_details[0]['party_type'] == 'I') { ?>
                             <th>Petitioner Name</th>
                             <th>Age / D.O.B</th>
-                        <?php } if ($petitioner_details[0]['party_type'] == 'D1' || $petitioner_details[0]['party_type'] == 'D2') { ?>
+                        <?php } if (!empty($petitioner_details) && ($petitioner_details[0]['party_type'] == 'D1' || $petitioner_details[0]['party_type'] == 'D2')) { ?>
                             <th>Petitioner Name</th>
-                        <?php } if ($petitioner_details[0]['party_type'] == 'D3') { ?>
+                        <?php } if (!empty($petitioner_details) && $petitioner_details[0]['party_type'] == 'D3') { ?>
                             <th>Petitioner Name</th>
                         <?php } ?>
                         <th>Contact</th>
@@ -38,6 +38,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                     <?php
                     $i = 1;
                     //print_r($petitioner_details);
+                    if(!empty($petitioner_details)){
                     foreach ($petitioner_details as $exp) {
                         $relation = ' ' . $exp['relation'] . '/O ';
                         $dob = isset($exp['party_dob']) && !empty($exp['party_dob'] && $exp['party_dob']!="--") ? date('d-m-Y', strtotime($exp['party_dob'])) : '';
@@ -89,7 +90,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                             <?php } ?>
 
                         </tr>
-                    <?php } ?>
+                    <?php } } ?>
                 </tbody>
             </table>
         </div>

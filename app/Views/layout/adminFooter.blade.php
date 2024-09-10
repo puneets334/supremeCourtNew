@@ -91,12 +91,12 @@
       <script src="{{ asset('js/jquery.validate.min.js') }}"></script>
       <script src="{{ asset('js/custom.js') }}"></script>
        <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-       <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script>
+       <!-- <script src="{{ asset('js/jquery.timepicker.min.js') }}"></script> -->
        <script src="{{ asset('js/dataTables.select.min.js') }}"></script>
        <script src="{{ asset('js/highcharts.js') }}"></script>
        <script src="{{ asset('js/perfect-scrollbar.min.js') }}"></script>
        <script src="{{ asset('js/moment.min.js') }}"></script>
-       <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+       <!-- <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script> -->
        <script src="{{ asset('js/select2.full.min.js') }}"></script>
        <script src="{{ asset('js/dropzone.min.js') }}"></script>
        <script src="{{ asset('js/main.js') }}"></script>
@@ -109,6 +109,8 @@
       <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
       <script src="{{ asset('js/idle.js') }}"></script>
        <script src="{{ asset('js/jquery-ui.js') }}"></script>
+       <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
         @stack('after-scripts')
         <!-- / Scripts -->
 
