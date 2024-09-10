@@ -22,15 +22,19 @@ class StageController extends BaseController {
 
     public function index()
     {
-        $loop_for_stage_flag = I_B_Defects_Cured_Stage; //Defects Cured stage
+        $loop_for_stage_flag = I_B_Defects_Cured_Stage; //Defects Cured stage 
         $scrutiny_result = $this->Default_model->get_efiled_nums_stage_wise_list_admin_cron($loop_for_stage_flag, ADMIN_FOR_TYPE_ID, ADMIN_FOR_ID);
+
         if ($scrutiny_result) {
             $data = $this->efiling_webservices->get_new_case_efiling_scrutiny_cron_SCIS($scrutiny_result);
 
             if ($data) {
                 $curr_dt = date('Y-m-d H:i:s');
+
                 foreach ($data->consumed_data as $response) {
+
                     //var_dump($response);
+                    // if ($response->status == 'N') { continue; }
                     if ($response->status == 'A') {
                         $objections_status = NULL;
                         $documents_status = NULL;
@@ -89,7 +93,7 @@ class StageController extends BaseController {
                         echo "<br>----------<br>";
 
 
-                        $update_status = $this->Default_model->update_icmis_case_status($response->registration_id, $next_stage, $curr_dt, $case_details, $objections_status[1], $objections_status[2]);
+                        $update_status = $this->Default_model->update_icmis_case_status($response->registration_id, $next_stage, $curr_dt, $case_details, isset($objections_status[1]) ? $objections_status[1] : NULL, isset($objections_status[2]) ? $objections_status[2] : NULL);
                         if ($update_status) {
                             if ($next_stage) {
                                 if ($next_stage == E_Filed_Stage) {
