@@ -20,8 +20,6 @@ class App extends BaseConfig
     
 
     public string $baseURL = "http://10.40.186.244:82/";
-Z
-
 
 
 
