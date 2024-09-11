@@ -1,7 +1,7 @@
 <?php
 //var_dump($_SESSION['user_address'][0]['first_name']);
-if ($_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"]) ) {
-if ($_SESSION['is_user_address_found'] != 'YES') {
+if (isset($_SESSION['is_token_matched']) && $_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"]) ) {
+if (isset($_SESSION['is_user_address_found']) && $_SESSION['is_user_address_found'] != 'YES') {
     //add your address *
     ?>
     <script type='text/javascript'>window.location.href = 'user_address.php'</script>
@@ -38,41 +38,43 @@ else{
 }
 
 $res_fil_det = eCopyingGetFileDetails($diary_no);
+$pno="";
 if(count($res_fil_det) > 0){
-   if($res_fil_det['pno']!=0)
+   if($res_fil_det[0]->pno!=0)
     {
-        if($res_fil_det['pno']==2)
+        if($res_fil_det[0]->pno==2)
             $pno=" AND ANOTHER";
-        else if($res_fil_det['pno']>2)
+        else if($res_fil_det[0]->pno>2)
             $pno=" AND OTHERS";
     }
-    if($res_fil_det['rno']!=0)
+    $rno="";
+    if($res_fil_det[0]->rno!=0)
     {
-        if($res_fil_det['rno']==2)
+        if($res_fil_det[0]->rno==2)
             $rno=" AND ANOTHER";
-        else if($res_fil_det['rno']>2)
+        else if($res_fil_det[0]->rno>2)
             $rno=" AND OTHERS";
     }
-   if($res_fil_det['reg_no_display']!='')
+   if($res_fil_det[0]->reg_no_display!='')
     {
-        $case_no = $res_fil_det['reg_no_display'];
+        $case_no = $res_fil_det[0]->reg_no_display;
     }
     $case_no .= '  Diary No. '.substr($diary_no,0,-4).' - '.substr($diary_no,-4);
 
     $_SESSION['session_case_no'] = $case_no;
-    $_SESSION['session_cause_title'] = $res_fil_det['pet_name'] . $pno . " Vs " . $res_fil_det['res_name'] . $rno;
-    $_SESSION['session_c_status'] = $res_fil_det['c_status'] ;
+    $_SESSION['session_cause_title'] = $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;
+    $_SESSION['session_c_status'] = $res_fil_det[0]->c_status ;
 ?>
 
 <!--    <div id="show_error"></div>  This Segment Displays The Validation Rule -->
     <div class="card mt-2" >
-<div class="card-header bg-info text-white font-weight-bolder mt-0 mb-0">            
+<div class="card-header bg-primary text-white font-weight-bolder mt-0 mb-0">            
                                         Case Info    
                                     </div>        
         <div class="card-body">
-            <div class="text-center diary_no_class" data-diary-no="<?=$diary_no;?>" data-case-no="<?=$case_no;?>" data-cause_title="<?=$res_fil_det['pet_name'] . $pno . " Vs " . $res_fil_det['res_name'] . $rno;?>" >
-                <p><?= $res_fil_det['pet_name'] . $pno . " Vs " . $res_fil_det['res_name'] . $rno; ?></p>
-                <strong><?= $case_no; ?> (<?= $res_fil_det['c_status']=='P' ? '<span style="color: #0554DB;">Pending</span>' : '<span class="text-danger">Disposed</span>'; ?>)</strong>
+            <div class="text-center diary_no_class" data-diary-no="<?=$diary_no;?>" data-case-no="<?=$case_no;?>" data-cause_title="<?=$res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;?>" >
+                <p><?= $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno; ?></p>
+                <strong><?= $case_no; ?> (<?= $res_fil_det[0]->c_status=='P' ? '<span style="color: #0554DB;">Pending</span>' : '<span class="text-danger">Disposed</span>'; ?>)</strong>
                 <p class="text-left">
                     Applying as :<b> 
                     <?php   if($_SESSION["session_filed"] == 1){ echo "AOR";}
@@ -99,11 +101,8 @@ if(count($res_fil_det) > 0){
     }
 
     if($_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4){
-        $stmt_video = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 3 order by ent_time desc limit 1");
-        $stmt_video->bindParam(':mobile', $_SESSION["applicant_mobile"]);
-        $stmt_video->bindParam(':email', $_SESSION["applicant_email"]);
-        $stmt_video->execute();
-        if ($stmt_video->rowCount() == 0) {
+        $stmt_video = getStatementVideo($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
+        if (count($stmt_video) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
                 Please <a class='btn btn-danger' href='user_video.php'>Click here</a> to record your 10 seconds video. (It's mandatory)
@@ -112,11 +111,8 @@ if(count($res_fil_det) > 0){
             exit();
         }
 
-        $stmt_image = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 2 order by ent_time desc limit 1");
-        $stmt_image->bindParam(':mobile', $_SESSION["applicant_mobile"]);
-        $stmt_image->bindParam(':email', $_SESSION["applicant_email"]);
-        $stmt_image->execute();
-        if ($stmt_image->rowCount() == 0) {
+        $stmt_image = getStatementImage($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
+        if (count($stmt_image) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
                 Please <a class='btn btn-danger' href='user_image.php'>Click here</a> to capture your photo. (It's mandatory)
@@ -124,12 +120,9 @@ if(count($res_fil_det) > 0){
             <?php
             exit();
         }
-
-        $stmt_id_proof = $dbo->prepare("select u.id from user_assets u where u.mobile =:mobile and u.email = :email and u.asset_type = 1 order by ent_time desc limit 1");
-        $stmt_id_proof->bindParam(':mobile', $_SESSION["applicant_mobile"]);
-        $stmt_id_proof->bindParam(':email', $_SESSION["applicant_email"]);
-        $stmt_id_proof->execute();
-        if ($stmt_id_proof->rowCount() == 0) {
+        
+        $stmt_id_proof = getStatementIdProof($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
+        if (count($stmt_id_proof) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
                 Please <a class='btn btn-danger' href='user_id_proof.php'>Click here</a> to upload you ID Proof. (It's mandatory)
@@ -139,21 +132,17 @@ if(count($res_fil_det) > 0){
         }
 
         //VERIFICATION OF CASES VALIDATE, MAX 10 REQUEST per day ALLOWED
-    $stmt_check = $dbo->prepare("SELECT id FROM user_assets where mobile = :mobile and email = :email and diary_no != 0 and date(ent_time) = curdate()");
-    $stmt_check->bindParam(':mobile', $_SESSION["applicant_mobile"]);
-    $stmt_check->bindParam(':email', $_SESSION["applicant_email"]);
-    $stmt_check->execute();
-    if ($stmt_check->rowCount() > 0) {
-
-                $_SESSION['max_cases_verify_per_day'] = $stmt_check->rowCount();
-                if($_SESSION['max_cases_verify_per_day'] >=10){
-                    ?>
-                        <div class="alert alert-danger alert-dismissible">
-                            Max 10 requests reached for verification per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
-                        </div>                  
-                    <?php                
-                    exit();
-                }
+    $stmt_check = eCopyingStatementCheck($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
+    if (count($stmt_check) > 0) {
+        $_SESSION['max_cases_verify_per_day'] = count($stmt_check);
+        if($_SESSION['max_cases_verify_per_day'] >=10){
+            ?>
+                <div class="alert alert-danger alert-dismissible">
+                    Max 10 requests reached for verification per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                </div>                  
+            <?php                
+            exit();
+        }
     }    
     else{
         $_SESSION['max_cases_verify_per_day'] = 0;
@@ -161,35 +150,25 @@ if(count($res_fil_det) > 0){
 
 
        //DIGITAL COPY, MAX 10 REQUEST ALLOWED
-    $stmt_check2 = $dbo->prepare("SELECT id FROM copying_application_online where allowed_request = 'digital_copy' and mobile = :mobile and email = :email and date(application_receipt) = curdate()");
-    $stmt_check2->bindParam(':mobile', $_SESSION["applicant_mobile"]);
-    $stmt_check2->bindParam(':email', $_SESSION["applicant_email"]);
-    $stmt_check2->execute();
-    if ($stmt_check2->rowCount() > 0) {
-                $_SESSION['max_digital_copy_per_day'] = $stmt_check2->rowCount();
-                if($_SESSION['max_digital_copy_per_day'] >=10){
-                    ?>
-                        <div class="alert alert-danger alert-dismissible">
-                            Max 10 digital copy request reached per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
-                        </div>                  
-                    <?php
-                    exit();
-                }                
-
+    $stmt_check2 = eCopyingCheckMaxDigitalRequest($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
+    if (count($stmt_check2) > 0) {
+        $_SESSION['max_digital_copy_per_day'] = count($stmt_check2);
+        if($_SESSION['max_digital_copy_per_day'] >=10){
+            ?>
+                <div class="alert alert-danger alert-dismissible">
+                    Max 10 digital copy request reached per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                </div>                  
+            <?php
+            exit();
+        }                
     }
     else{
         $_SESSION['max_digital_copy_per_day'] = 0;
     }
 
         
-    $sqlv = $dbo->prepare("SELECT asset_type, verify_status, verify_remark FROM user_assets where diary_no = :diary_no and asset_type = :check_asset_type and mobile = :mobile and email = :email order by ent_time desc limit 1");
-    $sqlv->bindParam(':email', trim($_SESSION["applicant_email"]));
-    $sqlv->bindParam(':mobile', $_SESSION["applicant_mobile"]);
-    $sqlv->bindParam(':check_asset_type', $check_asset_type);
-    $sqlv->bindParam(':diary_no', $diary_no);
-    $sqlv->execute();
-    if ($sqlv->rowCount() > 0) {
-            $data_sqlv = $sqlv->fetch(PDO::FETCH_ASSOC);
+    $data_sqlv = eCopyingCopyStatus($diary_no, $check_asset_type, $_SESSION["applicant_mobile"], trim($_SESSION["applicant_email"]));
+    if (count($data_sqlv) > 0) {
             if($data_sqlv['verify_status'] == 1){
                 //pending
                 $_SESSION['diary_filed_user_verify_status'] = 'pending';
@@ -209,13 +188,8 @@ if(count($res_fil_det) > 0){
                 //verification required
                 $_SESSION['diary_filed_user_verify_status'] = 'apply_for_verification';
                 //rejected
-//                $_SESSION['diary_filed_user_verify_status'] = 'rejected';
-                                ?>
-                    <!--<div class="alert alert-danger alert-dismissible">
-                        Your Verification for case no. <?/*=$case_no*/?> is rejected due to <?/*=$data_sqlv['verify_remark']*/?>. <a class='btn btn-danger' href='logout.php'>Exit</a>
-                    </div>-->
+            ?>
                 <?php                
-                /*exit();*/
             }
     }
     else{
@@ -223,36 +197,29 @@ if(count($res_fil_det) > 0){
         $_SESSION['diary_filed_user_verify_status'] = 'apply_for_verification';
     }
     
-    }
+}
 
-        if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
-            if($_SESSION["session_filed"] == 1){
-                $applicant_aor_mobile = $_SESSION["applicant_mobile"];
-            }
-            if($_SESSION["session_filed"] == 6){
-                $applicant_aor_mobile = $_SESSION["aor_mobile"];
-            }
-            $sql_verify = "select bar.bar_id from advocate adv
-                inner join bar bar on adv.advocate_id=bar.bar_id 
-                where diary_no=:diary_no and bar.mobile = :mobile and adv.display = 'Y' and bar.if_aor = 'Y' and bar.isdead = 'N' limit 1";
-            $sql_verify=$dbo2->prepare($sql_verify);
-            //$sql_verify->bindParam(':email', trim($_SESSION["applicant_email"]));
-            $sql_verify->bindParam(':mobile', $applicant_aor_mobile);
-            $sql_verify->bindParam(':diary_no', $diary_no);
-            $sql_verify->execute();
-            if($sql_verify->rowCount() > 0){
-                 $_SESSION['diary_filed_user_verify_status'] = 'success';
-            }
-            else{
-                 $_SESSION['diary_filed_user_verify_status'] = 'unregistered';
-            ?>
-                    <div class="alert alert-danger alert-dismissible">
-                        You are not registered in case no. <?=$case_no?>. <a class='btn btn-danger' href='logout.php'>Exit</a>
-                    </div>                  
-                <?php                
-                exit();
-            }        
-        }    
+    if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+        if($_SESSION["session_filed"] == 1){
+            $applicant_aor_mobile = $_SESSION["applicant_mobile"];
+        }
+        if($_SESSION["session_filed"] == 6){
+            $applicant_aor_mobile = $_SESSION["aor_mobile"];
+        }
+        $sql_verify = eCopyingGetBar($diary_no, $applicant_aor_mobile);
+        if(!empty($sql_verify)){
+            $_SESSION['diary_filed_user_verify_status'] = 'success';
+        }
+        else{
+                $_SESSION['diary_filed_user_verify_status'] = 'unregistered';
+        ?>
+                <div class="alert alert-danger alert-dismissible">
+                    You are not registered in case no. <?=$case_no?>. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                </div>                  
+            <?php                
+            exit();
+        }        
+    }    
         
     if($_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification'){
         ?>
@@ -279,7 +246,7 @@ if(count($res_fil_det) > 0){
     if(isset($_SESSION['user_address'])){
         ?>
         <div class="card col-md-12 mt-2 applicant_details_toggle">
-            <div class="card-header bg-info text-white font-weight-bolder">Applicant Details
+            <div class="card-header bg-primary text-white font-weight-bolder">Applicant Details
                     </div>
                     <div class="card-body">
                         <div class="row applicant_address">
@@ -343,7 +310,7 @@ if(count($res_fil_det) > 0){
     <div class="card col-md-12 mt-2 attach_documents">
 
 
-                    <div class="card-header bg-info text-white font-weight-bolder">Upload attested affidavit on stamp of &#x20b9; 20/- <sub> (Max 100 kb & Only PDF File Allowed)</sub>
+                    <div class="card-header bg-primary text-white font-weight-bolder">Upload attested affidavit on stamp of &#x20b9; 20/- <sub> (Max 100 kb & Only PDF File Allowed)</sub>
                     </div>
                     <div class="card-body">
 
@@ -383,7 +350,7 @@ if(count($res_fil_det) > 0){
     else{
     ?>
     <div class="card col-md-12 mt-2 copying_dedtails_toggle_request">
-                    <div class="card-header bg-info text-white font-weight-bolder">Copying Details</div>
+                    <div class="card-header bg-primary text-white font-weight-bolder">Copying Details</div>
                     <div class="card-body">
 
 <!--TODO:
@@ -402,17 +369,19 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
                 background-color: #fff;
             }
         </style>
-    <div class="form-row mb-3">
-<!--        <label for="happy" class="col-12 control-label text-left">Are you applying for Bail Order ?</label>-->
-        <div class="col-sm-12 col-md-12">
-            <div class="input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="bail_order">Are you applying first time for Bail Order ?</span>
-                <div id="radioBtn" class="btn-group">
-                    <a class="btn btn-primary btn-sm notActive" data-toggle="bail_order" data-title="Y">YES</a>
-                    <a class="btn btn-primary btn-sm active" data-toggle="bail_order" data-title="N">NO</a>
-                </div>
-<!--                    <input type="hidden" name="happy" id="happy">-->
+    <div class="row mb-3">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <div class="row">
+                <div class="row w-100 align-items-center">
+                    <div class="col-5">
+                        <label for="inputPassword6" id="bail_order" class="col-form-label">Are you applying first time for Bail Order ?</label>
+                    </div>
+                    <div class="col-7 pe-0">
+                        <div id="radioBtn" class="btn-group">
+                            <a class="btn btn-primary btn-sm notActive" data-toggle="bail_order" data-title="Y">YES</a>
+                            <a class="btn btn-primary btn-sm active" data-toggle="bail_order" data-title="N">NO</a>
+                        </div>  
+                    </div>
                 </div>
             </div>
         </div>
@@ -425,54 +394,52 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
 
 
 
-
-    <div class="form-row">
-
-
-        <div class="col-md-4">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="app_type_addon">Application Category *</span>
+    <div class="row mb-3">
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="row">
+                <div class="row w-100 align-items-center">
+                    <div class="col-5">
+                        <label for="inputPassword6" id="app_type_addon" class="col-form-label">Application Category *</label>
+                    </div>
+                    <div class="col-7 pe-0">
+                        <?php
+                            $app_category = eCopyingGetCopyCategory();
+                        ?>
+                        <select class="form-control cus-form-ctrl" id="app_type" name="app_type" aria-labelledby="app_type_addon" required>
+                            <option value="">-Select-</option>
+                            <?php foreach ($app_category as $row) { ?>
+                                <option value="<?php echo $row['id']; ?>"><?php echo $row['code'].'-'.$row['description']; ?></option>
+                            <?php } ?>
+                        </select>   
+                    </div>
                 </div>
-                <?php
-                $app_category = "Select id,code,description from copy_category";
-                $app_category = $dbo2->prepare($app_category);
-                $app_category->execute();
-                                               
-                ?>
-                <select class="form-control" id="app_type" name="app_type" aria-labelledby="app_type_addon" required>
-                <option value="">-Select-</option>
-                  <?php
-                                  while ($row = $app_category->fetch(PDO::FETCH_ASSOC)) {
-                                      ?>
-                    <option value="<?php echo $row['id']; ?>"><?php echo $row['code'].'-'.$row['description']; ?></option>
-                    <?php
-                                  }
-                  ?>
-                </select>              
             </div>
         </div>
-        <div class="col-md-4">                                
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="cop_mode_addon">Delivery Mode *</span>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="row">
+                <div class="row w-100 align-items-center">
+                    <div class="col-5">
+                        <label for="inputPassword6" id="cop_mode_addon" class="col-form-label">Delivery Mode *</label>
+                    </div>
+                    <div class="col-7 pe-0">
+                        <select class="form-control cus-form-ctrl" id="cop_mode" name="cop_mode" aria-labelledby="cop_mode_addon" required>
+                            <option value="">Select</option>
+                            <option value="1">By Speed Post</option>
+                            <option value="2">Counter</option>
+                            <option value="3">Email</option>                    
+                        </select>
+                    </div>
                 </div>
-                <select class="form-control" id="cop_mode" name="cop_mode" aria-labelledby="cop_mode_addon" required>
-                    <option value="">Select</option>
-                    <option value="1">By Speed Post</option>
-                    <option value="2">Counter</option>
-                    <option value="3">Email</option>                    
-                </select>
             </div>
         </div>
-
-         <div class="col-md-4">
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="num_copy_addon">No. of Copies *</span>
-                </div>
-                               
-                <select class="form-control" id="num_copy" name="num_copy" aria-labelledby="num_copy_addon" required>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <div class="row">
+                <div class="row w-100 align-items-center">
+                    <div class="col-5">
+                        <label for="inputPassword6" class="col-form-label" id="num_copy_addon">No. of Copies *</label>
+                    </div>
+                    <div class="col-7 pe-0">
+                    <select class="form-control cus-form-ctrl" id="num_copy" name="num_copy" aria-labelledby="num_copy_addon" required>
                         <?php
                         $currently_selected = date('Y');
                         $earliest_year = 1;
@@ -489,13 +456,12 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
                         }
                         ?>
                 </select>
-                
+                    </div>
+                </div>
             </div>
         </div>
-
-        
-        
     </div>
+
 
     <div class="form-row" style="color:#186329;">
         <div class="col-md-12">
@@ -531,17 +497,12 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
 
 
                 <div class="table-responsive form-radio ml-2 applied_check_boxes" aria-labelledby="applied_for_addon" style="max-height:200px; overflow:auto;">
-<?php
-        if($res_fil_det['main_case'] !='' && $res_fil_det['main_case'] != null && $res_fil_det['main_case'] != '0'){
-            $dbo2->query("SET SESSION group_concat_max_len = 10000000000");
-
-            $sql_conn_list = "select group_concat(diary_no) as conn_list from main where conn_key=:main_case";
-            $sql_conn_list = $dbo2->prepare($sql_conn_list);
-            $sql_conn_list->bindParam(':main_case', $res_fil_det['main_case']);
-            $sql_conn_list->execute();
-            if($sql_conn_list->rowCount() > 0){
-                    $res_diary_data = $sql_conn_list->fetch(PDO::FETCH_ASSOC);
-                    $condition = $res_diary_data['conn_list'];
+    <?php
+        if(isset($res_fil_det['main_case']) && ($res_fil_det['main_case'] !='' && $res_fil_det['main_case'] != null && $res_fil_det['main_case'] != '0')){
+            $sql_conn_list = eCopyingGetGroupConcat($res_fil_det['main_case']);
+            if(count($sql_conn_list) > 0){
+                $res_diary_data = $sql_conn_list;
+                $condition = $res_diary_data['conn_list'];
             }
             else{
                 $condition = $diary_no;
@@ -552,54 +513,15 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
         }
 
         //third party and appearing council allowed only judgemnet orders proceedings
-                            if($_SESSION["applicant_mobile"] != '9630100950' && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
-                                $third_party_sub_qry = " and ot.id in (36,8,3,20,1,2,4) ";    
-                            }
-                            else{
-                                $third_party_sub_qry = "";    
-                            }
-$jud_order="select zz.* from (
-select vd.path as pdfname, vd.order_date as orderdate, 0 as s, ot.order_type judgement_order, ot.id judgement_order_code, vd.order_type_remark,
-vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages
-from copying_request_verify u
-inner join copying_request_verify_documents vd on u.id = vd.copying_order_issuing_application_id
-inner join ref_order_type ot on ot.id = vd.order_type
-where u.diary in ($condition) 
-$third_party_sub_qry
-and u.application_status != 'P' and vd.request_status = 'D' and vd.path != '' and vd.path is not null 
-and ot.is_deleted = 'f' and u.allowed_request = 'request_to_available'         
-union
-Select pdfname, orderdate, '1' s, case when type='O' then 'Record of Proceedings' when type='J' then 'Judgement' END as judgement_order,
-    case when type='O' then 1 when type='J' then 3 END as judgement_order_code, '' as order_type_remark,
-'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
-        from ordernet where date(orderdate) > '2014-05-31' and diary_no in ($condition) and display='Y' 
-union 
-Select jm pdfname,dated orderdate,'2' s, case when jt='rop' then 'Record of Proceedings' when jt='judgment' then 'Judgement' END as judgement_order,
-case when jt='rop' then 1 when jt='judgment' then 3 END as judgement_order_code, '' as order_type_remark,
-'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
-from tempo where date(dated) > '2014-05-31' and diary_no in ($condition) and (jt='rop' or jt='judgment') 
-union 
-Select concat('ropor/rop/all/',pno,'.pdf') pdfname,orderDate orderdate,'3' s, 'Record of Proceedings' judgement_order, '1' as judgement_order_code, '' as order_type_remark, 
-'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
-from $OLD_ROP.old_rop where date(orderDate) > '2014-05-31' and dn in ($condition)
-union 
-Select concat('judis/',filename,'.pdf') pdfname,juddate orderdate,'4' s, 'Judgement' judgement_order, '3' as judgement_order_code, '' as order_type_remark,
-'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
-from scordermain where date(juddate) > '2014-05-31' and dn in ($condition) 
-union 
-Select concat('bosir/orderpdf/',pno,'.pdf') pdfname,orderdate orderdate,'5' s, 'Record of Proceedings' judgement_order, '1' as judgement_order_code, '' as order_type_remark,
-'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
-from $OLD_ROP.ordertext where date(orderdate) > '2014-05-31' and dn in ($condition)
-union
-Select concat('bosir/orderpdfold/',pno,'.pdf') pdfname,orderdate orderdate,'6' s, 'Record of Proceedings' judgement_order, '1' as judgement_order_code, '' as order_type_remark, 
-'' fee_clc_for_certification_no_doc, '' fee_clc_for_certification_pages, '' fee_clc_for_uncertification_no_doc, '' fee_clc_for_uncertification_pages
-from $OLD_ROP.oldordtext where date(orderdate) > '2014-05-31' and dn in ($condition)
-) zz order by orderdate ";
+        if($_SESSION["applicant_mobile"] != '9630100950' && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
+            $third_party_sub_qry = " and ot.id in (36,8,3,20,1,2,4) ";    
+        }
+        else{
+            $third_party_sub_qry = "";    
+        }
+        $jud_order = eCopyingGetCopyDetails($condition, $third_party_sub_qry, $OLD_ROP);
 
-            $jud_order = $dbo2->prepare($jud_order);           
-            $jud_order->execute();
-
-   if($jud_order->rowCount() > 0){
+    if(count($jud_order) > 0){
 
       ?>
 
@@ -631,7 +553,7 @@ from $OLD_ROP.oldordtext where date(orderdate) > '2014-05-31' and dn in ($condit
                    <?php
                    $sno=1;$tot_pages=0;$tot_amt=0;
        //while ($row1 = mysqli_fetch_array($jud_order)) {
-       while($row1 = $jud_order->fetch(PDO::FETCH_ASSOC)){
+       foreach($jud_order as $row1){
 
            $t_pages_x='';
            $pdfname_exploded=explode("/",$row1['pdfname']);
@@ -832,8 +754,8 @@ from $OLD_ROP.oldordtext where date(orderdate) > '2014-05-31' and dn in ($condit
 <script>
 
 $(document).ready(function() {
-$('[data-toggle="popover"]').popover();
-$('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 </script>

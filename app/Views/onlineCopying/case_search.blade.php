@@ -296,7 +296,7 @@
             }
 
             $.ajax({
-                url:'get_case_details.php',
+                url:'<?php echo base_url('online_copying/get_case_details'); ?>',
                 cache: false,
                 async: true,
                 beforeSend: function () {
