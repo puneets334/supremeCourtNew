@@ -218,11 +218,59 @@ class view extends BaseController
                 'total_amount' => $total_fee_paid,
                 's' => $img
             );
-
-
-
             $file_name_prefix = 'IA_';
         }
+
+
+        // if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == OLD_CASES_REFILING) {
+        //     $new_case_details = $this->Acknowledgement_model->get_new_case_details($registration_id);
+        //     // pr($_SESSION['efiling_details']);
+        //     $title = explode('Vs.', $new_case_details[0]['cause_title']);
+        //     //$get_IA = $this->Acknowledgement_model->get_IA_no($registration_id);
+
+        //     $data['view_data'] = array(
+        //         'efiling_name' => !empty($_SESSION['efiling_details']['efiling_for_name']) ? $_SESSION['efiling_details']['efiling_for_name'] : '',
+        //         'efiling_type' => 'Old Case Refile',
+        //         'efiling_no' => efile_preview($_SESSION['efiling_details']['efiling_no']),
+        //         'create_on' => isset($efiling_civil_data) ? date('d-m-Y H:i:s A', strtotime($efiling_civil_data[0]['create_on'])) : '',
+        //         'pet_name' => $title[0],
+        //         'res_name' => $title[1],
+        //         'total_ia' => !empty($get_IA) ? $get_IA : '',
+        //         'ref_file_no' => 'NA',
+        //         'payment_type' => $payment_type[0]['payment_type'] ?? '',
+        //         'payment_method_code' => $payment_type[0]['payment_method_code'] ?? '',
+        //         'payment_details' => isset($payment_type) ? $fee_payment_mode_and_fee : '',
+        //         'count_number_of_fee_pay' => $count_number_of_fee_pay,
+        //         'total_amount' => $total_fee_paid,
+        //         'urgent' => isset($efiling_civil_data) ? $efiling_civil_data[0]['urgent'] : '',
+        //         'bench_name' => !empty($efiling_civil_master) ? $efiling_civil_master[0]->bench_name : '',
+        //         'casename' => $new_case_details[0]['casename'],
+        //         'cdeval' => $new_case_details[0]['ifcde'],
+        //         'data_for_qr' => $new_case_details[0]['security_code'],
+
+        //     );
+
+        //     if (($data['view_data']['cdeval']) == 1) {
+        //         $efil_no = str_replace('-', '', $data['view_data']['efiling_no']);
+        //         $qrtext = $_SESSION['efiling_details']['registration_id'] . "-" . $efil_no . "-" . ($data['view_data']['data_for_qr']);
+        //         $qr_code_base64 = generate_qr_code(['data' => $qrtext])->base64;
+        //         $imag_base64_en = 'data:image/png;base64' . ',' . $qr_code_base64;
+        //         // var_dump($imag_base64_en);
+
+        //         $image_cntent = file_get_contents($imag_base64_en);
+
+        //         $path = tempnam(sys_get_temp_dir(), 'prefix');
+        //         file_put_contents($path, $image_cntent);
+        //         $img = '<img width="100" height="100" src="' . $path . '">';
+        //         //  var_dump($img);
+
+
+        //     }
+        //     $file_name_prefix = 'OLD_REFILE_';
+        // }
+
+
+
         // pr($data);
 
         // return view('acknowledgement/case_preview_pdf', $data);

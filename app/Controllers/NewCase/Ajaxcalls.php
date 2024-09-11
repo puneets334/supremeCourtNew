@@ -134,6 +134,7 @@ class Ajaxcalls extends BaseController {
         $dropDownOptions .= '<option value="' . url_encryption(0) . '">NOT IN LIST</option>';
         foreach ($post_list as $post) {
             $sel = ($selected_post_id == url_encryption($post->authcode)) ? "selected=selected" : '';
+            
             $dropDownOptions .= '<option ' . $sel . ' value="' . escape_data(url_encryption($post->authcode)) . '">' . escape_data(strtoupper($post->authdesc)) . '</option>';
         }
         echo $dropDownOptions;

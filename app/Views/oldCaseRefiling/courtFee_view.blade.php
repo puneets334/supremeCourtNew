@@ -2,10 +2,10 @@
     <h4 style="text-align: center;color: #31B0D5"> Pay eCourt Fee </h4>
     <h5 style="text-align: center;"><b>Please note that No Printing charges are required to be paid </b> </h5>
     <div class="panel-body">
+        
         <?php
+        
         $attribute = array('class' => 'form-horizontal', 'name' => 'court_fee_details', 'id' => 'court_fee_details', 'autocomplete' => 'off');
-
-
         echo form_open('miscellaneous_docs/courtFee/add_court_fee_details', $attribute);
         //$total_court_fee = $court_fee_details[0]['orders_challendged'] * $court_fee_details[0]['court_fee'];
         ?>
@@ -50,7 +50,7 @@
                 <div class="row">
                     <?php //var_dump($court_fee_list1) 
                     ?>
-                    <div class="col-sm-8 col-xs-8">
+                    <div class="col-sm-12 col-xs-12">
                         <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
@@ -80,6 +80,7 @@
                                     $doc_list_for_per_lower_court_order_challanged_number = array(85, 86, 87, 817, 120, 827, 828, 829, 830, 831, 835, 895, 8328);
                                     $doc_list_of_zero_doc_fee_for_criminal_matter = array(842, 8120, 8137, 8144, 8152, 8153, 8160, 8252, 8271, 8302, 8324, 8346, 8368, 8385);
                                     // var_dump($court_fee_list3);
+                                    
                                     $diary_no = (int)$court_fee_list3[0]['diary_no'] . (int)$court_fee_list3[0]['diary_year'];
                                     $case_nature = $court_fee_list3[0]['nature'];
                                     if (empty($case_nature)) {
@@ -87,6 +88,7 @@
                                     }
                                     $case_if_sclsc_status = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/checkCaseIfSCLSCStatus?diaryNo=' . $diary_no);
                                     foreach ($court_fee_list3 as $row) {
+                                        
 
                                         $doc = (int)$row['doccode'] . (int)$row['doccode1'];
 
@@ -316,57 +318,59 @@
                         </table>
 
                     </div>
-                    <div class="col-sm-4 col-xs-4" style="margin-top: 5%;">
-                        <?= ASTERISK_RED_MANDATORY; ?>
-                        <div class="col-lg-12 ccol-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-8 col-sm-12 col-xs-12 input-sm">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
-                                    <span style="color: red">*</span></label>
-                                <div class="col-md-4 col-sm-12 col-xs-12">
-                                    <div class="input-group ">
-                                        <input type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress(this)" id="user_declared_extra_fee" name="user_declared_extra_fee" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="0">
+                    <div class="col-sm-12 col-xs-12" style="margin-top: 5%;">
+                        <div class="row">
+                            <?= ASTERISK_RED_MANDATORY; ?>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-8 col-sm-12 col-xs-12 input-sm">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
+                                        <span style="color: red">*</span></label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="input-group ">
+                                            <input type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress(this)" id="user_declared_extra_fee" name="user_declared_extra_fee" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="0">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 ccol-md-12 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Court Fee ( <i class="fa fa-rupee"></i> )<br>(To Pay)
-                                    <span style="color: red">*</span></label>
-                                <div class="col-md-8 col-sm-12 col-xs-12">
-                                    <div class="input-group ">
-                                        <!--<label style="width: 70px;" class="form-control input-sm " <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Total Court Fee "><?/*=$court_fee;*/ ?></label>-->
-                                        <?php
-                                        $court_fee_already_paid = 0;
-                                        $user_declared_extra_fee = 0;
-                                        $user_declared_court_fee = 0;
-                                        $uploaded_pages = 0;
-                                        $printing_cost_already_paid = 0;
-                                        if (isset($payment_details) && !empty($payment_details)) {
-                                            foreach ($payment_details as $payment) {
-                                                if ($payment['payment_status'] == 'Y')
-                                                    $court_fee_already_paid = $court_fee_already_paid + (int)$payment['received_amt'];
-                                                $user_declared_court_fee = $user_declared_court_fee + (int)$payment['user_declared_court_fee'];
-                                                $user_declared_extra_fee = $user_declared_extra_fee + (int)$payment['user_declared_extra_fee'];
-                                                $uploaded_pages = $uploaded_pages + (int)$payment['uploaded_pages'];
-                                                $printing_cost_already_paid = $printing_cost_already_paid + (int)$payment['printing_total'];
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Court Fee ( <i class="fa fa-rupee"></i> ) (To Pay)
+                                        <span style="color: red">*</span></label>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="input-group ">
+                                            <!--<label style="width: 70px;" class="form-control input-sm " <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Total Court Fee "><?/*=$court_fee;*/ ?></label>-->
+                                            <?php
+                                            $court_fee_already_paid = 0;
+                                            $user_declared_extra_fee = 0;
+                                            $user_declared_court_fee = 0;
+                                            $uploaded_pages = 0;
+                                            $printing_cost_already_paid = 0;
+                                            if (isset($payment_details) && !empty($payment_details)) {
+                                                foreach ($payment_details as $payment) {
+                                                    if ($payment['payment_status'] == 'Y')
+                                                        $court_fee_already_paid = $court_fee_already_paid + (int)$payment['received_amt'];
+                                                    $user_declared_court_fee = $user_declared_court_fee + (int)$payment['user_declared_court_fee'];
+                                                    $user_declared_extra_fee = $user_declared_extra_fee + (int)$payment['user_declared_extra_fee'];
+                                                    $uploaded_pages = $uploaded_pages + (int)$payment['uploaded_pages'];
+                                                    $printing_cost_already_paid = $printing_cost_already_paid + (int)$payment['printing_total'];
+                                                }
                                             }
-                                        }
-                                        $court_fee_already_paid_without_extra_fee = $court_fee_already_paid - $user_declared_extra_fee;
-                                        $uploaded_pages_count_pending = $uploaded_pages_count - $uploaded_pages;
-                                        $printing_cost_to_be_paid = (int) $uploaded_pages_count_pending * (int) $_SESSION['estab_details']['printing_cost'];
-                                        //$total_court_fee=(int)$court_fee+(int)$printing_cost_to_be_paid;
+                                            $court_fee_already_paid_without_extra_fee = $court_fee_already_paid - $user_declared_extra_fee;
+                                            $uploaded_pages_count_pending = $uploaded_pages_count - $uploaded_pages;
+                                            $printing_cost_to_be_paid = (int) $uploaded_pages_count_pending * (int) $_SESSION['estab_details']['printing_cost'];
+                                            //$total_court_fee=(int)$court_fee+(int)$printing_cost_to_be_paid;
 
-                                        $printing_cost_total = (int)$printing_cost_to_be_paid + (int)$printing_cost_already_paid;
-                                        $total_court_fee = (int)$court_fee + (int)$printing_cost_to_be_paid + (int)$printing_cost_already_paid;
-                                        $user_declared_court_fee = $court_fee - $user_declared_court_fee;
-                                        $pending_court_fee = $total_court_fee - $court_fee_already_paid_without_extra_fee;
-                                        ?>
-                                        <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php echo_data(url_encryption($uploaded_pages_count_pending . '$$' . $printing_cost_total . '$$' . $printing_cost_already_paid . '$$' . $printing_cost_to_be_paid . '$$' . $user_declared_court_fee)); ?>" />
-                                        <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
-                                        <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly /><br>
-                                        <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?>= <i class="fa fa-rupee"></i> <?= $total_court_fee ?></label>
-                                        <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: <i class="fa fa-rupee"></i> <?= $court_fee_already_paid ?> </label>
+                                            $printing_cost_total = (int)$printing_cost_to_be_paid + (int)$printing_cost_already_paid;
+                                            $total_court_fee = (int)$court_fee + (int)$printing_cost_to_be_paid + (int)$printing_cost_already_paid;
+                                            $user_declared_court_fee = $court_fee - $user_declared_court_fee;
+                                            $pending_court_fee = $total_court_fee - $court_fee_already_paid_without_extra_fee;
+                                            ?>
+                                            <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php echo_data(url_encryption($uploaded_pages_count_pending . '$$' . $printing_cost_total . '$$' . $printing_cost_already_paid . '$$' . $printing_cost_to_be_paid . '$$' . $user_declared_court_fee)); ?>" />
+                                            <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
+                                            <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly /><br>
+                                            <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?>= <i class="fa fa-rupee"></i> <?= $total_court_fee ?></label>
+                                            <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: <i class="fa fa-rupee"></i> <?= $court_fee_already_paid ?> </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -427,10 +431,10 @@
 </div>
 <?php
 if (isset($payment_details) && !empty($payment_details)) { ?>
-    @include('shcilPayment/payment_list_view')
+    @include('shcilPayment.payment_list_view')
 <?php }
 ?>
-
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script>
     function edValueKeyPress(txb) {
         var pending_court_fee = <?= $pending_court_fee ?>;

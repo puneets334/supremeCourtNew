@@ -212,8 +212,6 @@ $hidepencilbtn = 'true';
             </div>
         </div> -->
 
-
-
 <!-- <div class="row">
             <div class="col-sm-11">
                 <a href="#demo_9" class="list-group-item" style="background: #EDEDED;" data-toggle="collapse" data-parent="#MainMenu"><i class="fa fa-plus" style="float: right;"></i><?php if (!isset($efiled_docs_list) || empty($efiled_docs_list)) { ?><font style="color:red;"> <b>Documents</b></font><?php } else { ?> <b>Documents</b><?php } ?></a>
@@ -285,6 +283,7 @@ $hidepencilbtn = 'true';
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 
 
 </html>

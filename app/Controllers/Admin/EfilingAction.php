@@ -47,8 +47,8 @@ class EfilingAction extends BaseController {
             exit(0);
         }
 
-        $regid = $this->session->userdata['efiling_details']['registration_id'];
-        $filing_type = $this->session->userdata['efiling_details']['ref_m_efiled_type_id'];
+        $regid = getSessionData('efiling_details')['registration_id'];
+        $filing_type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
 
         $data = $this->Efiling_action_model->approve_case($regid, $filing_type);
         //echo '<pre>'; print_r($data); exit;
@@ -71,8 +71,9 @@ class EfilingAction extends BaseController {
 
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Approved successfully !</div>');
             log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
-            redirect('adminDashboard');
-            exit(0);
+
+            return redirect('adminDashboard');
+            // exit(0);
         } else {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Approval Failded. Please try again!</div>');
             log_message('CUSTOM', "Approval Failded. Please try again!");
@@ -91,8 +92,8 @@ class EfilingAction extends BaseController {
             } else {
                 $redirectURL = 'adminDashboard';
             }
-            redirect($redirectURL);
-            exit(0);
+            // exit(0);
+            return redirect($redirectURL);
         }
     }
     public function transferCase()
@@ -106,7 +107,7 @@ class EfilingAction extends BaseController {
 
         $result=$this->Efiling_action_model->transferCase($registration_id);
         if ($result) {
-            log_message('CUSTOM', "E-filing number". efile_preview($_SESSION['efiling_details']['efiling_no']) . "successfully transferred to Section-X!");
+            // log_message('CUSTOM', "E-filing number". efile_preview($_SESSION['efiling_details']['efiling_no']) . "successfully transferred to Section-X!");
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' successfully transferred to Section-X!</div>');
             redirect('adminDashboard');
             exit(0);
@@ -237,7 +238,7 @@ class EfilingAction extends BaseController {
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE ||$_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_JAIL_PETITION ) {
 
             if (empty($_POST['remark'])) {
-                log_message('CUSTOM', "Reason for disapproval required.");
+                // log_message('CUSTOM', "Reason for disapproval required.");
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Reason for disapproval required.</div>');
                 redirect($redirectURL);
                 exit(0);
@@ -246,7 +247,7 @@ class EfilingAction extends BaseController {
 
         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage,HOLD);
         if (!in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-            log_message('CUSTOM', "Invalid Action in the process of disapprove case");
+            // log_message('CUSTOM', "Invalid Action in the process of disapprove case");
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> ' . htmlentities('Invalid Action', ENT_QUOTES) . ' </div>');
             redirect('admin');
             exit(0);
@@ -258,7 +259,7 @@ class EfilingAction extends BaseController {
         if ($filing_type == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway'] && $_SESSION['efiling_details']['efiling_type'] !='caveat') {
             // when payment gateway is enabled and fees is being filed then disapproval of it is not allowed.
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Action you have requested is not allowed.</div>');
-            log_message('CUSTOM', "Action you have requested is not allowed.");
+            // log_message('CUSTOM', "Action you have requested is not allowed.");
             redirect('admin');
             exit(0);
         }
@@ -267,7 +268,7 @@ class EfilingAction extends BaseController {
         $remark_length = strip_tags($remark);
 
         if (strlen($remark_length) > DISAPPROVE_REMARK_LENGTH) {
-            log_message('CUSTOM', "Remark should be max ".DISAPPROVE_REMARK_LENGTH."characters!");
+            // log_message('CUSTOM', "Remark should be max ".DISAPPROVE_REMARK_LENGTH."characters!");
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Remark should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
             redirect($redirectURL);
             exit(0);
@@ -280,14 +281,14 @@ class EfilingAction extends BaseController {
 
             $userdata = $this->Efiling_action_model->get_efiled_by_user($_SESSION['efiling_details']['created_by']);
 
-            log_message('CUSTOM', "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been disapproved. Please cure the notified defects through eFiling portal. - Supreme Court of India");
+            // log_message('CUSTOM', "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been disapproved. Please cure the notified defects through eFiling portal. - Supreme Court of India");
             $sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been disapproved. Please cure the notified defects through eFiling portal. - Supreme Court of India";
             $subject = "Disapproved : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
 
             $user_name = $userdata[0]->first_name . ' ' . $userdata[0]->last_name;
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS,SCISMS_Efiling_Disapproved);  //Commented on 05-08-2023
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
-            log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ." disapproved successfully !");
+            // log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ." disapproved successfully !");
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
             redirect('adminDashboard');
             exit(0);
@@ -360,7 +361,7 @@ class EfilingAction extends BaseController {
            // $user_name = $userdata[0]->first_name . ' ' . $userdata[0]->last_name;
             //send_mobile_sms($userdata[0]->moblie_number, $sentSMS);
            // send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
-            log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ."marked as error successfully !");
+            // log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ."marked as error successfully !");
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' marked as error successfully !</div>');
             redirect('adminDashboard');
             exit(0);
@@ -584,7 +585,7 @@ class EfilingAction extends BaseController {
                 if(isset($registration_id) && !empty($registration_id) && isset($remaining) && !empty($remaining) && $remaining == 1){
                    $this->Common_model->changeIaMiscDocStage($registration_id,$stage_id);
                 }
-                log_message('CUSTOM', "Doc No.".$doc_number." has been updated successfully!");
+                // log_message('CUSTOM', "Doc No.".$doc_number." has been updated successfully!");
                 echo json_encode(array('status'=>'SUCCESS','message'=>'Doc No.'.$doc_number.' has been updated successfully!'));
                 exit(0);
             }
@@ -654,12 +655,12 @@ class EfilingAction extends BaseController {
                           $_SESSION['efiling_details']['stage_id'] = I_B_Approval_Pending_Admin_Stage;
                           $this->Common_model->updateCaseStatus($registration_id, $next_stage);
                           $output['status'] = "success";
-                          log_message('CUSTOM', "File has been transfer to scrutiny.");
+                        //   log_message('CUSTOM', "File has been transfer to scrutiny.");
                           $output['message'] = "File has been transfer to scrutiny.";
                       }
                       else{
                           $output['status'] = "error";
-                          log_message('CUSTOM', "Something went wrong while updation of refiled case,Please try again later.");
+                        //   log_message('CUSTOM', "Something went wrong while updation of refiled case,Please try again later.");
                           $output['message'] = "Something went wrong,Please try again later.";
                       }
 
@@ -730,8 +731,8 @@ class EfilingAction extends BaseController {
             exit(0);
         }
 
-        $regid = $this->session->userdata['efiling_details']['registration_id'];
-        $filing_type = $this->session->userdata['efiling_details']['ref_m_efiled_type_id'];
+        $regid = getSessionData('efiling_details')['registration_id'];
+        $filing_type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
 
         $data = $this->Efiling_action_model->hold_case($regid, $filing_type);
         //echo '<pre>'; print_r($data); exit;
@@ -741,11 +742,11 @@ class EfilingAction extends BaseController {
 
             //$sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been approved.";
             $sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been initially accepted for further processing.";
-            log_message('CUSTOM', "eFiling no.".efile_preview($_SESSION['efiling_details']['efiling_no'])."has been initially accepted for further processing.");
+            // log_message('CUSTOM', "eFiling no.".efile_preview($_SESSION['efiling_details']['efiling_no'])."has been initially accepted for further processing.");
 
             //$subject = "Approved : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
             $subject = "Initially accepted : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
-            log_message('CUSTOM', "Initially accepted : eFiling no. ".efile_preview($_SESSION['efiling_details']['efiling_no']));
+            // log_message('CUSTOM', "Initially accepted : eFiling no. ".efile_preview($_SESSION['efiling_details']['efiling_no']));
 
             $user_name = $userdata[0]->first_name . ' ' . $userdata[0]->last_name;
 
@@ -753,12 +754,12 @@ class EfilingAction extends BaseController {
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
 
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Hold successfully !</div>');
-            log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
-            redirect('adminDashboard');
-            exit(0);
+            // log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
+            return redirect('adminDashboard');
+            // exit(0);
         } else {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Hold Failded. Please try again!</div>');
-            log_message('CUSTOM', "Approval Failded. Please try again!");
+            // log_message('CUSTOM', "Approval Failded. Please try again!");
             if ($filing_type == E_FILING_TYPE_NEW_CASE) {
                 $redirectURL = 'newcase/view';
             }elseif ($filing_type == E_FILING_TYPE_JAIL_PETITION) {
@@ -774,8 +775,8 @@ class EfilingAction extends BaseController {
             } else {
                 $redirectURL = 'adminDashboard';
             }
-            redirect($redirectURL);
-            exit(0);
+        return redirect($redirectURL);
+            // exit(0);
         }
     }
 
@@ -825,11 +826,11 @@ class EfilingAction extends BaseController {
 
             //$sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been approved.";
             $sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been initially accepted for further processing.";
-            log_message('CUSTOM', "eFiling no.".efile_preview($_SESSION['efiling_details']['efiling_no'])."has been initially accepted for further processing.");
+            // log_message('CUSTOM', "eFiling no.".efile_preview($_SESSION['efiling_details']['efiling_no'])."has been initially accepted for further processing.");
 
             //$subject = "Approved : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
             $subject = "Initially accepted : eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
-            log_message('CUSTOM', "Initially accepted : eFiling no. ".efile_preview($_SESSION['efiling_details']['efiling_no']));
+            // log_message('CUSTOM', "Initially accepted : eFiling no. ".efile_preview($_SESSION['efiling_details']['efiling_no']));
 
             $user_name = $userdata[0]->first_name . ' ' . $userdata[0]->last_name;
 
@@ -837,12 +838,12 @@ class EfilingAction extends BaseController {
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
 
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing Number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' Disposed successfully !</div>');
-            log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
-            redirect('adminDashboard');
-            exit(0);
+            // log_message('CUSTOM', "E-filing Number". efile_preview($_SESSION['efiling_details']['efiling_no'])." Approved successfully !");
+            return redirect('adminDashboard');
+            // exit(0);
         } else {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Disposed Failded. Please try again!</div>');
-            log_message('CUSTOM', "Approval Failded. Please try again!");
+            // log_message('CUSTOM', "Approval Failded. Please try again!");
             if ($filing_type == E_FILING_TYPE_NEW_CASE) {
                 $redirectURL = 'newcase/view';
             }elseif ($filing_type == E_FILING_TYPE_JAIL_PETITION) {
@@ -858,8 +859,8 @@ class EfilingAction extends BaseController {
             } else {
                 $redirectURL = 'adminDashboard';
             }
-            redirect($redirectURL);
-            exit(0);
+            return redirect($redirectURL);
+            // exit(0);
         }
     }
 

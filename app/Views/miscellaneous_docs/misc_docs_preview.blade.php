@@ -23,8 +23,8 @@
 
 <?php
 
-if (!isset($efiling_search_header)) { ?> 
-   
+if (!isset($efiling_search_header)) { ?>
+
     @include('miscellaneous_docs.misc_docs_breadcrumb')
 <?php }
 
@@ -150,7 +150,7 @@ $collapse_class = '';
                                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" <?php echo $collapse_class; ?>>
                                                             <?php
                                                             if (!isset($hidepencilbtn) || empty($hidepencilbtn)) { ?><font style="color:red;">
-                                                                    <b>Documents</b>
+                                                                    <b>Documents 2</b>
                                                                 </font><?php } else { ?>
                                                                 <b>Documents</b><?php } ?>
                                                         </button>
@@ -166,7 +166,7 @@ $collapse_class = '';
                                                 </div>
                                                 <div id="collapseThree" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
-                                                        <?php //render('documentIndex.preview_misc_doc_ia_index_doc_list', @compact('efiled_docs_list')); 
+                                                        <?php render('documentIndex.preview_misc_doc_ia_index_doc_list', @compact('efiled_docs_list','uploaded_docs')); 
                                                         ?>
                                                     </div>
                                                 </div>
