@@ -28,6 +28,10 @@
     .datepicker-days {
         background-color: #ffffff;
     }
+    input[type="radio"] {
+        margin-top: -1px;
+        vertical-align: middle;
+    }
 </style>
 <div id="loader-wrapper" style="display: none;">
     <div id="loader"></div>
