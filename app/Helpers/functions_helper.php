@@ -3866,3 +3866,156 @@ function eCopyingGetCopyCategory(){
     }
     return $results;
 }
+
+function copying_weight_calculator($total_pages,$total_red_wrappers){
+    $weight = 0;
+    if($total_pages >= 1 and $total_pages <=5){
+        //envelop no. 5 & addtional 1 gram for glue/pinup and barcode sticker
+        $weight = 3 + 1;
+    }
+    else if($total_pages >= 6 and $total_pages <=8){
+        //envelop no. 6 & addtional 2 gram for glue/pinup and barcode sticker
+        $weight = 6 + 2;
+    }
+    else if($total_pages >= 9 and $total_pages <=10){
+        //envelop no. 7 & addtional 3 gram for glue/pinup and barcode sticker
+        $weight = 12 + 3;
+    }
+    else if($total_pages >= 11 and $total_pages <=20){
+        //envelop no. A4 & addtional 4 gram for glue/pinup and barcode sticker
+        $weight = 20 + 4;
+    }
+    else if($total_pages >= 21 and $total_pages <=500){
+        //envelop no. 8 & addtional 5 gram for glue/pinup and barcode sticker
+        $weight = 35 + 5;
+    }
+    else{
+        //envelop no. 8 for above 500 pages & addtional 5 gram for glue/pinup and barcode sticker
+        $additional_weight_times = ceil($total_pages / 500);
+        $weight = (35+5) * $additional_weight_times;
+    }
+    //75 gsm page equal to 4 gram and wrap has 2 gram of weight
+    $weight += ($total_pages * 4) + ($total_red_wrappers * 2);
+    return $weight;
+}
+
+function speed_post_tariff_calc_online($weight,$desitnation_pincode){
+    $myObj = (object)[];
+    $myObj->service = "SP";
+    $myObj->sourcepin = 110001;
+    $myObj->destinationpin = $desitnation_pincode;
+    $myObj->weight = $weight;
+    $myObj->length = "0";
+    $myObj->breadth = "0";
+    $myObj->height = "0";
+    
+    //$url = "http://data.cept.gov.in/dop/api/values/gettariff";    
+    $url = CEPT_GOV_IN;
+    //$url = "https://uat.cept.gov.in/tariff/api/values/gettariff";
+     
+    $content = json_encode($myObj);
+    
+    
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    //Tell cURL that it should only spend 10 seconds
+    //trying to connect to the URL in question.
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+    //A given cURL operation should only take
+    //30 seconds max.
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+     
+    
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+    
+    $json_response = curl_exec($curl);
+    //var_dump($json_response);
+    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    
+    if($status == 200 || $status == 201) {    
+        $response_array = json_decode($json_response);  
+        $response = json_encode($response_array[0]);      
+    }
+    else if($status == 0){
+        //$error_type = "Network Issue";
+        $response = speed_post_tariff_calc_offline($weight,$desitnation_pincode); //json_encode(array("Validation Status" => $error_type));
+    }
+    else{
+        $error_type = "Network Issue";
+        $response = json_encode(array("Validation Status" => $error_type));    
+    }
+    curl_close($curl);
+    return $response;
+}
+
+function speed_post_tariff_calc_offline($weight,$desitnation_pincode){
+    $additional_weight_times = 0;
+    $rate = 0;
+    $status = 'Error';
+    $service_tax = 0;
+    $db2 = Database::connect('sci_cmis_final');
+    if ($weight > 0 && $desitnation_pincode > 0) {
+
+        if ($weight > 500) {
+            //get additional charges for each 500 and rest of them
+            $additional_weight_times = ceil(($weight - 500) / 500);
+            $weight = 500; //new weight due to more than 500
+        }
+
+        $builder = $db2->table('master.post_distance_master');
+        $builder->select('distance_from_sci');
+        $builder->where('pincode', $desitnation_pincode);
+        $builder->limit(1);
+        $query = $builder->get();
+        $result = $query->getRow();
+
+        if ($result) {
+            $distance = $result->distance_from_sci;
+        } else {
+            $distance = null; // or handle accordingly
+        }
+        if ($distance) {
+            $distance = ceil($distance);
+
+            if ($weight > 0) {
+                $builder = $db2->table('master.post_tariff_calc_master');
+                $builder->select('rate, tax');
+                $builder->where('weight_from <=', $weight);
+                $builder->where('weight_to >=', $weight);
+                $builder->where('distance_from <=', $distance);
+                $builder->where('distance_to >=', $distance);
+                $builder->where('to_date IS NULL');
+                $builder->limit(1);
+                $query = $builder->get();
+                $r_sql1 = $query->getRow();
+
+                if (!empty($r_sql1)) {
+                    $rate = $r_sql1->rate;
+                    if ($additional_weight_times > 0) {
+                        $builder = $db2->table('master.post_tariff_calc_master');
+                        $builder->select('rate');
+                        $builder->where('weight_type', 'W4');
+                        $builder->where('distance_from <=', $distance);
+                        $builder->where('distance_to >=', $distance);
+                        $builder->where('to_date IS NULL');
+                        $builder->limit(1);
+                        $query = $builder->get();
+                        $r_sql2 = $query->getRow();
+                        if (!empty($r_sql2)) {
+                            $rate += ($r_sql2->rate * $additional_weight_times);
+                        }
+                    }
+                    $status = 'Valid Input';
+                    $service_tax = $rate * $r_sql1->tax / 100;
+                }
+            }
+        } else {
+            $status = 'Pincode Not Matched';
+        }
+    }
+    //return $rate;
+    return json_encode(array("Validation Status" => $status, "Base Tariff" => $rate, "Service Tax" => $service_tax));
+}

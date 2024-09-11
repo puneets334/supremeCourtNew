@@ -19,9 +19,8 @@ class CommonModel extends Model
         $builder->orderBy('id');
         $query = $builder->get();
         if ($query === false) {
-            // Convert array error to string for logging
             $error = $this->db2->error();
-            log_message('error', 'Query Error: ' . print_r($error, true)); // Use print_r to convert array to string
+            log_message('error', 'Query Error: ' . print_r($error, true));
             return false;
         }
         $result = $query->getResult();
@@ -35,7 +34,7 @@ class CommonModel extends Model
         $query = $builder->get();
         if ($query === false) {
             $error = $this->db2->error();
-            log_message('error', 'Query Error: ' . print_r($error, true)); // Use print_r to convert array to string
+            log_message('error', 'Query Error: ' . print_r($error, true)); 
             return false;
         }
         $result = $query->getResult();
@@ -45,7 +44,6 @@ class CommonModel extends Model
     function getCaseType(){
         $builder = $this->db2->table('master.casetype');
 
-        // Build the query
         $results = $builder->select('casecode, skey, casename, short_description')
             ->where('display', 'Y')
             ->where('casecode !=', 9999)
@@ -56,6 +54,16 @@ class CommonModel extends Model
             ->getResult();
 
         return $results;
+    }
+
+    function getCatogoryForApplication($id){
+        $builder = $this->db2->table('master.copy_category');
+
+        $builder->select('id, urgent_fee, per_certification_fee, per_page, code, description');
+        $builder->where('id', $id);
+        // $builder->where('to_date', '0000-00-00');
+        $query = $builder->get();
+        return $query->getRow();
     }
 
 }

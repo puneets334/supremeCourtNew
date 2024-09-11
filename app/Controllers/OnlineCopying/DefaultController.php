@@ -148,5 +148,31 @@ class DefaultController extends BaseController
     {
         return $this->render('onlineCopying.get_case_details');
     }
-    
+    public function getAppCharge()
+    {
+        $r_sql = $this->Common_model->getCatogoryForApplication($_REQUEST['idd']);
+        $app_rule='';
+        if($r_sql->urgent_fee!=0)
+        {
+            $app_rule=$app_rule.$r_sql->urgent_fee.'/- urgency fees + ';
+        }
+        if($r_sql->per_certification_fee!=0)
+        {
+            $app_rule=$app_rule.$r_sql->per_certification_fee.'/- per certification + ';
+        }
+        if($_SESSION["session_filed"] == 4 && $_REQUEST['idd'] != 5){
+            $app_rule=$app_rule.'5/- (third party charges) + ';
+        }
+        $app_rule=$app_rule.$r_sql->per_page.'/- per page';
+        $app='';
+        if($r_sql->id==5)
+        {
+            $app= " <span class='font-weight-bold text-info'>First copy free of cost, thereafter - </span>";
+        }
+        return $app."Rs. ".$app_rule;
+    }
+    public function getTotCopy()
+    {
+        return $this->render('onlineCopying.get_tot_copy');
+    }
 }
