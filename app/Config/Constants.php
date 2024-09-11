@@ -969,3 +969,4 @@ define('SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED', '1107167091697162626');
 // Message settings
 define('MSG_TIME_OUT', 'Time Out');
 define('OLD_ROP_DB', "rop_text_web");
+define('GET_SERVER_IP', "10.0.0.0"); //server ip
