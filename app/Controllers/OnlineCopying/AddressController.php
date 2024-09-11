@@ -32,8 +32,30 @@ class AddressController extends BaseController
 
     public function applicantAddress()
     {
-        $caseType = $this->Common_model->getCaseType();
-        return $this->render('onlineCopying.applicant_address');
+        $mobile_number=$emailid='';
+        if(!empty(getSessionData('login')['mobile_number'])){
+            $mobile_number=getSessionData('login')['mobile_number'];
+        }
+
+        if(!empty(getSessionData('login')['emailid'])){
+            $emailid=getSessionData('login')['emailid'];
+        }
+        $verifyAadhar=$userAddress=$userBarAddress=[];
+        $userAddress= $this->AddressModel->checkUserAddress($mobile_number,$emailid );
+        $userAdharVerify= $this->AddressModel->verifyAadhar($mobile_number,$emailid );
+        $userBarAddress= $this->AddressModel->getListedCases($mobile_number,$emailid );
+        
+         
+        return $this->render('onlineCopying.applicant_address', @compact('userAddress','userAdharVerify','userBarAddress'));
     }
+
+    public function user_address_save() 
+    {
+        pr("Welcome");
+
+    }
+
+
+
     
 }
