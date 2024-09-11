@@ -14,10 +14,9 @@ $segment = service('uri');
 
     @include('affirmation.affirmation_view')
 <?php } elseif ($segment->getSegment(2) == 'courtFee') { ?>
-
+    
     @include('oldCaseRefiling.courtFee_view')
 <?php } elseif ($segment->getSegment(2) == 'view') {?>
-
     @include('oldCaseRefiling.old_efiling_preview')
 <?php }
 ?>

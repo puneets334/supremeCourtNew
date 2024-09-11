@@ -355,6 +355,8 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::i
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\FinalSubmit::index');
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
 $routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::index');
+$routes->match(['GET', 'POST'], 'admin/efilingAction/hold', 'Admin\EfilingAction::hold');
+
 $routes->match(['GET', 'POST'], 'shcilPayment/ViewPaymentChallan/(:any)', 'ShcilPayment\ViewPaymentChallan::index/$1');
 // $routes->match(['GET', 'POST'], 'report/search/view/miscellaneous_docs/defaultController/(:any)/(:any)/(:any)', 'MiscellaneousDocs\DefaultController::view/$1/$1/$1');
 

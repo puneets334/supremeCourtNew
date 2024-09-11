@@ -88,9 +88,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                 echo '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>';
                             }
                         }
-                        if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
-                            echo $details['details'][0]['c_status'] ?? $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
-                        }
+                        // if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
+                        //     echo $details['details'][0]['c_status'] ?? $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
+                        // }
                     }
                     ?>
                     <div class="btns-sec">

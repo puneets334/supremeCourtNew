@@ -1122,7 +1122,7 @@ class ResponsiveVariantRouteController extends BaseController
     /* start:function written for file a case of old e-filing */
     public function showOldEfilingCasesCrudByRegistrationId($registration_id = null)
     {
-        // $registration_id=str_replace('_','#',@$registration_id);
+        $registration_id=str_replace('_','#',@$registration_id);
         $tab = @$_REQUEST['tab'];
         $this->render('responsive_variant.case.refile_old_efiling_cases.crud_registration', @compact('registration_id', 'tab'));
     }

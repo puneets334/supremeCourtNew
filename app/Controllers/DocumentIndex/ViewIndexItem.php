@@ -44,11 +44,12 @@ class ViewIndexItem extends BaseController {
         }
 
         $doc_details = $this->DocumentIndex_Select_model->get_index_item_file($doc_id);
+        // pr($doc_details);
 
         $file_partial_path = $doc_details[0]['file_path'];
         $file_name = $file_partial_path . $doc_details[0]['file_name'];
         $doc_title = $_SESSION['efiling_details']['efiling_no'] . '_' . str_replace(' ', '_', $doc_details[0]['file_name']) . '.pdf';
-    //    pr($doc_title);
+    //    pr($file_name);
         if (file_exists($file_name)) { 
             header("Content-Type: application/pdf");
             header("Content-Disposition:inline;filename = $doc_title");
@@ -59,7 +60,7 @@ class ViewIndexItem extends BaseController {
             exit(0);
 
         } else {
-            echo "File does not exists !";
+            echo "File does not !";
             exit(0);
         }
     }

@@ -93,7 +93,6 @@ class View extends BaseController {
                     }
                 }
             }
-
             return $this->render('oldCaseRefiling.old_efiling_preview',$data);
 
 
