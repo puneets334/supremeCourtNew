@@ -1,6 +1,6 @@
 					<div class="tab-form-inner">
 						<div class="row">
-							<h6 class="text-center fw-bold">Upload Document / Index</h6>
+							<h6 class="text-center fw-bold">Upload Document</h6>
 						</div>
 
 						<?= ASTERISK_RED_MANDATORY ?>
