@@ -419,7 +419,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
             echo '2@@@<div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_content">
-                        <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
+                        <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%"> 
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
