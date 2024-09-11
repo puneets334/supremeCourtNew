@@ -141,8 +141,8 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="dtsign">
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of signature of jail incharge</label>
-                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value="<?php echo @$new_case_details[0]->jail_signature_date; ?>" type="text">
-                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
+                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value="<?php isset($new_case_details[0]) && !empty($new_case_details[0]->jail_signature_date) ? date("d/m/Y", strtotime(@$new_case_details[0]->jail_signature_date)) : ""; ?>" type="text">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -441,11 +441,11 @@
                         </div>
                         <div class="save-btns text-center">
                             <?php if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) { ?>
-                                <button type="submit" tabindex='15' class="quick-btn gray-btn btn-success" value="">UPDATE
+                                <button type="submit" tabindex='15' class="quick-btn btn-success" value="">UPDATE
                                 </button>
-                                <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
+                                <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn gray-btn" type="button" id="nextButton">Next</a>
                             <?php } else { ?>
-                                <button tabindex='14' type="submit" tabindex='16' class="quick-btn gray-btn" id="pet_save" value="">SAVE
+                                <button tabindex='14' type="submit" tabindex='16' class="quick-btn" id="pet_save" value="">SAVE
                                 </button>
                             <?php } ?>
                         </div>

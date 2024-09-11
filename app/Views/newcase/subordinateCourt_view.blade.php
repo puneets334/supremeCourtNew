@@ -158,27 +158,13 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
-                                    <label for=""
-                                        class="form-label">Case No. And Year<span
-                                            style="color: red"
-                                            class="astriks">*</span></label>
+                                    <label for="" class="form-label">Case No. And Year<span style="color: red" class="astriks">*</span></label>
                                     <div class="row">
                                         <div class="col-9">
-                                            <input id="sci_case_number"
-                                                name="sci_case_number"
-                                                tabindex='5'
-                                                maxlength="10"
-                                                onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                                placeholder="Case No."
-                                                class="form-control cus-form-ctrl age_calculate caseno"
-                                                type="text">
+                                            <input id="sci_case_number" name="sci_case_number" tabindex='5' maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl age_calculate caseno" type="text">
                                         </div>
                                         <div class="col-3">
-                                            <select tabindex='6'
-                                                class="form-control cus-form-ctrl filter_select_dropdown"
-                                                id="sci_case_year"
-                                                name="sci_case_year"
-                                                style="width: 100%">
+                                            <select tabindex='6' class="form-control cus-form-ctrl filter_select_dropdown col-4" id="sci_case_year" name="sci_case_year">
                                                 <option value="">Year</option>
                                                 <?php
                                                 $end_year = 47;
@@ -315,10 +301,9 @@
                                         </div>
                                         <div class="col-3">
                                             <select tabindex='10'
-                                                class="form-control cus-form-ctrl filter_select_dropdown"
+                                                class="form-control cus-form-ctrl filter_select_dropdown col-4"
                                                 id="hc_case_year"
-                                                name="hc_case_year"
-                                                style="height: 37px!important;width:75px!important;">
+                                                name="hc_case_year">
                                                 <option value="">Year
                                                 </option>
                                                 <?php
@@ -462,10 +447,9 @@
                                         </div>
                                         <div class="col-3">
                                             <select tabindex='16'
-                                                class="form-control cus-form-ctrl filter_select_dropdown"
+                                                class="form-control cus-form-ctrl filter_select_dropdown col-4"
                                                 id="dc_case_year"
-                                                name="dc_case_year"
-                                                style="width: 100%">
+                                                name="dc_case_year">
                                                 <option value="">Year</option>
                                                 <?php
                                                 $end_year = 47;
@@ -561,10 +545,9 @@
                                     </div>
                                     <div class="col-3">
                                         <select tabindex='10'
-                                            class="form-control cus-form-ctrl filter_select_dropdown"
+                                            class="form-control cus-form-ctrl filter_select_dropdown col-4"
                                             id="case_year"
-                                            name="case_year"
-                                            style="width: 100%">
+                                            name="case_year">
                                             <option value="">Year</option>
                                             <?php
                                             $end_year = 47;
@@ -886,9 +869,10 @@
             changeMonth: true,
             changeYear: true,
             yearRange: "-100:-1",
-            dateFormat: "dd/mm/yy",
+            format: "dd/mm/yyyy",
             endDate: '+0d',
-            defaultDate: new Date(new Date().setFullYear(new Date().getFullYear() - 40))
+            defaultDate: new Date(new Date().setFullYear(new Date().getFullYear() - 40)),
+            "autoclose": true
         });
     });
 </script>
@@ -946,8 +930,9 @@
         $('.order_date').datepicker({
             changeMonth: true,
             changeYear: true,
-            dateFormat: "dd/mm/yy",
-            maxDate: new Date
+            format: "dd/mm/yyyy",
+            maxDate: new Date,
+            "autoclose": true
         });
         $('#cnr').on('input', function() {
             if ($.trim($('#cnr').val()) == '')
