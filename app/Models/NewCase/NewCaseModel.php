@@ -206,6 +206,9 @@ class NewCaseModel extends Model {
         $builder->where('registration_id', $registration_id);
         $builder->update(array('breadcrumb_status' => $new_breadcrumbs));
         if ($this->db->affectedRows() > 0) {
+            $setD = getSessionData('efiling_details');
+            $setD['breadcrumb_status'] = $new_breadcrumbs;
+            setSessionData('efiling_details', $setD);
             return TRUE;
         } else {
             return FALSE;
@@ -391,6 +394,7 @@ class NewCaseModel extends Model {
         }
         $this->db->transComplete();
         if ($this->db->transStatus() === FALSE) {
+
             return FALSE;
         } else {
             return TRUE;

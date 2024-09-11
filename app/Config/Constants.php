@@ -588,7 +588,7 @@ $document_generate_case_id = array(9,10,19,20,20,25,26);
 define('DOCUMENT_GENERATE_CASE_ID',serialize($document_generate_case_id));
 define('INTERLOCUTARY_APPLICATION',8);
 define('CONDONATION_OF_DELAY_IN_REFILING_OR_CURING_THE_DEFECTS',226);
-define('ASTERISK_RED_MANDATORY','<div class="row"><label class="control-labelcol-md-3  col-sm-offset-1 col-sm-8 col-xs-12 input-sm"> <span style="color: red">Note : </span> <span style="color:black; ">Fields marked in </span><span style="color: red">*</span> <span style="color:black; "> are mandatory</span></label></div><br/>');
+define('ASTERISK_RED_MANDATORY','<div class="row"><label class="control-label col-md-3 col-sm-offset-1 col-sm-8 col-xs-12 input-sm"><b> <span style="color: red">Note : </span> <span style="color:black; ">Fields marked in </span><span style="color: red">*</span> <span style="color:black; "> are mandatory</span></b></label></div><br/>');
 
 define('PAYMENT_SERVICES_DOWN_FROM', '');
 define('PAYMENT_SERVICES_DOWN_TO',"");
@@ -969,3 +969,5 @@ define('SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED', '1107167091697162626');
 // Message settings
 define('MSG_TIME_OUT', 'Time Out');
 define('OLD_ROP_DB', "rop_text_web");
+define('GET_SERVER_IP', "10.0.0.0"); //server ip
+define('CEPT_GOV_IN', 'https://api.cept.gov.in/tariff/api/values/gettariff');

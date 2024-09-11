@@ -22,7 +22,43 @@ class DefaultController extends BaseController
         }
         $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
         $this->Common_model = new CommonModel();
-
+        $_SESSION['is_token_matched'] = 'Yes';
+        $_SESSION['applicant_email'] = getSessionData('login')['emailid'];
+        $_SESSION['applicant_mobile'] = getSessionData('login')['mobile_number'];
+        $checkUserAddress = getUserAddress(getSessionData('login')['mobile_number'], getSessionData('login')['emailid']);
+        if (count($checkUserAddress) > 0){
+            $address_array = array();
+            $_SESSION['is_user_address_found'] = 'YES';
+            $address_data = $checkUserAddress;
+            foreach($address_data as $r) {
+                $address_array[] = $r;   
+            }
+            $_SESSION['user_address'] = $address_array;
+        }
+        else{
+            $_SESSION['is_user_address_found'] = 'NO';
+        }
+        $dOtp = eCopyingOtpVerification($_SESSION['applicant_email']);
+        if($dOtp){
+            $_SESSION['session_verify_otp'] = '000000';
+            $_SESSION['session_otp_id'] = '999999';
+            $_SESSION['applicant_mobile'] = $dOtp->mobile;
+            $_SESSION['applicant_email'] = $dOtp->email;
+            $_SESSION['is_email_send'] = 'Yes';
+            $_SESSION['email_token'] = $dOtp->otp;
+            $_SESSION['is_token_matched'] = 'Yes';
+            
+            $_SESSION["session_filed"] = $dOtp->filed_by;
+            
+            if($dOtp->filed_by == 6){
+                $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;            
+                $aor_data = eCopyingGetBarDetails($dOtp->authorized_bar_id);
+                if (count($aor_data) == 1){
+                    $aor_mobile = $aor_data->mobile;
+                    $_SESSION["aor_mobile"] = $aor_data->mobile; 
+                }
+            }
+        }
         unset($_SESSION['MSG']);
         unset($_SESSION['msg']);
     }
@@ -112,5 +148,31 @@ class DefaultController extends BaseController
     {
         return $this->render('onlineCopying.get_case_details');
     }
-    
+    public function getAppCharge()
+    {
+        $r_sql = $this->Common_model->getCatogoryForApplication($_REQUEST['idd']);
+        $app_rule='';
+        if($r_sql->urgent_fee!=0)
+        {
+            $app_rule=$app_rule.$r_sql->urgent_fee.'/- urgency fees + ';
+        }
+        if($r_sql->per_certification_fee!=0)
+        {
+            $app_rule=$app_rule.$r_sql->per_certification_fee.'/- per certification + ';
+        }
+        if($_SESSION["session_filed"] == 4 && $_REQUEST['idd'] != 5){
+            $app_rule=$app_rule.'5/- (third party charges) + ';
+        }
+        $app_rule=$app_rule.$r_sql->per_page.'/- per page';
+        $app='';
+        if($r_sql->id==5)
+        {
+            $app= " <span class='font-weight-bold text-info'>First copy free of cost, thereafter - </span>";
+        }
+        return $app."Rs. ".$app_rule;
+    }
+    public function getTotCopy()
+    {
+        return $this->render('onlineCopying.get_tot_copy');
+    }
 }

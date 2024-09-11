@@ -3530,3 +3530,492 @@ function eCopyingGetFileDetails($diary_no){
 
     return $results;
 }
+
+function getStatementVideo($mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets u');
+
+    $results = $builder->select('u.id')
+        ->where('u.mobile', $mobile)
+        ->where('u.email', $email)
+        ->where('u.asset_type', 3)
+        ->orderBy('ent_time', 'DESC')
+        ->limit(1)
+        ->get()
+        ->getRow();
+    return $results;
+}
+
+function getStatementImage($mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets u');
+
+    $results = $builder->select('u.id')
+        ->where('u.mobile', $mobile)
+        ->where('u.email', $email)
+        ->where('u.asset_type', 2)
+        ->orderBy('ent_time', 'DESC')
+        ->limit(1)
+        ->get()
+        ->getRow();
+    return $results;
+}
+
+function getStatementIdProof($mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets u');
+
+    $results = $builder->select('u.id')
+        ->where('u.mobile', $mobile)
+        ->where('u.email', $email)
+        ->where('u.asset_type', 1)
+        ->orderBy('ent_time', 'DESC')
+        ->limit(1)
+        ->get()
+        ->getRow();
+    return $results;
+}
+
+function eCopyingStatementCheck($mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets u');
+
+    $results = $builder->select('id')
+        ->where('mobile', $mobile)
+        ->where('email', $email)
+        ->where('diary_no !=', 0)
+        ->where('DATE(ent_time) = CURDATE()', null, false)
+        ->get()
+        ->getResult();
+        return $results;
+}
+
+
+function eCopyingCheckMaxDigitalRequest($mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_online');
+
+    $results = $builder->select('id')
+        ->where('allowed_request', 'digital_copy')
+        ->where('mobile', $mobile)
+        ->where('email', $email)
+        ->where('DATE(application_receipt) = CURDATE()', null, false)
+        ->get()
+        ->getResult();
+        return $results;
+}
+
+function eCopyingCopyStatus($diary_no, $check_asset_type, $mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets');
+
+    $results = $builder->select('asset_type, verify_status, verify_remark')
+        ->where('diary_no', $diary_no)
+        ->where('asset_type', $check_asset_type)
+        ->where('mobile', $mobile)
+        ->where('email', $email)
+        ->orderBy('ent_time', 'DESC')
+        ->limit(1)
+        ->get()
+        ->getRow();
+        return $results;
+}
+
+function eCopyingGetBar($diary_no, $mobile){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder = $db2->table('public.advocate adv');
+
+    $results = $builder->select('bar.bar_id')
+    ->join('master.bar bar', 'adv.advocate_id = bar.bar_id', 'inner')
+    ->where('adv.diary_no', $diary_no)
+    ->where('bar.mobile', $mobile)
+    ->where('adv.display', 'Y')
+    ->where('bar.if_aor', 'Y')
+    ->where('bar.isdead', 'N')
+    ->limit(1)
+    ->get()
+    ->getRow();
+    return $results;
+}
+
+function getBailApplied($diary_no, $mobile, $email)
+{
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_online a');
+
+    $results = $builder->select('b.is_bail_order')
+        ->join('copying_application_documents_online b', 'b.copying_order_issuing_application_id = a.id', 'inner')
+        ->where('b.is_bail_order', 'Y')
+        ->where('a.mobile', $mobile)
+        ->where('a.email', $email)
+        ->where('a.diary', $diary_no)
+        ->get()
+        ->getRow();
+    if(!empty($results)){
+        $bail = 'YES';
+    }
+    else{
+        $bail = 'NO';
+    }
+    return $bail;
+}
+
+function eCopyingGetCopyDetails($condition, $third_party_sub_qry, $OLD_ROP){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder1 = $db2->table('public.copying_request_verify u');
+    $builder1->select('vd.path as pdfname, CAST("vd"."order_date" AS DATE) AS "orderdate", 0 as s, ot.order_type as judgement_order, ot.id as judgement_order_code, vd.order_type_remark, vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages');
+    $builder1->join('public.copying_request_verify_documents vd', 'u.id = vd.copying_order_issuing_application_id', 'inner');
+    $builder1->join('master.ref_order_type ot', 'ot.id = vd.order_type', 'inner');
+    $builder1->where("u.diary IN ($condition)");
+    if ($third_party_sub_qry) {
+        $builder1->where($third_party_sub_qry, null, false);
+    }
+    $builder1->where('u.application_status !=', 'P');
+    $builder1->where('vd.request_status', 'D');
+    $builder1->where('vd.path !=', '');
+    $builder1->where('vd.path IS NOT NULL', null, false);
+    $builder1->where('ot.is_deleted', 'f');
+    $builder1->where('u.allowed_request', 'request_to_available');
+    $sql1 = $builder1->getCompiledSelect();
+
+    $builder2 = $db2->table('public.ordernet');
+    $builder2->select("pdfname, CAST(\"orderdate\" AS DATE) AS \"orderdate\", '1' as s, CASE WHEN type = 'O' THEN 'Record of Proceedings' WHEN type = 'J' THEN 'Judgement' END as judgement_order, CASE WHEN type = 'O' THEN 1 WHEN type = 'J' THEN 3 END as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
+    $builder2->where("DATE(orderdate) >", '2014-05-31');
+    $builder2->where("diary_no IN ($condition)");
+    $builder2->where('display', 'Y');
+    $sql2 = $builder2->getCompiledSelect();
+
+    $builder3 = $db2->table('public.tempo');
+    $builder3->select("jm as pdfname, CAST(\"dated\" AS DATE) AS \"orderdate\", '2' as s, CASE WHEN jt = 'rop' THEN 'Record of Proceedings' WHEN jt = 'judgment' THEN 'Judgement' END as judgement_order, CASE WHEN jt = 'rop' THEN 1 WHEN jt = 'judgment' THEN 3 END as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
+    $builder3->where("DATE(dated) >", '2014-05-31');
+    $builder3->where("diary_no IN ($condition)");
+    $builder3->where("(jt = 'rop' OR jt = 'judgment')");
+    $sql3 = $builder3->getCompiledSelect();
+
+
+    // $builder4 = $db2->table("$OLD_ROP.old_rop");
+    // $builder4->select("CONCAT('ropor/rop/all/', pno, '.pdf') as pdfname, orderDate as orderdate, '3' as s, 'Record of Proceedings' as judgement_order, '1' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
+    // $builder4->where("DATE(orderDate) >", '2014-05-31');
+    // $builder4->where("dn IN ($condition)");
+    // $sql4 = $builder4->getCompiledSelect();
+
+
+    $builder5 = $db2->table('public.scordermain');
+    $builder5->select("CONCAT('judis/', filename, '.pdf') as pdfname, CAST(\"juddate\" AS DATE) AS \"orderdate\", '4' as s, 'Judgement' as judgement_order, '3' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
+    $builder5->where("DATE(juddate) >", '2014-05-31');
+    $builder5->where("dn IN ($condition)");
+    $sql5 = $builder5->getCompiledSelect();
+
+
+    /*$builder6 = $db2->table("$OLD_ROP.ordertext");
+    $builder6->select("CONCAT('bosir/orderpdf/', pno, '.pdf') as pdfname, orderdate as orderdate, '5' as s, 'Record of Proceedings' as judgement_order, '1' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
+    $builder6->where("DATE(orderdate) >", '2014-05-31');
+    $builder6->where("dn IN ($condition)");
+    $sql6 = $builder6->getCompiledSelect();
+
+
+    $builder7 = $db2->table("$OLD_ROP.oldordtext");
+    $builder7->select("CONCAT('bosir/orderpdfold/', pno, '.pdf') as pdfname, orderdate as orderdate, '6' as s, 'Record of Proceedings' as judgement_order, '1' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
+    $builder7->where("DATE(orderdate) >", '2014-05-31');
+    $builder7->where("dn IN ($condition)");
+    $sql7 = $builder7->getCompiledSelect();*/
+
+    $sql = "
+        SELECT * FROM (
+            $sql1
+            UNION ALL
+            $sql2
+            UNION ALL
+            $sql3
+            
+            UNION ALL
+            $sql5
+            
+        ) zz
+        ORDER BY orderdate
+    ";
+/*UNION ALL
+            $sql4
+UNION ALL
+            $sql6
+            UNION All
+            $sql7*/
+    try {
+        // pr($sql);
+        $query = $db2->query($sql);
+        $results = $query->getResultArray();
+    } catch (\Exception $e) {
+        // Handle exceptions
+        echo $e->getMessage();
+        $results = [];
+    }
+    return $results;
+}
+
+function eCopyingGetGroupConcat($main_case){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $db2->query("SET SESSION group_concat_max_len = 10000000000");
+    $builder = $db2->table('public.main');
+        $builder->select('GROUP_CONCAT(diary_no) AS conn_list');
+        $builder->where('conn_key', $main_case);
+
+        // Execute the query
+        $query = $builder->get();
+        $result = $query->getRowArray();
+        return $result;
+}
+
+function getIsPreviuslyApplied($copy_category, $diary_no, $mobile, $email, $order_type, $order_date)
+{
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_online a');
+        $builder->join('copying_application_documents_online b', 'a.id = b.copying_order_issuing_application_id', 'inner');
+        $builder->join('ref_order_type c', 'c.id = b.order_type', 'inner');
+        $builder->where('a.copy_category', $copy_category);
+        $builder->where('a.mobile', $mobile);
+        $builder->where('a.email', $email);
+        $builder->where('a.diary', $diary_no);
+        $builder->where('b.order_type', $order_type);
+        
+        // Custom condition for mandate_date_of_order_type
+        $builder->groupStart();
+        $builder->where('IF(c.mandate_date_of_order_type = \'Y\', DATE(b.order_date) = \'' . $order_date . '\', 1=1)', null, false);
+        $builder->groupEnd();
+
+        // Execute the query
+        $query = $builder->get();
+        $results = $query->getResultArray();
+    if(count($results) > 0){
+        $result = 'YES';
+    }
+    else{
+        $result = 'NO';
+    }
+    return $result;
+}
+
+function getUserAddress($mobile, $email)
+{
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_address');
+    
+    $builder->where('mobile', $mobile);
+    $builder->where('email', $email);
+    $builder->where('is_active', 'Y');
+    
+    $query = $builder->get();
+    
+    // Fetch the results
+    $results = $query->getResultArray();
+    
+    // Return or use the results as needed
+    return $results;
+}
+
+function eCopyingOtpVerification($email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('verify_email');
+    $builder->where('email', $email);
+    $builder->where('CURDATE() = DATE(ent_dt)', null, false); // `null` for no value, `false` to disable escaping
+    $builder->orderBy('id','DESC');
+    $query = $builder->get();
+    
+    $query = $builder->get();
+    if ($query === false) {
+        $error = $db2->error();
+        // echo "<pre>Error: " . $error['message'] . "</pre>";
+        $result = [];
+    } else {
+        $result = $query->getRow();
+    }
+    return $result;
+}
+
+function eCopyingGetBarDetails($bar_id){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder = $db2->table('master.bar');
+    
+    $builder->select('name, email, mobile, aor_code, bar_id');
+    $builder->where('LENGTH(mobile)', 10, false); // `false` to disable escaping
+    $builder->where('if_aor', 'Y');
+    $builder->where('isdead', 'N');
+    $builder->where('bar_id', $bar_id);
+    $builder->limit(1);
+    $query = $builder->get();
+    $query = $builder->get();
+    if ($query === false) {
+        $error = $db2->error();
+        // echo "<pre>Error: " . $error['message'] . "</pre>";
+        $result = [];
+    } else {
+        $result = $query->getRow();
+    }
+    return $result;
+}
+
+function eCopyingGetCopyCategory(){
+    $sql = "Select id,code,description from master.copy_category";
+    $db2 = Database::connect('sci_cmis_final');
+    try {
+        $query = $db2->query($sql);
+        $results = $query->getResultArray();
+    } catch (\Exception $e) {
+        // Handle exceptions
+        echo $e->getMessage();
+        $results = [];
+    }
+    return $results;
+}
+
+function copying_weight_calculator($total_pages,$total_red_wrappers){
+    $weight = 0;
+    if($total_pages >= 1 and $total_pages <=5){
+        //envelop no. 5 & addtional 1 gram for glue/pinup and barcode sticker
+        $weight = 3 + 1;
+    }
+    else if($total_pages >= 6 and $total_pages <=8){
+        //envelop no. 6 & addtional 2 gram for glue/pinup and barcode sticker
+        $weight = 6 + 2;
+    }
+    else if($total_pages >= 9 and $total_pages <=10){
+        //envelop no. 7 & addtional 3 gram for glue/pinup and barcode sticker
+        $weight = 12 + 3;
+    }
+    else if($total_pages >= 11 and $total_pages <=20){
+        //envelop no. A4 & addtional 4 gram for glue/pinup and barcode sticker
+        $weight = 20 + 4;
+    }
+    else if($total_pages >= 21 and $total_pages <=500){
+        //envelop no. 8 & addtional 5 gram for glue/pinup and barcode sticker
+        $weight = 35 + 5;
+    }
+    else{
+        //envelop no. 8 for above 500 pages & addtional 5 gram for glue/pinup and barcode sticker
+        $additional_weight_times = ceil($total_pages / 500);
+        $weight = (35+5) * $additional_weight_times;
+    }
+    //75 gsm page equal to 4 gram and wrap has 2 gram of weight
+    $weight += ($total_pages * 4) + ($total_red_wrappers * 2);
+    return $weight;
+}
+
+function speed_post_tariff_calc_online($weight,$desitnation_pincode){
+    $myObj = (object)[];
+    $myObj->service = "SP";
+    $myObj->sourcepin = 110001;
+    $myObj->destinationpin = $desitnation_pincode;
+    $myObj->weight = $weight;
+    $myObj->length = "0";
+    $myObj->breadth = "0";
+    $myObj->height = "0";
+    
+    //$url = "http://data.cept.gov.in/dop/api/values/gettariff";    
+    $url = CEPT_GOV_IN;
+    //$url = "https://uat.cept.gov.in/tariff/api/values/gettariff";
+     
+    $content = json_encode($myObj);
+    
+    
+    $curl = curl_init($url);
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    //Tell cURL that it should only spend 10 seconds
+    //trying to connect to the URL in question.
+    curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 10);
+    //A given cURL operation should only take
+    //30 seconds max.
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+     
+    
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-type: application/json"));
+    curl_setopt($curl, CURLOPT_POST, true);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
+    
+    $json_response = curl_exec($curl);
+    //var_dump($json_response);
+    $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    
+    if($status == 200 || $status == 201) {    
+        $response_array = json_decode($json_response);  
+        $response = json_encode($response_array[0]);      
+    }
+    else if($status == 0){
+        //$error_type = "Network Issue";
+        $response = speed_post_tariff_calc_offline($weight,$desitnation_pincode); //json_encode(array("Validation Status" => $error_type));
+    }
+    else{
+        $error_type = "Network Issue";
+        $response = json_encode(array("Validation Status" => $error_type));    
+    }
+    curl_close($curl);
+    return $response;
+}
+
+function speed_post_tariff_calc_offline($weight,$desitnation_pincode){
+    $additional_weight_times = 0;
+    $rate = 0;
+    $status = 'Error';
+    $service_tax = 0;
+    $db2 = Database::connect('sci_cmis_final');
+    if ($weight > 0 && $desitnation_pincode > 0) {
+
+        if ($weight > 500) {
+            //get additional charges for each 500 and rest of them
+            $additional_weight_times = ceil(($weight - 500) / 500);
+            $weight = 500; //new weight due to more than 500
+        }
+
+        $builder = $db2->table('master.post_distance_master');
+        $builder->select('distance_from_sci');
+        $builder->where('pincode', $desitnation_pincode);
+        $builder->limit(1);
+        $query = $builder->get();
+        $result = $query->getRow();
+
+        if ($result) {
+            $distance = $result->distance_from_sci;
+        } else {
+            $distance = null; // or handle accordingly
+        }
+        if ($distance) {
+            $distance = ceil($distance);
+
+            if ($weight > 0) {
+                $builder = $db2->table('master.post_tariff_calc_master');
+                $builder->select('rate, tax');
+                $builder->where('weight_from <=', $weight);
+                $builder->where('weight_to >=', $weight);
+                $builder->where('distance_from <=', $distance);
+                $builder->where('distance_to >=', $distance);
+                $builder->where('to_date IS NULL');
+                $builder->limit(1);
+                $query = $builder->get();
+                $r_sql1 = $query->getRow();
+
+                if (!empty($r_sql1)) {
+                    $rate = $r_sql1->rate;
+                    if ($additional_weight_times > 0) {
+                        $builder = $db2->table('master.post_tariff_calc_master');
+                        $builder->select('rate');
+                        $builder->where('weight_type', 'W4');
+                        $builder->where('distance_from <=', $distance);
+                        $builder->where('distance_to >=', $distance);
+                        $builder->where('to_date IS NULL');
+                        $builder->limit(1);
+                        $query = $builder->get();
+                        $r_sql2 = $query->getRow();
+                        if (!empty($r_sql2)) {
+                            $rate += ($r_sql2->rate * $additional_weight_times);
+                        }
+                    }
+                    $status = 'Valid Input';
+                    $service_tax = $rate * $r_sql1->tax / 100;
+                }
+            }
+        } else {
+            $status = 'Pincode Not Matched';
+        }
+    }
+    //return $rate;
+    return json_encode(array("Validation Status" => $status, "Base Tariff" => $rate, "Service Tax" => $service_tax));
+}

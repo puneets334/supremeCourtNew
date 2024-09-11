@@ -10,7 +10,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="table-sec">
                 <div class="table-responsive">
-                    <table id="datatable-responsive1" class="table table-striped custom-table datatableresponsive">
+                    <table id="datatable-responsive" class="table table-striped custom-table datatableresponsive">
                         <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                         <thead>
                             <tr class="success">
@@ -74,7 +74,7 @@
             <?php if ($segment->getSegment(2) != 'caseDetails' && !empty($uploaded_deleted_docs_while_refiling) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)) { ?>
                 <div class="table-sec">
                     <div class="table-responsive">
-                        <table id="datatable-responsive1" class="table table-striped custom-table">
+                        <table id="datatable-responsive1" class="table table-striped custom-table datatableresponsive">
                             <!-- <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                             <thead>
                                 <tr class="danger">
@@ -123,7 +123,10 @@
     </div>
 </div>
 <script>
-    $('#datatable-responsive1').dataTable();
+    $(document).ready(function() {
+        $('#datatable-responsive').DataTable();
+    });
+    $('#datatable-responsive1').DataTable();
     function DocDeleteAction(value) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

@@ -119,7 +119,7 @@ textarea {
                                     }
                                 }
                             ?>
-                            <select tabindex='2' name="party_is" id="party_is" onchange="get_caveator_as(this.value)" class="form-select cus-form-ctrl filter_select_dropdown" required>
+                            <select tabindex='2' name="party_is" id="party_is" onchange="get_caveator_as(this.value)" class="form-select cus-form-ctrl" required>
                                 <option value="I" <?php echo isset($selectIndividual) ? $selectIndividual : ''; ?>>Individual
                                 </option>
                                 <option value="D1" <?php echo isset($selectStateDept) ? $selectStateDept : ''; ?>>State Department
@@ -225,7 +225,7 @@ textarea {
                                 }
                                     }
                                 ?>
-                                <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
+                                <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate" disabled
                                 name="pet_age" id="pet_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($pet_age); ?>">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                 title="Approx. age in years only.">

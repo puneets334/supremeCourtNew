@@ -1,5 +1,5 @@
 
-WElcome To Admin Dashbod
+Welcome To Admin Dashboard
 
 {{-- @extends('responsive_variant.layouts.master.uikit_scutum_2.index')
 @section('title', 'Dashboard')
@@ -8,11 +8,10 @@ WElcome To Admin Dashbod
 
 @section('content')
 <script type="text/javascript">
-    if(window.name.endsWith("-iframe")){
+    if(window.name.endsWith("-iframe")) {
         parent.window.location.href=window.location.href;
-    }
-    else{
-        window.location.href = '{{base_url('dashboard_alt')}}';
+    } else {
+        window.location.href = '<?php echo base_url('dashboard_alt'); ?>';
     }
 
 </script>
