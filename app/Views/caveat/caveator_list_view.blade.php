@@ -18,7 +18,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
 						<th>Caveator Name</th>
 						<th>Age/D.O.B</th>
 						<th>Gender</th>
-						<th>Contact</th>
+						<th>Contact</th>   
 						<th>Address</th>
                          <?php
                     if($hidepencilbtn!='true'){ ?>
