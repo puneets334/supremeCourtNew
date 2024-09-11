@@ -351,7 +351,7 @@
                 $(".is_chargable").addClass("d-none");
             }
             $.ajax({
-                url:'get_app_charge.php',
+                url:'<?php echo base_url('online_copying/get_app_charge'); ?>',
                 cache: false,
                 async: true,
                 data: {idd: idd},               
@@ -477,9 +477,10 @@
                         sno++;
                     }
                 });
+                console.log(o_array);
                 var bail_order = $("#radioBtn .active").data('title');
                 $.ajax({
-                    url:'get_tot_copy.php',
+                    url:'<?php echo base_url('online_copying/get_tot_copy'); ?>',
                     cache: false,
                     async: true,
                     data: {app_type:app_type,num_copy:num_copy,cop_mode:cop_mode,pincode:pincode,bail_order:bail_order,o_array:o_array},

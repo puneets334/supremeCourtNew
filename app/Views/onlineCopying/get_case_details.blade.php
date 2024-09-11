@@ -9,7 +9,7 @@ if (isset($_SESSION['is_user_address_found']) && $_SESSION['is_user_address_foun
 }
 
 $OLD_ROP = OLD_ROP_DB;
-if($_REQUEST['chk_status']==1)
+if(isset($_REQUEST['chk_status']) && $_REQUEST['chk_status']==1)
 {
     $ct = $_REQUEST['ct']; 
     $cn = $_REQUEST['cn']; 
