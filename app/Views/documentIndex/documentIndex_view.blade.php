@@ -57,6 +57,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="card custom-card">
+                                <div class="row">
+                                    <h6 class="text-center fw-bold">Index</h6>
+                                </div>
                                     <?php
                                     $segment = service('uri');
                                     if (isset($uploaded_docs) && !empty($uploaded_pdf)) { ?>

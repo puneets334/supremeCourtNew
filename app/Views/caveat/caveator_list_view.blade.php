@@ -18,7 +18,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
 						<th>Caveator Name</th>
 						<th>Age/D.O.B</th>
 						<th>Gender</th>
-						<th>Contact</th>
+						<th>Contact</th>   
 						<th>Address</th>
                          <?php
                     if($hidepencilbtn!='true'){ ?>
@@ -28,6 +28,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                     </thead>
                     <tbody>
         <?php
+        $caveator_name=''; 
       if(isset($efiling_civil_data[0]['pet_name']) && !empty($efiling_civil_data[0]['pet_name'])){
         //$caveator_name ='Caveator is : Individual <br/>Caveator Name : '.$efiling_civil_data[0]['pet_name'];
         $caveator_name =$efiling_civil_data[0]['pet_name'];
