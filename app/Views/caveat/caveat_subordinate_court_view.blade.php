@@ -40,7 +40,7 @@
     background: rgba(255,255,255,0.8) url("loader.gif") center no-repeat;
 }
 /* Turn off scrollbar when body element has the loading class */
-body.loading{HCBM010302202020
+body.loading {
     overflow: hidden;   
 }
 /* Make spinner image visible when body element has the loading class */
@@ -50,7 +50,8 @@ body.loading .overlay{
 </style>
 <style>
  .datepicker-dropdown {
-    margin-top: 850px; !important;background-color: #fff;
+    margin-top: 850px !important;
+    background-color: #fff;
 }
 </style>
 

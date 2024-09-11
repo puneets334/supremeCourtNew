@@ -29,7 +29,7 @@
             ?>
             <div class="tab-form-inner">
                 <div class="row">
-                    <h6 class="text-center fw-bold">Petitioner</h6>
+                    <h6 class="text-center fw-bold">Petitioner Information</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
@@ -116,7 +116,7 @@
                             <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
                             <input tabindex='5' class="form-control cus-form-ctrl party_dob" id="party_dob" name="party_dob" value="<?php echo (!empty(@$party_details[0]['party_dob'])) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -229,7 +229,7 @@
                         <div class="mb-3">
                             <label class="form-label">Email <span style="color: red" class="astriks">*</span></label>
                             <input id="party_email" name="party_email" placeholder="Email" tabindex='16' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
-                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -238,7 +238,7 @@
                         <div class="mb-3">
                             <label class="form-label">Mobile <span style="color: red" class="astriks">*</span></label>
                             <input id="party_mobile" name="party_mobile" tabindex='17' onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Mobile" value="<?php echo (@$party_details[0]['mobile_num']); ?>" class="form-control cus-form-ctrl" type="text" minlength="10" maxlength="10">
-                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -247,7 +247,7 @@
                         <div class="mb-3">
                             <label class="form-label">Address <span id="address_span" <?php echo $style; ?> class="astriks"><?php echo $astrik; ?></span></label>
                             <textarea tabindex='18' name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3" required><?php echo (@$party_details[0]['address']); ?></textarea>
-                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
@@ -286,7 +286,7 @@
                         <div class="mb-3">
                             <label class="form-label">City <span id="city_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
                             <input id="party_city" tabindex='21' name="party_city" placeholder="City" value="<?php echo (@$party_details[0]['city']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49" required>
-                            <span class="input-group-addon text-danger" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>

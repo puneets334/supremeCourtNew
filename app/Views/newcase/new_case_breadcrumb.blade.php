@@ -378,8 +378,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             aria-selected="false"><span class="tab-num"
                                 style="<?php echo $ColorCode; ?>">3</span>Respondent</a>
                     </li>
-                    <li class="nav-item"
-                        role="presentation">
+                    <li class="nav-item" role="presentation">
                         <?php
                         if ($segment->getSegment(2) == 'subordinate_court') {
                             $ColorCode = 'background-color: #01ADEF';
@@ -395,15 +394,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             $disabled_status = 'pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_subordinate_court ?>"
-                            class="nav-link <?php echo $status_color; ?>"
-                            id="home-tab"
-                            type="button"
-                            style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) {
-                                echo $disabled_status1;
-                            } ?>"
-                            aria-selected="false"><span class="tab-num"
-                                style="<?php echo $ColorCode; ?>">4</span>Earlier Courts</a>
+                        <a href="<?= $url_subordinate_court ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) { echo $disabled_status1; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Earlier Courts</a>
                     </li>
                     <li class="nav-item"
                         role="presentation">
