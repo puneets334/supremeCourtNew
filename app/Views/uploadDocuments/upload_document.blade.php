@@ -15,8 +15,7 @@
 						<label for="" class="form-label">Proforma for Custody and Surrender Certificate.Download,fill and upload.</label>
 						<a href="<?= base_url('uploadDocuments/DefaultController/file_download/S') ?>"> Download Surrender Certificate</a>
 						<a href="<?= base_url('uploadDocuments/DefaultController/file_download/C') ?>"> Download Custody Certificate</a>
-
-					</div>
+          </div>
 				</div>
 			<?php } ?>
 			<div class="col-12 col-sm-12 col-md-6 col-lg-6">
