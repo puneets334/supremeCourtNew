@@ -149,8 +149,7 @@ textarea {
                                     <textarea id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
                                         class="form-control cus-form-ctrl sci_validation" 
                                         minlength="3" maxlength="250" ><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
-                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
-                                        title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>                                           
                                             
@@ -648,6 +647,7 @@ textarea {
 
 
     $(document).ready(function() {
+        $('#pet_complainant').attr('required', true);
         $(".filter_select_dropdown").select2().on('select2-focus', function() {
             // debugger;
             $(this).data('select2-closed', true)
@@ -655,7 +655,8 @@ textarea {
         
         var party_as = $('select#party_is option:selected').val();
         if (party_as == 'I') {          
-            $('#indvidual_form').show();
+        $('#pet_complainant').attr('required', true);
+            $('#indvidual_form').show(); 
             $('#org_form').hide();
             $('#org_state_row').show();
             $('#org_state').val('');
@@ -667,7 +668,8 @@ textarea {
         }else {
             if (party_as == 'D3') {
                
-                $('#indvidual_form').hide();
+        $('#pet_complainant').attr('required', false);
+                $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
@@ -681,7 +683,8 @@ textarea {
                  $('#party_gender3').val('');*/
             } else {
                 
-                $('#indvidual_form').hide();
+        $('#pet_complainant').attr('required', false);
+        $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').show();
                 $('#caveator_name').val('');
@@ -698,7 +701,8 @@ textarea {
     function get_caveator_as(value) {
         var party_as = value;
         if (party_as == 'I') {
-            $('#indvidual_form').show();
+        $('#pet_complainant').attr('required', true);
+            $('#indvidual_form').show(); 
             $('#org_form').hide();
             $('#org_state_row').show();
             $('#org_state').val('');
@@ -712,7 +716,8 @@ textarea {
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
-                $('#indvidual_form').hide();
+        $('#pet_complainant').attr('required', false);
+        $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
@@ -726,7 +731,8 @@ textarea {
                  $('#party_gender3').val('');*/
             } else {
                // alert(party_as);
-                $('#indvidual_form').hide();
+        $('#pet_complainant').attr('required', false);
+        $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').show();
                 $('#caveator_name').val('');

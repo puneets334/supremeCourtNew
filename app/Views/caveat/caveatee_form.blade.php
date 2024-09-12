@@ -99,7 +99,7 @@ textarea {
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
                                 <textarea  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
-                                <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
                             </div>
@@ -147,7 +147,7 @@ textarea {
                                 <input tabindex='5' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
                                 value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                     <i class="fa fa-question-circle-o"></i>
                                 </span>
                         
@@ -170,7 +170,7 @@ textarea {
                                 ?>
                                 <input type="number" class="form-control cus-form-ctrl" disabled
                                 name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" >
-                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Approx. age in years only.">
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
                                 </span>
                             </div>
@@ -239,7 +239,7 @@ textarea {
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
                                         <textarea tabindex = '9' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
-                                        <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                        <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                             <i class="fa fa-question-circle-o" ></i>
                                         </span>
                                     </div>
@@ -276,7 +276,7 @@ textarea {
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
                                             <textarea id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
-                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
                                         </div>
@@ -314,7 +314,7 @@ textarea {
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
                                             <textarea id="org_post_name" name="org_post_name" tabindex = '13' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
-                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" data-content="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                            <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
                                         </div>
@@ -338,7 +338,7 @@ textarea {
                                     tabindex='14' value="<?php echo isset($caveatee_details[0]['res_email']) ? $caveatee_details[0]['res_email'] : ''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="email" minlength="6" maxlength="49" >
-                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter caveatee valid email id. (eg : abc@example.com)">
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter caveatee valid email id. (eg : abc@example.com)">
                                         <i class="fa fa-question-circle-o" ></i>
                                     </span>
                             </div>
@@ -352,7 +352,7 @@ textarea {
                                     class="form-control cus-form-ctrl sci_validation"
                                     onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     type="tel" minlength="10" maxlength="10" >
-                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Mobile No. should be of 10 digits only.">
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Mobile No. should be of 10 digits only.">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
                             </div>
@@ -363,7 +363,7 @@ textarea {
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
                                 <textarea tabindex='16' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
                                     class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['resadd']) ? $caveatee_details[0]['resadd'] : ''; ?></textarea>
-                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o" ></i>
                                     </span>
                             </div>
@@ -377,7 +377,7 @@ textarea {
                                     placeholder="Pin code" 
                                     value="<?php echo !empty($caveatee_details[0]['res_pincode'])?$caveatee_details[0]['res_pincode']:''; ?>"
                                     class="form-control cus-form-ctrl" type="text" minlength="6" maxlength="6" >
-                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Pincode should be 6 digits only.">
+                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Pincode should be 6 digits only.">
                                         <i class="fa fa-question-circle-o"></i>
                                         <a href="https://www.indiapost.gov.in/vas/pages/findpincode.aspx" target="_blank" class="pin-code-loc" >Pin Code Locator</a>
                                     </span>
@@ -391,7 +391,7 @@ textarea {
                                 value="<?php echo isset($caveatee_details[0]['res_city'])?$caveatee_details[0]['res_city']:''; ?>"
                                 class="form-control cus-form-ctrl sci_validation" type="text" minlength="3"
                                 maxlength="49" required>
-                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please enter City name.">
+                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
                             </div>

@@ -102,7 +102,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             echo '&nbsp; <a class="btn btn-default btn-sm" href="' . base_url('history/efiled_case/view') . '">' . $lbl_history . ' </a>';
                         }*/
                         ?>
-                        <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
             </div>
