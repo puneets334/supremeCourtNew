@@ -51,7 +51,7 @@ class Caveator extends BaseController {
         if (!empty(getSessionData('estab_details'))) {
                  // if (isset(getSessionData('efiling_details')) && !empty(getSessionData('efiling_details'))) {
 
-            $estab_code = getSessionData('estab_details')['est_code'];
+            $estab_code = (getSessionData('estab_details')['est_code']);
             $efiling_for_type_id = getSessionData('estab_details')['efiling_for_type_id'];
             $state_code = getSessionData('estab_details')['state_code'];
         } else {
