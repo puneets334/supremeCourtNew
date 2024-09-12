@@ -7,6 +7,24 @@ use Config\Database;
 class AddressModel extends Model
 {
     protected $db2;
+    protected $table = 'user_address'; // Make sure this matches your table name
+    protected $primaryKey = 'id'; // Set the primary key if necessary
+
+    // Specify the fields allowed for mass assignment
+    protected $allowedFields = [
+        'mobile',
+        'email',
+        'first_name',
+        'second_name',
+        'address_type',
+        'address',
+        'city',
+        'district',
+        'state',
+        'pincode',
+        'country',
+        'entry_time_ip',
+    ];
     function __construct()
     {
         parent::__construct();
@@ -63,7 +81,32 @@ class AddressModel extends Model
         }else {
             $result = $query->getResult();           
         }
+        return $result;
     } 
+
+
+    public function getPincode($pincode)
+    {
+        $builder = $this->db2->table('master.post_distance_master');           
+        $builder->select('taluk_name, district_name, state');
+        $builder->where('pincode', $pincode);
+        // $sql = $builder->getCompiledSelect();
+        // echo "<pre>$sql</pre>";
+        $query = $builder->get();
+        if ($query === false) {           
+            return false;
+        }else {
+            $result = $query->getRow();           
+        }
+        return $result;
+        
+    } 
+
+
+
+
+
+
    
 
 }
