@@ -70,6 +70,9 @@ $this->hearing_model = new HearingModel();
                                 <div class="row bg-info">
                                     <?= getSessionData('msg'); ?>
                                 </div>
+                                <div class="title-sec">
+                                    <h5 class="unerline-title"> Physical Hearing </h5>
+                                </div>
                                 <div class="row g-3 align-items-center">
                                     <div class="col-auto">
                                         <label for="inputPassword6" class="col-form-label"> Select Court: </label>
@@ -296,7 +299,11 @@ $this->hearing_model = new HearingModel();
     });
     function goto_selected_court() {
         sel_ct = $('#selected_court').val();
-        // alert("/index/"+sel_ct);
-        window.location.href = "<?= base_url('Consent_VC/index/') ?>"+sel_ct;            
+        if(!sel_ct) {
+            alert('Please Select the Court List!');
+        } else {
+            // alert("/index/"+sel_ct);
+            window.location.href = "<?= base_url('Consent_VC/index/') ?>"+sel_ct;
+        }
     }
 </script>
