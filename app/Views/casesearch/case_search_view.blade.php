@@ -33,10 +33,10 @@
                                                         unset($_SESSION['efiling_type']);
                                                         setSessionData('efiling_type', 'misc'); 
                                                         $commonHeading = 'File A Document';
-                                                    } elseif (getSessionData('customEfil') == 'refile') {
+                                                    } elseif (getSessionData('customEfil') == 'refile_old_efiling_cases') {
                                                         unset($_SESSION['efiling_type']);
                                                         setSessionData('efiling_type', 'refile_old_efiling_cases');                                                         
-                                                        $commonHeading = 'Refile old efiling cases';
+                                                        $commonHeading = 'Refile Old Efiling Case';
                                                     }
                                                     ?>
                                                     <h5><i class="fa fa-file"></i> {{$commonHeading}}</h5>
@@ -46,7 +46,7 @@
                                             <div class="ryt-dash-breadcrumb">
                                                 <div class="btns-sec">
 
-                                                    <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                    <a href="javascript:void(0)" class="quick-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,7 +126,7 @@
                                                 <div class="col-md-4 col-sm-4 col-xs-12">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
-                                                            <button type="submit" class="quick-btn gray-btn" id="search_sc_case" value="SEARCH">Search</button>
+                                                            <button type="submit" class="quick-btn" id="search_sc_case" value="SEARCH">Search</button>
                                                         </div>
                                                     </div>
                                                 </div>
