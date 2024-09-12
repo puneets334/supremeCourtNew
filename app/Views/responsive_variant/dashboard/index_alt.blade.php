@@ -6,6 +6,9 @@
 @endif
 @section('content')
 <style>
+    .btn-info {
+        margin: -13% 15%;
+    }
     .fc-today-button {
         text-transform: capitalize !important;
     }
@@ -72,74 +75,151 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                             <div class="dashbord-tile pink-tile">
-                                                <h6 class="tile-title">Recent Documents</h6>
-                                                <p class="tile-subtitle">By other Parties</p>
-                                                <!-- <button ng-click="widgets.recentDocuments.byMe.ifVisible=true;widgets.recentDocuments.byOthers.ifVisible=false;" class="btn btn-primary pull-right" style="margin: -55px 60px;">#By me</button> -->
-                                                <h4 class="main-count">
-                                                    <?php
-                                                    if (isset($recent_documents_by_others) && !empty($recent_documents_by_others)) {
-                                                        echo count($recent_documents_by_others);
-                                                    } else {
-                                                        echo '00';
-                                                    }
-                                                    ?>
-                                                </h4>
-                                                @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others])
-                                                @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->adjournment_requests,'type' => 'adjournment_requests'])
-                                                <div class="tiles-comnts">
-                                                    <div class="tile-comnt">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                            if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
-                                                                echo count($recent_documents_by_others_grouped_by_document_type->rejoinder);
-                                                            } else {
-                                                                echo '00';
-                                                            }
-                                                            ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Rejoinder</p>
-                                                        @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->rejoinder])
-                                                    </div>
-                                                    <div class="tile-comnt">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                            if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
-                                                                echo count($recent_documents_by_others_grouped_by_document_type->reply);
-                                                            } else {
-                                                                echo '00';
-                                                            }
-                                                            ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Reply</p>
-                                                        @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->reply])
-                                                    </div>
-                                                    <div class="tile-comnt">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                            if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
-                                                                echo count($recent_documents_by_others_grouped_by_document_type->ia);
-                                                            } else {
-                                                                echo '00';
-                                                            }
-                                                            ?>
-                                                        </h6>
-                                                        <p class="comnt-name">IA</p>
-                                                        @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->ia, 'type' => ''])
-                                                    </div>
-                                                    <div class="tile-comnt">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                            if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
-                                                                echo count($recent_documents_by_others_grouped_by_document_type->other);
-                                                            } else {
-                                                                echo '00';
-                                                            }
-                                                            ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Other</p>
-                                                        @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->other])
+                                                <!-- Start 1st Grid -->
+                                                <div style="display: block;" id="showByMe">
+                                                    <h6 class="tile-title">Recent Documents</h6>
+                                                    <p class="tile-subtitle">By other Parties</p>
+                                                    <button id="byMe" class="btn btn-info pull-right">#By me</button>
+                                                    <h4 class="main-count">
+                                                        <?php
+                                                        if (isset($recent_documents_by_others) && !empty($recent_documents_by_others)) {
+                                                            echo count($recent_documents_by_others);
+                                                        } else {
+                                                            echo '00';
+                                                        }
+                                                        ?>
+                                                    </h4>
+                                                    @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others])
+                                                    @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->adjournment_requests,'type' => 'adjournment_requests'])
+                                                    <div class="tiles-comnts">
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_others_grouped_by_document_type->rejoinder);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">Rejoinder</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->rejoinder])
+                                                        </div>
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_others_grouped_by_document_type->reply);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">Reply</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->reply])
+                                                        </div>
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_others_grouped_by_document_type->ia);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">IA</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->ia, 'type' => ''])
+                                                        </div>
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_others_grouped_by_document_type->other);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">Other</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->other])
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <!-- End 1st Grid -->
+
+                                                <!--Start 2nd grid-->
+                                                <div style="display: none;" id="showByOthers">
+                                                    <h6 class="tile-title">Recent Documents</h6>
+                                                    <p class="tile-subtitle">By Me</p>
+                                                    <button id="byOthers" class="btn btn-info pull-right">#By others</button>
+                                                    <h4 class="main-count">
+                                                        <?php
+                                                        if (isset($recent_documents_by_me) && !empty($recent_documents_by_me)) {
+                                                            echo count($recent_documents_by_me);
+                                                        } else {
+                                                            echo '00';
+                                                        }
+                                                        ?>
+                                                    </h4>
+                                                    @include('responsive_variant.dashboard.layouts.documents', ['uk_drop_boundary' => '.my-documents-widget', 'documents' => $recent_documents_by_me])
+                                                    @include('responsive_variant.dashboard.layouts.documents', ['uk_drop_boundary' => '.my-documents-widget', 'documents' => $recent_documents_by_me_grouped_by_document_type->other])
+                                                    <div class="tiles-comnts">
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_me_grouped_by_document_type) && !empty($recent_documents_by_me_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_me_grouped_by_document_type->rejoinder);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">Rejoinder</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['uk_drop_boundary' => '.my-documents-widget', 'documents' => $recent_documents_by_me_grouped_by_document_type->rejoinder])
+                                                        </div>
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_me_grouped_by_document_type) && !empty($recent_documents_by_me_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_me_grouped_by_document_type->reply);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">Reply</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['uk_drop_boundary' => '.my-documents-widget', 'documents' => $recent_documents_by_me_grouped_by_document_type->reply])
+                                                        </div>
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_me_grouped_by_document_type) && !empty($recent_documents_by_me_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_me_grouped_by_document_type->ia);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">IA</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['uk_drop_boundary' => '.my-documents-widget', 'documents' => $recent_documents_by_me_grouped_by_document_type->ia])
+                                                        </div>
+                                                        <div class="tile-comnt">
+                                                            <h6 class="comts-no">
+                                                                <?php
+                                                                if (isset($recent_documents_by_me_grouped_by_document_type) && !empty($recent_documents_by_me_grouped_by_document_type)) {
+                                                                    echo count($recent_documents_by_me_grouped_by_document_type->other);
+                                                                } else {
+                                                                    echo '00';
+                                                                }
+                                                                ?>
+                                                            </h6>
+                                                            <p class="comnt-name">Other</p>
+                                                            @include('responsive_variant.dashboard.layouts.documents', ['uk_drop_boundary' => '.my-documents-widget', 'documents' => $recent_documents_by_me_grouped_by_document_type->other])
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!--End 2nd grid-->
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -1014,6 +1094,18 @@
             "bAutoWidth": false,
             "pageLength": 5,
             // "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
+        });
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $("#byMe").click(function(){
+            $("#showByMe").hide();
+            $("#showByOthers").show();
+        });
+        $("#byOthers").click(function() {
+            $("#showByOthers").hide();
+            $("#showByMe").show();
         });
     });
 </script>
