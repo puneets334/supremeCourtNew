@@ -24,7 +24,7 @@
                 $stage_id = !empty(getSessionData('efiling_details')['stage_id']) ? getSessionData('efiling_details')['stage_id'] : NULL;
                 if(is_array($payment_details)){
                     foreach ($payment_details as $resData) {
-                        $transaction_date = $resData['transaction_date'] ? date('d-m-Y H:i:s A', strtotime($resData['transaction_date'])) : '';
+                        $transaction_date = !empty($resData['transaction_date']) ? date('d-m-Y H:i:s A', strtotime($resData['transaction_date'])) : '';
                         $transaction_num = !empty($resData['transaction_num']) ? $resData['transaction_num'] : NULL;
                         $is_verified = !empty($resData['is_verified']) ? $resData['is_verified'] : NULL;
                         $is_locked = !empty($resData['is_locked']) ? $resData['is_locked'] : NULL;

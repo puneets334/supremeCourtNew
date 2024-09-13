@@ -102,7 +102,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             echo '&nbsp; <a class="btn btn-default btn-sm" href="' . base_url('history/efiled_case/view') . '">' . $lbl_history . ' </a>';
                         }*/
                         ?>
-                        <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
             </div>
@@ -144,10 +144,17 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         echo '<a href="javascript::void(0); " class="quick-btn transparent-btn '.$efiling_num_button_background_class.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                         echo '&nbsp; <a class="quick-btn gray-btn" href="' . base_url('history/efiled_case/view ') . '">eFiling History</a>';						
                     }
-                    if (!empty($_SESSION['efiling_details']['stage_id']) == Draft_Stage) {
+                  
+
+                   $stages_array = array(Draft_Stage);
+                        if (!empty(getSessionData('efiling_details')['stage_id']) && in_array(!empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'], $allowed_users_trash) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                         ?>
-                        <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('EAT')">Trash </a>
-                    <?php } ?>						
+                    <a href="javascript:void(0)"
+                        class="quick-btn gradient-btn"
+                        onclick="ActionToTrash('UAT')">Trash</a>
+                    <?php } ?>	
+                    
+                    
                 </div>
             </div>
         </div>

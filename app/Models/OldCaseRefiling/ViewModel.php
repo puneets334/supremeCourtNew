@@ -20,7 +20,7 @@ class ViewModel extends Model {
         $builder->orderBy('cfp.id', 'DESC');
         $query = $builder->get();
         if ($query->getNumRows() >= 1) {
-            $result = $query->getResult();
+            $result = $query->getResultArray();
             return $result;
         } else {
             return FALSE;

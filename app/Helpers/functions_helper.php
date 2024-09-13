@@ -2162,7 +2162,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                 if (empty($case_nature)) {
                     $case_nature = $court_fee_calculation_param1[0]['nature'] ?? '';
                 }
-                if (empty($case_nature)) {
+                if (empty($case_nature) && !empty($diary_no)) {
                     $case_nature = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 }
 

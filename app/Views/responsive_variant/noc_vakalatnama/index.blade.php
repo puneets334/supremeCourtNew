@@ -11,6 +11,7 @@
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Cases Transferred by Vakalatnama </h5>
+                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
                                 </div>
                                 <div class="table-sec">
                                     <div class="table-responsive">
@@ -36,15 +37,14 @@
                                                         <td>{{$case->updated_on}}</td>
                                                         <td>{{$case->name}} ({{$case->aor_code }})</td>
                                                     </tr>
-                                                    @endforeach 
-                                                    
+                                                    @endforeach
                                                 @else
                                                 <tr>
                                                     <td colspan="6">
                                                         <span class="text-danger fw-bold">Record Not Found</span>
                                                     </td>
                                                 </tr>
-                                                @endif   
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

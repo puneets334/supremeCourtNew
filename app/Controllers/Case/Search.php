@@ -168,7 +168,6 @@ class Search extends BaseController
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
                     $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                    // pr($listing_data);
                     // $data['listing_details'] = $listing_data->listed[0];
                     // $data['listing_details'] = $listing_data->listed[0];
                     if (isset($listing_data->listed) && is_array($listing_data->listed) && isset($listing_data->listed[0])) {
@@ -608,12 +607,11 @@ class Search extends BaseController
             $diary_year = $web_service_result->case_details[0]->diary_year;
             if (!empty($diary_no) && !empty($diary_year)) {
                 $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                // pr($listing_data);
+                
                 $data['listing_details'] = $listing_data->listed[0];
                 $_SESSION['listing_details'] = $data['listing_details'];
-                // pr($_SESSION);
                 $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
-                // pr($data['old_efiling_cases']);
+                // pr($data['old_efiling_cases']); 
                 if (empty($data['old_efiling_cases'])) {
                     echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
                     exit(0);

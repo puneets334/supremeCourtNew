@@ -3,15 +3,14 @@
 @section('content')
 <style>
     .uk-table.uk-table-hover tbody tr:hover, .uk-table.uk-table-hover > tr:hover {
-        background:#ffffff!important;
+        background: #ffffff !important;
     }
     .scif:hover {
-        background:#ffffff!important;
-        color: #ffffff!important;
+        background: #ffffff !important;
+        color: black !important;
     }
     .scif {
-
-        color: #ffffff;
+        color: black;
     }
     tr.hide-table-padding td {
         padding: 0;
@@ -121,6 +120,7 @@
                         <div class="dash-card">
                             <div class="title-sec">
                                 <h5 class="unerline-title">My Cases</h5>
+                                <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             <!-- <div class="row">
                                 <div class="col-sm-1 col-md-1 col-lg-1 customFilterBtnDiv">
@@ -574,8 +574,8 @@
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
 <script>
     // Assuming you are using Blade templating (Laravel)
-    var advCasesResponseData = @json($adv_cases_response_data);
-    var diaryEngagedData = @json(array_values(array_unique($meta_data['diaryEngaged'])));
+    var advCasesResponseData = json($adv_cases_response_data);
+    var diaryEngagedData = json(array_values(array_unique($meta_data['diaryEngaged'])));
 </script>
 <script>
     function AllcasesShowAlert(id) {

@@ -8035,7 +8035,7 @@ div#calendar {
 }
 
 .dataTables_length {
-    width: 36%;
+    width: 20%;
     margin-bottom: 15px;
 }
 
@@ -8177,6 +8177,11 @@ div#calendar {
 
 .btn-primary {
     border-radius: 100px;
+}
+
+input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle;
 }
 
 @-webkit-keyframes spin {

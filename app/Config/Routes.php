@@ -355,6 +355,8 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/view', 'OldCaseRefiling\View::i
 $routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\FinalSubmit::index');
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
 $routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::index');
+$routes->match(['GET', 'POST'], 'admin/efilingAction/hold', 'Admin\EfilingAction::hold');
+
 $routes->match(['GET', 'POST'], 'shcilPayment/ViewPaymentChallan/(:any)', 'ShcilPayment\ViewPaymentChallan::index/$1');
 // $routes->match(['GET', 'POST'], 'report/search/view/miscellaneous_docs/defaultController/(:any)/(:any)/(:any)', 'MiscellaneousDocs\DefaultController::view/$1/$1/$1');
 
@@ -397,6 +399,9 @@ $routes->match(['GET', 'POST'], 'online_copying/get_case_details', 'OnlineCopyin
 $routes->match(['GET', 'POST'], 'online_copying/applicant_address', 'OnlineCopying\AddressController::applicantAddress');
 $routes->match(['GET', 'POST'], 'online_copying/get_app_charge', 'OnlineCopying\DefaultController::getAppCharge');
 $routes->match(['GET', 'POST'], 'online_copying/get_tot_copy', 'OnlineCopying\DefaultController::getTotCopy');
+$routes->match(['GET', 'POST'], 'online_copying/get_pincode_details', 'OnlineCopying\AddressController::getPincodeDetails');
+$routes->match(['GET', 'POST'], 'online_copying/user_address_save', 'OnlineCopying\AddressController::saveApplicantAddress');
+$routes->match(['GET', 'POST'], 'online_copying/user_address_remove', 'OnlineCopying\AddressController::RemoveApplicantAddress');
 $routes->match(['GET', 'POST'], 'online_copying/unavailable_request', 'OnlineCopying\DefaultController::unavailableRequest');
 $routes->match(['GET', 'POST'], 'online_copying/requested_documents_save', 'OnlineCopying\DefaultController::requestedDocumentsSave');
 $routes->match(['GET', 'POST'], 'online_copying/case_relation_verification', 'OnlineCopying\DefaultController::caseRelationVerification');

@@ -43,7 +43,7 @@ class UploadDocsModel extends Model
         }
 
         $file_uploaded_dir = 'uploaded_docs/' . $establishment_code . '/' . getSessionData('efiling_details')['efiling_no'] . '/docs/';
-
+        // pr($file_uploaded_dir);
         if (!is_dir($file_uploaded_dir)) {
             $uold = umask(0);
             if (mkdir('uploaded_docs/' . $establishment_code . '/' . getSessionData('efiling_details')['efiling_no'] . '/docs/', 0777, true)) {

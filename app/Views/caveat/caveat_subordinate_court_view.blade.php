@@ -405,19 +405,13 @@ body.loading .overlay{
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Impugned Order Date <span style="color: red" class="astriks">*</span></label>
-
-                            <input tabindex = '18'
-                                                            class="form-control has-feedback-left cus-form-ctrl mb-3"
-                                                            id="order_date"
-                                                            name="order_date"
-                                                            maxlength="10"
-                                                            placeholder="DD/MM/YYYY"
-                                                            type="text"
-                                                            style="width: 80%">
-                                                        <select id="order_dates_list"
-                                                            class="form-control cus-form-ctrl"
-                                                            style="width: 10%">
-                                                        </select>
+                                      <div class="row">
+                                        <div class="col-md-8">
+                            <input tabindex = '18'class="form-control has-feedback-left cus-form-ctrl mb-3" id="order_date" name="order_date" maxlength="10" placeholder="DD/MM/YYYY" type="text"></div>
+                            <div class="col-md-4">
+                            <select id="order_dates_list" class="form-control cus-form-ctrl"></select>
+                            </div>
+                            </div>
 
 
 
@@ -425,8 +419,6 @@ body.loading .overlay{
                                 
                             </select>
                         </div>
-
-
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -690,7 +682,12 @@ body.loading .overlay{
                 $("#police_station_name,#complete_fir_number").prop("disabled", false);
         });
         $('#subordinate_court_details').on('submit', function () {
-           
+            var hc_case_number = $("#hc_case_number").val();
+            var cnr = $("#cnr").val();
+           if(hc_case_number=='' && cnr==''){
+            alert('Please fill Case No. And Year OR CNR Number.');
+            return false;
+           }
             var judgement_type = $("#judgement_type").val();
             var order_date = $("#order_date").val();
             if(judgement_type){

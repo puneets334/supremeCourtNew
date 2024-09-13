@@ -610,7 +610,7 @@
                         </div>
                     </div>
                 </div>
-                <label style="margin-top: 2px;font-weight: bold;color: red;><i class=" fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AS PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
+                <label style="margin-top: 2px; font-weight: bold; color: red;"><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AS PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <div class="row">
                         <div class="progress" style="display: none">

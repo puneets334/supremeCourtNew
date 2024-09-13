@@ -35,7 +35,7 @@ $segment = service('uri');
                     <img src="<?= base_url() . 'assets/newAdmin/' ?>images/profile-img.png" alt="">
                 </div>
                 <div class="profile-info">
-                    <h6><?= getSessionData('login')['first_name'] ?> <a href="javascript:void(0)" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
+                    <h6><?= getSessionData('login')['first_name'] ?> <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
                     <a href="<?= base_url('profile') ?>" class="profile-lnk link-txt">User Profile</a>
                 </div>
             </div>
@@ -95,7 +95,7 @@ $segment = service('uri');
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/track_consignment'); ?>">Track</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/case_search'); ?>">Application</a></li>
-                                <li><a class="btn-link" href="<?php echo base_url('online_copying/applicant_address'); ?>">Address</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/applicant_address'); ?>">Address</a></li> 
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader</a></li>
                                 <li><a class="btn-link" href="#">Manual</a></li>

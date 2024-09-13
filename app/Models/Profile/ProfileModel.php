@@ -14,7 +14,7 @@ class ProfileModel extends Model
 
     public function getProfileDetail($userid)
     {
-        $builder = $this->db->table($this->table);
+        $builder = $this->db->table('efil.tbl_users');
         $query = $builder->select('*')
             ->where('userid', $userid)
             ->get();
