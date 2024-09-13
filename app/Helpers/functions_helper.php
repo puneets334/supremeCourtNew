@@ -2162,7 +2162,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                 if (empty($case_nature)) {
                     $case_nature = $court_fee_calculation_param1[0]['nature'] ?? '';
                 }
-                if (empty($case_nature)) {
+                if (empty($case_nature) && !empty($diary_no)) {
                     $case_nature = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 }
 
@@ -3768,24 +3768,49 @@ function eCopyingGetGroupConcat($main_case){
 function getIsPreviuslyApplied($copy_category, $diary_no, $mobile, $email, $order_type, $order_date)
 {
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_online a');
-        $builder->join('copying_application_documents_online b', 'a.id = b.copying_order_issuing_application_id', 'inner');
-        $builder->join('ref_order_type c', 'c.id = b.order_type', 'inner');
-        $builder->where('a.copy_category', $copy_category);
-        $builder->where('a.mobile', $mobile);
-        $builder->where('a.email', $email);
-        $builder->where('a.diary', $diary_no);
-        $builder->where('b.order_type', $order_type);
+    // $builder = $db2->table('copying_application_online a');
+    //     $builder->join('copying_application_documents_online b', 'a.id = b.copying_order_issuing_application_id', 'inner');
+    //     $builder->join('ref_order_type c', 'c.id = b.order_type', 'inner');
+    //     $builder->where('a.copy_category', $copy_category);
+    //     $builder->where('a.mobile', $mobile);
+    //     $builder->where('a.email', $email);
+    //     $builder->where('a.diary', $diary_no);
+    //     $builder->where('b.order_type', $order_type);
         
-        // Custom condition for mandate_date_of_order_type
-        $builder->groupStart();
-        $builder->where('IF(c.mandate_date_of_order_type = \'Y\', DATE(b.order_date) = \'' . $order_date . '\', 1=1)', null, false);
-        $builder->groupEnd();
+    //     // Custom condition for mandate_date_of_order_type
+    //     $builder->groupStart();
+    //     $builder->where('IF(c.mandate_date_of_order_type = \'Y\', DATE(b.order_date) = \'' . $order_date . '\', 1=1)', null, false);
+    //     $builder->groupEnd();
+    //     $sql = $builder->getCompiledSelect();
+    //     pr($sql);
+    //     // Execute the query
+    //     $query = $builder->get();
+    //     $results = $query->getResultArray();
 
-        // Execute the query
-        $query = $builder->get();
-        $results = $query->getResultArray();
-    if(count($results) > 0){
+    $builder = $db2->table('copying_application_online a');
+    $builder->select('*');
+    $builder->join('copying_application_documents_online b', 'a.id = b.copying_order_issuing_application_id');
+    $builder->join('ref_order_type c', 'c.id = b.order_type');
+
+    $builder->where('a.copy_category', $copy_category);
+    $builder->where('a.mobile', $mobile);
+    $builder->where('a.email', $email);
+    $builder->where('a.diary', $diary_no);
+    $builder->where('b.order_type', $order_type);
+
+    // Custom conditional logic
+    $builder->groupStart()
+            ->where('c.mandate_date_of_order_type', 'Y')
+            ->where('DATE(b.order_date)', $order_date)
+            ->groupEnd()
+            ->orGroupStart()
+            ->where('c.mandate_date_of_order_type !=', 'Y')
+            ->groupEnd();
+            // $sql = $builder->getCompiledSelect();
+            //     pr($sql);
+    $query = $builder->get();
+    $result = $query->getResult();
+    if(count($result) > 0){
         $result = 'YES';
     }
     else{
@@ -4018,4 +4043,196 @@ function speed_post_tariff_calc_offline($weight,$desitnation_pincode){
     }
     //return $rate;
     return json_encode(array("Validation Status" => $status, "Base Tariff" => $rate, "Service Tax" => $service_tax));
+}
+
+function eCopyingAvailableAllowedRequests($mobile, $email){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_online');
+    $builder->select('id')
+            ->where('allowed_request', 'request_to_available')
+            ->where('mobile', $mobile)
+            ->where('email', $email)
+            ->where('DATE(application_receipt)', date('Y-m-d'));
+    $query = $builder->get();
+
+    return $query->getResult();
+}
+
+function eCopyingGetDocumentType($third_party_sub_qry){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('ref_order_type');
+
+    $builder->select('id, order_type, mandate_date_of_order_type, mandate_remark_of_order_type')
+            ->where('is_deleted', 'f')
+            ->where('id <', 5000);
+
+    if (!empty($third_party_sub_qry)) {
+        $builder->where($third_party_sub_qry, null, false);
+    }
+
+    $builder->orderBy('order_type');
+
+    $query = $builder->get();
+
+    return $query->getResult();
+}
+
+function createCRN($service_user_id){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('bharat_kosh_services');
+    $builder->where('service_user_id', $service_user_id);
+    $builder->where('display', 'Y');
+    $query = $builder->get();
+    $stmt_bh_service = $query->getResult();
+    if (count($stmt_bh_service) == 1) {
+        $keyMaster = $stmt_bh_service[0]->key_master;
+        $row = $builder = $db2->table('copying_application_online');
+        $builder->select('MAX(RIGHT(CRN, 5)) AS max_batch_code');
+        $builder->where('DATE(application_receipt)', 'CURDATE()', false);
+        $builder->where('LEFT(CRN, 2)', $keyMaster);
+        $query = $builder->get();
+        $result = $query->getRow();
+        $OrderBatchMerchantBatchCode = $row[0]->max_batch_code;
+        if ($OrderBatchMerchantBatchCode == null) {
+            $OrderBatchMerchantBatchCode = '00001';
+        } else {
+            $OrderBatchMerchantBatchCode = $OrderBatchMerchantBatchCode + 1;
+        }
+        $OrderBatchMerchantBatchCode = $keyMaster . date('Ymd') . str_pad($OrderBatchMerchantBatchCode, 5, '0', STR_PAD_LEFT);
+        $status = 'success';
+    }
+    else{
+        $status = 'Permission denied';
+    }
+    return json_encode(array("Status" => $status, "CRN" => $OrderBatchMerchantBatchCode));
+}
+
+function insert_copying_application_online($dataArray){
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_online');
+    $last_application_id = '';
+    if ($builder->insert($dataArray)) {
+        $status = 'success';
+        $last_application_id = $db2->insertID();
+    } else {
+        $status = 'Error:Unable to Insert Records';
+    }
+    return json_encode(array("Status" => $status, "last_application_id" => $last_application_id));
+}
+
+function insert_copying_application_documents_online($dataArray){
+    $status = '';
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('copying_application_documents_online');
+    if ($builder->insert($dataArray)) {
+        $status = 'success';
+    } else {
+        $status = 'Error:Unable to Insert Records';
+    }
+    return json_encode(['Status' => $status]);
+}
+
+function sci_send_sms($mobile,$cnt,$from_adr,$template_id){
+    $status = '';
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    if(empty($mobile)){
+        $status = " Mobile No. Empty.";
+    }
+    else if(empty($cnt)){
+        $status = " Message content Empty.";
+    }
+    else if(strlen($cnt) > 320){
+        $status = " Message length should be less than 320 characters.";
+    }
+    else if(empty($from_adr)){
+        $status = " Sender Information Empty";
+    }
+    else if(strlen($mobile) != '10'){
+        $status = " Not a Proper Mobile No.";
+    }
+    else if(!is_numeric($mobile)){
+        $status = "Mobile number contains invalid value.";
+    }
+    else{
+
+        $url = SCISMS_URL;
+        $post_fields = [
+            "providerCode" => "sms",
+            "recipients" => [
+                "mobileNumbers" => [
+                    "$mobile"
+                ]
+            ],
+            "templateCode" => "$template_id",
+            "body" => "$cnt",
+            "scheduledAt" => null,
+            "purpose" => "SCI-eCopying",
+            "createdByUser" => [
+                "id" => "44562",
+                "name" => "Abhishek",
+                "employeeCode" => "564863",
+                "organizationName" => "SSK Infotech"
+            ],
+            
+            "module" => "listing",
+            "project" => "icmis"
+        ];
+
+
+        $fields_string = http_build_query($post_fields);
+
+        //open connection
+        $ch = curl_init();
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+        //So that curl_exec returns the contents of the cURL; rather than echoing it
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+        $headers = [
+            'Content-Type: application/x-www-form-urlencoded',
+            'Accept: application/json',
+            'Authorization: Bearer sdfmsdbfjh327654t3ufb58'
+        ];
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
+
+        //execute post
+        $result = curl_exec($ch);
+        $json = json_decode($result);
+
+        if(empty($json->errors)){
+            $dataArr = array(
+                "mobile" => $mobile,
+                "msg" => trim($cnt),
+                "table_name" => trim($from_adr),
+                "c_status" => 'Y',
+                "ent_time" => date('Y-m-d H:i:s'),
+                "update_time" => date('Y-m-d H:i:s'),
+                "templateId" => trim($template_id)
+            );
+            $builder = $db2->table('sms_pool');
+            if ($builder->insert($dataArr)) {
+                $status = 'success';
+            } else {
+                $status = 'Error:Unable to Insert Records';
+            }
+
+        }
+        else{
+            $status = "Error:Try again later";
+        }
+    }
+    return json_encode(array("Status" => $status));
+}
+
+function eCopyingGetCasetoryById($id){
+    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $builder = $db2->table('master.copy_category');
+    $builder->select('id, urgent_fee, per_certification_fee, per_page');
+    $builder->where('id', $id);
+    // $builder->where('to_date', '0000-00-00');
+    $query = $builder->get();
+    return $query->getRow();
 }

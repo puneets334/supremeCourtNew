@@ -10,6 +10,7 @@ class DefaultController extends BaseController
     protected $session;
     protected $Common_model;
     protected $db2;
+    protected $db3;
 
     public function __construct()
     {
@@ -21,6 +22,7 @@ class DefaultController extends BaseController
             is_user_status();
         }
         $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+        $this->db3 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
         $this->Common_model = new CommonModel();
         $_SESSION['is_token_matched'] = 'Yes';
         $_SESSION['applicant_email'] = getSessionData('login')['emailid'];
@@ -175,4 +177,179 @@ class DefaultController extends BaseController
     {
         return $this->render('onlineCopying.get_tot_copy');
     }
+    public function unavailableRequest()
+    {
+        return $this->render('onlineCopying.unavailable_request');
+    }
+    public function requestedDocumentsSave()
+    {
+        $doc_array = array();
+        if(!empty($_POST['document_type'])){
+            for($i = 0; $i < count($_POST['document_type']); $i++){
+                if(!empty($_POST['document_type'][$i])){
+
+
+                    if($_POST['mandate_date_of_order_type'][$i] == 'Y' && empty($_POST['order_date'][$i])){
+                        $array = array('status' => $_POST['document_type_text'][$i].' - Empty Order Date Not Allowed.');
+                        echo json_encode($array);
+                        exit();
+                    }
+                    else if($_POST['mandate_date_of_order_type'][$i] == 'Y' && !empty($_POST['order_date'][$i]) && date('Y-m-d', strtotime($_POST['order_date'][$i])) > date('Y-m-d')){
+                        $array = array('status' => $_POST['document_type_text'][$i].' - Wrong Order Date Not Allowed.');
+                        echo json_encode($array);
+                        exit();
+                    }
+                    else if($_POST['mandate_remark_of_order_type'][$i] == 'Y' && empty($_POST['doc_detail'][$i])){
+                        $array = array('status' => $_POST['document_type_text'][$i].' - Empty Document detail Not Allowed.');
+                        echo json_encode($array);
+                        exit();
+                    }
+                    else {
+                        $doc_array[] = array("document_type" => $_POST['document_type'][$i], "order_date" => $_POST['order_date'][$i], "doc_detail" => $_POST['doc_detail'][$i]);
+                    }
+                }
+            }
+        }
+        if($_SESSION['max_unavailable_copy_request_per_day'] >=10){
+            $array = array('status' => 'Max 10 unavailable document request reached per day.');
+            exit();
+        }
+        if (!empty($_POST) && $_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"])) {
+            $diary_no=$_SESSION['session_d_no'].$_SESSION['session_d_year'];
+            //VERIFICATION OF CASE ALREADY APPLIED
+            $builder = $this->db2->table('copying_request_verify');
+            $builder->select('diary');
+            $builder->where('allowed_request', 'request_to_available');
+            $builder->where('mobile', $_SESSION["applicant_mobile"]);
+            $builder->where('diary', $diary_no);
+            $builder->where('application_status', 'P');
+
+            $query = $builder->get();
+            $result = $query->getResult();
+            if (count($result) > 0 || $_SESSION['unavailable_copy_requested_diary_no'] == $diary_no) {
+                $array = array('status' => 'Please wait till completion of your previous request.');
+            }
+            else {
+                if (isset($_SESSION['user_address'])) {
+                    foreach ($_SESSION['user_address'] as $data_address) {
+                        $address_id = $data_address['address_id'];
+                        $first_name = $data_address['first_name'];
+                        $second_name = $data_address['second_name'];
+                        $postal_add = $data_address['address'];
+                        $city = $data_address['city'];
+                        $district = $data_address['district'];
+                        $state = $data_address['state'];
+                        $country = $data_address['country'];
+                        $pincode = $data_address['pincode'];
+                        break;
+                    }
+                }
+
+                $allowed_request = "request_to_available";
+                $scipay = 10002;
+                $create_crn = createCRN($scipay);//for unavailable document request
+                $json_crn = json_decode($create_crn);
+                if ($json_crn->{'Status'} == "success") {
+                    $crn = $json_crn->{'CRN'};
+
+                    $dataArray = array(
+                        "diary" => $_SESSION['session_d_no'] . $_SESSION['session_d_year'],
+                        "copy_category" => '0',
+                        "application_reg_number" => '0',
+                        "application_reg_year" => '0',
+                        "application_receipt" => date('Y-m-d H:i:s'),
+                        "advocate_or_party" => '0',
+                        "court_fee" => '0',
+
+                        "delivery_mode" => "1",
+                        "postal_fee" => '0',
+                        "ready_date" => '',
+                        "dispatch_delivery_date" => '',
+                        "adm_updated_by" => '1',
+                        "updated_on" => date('Y-m-d H:i:s'),
+                        "is_deleted" => "0",
+                        "is_id_checked" => '',
+
+                        "purpose" => '',
+                        "application_status" => 'P',
+                        "defect_code" => '',
+                        "defect_description" => '',
+                        "notification_date" => '',
+                        "filed_by" => $_SESSION["session_filed"],
+                        "name" => $first_name . ' ' . $second_name,
+                        "mobile" => $_SESSION["applicant_mobile"],
+                        "address" => $postal_add . ', ' . $city . ', ' . $district . ', ' . $state . ', ' . $country . ' - ' . $pincode,
+
+                        "application_number_display" => '',
+                        "temp_id" => '',
+                        "remarks" => '',
+                        "source" => '6',
+                        "send_to_section" => 'f',
+                        "crn" => $crn,
+                        "email" => $_SESSION["applicant_email"],
+                        "authorized_by_aor" => $_SESSION['session_authorized_bar_id'] > 0 ? $_SESSION['session_authorized_bar_id'] : '0',
+                        "allowed_request" => $allowed_request,
+
+                        "token_id" => '',
+                        "address_id" => $address_id
+                    );
+
+                    $insert_application = insert_copying_application_online($dataArray); //insert application
+                    $json_insert_application = json_decode($insert_application);
+                    if ($json_insert_application->{'Status'} == "success") {
+                        $last_application_id = $json_insert_application->{'last_application_id'};
+                        for ($var = 0; $var < count($doc_array); $var++) {
+                            $document_type = $doc_array[$var]['document_type'];
+                            $ordate_date = $doc_array[$var]['order_date'];
+                            $doc_details = $doc_array[$var]['doc_detail'];
+                            $document_array = array();
+                            $document_array = array(
+                                'order_type' => $document_type,
+                                'order_date' => date('Y-m-d', strtotime($ordate_date)),
+                                'copying_order_issuing_application_id' => $last_application_id,
+                                'number_of_copies' => '1',
+                                'number_of_pages_in_pdf' => '0',
+                                'path' => null,
+                                'from_page' => null,
+                                'to_page' => null,
+                                'order_type_remark' => $doc_details,
+                                'is_bail_order' => 'N'
+                            );
+                            $insert_application_documents = insert_copying_application_documents_online($document_array); //insert user assets
+                            $json_insert_application_documents = json_decode($insert_application_documents);
+                            if ($json_insert_application_documents->{'Status'} == "success") {
+
+                            } else {
+                                $array = array('status' => 'Unable to insert records');
+                            }
+                        }
+
+                        $sms = "Your request successfully submitted with CRN $crn for reference - Supreme Court Of India";
+                        //Your request successfully submitted with CRN {#var#} for reference - Supreme Court Of India
+                        $mobile = $_SESSION["applicant_mobile"];
+
+                        $sms_response = sci_send_sms($mobile, $sms, 'ecop', SCISMS_e_copying_crn_created);
+                        $json = json_decode($sms_response);
+                        if ($json->{'Status'} == "success") {
+                            $_SESSION['max_unavailable_copy_request_per_day'] = $_SESSION['max_unavailable_copy_request_per_day'] + 1;
+                            $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
+                            $array = array('status' => 'success');
+                        }
+
+                    } else {
+                        $array = array('status' => 'Unable to insert records');
+                    }
+                } else {
+                    $array = array('status' => 'Permission Denied');
+                }
+            }
+            echo json_encode($array);
+        }
+    }
+
+    public function caseRelationVerification(){
+    
+    }
 }
+
+

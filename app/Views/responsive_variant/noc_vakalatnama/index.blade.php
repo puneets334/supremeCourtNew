@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="table-sec">
                                     <div class="table-responsive">
-                                        <table class="table table-striped custom-table first-th-left">
+                                        <table id="datatable-responsive" class="table table-striped table-border custom-table">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
@@ -36,15 +36,14 @@
                                                         <td>{{$case->updated_on}}</td>
                                                         <td>{{$case->name}} ({{$case->aor_code }})</td>
                                                     </tr>
-                                                    @endforeach 
-                                                    
+                                                    @endforeach
                                                 @else
                                                 <tr>
                                                     <td colspan="6">
                                                         <span class="text-danger fw-bold">Record Not Found</span>
                                                     </td>
                                                 </tr>
-                                                @endif   
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

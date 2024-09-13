@@ -23,6 +23,7 @@
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
                                     <h5 class="unerline-title"> Physical Hearing Reports </h5>
+                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
@@ -54,10 +55,6 @@
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <!-- <script src="<?=base_url()?>assets/plugins/datepicker/bootstrap-datepicker.js"></script> -->
 <script>
-    $(document).ready(function () {
-        $('.menu-sec').eq(1).hide();
-        // $('.dataTables_paginate').eq(1).hide();
-    });
     $(function () {
         $('.datepick').datepicker({
             format: 'dd-mm-yyyy',
