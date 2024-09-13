@@ -117,9 +117,7 @@ class AddressController extends BaseController
                         $response = ['status' => 'First Name and Second Name can not be change'];
                     }
                 }
-                if ($validatedName == 'YES' || count($address) == 0) {
-
-                    
+                if ($validatedName == 'YES' || count($address) == 0) {                    
                     $data = [
                         'mobile' => $applicantMobile,
                         'email' => $applicantEmail,
@@ -213,6 +211,120 @@ class AddressController extends BaseController
         }
         return $this->response->setJSON($array);
     }
+
+    public function editApplicantAddress() 
+    {
+        $request = service('request');          
+        $address_id = $request->getPost('address_id');
+        $address_type = $request->getPost('address_type');
+        $first_name = $request->getPost('first_name');
+        $second_name = $request->getPost('second_name');
+        $address = $request->getPost('address');
+        $city = $request->getPost('city');
+        $district = $request->getPost('district');
+        $state = $request->getPost('state');
+        $pincode = $request->getPost('pincode');
+        $country = $request->getPost('country');
+
+        $data = [
+            'address_id' => $address_id,
+            'address_type' => $address_type,
+            'first_name' => $first_name,
+            'second_name' => $second_name,
+            'address' => $address,
+            'city' => $city,
+            'district' => $district,
+            'state' => $state,
+            'pincode' => $pincode,
+            'country' => $country
+        ];
+        return $this->render('onlineCopying.applicant_address_edit', $data);
+
+    }
+    public function updateApplicantAddress() 
+    {
+
+       
+        if ($_SESSION['is_token_matched'] == 'Yes' && getSessionData('login')['emailid'] && getSessionData('login')['mobile_number'])
+        {   
+            $addressID='';
+            $request = service('request');  
+
+            $addressID=$request->getPost('address_id');
+            $clientIP = $this->getClientIP(); 
+            $applicantMobile=$applicantEmail='';
+            if(!empty(getSessionData('login')['mobile_number'])){
+                $applicantMobile=getSessionData('login')['mobile_number'];
+            }
+            if(!empty(getSessionData('login')['emailid'])){
+                $applicantEmail=getSessionData('login')['emailid'];
+            }
+            $db3 = \Config\Database::connect('e_services'); 
+            $session = \Config\Services::session();
+            
+            $builder = $db3->table('user_address');
+            $address = $builder->where('mobile', $applicantMobile)
+            ->where('email', $applicantEmail)
+            ->where('is_active', 'Y')
+            ->get()
+            ->getResultArray();
+            if (count($address) > 0){
+                $rowCheck = $address[0];
+                if (strtoupper($rowCheck['first_name']) == strtoupper($request->getPost('first_name')) &&
+                    strtoupper($rowCheck['second_name']) == strtoupper($request->getPost('second_name'))) {
+                    $removeAddress= $this->AddressModel->removeApplicantAddress($addressID, $clientIP);    
+                    $data = [
+                        'mobile' => $applicantMobile,
+                        'email' => $applicantEmail,
+                        'first_name' => $request->getPost('first_name'),
+                        'second_name' => $request->getPost('second_name'),
+                        'address_type' => $request->getPost('address_type'),
+                        'address' => $request->getPost('postal_add'),
+                        'city' => $request->getPost('city'),
+                        'district' => $request->getPost('district'),
+                        'state' => $request->getPost('state'),
+                        'pincode' => $request->getPost('pincode'),
+                        'country' => $request->getPost('country'),
+                        'entry_time_ip' => $clientIP
+                    ];   
+                    
+                    // pr($data);
+                    $builder = $db3->table('user_address');
+                    $insertData= $builder->insert($data);               
+                    if ($insertData){
+                        $response = ['status' => 'success'];    
+                        $builder = $db3->table('user_address');
+                        $builder->where('mobile', $applicantMobile);
+                        $builder->where('email', $applicantEmail);
+                        $builder->where('is_active', 'Y');
+                        $address = $builder->get()->getResult();
+                        
+                    } else {
+                        $response = ['status' => 'Error:Record Not Inserted'];
+                    }
+                } 
+                else {
+                    $response = ['status' => 'First Name and Second Name cannot be changed'];
+                }
+            }                
+                  
+        }
+        else 
+        {
+            $response = ['status' => 'Session Expired'];
+        }
+        return $this->response->setJSON($response);
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 
