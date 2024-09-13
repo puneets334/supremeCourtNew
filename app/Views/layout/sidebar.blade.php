@@ -35,7 +35,7 @@ $segment = service('uri');
                     <img src="<?= base_url() . 'assets/newAdmin/' ?>images/profile-img.png" alt="">
                 </div>
                 <div class="profile-info">
-                    <h6><?= getSessionData('login')['first_name'] ?> <a href="javascript:void(0)" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
+                    <h6><?= getSessionData('login')['first_name'] ?> <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
                     <a href="<?= base_url('profile') ?>" class="profile-lnk link-txt">User Profile</a>
                 </div>
             </div>

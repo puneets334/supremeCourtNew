@@ -209,7 +209,7 @@ class ArguingCounsel extends BaseController {
         // $encrypter = \Config\Services::encrypter();
         $webLinkData=array('id'=>$id,'registration_code'=>$registrationCode);
         $webLinkDataDecoded=json_encode($webLinkData);
-        $key = config('App')->encryptionKey;
+        // $key = config('App')->encryptionKey;
         // $key=$this->config->item('encryption_key');
         // $encrypter = \Config\Services::encryption();
         $encrypter = \Config\Services::encrypter();
@@ -381,24 +381,24 @@ class ArguingCounsel extends BaseController {
             } else{
                 if (!empty(getSessionData('self_register_arguing_counsel')) && getSessionData('self_register_arguing_counsel') == true)
                 {
-                    $name =  !empty($this->input->post('name')) ? $this->input->post('name') : NULL;
+                    $name =  !empty($this->request->getPost('name')) ? $this->request->getPost('name') : NULL;
                     $mobile = !empty(getSessionData('adv_details')['mobile_no']) ? getSessionData('adv_details')['mobile_no'] : NULL;
                     $email = !empty(getSessionData('adv_details')['email_id']) ? getSessionData('adv_details')['email_id'] : NULL;
-                    $bar_reg_no = !empty($this->input->post('bar_reg_no')) ? $this->input->post('bar_reg_no') : NULL;
+                    $bar_reg_no = !empty($this->request->getPost('bar_reg_no')) ? $this->request->getPost('bar_reg_no') : NULL;
                     $file_type = !empty($_FILES['bar_id_card']['type']) ? $_FILES['bar_id_card']['type'] : NULL;
-                    $relation = !empty($this->input->post('relation')) ? $this->input->post('relation') : NULL;
-                    $relation_name = !empty($this->input->post('relation_name')) ? $this->input->post('relation_name') : NULL;
-                    $c_address = !empty($this->input->post('c_address')) ? $this->input->post('c_address') : NULL;
-                    $c_city = !empty($this->input->post('c_city')) ? $this->input->post('c_city') : NULL;
-                    $c_pincode = !empty($this->input->post('c_pincode')) ? $this->input->post('c_pincode') : NULL;
-                    $c_state = !empty($this->input->post('c_state')) ? $this->input->post('c_state') : NULL;
-                    $c_district = !empty($this->input->post('c_district')) ? $this->input->post('c_district') : NULL;
-                    $r_address = !empty($this->input->post('r_address')) ? $this->input->post('r_address') : NULL;
-                    $r_pincode = !empty($this->input->post('r_pincode')) ? $this->input->post('r_pincode') : NULL;
-                    $r_city = !empty($this->input->post('r_city')) ? $this->input->post('r_city') : NULL;
-                    $r_state = !empty($this->input->post('r_state')) ? $this->input->post('r_state') : NULL;
-                    $r_district = !empty($this->input->post('r_district')) ? $this->input->post('r_district') : NULL;
-                    $aor = !empty($this->input->post('aor')) ? $this->input->post('aor') : NULL;
+                    $relation = !empty($this->request->getPost('relation')) ? $this->request->getPost('relation') : NULL;
+                    $relation_name = !empty($this->request->getPost('relation_name')) ? $this->request->getPost('relation_name') : NULL;
+                    $c_address = !empty($this->request->getPost('c_address')) ? $this->request->getPost('c_address') : NULL;
+                    $c_city = !empty($this->request->getPost('c_city')) ? $this->request->getPost('c_city') : NULL;
+                    $c_pincode = !empty($this->request->getPost('c_pincode')) ? $this->request->getPost('c_pincode') : NULL;
+                    $c_state = !empty($this->request->getPost('c_state')) ? $this->request->getPost('c_state') : NULL;
+                    $c_district = !empty($this->request->getPost('c_district')) ? $this->request->getPost('c_district') : NULL;
+                    $r_address = !empty($this->request->getPost('r_address')) ? $this->request->getPost('r_address') : NULL;
+                    $r_pincode = !empty($this->request->getPost('r_pincode')) ? $this->request->getPost('r_pincode') : NULL;
+                    $r_city = !empty($this->request->getPost('r_city')) ? $this->request->getPost('r_city') : NULL;
+                    $r_state = !empty($this->request->getPost('r_state')) ? $this->request->getPost('r_state') : NULL;
+                    $r_district = !empty($this->request->getPost('r_district')) ? $this->request->getPost('r_district') : NULL;
+                    $aor = !empty($this->request->getPost('aor')) ? $this->request->getPost('aor') : NULL;
                     $ext = '';
                     if (isset($file_type) && !empty($file_type)) {
                         $extarr = explode('/', $file_type);
@@ -480,7 +480,7 @@ class ArguingCounsel extends BaseController {
                                 if(isset($insetIdArguingCounsel) && !empty($insetIdArguingCounsel)){
                                     $success = 'Registration has been successfully completed.<a href="'.base_url().'">Back</a>';
                                     setSessionData('success', $success);
-                                    $this->session->set_userdata('self_arguing_counsel', true);
+                                    setSessionData('self_arguing_counsel', true);
                                 } else {
                                     setSessionData('error', 'Something went wrong! Please try again later.');
                                 }
@@ -501,20 +501,20 @@ class ArguingCounsel extends BaseController {
                     $mobile = !empty($arguingCounselDetails[0]['mobile_number']) ? $arguingCounselDetails[0]['mobile_number'] : NULL;
                     $email = !empty($arguingCounselDetails[0]['emailid']) ? $arguingCounselDetails[0]['emailid'] : NULL;
                     $tableId = !empty($arguingCounselDetails[0]['id']) ? $arguingCounselDetails[0]['id'] : NULL;
-                    $bar_reg_no = !empty($this->input->post('bar_reg_no')) ? $this->input->post('bar_reg_no') : NULL;
+                    $bar_reg_no = !empty($this->request->getPost('bar_reg_no')) ? $this->request->getPost('bar_reg_no') : NULL;
                     $file_type = !empty($_FILES['bar_id_card']['type']) ? $_FILES['bar_id_card']['type'] : NULL;
-                    $relation = !empty($this->input->post('relation')) ? $this->input->post('relation') : NULL;
-                    $relation_name = !empty($this->input->post('relation_name')) ? $this->input->post('relation_name') : NULL;
-                    $c_address = !empty($this->input->post('c_address')) ? $this->input->post('c_address') : NULL;
-                    $c_city = !empty($this->input->post('c_city')) ? $this->input->post('c_city') : NULL;
-                    $c_pincode = !empty($this->input->post('c_pincode')) ? $this->input->post('c_pincode') : NULL;
-                    $c_state = !empty($this->input->post('c_state')) ? $this->input->post('c_state') : NULL;
-                    $c_district = !empty($this->input->post('c_district')) ? $this->input->post('c_district') : NULL;
-                    $r_address = !empty($this->input->post('r_address')) ? $this->input->post('r_address') : NULL;
-                    $r_pincode = !empty($this->input->post('r_pincode')) ? $this->input->post('r_pincode') : NULL;
-                    $r_city = !empty($this->input->post('r_city')) ? $this->input->post('r_city') : NULL;
-                    $r_state = !empty($this->input->post('r_state')) ? $this->input->post('r_state') : NULL;
-                    $r_district = !empty($this->input->post('r_district')) ? $this->input->post('r_district') : NULL;
+                    $relation = !empty($this->request->getPost('relation')) ? $this->request->getPost('relation') : NULL;
+                    $relation_name = !empty($this->request->getPost('relation_name')) ? $this->request->getPost('relation_name') : NULL;
+                    $c_address = !empty($this->request->getPost('c_address')) ? $this->request->getPost('c_address') : NULL;
+                    $c_city = !empty($this->request->getPost('c_city')) ? $this->request->getPost('c_city') : NULL;
+                    $c_pincode = !empty($this->request->getPost('c_pincode')) ? $this->request->getPost('c_pincode') : NULL;
+                    $c_state = !empty($this->request->getPost('c_state')) ? $this->request->getPost('c_state') : NULL;
+                    $c_district = !empty($this->request->getPost('c_district')) ? $this->request->getPost('c_district') : NULL;
+                    $r_address = !empty($this->request->getPost('r_address')) ? $this->request->getPost('r_address') : NULL;
+                    $r_pincode = !empty($this->request->getPost('r_pincode')) ? $this->request->getPost('r_pincode') : NULL;
+                    $r_city = !empty($this->request->getPost('r_city')) ? $this->request->getPost('r_city') : NULL;
+                    $r_state = !empty($this->request->getPost('r_state')) ? $this->request->getPost('r_state') : NULL;
+                    $r_district = !empty($this->request->getPost('r_district')) ? $this->request->getPost('r_district') : NULL;
                         $ext = '';
                         if (isset($file_type) && !empty($file_type)) {
                             $extarr = explode('/', $file_type);
@@ -587,7 +587,7 @@ class ArguingCounsel extends BaseController {
                                     $subject = "Login credentials";
                                     $email_message = 'Dear ' . $name . ', Your email is "' . $email . '" and password is "' . $password . '" <br><a href="' . base_url() . '">Click To Login</a>';
                                     $sms_message = 'Dear ' . $name . ', Your email is "' . $email . '" and password is "' . $password . '" <br><a href="' . base_url() . '">Click To Login</a>';
-                                    $this->session->set_userdata('aor_register',true);
+                                    setSessionData('aor_register',true);
                                     send_mail_msg($email, $subject, $email_message, $to_user_name = "arguing_counsel");
                                     send_mobile_sms($mobile, $sms_message, SMS_EMAIL_API_USER);
                                     setSessionData('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
@@ -620,7 +620,7 @@ class ArguingCounsel extends BaseController {
         $arguingCounselId  = !empty(getSessionData('arguingCounselId')) ? trim(getSessionData('arguingCounselId')) : NULL;
         $arguingCounselDetails=$this->getArguingCounselDetails($arguingCounselId);
         $db_registration_code = !empty($arguingCounselDetails[0]['registration_code']) ? $arguingCounselDetails[0]['registration_code'] : NULL ;
-        $post_registration_code = !empty($this->input->post('registration_code')) ? trim($this->input->post('registration_code')) : NULL;
+        $post_registration_code = !empty($this->request->getPost('registration_code')) ? trim($this->request->getPost('registration_code')) : NULL;
 
         if(isset($db_registration_code) && !empty($db_registration_code) && isset($post_registration_code) && !empty($post_registration_code) &&
             $post_registration_code == $db_registration_code){
@@ -655,7 +655,7 @@ class ArguingCounsel extends BaseController {
             if(isset($arguingCounselDetails) && !empty($arguingCounselDetails)){
                 // Open page for asking registration code which was sent earlier on sms to advocate
                 $arr['arguingCounselDetails'] = !empty($arguingCounselDetails) ? $arguingCounselDetails[0] : NULL;
-                $this->session->set_userdata('arguingCounselId',$data->id);
+                setSessionData('arguingCounselId',$data->id);
             } else{
                 // Invalid attempt
                 $arr['arguingCounselDetails'] = array();
@@ -705,7 +705,7 @@ class ArguingCounsel extends BaseController {
                         $upUserTable = $this->Common_model->updateTableData($params);
                         if(isset($upUserTable) && !empty($upUserTable)){
                             $arguingCounselTable = array();
-                            $arguingCounselTable['created_by'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NLLL;
+                            $arguingCounselTable['created_by'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
                             $arguingCounselTable['is_user_registered'] = true;
                             $arguingCounselTable['approved_on'] = date('Y-m-d H:i:s');
                             $arguingCounselTable['approved_ip'] = getClientIP();
@@ -755,7 +755,7 @@ class ArguingCounsel extends BaseController {
                     foreach ($userIdArr as $id){
                         $updateId = (int)trim($id);
                         $arguingCounselTable = array();
-                        $arguingCounselTable['created_by'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NLLL;
+                        $arguingCounselTable['created_by'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
                         $arguingCounselTable['account_status'] = 0;
                         $arguingArr = array();
                         $arguingArr['table_name'] = "dscr.tbl_arguing_counsels";

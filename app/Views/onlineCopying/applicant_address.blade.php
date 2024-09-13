@@ -1,56 +1,18 @@
 @extends('layout.app')
 @section('content')
-
 <style>
-      .order-card {
-    color: #fff;
-}
-.applicant_dashboard{
-    cursor: pointer;
-}
-.bg-c-blue {
-    background: linear-gradient(45deg,#4099ff,#73b4ff);
-}
-
-.bg-c-green {
-    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
-}
-
-.bg-c-yellow {
-    background: linear-gradient(45deg,#FFB64D,#ffcb80);
-}
-
-.bg-c-pink {
-    background: linear-gradient(45deg,#FF5370,#ff869a);
-}
-
-
-.card {
-    border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-    box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16);
-    border: none;
-    margin-bottom: 5px;
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-}
-
-.card .card-block {
-    padding: 20px;
-}
-
-.order-card i {
-    font-size: 26px;
-}
-
-.f-left {
-    float: left;
-}
-
-.f-right {
-    float: right;
-}
-  </style>
+    .order-card { color: #fff; }
+    .applicant_dashboard{ cursor: pointer; }
+    .bg-c-blue { background: linear-gradient(45deg,#4099ff,#73b4ff);}
+    .bg-c-green { background: linear-gradient(45deg,#2ed8b6,#59e0c5); }
+    .bg-c-yellow { background: linear-gradient(45deg,#FFB64D,#ffcb80); }
+    .bg-c-pink { background: linear-gradient(45deg,#FF5370,#ff869a); }
+    .card { border-radius: 5px; -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16); box-shadow: 0 1px 2.94px 0.06px rgba(4,26,55,0.16); border: none;margin-bottom: 5px; -webkit-transition: all 0.3s ease-in-out;transition: all 0.3s ease-in-out; }
+    .card .card-block { padding: 20px; }
+    .order-card i { font-size: 26px; }
+    .f-left { float: left; } 
+    .f-right { float: right; } 
+</style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -97,276 +59,226 @@
                             <div id="">
                                 <body class="bg03" oncontextmenu="return false;">
                                     <div class="container">        
-                                        <form  method="post" action="user_address.php">
-                                    <div class="row tm-content-row tm-mt-big mt-2">
-            <div class="tm-col tm-col-big">
-                <div class="bg-white tm-block">
+                                        <form  method="post" action="<?= base_url('online_copying/applicant_address'); ?>">
+                                            <div class="row tm-content-row tm-mt-big mt-2">
+                                                <div class="tm-col tm-col-big">
+                                                    <div class="bg-white tm-block">  
+                                                        <div class="card mt-0">
+                                                            <div class="card-header bg-info text-white font-weight-bolder mt-0 mb-0">            
+                                                                Applicant Address
+                                                            </div>
+                                                                <div class="card-body">
+                                                                    <div class="row m-1">
+                                                                        <div class="alert alert-warning alert-dismissible">
+                                                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                                            <strong>Unless there is request for Certified Copy/Digital Copy, your identity as claimed will not be verified.</strong>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--HERE ALREADY ADDED ADDRESSES SHOWN WITH REMOVE EDIT BUTTON -->
+                                                                    <div class="row">
+                                                                        <?php
+                                                                        if (count($userAddress)>0) 
+                                                                        {
+                                                                            $_SESSION['is_user_address_found'] = 'YES';
+                                                                            foreach  ($userAddress  as $row) 
+                                                                            {
+                                                                                ?>
+                                                                                <div class="col-md-4 p-2">
+                                                                                    <div class="col-md-12 shadow p-3 mb-3 bg-white rounded">
+                                                                                        <div class="card">
+                                                                                            <div class="card-header bg-white pb-1 pt-1">
+                                                                                                <div class="row pl-1">
+                                                                                                    <div class=" col-6 text-left d-inline font-weight-bold text-black">
+                                                                                                        <?=$row['first_name']." ".$row['second_name'];?>
+                                                                                                    </div>
+                                                                                                    <div class="col-6 text-right d-inline font-weight-bold text-black">
+                                                                                                        <?=$row['address_type']?>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="card-body pb-1 pt-1">
+                                                                                                <p>
+                                                                                                    <?=$row['address'].", ".$row['city'].", "?>
+                                                                                                    <br>
+                                                                                                    <?=$row['district'].", ".$row['state']?>
+                                                                                                    <br>
+                                                                                                    <?=$row['pincode'].", ".$row['country']?>
+                                                                                                </p>
+                                                                                                <div class="row pl-1">
+                                                                                                    <div class=" col-6 text-left d-inline">
+                                                                                                        <a href="#" style="color: #fff;" class=" btn btn-danger btn_remove_address" data-address-id="<?=$row['id']?>">Remove</a>
+                                                                                                        <!--<input type="button" class="btn btn-primary btn_remove_address" value="Remove" />-->
+                                                                                                    </div>
+                                                                                                    <div class="col-6 text-right d-inline">
+                                                                                                        <a href="#" style="color: #0554DB;" class="card-link btn_edit_address" data-address-id="<?=$row['id']?>" data-first_name="<?=$row['first_name']?>" data-second_name="<?=$row['second_name']?>" data-address="<?=$row['address']?>" data-city="<?=$row['city']?>"data-district="<?=$row['district']?>" data-state="<?=$row['state']?>" data-pincode="<?=$row['pincode']?>" data-country="<?=$row['country']?>" data-address_type="<?=$row['address_type']?>">Edit</a>
+                                                                                                        <!--                                        <input type="button" class="btn btn-primary btn_edit_address" value="Edit" />-->
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <?php
+                                                                            }
+                                                                        }
+                                                                        ?>
 
+                                                                    </div>
+                                                                    <!--HERE ADD ADDRESS : ONE ADDRESS TO INCLUDE IS MANDATORY : SHOW ADD NEW ADDRESS BUTTON IF Required, max 3 ADDRESS LIMIT -->
+                                                                    <?php
+                                                                    if(count($userAddress)== 1 OR count($userAddress) == 2)
+                                                                    {
+                                                                        ?>
+                                                                        <div class="row mb-4">
+                                                                            <div class="text-right d-inline">
+                                                                                <input type="submit" name="add_new_address" class="btn btn-warning" value="Add New Address" />
+                                                                            </div>
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    if(count($userAddress) == 0) 
+                                                                    {
+                                                                        if( is_array($userAdharVerify) && count($userAdharVerify)> 0) 
+                                                                        {
+                                                                            foreach($userAdharVerify as $av) {
+                                                                                $data_verifed_name = str_replace('.', ' ', $av['user_name']);
+                                                                                $data_verify_name_explode = explode(" ", $data_verifed_name);
+                                                                                $data_verify_first_name = trim($data_verify_name_explode[0]);
+                                                                                $data_verify_second_name = trim(implode(' ', array_slice(explode(" ", $data_verifed_name), 1)));
+                                                                                $data_verifed_address = $data_verifed['address'];
+                                                                                $data_verifed_city_name = str_replace('.', ' ', $av['city']);
+                                                                                $data_verifed_state_name = str_replace('.', ' ', $av['state']);
+                                                                                $data_verifed_pin = $av['pincode'];
+                                                                            }        
 
-                    <div class="card mt-0">
-                        <div class="card-header bg-info text-white font-weight-bolder mt-0 mb-0">            
-                            Applicant Address
-                        </div>
-                        <div class="card-body">
-                            <div class="row m-1">
-                                <div class="alert alert-warning alert-dismissible">
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    <strong>Unless there is request for Certified Copy/Digital Copy, your identity as claimed will not be verified.</strong>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if ( isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1)
+                                                                            {
+                                                                                if(count($userBarAddress)>0) {
+                                                                                    foreach($userAddress as $bar) {  
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }  
+                                                                    }
+                                                                    if(count($userAddress) == 0 OR isset($_POST['add_new_address']))
+                                                                    { 
+                                                                        ?>
+                                                                        <div class="row shadow p-3 mb-3 bg-white rounded">
+                                                                            <div class="row">
+                                                                                <div class="row">
+                                                                                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                                        <div class="form-group">
+                                                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Address Type * <span style="color: red" class="astriks">*</span> :</label>
+                                                                                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                                                                                <label class="ml-3 radio-inline text-black">
+                                                                                                    <input type="radio" name="rdbtn_select" id="home_address_type" value="Home" <?= isset($data_verify_address_type) && $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Home
+                                                                                                </label>
+                                                                                                <label class="ml-3 radio-inline">
+                                                                                                    <input type="radio" name="rdbtn_select" id="work_address_type" value="Work" <?=isset($data_verify_address_type) &&  $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Work
+                                                                                                </label>
+                                                                                                <label class="ml-3 radio-inline">
+                                                                                                    <input type="radio" name="rdbtn_select" id="other_address_type" value="Other" <?=isset($data_verify_address_type) &&  $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Other
+                                                                                                </label>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">First Name <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verify_first_name)?$data_verify_first_name:''; ?>" id="applicant_first_name" aria-labelledby="applicant_first_name_addon"  required>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">Second Name <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verify_second_name)?$data_verify_second_name:''; ?>" id="applicant_second_name" aria-labelledby="applicant_second_name" required>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">Pincode <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verifed_pin)?$data_verifed_pin:''; ?>" id="pincode" aria-labelledby="pincode_addon" maxlength='6' onkeypress="return isNumber(event)" required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <span id="subcatLoadData"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verifed_address)?$data_verifed_address:''; ?>" id="postal_add" aria-labelledby="postal_add_addon"  required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <span id="subcatLoadData"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">City <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verifed_city_name)?$data_verifed_city_name:''; ?>" id="applicant_city" aria-labelledby="applicant_city_addon"  required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <span id="subcatLoadData"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">District <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?=  isset($data_verifed_city_name)?$data_verifed_city_name:''; ?>" id="applicant_district" aria-labelledby="applicant_district_addon"  required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <span id="subcatLoadData"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">State <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verifed_state_name)?$data_verifed_state_name:''; ?>" id="applicant_state" aria-labelledby="applicant_state_addon" required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <span id="subcatLoadData"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="" class="form-label">Country <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl"  id="applicant_country" aria-labelledby="applicant_country_addon" value="India" required>
+                                                                                    </div>
+                                                                                    <div class="form-group">
+                                                                                        <span id="subcatLoadData"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>  
+                                                                            <div class="col-md-12 form-row tm-btn-right">
+                                                                            <button type="button" name="btn_save" id="btn_save" value="Save Address" data-button_action_type="save" class="quick-btn" >Save Address </button>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <?php
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <div id="result" class="show_msg" style="overflow: auto;"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" >
+                                                <div class="modal-content"> </div>
+                                            </div>
+                                        </div>           
+                                        <br>
+                                        <div id="result"></div>
+                                    </div>
                                 </div>
                             </div>
-            <!--HERE ALREADY ADDED ADDRESSES SHOWN WITH REMOVE EDIT BUTTON -->
-<div class="row">
-    <?php
-    if (count($userAddress)>0) {
-        $_SESSION['is_user_address_found'] = 'YES';
-        foreach  ($userAddress  as $row) 
-        {
-            ?>
-            <div class="col-md-4 p-2">
-                <div class="col-md-12 shadow p-3 mb-3 bg-white rounded">
-
-                        <div class="card">
-                            <div class="card-header bg-white pb-1 pt-1">
-                                <div class="row pl-1">
-                                    <div class=" col-6 text-left d-inline font-weight-bold text-black">
-                                        <?=$row['first_name']." ".$row['second_name'];?>
-                                    </div>
-                                    <div class="col-6 text-right d-inline font-weight-bold text-black">
-                                        <?=$row['address_type']?>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="card-body pb-1 pt-1">
-                            <p>
-                                <?=$row['address'].", ".$row['city'].", "?>
-                                <br>
-                                <?=$row['district'].", ".$row['state']?>
-                                <br>
-                                <?=$row['pincode'].", ".$row['country']?>
-                            </p>
-                                <div class="row pl-1">
-                                    <div class=" col-6 text-left d-inline">
-                                        <a href="#" style="color: #0554DB;" class="card-link btn_remove_address" data-address-id="<?=$row['id']?>">Remove</a>
-                                        <!--<input type="button" class="btn btn-primary btn_remove_address" value="Remove" />-->
-                                    </div>
-                                    <div class="col-6 text-right d-inline">
-                                        <a href="#" style="color: #0554DB;" class="card-link btn_edit_address" data-address-id="<?=$row['id']?>" data-first_name="<?=$row['first_name']?>" data-second_name="<?=$row['second_name']?>" data-address="<?=$row['address']?>" data-city="<?=$row['city']?>"data-district="<?=$row['district']?>" data-state="<?=$row['state']?>" data-pincode="<?=$row['pincode']?>" data-country="<?=$row['country']?>" data-address_type="<?=$row['address_type']?>">Edit</a>
-                                        <!--                                        <input type="button" class="btn btn-primary btn_edit_address" value="Edit" />-->
-                                    </div>
-                                </div>
-                        </div>
-
-
-                        </div>
-
-                </div>
-            </div>
-<?php
-        }
-    }
-    ?>
-
-</div>
-<!--HERE ADD ADDRESS : ONE ADDRESS TO INCLUDE IS MANDATORY : SHOW ADD NEW ADDRESS BUTTON IF Required, max 3 ADDRESS LIMIT -->
-<?php
-    if(count($userAddress)== 1 OR count($userAddress) == 2) {
-        ?>
-        <div class="row mb-4">
-        <div class="text-right d-inline">
-        <input type="submit" name="add_new_address" class="btn btn-warning" value="Add New Address" />
-        </div>
-        </div>
-        <?php
-    }
-
-if(count($userAddress) == 0) {//first time address adding
-    //first check adhar details
-
-    if( is_array($userAdharVerify) && count($userAdharVerify)> 0) 
-    {
-        foreach($userAdharVerify as $av) {
-
-            $data_verifed_name = str_replace('.', ' ', $av['user_name']);
-            $data_verify_name_explode = explode(" ", $data_verifed_name);
-            $data_verify_first_name = trim($data_verify_name_explode[0]);
-            $data_verify_second_name = trim(implode(' ', array_slice(explode(" ", $data_verifed_name), 1)));
-            $data_verifed_address = $data_verifed['address'];
-            $data_verifed_city_name = str_replace('.', ' ', $av['city']);
-            $data_verifed_state_name = str_replace('.', ' ', $av['state']);
-            $data_verifed_pin = $av['pincode'];
-
-        }        
-
-    }else {
-        if ( isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1) {
-            if(count($userBarAddress)>0) {
-                foreach($userAddress as $bar) {      
-
-                }
-            }
-        }
-    }
-
-  
-}
-
-if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time address adding
-?>
-
-<div class="row shadow p-3 mb-3 bg-white rounded">
-
-
-<div class="col-12">
-    
-
-</div>
-    
-        <div class="form-row">
-            <div class="col-12 mb-3">
-                <fieldset class="the-fieldset">
-                    <legend class="the-legend bg-light ">Address Type *</legend>
-                    <label class="ml-3 radio-inline text-black">
-                        <input type="radio" name="rdbtn_select" id="home_address_type" value="Home" <?= isset($data_verify_address_type) && $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Home
-                    </label>
-                    <label class="ml-3 radio-inline">
-                        <input type="radio" name="rdbtn_select" id="work_address_type" value="Work" <?=isset($data_verify_address_type) &&  $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Work
-                    </label>
-                    <label class="ml-3 radio-inline">
-                        <input type="radio" name="rdbtn_select" id="other_address_type" value="Other" <?=isset($data_verify_address_type) &&  $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Other
-                    </label>
-                </fieldset>
-
-
-
-               
-
-            </div>
-        </div>
-
-
-
-
-
-
-        <div class="form-row">
-
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="applicant_first_name_addon">First Name *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?= isset($data_verify_first_name)?$data_verify_first_name:''; ?>" id="applicant_first_name" aria-labelledby="applicant_first_name_addon"  required>
-                    <p id="p1"></p> <!--This Segment Displays The Validation Rule For Name-->
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="applicant_second_name_addon">Second Name *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?= isset($data_verify_second_name)?$data_verify_second_name:''; ?>" id="applicant_second_name" aria-labelledby="applicant_second_name" required>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="pincode_addon">Pincode *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?= isset($data_verifed_pin)?$data_verifed_pin:''; ?>" id="pincode" aria-labelledby="pincode_addon" maxlength='6' onkeypress="return isNumber(event)" required>
-                </div>
-            </div>
-
-        </div>
-
-
-
-        <div class="form-row">
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="postal_add_addon">Address *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?= isset($data_verifed_address)?$data_verifed_address:''; ?>" id="postal_add" aria-labelledby="postal_add_addon"  required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="applicant_city_addon">City *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?= isset($data_verifed_city_name)?$data_verifed_city_name:''; ?>" id="applicant_city" aria-labelledby="applicant_city_addon"  required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="applicant_district_addon">District *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?=  isset($data_verifed_city_name)?$data_verifed_city_name:''; ?>" id="applicant_district" aria-labelledby="applicant_district_addon"  required>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="applicant_state_addon">State *</span>
-                    </div>
-                    <input type="text" class="form-control" value="<?= isset($data_verifed_state_name)?$data_verifed_state_name:''; ?>" id="applicant_state" aria-labelledby="applicant_state_addon" required>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="applicant_country_addon">Country *</span>
-                    </div>
-                    <input type="text" class="form-control" id="applicant_country" aria-labelledby="applicant_country_addon" value="India" required>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-12 form-row tm-btn-right">
-           <input type="button" name="btn_save" id="btn_save" value="Save Address" data-button_action_type="save" class="btn btn-primary" />
-        </div>
-
-</div>
-<?php } ?>
-
-</div>
-
-
-                        <div id="result" class="show_msg" style="overflow: auto;"></div>
-                    </div>
-
-
-
-
-                </div>
-            </div>
-
-        </form>
-
-
-        <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-            <div class="modal-dialog modal-lg" >
-                <div class="modal-content">
-
-                </div>
-            </div>
-        </div>
-            <!-- Footer -->
-     
-
-
-                            <?php echo form_close(); ?>
-
-                            <br>
-                            <div id="result"></div>
-
                         </div>
                     </div>
                 </div>
@@ -375,12 +287,15 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
     </div>
 @endsection
 @push('script')
+
+<script src="<?=base_url();?>assets/js/sweetalert2@11.js"></script>
+<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert2.min.css"> 
 <script>
     $(document).on('keyup','#pincode',function(){
         var pincode = $(this).val();
         if(pincode.length == 6){
             $.ajax({
-                url:'get_pincode_details.php',
+                url: "<?php echo base_url('online_copying/get_pincode_details'); ?>",
                 cache: false,
                 async: true,
                 data: {pincode:pincode},
@@ -404,12 +319,13 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
             });
         }
     });
+    // user_address_save
     $(document).on('keyup','#modal_pincode',function(){
         var pincode = $(this).val();
         if(pincode.length == 6)
         {
             $.ajax({
-                url:'get_pincode_details.php',
+                url: "<?php echo base_url('online_copying/get_pincode_details'); ?>",
                 cache: false,
                 async: true,
                 data: {pincode:pincode},                            
@@ -440,9 +356,9 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
         return true;
     }
 
-    $(document).on('click','#btn_save',function(){
-        url = 'user_address_save.php';
-
+    $(document).on('click','#btn_save',function(){        
+        
+        url = '<?php echo base_url('online_copying/user_address_save'); ?>';     
         var address_type = '';
         if ($("#home_address_type").is(':checked')) {
             address_type = 'Home';
@@ -512,15 +428,14 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
                     {
                         $('.show_msg').html('');
                         if(data.status == 'success'){
-                            swal({
-                                title: "SUCCESS!",
-                                text: "Successfully Saved",
-                                icon: "success",
-                                button: "Next",
+                            Swal.fire({
+                                title: 'SUCCESS!',
+                                text: 'Successfully Saved',
+                                icon: 'success',
+                                confirmButtonText: 'Next'
                             }).then(function () {
-                                window.location.href = 'user_address.php';
-                            }
-                            );
+                                window.location.href = '<?= base_url('online_copying/applicant_address'); ?>';
+                            });
                         }
                         else{
                             $('.show_msg').html('<div class="alert alert-danger alert-dismissible"><strong>'+data.status+'</strong></div>');
@@ -611,7 +526,7 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
                             icon: "success",
                             button: "Next",
                         }).then(function () {
-                            window.location.href = 'user_address.php';
+                            window.location.href = '<?= base_url('online_copying/applicant_address'); ?>';
                             }
                         );
                     }
@@ -645,7 +560,7 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
                             icon: "success",
                             button: "Next",
                         }).then(function () {
-                            window.location.href = 'user_address.php';
+                            window.location.href = '<?= base_url('online_copying/applicant_address'); ?>';
                             }
                         );
                     }
@@ -683,5 +598,5 @@ if(count($userAddress) == 0 OR isset($_POST['add_new_address'])){ //first time a
                 }
             });
         });
-  </script>
+</script>
         @endpush

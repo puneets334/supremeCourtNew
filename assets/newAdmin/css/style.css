@@ -8179,6 +8179,11 @@ div#calendar {
     border-radius: 100px;
 }
 
+input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle;
+}
+
 @-webkit-keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);
