@@ -324,15 +324,12 @@
                             $('#show_search_result_diary').html(resArr[1]);
 
                             if (resArr[0] == 1) {
-                                alert('sdf');
                                 $('#show_search_result_diary').html(resArr[1]);
                                 
                                 // $("#show_search_result_diary").css("display", "block");
                             } else if (resArr[0] == 2) {
-                                alert('2');
                                 $('#show_search_result').html(resArr[1]);
                             } else if (resArr[0] == 3) {
-                                alert('3');
                                 $(".form-response").show();
                                 $('#msg').show();
                                 $(".form-response").html(
