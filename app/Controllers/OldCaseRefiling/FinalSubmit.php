@@ -62,7 +62,7 @@ class FinalSubmit extends BaseController
             getSessionData('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
             redirect('dashboard');
         }
-
+        $next_stage = '';
         $final_submit = TRUE;
         if ($final_submit) {
             $result = $this->Common_model->updateCaseStatus($registration_id, $next_stage);
@@ -70,7 +70,6 @@ class FinalSubmit extends BaseController
                 $next_stage = REFILED_OLD_EFILING_CASE;
                 $result1 = $this->Common_model->updateCaseStatus($registration_id, $next_stage);
                 if ($result1) {
-
                     $diary_id = $_SESSION['efiling_details']['diary_no'] . $_SESSION['efiling_details']['diary_year'];
                     $efiling_no = $_SESSION['efiling_details']['efiling_no'];
                     $this->autoTransferRefiledOldEfilingCaseDocumentsToICMIS($registration_id, $_SESSION['efiling_details']['diary_no'], $_SESSION['efiling_details']['diary_year'], $_SESSION['efiling_details']['efiling_no'], $_SESSION['login']['aor_code']);
@@ -163,15 +162,15 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
 
                 getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 $_SESSION['efiling_details']['stage_id'] = Initial_Approaval_Pending_Stage;
-                redirect('miscellaneous_docs/view');
+               return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
-                exit(0);
+                // exit(0);
             } else {
                 getSessionData('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
                 // log_message('CUSTOM', "Miscellaneous Docs- Submition failed. Please try again!");
-                redirect('miscellaneous_docs/view');
+                return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');
-                exit(0);
+                // exit(0);
             }
         }
     }
@@ -186,6 +185,7 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
     // Auto Transfer to scrutiny changes : start
     public function autoTransferRefiledOldEfilingCaseDocumentsToICMIS($registration_id = null, $diary_no = null, $diary_year = null, $efiling_no = null, $refiled_by_aor_code = null)
     {
+        pr($registration_id);
         if (empty($registration_id)) {
             return NULL;
         } else {
@@ -227,7 +227,7 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
             //     getSessionData('msg', '<div class="alert alert-danger text-center text-bg">' . $response['message'] . '.</div>');
             // }
 
-            redirect('oldCaseRefiling/view');
+           return redirect('oldCaseRefiling/view');
         }
     }
     // Auto Transfer to scrutiny changes: end
