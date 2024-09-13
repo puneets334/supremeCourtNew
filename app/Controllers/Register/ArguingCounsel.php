@@ -154,12 +154,12 @@ class ArguingCounsel extends BaseController {
             // $emailExistStatus = false;
             // $mobileExistStatus = false;
             if(isset($emailExistStatus) && !empty($emailExistStatus) && isset($mobileExistStatus) && !empty($mobileExistStatus)){
-                setSessionData('emailExistMessage','Email Already Exists! Please Try Another One.');
-                setSessionData('mobileExistMessage','Mobile Already Exists! Please Try Another One.');
+                $this->session->setFlashdata('emailExistMessage','Email Already Exists! Please Try Another One.');
+                $this->session->setFlashdata('mobileExistMessage','Mobile Already Exists! Please Try Another One.');
             } else if(isset($emailExistStatus) && !empty($emailExistStatus)){
-                setSessionData('emailExistMessage','Email Already Exists! Please Try Another One.');
+                $this->session->setFlashdata('emailExistMessage','Email Already Exists! Please Try Another One.');
             } else if(isset($mobileExistStatus) && !empty($mobileExistStatus)){
-                setSessionData('mobileExistMessage','Mobile Already Exists! Please Try Another One.');
+                $this->session->setFlashdata('mobileExistMessage','Mobile Already Exists! Please Try Another One.');
             } else {
                 $registration_code=generateRandomString();
                 $dataToSave=array();
@@ -192,9 +192,9 @@ class ArguingCounsel extends BaseController {
                         // echo '<pre>Hello_'; print($insetId); echo '<br>'; print_r($registration_code); echo '<br>'; print_r($webUrl->getHeaderLine('Location')); echo '<br>'; print_r($name); echo '<br>'; print_r($subject); echo '<br>'; print_r($email_message); echo '<br>'; print_r($sms_message); die();
                         send_mail_msg($email, $subject, $email_message,$to_user_name="arguing_counsel");
                         send_mobile_sms($mobile, $sms_message,ARGUING_COUNSEL_VERIFY_CODE);
-                        setSessionData('success','Registration code has been sent successfully on email and sms! Please verify registration code.');
+                        $this->session->setFlashdata('success','Registration code has been sent successfully on email and sms! Please verify registration code.');
                     } else{
-                        setSessionData('error','Something went wrong! Please try again later.');
+                        $this->session->setFlashdata('error','Something went wrong! Please try again later.');
                     }
                 } else{
                     $this->index();
@@ -225,11 +225,11 @@ class ArguingCounsel extends BaseController {
         }
         else if(!empty(getSessionData('self_register_arguing_counsel')) &&  (!empty(getSessionData('self_arguing_counsel')))){
             $success = 'Registration has been successfully completed.<a href="'.base_url().'">Back</a>';
-            setSessionData('success', $success);
+            $this->session->setFlashdata('success', $success);
             $this->render('register.add_arguing_counsel',$data);
         }
         else if(!empty(getSessionData('arguingCounselId')) && !empty(getSessionData('aor_register'))){
-            setSessionData('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
+            $this->session->setFlashdata('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
             $this->render('register.add_arguing_counsel',$data);
         }
         else{
@@ -419,7 +419,7 @@ class ArguingCounsel extends BaseController {
                     if (!$this->upload->do_upload('bar_id_card')) {
                         setSessionData('bar_id_card_error', $this->upload->display_errors());
                         setSessionData('success', '');
-                        setSessionData('error', 'Something went wrong! Please try again.');
+                        $this->session->setFlashdata('error', 'Something went wrong! Please try again.');
                     } else {
                         $file_name = $this->upload->data('file_name');
                         $userIn = array();
@@ -482,15 +482,15 @@ class ArguingCounsel extends BaseController {
                                     setSessionData('success', $success);
                                     setSessionData('self_arguing_counsel', true);
                                 } else {
-                                    setSessionData('error', 'Something went wrong! Please try again later.');
+                                    $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
                                 }
                             }
                             else {
-                                setSessionData('error', 'Something went wrong! Please try again later.');
+                                $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
                             }
                         }
                         else {
-                            setSessionData('error', 'Something went wrong! Please try again later.');
+                            $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
                         }
                             setSessionData('bar_id_card_error', '');
                             setSessionData('error', '');
@@ -535,7 +535,7 @@ class ArguingCounsel extends BaseController {
                         if (!$this->upload->do_upload('bar_id_card')) {
                             setSessionData('bar_id_card_error', $this->upload->display_errors());
                             setSessionData('success', '');
-                            setSessionData('error', 'Something went wrong! Please try again.');
+                            $this->session->setFlashdata('error', 'Something went wrong! Please try again.');
                         } else {
                             $file_name = $this->upload->data('file_name');
                             $userIn = array();
@@ -624,7 +624,7 @@ class ArguingCounsel extends BaseController {
 
         if(isset($db_registration_code) && !empty($db_registration_code) && isset($post_registration_code) && !empty($post_registration_code) &&
             $post_registration_code == $db_registration_code){
-            setSessionData('success','Registration code matched.');
+            $this->session->setFlashdata('success','Registration code matched.');
             $data['arguingCounselDetails'] = !empty($arguingCounselDetails) ? $arguingCounselDetails[0] : NULL;
             $params = array();
             $params['ref_m_usertype_id'] = 1;
@@ -637,18 +637,19 @@ class ArguingCounsel extends BaseController {
             $this->render('register.add_arguing_counsel',$data);
         }
         else{
-            setSessionData('error','Registration code mismatched,Please try again.');
+            $this->session->setFlashdata('error','Registration code mismatched,Please try again.');
             redirect($_SERVER['HTTP_REFERER'], 'refresh');
         }
     }
     public function resendRegistrationCode(){}
 
     public function landArguingCounsel($encryptedData){
-        $key = config('App')->encryptionKey;
+        // $key = config('App')->encryptionKey;
+        $encrypter = \Config\Services::encrypter();
         $encryptedData=base64_decode($encryptedData);
         // $key = $this->config->item('encryption_key');
         // $data = json_decode($this->encrypt->decode($encryptedData, $key));
-        $data = json_decode($encrypter->decrypt($encryptedData, $key));
+        $data = json_decode($encrypter->decrypt($encryptedData));
         $arr = array();
         if(!empty($data)){
             $arguingCounselDetails=$this->getArguingCounselDetails($data->id,$data->registration_code);
