@@ -181,6 +181,8 @@
     </div>
 @endsection
 @push('script')
+<script src="<?= base_url(); ?>assets/js/sweetalert.min.js"></script>
+<link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert.css">
 <script type="text/javascript">
     $(document).on('click', '#is_bail_order_addon', function () {
         var sel = $("#radioBtn").find('a.active').data('title');
@@ -477,27 +479,30 @@
                         sno++;
                     }
                 });
-                console.log(o_array);
                 var bail_order = $("#radioBtn .active").data('title');
-                $.ajax({
-                    url:'<?php echo base_url('online_copying/get_tot_copy'); ?>',
-                    cache: false,
-                    async: true,
-                    data: {app_type:app_type,num_copy:num_copy,cop_mode:cop_mode,pincode:pincode,bail_order:bail_order,o_array:o_array},
-                    beforeSend: function () {
-                        $('#tb_added_doc').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
-                    },
-                    type: 'POST',
-                    success: function(data, status) {
-                        $('#tb_added_doc').html("");
-                        if(pincode_length == 6){
-                            $('#tb_added_doc').html(data);
-                        }                
-                    },
-                    error: function(xhr) {
-                        alert("Error: " + xhr.status + " " + xhr.statusText);
-                    }
-                });
+                if(o_array == ''){
+                    alert('Please select applied for');
+                }else{
+                    $.ajax({
+                        url:'<?php echo base_url('online_copying/get_tot_copy'); ?>',
+                        cache: false,
+                        async: true,
+                        data: {app_type:app_type,num_copy:num_copy,cop_mode:cop_mode,pincode:pincode,bail_order:bail_order,o_array:o_array},
+                        beforeSend: function () {
+                            $('#tb_added_doc').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
+                        },
+                        type: 'POST',
+                        success: function(data, status) {
+                            $('#tb_added_doc').html("");
+                            if(pincode_length == 6){
+                                $('#tb_added_doc').html(data);
+                            }                
+                        },
+                        error: function(xhr) {
+                            alert("Error: " + xhr.status + " " + xhr.statusText);
+                        }
+                    });
+                }
             }
         }
         var is_affidavit_uploaded = 0;
@@ -617,15 +622,14 @@
                 $("#tb_added_doc").parent().after('<div class="validation alert alert-danger alert-dismissible p-1 m-1"><strong>Unable to Calculate fee, Please check all inputs*</strong></div>');
                 return false;
             } else{
-            var redirect_url = 'case_relation_verification.php';
+            var redirect_url = '<?php echo base_url('online_copying/case_relation_verification'); ?>';
             swal({
                 title: "Are you sure?",
                 text: "Forwarding!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-            })
-            .then((willDelete) => {
+            },function(willDelete){
                 if (willDelete) {
                     //alert("ok"+is_affidavit_uploaded);          
                     $.redirect(redirect_url, {address_id:address_id, app_type:app_type, num_copy:num_copy, cop_mode:cop_mode, copy_detail: copy_detail, service_charges: service_charges, fee_in_stamp:fee_in_stamp, amount_to_pay:amount_to_pay, postage:postage});          
@@ -738,11 +742,9 @@
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
-            })
-                .then((willDelete) => {
-                    if (willDelete) {
+            },function(willDelete) {
+                if (willDelete) {
                     $.redirect(redirect_url, {address_id:address_id, app_type:app_type, num_copy:num_copy, cop_mode:cop_mode, copy_detail: copy_detail, service_charges:service_charges, fee_in_stamp:fee_in_stamp, amount_to_pay:amount_to_pay, postage:postage,bail_order:bail_order});
-
                 }
                 else {
                     //swal("Record is safe!");

@@ -4,7 +4,7 @@ if (isset($_SESSION['is_token_matched']) && $_SESSION['is_token_matched'] == 'Ye
 if (isset($_SESSION['is_user_address_found']) && $_SESSION['is_user_address_found'] != 'YES') {
     //add your address *
     ?>
-    <script type='text/javascript'>window.location.href = 'user_address.php'</script>
+    <script type='text/javascript'>window.location.href = '<?php echo base_url('online_copying/applicant_address'); ?>'</script>
     <?php
 }
 
@@ -64,6 +64,7 @@ if(count($res_fil_det) > 0){
     $_SESSION['session_case_no'] = $case_no;
     $_SESSION['session_cause_title'] = $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;
     $_SESSION['session_c_status'] = $res_fil_det[0]->c_status ;
+    $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
 ?>
 
 <!--    <div id="show_error"></div>  This Segment Displays The Validation Rule -->
@@ -235,7 +236,7 @@ if(count($res_fil_det) > 0){
         <div class="form-row note_unavailable_doc_request <?= $_SESSION["session_filed"] == 2 && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification' ? 'd-none' : ''; ?>">
             <div class="col-md-12 ">
                 <p class="font-weight-bolder text-right">Note : Click to request for unavailable documents in software
-                    <a class="unavailable_doc_request btn btn-warning" href="unavailable_request.php">Request Add</a>
+                    <a class="unavailable_doc_request btn btn-warning" href="<?php echo base_url('online_copying/unavailable_request'); ?>">Request Add</a>
                 </p>
             </div>    
         </div>
@@ -471,31 +472,35 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
      
     <div class="form-row">
 
-        <div class="row m-1">
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div class="row m-1 firstWarn">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Warning :</strong> While applying for Record of Proceedings (ROP), Please remember a possibility that Record of Proceedings can be clubbed with Judgements/Orders passed that day. If page count and cost is shown more than your expectations, please click and apply through unavailable documents.
+                <button type="button" class="btn btn-sm close firstWarnBtn" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
 
-        <div class="row m-1">
-            <div class="alert alert-warning alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <div class="row m-1 secWarn">
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Warning :</strong> When you are applying for Judgements/Orders and it is found that Record of Proceedings (ROP) is clubbed with such Judgements/Orders, in such case certified copy of the requested document will be issued where as unathenticated copy will be issued for other clubbed documents.
+                <button type="button" class="btn btn-sm close secWarnBtn" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         </div>
 
 
 
         <div class="col-md-12">                                
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
+            <div class="mb-3">
+                <div class="">
                     <span class="input-group-text" id="applied_for_addon">Applied For *</span>
                 </div>
 
 
 
-
+                <div class="table-sec">
                 <div class="table-responsive form-radio ml-2 applied_check_boxes" aria-labelledby="applied_for_addon" style="max-height:200px; overflow:auto;">
     <?php
         if(isset($res_fil_det['main_case']) && ($res_fil_det['main_case'] !='' && $res_fil_det['main_case'] != null && $res_fil_det['main_case'] != '0')){
@@ -531,7 +536,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
 
 
 
-<table class="table table-bordered  table-striped" >
+<table class="table table-bordered custom-table table-striped" >
 <thead>
     <tr>
        <th>Checkbox</th>
@@ -670,7 +675,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
                    ?>
                 </div>
 
-
+                </div>
 
 
 
@@ -757,7 +762,12 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').popover();
     $('[data-toggle="tooltip"]').tooltip();
 });
-
+$(document).on('click','.secWarnBtn', function(){
+    $('.secWarn').hide();
+});
+$(document).on('click','.firstWarnBtn', function(){
+    $('.firstWarn').hide();
+});
 </script>
 <?php 
   }
