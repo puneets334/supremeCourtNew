@@ -91,7 +91,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
         }
         echo $dropDownOptions;
     }
-
+ 
     function get_hc_bench_list() {
         $hc = explode("##", url_decryption(escape_data($_POST['high_court_id'])));
         $high_court_id = $hc[0];
