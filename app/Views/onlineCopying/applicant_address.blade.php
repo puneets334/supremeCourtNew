@@ -12,6 +12,7 @@
     .order-card i { font-size: 26px; }
     .f-left { float: left; } 
     .f-right { float: right; } 
+    input, select, textarea { text-transform: uppercase; }
 </style>
     <div class="container-fluid">
         <div class="row">
@@ -157,7 +158,7 @@
                                                                             if ( isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1)
                                                                             {
                                                                                 if(count($userBarAddress)>0) {
-                                                                                    foreach($userAddress as $bar) {  
+                                                                                    foreach($userBarAddress as $bar) {  
                                                                                     }
                                                                                 }
                                                                             }
@@ -543,7 +544,7 @@
             $.ajax
             ({
                 type: 'POST',
-                url: "user_address_remove.php",
+                url: "<?php echo base_url('online_copying/user_address_remove'); ?>",
                 dataType: "json",
                 cache: false,
                 data:{address_id: address_id},
@@ -553,16 +554,15 @@
                 success: function(data)
                 {
                     $('.show_msg').html('');
-                    if(data.status == 'success'){
-                        swal({
-                            title: "SUCCESS!",
-                            text: "Successfully Removed",
-                            icon: "success",
-                            button: "Next",
+                    if(data.status == 'success'){                     
+                        Swal.fire({
+                            title: 'SUCCESS!',
+                            text: 'Successfully Removed',
+                            icon: 'success',
+                            button: 'Next'
                         }).then(function () {
                             window.location.href = '<?= base_url('online_copying/applicant_address'); ?>';
-                            }
-                        );
+                        });
                     }
                     else{
                         $('.show_msg').html('<div class="alert alert-danger alert-dismissible"><strong>'+data.status+'</strong></div>');
@@ -599,4 +599,4 @@
             });
         });
 </script>
-        @endpush
+@endpush

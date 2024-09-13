@@ -166,6 +166,8 @@ class AddressController extends BaseController
         return $this->response->setJSON($response);
 
     }
+
+    
     public function getPincodeDetails () 
     {
         $request = service('request');
@@ -184,6 +186,55 @@ class AddressController extends BaseController
             return $this->response->setJSON(['status' => 'error']);
         }
     }
+
+
+    public function RemoveApplicantAddress() 
+    {
+        $request = service('request');  
+        $session = \Config\Services::session();
+        $clientIP = $this->getClientIP(); 
+        $addressID = $this->request->getPost('address_id');
+        $removeAddress= $this->AddressModel->removeApplicantAddress($addressID, $clientIP);
+
+        if ($removeAddress) {
+            $array = ['status' => 'success'];
+
+            $mobile =  $applicantMobile=getSessionData('login')['mobile_number'];
+            $email =   $applicantEmail=getSessionData('login')['emailid'];         
+            $addressData = $this->AddressModel->getActiveAddresses($email, $mobile);
+            if (!empty($addressData)) {
+                $session->set('is_user_address_found', 'YES');
+                $session->set('user_address', $addressData);
+            } else {
+                $session->set('is_user_address_found', 'NO');
+            }
+        } else {
+            $array = ['status' => 'Error: Not Removed'];
+        }
+        return $this->response->setJSON($array);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 }
