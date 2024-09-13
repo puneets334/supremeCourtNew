@@ -54,10 +54,6 @@
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <!-- <script src="<?=base_url()?>assets/plugins/datepicker/bootstrap-datepicker.js"></script> -->
 <script>
-    $(document).ready(function () {
-        $('.menu-sec').eq(1).hide();
-        // $('.dataTables_paginate').eq(1).hide();
-    });
     $(function () {
         $('.datepick').datepicker({
             format: 'dd-mm-yyyy',

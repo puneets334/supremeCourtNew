@@ -13,21 +13,21 @@
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="dash-card">
                                 {{-- Page Title Start --}}
-                                <!-- <div class="title-sec">
-                                    <h5 class="unerline-title"> Contact Us </h5>
-                                </div> -->
+                                <div class="title-sec">
+                                    <h5 class="unerline-title"> Performas </h5>
+                                </div>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
                                 @if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
-                                            <a href="<?= base_url('support/circulars'); ?>" aria-current="page" class="nav-link {{(current_url() == base_url('support') || current_url() == base_url('support/circulars')) ? 'active' : ''}}">Circulars</a>
+                                            <a href="<?= base_url('support/circulars'); ?>" aria-current="page" class="nav-link">Circulars</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="<?= base_url('support/proformas'); ?>" aria-current="page" class="nav-link {{current_url() == base_url('support/proformas') ? 'active' : ''}}">Proformas</a>
+                                            <a href="<?= base_url('support/proformas'); ?>" aria-current="page" class="nav-link active">Proformas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="<?= base_url('support/contact_us'); ?>" aria-current="page" class="nav-link {{current_url() == base_url('support/contact_us') ? 'active' : ''}}">Contact Us</a>
+                                            <a href="<?= base_url('support/contact_us'); ?>" aria-current="page" class="nav-link">Contact Us</a>
                                         </li>
                                     </ul>
                                 @endif
