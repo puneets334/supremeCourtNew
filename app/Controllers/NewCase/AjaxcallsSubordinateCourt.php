@@ -91,12 +91,12 @@ class AjaxcallsSubordinateCourt extends BaseController {
         }
         echo $dropDownOptions;
     }
-
+ 
     function get_hc_bench_list() {
         $hc = explode("##", url_decryption(escape_data($_POST['high_court_id'])));
         $high_court_id = $hc[0];
         $court_type = $_POST['court_type'];
-        $dropDownOptions = '<option value="">Select High Court Bench sdfds</option>';
+        $dropDownOptions = '<option value="">Select High Court Bench</option>';
         if (!empty($high_court_id) && !empty($court_type)) {
             $hc_benches = $this->Dropdown_list_model->hc_bench($high_court_id);
             foreach ($hc_benches as $bench) {
