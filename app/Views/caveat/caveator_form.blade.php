@@ -520,10 +520,10 @@ textarea {
                                
                                 
                                 ?>
-                                <input type="submit" class="quick-btn gray-btn" id="caveator_save" tabindex='26' value="UPDATE">
+                                <input type="submit" class="quick-btn" id="caveator_save" tabindex='26' value="UPDATE">
                                 <a href="<?= base_url('caveat/caveatee') ?>" class="quick-btn" type="button" id="nextButton">Next</a>
                             <?php } else { ?>
-                                <input type="submit" class="quick-btn gray-btn" id="caveator_save" value="SAVE" tabindex='24'>
+                                <input type="submit" class="quick-btn" id="caveator_save" value="SAVE" tabindex='24'>
                             <?php } ?>                                
                             
                         </div>
@@ -921,6 +921,7 @@ textarea {
                             $('#caveator_save').val('SAVE');
                             $('#caveator_save').prop('disabled', false);
                             var resArr = data.split('@@@');
+                            alert(resArr[1]);
                             if (resArr[0] == 1) {
                                 $('#msg').show();
 

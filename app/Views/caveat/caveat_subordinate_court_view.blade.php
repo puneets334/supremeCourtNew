@@ -751,6 +751,8 @@ body.loading .overlay{
                         $('#subcourt_save').val('SAVE');
                         $('#subcourt_save').prop('disabled', false);
                         var resArr = data.split('@@@');
+                        alert(resArr[1]);
+
                         if (resArr[0] == 1) {
                             $('#msg').show();
                             $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");

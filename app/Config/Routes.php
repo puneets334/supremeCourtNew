@@ -405,5 +405,8 @@ $routes->match(['GET', 'POST'], 'online_copying/user_address_remove', 'OnlineCop
 $routes->match(['GET', 'POST'], 'online_copying/unavailable_request', 'OnlineCopying\DefaultController::unavailableRequest');
 $routes->match(['GET', 'POST'], 'online_copying/requested_documents_save', 'OnlineCopying\DefaultController::requestedDocumentsSave');
 $routes->match(['GET', 'POST'], 'online_copying/case_relation_verification', 'OnlineCopying\DefaultController::caseRelationVerification');
+$routes->match(['GET', 'POST'], 'online_copying/user_address_edit', 'OnlineCopying\AddressController::editApplicantAddress');
+$routes->match(['GET', 'POST'], 'online_copying/user_address_update', 'OnlineCopying\AddressController::updateApplicantAddress');
 $routes->match(['GET', 'POST'], 'online_copying/sci_request', 'OnlineCopying\DefaultController::sciRequest');
 $routes->match(['GET', 'POST'], 'online_copying/sci_request_payment', 'OnlineCopying\DefaultController::sciRequestPayment');
+

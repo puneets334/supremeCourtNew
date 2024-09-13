@@ -1,5 +1,26 @@
 @extends('layout.app')
 @section('content')
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+
+
+
 <style>
     .order-card { color: #fff; }
     .applicant_dashboard{ cursor: pointer; }
@@ -40,11 +61,8 @@
                 <div class="dash-card dashboard-section">
                     <div class="row">
                         <div class="panel panel-default">
-                            <?php
-                            $attribute = array('class' => 'form-horizontal', 'id' => 'search_case_details', 'name' => 'search_case_details', 'autocomplete' => 'off', 'novalidate' => 'novalidate');
-                            echo form_open('#', $attribute);
-                            ?>
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                           
+                        
                             <div style="text-align: left;">
                                 <?php
                                 if (!empty(getSessionData('MSG'))) {
@@ -61,6 +79,7 @@
                                 <body class="bg03" oncontextmenu="return false;">
                                     <div class="container">        
                                         <form  method="post" action="<?= base_url('online_copying/applicant_address'); ?>">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <div class="row tm-content-row tm-mt-big mt-2">
                                                 <div class="tm-col tm-col-big">
                                                     <div class="bg-white tm-block">  
@@ -111,7 +130,7 @@
                                                                                                         <!--<input type="button" class="btn btn-primary btn_remove_address" value="Remove" />-->
                                                                                                     </div>
                                                                                                     <div class="col-6 text-right d-inline">
-                                                                                                        <a href="#" style="color: #0554DB;" class="card-link btn_edit_address" data-address-id="<?=$row['id']?>" data-first_name="<?=$row['first_name']?>" data-second_name="<?=$row['second_name']?>" data-address="<?=$row['address']?>" data-city="<?=$row['city']?>"data-district="<?=$row['district']?>" data-state="<?=$row['state']?>" data-pincode="<?=$row['pincode']?>" data-country="<?=$row['country']?>" data-address_type="<?=$row['address_type']?>">Edit</a>
+                                                                                                        <a href="#" style="color: #fff;" class="quick-btn btn_edit_address" data-address-id="<?=$row['id']?>" data-first_name="<?=$row['first_name']?>" data-second_name="<?=$row['second_name']?>" data-address="<?=$row['address']?>" data-city="<?=$row['city']?>"data-district="<?=$row['district']?>" data-state="<?=$row['state']?>" data-pincode="<?=$row['pincode']?>" data-country="<?=$row['country']?>" data-address_type="<?=$row['address_type']?>">Edit</a>
                                                                                                         <!--                                        <input type="button" class="btn btn-primary btn_edit_address" value="Edit" />-->
                                                                                                     </div>
                                                                                                 </div>
@@ -130,6 +149,7 @@
                                                                     if(count($userAddress)== 1 OR count($userAddress) == 2)
                                                                     {
                                                                         ?>
+                                                                        
                                                                         <div class="row mb-4">
                                                                             <div class="text-right d-inline">
                                                                                 <input type="submit" name="add_new_address" class="btn btn-warning" value="Add New Address" />
@@ -270,11 +290,14 @@
                                                 </div>
                                             </div>
                                         </form>
-                                        <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" >
-                                                <div class="modal-content"> </div>
+                                 
+                                        <div class="modal fade" id="modal-lg">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content myModal_content">
+
+                                                </div>
                                             </div>
-                                        </div>           
+                                        </div>       
                                         <br>
                                         <div id="result"></div>
                                     </div>
@@ -347,6 +370,56 @@
                 }
             });   
         }
+    });
+
+
+    $(document).on('click', '.btn_edit_address', function() {
+        $('#modal-lg').modal('show');
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        $(".modal-content").html("");
+        // $("#modal-lg").modal({backdrop: false});    
+        $(".myModal_content").html("");
+        var address_id = $(this).data("address-id");
+        var first_name = $(this).data("first_name");
+        var second_name = $(this).data("second_name");
+        var address = $(this).data("address");
+        var city = $(this).data("city");
+        var district = $(this).data("district");
+        var state = $(this).data("state");
+        var pincode = $(this).data("pincode");
+        var country = $(this).data("country");
+        var address_type = $(this).data("address_type");
+        // $('#modal-lg').modal('show');
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo base_url('online_copying/user_address_edit'); ?>",
+            cache: false,
+            data: {
+                address_id: address_id,
+                address_type: address_type,
+                first_name: first_name,
+                second_name: second_name,
+                address: address,
+                city: city,
+                district: district,
+                state: state,
+                pincode: pincode,
+                country: country
+            },
+            beforeSend: function () {
+                $('.myModal_content').html('<table width="100%" align="center"><tr><td>Loading...</td></tr></table>');
+            },
+            success: function(data) {
+               console.log(data);
+                $(".myModal_content").html(data);
+                
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX Error: ', status, error);
+                $('.myModal_content').html('<table width="100%" align="center"><tr><td>Error loading data</td></tr></table>');
+            }
+        });
     });
     function isNumber(evt) {
         evt = (evt) ? evt : window.event;
@@ -449,8 +522,7 @@
 
     $(document).on('click','#btn_address_edit_action',function(){
 
-            url = 'user_address_edit_action.php';
-
+        url = '<?php echo base_url('online_copying/user_address_update'); ?>';  
         var address_type = '';
         if ($("#modal_home_address_type").is(':checked')) {
             address_type = 'Home';
@@ -521,7 +593,7 @@
                 {
                     $('.show_msg_modal').html('');
                     if(data.status == 'success'){
-                        swal({
+                        swal.fire({
                             title: "SUCCESS!",
                             text: "Successfully Edited",
                             icon: "success",
@@ -539,64 +611,70 @@
         }
     });
 
-        $(document).on('click','.btn_remove_address',function(){
-            var address_id = $(this).data("address-id");
-            $.ajax
-            ({
-                type: 'POST',
-                url: "<?php echo base_url('online_copying/user_address_remove'); ?>",
-                dataType: "json",
-                cache: false,
-                data:{address_id: address_id},
-                beforeSend: function () {
-                    $('.show_msg').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
-                },
-                success: function(data)
-                {
-                    $('.show_msg').html('');
-                    if(data.status == 'success'){                     
-                        Swal.fire({
-                            title: 'SUCCESS!',
-                            text: 'Successfully Removed',
-                            icon: 'success',
-                            button: 'Next'
-                        }).then(function () {
-                            window.location.href = '<?= base_url('online_copying/applicant_address'); ?>';
-                        });
-                    }
-                    else{
-                        $('.show_msg').html('<div class="alert alert-danger alert-dismissible"><strong>'+data.status+'</strong></div>');
-                    }
+    $(document).on('click','.btn_remove_address',function(){
+        var address_id = $(this).data("address-id");
+        $.ajax
+        ({
+            type: 'POST',
+            url: "<?php echo base_url('online_copying/user_address_remove'); ?>",
+            dataType: "json",
+            cache: false,
+            data:{address_id: address_id},
+            beforeSend: function () {
+                $('.show_msg').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
+            },
+            success: function(data)
+            {
+                $('.show_msg').html('');
+                if(data.status == 'success'){                     
+                    Swal.fire({
+                        title: 'SUCCESS!',
+                        text: 'Successfully Removed',
+                        icon: 'success',
+                        button: 'Next'
+                    }).then(function () {
+                        window.location.href = '<?= base_url('online_copying/applicant_address'); ?>';
+                    });
                 }
-            });
+                else{
+                    $('.show_msg').html('<div class="alert alert-danger alert-dismissible"><strong>'+data.status+'</strong></div>');
+                }
+            }
         });
+    });
 
-        $(document).on('click','.btn_edit_address',function(){
-            $("#myModal").modal({backdrop: false});
-            var address_id = $(this).data("address-id");
-            var first_name = $(this).data("first_name");
-            var second_name = $(this).data("second_name");
-            var address = $(this).data("address");
-            var city = $(this).data("city");
-            var district = $(this).data("district");
-            var state = $(this).data("state");
-            var pincode = $(this).data("pincode");
-            var country = $(this).data("country");
-            var address_type = $(this).data("address_type");
-            $.ajax
-            ({
-                type: 'POST',
-                url: "user_address_edit.php",
-                cache: false,
-                data:{address_id: address_id,address_type:address_type,first_name:first_name,second_name:second_name,address:address,city:city,district:district,state:state,pincode:pincode,country:country},
-                beforeSend: function () {
-                    $('.modal-content').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
-                },
-                success: function(data)
-                {
-                    $(".modal-content").html(data);
-                }
-            });
-        });
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+     
 </script>
 @endpush

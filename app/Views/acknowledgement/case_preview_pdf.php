@@ -23,7 +23,6 @@ if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
     }
 }
 //var_dump($view_data);
-pr($view_data);
 ?>
 <div style="border:1px solid #000;">
     <h3  style="text-align: center"> Supreme Court Of India<br>
