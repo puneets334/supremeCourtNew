@@ -84,7 +84,7 @@
                                                 <div class="tm-col tm-col-big">
                                                     <div class="bg-white tm-block">  
                                                         <div class="card mt-0">
-                                                            <div class="card-header bg-info text-white font-weight-bolder mt-0 mb-0">            
+                                                            <div class="card-header bg-primary text-white font-weight-bolder mt-0 mb-0">            
                                                                 Applicant Address
                                                             </div>
                                                                 <div class="card-body">
@@ -152,7 +152,7 @@
                                                                         
                                                                         <div class="row mb-4">
                                                                             <div class="text-right d-inline">
-                                                                                <input type="submit" name="add_new_address" class="btn btn-warning" value="Add New Address" />
+                                                                                <button type="submit" name="add_new_address" class="btn quick-btn" value="Add New Address" >Add New Address</button>
                                                                             </div>
                                                                         </div>
                                                                         <?php
