@@ -24,6 +24,7 @@ class AddressModel extends Model
         'pincode',
         'country',
         'entry_time_ip',
+        'deleted_on',
     ];
     function __construct()
     {
@@ -101,6 +102,27 @@ class AddressModel extends Model
         return $result;
         
     } 
+
+    public function removeApplicantAddress($id, $deletedIP)
+    {
+        $builder = $this->db3->table('user_address'); 
+        $data = [
+            'is_active' => 'N',
+            'deleted_on' => date('Y-m-d H:i:s'),
+            'deleted_ip' => $deletedIP
+        ];
+
+        $builder->where('id', $id);
+        return $builder->update($data);
+    }
+    public function getActiveAddresses($email, $mobile)
+    {
+        $builder = $this->db3->table('user_address');         
+        $builder->where('email', $email);
+        $builder->where('mobile', $mobile);
+        $builder->where('is_active', 'Y');
+        return $builder->get()->getResultArray();
+    }
 
 
 

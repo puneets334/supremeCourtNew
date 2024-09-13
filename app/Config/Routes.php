@@ -399,3 +399,4 @@ $routes->match(['GET', 'POST'], 'online_copying/get_app_charge', 'OnlineCopying\
 $routes->match(['GET', 'POST'], 'online_copying/get_tot_copy', 'OnlineCopying\DefaultController::getTotCopy');
 $routes->match(['GET', 'POST'], 'online_copying/get_pincode_details', 'OnlineCopying\AddressController::getPincodeDetails');
 $routes->match(['GET', 'POST'], 'online_copying/user_address_save', 'OnlineCopying\AddressController::saveApplicantAddress');
+$routes->match(['GET', 'POST'], 'online_copying/user_address_remove', 'OnlineCopying\AddressController::RemoveApplicantAddress');
