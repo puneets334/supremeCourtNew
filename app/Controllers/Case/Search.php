@@ -611,7 +611,7 @@ class Search extends BaseController
                 $data['listing_details'] = $listing_data->listed[0];
                 $_SESSION['listing_details'] = $data['listing_details'];
                 $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
-                // pr($data['old_efiling_cases']); 
+                
                 if (empty($data['old_efiling_cases'])) {
                     echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
                     exit(0);

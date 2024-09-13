@@ -29,7 +29,7 @@ class FinalSubmit extends BaseController
 
     public function index()
     {
-
+    
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
@@ -66,6 +66,7 @@ class FinalSubmit extends BaseController
         $final_submit = TRUE;
         if ($final_submit) {
             $result = $this->Common_model->updateCaseStatus($registration_id, $next_stage);
+            pr($result);
             if ($result) {
                 $next_stage = REFILED_OLD_EFILING_CASE;
                 $result1 = $this->Common_model->updateCaseStatus($registration_id, $next_stage);
@@ -185,7 +186,7 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
     // Auto Transfer to scrutiny changes : start
     public function autoTransferRefiledOldEfilingCaseDocumentsToICMIS($registration_id = null, $diary_no = null, $diary_year = null, $efiling_no = null, $refiled_by_aor_code = null)
     {
-        pr($registration_id);
+        // pr($registration_id);
         if (empty($registration_id)) {
             return NULL;
         } else {
