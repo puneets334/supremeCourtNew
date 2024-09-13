@@ -4086,13 +4086,13 @@ function createCRN($service_user_id){
     $stmt_bh_service = $query->getResult();
     if (count($stmt_bh_service) == 1) {
         $keyMaster = $stmt_bh_service[0]->key_master;
-        $row = $builder = $db2->table('copying_application_online');
+        $builder = $db2->table('copying_application_online');
         $builder->select('MAX(RIGHT(CRN, 5)) AS max_batch_code');
-        $builder->where('DATE(application_receipt)', 'CURDATE()', false);
+        $builder->where('DATE(application_receipt)', date('Y-m-d'));
         $builder->where('LEFT(CRN, 2)', $keyMaster);
         $query = $builder->get();
         $result = $query->getRow();
-        $OrderBatchMerchantBatchCode = $row[0]->max_batch_code;
+        $OrderBatchMerchantBatchCode = $result->max_batch_code;
         if ($OrderBatchMerchantBatchCode == null) {
             $OrderBatchMerchantBatchCode = '00001';
         } else {
@@ -4235,4 +4235,191 @@ function eCopyingGetCasetoryById($id){
     // $builder->where('to_date', '0000-00-00');
     $query = $builder->get();
     return $query->getRow();
+}
+
+function insert_user_assets($dataArray){
+    $status = '';
+    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    $builder = $db2->table('user_assets');
+    $result = $builder->insert($dataArray);
+    if ($result) {
+        $status = 'success';
+    } else {
+        $status = 'Error:Unable to Insert Records';
+    }
+
+    return json_encode(array("Status" => $status));
+}
+
+function bharatKoshRequest($reqeust)
+{
+    //$xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="22" Version="1.0"/>'); //uat server
+    $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="022" Version="1.0"/>');//production server
+
+    $submit = $xml->addChild('Submit');
+    $order_batch = $submit->addChild('OrderBatch');
+    $order_batch->addAttribute('TotalAmount', "$reqeust[OrderBatchTotalAmount]");
+    $order_batch->addAttribute('Transactions', "$reqeust[OrderBatchTransactions]");
+    //$order_batch->addAttribute('Transactions', "2");
+    $order_batch->addAttribute('merchantBatchCode', "$reqeust[OrderBatchMerchantBatchCode]");
+
+    if($reqeust['OrderBatchTransactions'] == 1){
+    $order = $order_batch->addChild('Order');
+    $order->addAttribute('InstallationId', "$reqeust[InstallationId]");//given by pfms is unique for sci
+    //$order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
+    $order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
+
+    $cart = $order->addChild('CartDetails');
+    $cart->addChild('Description', "$reqeust[CartDescription]");
+    //$cart->addChild('Description');
+    //$cart->addChild('Amount CurrencyCode="INR" exponent="0" value="1"');
+    $cart->addChild('Amount CurrencyCode="INR" exponent="2" value="' . $reqeust['OrderBatchTotalAmount'] . '"');
+    $cart->addChild('OrderContent', "$reqeust[OrderContent]"); //also knows purposeId //OrderContent different for each head
+    $cart->addChild('PaymentTypeId', "$reqeust[PaymentTypeId]");
+    $cart->addChild('PAOCode', "$reqeust[PAOCode]");
+    $cart->addChild('DDOCode', "$reqeust[DDOCode]");
+
+    //repeating code
+    $pay_method_mask = $order->addChild('PaymentMethodMask');
+    $pay_method_mask->addChild('Include Code="'.$reqeust['PaymentMethodMode'].'"');
+
+    $shopper = $order->addChild('Shopper');
+    $shopper->addChild('ShopperEmailAddress', "$reqeust[ShopperEmailAddress]");
+    $shopper->addChild('ShopperEmailAddress');
+
+    $shipping = $order->addChild('ShippingAddress');
+    $shipping_address = $shipping->addChild('Address');
+    $shipping_address->addChild('FirstName', "$reqeust[ShippingFirstName]");
+    $shipping_address->addChild('LastName', "$reqeust[ShippingLastName]");
+    $shipping_address->addChild('Address1', "$reqeust[ShippingAddress1]");
+    $shipping_address->addChild('Address2', "$reqeust[ShippingAddress2]");
+
+    $shipping_address->addChild('PostalCode', "$reqeust[ShippingPostalCode]");
+    $shipping_address->addChild('City', "$reqeust[ShippingCity]");
+    $shipping_address->addChild('StateRegion', "$reqeust[ShippingStateRegion]");
+    $shipping_address->addChild('State', "$reqeust[ShippingState]");
+    $shipping_address->addChild('CountryCode', "$reqeust[ShippingCountryCode]");
+    $shipping_address->addChild('MobileNumber', "$reqeust[ShippingMobileNumber]");
+
+    $billing = $order->addChild('BillingAddress');
+    $billing_address = $billing->addChild('Address');
+    $billing_address->addChild('FirstName', "$reqeust[BillingFirstName]");
+    $billing_address->addChild('LastName', "$reqeust[BillingLastName]");
+    $billing_address->addChild('Address1', "$reqeust[BillingAddress1]");
+    $billing_address->addChild('Address2', "$reqeust[BillingAddress2]");
+    $billing_address->addChild('PostalCode', "$reqeust[BillingPostalCode]");
+    $billing_address->addChild('City', "$reqeust[BillingCity]");
+    $billing_address->addChild('StateRegion', "$reqeust[BillingStateRegion]");
+    $billing_address->addChild('State', "$reqeust[BillingState]");
+    $billing_address->addChild('CountryCode', "$reqeust[BillingCountryCode]");
+    $billing_address->addChild('MobileNumber', "$reqeust[BillingMobileNumber]");
+
+    $order->addChild('StatementNarrative');
+    }
+    else{
+        $multiHeadArray = $reqeust['MultiHeadArray'];
+       // var_dump($reqeust[MultiHeadArray]);
+        for($k=0;$k<$reqeust['OrderBatchTransactions'];$k++){
+            $ChildAmount = $multiHeadArray[$k]['ChildAmount'];
+            $ChildOrderCode = $multiHeadArray[$k]['ChildOrderCode'];
+            $ChildCartDescription = $multiHeadArray[$k]['ChildCartDescription'];
+            $ChildOrderContent = $multiHeadArray[$k]['ChildOrderContent'];
+            $ChildPaymentTypeId = $multiHeadArray[$k]['ChildPaymentTypeId'];
+
+            $order = $order_batch->addChild('Order');
+
+            $order->addAttribute('InstallationId', "$reqeust[InstallationId]");//given by loba to pfms
+            if($k==0){
+            $order->addAttribute('OrderCode', $reqeust['OrderBatchMerchantBatchCode']);
+            }
+            else{
+                $order->addAttribute('OrderCode', $ChildOrderCode);
+            }
+            $cart = $order->addChild('CartDetails');
+            $cart->addChild('Description', "$ChildCartDescription");
+            //$cart->addChild('Description');
+            $cart->addChild('Amount CurrencyCode="INR" exponent="2" value="' . $ChildAmount . '"');
+            $cart->addChild('OrderContent', "$ChildOrderContent"); //also knows purposeId //OrderContent different for each head
+            $cart->addChild('PaymentTypeId', "$ChildPaymentTypeId");
+
+
+
+            $cart->addChild('PAOCode', "$reqeust[PAOCode]");
+            $cart->addChild('DDOCode', "$reqeust[DDOCode]");
+
+
+            $pay_method_mask = $order->addChild('PaymentMethodMask');
+            $pay_method_mask->addChild('Include Code="'.$reqeust['PaymentMethodMode'].'"');
+
+            $shopper = $order->addChild('Shopper');
+            $shopper->addChild('ShopperEmailAddress', "$reqeust[ShopperEmailAddress]");
+            $shopper->addChild('ShopperEmailAddress');
+
+            $shipping = $order->addChild('ShippingAddress');
+            $shipping_address = $shipping->addChild('Address');
+            $shipping_address->addChild('FirstName', "$reqeust[ShippingFirstName]");
+            $shipping_address->addChild('LastName', "$reqeust[ShippingLastName]");
+            $shipping_address->addChild('Address1', "$reqeust[ShippingAddress1]");
+            $shipping_address->addChild('Address2', "$reqeust[ShippingAddress2]");
+
+            $shipping_address->addChild('PostalCode', "$reqeust[ShippingPostalCode]");
+            $shipping_address->addChild('City', "$reqeust[ShippingCity]");
+            $shipping_address->addChild('StateRegion', "$reqeust[ShippingStateRegion]");
+            $shipping_address->addChild('State', "$reqeust[ShippingState]");
+            $shipping_address->addChild('CountryCode', "$reqeust[ShippingCountryCode]");
+            $shipping_address->addChild('MobileNumber', "$reqeust[ShippingMobileNumber]");
+
+            $billing = $order->addChild('BillingAddress');
+            $billing_address = $billing->addChild('Address');
+            $billing_address->addChild('FirstName', "$reqeust[BillingFirstName]");
+            $billing_address->addChild('LastName', "$reqeust[BillingLastName]");
+            $billing_address->addChild('Address1', "$reqeust[BillingAddress1]");
+            $billing_address->addChild('Address2', "$reqeust[BillingAddress2]");
+            $billing_address->addChild('PostalCode', "$reqeust[BillingPostalCode]");
+            $billing_address->addChild('City', "$reqeust[BillingCity]");
+            $billing_address->addChild('StateRegion', "$reqeust[BillingStateRegion]");
+            $billing_address->addChild('State', "$reqeust[BillingState]");
+            $billing_address->addChild('CountryCode', "$reqeust[BillingCountryCode]");
+            $billing_address->addChild('MobileNumber', "$reqeust[BillingMobileNumber]");
+
+            $order->addChild('StatementNarrative');
+        }
+    }
+    $xmlString = $xml->asXML();
+
+    // Load the XML to be signed
+    $doc = new DOMDocument('1.0', 'utf-8');
+    $doc->encoding = 'utf-8';
+    $doc->formatOutput = false;
+    $doc->preserveWhiteSpace = true;
+    $doc->loadXML($xmlString);
+    // Create a new Security object
+    $objDSig = new XMLSecurityDSig("");
+    // Use the c14n exclusive canonicalization
+    $objDSig->setCanonicalMethod(XMLSecurityDSig::C14N);
+    //$options['prefix'] = '';
+    //$options['prefix_ns'] = '';
+    $options['force_uri'] = TRUE;
+    //$options['id_name'] = 'ID';
+    // Sign using SHA1
+    $objDSig->addReference($doc, XMLSecurityDSig::SHA1, array('http://www.w3.org/2000/09/xmldsig#enveloped-signature'), $options);
+    // Create a new (private) Security key
+    $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA1, array('type' => 'private'));
+    //If key has a passphrase, set it using
+    $objKey->passphrase = 'Savan@#2020';
+    //$objKey->passphrase = '123456';
+    // Load the private key
+    //$objKey->loadKey('privatekey_10082020.pem', TRUE);
+    $objKey->loadKey('private_key_capricon.pem', TRUE);
+
+    // Sign the XML file
+    $objDSig->sign($objKey);
+    // Add the associated public key to the signature
+    $objDSig->add509Cert(file_get_contents('publiccert_capricon.pem'), true, false, array('issuerSerial' => true));
+    //$objDSig->add509Cert(file_get_contents('publiccert_10082020.pem'), true, false, array('issuerSerial' => true));
+    // Append the signature to the XML
+    $objDSig->appendSignature($doc->documentElement);
+    // Save the signed XML
+    $signedXML = $doc->saveXML();
+    return $signedXML_encode64 = base64_encode($signedXML);
 }

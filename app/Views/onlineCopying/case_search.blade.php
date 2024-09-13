@@ -735,7 +735,7 @@
             return false;
         }
         else{
-            var redirect_url = '../sci_request.php';
+            var redirect_url = '<?php echo base_url('online_copying/sci_request'); ?>';
             swal({
                 title: "Are you sure?",
                 text: "Forwarding!",
@@ -744,7 +744,48 @@
                 dangerMode: true,
             },function(willDelete) {
                 if (willDelete) {
-                    $.redirect(redirect_url, {address_id:address_id, app_type:app_type, num_copy:num_copy, cop_mode:cop_mode, copy_detail: copy_detail, service_charges:service_charges, fee_in_stamp:fee_in_stamp, amount_to_pay:amount_to_pay, postage:postage,bail_order:bail_order});
+                    // var params = {
+                    //     address_id: address_id,
+                    //     app_type: app_type,
+                    //     num_copy: num_copy,
+                    //     cop_mode: cop_mode,
+                    //     copy_detail: copy_detail,
+                    //     service_charges: service_charges,
+                    //     fee_in_stamp: fee_in_stamp,
+                    //     amount_to_pay: amount_to_pay,
+                    //     postage: postage,
+                    //     bail_order: bail_order
+                    // };
+                    // redirectWithParams(redirect_url, params);
+                    // $.redirect(redirect_url, {address_id:address_id, app_type:app_type, num_copy:num_copy, cop_mode:cop_mode, copy_detail: copy_detail, service_charges:service_charges, fee_in_stamp:fee_in_stamp, amount_to_pay:amount_to_pay, postage:postage,bail_order:bail_order});
+
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = redirect_url;
+
+                    // Append hidden inputs for each parameter
+                    for (const [key, value] of Object.entries({
+                    address_id,
+                    app_type,
+                    num_copy,
+                    cop_mode,
+                    copy_detail,
+                    service_charges,
+                    fee_in_stamp,
+                    amount_to_pay,
+                    postage,
+                    bail_order
+                    })) {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.appendChild(input);
+                    }
+
+                    // Append the form to the body and submit it
+                    document.body.appendChild(form);
+                    form.submit();
                 }
                 else {
                     //swal("Record is safe!");

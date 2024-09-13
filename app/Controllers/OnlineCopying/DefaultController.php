@@ -51,9 +51,9 @@ class DefaultController extends BaseController
             $_SESSION['is_token_matched'] = 'Yes';
             
             $_SESSION["session_filed"] = $dOtp->filed_by;
-            
+            $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;
             if($dOtp->filed_by == 6){
-                $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;            
+                // $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;            
                 $aor_data = eCopyingGetBarDetails($dOtp->authorized_bar_id);
                 if (count($aor_data) == 1){
                     $aor_mobile = $aor_data->mobile;
@@ -348,8 +348,15 @@ class DefaultController extends BaseController
     }
 
     public function caseRelationVerification(){
-    
+        return $this->render('onlineCopying.case_relation_verification');
     }
+    public function sciRequest(){
+        return $this->render('onlineCopying.sci_request');
+    }
+    public function sciRequestPayment(){
+        return $this->render('onlineCopying.sci_request_payment');
+    }
+
 }
 
 
