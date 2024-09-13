@@ -397,3 +397,6 @@ $routes->match(['GET', 'POST'], 'online_copying/get_case_details', 'OnlineCopyin
 $routes->match(['GET', 'POST'], 'online_copying/applicant_address', 'OnlineCopying\AddressController::applicantAddress');
 $routes->match(['GET', 'POST'], 'online_copying/get_app_charge', 'OnlineCopying\DefaultController::getAppCharge');
 $routes->match(['GET', 'POST'], 'online_copying/get_tot_copy', 'OnlineCopying\DefaultController::getTotCopy');
+$routes->match(['GET', 'POST'], 'online_copying/unavailable_request', 'OnlineCopying\DefaultController::unavailableRequest');
+$routes->match(['GET', 'POST'], 'online_copying/requested_documents_save', 'OnlineCopying\DefaultController::requestedDocumentsSave');
+$routes->match(['GET', 'POST'], 'online_copying/case_relation_verification', 'OnlineCopying\DefaultController::caseRelationVerification');

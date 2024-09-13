@@ -971,3 +971,5 @@ define('MSG_TIME_OUT', 'Time Out');
 define('OLD_ROP_DB', "rop_text_web");
 define('GET_SERVER_IP', "10.0.0.0"); //server ip
 define('CEPT_GOV_IN', 'https://api.cept.gov.in/tariff/api/values/gettariff');
+define('SCISMS_URL', '10.0.0.0:36521/api/v1/send');
+define('SCISMS_e_copying_crn_created','e-copying_crn_created');
