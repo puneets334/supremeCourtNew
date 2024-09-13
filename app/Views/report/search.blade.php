@@ -411,7 +411,7 @@
                                                         </div>
                                                     </div>
                                                     <!--</center><br><hr>-->
-                                                    <div class="card-body diary box" style="display:none; block;background-color: #ffffff;border-color: #ffffff;">
+                                                    <div class="card-body diary box" style="display:none; background-color: #ffffff; border-color: #ffffff;">
                                                         <div class="row">
                                                             <div class="col-md-4 col-sm-4 col-xs-12">
                                                                 <div class="form-group">
