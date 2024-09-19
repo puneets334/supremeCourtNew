@@ -1929,6 +1929,7 @@ function get_challanged_sc_base_case_details($registration_id)
     $lower_court_type = $base_disposed_cases[0]['court_type'];
     $subject_category = null;
     $subcode1 = null;
+    $sc_case_type_id = null;
     if ($lower_court_type == 4)  //court type=4 belongs to supreme court
     {
         $case_type_id = $base_disposed_cases[0]['case_type_id'];
@@ -1940,7 +1941,7 @@ function get_challanged_sc_base_case_details($registration_id)
 
         // get the submaster id of the base case
         $base_case_subject_category_details = json_decode(file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails?diaryNo=' . $base_disposed_case_diary_no))->details;
-        //var_dump($base_case_subject_category_details);
+        //  pr($base_case_subject_category_details);
 
         $subject_category = $base_case_subject_category_details[0]->submaster_id;
         $subcode1 = $base_case_subject_category_details[0]->subcode1;
@@ -2007,7 +2008,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                         {
                             //|| ($court_fee_calculation_param1[0]['sc_case_type_id']=='19' && $lower_court_type!=4)
                             $base_case_subject_category_details = get_challanged_sc_base_case_details($registration_id);
-
+                            // pr($base_case_subject_category_details);
                             $subject_category = $base_case_subject_category_details['submaster_id'];
                             $subcode1 = $base_case_subject_category_details['subcode1'];
                             $sc_case_type_id = $base_case_subject_category_details['case_type_id'];

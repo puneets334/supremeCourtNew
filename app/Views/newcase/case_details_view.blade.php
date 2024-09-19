@@ -138,11 +138,10 @@
                             </select>
                         </div>
                     </div>
-                   
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="dtsign">
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of signature of jail incharge</label>
-                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value=" <?php  echo isset($new_case_details[0]) && !empty($new_case_details[0]->jail_signature_date) ? date("d/m/Y", strtotime($new_case_details[0]->jail_signature_date)) : ''; ?>" type="text">
+                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value=" <?php  echo isset($new_case_details[0]) && !empty($new_case_details[0]->jail_signature_date) ? date("d/m/Y", strtotime($new_case_details[0]->jail_signature_date)) : ''; ?>" type="text" > 
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -492,7 +491,7 @@
 {{-- @endsection --}}
 <script>
     $('#party_dob').datepicker({
-        onSelect: function(value) {
+        onSelect: function(value) { 
             var parts = value.split("/");
             var day = parts[0] && parseInt(parts[0], 10);
             var month = parts[1] && parseInt(parts[1], 10);
