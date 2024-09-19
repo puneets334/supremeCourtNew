@@ -415,4 +415,5 @@ $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload_photo', 'Register\Adv
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/add_advocate', 'Register\AdvSignUp::add_advocate');
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload', 'Register\AdvSignUp::upload');
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload_id_proof', 'Register\AdvSignUp::upload_id_proof');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit', 'Register\AdvSignUp::final_submit');
 

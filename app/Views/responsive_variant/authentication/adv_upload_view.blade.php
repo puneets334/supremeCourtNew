@@ -57,7 +57,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
-                                            <img data-src="<?php echo $_SESSION['image_and_id_view']['profile_photo']; ?>" width="250" height="250" alt="profile photo" style="border: 1px solid;" uk-img>
+                                            <img src="<?php echo $_SESSION['image_and_id_view']['profile_photo']; ?>" width="250" height="250" alt="profile photo" style="border: 1px solid;" uk-img>
                                         <?php } ?>
                                     </div>
                                 </div>
@@ -69,12 +69,14 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                 <input type="submit" value="UPLOAD" id="info_save" class="btnSubmit btn btn-sm quick-btn btn-primary" >
-                                                <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
-                                                    <a href="<?php echo base_url('register/AdvSignUp/final_submit'); ?>" class="uk-button uk-button-primary uk-margin-small-bottom"> FINAL SUBMIT </a>
-                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
+                                        <a href="<?php echo base_url('register/AdvSignUp/final_submit'); ?>" class="btn btn-sm quick-btn btn-primary"> FINAL SUBMIT </a>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </form>

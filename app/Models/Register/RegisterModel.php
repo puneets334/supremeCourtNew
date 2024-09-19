@@ -20,7 +20,7 @@ class RegisterModel extends Model
                 FROM icmis.state 
                 WHERE state_code != 0 AND district_code = 0 AND sub_dist_code = 0 
                 AND village_code = 0 AND sci_state_id != 0 AND display = 'Y' 
-                ORDER BY state_code";
+                ORDER BY name";
         $query = $this->db->query($sql);
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();
@@ -35,7 +35,7 @@ class RegisterModel extends Model
                 FROM icmis.state 
                 WHERE state_code = ? AND district_code != 0 AND sub_dist_code = 0 
                 AND village_code = 0 AND display = 'Y'
-                ORDER BY district_code";
+                ORDER BY name";
         $query = $this->db->query($sql, [$state_code]);
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();

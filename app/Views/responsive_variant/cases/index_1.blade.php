@@ -573,9 +573,10 @@
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
 <script>
+    <?php $adv_cases_response_data_json = json_encode($adv_cases_response_data); ?>
     // Assuming you are using Blade templating (Laravel)
-    var advCasesResponseData = json($adv_cases_response_data);
-    var diaryEngagedData = json(array_values(array_unique($meta_data['diaryEngaged'])));
+    var advCasesResponseData = JSON.parse('<?php echo addslashes($adv_cases_response_data_json); ?>');
+    var diaryEngagedData = JSON.parse(<?php echo json_encode(array_values(array_unique($meta_data['diaryEngaged']))) ?>);
 </script>
 <script>
     function AllcasesShowAlert(id) {
