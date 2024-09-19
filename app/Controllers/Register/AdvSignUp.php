@@ -318,7 +318,13 @@ class AdvSignUp extends BaseController {
         );
 
         $_SESSION['image_and_id_view'] = $data;
+        $_SESSION['profile_image'] = $data;
+        echo '<pre>'; print_r($_SESSION); echo '<br>';
+        echo '<pre>'; print_r($data); echo '<br>';
+echo '<pre>'; print_r($photo_file_path); echo '<br>';
+echo '<pre>'; print_r($new_filename);  
         $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
+
         $file_path_thumbs = '';
         if (!$thumb) {
             $_SESSION['login']['photo_path'] = $file_path_thumbs;
@@ -330,28 +336,7 @@ class AdvSignUp extends BaseController {
         }
     }
 
-    function image_upload($images, $file_path, $file_temp_name) {
-        $thumbnail_path = 'user_images/thumbnail/';
-        $photo_path = 'user_images/photo/';
-        $this->create_directory($thumbnail_path);
-        $this->create_directory($photo_path);
-
-        $config['upload_path'] = $photo_path;
-        $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['overwrite'] = true;
-        $config['file_name'] = $file_temp_name;
-
-        $file = $this->request->getFile($images);
-        if ($file && $file->isValid() && !$file->hasMoved()) { 
-    $file->move($photo_path, $file_temp_name);  
-    $data['picture'] = $file_temp_name; 
-    $sourcePath = $photo_path . $file_temp_name;   
-    $destinationPath = WRITEPATH . 'uploads/thumbnails/' . $file_temp_name; 
-    return $data;
-        } else {
-            return ['error' => 'File upload failed: ' . $file->getErrorString()];
-        }
-    }
+    
 
     function create_directory($path) {
         if (!is_dir($path)) {
@@ -362,41 +347,6 @@ class AdvSignUp extends BaseController {
             }
             umask($uold);
         }
-    }
-
-    function create_thumbnail($sourcePath, $destinationPath, $width, $height)
-    {
-        list($originalWidth, $originalHeight, $type) = getimagesize($sourcePath);
-        $thumbnail = \imagecreatetruecolor($width, $height);
-        switch ($type) {
-            case IMAGETYPE_JPEG:
-                $sourceImage = \imagecreatefromjpeg($sourcePath);
-                break;
-            case IMAGETYPE_PNG:
-                $sourceImage = \imagecreatefrompng($sourcePath);
-                break;
-            case IMAGETYPE_GIF:
-                $sourceImage = \imagecreatefromgif($sourcePath);
-                break;
-            default:
-                return false;
-        }
-        imagecopyresampled($thumbnail, $sourceImage, 0, 0, 0, 0, $width, $height, $originalWidth, $originalHeight);
-        switch ($type) {
-            case IMAGETYPE_JPEG:
-                \imagejpeg($thumbnail, $destinationPath);
-                break;
-            case IMAGETYPE_PNG:
-                \imagepng($thumbnail, $destinationPath);
-                break;
-            case IMAGETYPE_GIF:
-                \imagegif($thumbnail, $destinationPath);
-                break;
-        }
-        \imagedestroy($sourceImage);
-        \imagedestroy($thumbnail);
-        
-        return true;
     }
 
     // function _generate_thumbnail($filename, $thumbnail_path) {

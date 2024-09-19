@@ -319,7 +319,7 @@ class DefaultController extends BaseController {
                     $file = $request->getFile('ekyc_zip_file');
                     // Check if the file is valid and not moved
                     if ($file->isValid() && !$file->hasMoved()) {
-                        $uploadPath = WRITEPATH . 'uploads/ekyc/';
+                        $uploadPath = 'uploads/ekyc/';
                         // Ensure the upload path exists
                         if (!is_dir($uploadPath)) {
                             mkdir($uploadPath, 0777, true);
@@ -327,14 +327,17 @@ class DefaultController extends BaseController {
                         // Generate the destination path
                         $fileName = $file->getName();
                         $filePath = $uploadPath . $fileName;
+                        // pr($filePath);
                         // Move the file to the desired location
                         if ($file->move($uploadPath, $fileName)) {
                             $isValidFiles = $this->inspect_files_within_zip($filePath);
+                            // pr($isValidFiles);
                             if ($isValidFiles) {
                                 // Process the zip file
                                 $zip = new ZipArchive;
                                 if ($zip->open($filePath) === TRUE) {
-                                    $extractedPath = $uploadPath . $_SESSION['filename'] . '.xml';
+                                    $extractedPath = $uploadPath . explode('.',$fileName)[0] . '.xml';
+                                    // pr($extractedPath);
                                     if ($zip->setPassword($request->getPost('share_code'))) {
                                         if (!$zip->extractTo($uploadPath)) {
                                             $zip->close();
@@ -342,6 +345,7 @@ class DefaultController extends BaseController {
                                         }
                                     }
                                     $zip->close();
+                                    // pr($extractedPath);
                                     $xml = simplexml_load_file($extractedPath);
                                     $json = json_encode($xml);
                                     $dataConfig = json_decode($json, true);
@@ -371,7 +375,7 @@ class DefaultController extends BaseController {
                                             return redirect()->to(base_url('register'))->with('msg', 'Aadhar file tampered, please try with a fresh offline Aadhar!');
                                         }
                                     }
-                                    return redirect()->to(base_url('register'))->with('msg', 'Upload & Extract successfully.');
+                                    // return redirect()->to(base_url('register'))->with('msg', 'Upload & Extract successfully.');
                                 } else {
                                     return redirect()->to(base_url('register'))->with('msg', 'Failed to open zip file.');
                                 }

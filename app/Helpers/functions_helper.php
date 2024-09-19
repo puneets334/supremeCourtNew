@@ -3190,17 +3190,17 @@ function getClientIP()
     return $ipaddress;
 }
 
-// function idEncryptionCustom($id) {
-//     $key = openssl_random_pseudo_bytes(32); // Generate a 256-bit key for AES-256 encryption
-//     $key = bin2hex($key);
-//     $method = "AES-256-CBC";
-//     $key = "supremeCourtCI4KeyForEncryption";
-//     $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($method));
-//     $encryptedID = openssl_encrypt($id, $method, $key, 0, $iv);
-//    /*  $decryptedID1 = openssl_decrypt($encryptedID, $method, $key, 0, $iv);
-//     echo $decryptedID1; die; */
-//     return $encryptedID;
-// }
+function idEncryptionCustom($id) {
+    $key = openssl_random_pseudo_bytes(32); // Generate a 256-bit key for AES-256 encryption
+    $key = bin2hex($key);
+    $method = "AES-256-CBC";
+    $key = "supremeCourtCI4KeyForEncryption";
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($method));
+    $encryptedID = openssl_encrypt($id, $method, $key, 0, $iv);
+   /*  $decryptedID1 = openssl_decrypt($encryptedID, $method, $key, 0, $iv);
+    echo $decryptedID1; die; */
+    return $encryptedID;
+}
 
 // function idDecryptionCustom($encryptedID) {
 //     $key2 = openssl_random_pseudo_bytes(32); // Generate a 256-bit key for AES-256 encryption

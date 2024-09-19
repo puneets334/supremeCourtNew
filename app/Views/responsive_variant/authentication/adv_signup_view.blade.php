@@ -209,13 +209,12 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                     </div>
                                 </div>
                                 <?php
+                                    $male = '';
+                                    $female = '';
                                     if ($uid_data_gender == 'M') {
                                         $male = 'checked';
                                     } elseif ($uid_data_gender == 'F') {
                                         $female = 'checked';
-                                    }else{
-                                        $male = '';
-                                        $female = '';
                                     }
                                 ?>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
