@@ -397,7 +397,7 @@ class CaseDetails extends BaseController
             $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
 
             $special_category = !empty($_POST["special_category"]) ? url_decryption(escape_data($_POST["special_category"])) : 0;
-
+// pr($jailsignDt);
             $case_details = array(
                 'cause_title' => $cause_title,
                 'sc_case_type_id' => !empty($sc_case_type[0]) ? $sc_case_type[0] : null,
@@ -426,9 +426,10 @@ class CaseDetails extends BaseController
                 'supreme_court_state' => $supreme_court_state ? $supreme_court_state : null,
                 'supreme_court_bench' => $superem_court_bench ? $superem_court_bench : null,
                 'court_type' => $court_type ? $court_type : null,
-                'jail_signature_date' => $jailsignDt ? date('Y-m-d', strtotime($jailsignDt)) : null,
+                'jail_signature_date' => $jailsignDt ? $jailsignDt : null,
                 'special_category' => $special_category ? $special_category : null,
             );
+            // pr($case_details);
             if (isset($_SESSION['impersonated_department']))
                 unset($_SESSION['impersonated_department']);
             if (in_array($this->session->get('login')['ref_m_usertype_id'], [USER_DEPARTMENT, USER_CLERK])) {
@@ -471,7 +472,7 @@ class CaseDetails extends BaseController
                         exit();
                     }
                 }
-
+                // pr($case_details);
                 $status = $this->New_case_model->add_update_case_details($registration_id, $case_details, NEW_CASE_CASE_DETAIL, getSessionData('case_table_ids')->case_details_id);
 
                 if ($status) {

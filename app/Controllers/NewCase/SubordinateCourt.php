@@ -351,6 +351,15 @@ class SubordinateCourt extends BaseController {
             $case_type_id= '';
             $case_type_name='';
         }
+        // pr($_SESSION);
+        $pet_name = isset($_SESSION['search_case_data_save']['pet_name']) ? $_SESSION['search_case_data_save']['pet_name'] : NULL;
+        $res_name = isset($_SESSION['search_case_data_save']['res_name']) ? $_SESSION['search_case_data_save']['res_name'] : NULL;
+        $session_case_type_id = isset($_SESSION['search_case_data_save']['case_type_id']) ? $_SESSION['search_case_data_save']['case_type_id'] : NULL;
+        $case_num = isset($_SESSION['search_case_data_save']['case_num'])?$_SESSION['search_case_data_save']['case_num'] : $case_number;
+        $case_year = isset($_SESSION['search_case_data_save']['case_year'])?$_SESSION['search_case_data_save']['case_year']:$case_year;
+        $cnr_number = isset($_SESSION['search_case_data_save']['cnr_num']) && !empty($_SESSION['search_case_data_save']['cnr_num'])?$_SESSION['search_case_data_save']['cnr_num']:$cnr_number;
+        $session_case_type_name = isset($_SESSION['search_case_data_save']['case_type_name']) ? $_SESSION['search_case_data_save']['case_type_name'] : NULL;
+
 
         $case_details = array(
             'registration_id' => $registration_id,
@@ -358,24 +367,24 @@ class SubordinateCourt extends BaseController {
             'state_id' => !empty($state_id)?$state_id:0,
             'district_id' => !empty($district_id)?$district_id:0,
             'agency_code' => 0,
-            'pet_name' => $_SESSION['search_case_data_save']['pet_name'],
-            'res_name' => $_SESSION['search_case_data_save']['res_name'],
+            'pet_name' => $pet_name,
+            'res_name' => $res_name,
             /*'case_type_id' => (isset($case_type_ids[0]) && !empty($case_type_ids[0]))?$case_type_ids[0]:$_SESSION['search_case_data_save']['case_type_id'],
             'case_num' => $_SESSION['search_case_data_save']['case_num'],
             'case_year' => $_SESSION['search_case_data_save']['case_year'],
             'cnr_num' => $_SESSION['search_case_data_save']['cnr_num'],*/
             //'case_type_id' => (isset($case_type_ids[0]) && !empty($case_type_ids[0]))?$case_type_ids[0]:$_SESSION['search_case_data_save']['case_type_id'],
-            'case_type_id' => (isset($case_type_id) && !empty($case_type_id))?$case_type_id:$_SESSION['search_case_data_save']['case_type_id'],
-            'case_num' => !empty($_SESSION['search_case_data_save']['case_num'])?$_SESSION['search_case_data_save']['case_num']:$case_number,
-            'case_year' => !empty($_SESSION['search_case_data_save']['case_year'])?$_SESSION['search_case_data_save']['case_year']:$case_year,
-            'cnr_num' => isset($_SESSION['search_case_data_save']['cnr_num']) && !empty($_SESSION['search_case_data_save']['cnr_num'])?$_SESSION['search_case_data_save']['cnr_num']:$cnr_number,
+            'case_type_id' => (isset($case_type_id) && !empty($case_type_id))?$case_type_id : $session_case_type_id,
+            'case_num' =>  $case_num,
+            'case_year' => $case_year,
+            'cnr_num' =>  $cnr_number,
             'impugned_order_date' => $decision_date,
             'is_judgment_challenged' => $Is_Judgment_Challenged,
             'judgment_type' => $Judgment_Type,
             'status' => $status,
             // 'decision_date' => $decision_date,
             //'casetype_name' => (isset($case_type_ids[1]) && !empty($case_type_ids[1]))?$case_type_ids[1]:$_SESSION['search_case_data_save']['case_type_name'],
-            'casetype_name' => (isset($case_type_name) && !empty($case_type_name))?$case_type_name:$_SESSION['search_case_data_save']['case_type_name'],
+            'casetype_name' => isset($case_type_name) && !empty($case_type_name)?$case_type_name : $session_case_type_name,
             'estab_id' => (isset($estabid) && !empty($estabid))?$estabid:NULL,
             'estab_name' => (isset($estab_name) && !empty($estab_name)) ? $estab_name: (isset($_SESSION['search_case_data_save']['court_est_name']) ? $_SESSION['search_case_data_save']['court_est_name'] : ''),
             'estab_code' => (isset($estab_code) && !empty($estab_code)) ? $estab_code : (isset($_SESSION['search_case_data_save']['est_code']) ? $_SESSION['search_case_data_save']['est_code'] : ''),
