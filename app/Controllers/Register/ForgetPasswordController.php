@@ -412,15 +412,16 @@ class ForgetPasswordController extends BaseController
         // Unset image_and_id_view from session
         $session->remove('image_and_id_view');
         // Get state list and advocate details
-        $data['select_state'] = $this->Register_model->getStateList();
+        $data['select_state'] = $this->Register_model->get_state_list();
         $mobileNo = getSessionData('adv_details')['mobile_no'];
         $emailId = getSessionData('adv_details')['email_id'];
         $data['advDetailsIcmis'] = $this->efiling_webservices->getBarTable($mobileNo, $emailId);
         // Load views
         // echo view('responsive_variant/authentication/adv_signup_view', $data);
         // echo view('responsive_variant/authentication/adv_signup_nav');
-        return $this->render('responsive_variant.authentication.adv_signup_view',$data);
-        return $this->render('responsive_variant.authentication.adv_signup_nav',$data);
+        // return $this->render('responsive_variant.authentication.adv_signup_view',$data);
+        // return $this->render('responsive_variant.authentication.adv_signup_nav',$data);
+        $this->render('responsive_variant.authentication.adv_signup_view', $data);
     }
 
 }

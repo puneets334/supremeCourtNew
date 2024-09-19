@@ -160,7 +160,7 @@
                                     <?= session()->getFlashdata('msg') ?>
                                 </div>
                             </div>
-                        <?php endif; ?>
+                        <?php endif; print_r($_SESSION['adv_details']); ?>
                         @if(isset($validation) && !empty($validation->getError('adv_email')))
                         <div class="uk-text-danger">
                             <b>{{ $validation->getError('adv_email')}}</b>
@@ -304,7 +304,7 @@
                 /(webkit)[ \/]([\w.]+)/.exec(ua) ||
                 /(opera)(?:.*version|)[ \/]([\w.]+)/.exec(ua) ||
                 /(msie) ([\w.]+)/.exec(ua) ||
-                ua.indexOf("compatible") < script 0 && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) || [];
+                ua.indexOf("compatible") < script && /(mozilla)(?:.*? rv:([\w.]+)|)/.exec(ua) || [];
             return {
                 browser: match[1] || "",
                 version: match[2] || "0"

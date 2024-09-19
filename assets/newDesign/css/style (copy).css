@@ -31,10 +31,10 @@ body{font-family: 'noto_sansregular';font-weight:500;padding:0;margin:0;font-siz
 
 a:hover, a{text-decoration:none}
 .txt-bold{font-weight: 600;}
-.blue-txt{color:#110458!important;}
+.blue-txt{color:#0d6efd !important;}
 .gray-txt{color: #747474 !important;}
 .yellow-txt{color:#FF572E;}
-a.blue-txt:hover, a.blue-txt:focus{color: #0D48BE !important;}
+a.blue-txt:hover, a.blue-txt:focus{color: #5e89e0 !important;}
 button.btn:hover, button.btn:hover{background: #110474;}
 .quick-btn{display:inline-block;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s;border-radius:100px;position:relative;overflow:hidden;background-color: #110458;color: #FFF;border: none;}
 .quick-btn:before{left:-20px;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%)}
@@ -47,7 +47,7 @@ button.btn:hover, button.btn:hover{background: #110474;}
 @keyframes criss-cross-left {
     0%{left:-20px}
     50% {left:50%;width:20px;height:20px}
-    100%{left:50%;width:620px;height:375px}
+    100%{left:50%;width: 500px;height:375px}
 }
 @keyframes criss-cross-right {
     0%{right:-20px}
@@ -148,6 +148,7 @@ nav.navbar{padding:0}
 h6.htsmall {
     font-size: 18px;
     font-family: 'noto_sanssemibold';
+    text-align: center;
 }
 .regester-txts .regester-links {
     display: flex;
@@ -164,6 +165,7 @@ h6.htsmall {
 .regester-txts {
     margin-top: 15px;
 }
+.login-anc{font-size: 16px;}
 /* Login CSS End  */
 /* OTP Page CSS Start  */
 .otp-form form {
@@ -202,17 +204,143 @@ h6.htsmall {
 /* OTP Page CSS End  */
 
 /* Footer Section css Start */
-.footer-top-sec {padding: 30px;}
+.footer-top-sec {
+    padding: 30px;
+}
 .footer-top-sec p {margin: 0;font-size: 16px;}
 .footer-top-sec .copyright-sec p {font-family: 'noto_sanssemibold';}
 .footer-top-sec .contact-txt p {color: #747474;font-family: 'noto_sanssemibold';text-align: right;}
-/* Footer Section css End */
-/* Register Page Start  */
-.register-area .login-banner-inner .banimg-sec img {object-fit: contain;object-position: bottom;}
-.register-area .login-banner-inner .banimg-sec {background: #f6faff;border-radius: 21px 0px 0px 21px;}
-.image-note{font-size: 12px;}
-/* Register Page End  */
 
+
+/* Footer Section css End */
+
+
+
+/*..........13-06-2024 (Deepak).........*/
+/* Inner - Pages CSS Start  */
+/* Breadcrumb area start  */
+.breadcrumb-area {
+    margin-top: 15px;
+}
+.breadcrumb-area .breadcrumb {
+    margin: 0;
+}
+.breadcrum-bg {
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.breadcrumb-item+.breadcrumb-item::before {
+    content: '\f054';
+    position: absolute;
+    left: -20px;
+    top: 6px;
+    font-size: 14px;
+    color: #000;
+    font-family: "Font Awesome 5 Free";
+    font-weight:900
+}
+.breadcrumb-area .breadcrumb-item {
+    position: relative;
+}
+.breadcrumb-area .breadcrumb-item+.breadcrumb-item {margin-left: 30px;}
+.breadcrumb-area .breadcrumb-item {
+    padding: 5px 15px;
+    border: 1px solid #013FBB;
+    border-radius: 20px;
+    font-size: 14px;
+    background: #fff;
+}
+.breadcrumb-area .breadcrumb-item:hover {
+    background: #013FBB;
+    transition: background 0.4s;
+}
+
+.breadcrumb-area .breadcrumb-item:hover a {
+    color: #fff;
+}
+.breadcrumb-area .breadcrumb-item.active {
+    background: #013FBB;
+    color: #fff;
+}
+.breadcrumb-area .breadcrumb-item a {
+    color: #013fbb;
+}
+/* Breadcrumb area End  */
+
+.main-inner-bg
+{
+    background: #fff;
+    /*border-radius:0 0 20px 20px;*/
+    border-radius: 20px;
+    padding: 20px;
+}
+.inner-page-title h5 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    position: relative;
+    width: fit-content;
+    font-family: 'noto_sanssemibold';
+}
+
+.inner-page-title h5:before {
+    content: '';
+    position: absolute;
+    bottom: -33%;
+    left: 0;
+    width: 85px;
+    background: #FF572E;
+    height: 3px;
+}
+.inner-pg-cont-area {
+    padding: 20px 0 0;
+}
+ul.innpg-ul li:before {
+    content: "";
+    border-color: transparent #013fbb;
+    border-style: solid;
+    border-width: 0.35em 0 0.35em 0.45em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -14px;
+    top: 14px;
+    position: relative;
+}
+ul.innpg-ul {
+    list-style: none;
+}
+/* Faq-Page Start  */
+.faq-sec .accordion .accordion-item {border-color: #013fbb30;border-radius: 0;margin-bottom: 10px;border-top: 1px solid #013fbb30;}
+.faq-sec  .accordion  .accordion-item  h2 .accordion-button {font-size: 14px !important;padding: 9px 12px !important;border-radius: 0 !important;}
+.faq-sec .accordion .accordion-item h2 .accordion-button:hover, .faq-sec .accordion .accordion-item h2 .accordion-button:focus {box-shadow: none;}
+.faq-sec .accordion .accordion-item h2 .accordion-button:hover, .faq-sec .accordion .accordion-item h2 .accordion-button:focus{background: #013fbb!important;color: #fff!important;}
+.faq-sec .accordion .accordion-item h2 .accordion-button {background: #013fbb;color: #fff;}
+.faq-sec .accordion .accordion-item h2 .accordion-button::after {color: #fff !important;transform: scale(0.8);}
+.accordion-button.collapsed {background: #fff !important;color: #013fbb !important;}
+.faq-sec .accordion .accordion-item h2 .accordion-button:hover:after, .faq-sec .accordion .accordion-item h2 .accordion-button:focus:after{filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);}
+.accordion .accordion-button[aria-expanded="false"]:after {filter: invert(21%) sepia(86%) saturate(7489%) hue-rotate(208deg) brightness(101%) contrast(107%);}
+.accordion .accordion-button[aria-expanded="true"]:after{transition: transform 0.3s ease; filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);}
+.faq-img-sec img {
+    width: 500px;
+}
+.faq-img-sec {
+    text-align: center;
+}
+.faq-img-sec .faq-img-title {
+    font-size: 14px;
+    margin: 15px 0;
+    color: #013fbb;
+    font-family: 'noto_sansmedium';
+}
+.faq-sec p {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+/* Faq-Page End  */
+
+/* Inner - Pages CSS End  */
 
 
 @media (max-width: 767px){
