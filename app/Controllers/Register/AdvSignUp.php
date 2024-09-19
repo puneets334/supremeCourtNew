@@ -335,21 +335,19 @@ class AdvSignUp extends BaseController {
         $photo_path = 'user_images/photo/';
         $this->create_directory($thumbnail_path);
         $this->create_directory($photo_path);
+
         $config['upload_path'] = $photo_path;
         $config['allowed_types'] = 'jpg|jpeg|png';
         $config['overwrite'] = true;
         $config['file_name'] = $file_temp_name;
+
         $file = $this->request->getFile($images);
-        // pr($file);
-        if ($file && $file->isValid() && !$file->hasMoved()) {
-            $file->move($photo_path);
-            $filename = $file_temp_name;
-            $data['picture'] = $file_temp_name;
-            $sourcePath = $file->getTempName() . $file->getName();
-            $destinationPath = WRITEPATH . 'uploads/thumbnails/' . $file->getName();
-            // $this->_generate_thumbnail($filename, $thumbnail_path);
-            // $this->create_thumbnail($sourcePath, $destinationPath, 150, 150);
-            return $data;
+        if ($file && $file->isValid() && !$file->hasMoved()) { 
+    $file->move($photo_path, $file_temp_name);  
+    $data['picture'] = $file_temp_name; 
+    $sourcePath = $photo_path . $file_temp_name;   
+    $destinationPath = WRITEPATH . 'uploads/thumbnails/' . $file_temp_name; 
+    return $data;
         } else {
             return ['error' => 'File upload failed: ' . $file->getErrorString()];
         }
@@ -358,6 +356,7 @@ class AdvSignUp extends BaseController {
     function create_directory($path) {
         if (!is_dir($path)) {
             $uold = umask(0);
+
             if (!mkdir($path, 0777, true)) {
                 die('Failed to create directory: ' . $path . ' - Error: ' . error_get_last()['message']);
             }
