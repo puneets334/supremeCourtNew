@@ -98,7 +98,7 @@ class Search extends BaseController {
         }elseif(!empty($search_type) && $search_type!=null && $search_type=='efiling' && $search_type!='Diary' && $search_type!= 'All') {
          $Report_fromDate_toDate='E-Filing Number :'.$efiling_no . '-'.$efiling_year;
         }else{
-            $Report_fromDate_toDate='Data not fount.';
+            $Report_fromDate_toDate='Data not found.';
         }
         // pr($diary_year);
             $data = $this->ReportModel->get_report_list($search_type,$ActionFiledOn,$DateRange,array($stages),$filing_type_id,$users_id,$diary_no,$diary_year,$efiling_no,$efiling_year,$_SESSION['login']['admin_for_type_id'], $_SESSION['login']['admin_for_id'],$status_type);

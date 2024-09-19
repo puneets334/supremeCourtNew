@@ -413,7 +413,7 @@
                                                     <!--</center><br><hr>-->
                                                     <div class="card-body diary box" style="display:none; block;background-color: #ffffff;border-color: #ffffff;">
                                                         <div class="row">
-                                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="col-md-2 col-sm-2 col-xs-12">
                                                                 <div class="form-group">
                                                                     <!--<label class="control-label input-lg"> Diary No. <span style="color: red">*</span>:</label>-->
                                                                     <!--<label class="control-label col-md-3 col-sm-12 col-xs-12 input-lg"> Diary No. <span style="color: red">*</span>:</label>-->
@@ -421,14 +421,14 @@
                                                                     <label for="exampleInputEmail1"> Diary No. <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
                                                                         <input id="diary_no" name="diary_no" maxlength="10" placeholder="Diary No." class="form-control cus-form-ctrl age_calculate" type="text" required>
-                                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Diary number should be digit only.">
+                                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Diary number should be digit only.">
                                                                             <i class="fa fa-question-circle-o"></i>
                                                                         </span>
                                                                     </div>
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class=" col-md-4 col-sm-6 col-xs-12 ">
+                                                            <div class=" col-md-2 col-sm-2 col-xs-12 ">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1">Diary Year <span style="color: red">*</span>:</label>
                                                                     <!--<label class="control-label col-md-3 col-sm-12 col-xs-12 input-lg">Diary Year <span style="color: red">*</span>:</label>-->
@@ -463,7 +463,7 @@
                                                     <!--width: 714px;margin-left: 675px;     padding-left: 335px;;margin-top: -46px;-->
                                                     <div class="card-body register box" style="display: block;background-color: #ffffff;border-color: #ffffff;">
                                                         <div class="row">
-                                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                            <div class="col-md-3 col-sm-3 col-xs-12">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1"> Case Type <span style="color: red">*</span>:</label>
                                                                     <!--<label class="control-label col-md-4 col-sm-12 col-xs-12 input-lg"> Case Type <span style="color: red">*</span>:</label>-->
@@ -485,19 +485,19 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4 col-sm-6 col-xs-12  ">
+                                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1"> Case No. <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
                                                                         <input id="case_number" name="case_number" maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl age_calculate" type="text" required>
-                                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Related case number should be digits only.">
+                                                                        <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Related case number should be digits only.">
                                                                             <i class="fa fa-question-circle-o"></i>
                                                                         </span>
                                                                     </div>
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3 col-xs-12  ">
+                                                            <div class="col-md-2 col-sm-2 col-xs-12  ">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1"> Case Year <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
@@ -548,9 +548,9 @@
                                             <div class="x_title">
                                                 <h3 id="divTitle"></h3>
                                             </div>
-                                            <div class="x_content">
-                                                <div class="table-wrapper-scroll-y my-custom-scrollbar dictbldata">
-                                                    <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                            <div class="table-sec"> 
+                                                <div class="table-responsive">
+                                                    <table id="datatable-responsive" class="table table-striped custom-table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                                         <thead>
                                                             <tr class="success input-sm" role="row">
                                                                 <th width="6%">S.N0.</th>
@@ -825,12 +825,19 @@
                         $('#search_sc_case').val('Please wait...');
                         $('#search_sc_case').prop('disabled', true);
                     },*/
-                    success: function (resultData) {
-                        /*alert(resultData);
+
+                    success: function (resultData) { 
+                    //    alert(resultData);
                         console.log(resultData);
-                        return;*/
+                        /* return;*/
                         var rdata = JSON.parse(resultData);
+                    //    alert(rdata);
+
                         //console.log(rdata[0]['diary_no']);return;
+                        if(rdata[0]['diary_no']===''){
+                       alert('record not found'); 
+                       return false;
+                        }
                         var diary_no = rdata[0]['diary_no'];
                         var diary_year= rdata[0]['diary_year'];
                         if(diary_no !='' && diary_year !=''){
@@ -843,6 +850,7 @@
                 });
                 //XXXXXXXXXXXXXXXXXX
             });
+            
             $(".SearchEfilingNumbersubmit").click(function(e) {
                 e.preventDefault();
                 //alert('welcome click =Search Efiling Number submit');
@@ -879,6 +887,7 @@
                 var search_type='All';
                 loadData(search_type,ActionFiledOnGet,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year,status_type);
             });
+
             function loadData(search_type,ActionFiledOn,date,stage_id,filing_type_id,users_id,diary_no,diary_year,efiling_no,efiling_year,status_type) {
                 if(date == null || date=="") {
                     return false;
@@ -1024,7 +1033,8 @@
                     if(peding_since>2){
                         peding_since="<span style='color: red;'><b>"+peding_since+"</b></span>";
                     }
-                    $('#datatable-responsive').dataTable().fnAddData( [                            sn,
+                    $('#datatable-responsive').dataTable().fnAddData( [                            
+                        sn,
                         efiling_no,
                         efiling_type,
                         case_no,
