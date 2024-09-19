@@ -44,9 +44,9 @@ class DefaultController extends BaseController {
     }
 
     public function index() {
-        unset($_SESSION['kyc_configData']);
-        unset($_SESSION['adv_details']);
-        unset($_SESSION['register_data']);
+        // unset($_SESSION['kyc_configData']);
+        // unset($_SESSION['adv_details']);
+        // unset($_SESSION['register_data']);
         /* $captcha_value = captcha_generate();
         $data['captcha']['image'] = $captcha_value['image'];
         $data['captcha']['word'] = $captcha_value['word'];*/

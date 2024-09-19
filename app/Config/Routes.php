@@ -409,4 +409,9 @@ $routes->match(['GET', 'POST'], 'online_copying/user_address_edit', 'OnlineCopyi
 $routes->match(['GET', 'POST'], 'online_copying/user_address_update', 'OnlineCopying\AddressController::updateApplicantAddress');
 $routes->match(['GET', 'POST'], 'online_copying/sci_request', 'OnlineCopying\DefaultController::sciRequest');
 $routes->match(['GET', 'POST'], 'online_copying/sci_request_payment', 'OnlineCopying\DefaultController::sciRequestPayment');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp/get_dist_list', 'Register\AdvSignUp::get_dist_list');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp/upload_photo', 'Register\AdvSignUp::upload_photo');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp/add_advocate', 'Register\AdvSignUp::add_advocate');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp/upload', 'Register\AdvSignUp::upload');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp/upload_id_proof', 'Register\AdvSignUp::upload_id_proof');
 

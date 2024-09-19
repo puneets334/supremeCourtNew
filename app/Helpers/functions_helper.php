@@ -769,7 +769,7 @@ function url_encryption($url_val)
         // $return_value .= $str_value[$array_value[$i]];
         $return_value .= $str_value[$array_value[$i]] ?? '';
     }
-    $check_sum = getSessionData('login')['login_active_session'];
+    $check_sum = !empty(getSessionData('login')) ? getSessionData('login')['login_active_session'] : '';
 
     $string = $return_value;
     //$checksum = hash_hmac('crc32b', $string, $check_sum, false); // working php7.1
@@ -791,7 +791,7 @@ function url_decryption($url_val)
 
         // Load session library
         $session = \Config\Services::session();
-        $login_id = $session->get('login')['login_active_session'];
+        $login_id = !empty($session->get('login')) ? $session->get('login')['login_active_session'] : '';
 
         $res_checksum = strtoupper(hash_hmac('sha256', $check_sum_str[0], $login_id, false));
         if ($res_checksum == $check_sum_str[1]) {

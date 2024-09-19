@@ -13,6 +13,7 @@ class AdvocateOnRecord extends BaseController {
     protected $Register_model;
     protected $slice;
     protected $form_validation;
+    protected $efiling_webservices;
     protected $session;
     
     public function __construct() {
@@ -28,7 +29,7 @@ class AdvocateOnRecord extends BaseController {
     }
     
     public function index() {
-        unset($_SESSION['adv_details']);
+        // unset($_SESSION['adv_details']);
         // $captcha_value = captcha_generate();
         // $data['captcha']['image'] = $captcha_value['image'];
         // $data['captcha']['word'] = $captcha_value['word'];
