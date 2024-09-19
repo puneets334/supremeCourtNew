@@ -59,7 +59,7 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Main Respondent Name
                                 <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
+                            <textarea tabindex='2' id="party_name"  style="text-transform: uppercase"  name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -87,7 +87,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3" id="rel_name">
                             <label for="" class="form-label">Parent/Spouse Name <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation relative_name" type="text">
+                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3"  style="text-transform: uppercase" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation relative_name" type="text">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -119,7 +119,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3 icon-input">
-                            <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
+                            <label for="" class="form-label">Date of Birth </label>
                             <input tabindex='5' class="form-control cus-form-ctrl" id="party_dob" name="party_dob" value="<?php echo !empty(@$party_details[0]['party_dob']) ? date('d/m/Y', strtotime(@$party_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                             <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
@@ -157,7 +157,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" min="0" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" disabled>
+                            <input id="party_age" tabindex='6' name="party_age" min="0" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required >
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -171,9 +171,9 @@
                             $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
                             $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
                             ?>
-                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?>>Male</label>
-                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?>>Female</label>
-                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>>Other</label>
+                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?> required >Male</label>
+                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?> required >Female</label>
+                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?> required >Other</label>
                         </div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Email </label>
-                            <input id="party_email" name="party_email" placeholder="Email" tabindex='16' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
+                            <input id="party_email"  style="text-transform: uppercase" name="party_email" placeholder="Email" tabindex='16' value="<?php echo (@$party_details[0]['email_id']); ?>" class="form-control cus-form-ctrl" type="email" minlength="6" maxlength="49">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter Petitioner valid email id. (eg : abc@example.com)">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -249,7 +249,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Address <span id="address_span" <?php echo $style; ?> class="astriks"><?php echo $astrik; ?></span></label>
-                            <textarea tabindex='18' name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3"><?php echo (@$party_details[0]['address']); ?></textarea>
+                            <textarea tabindex='18' name="party_address" id="party_address" style="text-transform: uppercase"  placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3"><?php echo (@$party_details[0]['address']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -288,7 +288,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">City <span id="city_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
-                            <input id="party_city" tabindex='21' name="party_city" placeholder="City" value="<?php echo (@$party_details[0]['city']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49" required>
+                            <input id="party_city" tabindex='21' style="text-transform: uppercase"  name="party_city" placeholder="City" value="<?php echo (@$party_details[0]['city']); ?>" class="form-control cus-form-ctrl sci_validation" type="text" minlength="3" maxlength="49" required>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter City name.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -434,14 +434,14 @@
 
 
     $(document).ready(function() {
-        $('.party_name').bind('keyup blur', function() {
-            var node = $(this);
-            node.val(node.val().replace(/[^a-z]/g, ''));
-        })
-        $('.relative_name').bind('keyup blur', function() {
-            var node = $(this);
-            node.val(node.val().replace(/[^a-z]/g, ''));
-        })
+        // $('.party_name').bind('keyup blur', function() {
+        //     var node = $(this);
+        //     node.val(node.val().replace(/[^a-z]/g, ''));
+        // })
+        // $('.relative_name').bind('keyup blur', function() {
+        //     var node = $(this);
+        //     node.val(node.val().replace(/[^a-z]/g, ''));
+        // })
     });
     //---------- Hide and show Individual and Org form----------------------//
     $(document).ready(function() {
@@ -470,7 +470,7 @@
             $('.party_name').attr('required', 'required');
             $('.relation').attr('required', 'required');
             $('.relative_name').attr('required', 'required');
-            $('#party_dob').attr('required', 'required');
+            // $('#party_dob').attr('required', 'required');
             $('.org_state_name').removeAttr('required', 'required');
             $('.org_post').removeAttr('required', 'required');
         } else {

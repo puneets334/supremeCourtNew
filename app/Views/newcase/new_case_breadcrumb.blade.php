@@ -104,6 +104,33 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 </div>
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
+                        <?php
+                                            $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT);
+                                            $allowed_users_trash = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT); 
+                        if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+                            $stages_array = array(Draft_Stage);
+
+                            if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+                                if (!empty(getSessionData('efiling_details')) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == 1) {
+                                    if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
+                        ?>
+                                            <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
+                                        <?php } else {
+                                        ?>
+                                            <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
+                                        <?php
+                                        }
+                                    }
+                                } else {
+                                    if (!empty(getSessionData('efiling_details')) && in_array(JAIL_PETITION_SUBORDINATE_COURT, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                        ?><a href="<?php echo base_url('jailPetition/FinalSubmit') ?>" class="quick-btn btn btn-success btn-sm" id='jail'>
+                                            SUBMIT FOR EFILING</a>
+                        <?php }
+                                }
+                            }
+                        }
+                        ?>
                         <a href="javascript:void(0)" class="btn btn-primary" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
@@ -124,7 +151,9 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         $s = 'E FILE';
                     }
                     $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT);
-                    $allowed_users_trash = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+                    $allowed_users_trash = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT); 
+                                                 
+                                              
                     if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
                         $stages_array = array(Draft_Stage);
 

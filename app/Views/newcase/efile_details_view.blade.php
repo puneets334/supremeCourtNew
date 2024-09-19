@@ -612,7 +612,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                             if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                                                 if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                                                 ?>
-                                                                    <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilaor'> SUBMIT FOR EFILING </button>
+                                                                    <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
                                                                 <?php } else {
                                                                 ?>
                                                                     <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
@@ -1525,7 +1525,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             });
             return false;
         });
-        $("#efilaor").click(function() {
+        $(".efilaor").click(function() {
             $.ajax({
                 url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
                 success: function(data) {

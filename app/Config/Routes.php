@@ -331,6 +331,7 @@ $routes->get('shareDoc', 'ShareDoc\DefaultController::index');
 $routes->match(['GET', 'POST'],'on_behalf_of/DefaultController/save_filing_for', 'OnBehalfOf\DefaultController::save_filing_for');
 $routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
 $routes->match(['GET', 'POST'], 'report/search/actionFiledon', 'Report\Search::actionFiledon');
+$routes->match(['GET', 'POST'], 'report/search/Get_search_case_details_rpt', 'Report\Search::Get_search_case_details_rpt');
 $routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)/(:any)', 'Report\Search::view/$1/$2/$3/$4/$5');
 $routes->match(['GET', 'POST'], 'report/search/view/(:any)/(:any)/(:any)/(:any)', 'Report\Search::view/$1/$2/$3/$4');
 $routes->match(['GET', 'POST'], 'case/search/(:any)', 'Case\Search::index');

@@ -285,7 +285,6 @@ class ReportModel extends Model
             }
         } elseif (!empty($search_type) && $search_type != null && $search_type == 'Diary' && $search_type != 'efiling' && $search_type != 'All') {
             if (!empty($diary_no) && $diary_no != null) {
-                // pr($diary_no);
                 $builder->where('new_case_cd.sc_diary_num', $diary_no);
             }
             if (!empty($diary_year) && $diary_year != null) {
