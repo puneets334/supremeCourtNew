@@ -216,14 +216,17 @@ class NewCaseModel extends Model {
     }
 
     function add_update_case_parties($registration_id, $data, $breadcrumb_step, $party_id = null) {
+      
         if ($party_id) {
+          
             $this->update_breadcrumbs($registration_id, $breadcrumb_step);
             $builder = $this->db->table('efil.tbl_case_parties');
             $builder->where('registration_id', $registration_id);
             $builder->where('id', $party_id);
             $builder->where('is_deleted', FALSE);
             $builder->update($data);
-            if ($this->db->affectedRows() > 0) {
+           
+            if ($this->db->affectedRows() > 0) { 
                 return TRUE;
             } else {
                 return FALSE;
@@ -233,6 +236,7 @@ class NewCaseModel extends Model {
             $this->update_breadcrumbs($registration_id, $breadcrumb_step);
             $builder = $this->db->table('efil.tbl_case_parties');
             $builder->insert($data);
+          
             if (isset($data['parent_id']) && $data['parent_id'] != NULL) {
                 $this->update_party_lr_status($registration_id, $data['parent_id'], $data['create_on']);
             }

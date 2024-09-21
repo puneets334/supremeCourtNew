@@ -163,7 +163,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text">
+                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text"  >
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -177,9 +177,9 @@
                             $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
                             $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
                             ?>
-                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?> >Male</label>
-                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?> >Female</label>
-                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?> >Other</label>
+                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?>  >Male</label>
+                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?>  >Female</label>
+                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>  >Other</label>
                         </div>
                     </div>
                 </div>
@@ -477,6 +477,10 @@
             $('#relation').attr('required', 'required');
             $('#party_dob').attr('required', 'required');
             $('#org_state').removeAttr('required', 'required');
+            $('#party_age').attr('required', 'required');
+            $('input[name="party_gender"]').attr('required', 'required');
+
+
             // $('#org_state').val('');
             // $('#org_dept').val('');
             // $('#org_post').val('');
@@ -484,9 +488,12 @@
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
         } else {
+            $('#party_age').attr('required', false);
+            $('input[name="party_gender"]').attr('required', false);
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
+
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').hide();
@@ -1034,22 +1041,30 @@
         }
     });
 
-    // $(function() {
-        var today = new Date();
+    // $(function() { 
         var today = new Date();
         var startYear = 1984;
         var startDate = new Date(startYear, 1, 1);
-
-        $(".party_dob").datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100:-1",
-            format: "dd/mm/yyyy",
-            setDate: startDate,
-            endDate: today,
-            "autoclose": true
-            // startDate: startDate, 
-        });
+ 
+    $('.party_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: today,
+        autoclose: true
+    });
+        // $(".party_dob").datepicker({
+        //     changeMonth: true,
+        //     changeYear: true,
+        //     yearRange: "-100:-1",
+        //     format: "dd/mm/yyyy",
+        //     setDate: startDate,
+        //     endDate: today,
+        //     "autoclose": true
+        //     // startDate: startDate, 
+        // });
     // });
 
     $(document).on('change', '#party_dob', function() {

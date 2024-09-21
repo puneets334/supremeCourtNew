@@ -1739,7 +1739,7 @@
 		endDate: Infinity,
 		forceParse: true,
 		format: 'dd/mm/yyyy',
-		keyboardNavigation: true,
+		keyboardNavigation: true, 
 		language: 'en',
 		minViewMode: 0,
 		maxViewMode: 4,

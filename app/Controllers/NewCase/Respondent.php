@@ -267,9 +267,18 @@ class Respondent extends BaseController {
         $party_name = !empty($_POST["party_name"]) ? $_POST["party_name"] : '';
         $party_relation = !empty($_POST["relation"]) ? $_POST["relation"] : '';
         $relative_name = !empty($_POST["relative_name"]) ? $_POST["relative_name"] : '';
+
         if (isset($_POST['party_dob']) && !empty($_POST['party_dob'])) {
-            $party_dob = $_POST["party_dob"];
-            $party_dob = date('Y-m-d', strtotime($party_dob));
+            // $party_dob = $_POST["party_dob"];
+            $dateTime = \DateTime::createFromFormat('d/m/Y', $_POST["party_dob"]);
+            //   $party_dob = date('Y-m-d', strtotime($_POST["party_dob"]));
+            if ($dateTime !== false) {
+                $party_dob = $dateTime->format('Y-m-d'); // Convert to 'Y-m-d'
+            } else {
+                // Handle the error (invalid date format)
+                $party_dob = NULL;
+            }
+
         } else {
             $party_dob = NULL;
         }
@@ -359,17 +368,18 @@ class Respondent extends BaseController {
         );
         $party_dob = trim($party_dob); // Remove any extra whitespace
 
-        if ($party_dob && strtotime($party_dob) !== false) {
-            $formatted_date = date('Y-m-d', strtotime($party_dob));
-        } else {
-            $formatted_date = null;
-        }
+        // if ($party_dob && strtotime($party_dob) !== false) {
+        //     $formatted_date = date('Y-m-d', strtotime($party_dob));
+        // } else {
+        //     $formatted_date = null;
+        // }
+        //  pr($party_dob);
         $party_individual = array(
             'party_name' => $party_name,
             'relation' => $party_relation,
             'relative_name' => $relative_name,
             'party_age' => ($party_age != 'NaN') ? $party_age : null,
-            'party_dob' => $formatted_date,
+            'party_dob' => $party_dob,
             'gender' => $party_gender,
             'is_dead_minor'=>$is_dead_minor,
             'is_dead_file_status'=>$is_dead_file_status
@@ -385,6 +395,7 @@ class Respondent extends BaseController {
         );
 
         $party_details = array_merge($party_type, $party_individual, $party_organisation, $party_address_details);
+        
 
         $registration_id = getSessionData('efiling_details')['registration_id'];
         $curr_dt_time = date('Y-m-d H:i:s');
@@ -419,13 +430,14 @@ class Respondent extends BaseController {
                 'created_by_ip' => getClientIP()
             );
             $party_details = array_merge($party_details, $party_create_data);
+           
             $inserted_party_id = $this->New_case_model->add_update_case_parties($registration_id, $party_details, NEW_CASE_RESPONDENT);
-
+           
             if ($inserted_party_id) {
 
                 $_SESSION['case_table_ids']->m_respondent_id = $inserted_party_id;
                 echo '2@@@' . htmlentities('Respondent details added successfully', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . Draft_Stage)));
-            } else {
+            } else { 
                 echo '1@@@' . htmlentities('Some error ! Please Try again.', ENT_QUOTES);
             }
         }
