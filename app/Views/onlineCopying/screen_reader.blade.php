@@ -3,7 +3,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="dash-card dashboard-section">
+            <div class="dashboard-section dashboard-tiles-area"></div>
+                <div class="dashboard-section">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class=" dashboard-bradcrumb">
@@ -94,7 +95,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -104,39 +104,34 @@
 @endsection
 @push('script')
 <script type="text/javascript">
-
-        function isNumber(evt) {
-            evt = (evt) ? evt : window.event;
-            var charCode = (evt.which) ? evt.which : evt.keyCode;
-            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-                return false;
-            }
-            return true;
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
         }
-        $(document).ready(function(){
-            $("#search_crn").hide();
-        });
-$(document).on('click', '#radio_crn', function () {
-    $("#search_crn").show();
-    $("#search_application_no").hide();
-    $('#result').html('');
-});
-$(document).on('click', '#radio_ano', function () {
-    $("#search_application_no").show();
-    $("#search_crn").hide();
-    $('#result').html('');
-});
-
-
-$(document).on('click','#sub',function(){
-
+        return true;
+    }
+    $(document).ready(function(){
+        $("#search_crn").hide();
+    });
+    $(document).on('click', '#radio_crn', function () {
+        $("#search_crn").show();
+        $("#search_application_no").hide();
+        $('#result').html('');
+    });
+    $(document).on('click', '#radio_ano', function () {
+        $("#search_application_no").show();
+        $("#search_crn").hide();
+        $('#result').html('');
+    });
+    $(document).on('click','#sub',function(){
         var application_type= $("#application_type").val();
         var application_no= $("#application_no").val();
         var application_year= $("#application_year").val();
         var crn = $("#crn").val();
         var flag = '';
         var regNum = new RegExp('^[0-9]+$');
-
         if($("#radio_ano").is(':checked')){
             flag = 'ano';
             if(!regNum.test(application_type)){
@@ -164,16 +159,14 @@ $(document).on('click','#sub',function(){
                 $("#case_yr").focus();
                 return false;
             }
-        }
-         else{
-           flag = 'crn';
-           if(crn.length !=15){
-               alert("Please enter CRN");
-               $('#crn').focus();
-               return false;
-           }
-        }
-        
+        } else{
+            flag = 'crn';
+            if(crn.length !=15){
+                alert("Please enter CRN");
+                $('#crn').focus();
+                return false;
+            }
+        }        
         $.ajax({
             url:'<?php echo base_url("online_copying/get_copy_search"); ?>',
             cache: false,
@@ -193,39 +186,30 @@ $(document).on('click','#sub',function(){
                 alert("Error: " + xhr.status + " " + xhr.statusText);
             }
         });
-      });
-
-
-        function onloadCallback() {
-            var textarea = document.getElementById("g-recaptcha-response-100000");
-            textarea.setAttribute("aria-hidden", "true");
-            textarea.setAttribute("aria-label", "do not use");
-            textarea.setAttribute("aria-readonly", "true");
-        }
-
-        //XXXXXXXXX TRACK MODAL FUNCTION START XXXXXXXX
-
-        function mytrack_record(){
-            //alert("Rounak Mishra");
-            var modal = document.getElementById("myModal");
-            var btn = document.getElementById("myBtn");
-            var span = document.getElementsByClassName("close")[0];
-            modal.style.display = "block";
-            span.onclick = function() {
-
+    });
+    function onloadCallback() {
+        var textarea = document.getElementById("g-recaptcha-response-100000");
+        textarea.setAttribute("aria-hidden", "true");
+        textarea.setAttribute("aria-label", "do not use");
+        textarea.setAttribute("aria-readonly", "true");
+    }
+    //XXXXXXXXX TRACK MODAL FUNCTION START XXXXXXXX
+    function mytrack_record(){
+        //alert("Rounak Mishra");
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+        window.onclick = function(event) {
+            if (event.target == modal) {
                 modal.style.display = "none";
-            };
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
             }
-
-        }//End of function mytrack_record..
-
-        //XXXXXXXXXX TRACK MODAL FUNCTION END  XXXXXXX
-
-
-
-        </script>
-        @endpush
+        }
+    }
+    //End of function mytrack_record..
+    //XXXXXXXXXX TRACK MODAL FUNCTION END  XXXXXXX
+</script>
+@endpush
