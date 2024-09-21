@@ -7,6 +7,7 @@ use Config\Database;
 class AddressModel extends Model
 {
     protected $db2;
+    protected $db3;
     protected $table = 'user_address'; // Make sure this matches your table name
     protected $primaryKey = 'id'; // Set the primary key if necessary
 
@@ -36,16 +37,17 @@ class AddressModel extends Model
 
     public function checkUserAddress($mobile, $email)
     {
-        // Build the query
         $builder = $this->db3->table('user_address'); 
         $builder->where('mobile', $mobile)
                 ->where('email', $email)
                 ->where('is_active', 'Y');        
         $query = $builder->get();
-        $result = $query->getResultArray();
-
-        
-        // Return the result
+        if ($query === false) {
+            $error =  $this->db3->error();
+            $result = [];
+        } else {
+            $result = $query->getResultArray();
+        }
         return $result;
     }
 
