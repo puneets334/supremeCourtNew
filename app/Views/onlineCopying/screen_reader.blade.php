@@ -7,76 +7,90 @@
                 <div class="dashboard-section">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="dash-card">
-                                {{-- Page Title Start --}}
-                                <div class="title-sec">
-                                    <h5 class="unerline-title"> Screen Reader </h5>
-                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                            <div class=" dashboard-bradcrumb">
+                                <div class="left-dash-breadcrumb">
+                                    <div class="page-title">
+                                        <h5><i class="fa fa-file"></i> Screen Reader</h5>
+                                    </div>
+                                    <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
                                 </div>
-                                {{-- Page Title End --}}
-                                {{-- Main Start --}}
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <p><a href="<?=ANU_GOV_IN?>e_copying">eCopying Software</a> is accessible with different screen readers, Following are the information about different screen readers : </p>
-                                        <div class="table-sec">
-                                            <div class="table-responsive">
-                                                <table id="datatable-responsive" class="table table-striped custom-table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Screen Reader</th>
-                                                            <th>Free / Commercial</th>
-                                                            <th>URL</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>NVDA</td>
-                                                            <td>Free</td>
-                                                            <td><a href="http://www.nvda-project.org/" target="_blank" title="External website that opens in a new window :- Non Visual Desktop Access (NVDA)">http://www.nvda-project.org/</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>SAFA</td>
-                                                            <td>Free</td>
-                                                            <td><a href="http://safa-reader.software.informer.com/download/" target="_blank" title="External website that opens in a new window :- Screen Access For All (SAFA)">http://safa-reader.software.informer.com/download/</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>System Access To Go</td>
-                                                            <td>Free</td>
-                                                            <td><a href="http://www.satogo.com/" target="_blank" title="External website that opens in a new window :- System Access To Go">http://www.satogo.com/</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Thunder</td>
-                                                            <td>Free</td>
-                                                            <td><a href="http://www.screenreader.net/index.php?pageid=11" target="_blank" title="External website that opens in a new window :- Thunder">http://www.screenreader.net/index.php?pageid=11</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Web Anywhere</td>
-                                                            <td>Free</td>
-                                                            <td><a href="http://webanywhere.cs.washington.edu/wa.php" target="_blank" title="External website that opens in a new window :- Web Anywhere">http://webanywhere.cs.washington.edu/wa.php</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Hal</td>
-                                                            <td>Commercial</td>
-                                                            <td><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=5" target="_blank" title="External website that opens in a new window :- Hal">http://www.yourdolphin.co.uk/productdetail.asp?id=5</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>JAWS</td>
-                                                            <td>Commercial</td>
-                                                            <td><a href="http://www.freedomscientific.com/jaws-hq.asp" target="_blank" title="External website that opens in a new window :- JAWS">http://www.freedomscientific.com/jaws-hq.asp</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Supernova</td>
-                                                            <td>Commercial</td>
-                                                            <td><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=1" target="_blank" title="External website that opens in a new window :- Supernova">http://www.yourdolphin.co.uk/productdetail.asp?id=1</a><br />         (External website that opens in a new window)</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Window-Eyes</td>
-                                                            <td>Commercial</td>
-                                                            <td><a href="http://www.gwmicro.com/Window-Eyes/" target="_blank" title="External website that opens in a new window :- Window-Eyes">http://www.gwmicro.com/Window-Eyes/</a><br />(External website, you are going to open a new window)</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                <div class="ryt-dash-breadcrumb">
+                                    <div class="btns-sec">
+
+                                        <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                               
+                </div>
+                <div class="dash-card dashboard-section">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                    <p><a href="<?=ANU_GOV_IN?>e_copying">eCopying Software</a> is accessible with different screen readers, Following are the information about different screen readers :
+                                    </p>
+                                    <div class="table-sec">
+                                        <div class="table-responsive">
+                                            <table id="datatable-responsive" class="table table-striped custom-table">
+                                        <thead>
+
+                                        <tr>
+                                            <th>Screen Reader</th>
+                                            <th>Free / Commercial</th>
+                                            <th>URL</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>NVDA</td>
+                                            <td>Free</td>
+                                            <td><a href="http://www.nvda-project.org/" target="_blank" title="External website that opens in a new window :- Non Visual Desktop Access (NVDA)">http://www.nvda-project.org/</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>SAFA</td>
+                                            <td>Free</td>
+                                            <td><a href="http://safa-reader.software.informer.com/download/" target="_blank" title="External website that opens in a new window :- Screen Access For All (SAFA)">http://safa-reader.software.informer.com/download/</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>System Access To Go</td>
+                                            <td>Free</td>
+                                            <td><a href="http://www.satogo.com/" target="_blank" title="External website that opens in a new window :- System Access To Go">http://www.satogo.com/</a><br />(External website, you are going to open a new window)</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Thunder</td>
+                                            <td>Free</td>
+                                            <td><a href="http://www.screenreader.net/index.php?pageid=11" target="_blank" title="External website that opens in a new window :- Thunder">http://www.screenreader.net/index.php?pageid=11</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Web Anywhere</td>
+                                            <td>Free</td>
+                                            <td><a href="http://webanywhere.cs.washington.edu/wa.php" target="_blank" title="External website that opens in a new window :- Web Anywhere">http://webanywhere.cs.washington.edu/wa.php</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Hal</td>
+                                            <td>Commercial</td>
+                                            <td><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=5" target="_blank" title="External website that opens in a new window :- Hal">http://www.yourdolphin.co.uk/productdetail.asp?id=5</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>JAWS</td>
+                                            <td>Commercial</td>
+                                            <td><a href="http://www.freedomscientific.com/jaws-hq.asp" target="_blank" title="External website that opens in a new window :- JAWS">http://www.freedomscientific.com/jaws-hq.asp</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Supernova</td>
+                                            <td>Commercial</td>
+                                            <td><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=1" target="_blank" title="External website that opens in a new window :- Supernova">http://www.yourdolphin.co.uk/productdetail.asp?id=1</a><br />         (External website that opens in a new window)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Window-Eyes</td>
+                                            <td>Commercial</td>
+                                            <td><a href="http://www.gwmicro.com/Window-Eyes/" target="_blank" title="External website that opens in a new window :- Window-Eyes">http://www.gwmicro.com/Window-Eyes/</a><br />(External website, you are going to open a new window)</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                         </div>
                                     </div>
                                 </div>

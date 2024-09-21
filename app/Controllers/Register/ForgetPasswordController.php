@@ -228,13 +228,8 @@ class ForgetPasswordController extends BaseController
             return $this->render('responsive_variant.authentication.adv_otp_view',$data);
         } else {            
             // Check OTP expiration and verification
-            if ($registerType != 'Forget Password') {              
-                $mobile_status = $this->verifyOTP($currentTime, 'adv_mobile_otp', 'mobile_otp');
-                $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
-            } else {
-                $mobile_status = $this->verifyOTP($currentTime, 'adv_mobile_otp', 'mobile_otp');
-                $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
-            }
+            $mobile_status = $this->verifyOTP($currentTime, 'adv_mobile_otp', 'mobile_otp');
+            $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
             $session->set('verify_details', ['mobile_verified' => $mobile_status, 'email_verified' => $email_status]);
             if ($mobile_status == 'done' && $email_status == 'done') {
                 if ($registerType == 'Advocate') {               

@@ -36,6 +36,7 @@ select,
 textarea {
     text-transform: uppercase;
 }
+
 </style>
 <style>
     .datepicker-dropdown {
@@ -156,7 +157,7 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
+                                <label for="" class="form-label">Approximate Age </label>
                                 <?php
                                 $res_age = '';
                                 if(isset($caveatee_details[0]['res_age']))
@@ -536,14 +537,12 @@ textarea {
 
 <script>
     $(document).ready(function() {
-        // alert("SC");
-
         var today = new Date();
         $('#pet_dob').datepicker({
             changeMonth: true,
             changeYear: true,
-            yearRange: "-100:-1",
-            dateFormat: "dd/mm/yy",
+            yearRange: "-100",
+            format: "dd/mm/yyyy",
             defaultDate: '-40y',
             endDate: today 
             
@@ -1199,7 +1198,44 @@ textarea {
 
 
 
-
+    function setSelectedDistrict(stateId,district_name){
+        if(stateId && district_name){
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: "POST",
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: stateId},
+                url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
+                success: function (resData)
+                {
+                    if(resData){
+                        var districtObj = JSON.parse(resData);
+                        var singleObj = districtObj.find(
+                            item => item['district_name'] === district_name
+                        );
+                        if(singleObj){
+                            $('#party_district').val('');
+                            $('#party_district').val(singleObj.id).select2().trigger("change");
+                        }
+                        else{
+                            $('#party_district').val('');
+                        }
+                    }
+                    else{
+                        $('#party_district').val('');
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function () {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    }
 
 
 

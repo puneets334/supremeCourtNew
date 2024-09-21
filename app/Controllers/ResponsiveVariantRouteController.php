@@ -1192,9 +1192,13 @@ class ResponsiveVariantRouteController extends BaseController
             } else {
                 $dateCounts = [];
                 foreach ($final_submitted_applications as $obj) {
-                    $activatedDate = (isset($obj->activated_on) && !empty($obj->activated_on)) ? substr($obj->activated_on, 0, 10) : '';
-                    if (isset($dateCounts[$activatedDate]) && !empty($dateCounts[$activatedDate])) {
-                        $dateCounts[$activatedDate]++;
+                    $activatedDate = (isset($obj->activated_on) && !empty($obj->activated_on)) ? substr($obj->activated_on, 0, 10) : 0;
+                    if($activatedDate != 0){
+                        if (isset($dateCounts[$activatedDate]) && !empty($dateCounts[$activatedDate])) {
+                            $dateCounts[$activatedDate]++;
+                        } else {
+                            $dateCounts[$activatedDate] = 1;
+                        }
                     } else {
                         $dateCounts[$activatedDate] = 1;
                     }

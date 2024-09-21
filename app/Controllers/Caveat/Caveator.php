@@ -3,6 +3,7 @@
 namespace App\Controllers\Caveat;
 
 use App\Controllers\BaseController;
+use App\Libraries\webservices\Efiling_webservices;
 use App\Models\Common\CommonModel;
 use App\Models\Caveat\CaveatCommonModel;
 use App\Models\Caveat\CaveatorModel;
@@ -15,6 +16,7 @@ class Caveator extends BaseController {
     protected $request;
     protected $validation;
     protected $session;
+    protected $efiling_webservices;
 
  public function __construct()
     {
@@ -36,6 +38,7 @@ class Caveator extends BaseController {
         $this->caveat_common_model = new CaveatCommonModel();
         $this->Caveator_model = new CaveatorModel();
         $this->Common_model = new CommonModel();
+        $this->efiling_webservices = new Efiling_webservices();
         $this->validation = \Config\Services::validation();
         $this->request = \Config\Services::request();
     }

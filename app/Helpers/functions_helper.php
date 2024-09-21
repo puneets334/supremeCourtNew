@@ -1240,39 +1240,7 @@ function remark_preview($reg_id, $current_stage_id)
         }
         $msg .= '</div>';
         $msg .= '</div>';
-        $msg .= '<script type="text/javascript">';
-        $msg .= '$(document).ready(function () {';
-
-        $msg .= 'var oTable = $("#datatable-defects").dataTable();';
-
-        $msg .= '$("#checkAll").change(function () {';
-        $msg .= 'oTable.$("input[type=\'checkbox\']").prop("checked", $(this).prop("checked"));';
-        $msg .= '});';
-        $msg .= '});';
-        $msg .= 'function setCuredDefect(id) {';
-        $msg .= 'var CSRF_TOKEN_VALUE = $(\'[name="CSRF_TOKEN"]\').val();';
-        $msg .= 'var value = $("#" + id).is(":checked"); ';
-        $msg .= '$.ajax({';
-        $msg .= 'type: \'POST\',';
-        $msg .= 'url: \'' . base_url("documentIndex/Ajaxcalls/markCuredDefect") .
-            '\',';
-        $msg .= 'data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value},';
-        $msg .= 'success: function () {';
-        $msg .= '$("#row"+id).toggleClass("curemarked")';
-        $msg .= '';
-        $msg .= '},';
-        $msg .= 'error: function () {alert("failed");}';
-        $msg .= '});';
-        $msg .= '}';
-        $msg .= '
-            </script>';
-        $msg .= '<style>
-            ';
-        $msg .= '.curemarked {';
-        $msg .= ' font-weight: bold; text-decoration: line-through;';
-        $msg .= '}';
-        $msg .= '
-            </style>';
+        
 
 
         return $msg;
@@ -3491,9 +3459,16 @@ function eCopyingGetDiaryNo($ct, $cn, $cy){
         ->where("(IF(reg_year_mh = 0 OR DATE(fil_dt) > DATE('2017-05-10'), 
                     YEAR(fil_dt) = {$cy}, 
                     reg_year_mh = {$cy}))")
-        ->get()
-        ->getResult();
-        return $results;
+        ->get();
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            // echo "<pre>Error: " . $error['message'] . "</pre>";
+            $result = [];
+        } else {
+            $result = $query->getResult();
+        }
+        return $result;
 }
 
 function eCopyingCheckDiaryNo($ct, $cn, $cy){
