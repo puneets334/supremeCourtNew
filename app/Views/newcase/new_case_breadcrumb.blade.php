@@ -338,6 +338,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 <ul class="nav nav-tabs"
                     id="myTab"
                     role="tablist">
+                    
                     <li class="nav-item"
                         role="presentation">
                         <?php

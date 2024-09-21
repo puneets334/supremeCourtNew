@@ -43,7 +43,6 @@ class CommonModel extends Model
 
     function getCaseType(){
         $builder = $this->db2->table('master.casetype');
-
         $results = $builder->select('casecode, skey, casename, short_description')
             ->where('display', 'Y')
             ->where('casecode !=', 9999)
@@ -58,7 +57,6 @@ class CommonModel extends Model
 
     function getCatogoryForApplication($id){
         $builder = $this->db2->table('master.copy_category');
-
         $builder->select('id, urgent_fee, per_certification_fee, per_page, code, description');
         $builder->where('id', $id);
         // $builder->where('to_date', '0000-00-00');

@@ -98,7 +98,7 @@ $segment = service('uri');
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/applicant_address'); ?>">Address</a></li> 
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader</a></li>
-                                <li><a class="btn-link" href="#">Manual</a></li>
+                                <li><a class="btn-link" href="https://registry.sci.gov.in/api/callback/bharat_kosh/eCopyingPublic_manual.pdf" target="_blank">Manual</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
                             </ul>
                         </li>
