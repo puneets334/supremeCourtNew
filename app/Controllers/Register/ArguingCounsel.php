@@ -90,19 +90,19 @@ class ArguingCounsel extends BaseController {
         $rules=[
             "name" => [
                 "label" => "Name",
-                "rules" => "trim|required|max_length[100]|min_length[3]"
+                "rules" => "required|max_length[100]|min_length[3]"
             ],
             "email" => [
                 "label" => "Email",
-                "rules" => "trim|required|max_length[100]|valid_email"
+                "rules" => "required|max_length[100]|valid_email"
             ],
             "mobile" => [
                 "label" => "Mobile",
-                "rules" => "trim|required|exact_length[10]|is_natural"
+                "rules" => "required|exact_length[10]|is_natural"
             ],
             "bar_reg_no" => [
                 "label" => "Bar Registration No.",
-                "rules" => "trim|max_length[30]"
+                "rules" => "max_length[30]"
             ],
         ];
 
@@ -287,71 +287,71 @@ class ArguingCounsel extends BaseController {
             $rules=[
                 "name" => [
                     "label" => "Name",
-                    "rules" => "trim|required|max_length[100]|min_length[3]"
+                    "rules" => "required|max_length[100]|min_length[3]"
                 ],
                 "email" => [
                     "label" => "Email",
-                    "rules" => "trim|required|max_length[100]|valid_email"
+                    "rules" => "required|max_length[100]|valid_email"
                 ],
                 "mobile" => [
                     "label" => "Mobile",
-                    "rules" => "trim|required|exact_length[10]|is_natural"
+                    "rules" => "required|exact_length[10]|is_natural"
                 ],
                 "bar_reg_no" => [
                     "label" => "Bar Registration No.",
-                    "rules" => "trim|max_length[30]"
+                    "rules" => "max_length[30]"
                 ],
                 "relation" => [
                     "label" => "Relation",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],
                 "relation_name" => [
                     "label" => "Relation Name",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],
                 "c_address" => [
                     "label" => "Bar Chamber address.",
-                    "rules" => "trim|max_length[150]|min_length[3]"
+                    "rules" => "max_length[150]|min_length[3]"
                 ],
                 "c_pincode" => [
                     "label" => "Pincode",
-                    "rules" => "trim|max_length[6]|is_natural"
+                    "rules" => "max_length[6]|is_natural"
                 ],
                 "c_city" => [
                     "label" => "City",
-                    "rules" => "trim|max_length[35]"
+                    "rules" => "max_length[35]"
                 ],
                 "c_state" => [
                     "label" => "State",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],
                 "c_district" => [
                     "label" => "State",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],
                 "r_address" => [
                     "label" => "Bar Chamber address.",
-                    "rules" => "trim|max_length[150]|min_length[3]"
+                    "rules" => "max_length[150]|min_length[3]"
                 ],
                 "r_pincode" => [
                     "label" => "Pincode",
-                    "rules" => "trim|max_length[6]|is_natural"
+                    "rules" => "max_length[6]|is_natural"
                 ],
                 "r_city" => [
                     "label" => "City",
-                    "rules" => "trim|max_length[35]"
+                    "rules" => "max_length[35]"
                 ],
                 "r_state" => [
                     "label" => "State",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],
                 "r_district" => [
                     "label" => "State",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],                
                 "aor" => [
                     "label" => "AOR",
-                    "rules" => "trim|required"
+                    "rules" => "required"
                 ],
                 "bar_id_card" => [
                     "label" => "Bar Id Card",
