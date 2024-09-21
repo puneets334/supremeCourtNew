@@ -216,7 +216,7 @@ $routes->get('register/AdvOtp/verify', 'Register\AdvOtp::verify');
 $routes->get('register/arguingCounsel', 'Register\ArguingCounsel::index');
 $routes->post('registerCounsel', 'Register\ArguingCounsel::saveArguingCounselByAOR');
 $routes->get('matchRegistrationCode', 'Register\ArguingCounsel::matchRegistrationCode');
-$routes->post('saveArguingCounselCompleteDetails', 'Register\ArguingCounsel::saveArguingCounselCompleteDetails');
+$routes->match(['GET', 'POST'], 'saveArguingCounselCompleteDetails', 'Register\ArguingCounsel::saveArguingCounselCompleteDetails');
 $routes->post('register/ArguingCounsel/approveRejectedArguingCounsel', 'Register\ArguingCounsel::approveRejectedArguingCounsel');
 $routes->post('register/arguingCounsel/landArguingCounsel/(:any)', 'Register\ArguingCounsel::landArguingCounsel/$1');
 $routes->get('support/(:any)', 'ResponsiveVariantRouteController::showSupport/$1');
