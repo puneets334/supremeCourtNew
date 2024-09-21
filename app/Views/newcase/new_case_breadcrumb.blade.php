@@ -338,6 +338,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 <ul class="nav nav-tabs"
                     id="myTab"
                     role="tablist">
+                    
                     <li class="nav-item"
                         role="presentation">
                         <?php
@@ -360,6 +361,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     </li>
                     <li class="nav-item"
                         role="presentation">
+                        <?php print_r(getSessionData('efiling_details')['breadcrumb_status']); ?>
                         <?php
                         if ($segment->getSegment(2) == 'petitioner') {
                             $ColorCode = 'background-color: #01ADEF';
