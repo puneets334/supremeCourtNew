@@ -37,7 +37,7 @@
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Advocates Appearing</h5>
-                                    
+                                    <a href="javascript:void(0)" class="quick-btn pull-right mb-2" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 <h6>Search </h6>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2">

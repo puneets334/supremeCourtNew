@@ -15,24 +15,23 @@
                                 </div>
                                 <div class="ryt-dash-breadcrumb">
                                     <div class="btns-sec">
-
-                                        <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                        <a href="javascript:void(0)" class="quick-btn pull-right mb-2" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                                <!-- <div class="row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
-                                        <div class="crnt-page-head">
-                                            <div class="current-pg-title">
-                                                <h6>Case Search </h6>
-                                            </div>
-                                            <div class="current-pg-actions"> </div>
-                                        </div>
-                                    </div>
-                                </div> -->
+                    <!-- <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                            <div class="crnt-page-head">
+                                <div class="current-pg-title">
+                                    <h6>Case Search </h6>
+                                </div>
+                                <div class="current-pg-actions"> </div>
                             </div>
+                        </div>
+                    </div> -->
+                </div>
                 <div class="dash-card dashboard-section">
                     <div class="row">
                         <div class="panel panel-default">
