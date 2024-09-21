@@ -5,7 +5,11 @@ $disabled_status1 = 'pointer-events: none; cursor: default;';
 $allowed_users_array = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT];
 $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT];
 ?>
-
+<style>
+    .curemarked {
+        font-weight: bold; text-decoration: line-through;
+    }
+</style>
 <div class="dash-card dashboard-section">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -236,9 +240,9 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     <?php }
                                         else{
                                             ?>
-                    <a href="javascript:void(0)"
+                    <!-- <a href="javascript:void(0)"
                         class="quick-btn black-btn"
-                        id='efilpip'><span class="mdi mdi-file-send"></span></a>
+                        id='efilpip'><span class="mdi mdi-file-send"></span></a> -->
                     <?php
                                         }
                                         }
@@ -246,8 +250,8 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                                 else{
                                     if (!empty(getSessionData('efiling_details')['breadcrumb_status']) && in_array(JAIL_PETITION_SUBORDINATE_COURT, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                         ?>
-                    <a href="<?php echo base_url('jailPetition/FinalSubmit'); ?>"
-                        class="quick-btn black-btn"><span class="mdi mdi-file-send"></span></a>
+                    <!-- <a href="<?php echo base_url('jailPetition/FinalSubmit'); ?>"
+                        class="quick-btn black-btn"><span class="mdi mdi-file-send"></span></a> -->
                     <?php }
                                 }
                             }
@@ -255,7 +259,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             if (!empty(getSessionData('efiling_details')['stage_id']) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                 // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                                 if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                    echo '<a href="'.base_url('newcase/finalSubmit').'" class="quick-btn black-btn"><span class="mdi mdi-file-send"></span></a>';
+                                    // echo '<a href="'.base_url('newcase/finalSubmit').'" class="quick-btn black-btn"><span class="mdi mdi-file-send"></span></a>';
                                 }
                             }
                         }
@@ -711,5 +715,35 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     target.textContent = "";
                 }
                 return succeed;
+            }
+
+            $("#checkAll").change(function(){
+                if (! $('input:checkbox').is('checked')) {
+                    $('input:checkbox').attr('checked','checked');
+                } else {
+                    $('input:checkbox').removeAttr('checked');
+                }       
+            });
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var oTable = $("#datatable-defects").dataTable();
+
+                $("#checkAll").change(function () {
+                    oTable.$("input[type=\'checkbox\']").prop("checked", $(this).prop("checked"));
+                });
+            });
+            function setCuredDefect(id) {
+                var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                var value = $("#" + id).is(":checked");
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo base_url("documentIndex/Ajaxcalls/markCuredDefect"); ?>',
+                    data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value},
+                    success: function () {
+                        $("#row"+id).toggleClass("curemarked");
+                    },
+                    error: function () {alert("failed");}
+                });
             }
         </script>

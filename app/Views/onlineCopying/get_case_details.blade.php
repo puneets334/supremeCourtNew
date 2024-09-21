@@ -16,7 +16,7 @@ if(isset($_REQUEST['chk_status']) && $_REQUEST['chk_status']==1)
     $cy = $_REQUEST['cy'];
     
     $sql_dno = eCopyingGetDiaryNo($ct, $cn, $cy);
-
+pr(count($sql_dno));
     if(count($sql_dno) > 0){
         $diary_no = $sql_dno['dn'].$sql_dno['dy'];
         $_SESSION['session_d_no'] = $sql_dno['dn'];

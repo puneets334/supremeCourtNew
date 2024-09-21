@@ -177,9 +177,11 @@
                                                                         {
                                                                             if ( isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1)
                                                                             {
+                                                                                if(!empty($userBarAddress)){
                                                                                 if(count($userBarAddress)>0) {
                                                                                     foreach($userBarAddress as $bar) {  
                                                                                     }
+                                                                                }
                                                                                 }
                                                                             }
                                                                         }  

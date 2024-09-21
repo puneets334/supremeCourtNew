@@ -336,7 +336,45 @@ echo '<pre>'; print_r($new_filename);
         }
     }
 
+    function image_upload($images, $file_path, $file_temp_name) {
+        $thumbnail_path = 'user_images/thumbnail/';
+        $photo_path = 'user_images/photo/';
+        $this->create_directory($thumbnail_path);
+        $this->create_directory($photo_path);
+
+        $config['upload_path'] = $photo_path;
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['overwrite'] = true;
+        $config['file_name'] = $file_temp_name;
+
+        $file = $this->request->getFile($images);
+        if ($file && $file->isValid() && !$file->hasMoved()) { 
+            $file->move($photo_path, $file_temp_name);  
+            $data['picture'] = $file_temp_name; 
+            $sourcePath = $photo_path . $file_temp_name;   
+            $destinationPath = WRITEPATH . 'uploads/thumbnails/' . $file_temp_name; 
+            return $data;
+        } else {
+            return ['error' => 'File upload failed: ' . $file->getErrorString()];
+        }
+    }
     
+    function create_thumbnail($filename, $thumbnail_path) {
+        $config['source_image'] = 'user_images/photo/' . $filename;
+        $config['new_image'] = $thumbnail_path . $filename;
+        $config['maintain_ratio'] = TRUE;
+        $config['width'] = 150; // Set your desired thumbnail width
+        $config['height'] = 150; // Set your desired thumbnail height
+    
+        // Load the image library
+        $image_lib = \Config\Services::image();
+        $image_lib->initialize($config);
+    
+        // Create the thumbnail
+        if (!$image_lib->resize(150, 150)) {
+            return ['error' => $image_lib->display_errors()];
+        }
+    }
 
     function create_directory($path) {
         if (!is_dir($path)) {
@@ -348,61 +386,6 @@ echo '<pre>'; print_r($new_filename);
             umask($uold);
         }
     }
-
-    // function _generate_thumbnail($filename, $thumbnail_path) {
-    //     $image = \Config\Services::image();
-    //     $image->withFile($thumbnail_path . $filename)
-    //         ->resize(150, 150, true, 'height')
-    //         ->save($thumbnail_path . $filename);
-    // }
-
-    // function image_upload($images, $file_path, $file_temp_name) {
-    //     $thumbnail_path = 'user_images/thumbnail/';
-    //     if (!is_dir($thumbnail_path)) {
-    //         $uold = umask(0);
-    //         if (mkdir('user_images/thumbnail/', 0777, true)) {
-    //             $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
-    //             write_file($thumbnail_path . '/index.html', $html);
-    //         }
-    //         umask($uold);
-    //     }
-
-    //     $thumbnail_path = 'user_images/photo/';
-    //     if (!is_dir($thumbnail_path)) {
-    //         $uold = umask(0);
-    //         if (mkdir('user_images/photo/', 0777, true)) {
-    //             $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
-    //             write_file($thumbnail_path . '/index.html', $html);
-    //         }
-    //         umask($uold);
-    //     }
-    //     $config['upload_path'] = 'user_images/photo/';
-    //     $config['allowed_types'] = 'jpg|jpeg|png';
-    //     $config['overwrite'] = TRUE;
-    //     $config['file_name'] = $file_temp_name;
-    //     $upload = \Config\Services::image();
-    //     $upload->initialize($config);
-    //     $upload->do_upload($images);
-    //     $uploadData = $upload->data();
-    //     $filename = $uploadData['file_name'];
-    //     $data['picture'] = $filename;
-    //     $this->_generate_thumbnail($filename);
-    //     return $data;
-    // }
-
-    // function _generate_thumbnail($picture) {
-    //     $this->load->library('image_lib');
-    //     $config['image_library'] = 'gd2';
-    //     $config['source_image'] = 'user_images/photo/' . $picture;
-    //     $config['new_image'] = 'user_images/thumbnail/' . $picture;
-    //     $config['maintain_ratio'] = TRUE;
-    //     $config['width'] = 150;
-    //     $config['height'] = 150;
-    //     $this->load->library('image_lib', $config);
-    //     $this->image_lib->initialize($config);
-    //     $this->image_lib->resize();
-    //     return true;
-    // }
 
     function final_submit() {
 
@@ -432,10 +415,10 @@ echo '<pre>'; print_r($new_filename);
                 send_mail_msg($to_email, $subject, $message);
                 //END
                 $this->session->setFlashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Successful</p> </div>');
-                redirect('login');
+                return redirect()->to(base_url('/'));
             } else {
                 $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Failed</p> </div>');
-                redirect('register/AdvSignUp');
+                return redirect()->to(base_url('register/AdvSignUp'));
             }
         }
     }

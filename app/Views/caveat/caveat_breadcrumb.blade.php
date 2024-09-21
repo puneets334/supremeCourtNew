@@ -133,7 +133,6 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                     $action = base_url('efilingAction/Caveat_final_submit');
                                     $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
                                     echo form_open($action, $attribute);
-                                    $ci = & get_instance();
                                     $clerk_adv='';                                    
                                     echo form_close();
                                 }
@@ -187,22 +186,22 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
             if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], array(USER_ADVOCATE, USER_IN_PERSON, USER_PDE))) {
                 $final_submit_action = TRUE;
                 $final_submit_continue_action = TRUE;                
-                $url_caveator = base_url('caveat/caveator');
+                $url_caveator = base_url('caveat/');
                 $url_caveatee = base_url('caveat/caveatee');
                 $url_extra_party = base_url('caveat/extra_party');
                 $url_subordinate_court = base_url('caveat/subordinate_court');
                 $upload_doc_url = base_url('uploadDocuments');
                 $doc_index_url = base_url('documentIndex');
-                $url_case_courtfee = base_url('courtFee');
+                $url_case_courtfee = base_url('newcase/courtFee');
             } elseif (!empty(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] ==  USER_CLERK && in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage)))) {			
                 $final_submit_action = False;
-                $url_caveator = base_url('caveat/caveator');
+                $url_caveator = base_url('caveat/');
                 $url_caveatee = base_url('caveat/caveatee');
                 $url_extra_party = base_url('caveat/extra_party');
                 $url_subordinate_court = base_url('caveat/subordinate_court');
                 $upload_doc_url = base_url('uploadDocuments');
                 $doc_index_url = base_url('documentIndex');
-                $url_case_courtfee = base_url('courtFee');                            
+                $url_case_courtfee = base_url('newcase/courtFee');                            
             } else {					
                 $url_case_detail = $url_caveator = $url_caveatee = $url_extra_party = $url_subordinate_court = $upload_doc_url = $doc_index_url = $url_case_courtfee = '#';
             }
@@ -327,6 +326,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $status_color = 'active';
                             $disabled_status='';
                         } elseif (in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) {
+                            
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
                             $status_color = '';
                             $disabled_status='';
@@ -336,7 +336,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="z-index:4" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span>Upload Document / Index </a>
+                        <a href="<?= $upload_doc_url ?>" class="nav-link <?php echo $status_color; ?>" type="button" style="z-index:4; <?php if(!in_array(CAVEAT_BREAD_UPLOAD_DOC, $StageArray)) { echo $disabled_status; } ?>" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?> ">4</span>Upload Document / Index </a>
                     </li>
 
                     <li class="nav-item" role="presentation">

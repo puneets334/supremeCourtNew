@@ -99,7 +99,7 @@ body.loading .overlay{
                             
                         </div>
                     </div>
-
+                    <hr>
                     <div id="supreme_court_info" style="display: none;">                                               
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
