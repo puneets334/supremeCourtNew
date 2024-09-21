@@ -11,6 +11,7 @@
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Cases Transferred by Vakalatnama </h5>
+                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 <div class="table-sec">
                                     <div class="table-responsive">
