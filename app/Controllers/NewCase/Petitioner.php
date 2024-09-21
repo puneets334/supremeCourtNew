@@ -255,9 +255,12 @@ class Petitioner extends BaseController {
         $party_name = !empty($_POST["party_name"]) ? $_POST["party_name"] : '';
         $party_relation = !empty($_POST["relation"]) ? $_POST["relation"] : '';
         $relative_name = !empty($_POST["relative_name"]) ? $_POST["relative_name"] : '';
+
         if (!empty($_POST['party_dob'])) {
+
             $party_dob = $_POST["party_dob"];
-            $party_dob = date('Y-m-d', strtotime($party_dob));
+
+            // $party_dob = date('Y-m-d', strtotime($party_dob));
         } else {
             $party_dob = NULL;
         }
@@ -342,17 +345,18 @@ class Petitioner extends BaseController {
         );
         $party_dob = trim($party_dob); // Remove any extra whitespace
 
-        if ($party_dob && strtotime($party_dob) !== false) {
-            $formatted_date = date('Y-m-d', strtotime($party_dob));
-        } else {
-            $formatted_date = null;
-        }
+        // if ($party_dob && strtotime($party_dob) !== false) {
+        //     $formatted_date = date('Y-m-d', strtotime($party_dob));
+        // } else {
+        //     $formatted_date = null;
+        // }
+
         $party_individual = array(
             'party_name' => $party_name,
             'relation' => $party_relation,
             'relative_name' => $relative_name,
             'party_age' => ($party_age != 'NaN') ? $party_age : null,
-            'party_dob' => $formatted_date,
+            'party_dob' => $party_dob,
             'gender' => $party_gender,
             'is_dead_minor'=>$is_dead_minor,
             'is_dead_file_status'=>$is_dead_file_status
@@ -366,7 +370,6 @@ class Petitioner extends BaseController {
             'party_no' => 1,
             'party_id' => 1
         );
-
         $party_details = array_merge($party_type, $party_individual, $party_organisation, $party_address_details);
        // echo '<pre>'; print_r($party_details); exit;
 

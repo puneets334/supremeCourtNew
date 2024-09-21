@@ -397,7 +397,7 @@ class CaseDetails extends BaseController
             $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
 
             $special_category = !empty($_POST["special_category"]) ? url_decryption(escape_data($_POST["special_category"])) : 0;
-// pr($jailsignDt);
+//   pr($jailsignDt);
             $case_details = array(
                 'cause_title' => $cause_title,
                 'sc_case_type_id' => !empty($sc_case_type[0]) ? $sc_case_type[0] : null,
@@ -472,7 +472,7 @@ class CaseDetails extends BaseController
                         exit();
                     }
                 }
-                // pr($case_details);
+            //    pr($case_details);
                 $status = $this->New_case_model->add_update_case_details($registration_id, $case_details, NEW_CASE_CASE_DETAIL, getSessionData('case_table_ids')->case_details_id);
 
                 if ($status) {

@@ -168,7 +168,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" min="0" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required >
+                            <input id="party_age" tabindex='6' name="party_age" min="0" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text"  >
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -182,9 +182,9 @@
                             $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
                             $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
                             ?>
-                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?> required >Male</label>
-                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?> required >Female</label>
-                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?> required >Other</label>
+                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?>  >Male</label>
+                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?>  >Female</label>
+                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>  >Other</label>
                         </div>
                     </div>
                 </div>
@@ -478,6 +478,9 @@
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
+            $('#party_age').attr('required', 'required');
+            $('input[name="party_gender"]').attr('required', 'required');
+
             $('.party_name').attr('required', 'required');
             $('.relation').attr('required', 'required');
             $('.relative_name').attr('required', 'required');
@@ -485,6 +488,9 @@
             $('.org_state_name').removeAttr('required', 'required');
             $('.org_post').removeAttr('required', 'required');
         } else {
+            $('#party_age').attr('required', false);
+            $('input[name="party_gender"]').attr('required', false);
+
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
@@ -1046,13 +1052,13 @@
     var startYear = 1984;
     var startDate = new Date(startYear, 1, 1);
     $('#party_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
         changeMonth: true,
         changeYear: true,
-        yearRange: "-100:-1",
-        format: "dd/mm/yyyy",
-        // defaultDate: '-40y',
         endDate: today,
-        "autoclose": true
+        autoclose: true
     });
     $(document).on('change', '#party_dob', function() {
         var value = $('#party_dob').val();
