@@ -61,7 +61,6 @@ class AddressModel extends Model
         $builder->where('email', $email);
         $builder->limit(1);
         $query = $builder->get();
-
         if ($query === false) {           
             return false;
         }else {
@@ -69,7 +68,6 @@ class AddressModel extends Model
         }
         return $result;
     }
-
 
     public function getListedCases($mobile, $email)
     {
