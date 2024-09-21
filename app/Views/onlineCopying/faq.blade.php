@@ -16,18 +16,29 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="dashboard-section dashboard-tiles-area"></div>
-                <div class="dashboard-section">
+                <div class="dash-card dashboard-section">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="dash-card">
-                                {{-- Page Title Start --}}
-                                <div class="title-sec">
-                                    <h5 class="unerline-title"> FAQs</h5>
-                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()" style="margin-top: -50px;"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                            <div class=" dashboard-bradcrumb">
+                                <div class="left-dash-breadcrumb">
+                                    <div class="page-title">
+                                        <h5><i class="fa fa-file"></i> Screen Reader </h5>
+                                    </div>
+                                    <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
                                 </div>
-                                {{-- Page Title End --}}
-                                {{-- Main Start --}}
+                                <div class="ryt-dash-breadcrumb">
+                                    <div class="btns-sec">
+                                        <a href="javascript:void(0)" class="quick-btn pull-right mb-2" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dash-card dashboard-section">
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="accordion" id="accordionExample">
                                     <?php if(count($faqs) > 0) {
                                         $count=1;

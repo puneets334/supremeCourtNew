@@ -1219,10 +1219,12 @@ class ResponsiveVariantRouteController extends BaseController
     public function getDayCaseDetails()
     {
         $cases = array();
+        
         $start = date('Y-m-d 00:00:00', strtotime((string)$this->request->getPost('start')));
         $end = date('Y-m-d 23:59:59', strtotime((string)$this->request->getPost('start')));
+        
         if (getSessionData('login')['ref_m_usertype_id'] != SR_ADVOCATE || getSessionData('login')['ref_m_usertype_id']  != ARGUING_COUNSEL) {
-            $day_wise_cases = ($this->StageslistModel->get_day_wise_case_details(array(1), getSessionData('login')['id'], $start, $end, 1));
+            $day_wise_cases = $this->StageslistModel->get_day_wise_case_details(array(1), getSessionData('login')['id'], $start, $end, 1);
             if ($day_wise_cases == false) {
                 header('Content-Type: application/json');
                 http_response_code(400);
@@ -1238,6 +1240,7 @@ class ResponsiveVariantRouteController extends BaseController
                     }
                 }
                 header('Content-Type: application/json');
+                // pr($cases);
                 return json_encode($cases);
             }
         }
