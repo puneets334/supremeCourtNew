@@ -19,6 +19,17 @@
     .datepicker-dropdown {
         background-color: #fff;
     }
+    label .error{
+        color: red !important;
+    }
+
+    .error{
+        color: red !important;
+    }
+
+    .col-12 label.error{
+        color: red !important;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">

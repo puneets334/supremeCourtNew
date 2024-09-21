@@ -6841,7 +6841,7 @@ p.comnt-name {
 /* Dashboard CSS End  */
 .user-action-sec {
     position: absolute;
-    z-index: 9;
+    z-index: 999;
     width: 150px;
     padding: 12px 0 0;
     background: #ff000000;

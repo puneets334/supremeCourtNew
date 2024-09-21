@@ -14,12 +14,12 @@
                         <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                         <thead>
                             <tr class="success">
-                                <th>#</th>
-                                <th>Uploaded Documents(s) </th>
-                                <th>Uploaded On </th>
-                                <th>Pages</th>
+                                <th style="width: 10% !important;">#</th>
+                                <th style="width: 40% !important;">Uploaded Documents(s) </th>
+                                <th style="width: 15% !important;">Uploaded On </th>
+                                <th style="width: 15% !important;">Pages</th>
                                 <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
-                                    <th>Delete</th>
+                                    <th style="width: 20% !important;">Delete</th>
                                 <?php } ?>
                             </tr>
                         </thead>

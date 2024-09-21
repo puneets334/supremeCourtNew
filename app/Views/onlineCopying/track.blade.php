@@ -235,5 +235,9 @@
             textarea.setAttribute("aria-label", "do not use");
             textarea.setAttribute("aria-readonly", "true");
         }
+
+        $('input[type=text]').val (function () {
+            return this.value.toUpperCase();
+        })
     </script>
         @endpush

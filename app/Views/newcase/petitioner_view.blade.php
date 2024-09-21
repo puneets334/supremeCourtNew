@@ -19,6 +19,18 @@
     .datepicker-dropdown {
         background-color: #fff;
     }
+
+    label .error{
+        color: red !important;
+    }
+
+    .error{
+        color: red !important;
+    }
+
+    .col-12 label.error{
+        color: red !important;
+    }
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -151,7 +163,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text" required >
+                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -165,9 +177,9 @@
                             $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
                             $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
                             ?>
-                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?> required >Male</label>
-                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?> required >Female</label>
-                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?> required >Other</label>
+                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?> >Male</label>
+                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?> >Female</label>
+                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?> >Other</label>
                         </div>
                     </div>
                 </div>

@@ -536,8 +536,8 @@
                                 </div>
                                     <div class="form-group" id="status_refresh">
 
-                                    <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="btn btn-success loadDataReport">
-                                  <button onclick="location.href = '<?php echo base_url('report'); ?>'" class="btn btn-primary" type="reset">Reset</button>
+                                    <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="btn btn-primary loadDataReport">
+                                  <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="btn btn-danger" type="reset">Reset</button>
                                 </div>
                             </div>
                             </div>

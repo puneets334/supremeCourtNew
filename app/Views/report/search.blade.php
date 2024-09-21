@@ -341,8 +341,8 @@
                                                                         <img id="loader_img" style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;" src="<?php echo base_url(); ?>/assets/images/loading-data.gif">
                                                                     </div>
                                                                     <div class="form-group" id="status_refresh">
-                                                                        <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn gray-btn loadDataReport">
-                                                                        <button onclick="location.href = '<?php echo base_url('report'); ?>'" class="quick-btn btn-primary" type="reset">Reset</button>
+                                                                        <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport">
+                                                                        <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -712,6 +712,28 @@
         });
     </script>
     <script>
+        $(function() {
+            $.fn.dataTable.ext.errMode = 'none';
+            $("#datatable-responsive").DataTable({
+                "responsive": false,
+                "lengthChange": false,
+                "autoWidth": true,
+                "buttons": ["copy", "csv", "excel", {
+                        extend: 'pdfHtml5',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Show/Hide'
+                    }
+                ],
+                "bProcessing": true,
+                "extend": 'colvis',
+                "text": 'Show/Hide'
+            });
+
+        });
         // $(document).ready(function() {
         //     $('#datatable-responsive').DataTable({
         //         dom: 'lBfrtip',

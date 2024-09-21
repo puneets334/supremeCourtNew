@@ -602,6 +602,7 @@
                             <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
                             <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
                             <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?> = <i class="fa fa-rupee"></i> <?= $total_court_fee ?></label>
+                            <br>
                             <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: <i class="fa fa-rupee"></i> <?= $court_fee_already_paid ?> </label>
                             {{-- <input type="text"
                                                             class="form-control cus-form-ctrl"
