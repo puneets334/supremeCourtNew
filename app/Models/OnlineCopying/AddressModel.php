@@ -40,7 +40,7 @@ class AddressModel extends Model
         $builder = $this->db3->table('user_address'); 
         $builder->where('mobile', $mobile)
                 ->where('email', $email)
-                ->where('is_active', 'Y');        
+                ->where('is_active', 'Y');      
         $query = $builder->get();
         if ($query === false) {
             $error =  $this->db3->error();
