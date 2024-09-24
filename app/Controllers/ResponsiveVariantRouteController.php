@@ -672,6 +672,15 @@ class ResponsiveVariantRouteController extends BaseController
         if (!empty($_SESSION['efiling_details'])) {
             unset($_SESSION['efiling_details']);
         }
+        if (!empty(session()->get('MSG'))) {
+            session()->set('MSG', ''); // Set to an empty string  
+        }
+        
+        if (!empty(session()->get('msg'))) {
+            session()->set('msg', ''); // Set to an empty string
+        }
+        
+        
         $registration_id = str_replace('_', '#', @$registration_id);
         $tab = @$_REQUEST['tab'];
         $data['tab'] = $tab;

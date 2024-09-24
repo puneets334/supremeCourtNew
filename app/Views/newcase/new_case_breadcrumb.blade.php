@@ -117,6 +117,9 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                 if (!empty(getSessionData('efiling_details')) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == 1) {
                                     if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                         //  pr(explode(',', getSessionData('efiling_details')['breadcrumb_status']));
+
+                                        if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) > 6){
                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                         ?>
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
@@ -125,6 +128,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
                                         <?php
                                         }
+                                    }
                                     }
                                 } else {
                                     if (!empty(getSessionData('efiling_details')) && in_array(JAIL_PETITION_SUBORDINATE_COURT, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
@@ -141,6 +145,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
             <div class="crnt-page-head">
@@ -289,6 +294,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
         <div class="col-12">'.remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']).'</div></div>' : '';
         ?>
         <!-- form--start  -->
+
         <form action="">
             <?php
             $StageArray = !empty(getSessionData('efiling_details')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : [];
@@ -329,7 +335,10 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
             } else {
                 $url_case_detail = $url_petitioner = $url_respondent = $url_extra_info = $url_extra_party = $url_add_lrs = $url_act_section = $url_main_matter = $url_subordinate_court = $url_case_sign_method = $url_case_upload_docs = $url_case_courtfee = $url_case_affirmation = $url_case_view = '#';
             }
+
             ?>
+            
+
             @if (
                 !empty(getSessionData('efiling_details')['stage_id']) &&
                     (getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage ||
@@ -353,12 +362,14 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             $status_color = '';
                         }
                         ?>
+
                         <a href="<?= $url_case_detail ?>"
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
                             ><span class="tab-num"
                                 style="<?php echo $ColorCode; ?>">1</span>Case Detail</a>
                     </li>
+                    
                     <li class="nav-item"
                         role="presentation">
                         <?php
@@ -517,6 +528,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 </ul>
             @endif
         </form>
+
         <div class="modal fade"
             id="FinalSubmitModal"
             role="dialog">

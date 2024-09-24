@@ -682,12 +682,12 @@ body.loading .overlay{
                 $("#police_station_name,#complete_fir_number").prop("disabled", false);
         });
         $('#subordinate_court_details').on('submit', function () {
-            var hc_case_number = $("#hc_case_number").val();
-            var cnr = $("#cnr").val();
-           if(hc_case_number=='' && cnr==''){
-            alert('Please fill Case No. And Year OR CNR Number.');
-            return false;
-           }
+        //     var hc_case_number = $("#hc_case_number").val();
+        //     var cnr = $("#cnr").val();
+        //    if(hc_case_number=='' && cnr==''){
+        //     alert('Please fill Case No. And Year OR CNR Number.');
+        //     return false;
+        //    }
             var judgement_type = $("#judgement_type").val();
             var order_date = $("#order_date").val();
             if(judgement_type){

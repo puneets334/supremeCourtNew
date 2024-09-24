@@ -144,9 +144,9 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Date of Birth  <span style="color: red" class="astriks">*</span></label>
+                                <label for="" class="form-label">Date of Birth </label>
                                 <input tabindex='5' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
+                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                     <i class="fa fa-question-circle-o"></i>
@@ -157,7 +157,7 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Approximate Age </label>
+                                <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                 $res_age = '';
                                 if(isset($caveatee_details[0]['res_age']))
@@ -169,7 +169,7 @@ textarea {
                                 }
                                     }
                                 ?>
-                                <input type="number" class="form-control cus-form-ctrl" disabled
+                                <input type="number" class="form-control cus-form-ctrl"
                                 name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
@@ -489,6 +489,12 @@ textarea {
     function get_caveator_as(value) {        
         var party_as = value;
         if (party_as == 'I') {
+        $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
+
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -499,6 +505,12 @@ textarea {
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
         } else {
+            $('#pet_complainant').attr('required', false); 
+            $('#pet_rel_flag').attr('required', false); 
+            $('#relative_name').attr('required', false); 
+            $('#pet_age').attr('required', false); 
+            $('input[name="pet_gender"]').attr('required', false);
+
 
             get_departments(party_as);
             get_posts();
