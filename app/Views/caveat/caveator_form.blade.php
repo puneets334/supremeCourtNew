@@ -162,7 +162,7 @@ textarea {
                         
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                             <div class="mb-3">
-                                <label for="" class="form-label">Relation</label>
+                                <label for="" class="form-label">Relation <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                     $selectSon = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'S' ? 'selected=selected' : '';
                                     $selectDaughter = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'D' ? 'selected=selected' : '';
@@ -179,7 +179,7 @@ textarea {
                                 </select>
 
                             </div>
-                        </div>                    
+                        </div>             
                         <!-- V  Field Start -->  
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                             <div class="mb-3">
@@ -187,7 +187,7 @@ textarea {
 
                                 <input tabindex="5" id="relative_name" name="relative_name"
                                     minlength="3" maxlength="99" placeholder="Relative Name"
-                                    value="<?php   echo isset($caveator_details[0]['relative_name'])?$caveator_details[0]['relative_name']:''; ?>"
+                                    value="<?php   echo isset($caveator_details[0]['pet_father_name'])?$caveator_details[0]['pet_father_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="text" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
@@ -199,9 +199,9 @@ textarea {
                         <!-- VI  Field Start -->  
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                             <div class="mb-3">
-                                <label for="" class="form-label">Date of Birth <span style="color: red" class="astriks">*</span></label>
+                                <label for="" class="form-label">Date of Birth</label>
                                 <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                value="<?php echo isset($caveator_details[0]['party_dob']) ? date('m/d/Y', strtotime($caveator_details[0]['party_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
+                                value="<?php echo isset($caveator_details[0]['pet_dob']) ? date('m/d/Y', strtotime($caveator_details[0]['pet_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                         title="Please Enter Date of Birth.">
@@ -215,16 +215,16 @@ textarea {
                                 <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                 $pet_age = '';
-                                if(isset($caveator_details[0]['party_age']))
+                                if(isset($caveator_details[0]['pet_age']))
                                 {
-                                if ($caveator_details[0]['party_age'] == 0 || $caveator_details[0]['party_age'] == '' || $caveator_details[0]['party_age'] == NULL) {
+                                if ($caveator_details[0]['pet_age'] == 0 || $caveator_details[0]['pet_age'] == '' || $caveator_details[0]['pet_age'] == NULL) {
                                     $pet_age = '';
                                 } else {
-                                    $pet_age = $caveator_details[0]['party_age'];
+                                    $pet_age = $caveator_details[0]['pet_age'];
                                 }
                                     }
                                 ?>
-                                <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate" disabled
+                                <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
                                 name="pet_age" id="pet_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($pet_age); ?>">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                 title="Approx. age in years only.">
@@ -457,7 +457,7 @@ textarea {
                                     <span style="color: red" class="astriks">*</span>
                                 </label>
                                 <select class="form-select cus-form-ctrl filter_select_dropdown" name="party_state" id="party_state">
-                                    <option value="" title="Select">Select State</option>
+                                    <option value="" title="Select" required >Select State</option>
                                     <?php
                                         $stateArr = array();
                                         if (!empty($state_list)) 
@@ -655,7 +655,12 @@ textarea {
         
         var party_as = $('select#party_is option:selected').val();
         if (party_as == 'I') {          
-        $('#pet_complainant').attr('required', true);
+ 
+        $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
             $('#indvidual_form').show(); 
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -666,9 +671,12 @@ textarea {
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
         }else {
-            if (party_as == 'D3') {
-               
-        $('#pet_complainant').attr('required', false);
+            $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
+            if (party_as == 'D3') { 
                 $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').hide();
@@ -931,10 +939,10 @@ textarea {
                             } else if (resArr[0] == 2) {
                                 $(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                                 $('#msg').show();
-                                // alert(resArr[2]);
                                 window.location.href = resArr[2];
                                 // location.reload();
                             } else if (resArr[0] == 3) {
+                                
                                 $('#msg').show();
                                 $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                             }

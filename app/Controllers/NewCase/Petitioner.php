@@ -258,9 +258,15 @@ class Petitioner extends BaseController {
 
         if (!empty($_POST['party_dob'])) {
 
-            $party_dob = $_POST["party_dob"];
+            // $party_dob = $_POST["party_dob"];
 
-            // $party_dob = date('Y-m-d', strtotime($party_dob));
+            $dateTime = \DateTime::createFromFormat('d/m/Y', $_POST["party_dob"]);
+            if ($dateTime !== false) {
+                $party_dob = $dateTime->format('Y-m-d'); // Convert to 'Y-m-d'
+            } else {
+                // Handle the error (invalid date format)
+                $party_dob = NULL;
+            }
         } else {
             $party_dob = NULL;
         }

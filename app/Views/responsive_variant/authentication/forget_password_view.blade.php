@@ -118,7 +118,7 @@
                 <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
                     <div class="login-s-inner">
                         <?php $session = session(); ?>
-                        @if($session->getFlashdata('msg'))
+                        <!-- @if($session->getFlashdata('msg'))
                             <div class="alert alert-danger text-center flashmessage" role="alert">
                                 {{ esc($session->getFlashdata('msg')) }}
                             </div>
@@ -137,7 +137,7 @@
                         <div class="alert alert-danger text-center flashmessage" role="alert">
                             <b>{{ $validation->getError('txt_password')}}</b>
                         </div>
-                        @endif
+                        @endif -->
                         <div class="loin-form">
                             <?php
                             $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off');

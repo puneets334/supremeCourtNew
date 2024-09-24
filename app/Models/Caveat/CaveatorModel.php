@@ -17,9 +17,7 @@ class CaveatorModel extends Model {
     }
 
 public function add_caveator($data, $petmobile, $pet_email, $cis_masters_values)
-{
-    
-
+{ 
     $estabDetails= getSessionData('estab_details');  
     $est_code='';
     if (!empty($estabDetails)) {
@@ -94,8 +92,7 @@ public function add_caveator($data, $petmobile, $pet_email, $cis_masters_values)
             //$sql = $builder->set($data)->getCompiledInsert();
             // echo $sql;die;
             $builder->insert($data);
-
-           
+ 
             if ($this->db->insertID()) {
                 $data3 = [
                     'registration_id' => isset($result['registration_id'])?$result['registration_id']:'',

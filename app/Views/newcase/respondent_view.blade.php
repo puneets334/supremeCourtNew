@@ -70,7 +70,7 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Main Respondent Name
                                 <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='2' id="party_name"  style="text-transform: uppercase"  name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
+                            <textarea oninput="validateInput(event)"  tabindex='2' id="party_name"  style="text-transform: uppercase"  name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -98,7 +98,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                         <div class="mb-3" id="rel_name">
                             <label for="" class="form-label">Parent/Spouse Name <span style="color: red" class="astriks">*</span></label>
-                            <input tabindex='4' id="relative_name" name="relative_name" minlength="3"  style="text-transform: uppercase" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation relative_name" type="text">
+                            <input oninput="validateInput(event)"  tabindex='4' id="relative_name" name="relative_name" minlength="3"  style="text-transform: uppercase" maxlength="99" placeholder="Name of Parent or Husband" value="<?php echo (@$party_details[0]['relative_name']); ?>" class="form-control cus-form-ctrl sci_validation relative_name" type="text">
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please write name of father or mother or husband or other relative. Relative Name should be in characters ( only dot[.] and space are allowed ).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -443,8 +443,16 @@
         });
     });
 
-
+    function validateInput(event) {
+        const input = event.target.value;
+        const regex = /^[a-zA-Z@_ ]*$/;
+        if (!regex.test(input)) {
+            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        }
+    }
     $(document).ready(function() {
+        
+
         // $('.party_name').bind('keyup blur', function() {
         //     var node = $(this);
         //     node.val(node.val().replace(/[^a-z]/g, ''));
@@ -465,6 +473,8 @@
     $('.party_name').attr('required', 'required');
     $('.relation').attr('required', 'required');
     $('.relative_name').attr('required', 'required');
+    $('input[name="party_gender"]').attr('required', 'required');
+    $('#party_age').attr('required', 'required');
 
     function get_party_as(value) {
         var party_as = value;

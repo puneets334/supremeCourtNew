@@ -177,15 +177,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         <?php
                                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
                                                             $allowed_users_array = array(Initial_Approaval_Pending_Stage,I_B_Defects_Cured_Stage,Initial_Defects_Cured_Stage);
-                                                            if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
-                                                                ?>
-                                                        <a class="btn btn-success btn-sm"
-                                                            target="_blank"
-                                                            href="<?php echo base_url('acknowledgement/view'); ?>">
-                                                            <i class="fa fa-download blink"></i> eFiling Acknowledgement
-                                                        </a>
-                                                        <?php
-                                                            }
+                                                          
                                                         }
                                                         ?>
                                                     </div>
