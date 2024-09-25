@@ -64,7 +64,7 @@
                                     $segment = service('uri');
                                     if (isset($uploaded_docs) && !empty($uploaded_pdf)) { ?>
                                         <?= ASTERISK_RED_MANDATORY ?>
-                                        <h5 style="text-align: left;">For computation of court fees, please use the options below carefully for all documents, interim application(s), if any, uploaded. </h5>
+                                        <h5 style="text-align: left;" class="mb-4">For computation of court fees, please use the options below carefully for all documents, interim application(s), if any, uploaded. </h5>
                                         <?php
                                         if (isset($index_details[0]['doc_type_id']) && $index_details[0]['doc_type_id'] != '') {
                                             $editDocType_id = $index_details[0]['doc_type_id'];

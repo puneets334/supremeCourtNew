@@ -66,7 +66,10 @@
 			$('#datatable-responsive').DataTable();
 		});
 	</script>
+
+	
 	@stack('script')
 </body>
+
 
 </html>

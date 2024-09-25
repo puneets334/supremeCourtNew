@@ -3,7 +3,7 @@
 		<h6 class="text-center fw-bold">Upload Document / Index</h6>
 	</div>
 	<?= ASTERISK_RED_MANDATORY ?>
-	<h5 style="text-align: left;">All documents, Interlocutory Applications, if any, other than main petition are to be uploaded using this feature. </h5>
+	<h5 style="text-align: left;" class="mb-4">All documents, Interlocutory Applications, if any, other than main petition are to be uploaded using this feature. </h5>
 	<?php
 	$attribute = array('class' => 'form-horizontal', 'name' => 'uploadDocument', 'id' => 'uploadDocument', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
 	echo form_open('#', $attribute);
@@ -23,7 +23,7 @@
 					<label for="" class="form-label">Title<span style="color: red" class="astriks">*</span></label>
 					<input type="text" class="form-control cus-form-ctrl" tabindex="2" name="doc_title" id="doc_title" required="" placeholder="PDF Title" minlength="3" maxlength="75">
 					<span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content=" PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed." data-original-title="" title="">
-						<i class="fa fa-question-circle-o"></i>
+						<!-- <i class="fa fa-question-circle-o"></i> -->
 					</span>
 				</div>
 			</div>
