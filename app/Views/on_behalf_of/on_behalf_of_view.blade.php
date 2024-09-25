@@ -53,12 +53,12 @@ if ($segment->getSegment(2) != 'view') {
             <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
                 <div class="form-group">
                     <?php
-                    $lbl_appearing_for = $appearing_for_details[0]['partytype'] == 'P' ? 'Petitioner / Complainant' : 'Respondent / Accused';
+                    $lbl_appearing_for =isset($appearing_for_details[0]['partytype']) &&  $appearing_for_details[0]['partytype'] == 'P' ? 'Petitioner / Complainant' : 'Respondent / Accused';
                     ?>
                     <label class="radio-inline"><strong><?php echo $lbl_appearing_for; ?></strong></label>
 
                     <?php
-                    if ($appearing_for_details[0]['partytype'] == 'P') {
+                    if (isset($appearing_for_details[0]['partytype']) &&  $appearing_for_details[0]['partytype'] == 'P') {
                         $party_name_array = explode('##', $parties_details[0]['p_partyname']);
                         $party_sr_no_array = explode('##', $parties_details[0]['p_sr_no']);
                     } else {
@@ -100,7 +100,7 @@ if ($segment->getSegment(2) != 'view') {
                 </thead>
                 <tbody>
                     <?php                 
-                    if (count($parties_list) > 0) {
+                    if ( is_array($saved_appearing_for) &&  is_array($parties_list) && count($parties_list) > 0) {
                             $i = 1;
                             foreach ($parties_list as $key => $value) {
                                 $appearing = (in_array($key, $saved_appearing_for)) ? TRUE : FALSE;

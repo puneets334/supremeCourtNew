@@ -60,7 +60,7 @@ class DefaultController extends BaseController
 
             }
         } else {
-pr('tesf');
+            // pr('tesf');
             // SETS $_SESSION['estab_details']
             $estab_details = $this->CommonModel->get_establishment_details();
             if ($estab_details) {
@@ -97,7 +97,7 @@ pr('tesf');
 
                     case IA_BREAD_ON_BEHALF_OF:
                         if (!empty(getSessionData('radio_appearing_for')) && getSessionData('radio_appearing_for') == 'I' && IA_BREAD_ON_BEHALF_OF == 3) {
-                            return redirect()->to(base_url('nuploadDocuments'));
+                            return redirect()->to(base_url('uploadDocuments'));
                         } else {
                             return redirect()->to(base_url('appearing_for'));
 

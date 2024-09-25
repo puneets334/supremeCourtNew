@@ -43,7 +43,7 @@ class View extends BaseController {
             exit(0);
         }
         $data['efiling_civil_data'] = $this->View_model->get_efiling_civil_details($registration_id);
-        pr($data);
+        // pr($data);
         //$data['efiling_civil_data'] = $this->View_model->get_efiling_civil_caveat_details($registration_id);
         $session = session();
         $session->set([

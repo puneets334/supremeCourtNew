@@ -648,7 +648,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                     echo '<option value="" selected="true" disabled="disabled"> Select District</option>';
                    // echo '<option value="0"> All </option>';
                     foreach ($result as $dataRes) {
-                            echo '<option  value="' . htmlentities(url_encryption($dataRes->id_no . '#$' . $dataRes->name), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes->name), ENT_QUOTES) . '</option>';
+                            echo '<option data-id="'.$dataRes->id_no.'"  value="' . htmlentities(url_encryption($dataRes->id_no . '#$' . $dataRes->name), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes->name), ENT_QUOTES) . '</option>';
                     }
                 } else {
                     echo '<option value="" selected="true" disabled="disabled"> Select District </option>';
@@ -670,22 +670,31 @@ class AjaxcallsSubordinateCourt extends BaseController {
         if (isset($state_id) ) {
 
             if (!empty($state_id)) {
+                
                 $result = $this->efiling_webservices->get_police_station_list($state_id,$district_id);
-                if (is_array($result) && count($result)) {
+                // pr($$result['policeStation']);
+                if (!empty($result['policeStation']) && count($result['policeStation'])>0 ) {
                     echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
                     foreach($result['policeStation'] as $dataRes)
                     {
                         echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.$dataRes['police_district']), ENT_QUOTES) . '</option>';
                     }
+                    echo '<option value="" > Not in List </option>';
+
                 } else {
+
                     echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
+                    echo '<option value="" > Not in List </option>';
+
                 }
 
             } else {
-                echo '<option value="" selected="true" disabled="disabled"> Select Police Station</option>';
+                echo '<option value="" selected="true" disabled="disabled"> Select Police Station   </option>';
+                echo '<option value="" > Not in List </option>';
             }
         } else {
-            echo '<option value="" selected="true" disabled="disabled"> Select Police Station</option>';
+            echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
+            echo '<option value="" > Not in List </option>';
         }
     }
 
