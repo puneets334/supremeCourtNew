@@ -4163,9 +4163,10 @@ input[type="file"] {
 .account-details {
     display: flex;
     align-items: center;
-    flex-direction: row-reverse;
+    flex-direction: row;
     margin-top: 5px;
     gap: 10px;
+    justify-content: end;
 }
 
 .mngmntHeader .userImgWrap {
@@ -6178,7 +6179,7 @@ input[type="file"] {
 }
 
 .dashboardLeftNav li a.active {
-    background: #fff;
+    background: #fff !important;!i;!;
     box-shadow: inset -56px 0px 14px -51px rgba(232, 232, 232, 1);
     color: #000;
 }
@@ -6602,7 +6603,7 @@ li.text-size a:last-child {
     transition: 0.6s;
 }
 
-.dashboard-tiles-area .dashbord-tile:hover:after {
+.dashboard-tiles-area .dashbord-tile:hover:after , .dashboard-tiles-area .dashbord-tile:focus:after{
     height: 100%;
     transition: 0.4s;
 }
@@ -6627,18 +6628,21 @@ li.text-size a:last-child {
     margin: 0;
     font-size: 18px;
     font-family: 'noto_sansmedium';
+    z-index: 1;
 }
 
 .dashbord-tile .tile-subtitle {
     font-size: 14px;
     line-height: 26px;
     margin: 0;
+    z-index: 1;
 }
 
 .dashbord-tile .main-count {
     font-size: 36px;
     line-height: 26px;
     margin: 15px 0;
+    z-index: 1;
 }
 
 h6.comts-no {
@@ -6656,6 +6660,7 @@ p.comnt-name {
     justify-content: space-between;
     align-items: center;
     gap: 5px;
+    z-index: 1;
 }
 
 .tiles-comnts .tile-comnt {
@@ -6869,7 +6874,7 @@ p.comnt-name {
     border-radius: 15px;
 }
 
-.mngmntHeader .userDetail:hover .user-action-sec {
+.mngmntHeader .userDetail:hover .user-action-sec, .mngmntHeader .userDetail:focus-within .user-action-sec , mngmntHeader .userDetail:focus .user-action-sec {
     display: block;
 }
 
@@ -6961,12 +6966,12 @@ a.add-btn .mdi {
     transition: width 0.4s
 }
 
-.add-new-area:hover .add-new-options,
+/* .add-new-area:hover .add-new-options,
 .add-new-area:hover .add-new-options ul {
     width: 234px;
     transition: width 0.4s
-}
-
+} */
+add-new-area:hover .add-new-options, .add-new-area:hover .add-new-options ul, .add-new-area:focus .add-new-options, .add-new-area:focus.add-new-options ul, .add-new-area:focus-within .add-new-options,  .add-new-area:focus-within .add-new-options ul{width: 234px;transition:width 0.4s}
 .add-new-area .add-new-options ul {
     width: 234px
 }
@@ -7645,6 +7650,7 @@ textarea.form-control.cus-form-ctrl {
     padding: 15px 0 0;
     background: #fff0;
     width: 300% !important;
+    z-index: 1;
 }
 
 .tiles-comnts .tile-comnt {
@@ -8217,3 +8223,22 @@ input[type="radio"] {
 }
 
 /* Close Loader  */
+/* 24 sept 2024 start  */
+.application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
+.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;}
+.application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
+.application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
+.application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
+.application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
+.application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
+.dashbord-tile:focus-within , .dashbord-tile:focus{outline: 1px dotted #000;}
+/* 24 sept 2024 start  */
+.dashboardLeftNav li:nth-child(1) a.active:before {  background-position: 0px -42px;}
+.dashboardLeftNav li:nth-child(2) a.active:before {  background-position: 4px -95px;}
+.dashboardLeftNav li:nth-child(3) a.active:before {  background-position: 2px -142px;}
+.dashboardLeftNav li:nth-child(4) a.active:before {   background-position: 2px -193px;}
+.dashboardLeftNav li:nth-child(5) a.active:before { background-position: 0px -243px;}
+.dashboardLeftNav li:nth-child(6) a.active:before {   background-position: 1px -291px;}
+.dashboardLeftNav li:nth-child(7) a.active:before {    background-position: 0px -341px;}
+.dashboardLeftNav li:nth-child(8) a.active:before {    background-position: 0px -394px;}
+.dashboardLeftNav li:nth-child(9) a.active:before {  background-position: 1px -432px;}
