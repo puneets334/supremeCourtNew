@@ -257,3 +257,13 @@ h6.htsmall {
     .container, .container-fluid{max-width:1300px!important}
 }
 .container, .container-fluid{width:100%;padding:0 15px;max-width:1430px;margin:0 auto}
+
+/* yash css 25-09-24  */
+
+.login-section {
+    height: 719px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+/* yash css 25-09-24  */
