@@ -239,7 +239,6 @@ class DefaultController extends BaseController {
 
         $insert_objections = array();
         $update_objections = array();
-
         $objections_pending = FALSE;
 
         foreach ($cis_objections as $cis_objection) {
