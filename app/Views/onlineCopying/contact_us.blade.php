@@ -13,7 +13,7 @@
                             <div class=" dashboard-bradcrumb">
                                 <div class="left-dash-breadcrumb">
                                     <div class="page-title">
-                                        <h5><i class="fa fa-file"></i> Screen Reader </h5>
+                                        <h5><i class="fa fa-file"></i> Contact Us </h5>
                                     </div>
                                     <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
                                 </div>
