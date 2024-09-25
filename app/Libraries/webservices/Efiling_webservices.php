@@ -1614,6 +1614,8 @@ class Efiling_webservices {
     public function get_police_station_list($state_id,$district_id)
     {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getPoliceStation/?state_id=$state_id&district_id=$district_id");
+
+        // pr(ICMIS_SERVICE_URL."/ConsumedData/getPoliceStation/?state_id=$state_id&district_id=$district_id");
         if ($data != false) {
             return json_decode($data,true);
         } else {

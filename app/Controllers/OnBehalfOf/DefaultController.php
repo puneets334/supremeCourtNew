@@ -16,6 +16,7 @@ class DefaultController extends BaseController
     public function __construct()
     {
         parent::__construct();
+        error_reporting(0);
         //$this->load->model('miscellaneous_docs/Get_details_model');
         $this->OnBehalfOfModel = new OnBehalfOfModel();
         $this->validation = \Config\Services::validation();
