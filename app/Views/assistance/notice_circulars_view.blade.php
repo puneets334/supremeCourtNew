@@ -22,13 +22,13 @@
                                 @if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
-                                            <a href="<?= base_url('support/circulars'); ?>" aria-current="page" class="nav-link active">Circulars</a>
+                                            <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link active">Circulars</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="<?= base_url('support/proformas'); ?>" aria-current="page" class="nav-link">Proformas</a>
+                                            <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link">Proformas</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="<?= base_url('support/contact_us'); ?>" aria-current="page" class="nav-link">Contact Us</a>
+                                            <a href="<?= base_url('contact_us'); ?>" aria-current="page" class="nav-link">Contact Us</a>
                                         </li>
                                     </ul>
                                 @endif

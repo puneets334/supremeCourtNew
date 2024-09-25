@@ -44,7 +44,7 @@
         </div>
         <footer class="footer-sec">Content Owned by Supreme Court of India</footer>
     </div>
-    <div class="add-new-area">
+    <div class="add-new-area" tabindex="0" role="button">
         <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
         <div class="add-new-options">
             <ul>

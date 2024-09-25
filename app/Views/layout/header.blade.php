@@ -66,9 +66,15 @@
                 }
             ?>
             <div class="account-details">
+                <div class="userInfo">
+                    <!-- <a href="#"><span class="fa fa-envelope-o icon-animated-vertical"></span></a> -->
+                    <!-- <a href="#"><span class="fa fa-question animated bounceInDown"></span></a>  -->
+                    <a href="#"	class="bell"><span class="fa fa-bell ringing"></span><span class="count">5</span></a>
+                    <!-- <a	href="login.html" class="signOut"><span class="fa fa-sign-out"></span></a> -->
+                </div>
                 <div class="userInformation">
                     <!--userDetail-->
-                    <div class="userDetail" id="usr-action-btn">
+                    <div class="userDetail" id="usr-action-btn" tabindex="0" role="button">
                         <div class="userName"> <?= getSessionData('login')['first_name']; ?> <i class="fas fa-chevron-down"></i>
                             <span class="division"><?= '<strong>Last Login Details</strong>' . "<br>" . "Date : " . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '');
                             // . "<br>" . "IP : " . (!empty($login_time) ? htmlentities($login_time->ip_address, ENT_QUOTES) : '')
@@ -96,12 +102,7 @@
                     </div>
                     <!--userImg-->
                 </div>
-                <div class="userInfo">
-                    <!-- <a href="#"><span class="fa fa-envelope-o icon-animated-vertical"></span></a> -->
-                    <!-- <a href="#"><span class="fa fa-question animated bounceInDown"></span></a>  -->
-                    <a href="#"	class="bell"><span class="fa fa-bell ringing"></span><span class="count">5</span></a>
-                    <!-- <a	href="login.html" class="signOut"><span class="fa fa-sign-out"></span></a> -->
-                </div>
+                
             </div>
         </div>
     </div>			

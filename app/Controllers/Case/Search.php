@@ -608,7 +608,7 @@ class Search extends BaseController
             if (!empty($diary_no) && !empty($diary_year)) {
                 $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
                 
-                $data['listing_details'] = $listing_data->listed[0];
+                $data['listing_details'] = !empty($listing_data->listed) ? $listing_data->listed[0] : '';
                 $_SESSION['listing_details'] = $data['listing_details'];
                 $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
                 
