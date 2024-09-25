@@ -41,19 +41,25 @@ class DefaultModel extends Model {
 
     function update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_insert, $objections_update, $efiling_type = null) {
         // $this->db->trans_start();
-        $db = Database::connect();
-        $builder = $db->table('efil.tbl_case_details');
+        
+        $builder = $this->db->table('efil.tbl_case_details');
         // $builder->WHERE('registration_id', $registration_id);
         foreach($case_details as $case_detail){
             // print_r($case_detail); die;
-            $registration_id_arr = $case_detail['registration_id'];
-            $builder->WHERE('registration_id', $registration_id_arr);
-            $builder->update($case_detail, 'registration_id');
+            //$registration_id_arr = $case_detail['registration_id'];
+            $builder->where('registration_id', $registration_id);
+            $builder->update($case_detail);
+            //echo $builder->getCompiledUpdate();
+           // die;
         }
+        
+
         if (isset($objections_insert) && !empty($objections_insert)) {
             foreach($objections_insert as $objection_insert){
-                // $this->db->insertID()
+                // 
                 $builder->insert($objection_insert);
+              // echo $this->db->insertID().'<br>';
+               //die;
             }
             // $db = Database::connect();
             // $builder = $db->table('efil.tbl_case_details');
@@ -61,8 +67,13 @@ class DefaultModel extends Model {
             // $builder = $this->db->table('efil.tbl_case_details'); 
             // $builder->insertBatch($objections_insert);
         }
+
         if (isset($objections_update) && !empty($objections_update)) {
-            $builder->updateBatch($objections_update, 'id');
+            
+            $builder->where('registration_id', $registration_id);
+            $builder->update($objections_update);
+ 
+            //$builder->updateBatch($objections_update, 'id');
         }
         $current_stage = $this->get_current_stage($registration_id);
         if ($current_stage) {
