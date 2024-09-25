@@ -73,7 +73,11 @@ class DefaultController extends BaseController {
                                     'updated_by_ip' => getClientIP(),
                                 );
 
-                                if ($response->verification_date != '' || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='SCR -> CAT' : '') || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='CAT -> IB-Ex' : '' ) || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='AUTO -> CAT' : '' ) || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='CAT -> TAG' : '' )) {
+                                if ($response->verification_date != '' 
+                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='SCR -> CAT' : '') 
+                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='CAT -> IB-Ex' : '' ) 
+                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='AUTO -> CAT' : '' ) 
+                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='CAT -> TAG' : '' )) {
 
                                     // echo "<br>verfication_date " . $response->verification_date;
 
@@ -247,9 +251,9 @@ class DefaultController extends BaseController {
 
             //$key = array_keys(array_column($old_objections, 'obj_id').array_column($old_objections, 'remarks'), $cis_objection->org_id.$cis_objection->remark);
 
-            $obj_removed_date = ($cis_objection->rm_dt == '0000-00-00 00:00:00') ? NULL : $cis_objection->rm_dt;
+            $obj_removed_date = ($cis_objection->rm_dt == '0000-00-00 00:00:00' || $cis_objection->rm_dt == NULL) ? NULL : $cis_objection->rm_dt;
 
-            if ($cis_objection->rm_dt == '0000-00-00 00:00:00' && $objections_pending == FALSE) {
+            if (($cis_objection->rm_dt == '0000-00-00 00:00:00' || $cis_objection->rm_dt == NULL) && $objections_pending == FALSE) {
                 $objections_pending = TRUE;
             }
 
