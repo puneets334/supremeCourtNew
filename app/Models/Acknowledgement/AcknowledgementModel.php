@@ -18,6 +18,7 @@ class AcknowledgementModel extends Model {
         $builder->WHERE('cd.registration_id', $registration_id);
         $builder->WHERE('cd.is_deleted', FALSE);
         $query = $builder->get();
+        // pr($query->getResultArray());
         if ($query->getNumRows() >= 1) {
             $new_case_details = $query->getResultArray();
             return $query->getResultArray();
@@ -25,7 +26,22 @@ class AcknowledgementModel extends Model {
             return FALSE;
         }
     }
-
+    public function get_caveat_details($registration_id) {
+        $builder = $this->db->table('efil.tbl_case_details cd');
+        $builder->SELECT("*");
+        $builder->JOIN( "icmis.casetype cs",'cd.sc_case_type_id =cs.casecode','LEFT');
+        $builder->JOIN("efil.tbl_efiling_nums ten",'cd.registration_id=ten.registration_id','LEFT');
+        $builder->WHERE('cd.registration_id', $registration_id);
+        $builder->WHERE('cd.is_deleted', FALSE);
+        $query = $builder->get();
+        // pr($query->getResultArray());
+        if ($query->getNumRows() >= 1) {
+            $new_case_details = $query->getResultArray();
+            return $query->getResultArray();
+        } else{
+            return FALSE;
+        }
+    }
     function get_efiled_by_user($user_id) {
         $builder = $this->db->table('efil.tbl_users');
         $builder->SELECT('id,ref_m_usertype_id,first_name, last_name, moblie_number, emailid');

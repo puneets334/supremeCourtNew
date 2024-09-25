@@ -37,14 +37,10 @@
             ?>
             <div class="tab-form-inner">
                 <div class="row">
-                    <h6 class="text-center fw-bold mb-2">Pay Court Fee</h6>
-                    <div class="table_pay_heading">
-                    <h5>No printing charges are required to be paid</h5>
-                </div>
+                    <h6 class="text-center fw-bold">Pay Court Fee</h6>
                 </div>
 
                 <?= ASTERISK_RED_MANDATORY ?>
-               
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                         <!-- <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%"> -->
@@ -52,9 +48,9 @@
 
                             <thead>
                                 <tr class="success">
-                                    <th>Cost Per Page (₹)</th>
+                                    <th>Cost Per Page ( <i class="fa fa-rupee"></i> )</th>
                                     <th>Uploaded Page(s)</th>
-                                    <th>Total Cost (₹)</th>
+                                    <th>Total Cost ( <i class="fa fa-rupee"></i> )</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -86,7 +82,7 @@
                                 <tr class="success">
                                     <th>#</th>
                                     <th>Court Fee Details </th>
-                                    <th style="text-align: center">Amount ( ₹ )</th>
+                                    <th style="text-align: center">Amount ( <i class="fa fa-rupee"></i> )</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -284,7 +280,7 @@
                                                     $court_fee1 = 0;
                                                 }
                                                 ?>
-                                                ₹ <?= $court_fee1; ?>
+                                                <i class="fa fa-rupee"></i> <?= $court_fee1; ?>
                                             </td>
                                         </tr>
                                         <?php $sr_no++;
@@ -326,7 +322,7 @@
                                                         <?php }
                                                         } ?>
                                                     </td>
-                                                    <td align="center">₹
+                                                    <td align="center"><i class="fa fa-rupee"></i>
                                                         <?php
                                                         //print_r($case_nature);
                                                         if (($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
@@ -388,7 +384,7 @@
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td><?= $sr_no ?></td>
                                             <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center">₹ <?= $doc_court_fee ?></td>
+                                            <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
                                     <?php
                                         $sr_no++;
@@ -410,7 +406,7 @@
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td><?= $sr_no ?></td>
                                             <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center">₹
+                                            <td align="center"><i class="fa fa-rupee"></i>
                                                 <?php if ($no_of_affidavit_copies > 0)
                                                     echo (int)$doc_court_fee * (int)$no_of_affidavit_copies;
                                                 else
@@ -438,7 +434,7 @@
                                             <td><?= $sr_no;
                                                 $doc ?></td>
                                             <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center">₹ <?= $doc_court_fee ?></td>
+                                            <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
                                     <?php
                                         $sr_no++;
@@ -449,7 +445,7 @@
                                             <td> <?= $row['docdesc'] ?> <br> (No. of petitioners
                                                 : <?= $row['total_petitioners']; ?>)
                                             </td>
-                                            <td align="center">₹
+                                            <td align="center"><i class="fa fa-rupee"></i>
                                                 <?php
                                                 if ($row['nature'] == 'C')
                                                     $doc_court_fee = $row['docfee'];
@@ -470,7 +466,7 @@
                                             <td> <?= $row['docdesc'] ?> <br> (No. of order Challanged
                                                 : <?= $row['order_challanged']; ?>)
                                             </td>
-                                            <td align="center">₹
+                                            <td align="center"><i class="fa fa-rupee"></i>
                                                 <?php
                                                 if ($row['nature'] == 'C')
                                                     $doc_court_fee = $row['docfee'];
@@ -496,7 +492,7 @@
                                             <td><?= $sr_no ?></td>
                                             <td> <?= $row['docdesc'] ?>
                                             </td>
-                                            <td align="center">₹ <?= (int)$doc_court_fee; ?></td>
+                                            <td align="center"><i class="fa fa-rupee"></i> <?= (int)$doc_court_fee; ?></td>
                                         </tr>
                                     <?php
                                         $sr_no++;
@@ -507,7 +503,7 @@
                                             <td> <?= $row['docdesc'] ?> <br> No of Petitioners / appellant (Non-party)
                                                 : <?= $row['no_of_petitioner_appellant']; ?>
                                             </td>
-                                            <td align="center">₹
+                                            <td align="center"><i class="fa fa-rupee"></i>
                                                 <?php
                                                 if ($row['nature'] == 'C') {
                                                     if ((int)$row['no_of_petitioner_appellant'] > 0) {
@@ -527,7 +523,7 @@
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td><?= $sr_no; ?></td>
                                             <td> <?= $row['docdesc'] ?> </td>
-                                            <td align="center">₹
+                                            <td align="center"><i class="fa fa-rupee"></i>
                                                 <?php
                                                 if (($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
                                                     $doc_court_fee = (int)$row['docfee'];
@@ -556,9 +552,8 @@
                                 }
                                 ?>
                                 <tr>
-                                    <td></td><td></td>
-                                    <td colspan="3" style="text-align: center;padding-right: 71px;">
-                                        <label style="margin-top: 10px;font-weight: bold">Total : ₹ <?= $court_fee ?></label>
+                                    <td colspan="3" style="text-align: right;padding-right: 71px;">
+                                        <label style="margin-top: 10px;font-weight: bold">Total : <i class="fa fa-rupee"></i> <?= $court_fee ?></label>
                                     </td>
                                 </tr>
                             </tbody>
@@ -568,8 +563,8 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <label class="">Want to pay more Court Fee ( ₹ ) <span style="color: red" class="astriks">*</span> :</label>
-                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-6">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> ) <span style="color: red" class="astriks">*</span> :</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                 <input type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress(this)" id="user_declared_extra_fee" name="user_declared_extra_fee" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="0">
                             </div>
                         </div>
@@ -602,15 +597,13 @@
                         ?>
                         <div class="mb-3">
                             <label for=""
-                                class="form-label">Court Fee (To Pay) ( ₹ ) <span style="color: red" class="astriks">*</span></label>
-                          <div class="col-md-6 col-12 col-lg-6 col-xl-6">
-                          <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php echo_data(url_encryption($uploaded_pages_count_pending . '$$' . $printing_cost_total . '$$' . $printing_cost_already_paid . '$$' . $printing_cost_to_be_paid . '$$' . $user_declared_court_fee)); ?>" />
+                                class="form-label">Court Fee<br> (To Pay)( <i class="fa fa-rupee"></i> ) <span style="color: red" class="astriks">*</span></label>
+                            <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php echo_data(url_encryption($uploaded_pages_count_pending . '$$' . $printing_cost_total . '$$' . $printing_cost_already_paid . '$$' . $printing_cost_to_be_paid . '$$' . $user_declared_court_fee)); ?>" />
                             <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
                             <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
-                          </div>
-                            <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?> = ₹ <?= $total_court_fee ?></label>
+                            <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?> = <i class="fa fa-rupee"></i> <?= $total_court_fee ?></label>
                             <br>
-                            <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: ₹ <?= $court_fee_already_paid ?> </label>
+                            <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: <i class="fa fa-rupee"></i> <?= $court_fee_already_paid ?> </label>
                             {{-- <input type="text"
                                                             class="form-control cus-form-ctrl"
                                                             id="exampleInputEmail1"

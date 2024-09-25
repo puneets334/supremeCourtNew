@@ -177,15 +177,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         <?php
                                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
                                                             $allowed_users_array = array(Initial_Approaval_Pending_Stage,I_B_Defects_Cured_Stage,Initial_Defects_Cured_Stage);
-                                                            if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
-                                                                ?>
-                                                        <a class="btn btn-success btn-sm"
-                                                            target="_blank"
-                                                            href="<?php echo base_url('acknowledgement/view'); ?>">
-                                                            <i class="fa fa-download blink"></i> eFiling Acknowledgement
-                                                        </a>
-                                                        <?php
-                                                            }
+                                                          
                                                         }
                                                         ?>
                                                     </div>
@@ -215,7 +207,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="accordion"
                                                         id="accordionExample">
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <h2 class="accordion-header"
                                                                 id="headingOne">
                                                                 <button class="accordion-button"
@@ -328,7 +320,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header col-sm-11"
                                                                     id="headingTwo">
@@ -363,7 +355,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header col-sm-11"
                                                                     id="headingThree">
@@ -398,7 +390,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header col-sm-11"
                                                                     id="headingFour">
@@ -433,7 +425,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header col-sm-11"
                                                                     id="headingFive">
@@ -470,7 +462,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                             </div>
                                                         </div>
 
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header col-sm-11"
                                                                     id="headingSix">
@@ -506,7 +498,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                             </div>
                                                         </div>
                                                         
-                                                        <div class="accordion-item custom-table">
+                                                        <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header col-sm-11"
                                                                     id="headingNine">
