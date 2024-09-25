@@ -183,10 +183,10 @@ class DefaultController extends BaseController {
         $efil_docs = $temp_efil_docs = $this->Get_CIS_Status_model->get_efiled_docs_list($registration_id, $ia_only);
         $i = 0;
 
-        foreach ($temp_efil_docs as $e_doc) {
-            $temp_efil_docs[$i]['doc_id'] = $this->encrypt_doc_id($e_doc['doc_id']);
-            $i++;
-        }
+        // foreach ($temp_efil_docs as $e_doc) {
+        //     $temp_efil_docs[$i]['doc_id'] = $this->encrypt_doc_id($e_doc['doc_id']);
+        //     $i++;
+        // }
 
         $update_documents = array();
 
