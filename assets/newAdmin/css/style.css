@@ -6179,7 +6179,7 @@ input[type="file"] {
 }
 
 .dashboardLeftNav li a.active {
-    background: #fff !important;!i;!;
+    background: #fff !important;
     box-shadow: inset -56px 0px 14px -51px rgba(232, 232, 232, 1);
     color: #000;
 }
@@ -6761,7 +6761,7 @@ p.comnt-name {
 }
 
 .table-striped tr:hover td {
-    background: #4443b !important;
+    background: #4443 !important;
 }
 
 .calender-table {
@@ -8224,6 +8224,28 @@ input[type="radio"] {
 }
 
 /* Close Loader  */
+
+/* 24 sept 2024 start  */
+.application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
+.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;}
+.application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
+.application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
+.application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
+.application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
+.application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
+.dashbord-tile:focus-within , .dashbord-tile:focus{outline: 1px dotted #000;}
+/* 24 sept 2024 start  */
+.dashboardLeftNav li:nth-child(1) a.active:before {  background-position: 0px -42px;}
+.dashboardLeftNav li:nth-child(2) a.active:before {  background-position: 4px -95px;}
+.dashboardLeftNav li:nth-child(3) a.active:before {  background-position: 2px -142px;}
+.dashboardLeftNav li:nth-child(4) a.active:before {   background-position: 2px -193px;}
+.dashboardLeftNav li:nth-child(5) a.active:before { background-position: 0px -243px;}
+.dashboardLeftNav li:nth-child(6) a.active:before {   background-position: 1px -291px;}
+.dashboardLeftNav li:nth-child(7) a.active:before {    background-position: 0px -341px;}
+.dashboardLeftNav li:nth-child(8) a.active:before {    background-position: 0px -394px;}
+.dashboardLeftNav li:nth-child(9) a.active:before {  background-position: 1px -432px;}
+
+
 /* yash css start 24-09-2024  */
 label.error {
     color: red;
@@ -8278,8 +8300,11 @@ table.dataTable thead .sorting {
 .table-sec table tr th {
     font-size: 13px;
 }
-.custom-table thead th, .custom-table tbody td {
+.custom-table thead th {
     padding: 12px 12px !important;
+}
+.custom-table tbody td {
+    padding: 10px 12px !important;
 }
 span.select2.select2-container.select2-container--default {
     width: 100% !important;
@@ -8294,7 +8319,7 @@ span.select2.select2-container.select2-container--default {
 a.add-btn {
     background: #000000;
 }
-.btn-info {
+#byMe {
     margin: -13% 14%;
     background: transparent;
     border: 1px solid #bfbfbf;
@@ -8303,29 +8328,181 @@ a.add-btn {
     font-weight: 600;
     transition: 0.2s ease-in-out;
 }
-.btn-info:hover {
+#byMe:hover {
     background: white;
     border: 1px solid white;
     color: black;
     transition: 0.2s ease-in-out;
 }
+
+.quick-btn.gradient-btn {
+    background: #444444;
+}
+
+.pading_low {
+    margin-top: 35px !important;
+}
+.tabs-sec-inner h5 {
+    padding: 20px 0 0 0 !important;
+    margin: 0;
+}
+.card.custom-card h5 {
+    font-size: 1rem;
+}
+
+.dataTables_length select {
+    padding: 0 !important;
+}
+.custom-table tr th {
+    width: 35px;
+}
+.top-right-nav ul li.theme-color a {
+    font-size: 0;
+    padding: 6px !important;
+}
+a.btn-link.active {
+    color: black !important;
+}
+.add-new-options:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 16px;
+    border-top: 10px solid transparent;
+    border-left: 10px solid #ffffff;
+    border-bottom: 10px solid transparent;
+    display: none;
+}
+.add-new-area .add-new-options ul {
+    margin: 0;
+}
+.form-label {
+    margin-top: 15px;
+}
+.dashboardLeftNav li:nth-child(8) a:before {
+    background-position: -43px -394px;
+}
+.dashboardLeftNav li:nth-child(9) a:before {
+    background-position: -42px -432px;
+}
+.dashboardLeftNav li:nth-child(10) a:before {
+    background-position: -41px -466px;
+}
+.dashboardLeftNav li:nth-child(11) a:before {
+    background-position: -43px -499px;
+}
+ 
+ 
+ 
+.dashboardLeftNav li:nth-child(10) a:hover:before {
+    background-position: 1px -467px;
+}
+.dashboardLeftNav li:nth-child(11) a:hover:before {
+    background-position: 1px -498px;
+}
 /* Edn yash css 25-096-2024  */
-/* 24 sept 2024 start  */
-.application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
-.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;}
-.application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
-.application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
-.application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
-.application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
-.application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
-.dashbord-tile:focus-within , .dashbord-tile:focus{outline: 1px dotted #000;}
-/* 24 sept 2024 start  */
-.dashboardLeftNav li:nth-child(1) a.active:before {  background-position: 0px -42px;}
-.dashboardLeftNav li:nth-child(2) a.active:before {  background-position: 4px -95px;}
-.dashboardLeftNav li:nth-child(3) a.active:before {  background-position: 2px -142px;}
-.dashboardLeftNav li:nth-child(4) a.active:before {   background-position: 2px -193px;}
-.dashboardLeftNav li:nth-child(5) a.active:before { background-position: 0px -243px;}
-.dashboardLeftNav li:nth-child(6) a.active:before {   background-position: 1px -291px;}
-.dashboardLeftNav li:nth-child(7) a.active:before {    background-position: 0px -341px;}
-.dashboardLeftNav li:nth-child(8) a.active:before {    background-position: 0px -394px;}
-.dashboardLeftNav li:nth-child(9) a.active:before {  background-position: 1px -432px;}
+
+/* black theme css old file 25-09-24  */
+
+/* Header CSS Start  */
+.black-theme .mngmntHeader .top-right-nav{background: #222222;}
+.black-theme .mngmntHeader .top-right-nav img.txt-icon{filter: invert(0.45) sepia(1) saturate(10) hue-rotate(30deg) brightness(1.4);}
+.black-theme .mngmntHeader .top-right-nav a {color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a.whitebg {background: #fff;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a {border: 1px solid #ffffffb0;color: #fff;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang {background: transparent;color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang option {background: #000;}
+.black-theme .mngmntHeader .top-right-nav a {color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a.whitebg {background: #fff;}
+.black-theme .mngmntHeader .top-right-nav .theme-color a {border: 1px solid #ffffffb0;color: #fff;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang {background: transparent;color: #ff0;}
+.black-theme .mngmntHeader .top-right-nav select.select-lang option { background: #000;}
+.black-theme .mngmntHeader {background: #000;}
+.black-theme .mngmntLogoSection .logo img {filter: invert(1);}
+.black-theme .mngmntLogoSection .logoSubtitle {color: #ff0;}
+.black-theme .mngmntLogoSection .brand-text h4, .black-theme .mngmntLogoSection .brand-text h4 span {color: #ff0 !important;}
+.black-theme .mngmntUserSection .userName, .black-theme .mngmntHeader .userDetail i {color: #ff0;}
+.black-theme .mngmntHeader .userInfo a {background: #333333;color: #ff0;}
+.black-theme .mngmntHeader .userInfo .bell .count {background: #ff0;}
+.black-theme .user-action-sec ul {background: #333333;}
+.black-theme .user-action-sec:before {border-bottom-color: #333333;}
+.black-theme .wrapper {background: #222222;}
+/* Header CSS End  */
+/* Menu CSS Start  */
+.black-theme .dashboardLeftNav li a.active:before, .black-theme .dashboardLeftNav li a.btn-link:hover:before {filter: invert(1);}
+.black-theme .togglemenuSection {background: #111111;}
+.black-theme .user-action-sec ul a:hover {background: #000;color: #ff0;}
+.black-theme .user-action-sec ul a {color: #ff0;}
+.black-theme .sidePanel {background: #111111;}
+.black-theme .hamburger-icon span {background: #ff0;}
+.black-theme .dashboardLeftNav li a.active, .black-theme .dashboardLeftNav li a.btn-link:hover {background: #000 !important;color: #ff0 !important;box-shadow: none !important}
+.black-theme .dashLeftNavSection .menu-close-sec .main-menu-close span {color: #ff0;}
+.black-theme .menu-profile-sec .profile-info h6, .black-theme .menu-profile-sec .profile-info a.profile-lnk {color: #ff0;}
+.black-theme .menu-profile-sec .profile-link span.mdi {color: #ff0;}
+.black-theme .dashboardLeftNav li > .accordion-button[aria-expanded="true"] , .black-theme .dashboardLeftNav li > .submenu{background:#000 !important;color:#ff0;}
+.black-theme .dashboardLeftNav li > .submenu a:hover, .black-theme .dashboardLeftNav li > .submenu a:focus{background: #222 !important;color:#ff0;}
+.black-theme .dashboardLeftNav li:nth-child(2) .accordion-button[aria-expanded="true"]:before{background-position:-38px -95px;}
+.black-theme .dashboardLeftNav li:nth-child(2) a:hover:before, .black-theme .dashboardLeftNav li:nth-child(2) a:focus:before{background-position: 4px -95px !important;}
+/* Menu CSS End  */
+/* Dashboard Main Section Start  */
+.black-theme .dashbord-tile{background: #000;border-color: #ffffff52;}
+.black-theme .dashboard-tiles-area .dashbord-tile:after {background: #333;}
+.black-theme .dash-card {background: #000;}
+.black-theme .custom-table thead th {background:#111111!important;border-top:1px solid #ffffff63;border-bottom:1px solid #ffffff63;}
+.black-theme .table-striped tr:nth-child(odd) td {background: #333333 !important;}
+.black-theme .table-striped tr:nth-child(even) td {background: #222222;}
+.black-theme .table-striped tr td {border-bottom: 1px solid #ffffff59;}
+.black-theme .table tr td, .black-theme .table tr th {color: #ffffff;}
+.black-theme .table-striped tr:hover td {background: #111111 !important;color: #ff0;}
+.black-theme .title-sec .unerline-title {color: #fff;}
+.black-theme .title-sec .unerline-title:before {background: #fff !important;}
+.black-theme .calender-table .dt-td .mdi {color: #ff0;}
+.black-theme .pagination-inner a.page-link {background: #222222;border-color: #ffffff3d;color: #ff0;}
+.black-theme .pagination-inner a.page-link:hover, .black-theme .pagination-inner a.page-link:focus, .black-theme .pagination-inner li.page-item.active a {background: #000;color: #ff0;}
+.black-theme .calender-table::-webkit-scrollbar-thumb{border-radius:10px;background-color:#ffffff!important}
+.black-theme a.add-btn {background: #000;color: #ff0;box-shadow: 0px 0px 8px 0px rgb(255 255 255);}
+.black-theme .add-new-options {background: #111;box-shadow: 5px 1px 8px 0px rgb(94 93 93 / 72%);}
+.black-theme .add-new-options ul .add-lnk:hover {background: #000 !important;color: #ff0;}
+.black-theme .add-new-options ul .add-lnk {color: #ff0;}
+.black-theme .add-new-options:before {border-left-color: #ff0;}
+.black-theme .dashboard-bradcrumb .page-title h5{color: #ff0 !important;}
+.black-theme .page-breifs ul a {color: #ff0;}
+.black-theme .quick-btn {background: #333333 !important;color: #ff0 !important;}
+.black-theme .quick-btn.gray-btn {background: #000;}
+.black-theme .quick-btn:before, .black-theme .quick-btn:after {background: #222222;}
+.black-theme .tabs-section .nav-tabs li.nav-item .nav-link {background: #333333;color: #ff0;}
+.black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover {background: #000;color: #ff0;}
+.black-theme form label {color: #ffffff;}
+.black-theme .cus-form-ctrl {background: #222222;border-color: #ffffff4d !important;color: #ffffff !important;appearance: auto;}
+.black-theme .cus-form-ctrl:focus {border-color: #00ff0075 !important;background: #222222;}
+.black-theme select.form-select option {background: #222222;}
+.black-theme .current-pg-title h6 {color:#ffffff;}
+.black-theme .crnt-page-head{border-color:#ffffff78;}
+.black-theme .form-check.form-switch input[type="checkbox"] {border-color: #ffffff57;}
+.black-theme .form-switch .form-check-input:focus {filter: invert(1) brightness(16);}
+.black-theme .common-modal .modal-dialog .modal-content {background: #000;box-shadow: 0px 0px 13px 0px rgb(255 255 255 / 58%);}
+.black-theme .common-modal .modal-footer{background: #333333;}
+.black-theme .common-modal .modal-body {color:#ff0;}
+.black-theme .common-modal .quick-btn {background: #000!important;}
+/* Dashboard Main Section End  */       
+/* Footer CSS Start  */
+.black-theme .footer-sec{background:#333333;color:#ff0;}
+/* Footer CSS End  */
+.black-theme .top-right-nav .font-action-sec ul {background: #111111;box-shadow: 0px 0px 6px 0px rgb(255 255 255);}
+.black-theme .top-right-nav .font-action-sec:before {border-bottom-color: #111111;}
+.black-theme .top-right-nav .font-action-sec ul li:hover {background: #333333;}
+.black-theme .top-right-nav .font-action-sec ul li:hover a{color: #ff0!important;}
+.black-theme .top-right-nav .font-action-sec ul li a {color: #ff0 !important;}
+.black-theme .quick-btn:hover{color: #ff0 !important;}
+.black-theme .breadcrumb-area .breadcrumb-item.active {background: #333;}
+.black-theme .breadcrumb-area .breadcrumb-item {border-color: #333;background: #222;}
+.black-theme .breadcrumb-area .breadcrumb-item a {color: #ff0;}
+.black-theme .breadcrumb-item+.breadcrumb-item::before {color: #fff;}
+.black-theme .breadcrumb-area .breadcrumb-item:hover {background: #333;}
+.black-theme .breadcrumb-area .breadcrumb-item:hover a {color: #ff0;}
+.black-theme .discription-sec p, .black-theme .innner-sub-title h5 {color: #fff;}
+.black-theme .custom-table td a {color: #ff0;}
+.black-theme .dataTables_length label, .dataTables_filter label {color: #fff;}
+
+
+/* black theme css old 25-09-24  */

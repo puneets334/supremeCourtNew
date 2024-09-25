@@ -297,6 +297,8 @@
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+
+	
 </body>
 
 </html>

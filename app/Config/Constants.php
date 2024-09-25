@@ -588,7 +588,7 @@ $document_generate_case_id = array(9,10,19,20,20,25,26);
 define('DOCUMENT_GENERATE_CASE_ID',serialize($document_generate_case_id));
 define('INTERLOCUTARY_APPLICATION',8);
 define('CONDONATION_OF_DELAY_IN_REFILING_OR_CURING_THE_DEFECTS',226);
-define('ASTERISK_RED_MANDATORY','<div class="row"><label class="control-label col-md-3 col-sm-offset-1 col-sm-8 col-xs-12 input-sm"><b> <span style="color: red">Note : </span> <span style="color:black; ">Fields marked in </span><span style="color: red">*</span> <span style="color:black; "> are mandatory</span></b></label></div><br/>');
+define('ASTERISK_RED_MANDATORY','<div class="row"><label class="control-label col-md-6 col-sm-offset-1 col-sm-8 col-xs-12 input-sm"><b> <span style="color: red">Note : </span> <span style="color:black; ">Fields marked in </span><span style="color: red">*</span> <span style="color:black; "> are mandatory</span></b></label></div>');
 
 define('PAYMENT_SERVICES_DOWN_FROM', '');
 define('PAYMENT_SERVICES_DOWN_TO',"");

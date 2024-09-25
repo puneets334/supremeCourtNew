@@ -30,8 +30,7 @@ class DefaultController extends BaseController {
         $cronDetails= array("cron_type"=>'scrutiny_status','started_at'=>date('Y-m-d H:i:s'));
 
         $cronDetailsId=$this->Default_model->insertInDBwithInsertedId('efil.tbl_cron_details',$cronDetails);
-
-
+ 
         for ($i = 1; $i <= 1; $i++) {
             if ($i == 1) {
                 $loop_for_stage_flag = I_B_Approval_Pending_Admin_Stage; //scrutiny pending
@@ -172,6 +171,7 @@ class DefaultController extends BaseController {
             }
         }
         $this->Default_model->updateCronDetails($cronDetailsId);
+        die;
     }
 
     function get_icmis_documents_status($registration_id, $cis_documents, $ia_only, $check_verify, $curr_dt) {
