@@ -134,7 +134,7 @@ class Notice_ciruclars_model extends Model {
         $builder = $this->db->table('efil.tbl_news');
         $builder->select('*');
         $builder->where('is_deleted', FALSE);
-        if(getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN) {
+        if(isset(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN) {
             $builder->where('deactive_date >=', date('Y-m-d'));
         }
         $builder->orderBy('id', 'DESC');
