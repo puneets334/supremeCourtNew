@@ -287,3 +287,33 @@
     }
     </script>
 @endpush
+<script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $("#datatable-defects").dataTable();
+
+        $("#checkAll").change(function () {
+            oTable.$("input[type=\'checkbox\']").prop("checked", $(this).prop("checked"));
+        });
+    });
+    function setCuredDefect(id) {
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var value = $("#" + id).is(":checked");
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo base_url("documentIndex/Ajaxcalls/markCuredDefect"); ?>',
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value},
+            success: function () {
+                $("#row"+id).toggleClass("curemarked");
+            },
+            error: function () {alert("failed");}
+        });
+    }
+
+    function checkAll(){
+        $(".checkOneByOne").prop("checked", $(this).prop("checked"));
+        jQuery('.checkOneByOne').each(function(index, currentElement) {
+            var value = currentElement.id;
+            setCuredDefect(value);
+        });
+    }
+</script>

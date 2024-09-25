@@ -1163,7 +1163,7 @@ function remark_preview($reg_id, $current_stage_id)
         $msg .= '<table id="datatable-defects" class="table table-striped custom-table"
                     cellspacing="0" width="100%">'
             . '<thead class="success">
-                        <th>Mark Cured<br /><input type="checkbox" id="checkAll" /></th>
+                        <th>Mark Cured<br /><input type="checkbox" id="checkAll" onclick="checkAll()"/></th>
                         <th>#</th>
                         <th>Defect Description</th>
                         <th>Defect Remark</th>
@@ -1213,7 +1213,7 @@ function remark_preview($reg_id, $current_stage_id)
 
             $msg .= '<tr id="row' . $re['id'] . '" class="' . $markdefectclass . '">';
             $msg .= '<td>' . '<input type="checkbox" ' . $checked . ' id="' . $re['id'] . '"
-                                    onchange="setCuredDefect(this.id)">' . '</td>';
+                                    onchange="setCuredDefect(this.id)" class="checkOneByOne">' . '</td>';
             $msg .= '<td>' . $i++ . '</td>';
             $msg .= '<td>' . escape_data($re['objdesc']) . '</td>';
             $msg .= '<td>' . escape_data($re['remarks']) . '</td>';
@@ -2903,16 +2903,12 @@ function get_count_days_FromDate_Todate($from_date, $to_date)
 
 function isRefilingCompulsoryIADefect($reg_id, $current_stage_id)
 {
-    // echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
-    // $ci = &get_instance();
-    // $ci->load->model('common/Common_model');
-    // $ci->load->library('session');
     $Common_model = new CommonModel();
     $session = \Config\Services::session();
     $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
     $result_icmis = $Common_model->get_cis_defects_remarks($reg_id, FALSE);
+    
     $defects['pdfdefects'] = $Common_model->get_pdf_defects_remarks($reg_id);
-
 
     foreach ($result_icmis as $re) {
         $prep_dt = (isset($re->obj_prepare_date) && !empty($re->obj_prepare_date)) ? date('Y-m-d', strtotime($re->obj_prepare_date)) : null;
@@ -2931,7 +2927,7 @@ function isRefilingCompulsoryIADefect($reg_id, $current_stage_id)
         $defect_removal_max_date = date('Y-m-d', strtotime($from_date . ' + ' . $defect_date_was_more_than28days . ' days'));
         $max_allowable_defect_cured_date = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/checkAndGetMaxDateForCuringDefectWhileRefilingTheCase/?allow_defect_remove_max_date=' . $defect_removal_max_date);
         $today_date = date('Y-m-d');
-        if ($max_allowable_defect_cured_date >= $today_date) {
+        if (json_decode($max_allowable_defect_cured_date)->date_for_curing_defect_while_refiling >= $today_date) {
             //echo "allow to refile the case- $max_allowable_defect_cured_date";exit();
             return true;
         } else {

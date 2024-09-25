@@ -1991,8 +1991,7 @@ class Efiling_webservices {
         );
         $context  = stream_context_create($opts);
         $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/PutInICMIS/getScruitinyOfficialDetails', false, $context);
-
+        $result = file_get_contents($url.'/PutInICMIS/getScruitinyOfficialDetails?diaryNo='.$diaryNo);
         return json_decode($result,true);
     }
 //

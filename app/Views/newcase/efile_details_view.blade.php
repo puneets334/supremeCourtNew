@@ -1822,7 +1822,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                 success: function(data) {
 
                     $('.status_refresh').remove();
-                    // location.reload();
+                    alert(data);
                     $.getJSON(base_url + "csrftoken", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
@@ -1879,6 +1879,36 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                     }
 
                 });
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var oTable = $("#datatable-defects").dataTable();
+
+            $("#checkAll").change(function () {
+                oTable.$("input[type=\'checkbox\']").prop("checked", $(this).prop("checked"));
+            });
+        });
+        function setCuredDefect(id) {
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            var value = $("#" + id).is(":checked");
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo base_url("documentIndex/Ajaxcalls/markCuredDefect"); ?>',
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value},
+                success: function (data) {
+                    $("#row"+id).toggleClass("curemarked");
+                },
+                error: function () {alert("failed");}
+            });
+        }
+
+        function checkAll(){
+            $(".checkOneByOne").prop("checked", $(this).prop("checked"));
+            jQuery('.checkOneByOne').each(function(index, currentElement) {
+                var value = currentElement.id;
+                setCuredDefect(value);
+            });
         }
     </script>
 
