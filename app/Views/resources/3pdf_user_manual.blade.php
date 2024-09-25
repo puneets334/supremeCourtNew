@@ -70,7 +70,7 @@ if(isset($_SESSION['login'])){
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="x_panel">
                                                 <div class="x_content">
-                                                    <div>3PDF User Manual</div>
+                                                    <!-- <div>3PDF User Manual</div> -->
                                                     <embed src="<?php echo base_url('/uploaded_docs/user_manual/3pdf_user_manual.pdf'); ?>" type="application/pdf" width="100%" height="800">
                                                 </div>
                                             </div>
