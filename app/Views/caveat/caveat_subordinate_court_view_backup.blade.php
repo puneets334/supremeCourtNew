@@ -84,15 +84,15 @@ body.loading .overlay{
 
                                     //echo '<pre>'; print_r($caseData['court_type']); exit;
                                     ?>
-                                <div class="form-check form-check-inline m-0">
+                                <div class="form-check form-check-inline">
                                     <input class="form-check-input cus-form-check" type="radio" id="radio_selected_court2" name="radio_selected_court" onchange="get_court_as(this.value)" value="1" maxlength="2" <?php echo $hcchecked; ?>>
                                     <label class="form-check-label" for="inlineRadio1">High Court</span></label>
                                 </div>
-                                <div class="form-check form-check-inline m-0">
+                                <div class="form-check form-check-inline">
                                     <input class="form-check-input cus-form-check" type="radio" id="radio_selected_court3" name="radio_selected_court" onchange="get_court_as(this.value)" value="3" maxlength="2" <?php echo $dcchecked; ?>>
                                     <label class="form-check-label" for="inlineRadio2">District Court</label>
                                 </div>
-                                <div class="form-check form-check-inline m-0">
+                                <div class="form-check form-check-inline">
                                     <input class="form-check-input cus-form-check" type="radio" id="radio_selected_court5" name="radio_selected_court" onchange="get_court_as(this.value)" value="5" maxlength="2" <?php echo $sachecked; ?>>
                                     <label class="form-check-label" for="inlineRadio2">State Agency/Tribunal</label>
                                 </div>
@@ -682,12 +682,12 @@ body.loading .overlay{
                 $("#police_station_name,#complete_fir_number").prop("disabled", false);
         });
         $('#subordinate_court_details').on('submit', function () {
-            var hc_case_number = $("#hc_case_number").val();
-            var cnr = $("#cnr").val();
-           if(hc_case_number=='' && cnr==''){
-            alert('Please fill Case No. And Year OR CNR Number.');
-            return false;
-           }
+        //     var hc_case_number = $("#hc_case_number").val();
+        //     var cnr = $("#cnr").val();
+        //    if(hc_case_number=='' && cnr==''){
+        //     alert('Please fill Case No. And Year OR CNR Number.');
+        //     return false;
+        //    }
             var judgement_type = $("#judgement_type").val();
             var order_date = $("#order_date").val();
             if(judgement_type){

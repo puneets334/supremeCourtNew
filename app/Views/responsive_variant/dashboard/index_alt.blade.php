@@ -689,8 +689,8 @@
                                                                                     $caveat_no = '<b>Filed In</b><br/><b>Caveat No.</b> : ' . $re->caveat_num . ' / ' . $re->caveat_num . '<br/> ';
                                                                                 }
                                                                             }
-                                                                            $cause_title = escape_data(strtoupper($re->pet_name));
-                                                                            $cause_title = escape_data(strtoupper($caveator_name_vs_caveatee_name));
+                                                                            $cause_title = !empty($re->pet_name) ? escape_data(strtoupper($re->pet_name)) : '';
+                                                                            $cause_title = !empty($caveator_name_vs_caveatee_name) ? escape_data(strtoupper($caveator_name_vs_caveatee_name)) : '';
                                                                             if ($re->sc_diary_num != '') {
                                                                                 $diary_no = '<b>Diary No.</b> : ' . escape_data($re->sc_diary_num) . '/' . escape_data($re->sc_diary_year) . '<br/> ';
                                                                             } else {

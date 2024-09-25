@@ -6439,7 +6439,7 @@ a.profile-lnk {
 }
 
 .dashboardLeftNav li ul.submenu li a:hover {
-    background: #444 !important;
+    background: #110458 !important;
 }
 
 /* Left Menu Toggle CSS End */
@@ -6570,16 +6570,15 @@ li.text-size a:last-child {
 }
 
 .pink-tile {
-    /* background: linear-gradient(180deg, rgba(241,95,160,1) 0%, rgba(241,118,91,1) 100%); */
-    background: #444444;
+    background: linear-gradient(180deg, rgba(241, 95, 160, 1) 0%, rgba(241, 118, 91, 1) 100%);
 }
+
 .purple-tile {
-    background: linear-gradient(180deg, rgba(89,80,187,1) 0%, rgba(133,88,196,1) 100%);
-    background: #6452bd;
+    background: linear-gradient(180deg, rgba(89, 80, 187, 1) 0%, rgba(133, 88, 196, 1) 100%);
 }
+
 .blue-tile {
-    /* background: linear-gradient(180deg, rgb(13 72 190) 0%, rgb(116 159 243) 100%); */
-    background: #3469d2;
+    background: linear-gradient(180deg, rgba(107, 141, 211, 1) 0%, rgba(71, 195, 238, 1) 100%);
 }
 
 .dashboard-tiles-area .dashbord-tile:before {
@@ -6717,7 +6716,7 @@ p.comnt-name {
 
 /* Table-css start  */
 .custom-table thead th {
-    background: #444;
+    background: #110458;
     color: #fff;
     font-family: 'noto_sansmedium';
 }
@@ -6756,7 +6755,7 @@ p.comnt-name {
 }
 
 .table-striped tr:hover td {
-    background: #4443b !important;
+    background: #1104583b !important;
 }
 
 .calender-table {
@@ -6771,11 +6770,11 @@ p.comnt-name {
 
 .calender-table::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #444
+    background-color: #110458
 }
 
 .calender-table .dt-td .mdi {
-    color: #444;
+    color: #110458;
 }
 
 .calender-table .custom-table tbody tr td:first-child {
@@ -7067,7 +7066,7 @@ a.red-dot .mdi {
     border-radius: 100px;
     position: relative;
     overflow: hidden;
-    background-color: #444;
+    background-color: #110458;
     color: #FFF;
     border: none;
     padding: 10px 30px;
@@ -7373,7 +7372,7 @@ input#search_case_hc {
 
 .cus-form-ctrl:focus {
     box-shadow: none !important;
-    border-color: #444 !important;
+    border-color: #110458 !important;
 }
 
 .form-check.form-switch input[type="checkbox"] {
@@ -7385,7 +7384,7 @@ input#search_case_hc {
 
 .form-check.form-switch input[type="checkbox"]:focus {
     box-shadow: none;
-    border-color: #444;
+    border-color: #110458;
 }
 
 form label {
@@ -7710,7 +7709,7 @@ textarea.form-control.cus-form-ctrl {
 
 .tiles-comnts .tile-comnt .title-comnt-bref .table-responsive::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #444;
+    background-color: #110458;
 }
 
 .tiles-comnts .tile-comnt:hover .title-comnt-bref:after {
@@ -8100,7 +8099,7 @@ div#calendar {
 }
 
 .custom-table tbody td a {
-    /* color: #444; */
+    /* color: #110458; */
 }
 
 .tiles-comnts .tile-comnt:hover .title-comnt-bref .table-responsive {
@@ -8218,91 +8217,3 @@ input[type="radio"] {
 }
 
 /* Close Loader  */
-
-
-/* yash css start 24-09-2024  */
-label.error {
-    color: red;
-    padding-top: 5px;
-}
-.table_pay_heading h5 {
-    font-size: 1.3rem;
-    text-align: center;
-    color: #444;
-    font-weight: 500;
-    padding: 0;
-}
-label span {
-    font-size: 12px;
-    font-style: italic;
-}
-
-.fc .fc-toolbar {
-    flex-wrap: wrap;
-}
-form label {
-    padding: 0 10px;
-}
-.user-action-sec {
-    width: 175px;
-}
-.quick-btn.gray-btn {
-    background-color: #7D46D3;
-    color: #FFFFFF;
-}
-input[type="file"] {
-    height: auto;
-}
-/* yash css end  */
-
-/* yash css start 24-09-2024 */
-
-table.dataTable thead .sorting:before {
-    content: '\f4ba';
-    display: none !important;
-}
-
-table.dataTable thead .sorting_desc:after {
-    content: '\f4bd';
-    color: rgba(0, 0, 0, .87);
-    display: none !important;
-}
-table.dataTable thead .sorting {
-    background-image: url(../images/sort_both.png);
-    background-size: auto calc(100% - 37px);
-}
-.table-sec table tr th {
-    font-size: 13px;
-}
-.custom-table thead th, .custom-table tbody td {
-    padding: 12px 12px !important;
-}
-span.select2.select2-container.select2-container--default {
-    width: 100% !important;
-}
-/* End css 24-09-2024  */
-
-/* yash css start 25-09-2024  */
-.add-new-area {
-    z-index: 99999;
-    /* animation: bounce 2s infinite; */
-}
-a.add-btn {
-    background: #000000;
-}
-.btn-info {
-    margin: -13% 14%;
-    background: transparent;
-    border: 1px solid #bfbfbf;
-    color: white;
-    padding: 3px 13px;
-    font-weight: 600;
-    transition: 0.2s ease-in-out;
-}
-.btn-info:hover {
-    background: white;
-    border: 1px solid white;
-    color: black;
-    transition: 0.2s ease-in-out;
-}
-/* Edn yash css 25-096-2024  */
