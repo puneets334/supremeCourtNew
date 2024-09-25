@@ -48,13 +48,14 @@ class DefaultController extends BaseController {
                 foreach($case_chunks as $index=>$chunk){
 
                     $data = $this->efiling_webservices->get_new_case_efiling_scrutiny_cron_SCIS($chunk);
-
+                    
                     if ($data) {
                         $curr_dt = date('Y-m-d H:i:s');
                         foreach ($data->consumed_data as $response) {
-
+                            
                             // var_dump($response);
                             if ($response->status == 'A') {
+                              
                                 $objections_status = NULL;
                                 $documents_status = NULL;
                                 $next_stage = 0;
@@ -83,7 +84,7 @@ class DefaultController extends BaseController {
 
                                     $reg_no_display = $response->reg_no_display;
                                     $reg_date = $response->registration_date;
-                                    if ($reg_date == '0000-00-00 00:00:00') {
+                                    if ($reg_date == NULL ||$reg_date == '0000-00-00 00:00:00') {
                                         $reg_date = null;
                                     }
                                     $case_details1[0] = array(
@@ -100,10 +101,12 @@ class DefaultController extends BaseController {
                                         $cis_objections = $response->objections;
 
                                         $objections_status = $this->get_icmis_objections_status($response->registration_id, $cis_objections, $curr_dt);
+                                        //pr($objections_status);
                                     }
 
                                     $next_stage = E_Filed_Stage;
                                 } else {
+                                    
 
                                     $stage_update_timestamp = $this->Get_CIS_Status_model->get_stage_update_timestamp($response->registration_id, $loop_for_stage_flag);
 
@@ -112,11 +115,13 @@ class DefaultController extends BaseController {
                                         $filTrapDispDt= isset($response->fil_trap_data[0]->disp_dt) ? $response->fil_trap_data[0]->disp_dt : '';
                                         if ($stage_update_timestamp[0]['activated_on'] >= $response->last_defect_notified_date && $filTrapRemarks!='FDR -> AOR') {
                                             echo "eFiling No. " . $response->efiling_no . " action is still pending for scrutiny.";
-                                            continue;
+                                            //continue;
                                         }
 
                                         $cis_objections = $response->objections;
                                         $objections_status = $this->get_icmis_objections_status($response->registration_id, $cis_objections, $curr_dt);
+                                       // echo 'rrrr';
+                                        //pr($objections_status);
 
                                         if ((isset($objections_status[0]) ? $objections_status[0] : '') == TRUE && (isset($objections_status[1]) ? $objections_status[1] : '') || (isset($objections_status[2]) ? $objections_status[2] : '')) {
                                             $next_stage = I_B_Defected_Stage;
@@ -141,7 +146,7 @@ class DefaultController extends BaseController {
                                 // echo "<br>";
                                 // echo "<br>----------<br>";
 
-//exit;
+ 
                                 // echo "Objection 1: <br>";
                                 // var_dump(isset($objections_status[1]) ? $objections_status[1] : NULL);
                                 // echo "<br>Objection 2: <br>";
