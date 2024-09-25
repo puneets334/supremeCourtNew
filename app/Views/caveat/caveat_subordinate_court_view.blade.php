@@ -50,7 +50,7 @@ body.loading .overlay{
 </style>
 <style>
  .datepicker-dropdown {
-    margin-top: 850px !important;
+    margin-top: 365px !important;
     background-color: #fff;
 }
 </style>
@@ -118,8 +118,8 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">Case No. And Year  fasfasdf<span style="color: red">*</span></label>
                                     <input id="sci_case_number" name="sci_case_number" placeholder="Case No"
-                                    tabindex='17' value="" class="form-control cus-form-ctrl sci_validation" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                    type="text" minlength="10" maxlength="10" >
+                                    tabindex='17' value="" class="form-control cus-form-ctrl sci_validation" 
+                                    type="text" minlength="1" maxlength="10" >
                                     <select class="form-select cus-form-ctrl"
                                         aria-label="Default select example" name="sci_case_year" id="sci_case_year">
                                         <option value="" title="Select">Select Year</option>
@@ -200,8 +200,7 @@ body.loading .overlay{
                                     <div class="row">
                                     <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                                         <input id="hc_case_number" name="hc_case_number" placeholder="Case No"
-                                        tabindex='17' value="" class="form-control cus-form-ctrl sci_validation" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                        type="text">
+                                        tabindex='17' value="" class="form-control cus-form-ctrl sci_validation" type="text">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                         <select class="form-select cus-form-ctrl"
@@ -260,7 +259,7 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">State <span style="color: red">*</span></label>
                                     <select class="form-select cus-form-ctrl"
-                                            aria-label="Default select example" name="agency_state" id="agency_state">
+                                            aria-label="Default select example" name="state" id="state">
                                     <option value="" title="Select">Select State</option>
                                     <?php
                                     
@@ -283,7 +282,7 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">Establishment <span style="color: red">*</span></label>
                                     <select class="form-select cus-form-ctrl"
-                                        aria-label="Default select example" name="Establishment" id="Establishment">
+                                        aria-label="Default select example" name="establishment" id="establishment">
                                         <option value="" title="Select">Select Establishment</option>
                                         
                                     </select>
@@ -292,7 +291,7 @@ body.loading .overlay{
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Case Type <span style="color: red">*</span></label>
-                                    <select class="form-select cus-form-ctrl"
+                                    <select class="form-control cus-form-ctrl"
                                         aria-label="Default select example" name="dc_case_type_id" id="dc_case_type_id">
                                         <option value="" title="Select">Select Case Type</option>
                                         
@@ -322,6 +321,20 @@ body.loading .overlay{
                                         <select class="form-select cus-form-ctrl"
                                         aria-label="Default select example" name="dc_case_year" id="dc_case_year">
                                         <option value="" title="Select">Select Year</option>
+                                        <?php
+                                        $end_year = 47;
+                                        for ($i = 0; $i <= $end_year; $i++) {
+                                            $sel = '';
+                                            $year = (int) date("Y") - $i;
+                                            /* if (url_encryption($data_to_be_populated['year']) == url_encryption($year)) {
+                                                $sel = 'selected=selected';
+                                            } else {
+                                                $sel = '';
+                                            } */
+                                            echo '<option ' . $sel . ' value=' . url_encryption($year) . '>' . $year . '</option>';
+                                        }
+                                        ?>
+                                        
                                         
                                     </select>
                                     </div>
@@ -357,6 +370,24 @@ body.loading .overlay{
                                     </select>
                                 </div>
                         </div>
+                        <div class="col-sm-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"> Case Type <span style="color: red">*</span>:</label>
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <select tabindex = '8' name="agency_case_type_id" id="agency_case_type_id" class="form-control cus-form-ctrl  filter_select_dropdown" style="width: 100%">
+                                        <option value="" title="Select">Select Case Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-12 agency_case_type_name" style="display:none;">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Case Type Name: <span style="color: red">*</span>:</label>
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    <input type="text"  name="agency_case_type_name" id="agency_case_type_name" class="form-control input-sm" placeholder="Enter Case Type Name..">
+                                </div>
+                            </div>
+                        </div>
                         
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
@@ -366,13 +397,21 @@ body.loading .overlay{
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-8 col-lg-8">
                                     <input id="case_number" name="case_number" placeholder="Case No"
-                                    tabindex='17' value="" class="form-control cus-form-ctrl sci_validation" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                    type="text" minlength="10" maxlength="10" >
+                                    tabindex='17' value="" class="form-control cus-form-ctrl sci_validation"  type="text" minlength="1" maxlength="10" >
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <select class="form-select cus-form-ctrl"
                                     aria-label="Default select example" name="case_year" id="case_year">
                                     <option value="" title="Select">Select Year</option>
+                                    <?php
+                                    $end_year = 48;
+                                    for ($i = 0; $i <= $end_year; $i++) {
+                                        $year = (int) date('Y') - $i;
+                                        $sel = $year == ((int) date('Y')) ? 'selected=selected' : '';
+                                        echo '<option ' . $sel . ' value=' . $year . '>' . $year . '</option>';
+                                    }
+                                    ?>
+
                                     
                                 </select>
                                 </div>
@@ -470,11 +509,9 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">State <span style="color: red">*</span></label>
                                     <select class="form-select cus-form-ctrl"
-                                            aria-label="Default select example" name="agency_state" id="agency_state">
+                                            aria-label="Default select example" name="fir_state" id="fir_state">
                                     <option value="" title="Select">Select State</option>
-                                    <?php
-                                
-                                    ?>
+                                   
                                     </select>
                                 </div>
                             </div>
@@ -483,7 +520,7 @@ body.loading .overlay{
                                     <div class="mb-3">
                                         <label for="" class="form-label">District <span style="color: red">*</span></label>
                                         <select class="form-select cus-form-ctrl"
-                                            aria-label="Default select example" name="agency" id="agency">
+                                            aria-label="Default select example" name="fir_district" id="fir_district">
                                             <option value="" title="Select">Select District</option>
                                         
                                         </select>
@@ -493,7 +530,7 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <label for="" class="form-label">Police Station <span style="color: red">*</span></label>
                                     <select class="form-select cus-form-ctrl"
-                                        aria-label="Default select example" name="agency" id="agency">
+                                        aria-label="Default select example" name="fir_policeStation" id="fir_policeStation">
                                         <option value="" title="Select">Select Police Station</option>
                                     
                                     </select>
@@ -524,12 +561,12 @@ body.loading .overlay{
                                         <option value="">Year</option>
                                         <?php
                                         $end_year = 48;
-                                        /* for ($i = 0; $i <= $end_year; $i++) {
+                                        for ($i = 0; $i <= $end_year; $i++) {
                                             $year = (int) date("Y") - $i;
                                         
                                             echo '<option ' . $sel . ' value=' . url_encryption($year) . '>' . $year . '</option>';
                                         }
-                                        */ ?>
+                                        ?>
                                     </select>
 
                                 </div>
@@ -684,10 +721,10 @@ body.loading .overlay{
         $('#subordinate_court_details').on('submit', function () {
             var hc_case_number = $("#hc_case_number").val();
             var cnr = $("#cnr").val();
-           if(hc_case_number=='' && cnr==''){
-            alert('Please fill Case No. And Year OR CNR Number.');
-            return false;
-           }
+        //    if(hc_case_number=='' && cnr==''){
+        //     alert('Please fill Case No. And Year OR CNR Number.');
+        //     return false;
+        //    }
             var judgement_type = $("#judgement_type").val();
             var order_date = $("#order_date").val();
             if(judgement_type){

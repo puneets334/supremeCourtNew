@@ -26,7 +26,7 @@ if ($uris->getSegment(2) != 'view') {
         <div class="row">
             <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label><strong>Diary No :</strong></label>
                     </div>
                     <div class="col-md-8">
@@ -36,7 +36,7 @@ if ($uris->getSegment(2) != 'view') {
             </div>
             <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <label><strong>Registration No. :</strong></label>
                     </div>
                     <div class="col-md-8">
@@ -52,7 +52,7 @@ if ($uris->getSegment(2) != 'view') {
             <div class="row">
                 <div class="col-md-6 col-lg-6">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label><strong>Cause Title :</strong></label>
                         </div>
                         <div class="col-md-8">
@@ -62,7 +62,7 @@ if ($uris->getSegment(2) != 'view') {
                 </div>
                 <div class="col-md-6 col-lg-6">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label><strong>Status :</strong></label>
                         </div>
                         <div class="col-md-8">

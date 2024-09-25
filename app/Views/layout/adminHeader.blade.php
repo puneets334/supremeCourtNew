@@ -25,26 +25,26 @@
             </div>
         </div>
         <div class="mngmntUserSection">
-            <div class="top-right-nav">
+        <div class="top-right-nav">
                 <ul>
                     <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
-                    <li><a class="hide" href="javascript:void(0)">Screen Reader Access</a></li>
+                    <li><a class="hide" href="<?php echo base_url('online_copying/screen_reader');?>">Screen Reader Access</a></li>
                     <li class="text-size">
                     <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-ixon.png" alt="" class="txt-icon"></a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
-                    </li>
+                    </li> -->
                     <li class="theme-color">
                         <a href="javascript:void(0)" class="whitebg">A</a>
                         <a href="javascript:void(0)" class="blackbg">A</a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <select name="" id="" class="select-lang">
                             <option value="">English</option>
                             <option value="">Hindi</option>
                         </select>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             <div id="SkipContent" tabindex="-1"></div>

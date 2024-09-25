@@ -27,26 +27,28 @@
 
 					</div>
 					<div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
-						<ul>
-							<li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
-							<li><a class="hide" href="javascript:void(0)">Screen Reader Access</a></li>
-							<li class="text-size">
-								<img src="<?= base_url() . 'assets/newDesign/' ?>images/text-ixon.png" alt="" class="txt-icon">
-							</li>
-							<li>
-								<a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
-							</li>
-							<li class="theme-color">
-								<a href="javascript:void(0)" class="whitebg">A</a>
-								<a href="javascript:void(0)" class="blackbg">A</a>
-							</li>
-							<li>
-								<select name="" id="" class="select-lang">
-									<option value="">English</option>
-									<option value="">Hindi</option>
-								</select>
-							</li>
-						</ul>
+					
+                <ul>
+                    <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
+                    <li><a class="hide" href="<?php echo base_url('online_copying/screen_reader');?>">Screen Reader Access</a></li>
+                    <li class="text-size">
+                    <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-ixon.png" alt="" class="txt-icon"></a>
+                    </li>
+                    <!-- <li>
+                        <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
+                    </li> -->
+                    <li class="theme-color">
+                        <a href="javascript:void(0)" class="whitebg">A</a>
+                        <a href="javascript:void(0)" class="blackbg">A</a>
+                    </li>
+                    <!-- <li>
+                        <select name="" id="" class="select-lang">
+                            <option value="">English</option>
+                            <option value="">Hindi</option>
+                        </select>
+                    </li> -->
+                </ul>
+       
 					</div>
 				</div>
 			</div>
@@ -75,25 +77,25 @@
 									<span class="navbar-toggler-icon"></span>
 								</button>
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul class="navbar-nav mr-auto">
-                                        <li class="nav-item">
-                                            <!-- <a class="active" href="index.html">Handbook </a> -->
-                                            <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
-                                            <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('e-resources/video-tutorial')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/video-tutorial') ?>">Video Tutorial</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('e-resources/FAQs')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/FAQs') ?>">FAQs</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('e-resources/hand-book-old-efiling')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/hand-book-old-efiling') ?>">Stats</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('e-resources/three-pdf-user-manual')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/three-pdf-user-manual') ?>">3PDF User Manual</a>
-                                        </li>
-                                    </ul>
+									<ul class="navbar-nav mr-auto">
+										<li class="nav-item">
+											<!-- <a class="active" href="index.html">Handbook </a> -->
+											<!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
+											<a class="nav-link <?= (current_url() == base_url('resources/hand_book')) ? 'active' : '' ?>"  href="<?= base_url('resources/hand_book') ?>">Handbook </a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link <?= (current_url() == base_url('resources/video_tutorial/view')) ? 'active' : '' ?>"  href="<?= base_url('resources/video_tutorial/view') ?>">Video Tutorial</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link <?= (current_url() == base_url('resources/FAQ')) ? 'active' : '' ?>"  href="<?= base_url('resources/FAQ') ?>">FAQs</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link <?= (current_url() == base_url('resources/hand_book_old_efiling')) ? 'active' : '' ?>"  href="<?= base_url('resources/hand_book_old_efiling') ?>">Stats</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link <?= (current_url() == base_url('resources/Three_PDF_user_manual')) ? 'active' : '' ?>"  href="<?= base_url('resources/Three_PDF_user_manual') ?>">3PDF User Manual</a>
+										</li>
+									</ul>
                                 </div>
 							</nav>
 						</div>

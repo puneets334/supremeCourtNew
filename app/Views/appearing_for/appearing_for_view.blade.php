@@ -27,8 +27,8 @@ $parties_details = $data['parties_details'];
         echo form_open('#', $attribute);
         if (!empty(getSessionData('radio_appearing_for')) && getSessionData('radio_appearing_for') == 'N' && !empty($appearing_for_details)) {
         ?>
-            <div class="row">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Appearing For <span style="color: red">*</span> :</label>
+            <div class="row mt-4 mb-4 mt-4">
+                <label class="control-label col-md-1 col-sm-6 col-xs-1">Appearing For <span style="color: red">*</span> :</label>
                 <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
                     <div class="form-group">
                         <?php
@@ -146,8 +146,8 @@ $parties_details = $data['parties_details'];
                 [ Select party(s) to whom you represent in the present case. <br>
                 It is recommended to provide email and mobile of parties, which you representing, for your own convenience. ]
             </span>
-            <div class="row  mt-2">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12">Appearing For <span style="color: red">*</span> :</label>
+            <div class="row  mt-4 mb-4">
+                <label class="control-label col-md-1 col-sm-6 col-xs-1">Appearing For <span style="color: red">*</span> :</label>
                 <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
                     <div class="form-group">
                         <?php

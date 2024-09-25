@@ -83,7 +83,7 @@
                                             ?>
                                             <br>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                                <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Diary Number &nbsp;</label><label class="radio-inline input-lg"><b>OR</b> </label>
+                                                <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Diary Number  &nbsp;</label><label class="radio-inline input-lg"><b>OR</b> </label>
                                                 <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="register">Registration No</label>
                                             </div>
                                         </div>
@@ -299,8 +299,14 @@
             $(document).ready(function() {
                 $('#search_case_details').on('submit', function() {
                     // if ($('#search_case_details').valid()) {
-                    var diary_no = $(this).val();
+                    var diary_no = $('#diaryno').val();
                     var form_data = $(this).serialize();
+                    if(diary_no=='') {
+                        alert("Please Enter Diary Number");
+                        $('#diaryno').focus();
+                        return false;
+                    }
+
                     // console.log(form_data); exit;
                     var CSRF_TOKEN = 'CSRF_TOKEN';
                     var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
