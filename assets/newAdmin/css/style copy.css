@@ -4163,10 +4163,9 @@ input[type="file"] {
 .account-details {
     display: flex;
     align-items: center;
-    flex-direction: row;
+    flex-direction: row-reverse;
     margin-top: 5px;
     gap: 10px;
-    justify-content: end;
 }
 
 .mngmntHeader .userImgWrap {
@@ -6179,7 +6178,7 @@ input[type="file"] {
 }
 
 .dashboardLeftNav li a.active {
-    background: #fff !important;!i;!;
+    background: #fff;
     box-shadow: inset -56px 0px 14px -51px rgba(232, 232, 232, 1);
     color: #000;
 }
@@ -6440,7 +6439,7 @@ a.profile-lnk {
 }
 
 .dashboardLeftNav li ul.submenu li a:hover {
-    background: #444 !important;
+    background: #110458 !important;
 }
 
 /* Left Menu Toggle CSS End */
@@ -6571,16 +6570,15 @@ li.text-size a:last-child {
 }
 
 .pink-tile {
-    /* background: linear-gradient(180deg, rgba(241,95,160,1) 0%, rgba(241,118,91,1) 100%); */
-    background: #444444;
+    background: linear-gradient(180deg, rgba(241, 95, 160, 1) 0%, rgba(241, 118, 91, 1) 100%);
 }
+
 .purple-tile {
-    background: linear-gradient(180deg, rgba(89,80,187,1) 0%, rgba(133,88,196,1) 100%);
-    background: #6452bd;
+    background: linear-gradient(180deg, rgba(89, 80, 187, 1) 0%, rgba(133, 88, 196, 1) 100%);
 }
+
 .blue-tile {
-    /* background: linear-gradient(180deg, rgb(13 72 190) 0%, rgb(116 159 243) 100%); */
-    background: #3469d2;
+    background: linear-gradient(180deg, rgba(107, 141, 211, 1) 0%, rgba(71, 195, 238, 1) 100%);
 }
 
 .dashboard-tiles-area .dashbord-tile:before {
@@ -6604,7 +6602,7 @@ li.text-size a:last-child {
     transition: 0.6s;
 }
 
-.dashboard-tiles-area .dashbord-tile:hover:after , .dashboard-tiles-area .dashbord-tile:focus:after{
+.dashboard-tiles-area .dashbord-tile:hover:after {
     height: 100%;
     transition: 0.4s;
 }
@@ -6629,21 +6627,18 @@ li.text-size a:last-child {
     margin: 0;
     font-size: 18px;
     font-family: 'noto_sansmedium';
-    z-index: 1;
 }
 
 .dashbord-tile .tile-subtitle {
     font-size: 14px;
     line-height: 26px;
     margin: 0;
-    z-index: 1;
 }
 
 .dashbord-tile .main-count {
     font-size: 36px;
     line-height: 26px;
     margin: 15px 0;
-    z-index: 1;
 }
 
 h6.comts-no {
@@ -6661,7 +6656,6 @@ p.comnt-name {
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-    z-index: 1;
 }
 
 .tiles-comnts .tile-comnt {
@@ -6722,7 +6716,7 @@ p.comnt-name {
 
 /* Table-css start  */
 .custom-table thead th {
-    background: #444;
+    background: #110458;
     color: #fff;
     font-family: 'noto_sansmedium';
 }
@@ -6761,7 +6755,7 @@ p.comnt-name {
 }
 
 .table-striped tr:hover td {
-    background: #4443b !important;
+    background: #1104583b !important;
 }
 
 .calender-table {
@@ -6776,11 +6770,11 @@ p.comnt-name {
 
 .calender-table::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #444
+    background-color: #110458
 }
 
 .calender-table .dt-td .mdi {
-    color: #444;
+    color: #110458;
 }
 
 .calender-table .custom-table tbody tr td:first-child {
@@ -6875,7 +6869,7 @@ p.comnt-name {
     border-radius: 15px;
 }
 
-.mngmntHeader .userDetail:hover .user-action-sec, .mngmntHeader .userDetail:focus-within .user-action-sec , mngmntHeader .userDetail:focus .user-action-sec {
+.mngmntHeader .userDetail:hover .user-action-sec {
     display: block;
 }
 
@@ -6967,12 +6961,12 @@ a.add-btn .mdi {
     transition: width 0.4s
 }
 
-/* .add-new-area:hover .add-new-options,
+.add-new-area:hover .add-new-options,
 .add-new-area:hover .add-new-options ul {
     width: 234px;
     transition: width 0.4s
-} */
-add-new-area:hover .add-new-options, .add-new-area:hover .add-new-options ul, .add-new-area:focus .add-new-options, .add-new-area:focus.add-new-options ul, .add-new-area:focus-within .add-new-options,  .add-new-area:focus-within .add-new-options ul{width: 234px;transition:width 0.4s}
+}
+
 .add-new-area .add-new-options ul {
     width: 234px
 }
@@ -7072,7 +7066,7 @@ a.red-dot .mdi {
     border-radius: 100px;
     position: relative;
     overflow: hidden;
-    background-color: #444;
+    background-color: #110458;
     color: #FFF;
     border: none;
     padding: 10px 30px;
@@ -7378,7 +7372,7 @@ input#search_case_hc {
 
 .cus-form-ctrl:focus {
     box-shadow: none !important;
-    border-color: #444 !important;
+    border-color: #110458 !important;
 }
 
 .form-check.form-switch input[type="checkbox"] {
@@ -7390,7 +7384,7 @@ input#search_case_hc {
 
 .form-check.form-switch input[type="checkbox"]:focus {
     box-shadow: none;
-    border-color: #444;
+    border-color: #110458;
 }
 
 form label {
@@ -7651,7 +7645,6 @@ textarea.form-control.cus-form-ctrl {
     padding: 15px 0 0;
     background: #fff0;
     width: 300% !important;
-    z-index: 1;
 }
 
 .tiles-comnts .tile-comnt {
@@ -7716,7 +7709,7 @@ textarea.form-control.cus-form-ctrl {
 
 .tiles-comnts .tile-comnt .title-comnt-bref .table-responsive::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background-color: #444;
+    background-color: #110458;
 }
 
 .tiles-comnts .tile-comnt:hover .title-comnt-bref:after {
@@ -8106,7 +8099,7 @@ div#calendar {
 }
 
 .custom-table tbody td a {
-    /* color: #444; */
+    /* color: #110458; */
 }
 
 .tiles-comnts .tile-comnt:hover .title-comnt-bref .table-responsive {
@@ -8224,108 +8217,3 @@ input[type="radio"] {
 }
 
 /* Close Loader  */
-/* yash css start 24-09-2024  */
-label.error {
-    color: red;
-    padding-top: 5px;
-}
-.table_pay_heading h5 {
-    font-size: 1.3rem;
-    text-align: center;
-    color: #444;
-    font-weight: 500;
-    padding: 0;
-}
-label span {
-    font-size: 12px;
-    font-style: italic;
-}
-
-.fc .fc-toolbar {
-    flex-wrap: wrap;
-}
-form label {
-    padding: 0 10px;
-}
-.user-action-sec {
-    width: 175px;
-}
-.quick-btn.gray-btn {
-    background-color: #7D46D3;
-    color: #FFFFFF;
-}
-input[type="file"] {
-    height: auto;
-}
-/* yash css end  */
-
-/* yash css start 24-09-2024 */
-
-table.dataTable thead .sorting:before {
-    content: '\f4ba';
-    display: none !important;
-}
-
-table.dataTable thead .sorting_desc:after {
-    content: '\f4bd';
-    color: rgba(0, 0, 0, .87);
-    display: none !important;
-}
-table.dataTable thead .sorting {
-    background-image: url(../images/sort_both.png);
-    background-size: auto calc(100% - 37px);
-}
-.table-sec table tr th {
-    font-size: 13px;
-}
-.custom-table thead th, .custom-table tbody td {
-    padding: 12px 12px !important;
-}
-span.select2.select2-container.select2-container--default {
-    width: 100% !important;
-}
-/* End css 24-09-2024  */
-
-/* yash css start 25-09-2024  */
-.add-new-area {
-    z-index: 99999;
-    /* animation: bounce 2s infinite; */
-}
-a.add-btn {
-    background: #000000;
-}
-.btn-info {
-    margin: -13% 14%;
-    background: transparent;
-    border: 1px solid #bfbfbf;
-    color: white;
-    padding: 3px 13px;
-    font-weight: 600;
-    transition: 0.2s ease-in-out;
-}
-.btn-info:hover {
-    background: white;
-    border: 1px solid white;
-    color: black;
-    transition: 0.2s ease-in-out;
-}
-/* Edn yash css 25-096-2024  */
-/* 24 sept 2024 start  */
-.application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
-.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;}
-.application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
-.application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
-.application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
-.application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
-.application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
-.dashbord-tile:focus-within , .dashbord-tile:focus{outline: 1px dotted #000;}
-/* 24 sept 2024 start  */
-.dashboardLeftNav li:nth-child(1) a.active:before {  background-position: 0px -42px;}
-.dashboardLeftNav li:nth-child(2) a.active:before {  background-position: 4px -95px;}
-.dashboardLeftNav li:nth-child(3) a.active:before {  background-position: 2px -142px;}
-.dashboardLeftNav li:nth-child(4) a.active:before {   background-position: 2px -193px;}
-.dashboardLeftNav li:nth-child(5) a.active:before { background-position: 0px -243px;}
-.dashboardLeftNav li:nth-child(6) a.active:before {   background-position: 1px -291px;}
-.dashboardLeftNav li:nth-child(7) a.active:before {    background-position: 0px -341px;}
-.dashboardLeftNav li:nth-child(8) a.active:before {    background-position: 0px -394px;}
-.dashboardLeftNav li:nth-child(9) a.active:before {  background-position: 1px -432px;}

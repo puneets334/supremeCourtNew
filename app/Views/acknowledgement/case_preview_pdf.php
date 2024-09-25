@@ -22,7 +22,7 @@ if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
         $lbl_efiling_dt = 'CDE Date/Time';
     }
 }
-//var_dump($view_data);
+//  var_dump($view_data); die;
 ?>
 <div style="border:1px solid #000;">
     <h3  style="text-align: center"> Supreme Court Of India<br>

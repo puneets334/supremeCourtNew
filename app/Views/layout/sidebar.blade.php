@@ -71,7 +71,7 @@ $segment = service('uri');
                             <li class="premium"><a href="<?php echo base_url('vacation/advance') ?>" class="btn-link">Advance Summer Vacation List</a> </li>
                         <?php } ?>
                         <li class="premium"><a href="<?php echo base_url('register/arguingCounsel') ?>" class="btn-link">Add Advocate</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('support') ?>" class="btn-link">Support</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
                         <li class="premium"><a href="<?php echo base_url('e-resources') ?>" class="btn-link">Resources</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
                         <li class="premium">                    
@@ -110,7 +110,7 @@ $segment = service('uri');
                     <?php } else if((!empty(getSessionData('login.ref_m_usertype_id')) && (getSessionData('login.ref_m_usertype_id') == SR_ADVOCATE  ))) { ?>
                         <li class="premium"><a href="<?= base_url('dashboard') ?>" class="btn-link">Dashboard</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">My Cases</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('support') ?>" class="btn-link">Support</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
                     <?php } else { ?>
                         <?php if ($segment->getSegment(1) == 'registrarActionDashboard') { ?>
                             <li class="health "><a href="<?= base_url('adminDashboard') ?>">Home</a></li>

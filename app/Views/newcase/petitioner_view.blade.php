@@ -45,10 +45,10 @@
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 mb-2">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                         <div class="form-group mb-3">
                             <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12 form-label">Petitioner Is <span style="color: red" class="astriks">*</span> :</label>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                            <div class="col-lg-4 col-md-6 col-sm-12 col-xs-4 pe-3">
                                 <?php
                                 $selectIndividual = @$party_details[0]['party_type'] == 'I' ? 'selected=selected' : '';
                                 $selectStateDept = @$party_details[0]['party_type'] == 'D1' ? 'selected=selected' : '';

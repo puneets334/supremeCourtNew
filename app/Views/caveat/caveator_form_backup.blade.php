@@ -133,22 +133,22 @@ textarea {
                     </div>
 
                     <!-- III  Field Start -->  
-                    <div class="" id="indvidual_form" >
-                        <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="row" id="indvidual_form" >
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                     
                         <div class="container">
                             <div class="row">   </div>
                             </div>
                         </div>    
-                        <div style="clear:both"></div> -->
+                        <div style="clear:both"></div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
 
                                 <div class="mb-3">
                                     <label for="" class="form-label">Caveator Name <span style="color: red" class="astriks">*</span></label>
-                                    <input id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
+                                    <textarea id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
                                         class="form-control cus-form-ctrl sci_validation" 
-                                        minlength="3" maxlength="250" ><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></input>
+                                        minlength="3" maxlength="250" ><?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?></textarea>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>                                           
@@ -162,7 +162,7 @@ textarea {
                         
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                             <div class="mb-3">
-                                <label for="" class="form-label">Relation</label>
+                                <label for="" class="form-label">Relation <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                     $selectSon = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'S' ? 'selected=selected' : '';
                                     $selectDaughter = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'D' ? 'selected=selected' : '';
@@ -179,7 +179,7 @@ textarea {
                                 </select>
 
                             </div>
-                        </div>                    
+                        </div>             
                         <!-- V  Field Start -->  
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                             <div class="mb-3">
@@ -187,7 +187,7 @@ textarea {
 
                                 <input tabindex="5" id="relative_name" name="relative_name"
                                     minlength="3" maxlength="99" placeholder="Relative Name"
-                                    value="<?php   echo isset($caveator_details[0]['relative_name'])?$caveator_details[0]['relative_name']:''; ?>"
+                                    value="<?php   echo isset($caveator_details[0]['pet_father_name'])?$caveator_details[0]['pet_father_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="text" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
@@ -457,7 +457,7 @@ textarea {
                                     <span style="color: red" class="astriks">*</span>
                                 </label>
                                 <select class="form-select cus-form-ctrl filter_select_dropdown" name="party_state" id="party_state">
-                                    <option value="" title="Select">Select State</option>
+                                    <option value="" title="Select" required >Select State</option>
                                     <?php
                                         $stateArr = array();
                                         if (!empty($state_list)) 
@@ -790,20 +790,27 @@ textarea {
 
     }); 
      
-    function isNumber(value) {
-        return typeof value === 'number';
-    }
+
 
       $(document).ready(function () {   
         var today = new Date();
-        $('#pet_dob').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100:-1",
-            dateFormat: "dd/mm/yy",
-            defaultDate: '-40y',
-            endDate: today 
+        // $('#pet_dob').datepicker({
+        //     changeMonth: true,
+        //     changeYear: true,
+        //     yearRange: "-100:-1",
+        //     dateFormat: "dd/mm/yy",
+        //     defaultDate: '-40y',
+        //     endDate: today 
             
+        // });
+        $('#pet_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: today,
+        autoclose: true
         });
 
         $(document).on('change','#pet_dob', function(){
@@ -941,10 +948,10 @@ textarea {
                             } else if (resArr[0] == 2) {
                                 $(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                                 $('#msg').show();
-                                // alert(resArr[2]);
                                 window.location.href = resArr[2];
                                 // location.reload();
                             } else if (resArr[0] == 3) {
+                                
                                 $('#msg').show();
                                 $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                             }
