@@ -72,7 +72,7 @@ $segment = service('uri');
                         <?php } ?>
                         <li class="premium"><a href="<?php echo base_url('register/arguingCounsel') ?>" class="btn-link">Add Advocate</a> </li>
                         <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('e-resources') ?>" class="btn-link">Resources</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('resources/hand_book') ?>" class="btn-link">Resources</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
                         <li class="premium">                    
                             <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">Physical Hearing</a>

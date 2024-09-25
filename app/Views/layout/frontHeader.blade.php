@@ -61,23 +61,19 @@
                                     <li class="nav-item">
                                         <!-- <a class="active" href="index.html">Handbook </a> -->
                                         <!-- <a class="active"  href="<?php echo base_url('e-resources')?>">Handbook </a> -->
-                                        <a class="nav-link <?= (current_url() == base_url('e-resources')) ? 'active' : '' ?>"  href="<?= base_url('e-resources') ?>">Handbook </a>
+                                        <a class="nav-link <?= (current_url() == base_url('resources/hand_book')) ? 'active' : '' ?>"  href="<?= base_url('resources/hand_book') ?>">Handbook </a>
                                     </li>
                                     <li class="nav-item">
-
-                                        <a class="nav-link <?= (current_url() == base_url('e-resources/video-tutorial')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/video-tutorial') ?>">Video Tutorial</a>
+                                        <a class="nav-link <?= (current_url() == base_url('resources/video_tutorial/view')) ? 'active' : '' ?>"  href="<?= base_url('resources/video_tutorial/view') ?>">Video Tutorial</a>
                                     </li>
                                     <li class="nav-item">
-
-                                        <a class="nav-link <?= (current_url() == base_url('e-resources/FAQs')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/FAQs') ?>">FAQs</a>
+                                        <a class="nav-link <?= (current_url() == base_url('resources/FAQ')) ? 'active' : '' ?>"  href="<?= base_url('resources/FAQ') ?>">FAQs</a>
                                     </li>
                                     <li class="nav-item">
-
-                                        <a class="nav-link <?= (current_url() == base_url('e-resources/hand-book-old-efiling')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/hand-book-old-efiling') ?>">Stats</a>
+                                        <a class="nav-link <?= (current_url() == base_url('resources/hand_book_old_efiling')) ? 'active' : '' ?>"  href="<?= base_url('resources/hand_book_old_efiling') ?>">Stats</a>
                                     </li>
                                     <li class="nav-item">
-
-                                        <a class="nav-link <?= (current_url() == base_url('e-resources/three-pdf-user-manual')) ? 'active' : '' ?>"  href="<?= base_url('e-resources/three-pdf-user-manual') ?>">3PDF User Manual</a>
+                                        <a class="nav-link <?= (current_url() == base_url('resources/Three_PDF_user_manual')) ? 'active' : '' ?>"  href="<?= base_url('resources/Three_PDF_user_manual') ?>">3PDF User Manual</a>
                                     </li>
                                 </ul>
                             </div>
