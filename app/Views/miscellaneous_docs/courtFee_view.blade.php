@@ -12,6 +12,7 @@
         <div>
             <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
 
+                <div class="table-responsive">
                 <table id="datatable-responsive" class="table table-striped custom-table dataTable no-footer" cellspacing="0" width="100%">
                     <thead>
                         <tr class="success">
@@ -41,6 +42,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
 
@@ -50,8 +52,8 @@
                 <div class="row">
                     <?php //var_dump($court_fee_list1) 
                     ?>
-                    <div class="col-sm-12 col-xs-12">
-                        <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <div class="col-sm-12 col-xs-12 mt-4">
+                        <table id="datatable-responsive1 " class="table table-striped custom-table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
@@ -329,10 +331,10 @@
                         </table>
 
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5%;">
+                    <div class="col-sm-12 col-xs-12" style="margin-top:2rem;">
                         <div class="row">
                         <?= ASTERISK_RED_MANDATORY; ?>
-                        <div class="col-lg-6 ccol-md-6 col-sm-6 col-xs-6">
+                        <div class="col-lg-6 ccol-md-6 col-sm-6 col-xs-6 mt-4">
                             <div class="form-group">
                                 <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
                                     <span style="color: red">*</span></label>
@@ -343,7 +345,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 ccol-md-6 col-sm-6 col-xs-6">
+                        <div class="col-lg-6 ccol-md-6 col-sm-6 col-xs-6 mt-4">
                             <div class="form-group">
 
                                 <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Court Fee ( <i class="fa fa-rupee"></i> ) (To Pay)
@@ -383,7 +385,7 @@
                                         <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control input-lg " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
                                         <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control input-lg cus-form-ctrl" placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly /><br>
                                         <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?>= <i class="fa fa-rupee"></i> <?= $total_court_fee ?></label>
-                                        <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: <i class="fa fa-rupee"></i> <?= $court_fee_already_paid ?> </label>
+                                        <label style="margin-top: 10px;font-weight: bold;color: #2c4762">Court Fee Already paid: <i class="fa fa-rupee"></i> <?= $court_fee_already_paid ?> </label>
                                     </div>
                                 </div>
                             </div>
@@ -391,7 +393,7 @@
                         
                     </div>
                     <!--<label style="margin-top: 2px;font-weight: bold;color: red;><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY.ANY DEFICIT COURT FEE WHICH REMAINS AS DIFFERENCE SHALL BE RAISED AS DEFECT AT SCRUTINY STAGE AND THE PAYMENT TO SUCH EFFECT COMPLYING THE DEFECT RAISED SHALL BE MADE BY THE AOR/PARTY-IN-PERSON."</label>-->
-                    <label style="margin-top: 2px;font-weight: bold;color: red;"><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
+                    <label style="margin-top: 10px;font-weight: bold;color: red;"><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
                 </div>
             </div>
             <div class="col-lg-6 ccol-md-6 col-sm-12 col-xs-12">
