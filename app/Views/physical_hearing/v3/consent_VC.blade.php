@@ -238,7 +238,7 @@ $this->hearing_model = new HearingModel();
                                     echo ' </div>';
                                 }
                                 else if($court_from_uri!=0)
-                                    echo "<div class='row col-sm-12 mt-3' style='text-align: center;'><br><br>No case found.</div>";
+                                    echo "<div class='row mt-3' style='margin: 0% 45%;'> No case found! </div>";
                                 echo form_close();
                                 if($court_from_uri=='index') {
                                     ?>
