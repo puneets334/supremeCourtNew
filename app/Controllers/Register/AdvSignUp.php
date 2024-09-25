@@ -321,8 +321,8 @@ class AdvSignUp extends BaseController {
         $_SESSION['profile_image'] = $data;
         echo '<pre>'; print_r($_SESSION); echo '<br>';
         echo '<pre>'; print_r($data); echo '<br>';
-echo '<pre>'; print_r($photo_file_path); echo '<br>';
-echo '<pre>'; print_r($new_filename);  
+        echo '<pre>'; print_r($photo_file_path); echo '<br>';
+        echo '<pre>'; print_r($new_filename);  
         $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
 
         $file_path_thumbs = '';

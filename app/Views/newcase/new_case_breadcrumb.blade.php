@@ -132,9 +132,18 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                                     }
                                 } else {
                                     if (!empty(getSessionData('efiling_details')) && in_array(JAIL_PETITION_SUBORDINATE_COURT, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                        ?><a href="<?php echo base_url('jailPetition/FinalSubmit') ?>" class="quick-btn btn btn-success btn-sm" id='jail'>
+                                        ?><a href="<?php echo base_url('jailPetition/FinalSubmit') ?>" class="quick-btn gradient-btn btn btn-success btn-sm" id='jail'>
                                             SUBMIT FOR EFILING</a>
                         <?php }
+                                }
+                            }
+                        }
+                        $stages_array = array(Initial_Defected_Stage, I_B_Defected_Stage);
+                        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+                            // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                            if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                if ($segment->getSegment(2) == 'view') {
+                                    echo '<a href="' . base_url('newcase/finalSubmit') . '" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
                                 }
                             }
                         }
@@ -187,13 +196,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                                 <?php }
                             }
                         }*/
-                        $stages_array = array(Initial_Defected_Stage, I_B_Defected_Stage);
-                        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-                            // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
-                            if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                echo '<a href="' . base_url('newcase/finalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
-                            }
-                        }
+                        
                         // $stages_array = array(Draft_Stage);
                         // if (!empty(getSessionData('efiling_details')) && in_array(!empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'], $allowed_users_trash) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                             ?>
@@ -737,26 +740,4 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     $('input:checkbox').removeAttr('checked');
                 }       
             });
-        </script>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var oTable = $("#datatable-defects").dataTable();
-
-                $("#checkAll").change(function () {
-                    oTable.$("input[type=\'checkbox\']").prop("checked", $(this).prop("checked"));
-                });
-            });
-            function setCuredDefect(id) {
-                var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-                var value = $("#" + id).is(":checked");
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo base_url("documentIndex/Ajaxcalls/markCuredDefect"); ?>',
-                    data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value},
-                    success: function () {
-                        $("#row"+id).toggleClass("curemarked");
-                    },
-                    error: function () {alert("failed");}
-                });
-            }
         </script>

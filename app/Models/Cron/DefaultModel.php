@@ -121,7 +121,6 @@ class DefaultModel extends Model {
         );
         $builder = $this->db->table('efil.tbl_efiling_num_status');
         $builder->INSERT($insert_data);
-       // print_r($this->db->insertID()); die;
 
         if ($this->db->insertID()) {
             return TRUE;

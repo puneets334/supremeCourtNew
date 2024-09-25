@@ -486,11 +486,15 @@ class Ajaxcalls extends BaseController
         extract($_POST);
         if(!empty($val) && !empty($objectionId)){
             $dbs = \Config\Database::connect();
-            $dbs->connect();
             $builder = $dbs->table('efil.tbl_icmis_objections');
-            $builder->WHERE('id', $objectionId);
-            $builder->WHERE('is_deleted', false);
-            $builder->UPDATE('aor_cured', $val);
+            $builder->where('id', $objectionId);
+            $builder->where('is_deleted', false);
+            $updated = $builder->update(['aor_cured' => $val]);
+            if ($updated) {
+                return 1;
+            } else {
+                return 0;
+            }
         }
 
     }

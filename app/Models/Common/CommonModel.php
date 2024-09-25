@@ -782,9 +782,10 @@ class CommonModel extends Model
                         $assoc_arr = array();
                         $assoc_arr['diaryNo'] = $diaryNo;
                         $assoc_json = json_encode($assoc_arr);
-                        $key = $this->config->item('encryption_key');
-                        $encrypted_string = $this->encrypt->encrypt($assoc_json, $key);
-                        $scrutinyUser = $this->efiling_webservices->getScrutinyUserByDiaryNo($encrypted_string);
+                        // $key = $this->config->item('encryption_key');
+                        $key = config('Encryption')->key;
+                        $encrypted_string = $this->encrypt->encrypt($assoc_json);
+                        $scrutinyUser = $this->efiling_webservices->getScrutinyUserByDiaryNo($diaryNo);
                         $usercode = !empty($scrutinyUser['user_details'][0]['usercode']) ? $scrutinyUser['user_details'][0]['usercode'] : NULL;
                         if (isset($usercode) && !empty($usercode)) {
                             $getuserDetailsArr = array();

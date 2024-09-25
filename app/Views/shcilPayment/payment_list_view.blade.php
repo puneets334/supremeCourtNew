@@ -395,9 +395,9 @@
             data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, order_id: order_id},
             url: base_url + "shcilPayment/paymentCheckStatus",
             success: function (data) {
-
                 $('.status_refresh').remove();
                // location.reload();
+               alert(data);
                 $.getJSON(base_url + "csrftoken", function (result) {
                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                 });

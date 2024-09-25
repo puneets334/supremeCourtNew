@@ -359,6 +359,7 @@ $routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::ind
 $routes->match(['GET', 'POST'], 'admin/efilingAction/hold', 'Admin\EfilingAction::hold');
 
 $routes->match(['GET', 'POST'], 'shcilPayment/ViewPaymentChallan/(:any)', 'ShcilPayment\ViewPaymentChallan::index/$1');
+$routes->match(['GET', 'POST'], 'shcilPayment/paymentCheckStatus', 'ShcilPayment\PaymentCheckStatus::index');
 // $routes->match(['GET', 'POST'], 'report/search/view/miscellaneous_docs/defaultController/(:any)/(:any)/(:any)', 'MiscellaneousDocs\DefaultController::view/$1/$1/$1');
 
 
