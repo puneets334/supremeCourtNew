@@ -64,17 +64,12 @@
         <div class="middleContent">
             <div class="container-fluid">
                 <div class="row">
-                    @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
-                        <div class="col-12 sm-12 col-md-9 col-lg-9 middleContent-left">
-                    @else
-                        <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
-                    @endif
-                        <div class="left-content-inner comn-innercontent">
-                            @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
+                    <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+                        @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
                                 <div class="dashboard-section dashboard-tiles-area">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <div class="dashbord-tile pink-tile">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <div class="dashbord-tile pink-tile" tabindex="0">
                                                 <!-- Start 1st Grid -->
                                                 <div style="display: block;" id="showByMe">
                                                     <h6 class="tile-title">Recent Documents</h6>
@@ -222,8 +217,8 @@
                                                 <!--End 2nd grid-->
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <div class="dashbord-tile purple-tile">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <div class="dashbord-tile purple-tile" tabindex="0">
                                                 <h6 class="tile-title">Incomplete Filings</h6>
                                                 <p class="tile-subtitle">Cases/appl. Filed by you</p>
                                                 <h4 class="main-count">
@@ -266,8 +261,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <div class="dashbord-tile blue-tile">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <div class="dashbord-tile blue-tile" tabindex="0">
                                                 <h6 class="tile-title">Scrutiny Status</h6>
                                                 <p class="tile-subtitle">Cases/appl. Filed by you</p>
                                                 <h4 class="main-count">&nbsp;&nbsp;</h4>
@@ -301,9 +296,126 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- -----  -->
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <div class="dashbord-tile purple-tile application-tile" tabindex="0">
+                                                <h6 class="tile-title">Application</h6>
+                                                <p class="tile-subtitle"></p>
+                                                <h4 class="main-count">&nbsp;&nbsp;</h4>
+                                                <div class="application-tile-sections">
+                                                    <div class="applictin-tile-sec">
+                                                    <div class="appliction-til-nam">
+                                                                <h6>Online</h6>
+                                                            </div>
+                                                        <div class="tiles-comnts">
+                                                            <div class="tile-comnt">
+                                                                <h6 class="comts-no">
+                                                                    <?php
+                                                                    if (isset($defect_notified) && !empty($defect_notified)) {
+                                                                        echo count($defect_notified);
+                                                                    } else {
+                                                                        echo '00';
+                                                                    }
+                                                                    ?>
+                                                                </h6>
+                                                                <p class="comnt-name">Disposed</p>
+                                                              
+                                                            </div>
+                                                            <div class="tile-comnt">
+                                                                <h6 class="comts-no">
+                                                                    <?php
+                                                                    if (isset($pending_scrutiny) && !empty($pending_scrutiny)) {
+                                                                        echo count($pending_scrutiny);
+                                                                    } else {
+                                                                        echo '00';
+                                                                    }
+                                                                    ?>
+                                                                </h6>
+                                                                <p class="comnt-name">Pending</p>
+                                                            </div>                                                           
+                                                        </div>
+                                                      
+                                                    </div>
+                                                    <div class="applictin-tile-sec">
+                                                    <div class="appliction-til-nam">
+                                                                <h6>Offline</h6>        
+                                                            </div>
+                                                        <div class="tiles-comnts">
+                                                            <div class="tile-comnt">
+                                                                <h6 class="comts-no">
+                                                                    <?php
+                                                                    if (isset($defect_notified) && !empty($defect_notified)) {
+                                                                        echo count($defect_notified);
+                                                                    } else {
+                                                                        echo '00';
+                                                                    }
+                                                                    ?>
+                                                                </h6>
+                                                                <p class="comnt-name">Disposed</p>
+                                                            </div>
+                                                            <div class="tile-comnt">
+                                                                <h6 class="comts-no">
+                                                                    <?php
+                                                                    if (isset($pending_scrutiny) && !empty($pending_scrutiny)) {
+                                                                        echo count($pending_scrutiny);
+                                                                    } else {
+                                                                        echo '00';
+                                                                    }
+                                                                    ?>
+                                                                </h6>
+                                                                <p class="comnt-name">Pending</p>
+                                                            </div>                                                            
+                                                        </div>
+                                                      
+                                                    </div>
+                                                    <div class="applictin-tile-sec">
+                                                    <div class="appliction-til-nam">
+                                                                <h6>Document Requested</h6>        
+                                                        </div>
+                                                        <div class="tiles-comnts">
+                                                            <div class="tile-comnt">
+                                                                <h6 class="comts-no">
+                                                                    <?php
+                                                                    if (isset($defect_notified) && !empty($defect_notified)) {
+                                                                        echo count($defect_notified);
+                                                                    } else {
+                                                                        echo '00';
+                                                                    }
+                                                                    ?>
+                                                                </h6>
+                                                                <p class="comnt-name">Disposed</p>
+                                                            </div>
+                                                            <div class="tile-comnt">
+                                                                <h6 class="comts-no">
+                                                                    <?php
+                                                                    if (isset($pending_scrutiny) && !empty($pending_scrutiny)) {
+                                                                        echo count($pending_scrutiny);
+                                                                    } else {
+                                                                        echo '00';
+                                                                    }
+                                                                    ?>
+                                                                </h6>
+                                                                <p class="comnt-name">Pending</p>
+                                                            </div>                                                            
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             @endif
+                    </div>
+                </div>
+                <div class="row">
+                    @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
+                        <div class="col-12 sm-12 col-md-9 col-lg-9 middleContent-left">
+                    @else
+                        <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+                    @endif
+                        <div class="left-content-inner comn-innercontent">
+                            
                             <div class="dashboard-section">
                                 <div class="row">
                                     @if(!empty($scheduled_cases))
