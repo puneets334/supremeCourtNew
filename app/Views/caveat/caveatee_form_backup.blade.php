@@ -99,7 +99,7 @@ textarea {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                <input  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></inp>
+                                <textarea  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
@@ -144,9 +144,9 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Date of Birth  <span style="color: red" class="astriks">*</span></label>
+                                <label for="" class="form-label">Date of Birth </label>
                                 <input tabindex='5' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
+                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                     <i class="fa fa-question-circle-o"></i>
@@ -157,7 +157,7 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Approximate Age </label>
+                                <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                 $res_age = '';
                                 if(isset($caveatee_details[0]['res_age']))
@@ -169,7 +169,7 @@ textarea {
                                 }
                                     }
                                 ?>
-                                <input type="number" class="form-control cus-form-ctrl" disabled
+                                <input type="number" class="form-control cus-form-ctrl"
                                 name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
@@ -186,15 +186,15 @@ textarea {
                                 $gfchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'F' )? 'checked="checked"' : '';
                                 $gochecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
                                 ?>
-                                <div class="form-check form-check-inline m-0">
+                                <div class="form-check form-check-inline">
                                     <input class="form-check-input cus-form-check" type="radio" name="pet_gender" id="pet_gender1"  tabindex='7'  value="M" <?php echo $gmchecked; ?>>
                                     <label class="form-check-label" for="inlineRadio1">Male</span></label>
                                 </div>
-                                <div class="form-check form-check-inline m-0">
+                                <div class="form-check form-check-inline">
                                     <input class="form-check-input cus-form-check" type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>>
                                     <label class="form-check-label" for="inlineRadio2">Female</label>
                                 </div>
-                                <div class="form-check form-check-inline m-0">
+                                <div class="form-check form-check-inline">
                                     <input class="form-check-input cus-form-check" type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>>
                                     <label class="form-check-label" for="inlineRadio2">Other</label>
                                 </div>
@@ -489,6 +489,12 @@ textarea {
     function get_caveator_as(value) {        
         var party_as = value;
         if (party_as == 'I') {
+        $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
+
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -499,6 +505,12 @@ textarea {
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
         } else {
+            $('#pet_complainant').attr('required', false); 
+            $('#pet_rel_flag').attr('required', false); 
+            $('#relative_name').attr('required', false); 
+            $('#pet_age').attr('required', false); 
+            $('input[name="pet_gender"]').attr('required', false);
+
 
             get_departments(party_as);
             get_posts();
@@ -538,14 +550,23 @@ textarea {
 <script>
     $(document).ready(function() {
         var today = new Date();
-        $('#pet_dob').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100",
-            format: "dd/mm/yyyy",
-            defaultDate: '-40y',
-            endDate: today 
+        // $('#pet_dob').datepicker({
+        //     changeMonth: true,
+        //     changeYear: true,
+        //     yearRange: "-100",
+        //     format: "dd/mm/yyyy",
+        //     defaultDate: '-40y',
+        //     endDate: today 
             
+        // });
+        $('#pet_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: today,
+        autoclose: true
         });
 
         $(document).on('change','#pet_dob', function(){
