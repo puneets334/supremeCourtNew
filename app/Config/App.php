@@ -15,10 +15,9 @@ class App extends BaseConfig
      * WITH a trailing slash:
      *
      * E.g., http://example.com/
-     * 
     */
-    
-    public string $baseURL = "http://10.40.186.81:81/";
+  
+    public string $baseURL = "http://10.40.186.78:94/";
     
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
