@@ -166,6 +166,9 @@ if ($uris->getSegment(2) != 'view') {
                         <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) { ?>
                             <a href="<?= base_url('appearing_for'); ?>" class="btn btn-primary btn-block" type="button">Next</a>
                             
+                        <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS) { ?>
+                            <a href="<?= base_url('appearing_for'); ?>" class="btn btn-primary btn-block" type="button">Next</a>
+                            
                         <?php  } 
                         
                         
