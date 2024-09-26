@@ -148,7 +148,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             }
                         }
                         ?>
-                        <a href="javascript:void(0)" class="btn btn-primary" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
     <div class="form-row">
         <div class="input-group col-12 mb-3">
             <fieldset class="the-fieldset">
-                <legend class="the-legend bg-light ">Address Type *</legend>
+                <legend class="the-legend bg-light ">Address Type * rsgrg</legend>
                 <label class="ml-3 radio-inline text-black">
                     <input type="radio" name="modal_rdbtn_select" id="modal_home_address_type" value="Home" <?=$address_type == 'Home' ? 'checked' : '' ?>> Home
                 </label>
