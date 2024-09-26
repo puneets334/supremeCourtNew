@@ -145,6 +145,11 @@ if ($uris->getSegment(2) != 'view') {
 
 
             </br>
+            <?php 
+            
+            // echo $_SESSION['efiling_details']['ref_m_efiled_type_id'] ;
+            
+            ?>
 
             <?php if ($uris->getSegment(2) != 'view') { ?>
                 <div class="row">
@@ -157,7 +162,15 @@ if ($uris->getSegment(2) != 'view') {
                             <a href="<?= base_url('certificate/AddDetails'); ?>" class="btn btn-primary btn-block" type="button">Next</a>
                         <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == OLD_CASES_REFILING) { ?>
                             <a href="<?= base_url('uploadDocuments/DefaultController'); ?>" class="btn btn-primary btn-block" type="button">Next</a>
-                        <?php  } else { ?>
+                            
+                        <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) { ?>
+                            <a href="<?= base_url('appearing_for'); ?>" class="btn btn-primary btn-block" type="button">Next</a>
+                            
+                        <?php  } 
+                        
+                        
+                        
+                        else { ?>
                             <a href="<?= base_url('case/interim_application/crud_registration/' . url_encryption(trim($_SESSION['efiling_details']['registration_id'] . '#' . $_SESSION['efiling_details']['ref_m_efiled_type_id'] . '#' . 1))); ?>" class="btn btn-primary btn-block" type="button">Next</a>
                         <?php } ?>
                     </div>
@@ -166,3 +179,5 @@ if ($uris->getSegment(2) != 'view') {
         </div>
     </div>
 </div>
+
+
