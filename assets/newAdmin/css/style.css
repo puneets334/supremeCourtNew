@@ -8402,6 +8402,27 @@ a.btn-link.active {
 }
 /* Edn yash css 25-096-2024  */
 
+/* start yash css 26-09-2024  */
+#byOthers {
+    margin: -13% 14%;
+    background: transparent;
+    border: 1px solid #bfbfbf;
+    color: white;
+    padding: 3px 13px;
+    font-weight: 600;
+    transition: 0.2s ease-in-out;
+}
+#byOthers:hover {
+    background: white;
+    border: 1px solid white;
+    color: black;
+    transition: 0.2s ease-in-out;
+}
+.x_panel {
+    margin-top: 12px;
+}
+/* End yash css  26-09-2024*/
+
 /* black theme css old file 25-09-24  */
 
 /* Header CSS Start  */
@@ -8484,6 +8505,16 @@ a.btn-link.active {
 .black-theme .common-modal .modal-footer{background: #333333;}
 .black-theme .common-modal .modal-body {color:#ff0;}
 .black-theme .common-modal .quick-btn {background: #000!important;}
+.black-theme input[type="search"] {color: white;}
+.black-theme .usrprofile-details label.prof-label {
+    font-size: 16px;
+    font-family: 'noto_sanssemibold';
+    color: #ffff00;
+}
+.black-theme .usrprofile-details .prof-outp {
+    color: #ffffff;
+    font-size: 16px;
+}
 /* Dashboard Main Section End  */       
 /* Footer CSS Start  */
 .black-theme .footer-sec{background:#333333;color:#ff0;}
@@ -8506,3 +8537,21 @@ a.btn-link.active {
 
 
 /* black theme css old 25-09-24  */
+
+/* yash css start 26-09-24  */
+table.dataTable thead .sorting_asc:after {
+    content: '\f4bc';
+    color: rgba(0, 0, 0, .87);
+    display: none !important;
+}
+.add-new-options {
+    background: #3469d2;
+}
+.user-action-sec ul {
+    background: #3469d2;
+}
+/* yash css end 26-09-24  */
+
+
+
+

@@ -223,6 +223,7 @@ $session = service('session');
     <script src="<?= base_url('assets/js/jquery.min.js'); ?>" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?=base_url('CaptchaResource/js/Captcha.js');?>"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
     <script type="text/javascript">
         function showHideDiv(ele) {
             var srcElement = document.getElementById(ele);
