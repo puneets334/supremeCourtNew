@@ -455,7 +455,7 @@ input[type="submit"],
 input[type="button"],
 button,
 .button {
-    background-color: #7d46d3;
+    background-color: #0d48be;
     color: #fff;
     font-family: 'noto_sanssemibold';
 }
@@ -472,7 +472,7 @@ input[type="reset"]:hover,
 button:hover,
 .button:hover {
     color: #fff;
-    background-color: #333;
+    background-color: #04318d;
 }
 
 input[type="submit"].cancelBtn,
