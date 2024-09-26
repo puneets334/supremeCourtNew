@@ -193,14 +193,112 @@ class DefaultController extends BaseController {
                         $row = $this->Login_model->get_user($username, $password);
                     }
                     if ($row) {
-                            $otp = '123456';
-                            $this->Login_model->storeOtp($username, $password, $otp);
-                            $sessiondata['login_cred'] = array(
-                                'user_name' => $username,
-                                'password' => $password
-                            );
-                            $this->session->set($sessiondata);
-                            return $this->render('responsive_variant.authentication.loginOtp');
+                            // $otp = '123456';
+                            // $this->Login_model->storeOtp($username, $password, $otp);
+                            // $sessiondata['login_cred'] = array(
+                            //     'user_name' => $username,
+                            //     'password' => $password
+                            // );
+                            // $this->session->set($sessiondata);
+                            // return $this->render('responsive_variant.authentication.loginOtp');
+                            $row = $this->Login_model->get_user($username, $password); 
+                            $impersonator_user = new stdClass();
+                            if ($row) {
+                                $impersonator_user = $row;
+                                $usr_block = $this->Login_model->get_user_block_dtl($row->id);
+                                // print_r($usr_block);
+                                // die;
+                                if(!empty($usr_block)){
+                                    foreach ($usr_block as $user_val) {
+                                        $logintime = $user_val->login_time;
+                                        $failure_no_attmpt=$user_val->failure_no_attmpt;
+                                    }
+                                    $currenttime = date("Y-m-d H:i:s");
+                                    $fullHours = 0;
+                                    $diff = strtotime($currenttime) - strtotime($logintime);
+                                    $fullDays = floor($diff / (60 * 60 * 24));
+                                    $fullMinutes = floor(($diff - ($fullDays * 60 * 60 * 24) - ($fullHours * 60 * 60)) / 60);
+
+                                    if ($fullDays == 0 && $fullMinutes <= 5 && $failure_no_attmpt==3) {
+                                        $this->session->setFlashdata('msg', 'You are Blocked Try After 5 min');
+                                        return response()->redirect(base_url('/'));
+                                        exit(0);
+
+                                    }
+                                }
+                                $user_name = ucwords($row->first_name . ' ' . $row->last_name);
+                                //Check user role
+                                if(logged_in_check_user_type($row->ref_m_usertype_id)){
+                                    $this->session->setFlashdata('msg', 'You are not authorized !!');
+                                    return response()->redirect(base_url('/'));
+                                    exit(0);
+                                }
+                                $usr_block_update = $this->Login_model->get_user_block_dtl_update($row->id);
+                                $log_data = $this->Login_model->get_user_login_log_details($row->id);
+                                // print_r(count($log_data));die;
+                                if ($log_data) {
+                                    foreach ($log_data as $resdata) {
+                                        $unauthorized_access = array_keys(array_column($log_data, 'block'), 't');
+                                        $new_login_agent = array_keys(array_column($log_data, 'user_agent'), $_SERVER['HTTP_USER_AGENT']);
+                                        if(isset($unauthorized_access[0]) && !empty($unauthorized_access[0])){
+                                            $this->session->setFlashdata('msg', 'Unauthorized Access.');
+                                            return response()->redirect(base_url('/'));
+                                            exit(0);
+                                        }
+                                        if(isset($new_login_agent) && empty($new_login_agent)){
+                                            $subject = 'New Login Detection on eFiling application';
+                                            $Mail_message = 'We detected a login into your account from a new device on ' . date('d-m-Y') . ' at ' . date("h:i:s A") . "<br>Device: <b>" . $this->Login_device . '</b><br>IP Address: <b>' . getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT'] . '</b><br>If you think that somebody logged in to your account against your will, you can block it from your profile on  efiling portal.';
+                                        }
+                                    }
+                                } else {
+                                    $subject = 'New Login Detection on eFiling application';
+                                    $Mail_message = 'We detected a login into your account from a new device on ' . date('d-m-Y') . ' at ' . date("h:i:s A") . "<br>Device: <b>" . $this->Login_device . '</b><br>IP Address: <b>' . getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT'] . '</b><br>If you think that somebody logged in to your account against your will, you blocked it from your profile on  efiling portal.';
+                                    // send_mail_msg($row->emailid, $subject, $Mail_message, $user_name);
+                                }
+                                $pg_request_function = $row->pg_request_function;
+                                $pg_response_function = $row->pg_response_function;
+                                $admin_estab_code = $row->estab_code;
+                                $logindata = array(
+                                    'id' => $row->id,
+                                    'userid' => $row->userid,
+                                    'ref_m_usertype_id' => $row->ref_m_usertype_id,
+                                    'first_name' => $row->first_name,
+                                    'last_name' => $row->last_name,
+                                    'mobile_number' => $row->moblie_number,
+                                    'emailid' => $row->emailid,
+                                    'adv_sci_bar_id' => $row->adv_sci_bar_id,
+                                    'aor_code' => $row->aor_code,
+                                    'bar_reg_no' => $row->bar_reg_no,
+                                    'gender' => $row->gender,
+                                    'pg_request_fun' => $pg_request_function,
+                                    'pg_response_fun' => $pg_response_function,
+                                    'photo_path' => $row->photo_path,
+                                    'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
+                                    'admin_for_type_id'=>$row->admin_for_type_id,
+                                    'admin_for_id' =>$row->admin_for_id,
+                                    'account_status' => $row->account_status,
+                                    'refresh_token' => $row->refresh_token,
+                                    //'dep_flag' => $row->dep_flag,
+                                    //'case_flag' => $row->case_flag,
+                                    //'doc_flag' => $row->doc_flag,
+                                    //'efiling_flag' => $row->efiling_flag,
+                                    //'dep_adv_flag' => $row->dep_adv_flag,
+                                    'impersonator_user' => $impersonator_user,//for efiling_assistant
+                                    'processid' => getmypid(),
+                                    'department_id' => $row->ref_department_id
+                                );
+                                $sessiondata = array(
+                                    'login' => $logindata
+                                );
+                                // pr($sessiondata);
+                                $this->session->set($sessiondata);
+                                $this->logUser('login', $logindata);
+                                $this->redirect_on_login();
+                            } else {
+                                $this->session->setFlashdata('msg', 'Invalid username or password !');
+                                return response()->redirect(base_url('/'));
+                                exit(0);
+                            }
                     } else {
                         $this->session->setFlashdata('msg', 'Invalid username or password !');
                         return response()->redirect(base_url('/'));
