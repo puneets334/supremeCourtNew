@@ -165,11 +165,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
-                                                <div class="row">
+                                                <!-- <div class="row">
                                                     <div class="progress" style="display: none">
                                                         <div class="progress-bar progress-bar-success myprogress" role="progressbar" value="0" max="100" style="width:0%">0%</div>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="save-btns text-center">
                                                     <?php if (!empty($document_id)) { ?>
                                                         <input type="hidden" name="pdfs_list" value="<?php echo (!empty($index_details) ? url_encryption($index_details[0]['pdf_id']) : ''); ?>">
