@@ -144,7 +144,7 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Date of Birth  <span style="color: red" class="astriks">*</span></label>
+                                <label for="" class="form-label">Date of Birth  </label>
                                 <input tabindex='5' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
                                 value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
@@ -157,7 +157,7 @@ textarea {
 
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
-                                <label for="" class="form-label">Approximate Age </label>
+                                <label for="" class="form-label">Approximate Age <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                 $res_age = '';
                                 if(isset($caveatee_details[0]['res_age']))
@@ -169,7 +169,7 @@ textarea {
                                 }
                                     }
                                 ?>
-                                <input type="number" class="form-control cus-form-ctrl" disabled
+                                <input type="number" class="form-control cus-form-ctrl" 
                                 name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
