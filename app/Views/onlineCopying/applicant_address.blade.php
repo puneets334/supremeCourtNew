@@ -51,7 +51,7 @@
                                 <div class="ryt-dash-breadcrumb">
                                     <div class="btns-sec">
 
-                                        <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                             <br>
                             <div id="">
                                 <body class="bg03" oncontextmenu="return false;">
-                                    <div class="container">        
+                                    <div class="container-fluid">        
                                         <form  method="post" action="<?= base_url('online_copying/applicant_address'); ?>">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <div class="row tm-content-row tm-mt-big mt-2">
@@ -189,14 +189,14 @@
                                                                     if(count($userAddress) == 0 OR isset($_POST['add_new_address']))
                                                                     { 
                                                                         ?>
-                                                                        <div class="row shadow p-3 mb-3 bg-white rounded">
+                                                                        <div class="row p-3 mb-3">
                                                                             <div class="row">
                                                                                 <div class="row">
                                                                                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
                                                                                         <div class="form-group">
-                                                                                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-12">Address Type * <span style="color: red" class="astriks">*</span> :</label>
+                                                                                            <label class="form-label col-lg-3 col-md-3 col-sm-3 col-xs-12">Address Type <span style="color: red" class="astriks">*</span></label>
                                                                                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                                                                                                <label class="ml-3 radio-inline text-black">
+                                                                                                <label class="ml-3 radio-inline text-black ms-0 ps-0">
                                                                                                     <input type="radio" name="rdbtn_select" id="home_address_type" value="Home" <?= isset($data_verify_address_type) && $data_verify_address_type == 'Home' ? 'checked' : '' ?>> Home
                                                                                                 </label>
                                                                                                 <label class="ml-3 radio-inline">

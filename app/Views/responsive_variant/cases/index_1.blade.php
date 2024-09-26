@@ -66,6 +66,12 @@
     div .dataTables_wrapper ~ .dataTables_info {
         display: none !important;
     }
+    .mdi:before {
+    font-size: 16px !important;
+}
+a.quick-btn.pull-right:hover {
+    text-decoration: none;
+}
 </style>
 <link rel="stylesheet" href="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/css/main.min.css')}}" />
 <link type="text/css" rel="stylesheet" href="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css')}}" />
@@ -177,7 +183,7 @@
                                 </div>
                             </div> -->
                             <section>
-                                <div  id="myFilter" ukfilter="target: .js-filter">
+                                <div class="mt-4" id="myFilter" ukfilter="target: .js-filter">
                                     <!-- <table id='example' class="display dataTable uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" ukfilter="target: .js-filter"> -->
                                     <table id="example" class="table table-striped custom-table">
                                         <tfoot>
