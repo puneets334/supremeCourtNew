@@ -56,21 +56,21 @@ class AdvSignUp extends BaseController {
         }else if (!empty($_SESSION['kyc_configData']['UidData']['Pht'])) {
         }else {
             if (empty($_SESSION['profile_image']['profile_photo'])) {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Please Choose profile Photo!</p> </div>');
-                redirect('register/AdvSignUp');
+                $this->session->setFlashdata('msg', 'Please Choose profile Photo!');
+                return redirect()->to(base_url('register/AdvSignUp'));
             }
         }
         if (!empty($_POST['mobile']) || !empty($_POST['email_id'])) {
             if ($_SESSION['adv_details']['mobile_no'] != $_POST['mobile']) {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Mobile number!</p> </div>');
-                redirect('register');
+                $this->session->setFlashdata('msg', 'Invalid Mobile number!');
+                return redirect()->to(base_url('register'));
             } elseif ($_SESSION['adv_details']['email_id'] != $_POST['email_id']) {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Invalid Emai ID!</p> </div>');
+                $this->session->setFlashdata('msg', 'Invalid Emai ID!');
 
-                redirect('register');
+                return redirect()->to(base_url('register'));
             }
         } else {
-            redirect('register');
+            return redirect()->to(base_url('register'));
         }
         $rules=[
             "name" => [
@@ -177,8 +177,8 @@ class AdvSignUp extends BaseController {
                 $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
 
                 if (!empty($already_exist)) {
-                    $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Already Registerd Email!</div>');
-                    redirect('register/AdvSignUp');
+                    $this->session->setFlashdata('msg', 'Already Registerd Email!');
+                    return redirect()->to(base_url('register/AdvSignUp'));
                 } else {
                     $add_adv = $this->Register_model->add_new_advocate_details($final_data);
                     if (!empty($add_adv)) {
@@ -188,10 +188,10 @@ class AdvSignUp extends BaseController {
                         $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." ,Please do not share it with any one.";
                         send_mail_msg($to_email, $subject, $message);
                         //END
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Successful</p> </div>');
+                        $this->session->setFlashdata('msg', 'Registration Successful');
                         return redirect()->to(base_url(''));
                     } else {
-                        $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Failed</p> </div>');
+                        $this->session->setFlashdata('msg', 'Registration Failed');
                         return redirect()->to(base_url('register/AdvSignUp'));
                     }
                 }

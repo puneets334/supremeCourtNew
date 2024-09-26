@@ -62,7 +62,10 @@ button.btn:hover, button.btn:hover{background: #110474;}
     box-shadow: none;
     border-color: #110458;
 }
-
+.gray-btn {
+    background: #ccc;
+    color: #000;
+}
 .login-page{background: url(../images/body-bg.png) no-repeat;background-size: cover;}
 /* Top Header css Start */
 .select-lang {border: none;line-height: 0px !important;padding: 0!important;}
@@ -109,7 +112,7 @@ nav.navbar{padding:0}
     cursor: none;
 }
 .captchaimage>.mb-3>input.form-control::placeholder {color: #fff !important;text-decoration: line-through;}
-.loin-form .quick-btn {width: 100%;padding: 12px 5px;line-height: 21px;}
+.loin-form .quick-btn {width: 100%;padding: 12px 5px;line-height: 21px;font-size: 16px;text-align: center;}
 .login-section {
     padding-left: 0;
     background: #fff;
@@ -208,9 +211,12 @@ h6.htsmall {
 .footer-top-sec .contact-txt p {color: #747474;font-family: 'noto_sanssemibold';text-align: right;}
 /* Footer Section css End */
 /* Register Page Start  */
-.register-area .login-banner-inner .banimg-sec img {object-fit: contain;object-position: bottom;}
-.register-area .login-banner-inner .banimg-sec {background: #f6faff;border-radius: 21px 0px 0px 21px;}
+.register-area .login-banner-inner .banimg-sec img {object-fit: contain;object-position: bottom;height: 100%;}
+.register-area .login-banner-inner .banimg-sec {background: #f6faff;border-radius: 21px 0px 0px 21px;height: 100%;}
 .image-note{font-size: 12px;}
+.register-area .login-banner-inner {
+    height: 100%;
+}
 /* Register Page End  */
 
 
