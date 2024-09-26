@@ -14,6 +14,7 @@
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/owl.theme.default.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/black-theme.css" rel="stylesheet" />
 </head>
 <?php
 $segment = service('uri');
