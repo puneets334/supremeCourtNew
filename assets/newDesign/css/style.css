@@ -35,11 +35,11 @@ a:hover, a{text-decoration:none}
 .gray-txt{color: #747474 !important;}
 .yellow-txt{color:#FF572E;}
 a.blue-txt:hover, a.blue-txt:focus{color: #0D48BE !important;}
-button.btn:hover, button.btn:hover{background: #110474;}
-.quick-btn{display:inline-block;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s;border-radius:100px;position:relative;overflow:hidden;background-color: #110458;color: #FFF;border: none;}
+button.btn:hover, button.btn:hover{background: #0D48BE;}
+.quick-btn{display:inline-block;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s;border-radius:100px;position:relative;overflow:hidden;background-color: #0D48BE;color: #FFF;border: none;}
 .quick-btn:before{left:-20px;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%)}
 .quick-btn:after{right:-20px;-webkit-transform:translate(50%, -50%);transform:translate(50%, -50%)}
-.quick-btn:before, .quick-btn:after{position:absolute;top:50%;content:"";width:20px;height:20px;background-color: #0D48BE;border-radius:50%}
+.quick-btn:before, .quick-btn:after{position:absolute;top:50%;content:"";width:20px;height:20px;background-color: #04318d;border-radius:50%}
 .quick-btn:after, .quick-btn:before{z-index:-1;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s}
 .quick-btn:hover{color:#fff;z-index:1}
 .quick-btn:hover:before{-webkit-animation:criss-cross-left 0.8s both;animation:criss-cross-left 0.8s both;-webkit-animation-direction:alternate;animation-direction:alternate}
@@ -145,7 +145,7 @@ nav.navbar{padding:0}
     bottom: -33%;
     left: 0;
     width: 85px;
-    background: #FF572E;
+    background: #0D48BE;
     height: 3px;
 }
 h6.htsmall {
@@ -221,13 +221,13 @@ h6.htsmall {
 
 
 
-@media (max-width: 767px){
-/* Top Header CSS Start  */
+/* @media (max-width: 767px){
+
 .top-header .top-right-nav ul{display:inline-block;text-align:center;height:auto!important}
 .top-header .top-right-nav ul li{padding:0 4px;display:inline-block;margin:5px 0;}
 .top-header .top-left-nav{justify-content:center;margin:5px 0;}
 .top-header li.search-btn a{font-size:13px!important;padding:3px 7px;}
-/* Menu CSS Start  */
+
 .top-right-nav ul{display:inline-block;text-align:center;height:auto!important;}
 .top-right-nav ul li{padding:0 4px;display:inline-block;margin:5px 0;}
 .top-left-nav{justify-content:center;margin:5px 0;}
@@ -238,7 +238,7 @@ h6.htsmall {
 
 }
 @media screen and (max-width: 991px) and (min-width: 768px){
- /* Menu Area CSS Start  */
+
 .nav-wraper .navbar-collapse{position:absolute;right:0;background:#fff;top:44px;z-index:9;box-shadow:0 0 10px #bbbbbb;}
 .custom-nav li{width:100%;}
 .loginbtn-sec{position:relative;}
@@ -247,6 +247,73 @@ h6.htsmall {
 .nav-wraper .custom-nav li a.active{background:#ffb633;}
 .custom-nav{justify-content: end;}
 }
+@media screen and (max-width: 1199px) and (min-width: 992px){
+
+    .brand-text h4{font-size:21px;}
+    .brand-text h4 span{font-size:21px;}
+
+    .nav-wraper .custom-nav li:first-child a{padding-left:0!important;}
+    .nav-wraper .custom-nav li:last-child a{padding-right:0!important;}
+    .nav-wraper .custom-nav li a {font-size:14px;padding:10px 6px!important;}
+} */
+@media (max-width: 767px){
+    /* Top Header CSS Start  */
+    .top-header .top-right-nav ul{display:inline-block;text-align:center;height:auto!important}
+    .top-header .top-right-nav ul li{padding:0 4px;display:inline-block;margin:5px 0;}
+    .top-header .top-right-nav ul li.theme-color{
+    margin: 0;
+}
+    .top-header .top-left-nav{justify-content:center;margin:5px 0;}
+    .top-header li.search-btn a{font-size:13px!important;padding:3px 7px;}
+    /* Logo CSS Start  */
+    .logo-sec-wraper a.logo-align{justify-content: center;}
+    /* Menu CSS Start  */
+    .custom-nav .navbar-collapse.in {display: block;}
+    .top-right-nav ul{display:inline-block;text-align:center;height:auto!important;}
+    .top-right-nav ul li{padding:0 4px;display:inline-block;margin:5px 0;}
+    .top-left-nav{justify-content:center;margin:5px 0;}
+    .logo-sec-wraper .loginbtn-sec{justify-content:start;margin-top:10px;padding-top:5px;padding-bottom:5px;background: #0D48BE;}
+    .nav-wraper .custom-nav li a {color: #fff;padding: 10px 13px !important;width: 100%;}
+    .nav-wraper .custom-nav li.nav-item + li.nav-item {margin-left: 0;}
+    .custom-nav .navbar-collapse {position: absolute;top: 36px;background: #0d48be;z-index: 9;min-width: 180px;}
+    .custom-nav {position: relative;}
+    .logo-sec-wraper{padding:15px 0 0px;}
+    .logo-sec-wraper .navbar-toggler{background:#fff;padding:3px 8px;font-size:16px;}
+    .nav-wraper .custom-nav li a.active{background:#032c7e;}
+    .login-section {border-radius: 0 0px 20px 20px;}
+    .login-banner {padding-left: 0;}
+    .login-s-inner {padding: 15px;margin: 15px;}
+    .otp-row .round-input {height: 41px;width: 41px;}
+    .otp-row > .col {padding: 0;}
+    .footer-top-sec p {font-size: 14px;text-align: center !important;}
+    .footer-top-sec {padding: 30px 0;}
+    .footer-top-sec .contact-txt p {margin-top: 15px;}
+}
+
+
+@media screen and (max-width: 991px) and (min-width: 768px){
+    /* Menu Area CSS Start  */
+    .nav-wraper .navbar-collapse{position:absolute;right:0;background: #0D48BE;top: 40px;z-index:9;box-shadow:0 0 10px #bbbbbb;padding: 12px 0;border-radius: 12px;}
+    .custom-nav li{width:100%;}
+    .loginbtn-sec{position:relative;}
+    .nav-wraper .custom-nav li a{white-space:nowrap;width:100%;text-align:center;color: #fff;padding: 8px 15px !important;font-size: 14px;}
+    .nav-wraper .custom-nav li:last-child a{border-bottom:none;}
+    .nav-wraper .custom-nav li a.active{background:#032c7e;}
+    .custom-nav{justify-content: end;}
+    .nav-wraper .custom-nav li.nav-item + li.nav-item {margin-left: 0;}
+    .logo-sec-wraper {padding: 15px 0;}
+    .brand-text h4 {font-size: 20px;line-height: 20px;}
+    .brand-text h4 span {font-size: 20px;}
+    .brand-text h4 span.logo-sm-txt {font-size: 16px;line-height: 26px}
+    .login-s-inner {padding: 20px;margin: 15px;}
+    .login-banner-inner {height: 100%;}
+    .login-banner-inner .banimg-sec {height: 100%;}
+    .login-banner-inner .banimg-sec img {height: 100%;object-fit: cover;}
+    .otp-row > .col {padding: 0;}
+    .custom-nav .navbar-collapse.in {display: block;}
+}
+
+
 @media screen and (max-width: 1199px) and (min-width: 992px){
     /* Logo Area CSS Start  */
     .brand-text h4{font-size:21px;}
@@ -258,7 +325,6 @@ h6.htsmall {
 }
 
 
-
 @media only screen and (max-width: 1430px){
     .container, .container-fluid{max-width:1300px!important}
 }
@@ -267,84 +333,7 @@ h6.htsmall {
 
 
 /* yash css 26-09-24  */
-/* Header CSS Start  */
-.black-theme .top-right-nav ul{background: #222222;border-color: #ffffff5e;}
-.black-theme .top-header ul li a {color: #ff0;}
-.black-theme a.whitebg {background:#fff}
-.black-theme li.theme-color a {border:1px solid #fff!important;color: #fff !important;}
-.black-theme .top-right-nav select.select-lang {background: transparent;color: #ff0;}
-.black-theme .top-header {background: #000;}
-.black-theme .logo-sec-wraper {background: #000;}
-.black-theme .nav-wraper .custom-nav li a.active {background: #333333;color: #ff0;}
-.black-theme  .nav-wraper .custom-nav li a {color: #ff0;}
-.black-theme  .logo-sec-wraper a.logo-align img {filter: invert(1);}
-.black-theme  .logo-sec-wraper a.logo-align .brand-text h4 span, .black-theme .logo-sec-wraper a.logo-align .brand-text h4 {color: #ff0;}
-.black-theme  .nav-wraper .custom-nav li a:hover, .black-theme .nav-wraper .custom-nav li a:focus {background: #333333;color: #fff;}
-.black-theme .logo-sec-wraper button.navbar-toggler{background: #ffffff;}
-.black-theme .logo-sec-wraper .nav-wraper .navbar-collapse {background: #000;}
-.black-theme .logo-sec-wraper .loginbtn-sec{background: #000000;}
-/* Header CSS End  */
-/* Login Area Start  */
-.black-theme .login-area {background: #222222;}
-.black-theme button.btn:hover, .black-theme button.btn:hover{background: #cfc53a;}
-.black-theme .login-section {background: #000;}
-.black-theme .httxt h4 {color: #fff;}
-.black-theme .httxt h4:before {background: #fff;}
-.black-theme .loin-form label {color: #ffffff !important;}
-.black-theme .cus-form-ctrl {background: #333333;border-color: #ffffff69;color: #ffffff;}
-.black-theme .cus-form-ctrl:focus {background: #333333;border-color: #ff0;color: #ff0;}
-.black-theme .blue-txt {color: #ff0 !important;}
-.black-theme .quick-btn {background: #cfc53a;color: #000000;}
-.black-theme .login-s-inner {background: #111111;border-color: #ffffff5e;}
-.black-theme .quick-btn:before, .black-theme .quick-btn:after {background: #333;}
-.black-theme .quick-btn:hover {color: #ff0;}
-.black-theme .regester-txts h6.htsmall {color: #ffffff;}
-.black-theme .regester-txts .gray-txt {color: #ffffff !important;}
-.black-theme a.blue-txt:hover, .black-theme a.blue-txt:focus {text-decoration: underline;color: #ff0 !important;}
-.black-theme .top-right-nav {background: #333333;border: 1px solid #dfdfdf38;}
-/* Login Area End  */
-/* OTP Page CSS Start  */
-.black-theme .otp-row .round-input:hover, .black-theme .otp-row .round-input:focus, .black-theme .otp-row .round-input:active {background: #000;color: #ff0;}
-.black-theme input.form-control.round-input:focus, .black-theme input.form-control.round-input:not(:placeholder-shown), .black-theme input.form-control.round-input:active{background: #000000;color: #ff0;border-color: #ff0 !important;}
-.black-theme .otp-form .yellow-txt {color: #ff0;}
-.black-theme .otp-form .yellow-txt:hover, .black-theme .otp-form .yellow-txt:focus {text-decoration: underline!important;}
-.black-theme .top-header ul li a:hover {color: #ff0;}
-.black-theme .top-right-nav select.select-lang option {background: #000;}
-/* OTP Page CSS End  */
-/* FaQ Page CSS Start  */
-.login-page.black-theme {background: #111111;}
-.black-theme .breadcrum-bg {background: #222222;border-bottom-color: #ffffff54;}
-.black-theme .breadcrum-bg .breadcrumb-item {border-color: #ffffff7d;background: #222222;color: #ff0 !important;}
-.black-theme .breadcrumb-area .breadcrumb-item a , .black-theme .inner-page-title h5 , .black-theme .faq-sec p, .accordion-body ul li{color: #ffffff;}
- ul.innpg-ul li:before {border-color: transparent #ffffff;}
-.black-theme .breadcrumb-item+.breadcrumb-item::before {color: #fff;}
-.black-theme .main-inner-bg {background: #222222;}
-.black-theme .inner-page-title h5:before {background: #ff0;}
-.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button{color: #ff0 }
-.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button , .black-theme .breadcrum-bg .breadcrumb-item.active , .black-theme .accordion-body{background: #000;}
-.black-theme .accordion-button.collapsed {background: #222222!important;color: #ff0 !important;}
-.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:hover, .black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:focus {background: #000000 !important;color: #ff0 !important;}
-.black-theme .faq-sec .accordion .accordion-item {border: 1px solid #00000087 !important;}
-.black-theme .faq-sec .accordion button.accordion-button.collapsed:after { filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) !important;}
-/* FaQ Page CSS End  */
-/* Footer CSS Start  */
-.black-theme .footer-top-sec {background: #222222;}
-.black-theme .footer-top-sec .copyright-sec p {color: #ffffff;}
-.black-theme .footer-top-sec .contact-txt p {color: #ffffff;}
-/* Footer CSS End  */
-.black-theme .top-header .font-action-sec ul {background: #111111;box-shadow: 0px 0px 6px 0px rgb(255 255 255);}
-.black-theme .top-header .font-action-sec:before {border-bottom-color: #111111;}
-.black-theme .top-header .font-action-sec ul li:hover {background: #333333;}
-.black-theme .top-header .font-action-sec ul li:hover a{color: #ff0!important;}
-.black-theme .top-header .font-action-sec ul li a {color: #ff0 !important;}
-.black-theme .captchareload a{color:#ff0;}
-.black-theme .discription-sec p, .black-theme .innner-sub-title h5 {color: #fff;}
-.black-theme .custom-table td a {color: #ff0;}
-.black-theme .custom-table thead th {background:#111111!important;}
-.black-theme .table-striped tr:nth-child(odd) td {background: #333333 !important;}
-.black-theme .table-striped tr:nth-child(even) td {background: #222222;}
-.black-theme .table tr td, .black-theme .table tr th {color: #ffffff;border-bottom: 1px solid #ffffff59;border-top: 1px solid #ffffff63;}
-.black-theme .table-striped tr:hover td {background: #111111 !important;color: #ff0;}
+
 
 .top-header ul {
     justify-content: end;
