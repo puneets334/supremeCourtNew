@@ -200,6 +200,7 @@ $routes->match(['GET', 'POST'], 'Register/ForgetPassword/adv_get_otp', 'Register
 $routes->match(['GET', 'POST'], 'Register/AdvOtp', 'Register\ForgetPasswordController::AdvOtp');
 $routes->match(['GET', 'POST'], 'Register/verify', 'Register\ForgetPasswordController::verify');
 $routes->match(['GET', 'POST'], 'Register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
 // $routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'App\Controllers\Mycases\CitationNotes::add_case_contact');
 $routes->post('mycases/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
 $routes->post('newcase/assignSrAdvocate', 'NewCase\Ajaxcalls::assignSrAdvocate');
