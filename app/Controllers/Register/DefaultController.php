@@ -330,6 +330,11 @@ class DefaultController extends BaseController {
                         // pr($filePath);
                         // Move the file to the desired location
                         if ($file->move($uploadPath, $fileName)) {
+                            $xfile = explode('.',$fileName);
+                            if($xfile != 'zip'){
+                                unlink($filePath);
+                                return redirect()->to(base_url('register'))->with('msg', 'Please upload Zip file only.');
+                            }
                             $isValidFiles = $this->inspect_files_within_zip($filePath);
                             // pr($isValidFiles);
                             if ($isValidFiles) {
