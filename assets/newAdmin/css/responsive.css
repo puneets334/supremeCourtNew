@@ -1,0 +1,86 @@
+/* Mobile Screen CSS  */
+@media (max-width: 767px){
+    /* Header CSS Start  */
+    .mngmntHeader{padding-right: 0;}
+    .mngmntHeader .menu-sec{flex-direction: column;position: relative;}    
+    .mngmntHeader .mngmntLogoSection {padding-top: 80px;flex-direction: column-reverse;align-items: baseline;}
+    .mngmntHeader .mngmntUserSection .top-right-nav {position: absolute;top: 0;left: 0;}
+    .mngmntHeader .top-right-nav ul li a {font-size: 12px;text-wrap: nowrap;}
+    .mngmntHeader .top-right-nav ul li {padding: 0 8px;}    
+    .mngmntHeader .top-right-nav ul {flex-wrap: wrap;justify-content: center;row-gap: 7px;padding: 7px 0;}    
+    .mngmntHeader .mngmntUserSection {width: fit-content;}
+    .mngmntHeader .account-details {position: absolute;bottom: 15px;right: 10px;}
+    .mngmntHeader .brand-logo-sec {margin: 0 auto;padding-bottom: 15px;}
+    .togglemenuSection{padding: 16px;}    
+    .hamburger-icon{width: 30px;height: 20px;}
+    .hamburger-icon.hide span:nth-child(3) {left: 2px;top: 0;}    
+    .hamburger-icon.hide span:nth-child(2) {left: 10px;top: 0;}
+    
+    /* Header CSS End  */
+    /* Dashboard Main Content Start  */
+    .togglemenuSection {padding: 16px;}
+    .hamburger-icon {width: 30px;height: 20px;}
+    .hamburger-icon.hide span:nth-child(3) {left: 2px;top: 0;}
+    .hamburger-icon.hide span:nth-child(2) {left: 10px;top: 0;}
+    .dashboard-section {margin-top: 0;}
+    .sidePanel {position: absolute;/* width: 71%; */}
+    .sidePanel, .sidePanel .leftPanel {width:277px;}
+    .dashbord-tile {margin-top: 15px;height: auto !important}
+    .dashbord-tile.blue-tile {height: auto !important}
+    .title-sec .unerline-title {font-size: 18px;padding-bottom: 10px;}
+    .title-sec .unerline-title:before {height: 3px;}
+    .custom-table thead th:first-child, .custom-table tbody td:first-child {padding-left: 20px;}
+    .custom-table thead th:last-child, .custom-table tbody td:last-child {padding-right: 20px;}
+    .custom-table thead th, .custom-table tbody td {padding: 10px 15px;line-height: 18px;}
+    .custom-table thead th {text-wrap: nowrap;}
+    .pagination-area .sowing-pg p {font-size: 14px;}
+    .pagination-inner a.page-link {padding: 6px 11px;}
+    .pagination {margin: 15px 0;}
+    .add-new-area:hover .add-new-options, .add-new-area:hover .add-new-options ul{width: 191px;}
+    .dashboard-bradcrumb .left-dash-breadcrumb{flex-direction:column;gap:15px;}
+    .dashboard-bradcrumb{flex-direction:column;gap:15px;}
+    .crnt-page-head {flex-direction:column;}
+    .current-pg-actions{flex-wrap:wrap;justify-content:center;}
+    .dashboard-bradcrumb .page-title h5{font-size:20px;}
+    .crnt-page-head .current-pg-title{margin-bottom:15px;}
+    .save-form-details {flex-direction: column;gap: 20px;}
+    .tabs-section .tab-content {padding: 0px 0px;}
+    .dash-card .title-sec {display: flex;flex-direction: column;gap: 10px;align-items: start;}
+    .application-tile-sections {flex-wrap: wrap;justify-content: start;row-gap: 25px;}
+    .application-tile-sections .applictin-tile-sec {width: 48%;}
+    .application-tile-sections .applictin-tile-sec:last-child {width: 100%;}
+    .application-tile-sections .applictin-tile-sec:last-child:after {content: '';position: absolute;top: -13px;left: 0;width: 100%;height: 1px;background: #ffffff59;}
+    .application-tile-sections .applictin-tile-sec:nth-child(2):before {display: none;}
+    .dataTables_length select {width: initial !important;padding: 5px !important;}
+    /* Dashboard Main Content End  */
+    /* Footer CSS Start  */
+    .footer-sec{font-size:14px;}
+    /* Footer CSS End  */
+}
+
+/* Tablet CSS Start  */
+@media screen and (max-width: 991px) and (min-width: 768px){
+    /* Header CSS Start  */
+    .top-right-nav ul li{padding:0 15px;}
+    .top-right-nav {position:absolute;width:fit-content;right:0;top:0;}
+    .menu-sec{position:relative;}
+    .mngmntUserSection, .brand-logo-sec{padding-top:40px;}
+    /* Header CSS End  */
+    /* Side pannel CSS Start  */
+    .sidePanel{position: absolute;width:40%;box-shadow: 5px 8px 20px 0px rgb(0 0 0 / 55%);}
+    .sidePanel .leftPanel{width: 307px;}
+    /* Side pannel CSS End  */
+    .dashboard-bradcrumb .page-title h5 {font-size: 1.2em;}
+    .current-pg-title h6 {font-size: 1em;}
+    .radio-btns-inp {align-items: self-start;}
+    .tabs-section .tab-content {padding: 0px 10px;}
+}
+/* Tablet CSS End  */
+
+
+/* Laptop CSS Start  */
+@media screen and (max-width: 1200px) and (min-width: 992px){
+    /* Header CSS Start  */
+    .top-right-nav ul li{padding: 0 12px;}
+     /* Header CSS End  */
+}

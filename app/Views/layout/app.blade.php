@@ -10,6 +10,8 @@
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">

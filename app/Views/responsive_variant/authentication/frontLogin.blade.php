@@ -4,7 +4,7 @@
 <div class="login-area">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-7 col-lg-7 login-banner">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7 login-banner">
                 <div class="login-banner-inner">
                     <div class="banimg-sec">
                         <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="" class="img-fluid">
@@ -19,7 +19,7 @@
 
 
 
-            <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-5 login-section">
                 <div class="login-s-inner">
                     <?php $session = session(); ?>
                     @if($session->has('msg'))

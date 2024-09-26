@@ -38,10 +38,10 @@
                                                 <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                                     <div class="tab-form-inner">
                                                         <div class="row">
-                                                            <div class="col-9">
+                                                            <div class="col-12 col-md-8 col-lg-9">
                                                                 <h6 class="text-center"> Advance Summer Vacation List @php echo date("Y") @endphp</h6>
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-12 col-md-4 col-lg-3">
                                                                 <button id="declineButton" type="button" class="btn btn-primary btn-success text-center pull-right" onclick="javascript:confirmBeforeDecline();"><strong>Decline Selected Case(s)</strong></button>
                                                             </div>
                                                         </div>
