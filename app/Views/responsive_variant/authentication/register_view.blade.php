@@ -14,6 +14,7 @@
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/owl.theme.default.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newDesign/' ?>css/black-theme.css" rel="stylesheet" />
 </head>
 <?php
 $segment = service('uri');
@@ -297,7 +298,7 @@ $session = service('session');
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
-                        <center><a href="{{base_url()}}" class="col-sm-3 col-md-3">LOGIN</a></center>
+                        <center><a href="{{base_url()}}" class="col-sm-3 col-md-3 btn quick-btn">LOGIN</a></center>
                         <div class="regester-txts">
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
