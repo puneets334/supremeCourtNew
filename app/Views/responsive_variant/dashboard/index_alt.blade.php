@@ -1268,7 +1268,7 @@
                         var Table = document.getElementById("efiling");
                         Table.innerHTML = "";
                         for (var i = 0; i < response.length; i++) {
-                            $('#efiling').append('<tr><td>' + response[i]['efiling_no'] + '</td><td>' + response[i]['activated_on'] + " " + '</td></tr>');
+                            $('#efiling').append('<tr><td><a href="<?php echo base_url('case/paper_book_viewer/'); ?>' + response[i]['diary_id'] + '" target="_blank" rel="noopener">' + response[i]['efiling_no'] + '</a></td><td>' + response[i]['activated_on'] + " " + '</td></tr>');
                         }
                     },
                     error: function(xhr, status, error) {

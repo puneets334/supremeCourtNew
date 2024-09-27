@@ -51,7 +51,7 @@
                                                                     <h6>Tilak Marg, New Delhi - 110001</h6>
                                                                     <p>011-23388922-24,23388942</p>
                                                                     <p>FAX : 011-23381508,23381584</p>
-                                                                    <p>e-mail : efiling@sci.nic.in</p>
+                                                                    <p>e-mail : efiling[at]sci[dot]nic[dot]in</p>
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-3">
