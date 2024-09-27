@@ -221,7 +221,7 @@ class ResponsiveVariantRouteController extends BaseController
                 default:
             }
         } else {
-            //echo "AOR id is: ".getSessionData('login')['adv_sci_bar_id'];
+        //  echo "AOR id is: ".getSessionData('login')['adv_sci_bar_id']; die;
             $from_date = date("Y-m-d", strtotime("-3 months"));
             $to_date = date('Y-m-d');
             $incomplete_applications = [];
@@ -247,6 +247,8 @@ class ResponsiveVariantRouteController extends BaseController
             $url = $serviceUrl . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date_encoded . '%20to%20' . $to_date_encoded;
             // Fetch the data from the external service
             $recent_documents_str = file_get_contents($url);
+            // print_r($recent_documents_str); die;
+
             // Handle the response (convert to JSON, process it, etc.)
             $recent_documents = json_decode($recent_documents_str, true);
             // $recent_documents_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date . '%20to%20' . $to_date . '');
@@ -311,6 +313,7 @@ class ResponsiveVariantRouteController extends BaseController
             }
             //Adjournment Request Started
             $recent_documents_str_advocate_others = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true');
+            
             $recent_documents_advocate_others = json_decode($recent_documents_str_advocate_others);
             $adjournment_by_others_data = (isset($recent_documents_advocate_others)) ? $recent_documents_advocate_others->data : '';
             $others_all_diaryId_data = array_column((array)$adjournment_by_others_data, 'diaryId');
@@ -416,6 +419,8 @@ class ResponsiveVariantRouteController extends BaseController
             $or_request_params = [];
             $or_request_params['documentType'] = 'or';
             $or_request_params['diaryIds'] = array_column($scheduled_cases, 'diary_id');
+            // print_r(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params));die;
+
             $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
             $office_reports = (!empty($or_response)) ? $or_response->data : [];
             $rop_judgment_request_params = [];
@@ -523,6 +528,7 @@ class ResponsiveVariantRouteController extends BaseController
                 $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
                 // $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
                 $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                pr($sr_advocate_data);
                 if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
                     $arr = array();
                     $arr['sr_advocate_id'] = $advocate_id;
