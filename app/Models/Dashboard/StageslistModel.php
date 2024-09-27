@@ -179,7 +179,6 @@ class StageslistModel extends Model
         $builder->orderBy('cs.activated_on', 'DESC');
 
         $query = $builder->get();
-        // print_r($query->getResult()); die;
 
         if ($query->getNumRows() >= 1) {
             return $query->getResult();

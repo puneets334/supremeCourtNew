@@ -112,3 +112,5 @@
 
 
 /* black theme css old 25-09-24  */ 
+.black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button {background: #555555 !important;color: #ff0 !important;border: 1px solid #ffffff52 !important;}
+.black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button.current, .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button:hover { background: #333 !important;color: #ff0 !important;}
