@@ -68,7 +68,7 @@
                         @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
                                 <div class="dashboard-section dashboard-tiles-area">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                             <div class="dashbord-tile pink-tile" tabindex="0">
                                                 <!-- Start 1st Grid -->
                                                 <div style="display: block;" id="showByMe">
@@ -217,7 +217,7 @@
                                                 <!--End 2nd grid-->
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                             <div class="dashbord-tile purple-tile" tabindex="0">
                                                 <h6 class="tile-title">Incomplete Filings</h6>
                                                 <p class="tile-subtitle">Cases/appl. Filed by you</p>
@@ -261,7 +261,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                             <div class="dashbord-tile blue-tile" tabindex="0">
                                                 <h6 class="tile-title">Scrutiny Status</h6>
                                                 <p class="tile-subtitle">Cases/appl. Filed by you</p>
@@ -297,7 +297,7 @@
                                             </div>
                                         </div>
                                         <!-- -----  -->
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                             <div class="dashbord-tile purple-tile application-tile" tabindex="0">
                                                 <h6 class="tile-title">Application</h6>
                                                 <p class="tile-subtitle"></p>
@@ -410,7 +410,7 @@
                 </div>
                 <div class="row">
                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
-                        <div class="col-12 sm-12 col-md-9 col-lg-9 middleContent-left">
+                        <div class="col-12 sm-12 col-md-12 col-lg-9 middleContent-left">
                     @else
                         <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
                     @endif
@@ -419,7 +419,7 @@
                             <div class="dashboard-section">
                                 <div class="row">
                                     @if(!empty($scheduled_cases))
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-3">
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">My Cases <small class="uk-text-muted">soon to be listed</small></h5>
@@ -642,7 +642,7 @@
                                     @endif
                                     <!-- end sr advocate data -->
                                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
-                                        <div class="col-12 col-sm-12 col-md-9 col-lg-9">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-9">
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
@@ -667,6 +667,7 @@
                                                                 $i = 1;
                                                                 $allocated = '';
                                                                 if (isset($final_submitted_applications) && !empty($final_submitted_applications) && count($final_submitted_applications) > 0) {
+                                                                     
                                                                     foreach ($final_submitted_applications as $re) {
                                                                         $stages = $re->stage_id;
                                                                         $exclude_stages_array = array(8, 9, 11, 13, 34, 35, 36, 37);
@@ -1132,7 +1133,7 @@
                         </div>
                     </div>
                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
-                        <div class="col-12 sm-12 col-md-3 col-lg-3 middleContent-right">
+                        <div class="col-12 sm-12 col-md-12 col-lg-3 middleContent-right">
                             <div class="right-content-inner comn-innercontent">
                                 <div class="dashboard-section">
                                     <div class="row">

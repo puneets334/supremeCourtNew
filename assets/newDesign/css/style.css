@@ -88,6 +88,7 @@ a.logo-align{text-decoration:none;display:flex;align-items:center}
 .brand-text h4 span.logo-sm-txt {font-size: 17px;line-height: 28px;}
 .brand-text h4{padding-left: 12px;font-size: 22px;color:#000;line-height: 26px;margin-bottom:0;}
 .brand-text h4 span{color:#000;display:block;font-size: 22px;line-height:normal}
+a.logo-align img {width: 94px;}
 /* Logo Section Header css End */
 /* Main Menu Section Header css Start */
 nav.navbar{padding:0}

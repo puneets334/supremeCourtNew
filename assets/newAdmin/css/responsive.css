@@ -71,9 +71,13 @@
     .sidePanel .leftPanel{width: 307px;}
     /* Side pannel CSS End  */
     .dashboard-bradcrumb .page-title h5 {font-size: 1.2em;}
+    .title-sec .unerline-title {font-size:20px;padding-bottom: 10px;}
+    .title-sec .unerline-title:before {height: 3px;}
     .current-pg-title h6 {font-size: 1em;}
     .radio-btns-inp {align-items: self-start;}
     .tabs-section .tab-content {padding: 0px 10px;}
+    .dashboard-tiles-area .col-md-6:nth-child(3), .dashboard-tiles-area .col-md-6:nth-child(4) {margin-top: 15px;}    
+    .dashboard-tiles-area .col-md-6:nth-child(2), .dashboard-tiles-area .col-md-6:nth-child(4) {padding-left: 0;}
 }
 /* Tablet CSS End  */
 

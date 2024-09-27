@@ -1,5 +1,7 @@
 @extends('layout.app')
 @section('content')
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <div class="container-fluid">
     <div class="row" id="printData">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -52,19 +54,21 @@
     </div>
     @endsection
     @push('script')
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#from_date').datepicker({
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: "dd/mm/yy",
+                format: "dd/mm/yyyy",
                 maxDate: new Date,
                 defaultDate: '-6d'
             });
             $('#to_date').datepicker({
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: "dd/mm/yy",
+                format: "dd/mm/yyyy",
                 maxDate: new Date
             });
             var d = new Date();
@@ -84,6 +88,8 @@
             $(document).on('click', '#getResult', function() {
                 var from_date = $("#from_date").val();
                 var to_date = $("#to_date").val();
+
+               
                 var validationError = true;
                 if (from_date == '') {
                     alert("Please select from date.")
@@ -95,6 +101,12 @@
                     $("#to_date").focus();
                     validationError = false;
                     return fasle;
+                }
+                if(to_date<from_date) {
+                    alert("To Date will be greater than From Date");
+                    $("#to_date").val('');
+                    $("#to_date").focus();
+                    return false;
                 }
                 if (validationError) {
                     var CSRF_TOKEN = 'CSRF_TOKEN';

@@ -2102,7 +2102,7 @@ logo h1 {
 }
 
 .dashboardLeftNav li:nth-child(1) a:hover:before {
-    background-position: -36px -42px;
+    background-position: -3px -44px;
 }
 
 .dashboardLeftNav li:nth-child(2) a:hover:before {
@@ -2139,7 +2139,8 @@ logo h1 {
 
 .dashboardLeftNav li .accordion-button[aria-expanded="true"] {
     background-color: #fff;
-    color: #000
+    color: #000;
+    border-bottom-left-radius: 0 !important;
 }
 
 .dashboardLeftNav li:nth-child(2) .accordion-button[aria-expanded="true"]:before {
@@ -6432,20 +6433,24 @@ a.profile-lnk {
 }
 
 .dashboardLeftNav li ul.submenu {
-    background: #0d48be;
+    background: #1656d5;
     border-radius: 0px 0px 0px 20px;
+    overflow: hidden;
 }
 
 .dashboardLeftNav li ul.submenu li:last-child a {
     border-bottom-left-radius: 20px;
 }
 
-.dashboardLeftNav li ul.submenu li a:hover {
-    background: #ffffff !important;
-    color: #000 !important;
-    border-radius: 20px 0 0 20px;
+.dashboardLeftNav li ul.submenu li a:hover{
+    /* background: #ffffff !important; */
+    /* color: #000 !important; */
 }
-
+.dashboardLeftNav li ul.submenu a.active, .dashboardLeftNav li ul.submenu a:hover {
+    border-radius: 0 !important;
+    background: #edf3ff !important;
+    color: #000 !important;
+}
 /* Left Menu Toggle CSS End */
 
 /* CSS By Dpak Start  */
@@ -6488,7 +6493,6 @@ a {
 
 .top-right-nav ul li:last-child {
     border: none;
-    padding-right: 0
 }
 
 .top-right-nav ul {
@@ -6533,7 +6537,7 @@ li.text-size a:last-child {
 }
 
 .brand-text h4 {
-    padding-left: 12px;
+    padding-left:5px;
     font-size: 21px;
     color: #000;
     line-height: 22px;
@@ -6625,7 +6629,7 @@ li.text-size a:last-child {
 }
 
 .dashboard-tiles-area .dashbord-tile:after {
-    background: linear-gradient(180deg, rgb(94 81 188) 0%, rgb(0 138 191) 100%);
+    background: linear-gradient(180deg, rgb(13 72 190) 0%, rgb(13 72 190) 100%);
 }
 
 .dashbord-tile .tile-title {
@@ -7075,7 +7079,7 @@ a.red-dot .mdi {
     border-radius: 100px;
     position: relative;
     overflow: hidden;
-    background-color: #444;
+    background-color: #0d48be;
     color: #FFF;
     border: none;
     padding: 10px 30px;
@@ -7103,7 +7107,7 @@ a.red-dot .mdi {
     content: "";
     width: 20px;
     height: 20px;
-    background-color: #0D48BE;
+    background-color: #022651;
     border-radius: 50%
 }
 
@@ -7116,7 +7120,8 @@ a.red-dot .mdi {
 
 .quick-btn:hover {
     color: #fff;
-    z-index: 1
+    z-index: 1;
+    background: #0d48be;
 }
 
 .quick-btn:hover:before {
@@ -8275,10 +8280,6 @@ form label {
 }
 .user-action-sec {
     width: 175px;
-}
-.quick-btn.gray-btn {
-    background-color: #7D46D3;
-    color: #FFFFFF;
 }
 input[type="file"] {
     height: auto;
