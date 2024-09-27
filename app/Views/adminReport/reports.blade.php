@@ -1,5 +1,7 @@
 @extends('layout.app')
 @section('content')
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <div class="container-fluid">
     <div class="row" id="printData">
         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -52,19 +54,21 @@
     </div>
     @endsection
     @push('script')
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#from_date').datepicker({
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: "dd/mm/yy",
+                format: "dd/mm/yyyy",
                 maxDate: new Date,
                 defaultDate: '-6d'
             });
             $('#to_date').datepicker({
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: "dd/mm/yy",
+                format: "dd/mm/yyyy",
                 maxDate: new Date
             });
             var d = new Date();

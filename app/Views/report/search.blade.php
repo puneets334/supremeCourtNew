@@ -4,6 +4,8 @@
 <link type="text/css" rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css" />
 <link rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/templates/uikit_scutum_2/assets/css/fonts/mdi_fonts.css" />
 <link rel="stylesheet" href="<?= base_url() ?>assets/responsive_variant/templates/uikit_scutum_2/assets/css/materialdesignicons.min.css" />
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <style>
     .add-new-area {
         display: none !important;
@@ -605,6 +607,8 @@
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/daterangepicker/daterangepicker.css">
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script>
         function openSearch(cityName,elmnt,color) {
             var i, tabcontent, tablinks;
@@ -704,7 +708,7 @@
                 endDate: moment().startOf('hour').add(24, 'hour'),
                 locale: {
                 // format: 'YYYY-MM-DD hh:mm:ss',//
-                    format: 'YYYY-MM-DD hh:mm:ss A',
+                    format: 'DD-MM-YYYY hh:mm:ss A',
                     separator: " to "
                 }
             });
