@@ -8275,7 +8275,7 @@ input[type="radio"] {
 
 /* 24 sept 2024 start  */
 .application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
-.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;}
+.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;    z-index: 1;}
 .application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
 .application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
 .application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
