@@ -13,20 +13,9 @@
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
-	<style>
-		#loader-wrapper {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 1000; /* Ensure it's on top of other content */
-		}
-	</style>
 </head>
 
 <body>
-	<div id="loader-wrapper">
-        <div id="loader"></div>
-    </div>
 	<div class="wrapper">
 
 		<!--header section-->
@@ -311,14 +300,6 @@
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 
-	<script>
-		// document.getElementById('loader-wrapper').style.display = 'flex';
-		$(window).on('load', function() {
-			// Hide the loader
-			$('#loader-wrapper').fadeOut('slow', function() {
-			});
-		});
-	</script>
 	
 </body>
 

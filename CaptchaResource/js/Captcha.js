@@ -57,12 +57,11 @@ function playAudio() {
                 var CaptchaCode=resArr[1];
                 //var CaptchaCode=$('#current_captcha_code').val();
                 if (CaptchaCode.length != 0){
-                        const { captcha, spokenText } = generateCaptcha(CaptchaCode);
-                        console.log(captcha);
-                        const msg = new SpeechSynthesisUtterance();
-                        msg.text = `${spokenText}`;
-                        msg.lang = 'en-US';
+                        //$('#captcha_code').val(CaptchaCode); //test auto fill Captcha Code
+                        var msg = new SpeechSynthesisUtterance();
+                        msg.text = CaptchaCode;
                         window.speechSynthesis.speak(msg);
+
                 }else{
                     $('#playAudio').hide();
                     alert('Captcha code audio not found');
@@ -78,15 +77,4 @@ function playAudio() {
         }
     });
 
-}
-
-
-function generateCaptcha(captcha) {
-    const spokenText = Array.from(captcha)
-        .map(char => {
-            return char === char.toUpperCase() ? `Capital ${char}` : `small ${char}`;
-        })
-        .join(", ");
-
-    return { captcha, spokenText };
 }
