@@ -1227,11 +1227,9 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function getDayCaseDetails()
     {
-        $cases = array();
-        
+        $cases = array();        
         $start = date('Y-m-d 00:00:00', strtotime((string)$this->request->getPost('start')));
-        $end = date('Y-m-d 23:59:59', strtotime((string)$this->request->getPost('start')));
-        
+        $end = date('Y-m-d 23:59:59', strtotime((string)$this->request->getPost('start')));        
         if (getSessionData('login')['ref_m_usertype_id'] != SR_ADVOCATE || getSessionData('login')['ref_m_usertype_id']  != ARGUING_COUNSEL) {
             $day_wise_cases = $this->StageslistModel->get_day_wise_case_details(array(1), getSessionData('login')['id'], $start, $end, 1);
             if ($day_wise_cases == false) {
@@ -1243,19 +1241,16 @@ class ResponsiveVariantRouteController extends BaseController
                     $activated_date = date('Y-m-d h:i:s', strtotime($case->activated_on));
                     if ($activated_date >= $start && $activated_date <= $end) {
                         $cases[] = array(
+                            'diary_id' => $case->sc_diary_year,
                             'efiling_no' => $case->efiling_no,
                             'activated_on' => date("d/m/Y h.i.s A", strtotime($case->activated_on))
                         );
                     }
                 }
                 header('Content-Type: application/json');
-                // pr($cases);
                 return json_encode($cases);
             }
         }
     }
-    public function showPhysicalHearing()
-    {
-        
-    }
+    
 }
