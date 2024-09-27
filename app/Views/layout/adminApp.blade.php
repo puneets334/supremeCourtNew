@@ -13,9 +13,20 @@
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+	<style>
+		#loader-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000; /* Ensure it's on top of other content */
+		}
+	</style>
 </head>
 
 <body>
+	<div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+    </div>
 	<div class="wrapper">
 
 		<!--header section-->
@@ -300,6 +311,23 @@
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 
+	<script>
+        $(document).ready(function() {
+            $('#loader-wrapper').show();
+            var loaderTimeout = setTimeout(function() {
+                $('#loader-wrapper').fadeOut('slow', function() {
+                    $('#content').fadeIn('slow');
+                });
+            }, 3000);
+
+            $(window).on('load', function() {
+                clearTimeout(loaderTimeout);
+                $('#loader-wrapper').fadeOut('slow', function() {
+                    $('#content').fadeIn('slow');
+                });
+            });
+        });
+	</script>
 	
 </body>
 

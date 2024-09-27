@@ -23,9 +23,21 @@
         href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
     @stack('style')
+    <style>
+		#loader-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000; /* Ensure it's on top of other content */
+		}
+	</style>
 </head>
 
 <body>
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div id="loader-text">Loading ...</div>
+    </div>
     <div class="wrapper">
         <!--header section-->
         @include('layout.header')
@@ -214,6 +226,24 @@
             return typeof value === 'number';
         }
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#loader-wrapper').show();
+            var loaderTimeout = setTimeout(function() {
+                $('#loader-wrapper').fadeOut('slow', function() {
+                    $('#content').fadeIn('slow');
+                });
+            }, 3000);
+
+            $(window).on('load', function() {
+                clearTimeout(loaderTimeout);
+                $('#loader-wrapper').fadeOut('slow', function() {
+                    $('#content').fadeIn('slow');
+                });
+            });
+        });
+	</script>
+    
 </body>
 
 </html>
