@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <?php $crnt_dt = date("d-m-Y"); ?>
 @extends('layout.app')
 @section('content')
@@ -51,37 +53,41 @@
             </div>
         </div>
     </div>
+    @push('script')
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <!-- <script src="<?=base_url()?>assets/plugins/datepicker/bootstrap-datepicker.js"></script> -->   
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(function () {
+            $('.datepick').datepicker({
+                format: 'dd-mm-yyyy',
+                todayHighlight: true,
+                autoclose:true
+            });
+        });
+        function Get_result_function(){
+            var date_chk=document.getElementById("listing_dt").value;
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: 'POST',
+                url: "<?=base_url()?>Advocate_listing/advocate_rpt_srch",
+                beforeSend: function (xhr) {
+                    $("#divConsentEntries").html("<div style='margin:0 auto;margin-top:20px;width:15%'><img src='<?=base_url()?>/assets/physical_hearing/load.gif'></div>");
+                },
+                data:{CSRF_TOKEN: CSRF_TOKEN_VALUE , srch_date_data: date_chk },
+            })
+            .done(function (resultData) {
+                $("#divConsentEntries").html(resultData);
+                // $("#search-listing").hide();
+                // $("#divConsentEntries").show();
+            })
+            .fail(function () {
+                alert("ERROR, Please Contact Server Room");
+                $("#divConsentEntries").html();
+            });
+        }
+    </script>
+    @endpush
 @endsection
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
-<!-- <script src="<?=base_url()?>assets/plugins/datepicker/bootstrap-datepicker.js"></script> -->
-<script>
-    $(function () {
-        $('.datepick').datepicker({
-            format: 'dd-mm-yyyy',
-            todayHighlight: true,
-            autoclose:true
-        });
-    });
-    function Get_result_function(){
-        var date_chk=document.getElementById("listing_dt").value;
-        var CSRF_TOKEN = 'CSRF_TOKEN';
-        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        $.ajax({
-            type: 'POST',
-            url: "<?=base_url()?>Advocate_listing/advocate_rpt_srch",
-            beforeSend: function (xhr) {
-                $("#divConsentEntries").html("<div style='margin:0 auto;margin-top:20px;width:15%'><img src='<?=base_url()?>/assets/physical_hearing/load.gif'></div>");
-            },
-            data:{CSRF_TOKEN: CSRF_TOKEN_VALUE , srch_date_data: date_chk },
-        })
-        .done(function (resultData) {
-            $("#divConsentEntries").html(resultData);
-            // $("#search-listing").hide();
-            // $("#divConsentEntries").show();
-        })
-        .fail(function () {
-            alert("ERROR, Please Contact Server Room");
-            $("#divConsentEntries").html();
-        });
-    }
-</script>
