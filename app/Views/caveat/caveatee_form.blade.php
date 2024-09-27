@@ -5,6 +5,9 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet"> 
+
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
@@ -99,7 +102,7 @@ textarea {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                <input  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name" ><?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?></inp>
+                                <input  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  value=" <?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?>">
                                 <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
