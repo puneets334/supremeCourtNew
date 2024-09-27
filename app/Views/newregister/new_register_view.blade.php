@@ -48,17 +48,12 @@ use Hashids\Hashids;
                                                 <td width="5%"><?=$k; ?></td>
                                                 <td width="15%">
                                                     <?php
-
-
                                                     $encodedId = integerEncreption($res->id);
                                                     ?>
                                                     <a href="<?= base_url('NewRegister/Advocate/view/' . $encodedId) ?>" style="color: #385198;">
                                                         <?= strtoupper($res->first_name) ?>
                                                     </a>
                                                 </td>
-
-
-
                                                 <td width="8%">{{ $user_type }}</td>
                                                 <td width="10%">{{ $res->m_address1 . ' , ' . $res->m_city . $m_pincode }}</td>
                                                 <td width="15%">{{ date("d-m-Y h:i:s A", strtotime($res->created_on)) }}</td>
