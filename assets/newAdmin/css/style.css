@@ -8141,11 +8141,13 @@ div#calendar {
     background-repeat: no-repeat;
     background-position: center;
     z-index: 100000;
+    background-position: center center;
+    background-size: 101px;
 }
 
 #loader {
     display: block;
-    position: relative;
+    position: fixed;
     left: 49%;
     top: 49%;
     width: 170px;
@@ -8222,7 +8224,44 @@ input[type="radio"] {
         transform: rotate(360deg);
     }
 }
+@keyframes colorFade {
+    0% {
+        color: #3498db; /* Starting color */
+        opacity: 0.3; /* Initially invisible */
+    }
+    50% {
+        color: #bb0000; /* Midway color */
+        opacity: 1; /* Fully visible */
+    }
+    100% {
+        color: #e74c3c; /* Ending color */
+        opacity: 0.5; /* Fade out */
+    }
+}
 
+#loader-text {
+    position: absolute;
+    top: 62%;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: colorFade 3s linear infinite; /* Apply color fade animation */
+    font-size: 22px;
+}
+
+@media screen and (max-width: 767px) {
+	#loader-text {
+    position: absolute;
+    top: 66%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    color: #c80000;
+}
+#loader {
+    left: 47%;
+    top: 48%;
+}
+}
 .form-label {
     font-weight: bold;
 }
