@@ -2,9 +2,9 @@
 @section('content')
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
-                <div class="dashboard-section dashboard-tiles-area">
-                    <div class="row">
+            <div class="col-12 sm-12 col-md-12 col-lg-12">
+                <div class="dashboard-section">
+                    <!-- <div class="row"> -->
                         <div class="dash-card">
                             <!--<form action="#" class="form-horizontal" name="search_user" id="search_user" autocomplete="off" method="post" accept-charset="utf-8">-->
                             <?php
@@ -45,10 +45,8 @@
                                 </div>
                             </div>
                             </form>
-                        </div>
-                        <div class="row">
-                            <div class="dash-card">
-                                <div class="row"
+                            <hr>
+                            <div class="row"
                                     id="norecordDiv"
                                     style="display: none;">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
@@ -254,9 +252,13 @@
                                         id="usercode" />
                                     </form>
                                 </div>
-                            </div>
                         </div>
-                    </div>
+                        <!-- <div class="row"> -->
+                            <!-- <div class="dash-card">
+                              
+                            </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
                 </div>
             </div>
 

@@ -60,16 +60,7 @@ class AdvocateController extends BaseController
         return $this->render('advocate.display_appearance_slip', @compact('data','posted_data','slip_data'));
     }
 
-    public function timeoutValidation($listDate)
-    {
-        $currentDate = $this->constants->CURRENT_DATE;
-        $appearanceAllowTime = $this->constants->APPEARANCE_ALLOW_TIME;
-        if ($listDate == $currentDate && date('H:i:s') > $appearanceAllowTime) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     public function modal_appearance_save()
     {
@@ -77,15 +68,10 @@ class AdvocateController extends BaseController
         $request = service('request');
         $session = session();
         $aor_code=getSessionData('login')['aor_code'];
-        //  $timout_validation = $this->timeout_validation($this->request->getPost('next_dt'));  //  
-        //     if($timout_validation){
-        //         return response()->json(array('status' => 'timeout'));
-        //         exit;
-        //     }
-        //     $timeoutValidation = $this->timeoutValidation($request->getPost('next_dt'));
-        // if ($timeoutValidation) {
-        //     return $this->response->setJSON(['status' => 'timeout']);
-        // }
+        $timeoutValidation = $this->timeoutValidation($request->getPost('next_dt'));
+        if ($timeoutValidation) {
+            return $this->response->setJSON(['status' => 'timeout']);
+        }
         $rules = [
             'advocate_type' => [
                 'rules' => 'required|in_list[Adv.,Sr. Adv.,AOR,Attorney General for India,Solicitor General,A.S.G.,Sr. A.A.G.,A.A.G.,D.A.G.,Amicus Curiae]',
@@ -157,11 +143,12 @@ class AdvocateController extends BaseController
     }
 
     public function remove_advocate() {
-        // $timout_validation = $this->timeout_validation($request->input('next_dt'));
-        // if($timout_validation){
-        //     return response()->json(array('status' => 'timeout'));
-        //     exit;
-        // }
+        $request = service('request');
+
+        $timeoutValidation = $this->timeoutValidation($request->getPost('next_dt'));
+        if ($timeoutValidation) {
+            return $this->response->setJSON(['status' => 'timeout']);
+        }
         $nextDt = $this->request->getPost('next_dt');
         $id = $this->request->getPost('id');
         $isActive = '0';
@@ -202,8 +189,9 @@ class AdvocateController extends BaseController
     }
 
     public function appearingReport() {
+        $request = service('request');
+
         $heading = "Advocates Appearing";
-        // Commented by VEL/N/1023/2573
         // $request->validate(
         //     [
         //         'cause_list_date' => 'date|date_format:d-m-Y'
@@ -214,13 +202,8 @@ class AdvocateController extends BaseController
         //     ]
         // );
         $cause_list_date = date('Y-m-d', strtotime($this->request->getPost('cause_list_date')));
-        // pr($cause_list_date);
         $cause_list_array = array();
-        // $cause_list_array = new stdClass;
         $cause_list= $this->AdvocateModel->getAppearingDiaryNosOnly($cause_list_date);
-        //  pr($cause_list);
-
-        // var_dump($cause_list);
         foreach($cause_list as $key => $cl){
             $cause_list_array[$key]['diary_no'] = $cl->diary_no;
             $cause_list_array[$key]['list_date'] = $cl->list_date;
@@ -236,6 +219,7 @@ class AdvocateController extends BaseController
     }   
 
     public function confirm_final_submit() {
+        $request = service('request');
         $box = $this->request->getPost();
         $timout_validation = $this->timeout_validation($box['next_dt']);
         if ($timout_validation) {
@@ -282,8 +266,8 @@ class AdvocateController extends BaseController
     }
 
     public function add_from_case_advocate_master_list() {
+        $request = service('request');
         $data = $this->request->getPost();
-        // pr($data);
         $previous_list_date= $this->AdvocateModel->getPreviousListingDate($data);
         if($previous_list_date){
             $previous_list_advocates= $this->AdvocateModel->getPreviousListAdvocates($data,$previous_list_date);
@@ -367,22 +351,15 @@ class AdvocateController extends BaseController
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
+    public function timeoutValidation($listDate)
+    {
+        $currentDate = CURRENT_DATE;
+        $appearanceAllowTime = APPEARANCE_ALLOW_TIME;
+        if ($listDate == $currentDate && date('H:i:s') > $appearanceAllowTime) {
+            return true;
+        } else {
+            return false;
+        }
+    }    
  
 }

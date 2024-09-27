@@ -263,6 +263,7 @@
         var is_active = $(this).data('is_active');
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        // alert(next_dt);
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('advocate/remove_advocate'); ?>",

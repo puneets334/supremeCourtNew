@@ -84,6 +84,8 @@
             $(document).on('click', '#getResult', function() {
                 var from_date = $("#from_date").val();
                 var to_date = $("#to_date").val();
+
+               
                 var validationError = true;
                 if (from_date == '') {
                     alert("Please select from date.")
@@ -95,6 +97,12 @@
                     $("#to_date").focus();
                     validationError = false;
                     return fasle;
+                }
+                if(to_date<from_date) {
+                    alert("To Date will be greater than From Date");
+                    $("#to_date").val('');
+                    $("#to_date").focus();
+                    return false;
                 }
                 if (validationError) {
                     var CSRF_TOKEN = 'CSRF_TOKEN';

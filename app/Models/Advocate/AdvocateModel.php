@@ -36,7 +36,6 @@ class AdvocateModel extends Model {
             ->orderBy('r.courtno')
             ->orderBy('h.brd_slno')
             ->distinct();        
-
             // $sql = $builder->getCompiledSelect();
             // echo $sql; die;
             $query = $builder->get();        
@@ -50,22 +49,20 @@ class AdvocateModel extends Model {
 
     public function get_pending_reg_other_matters_data($aor_code) {
         // Subquery 1: Petitioner matters with other (neither Petitioner nor Respondent) status
-            $subquery1 = $this->db->table('main m1')
-            ->select('DISTINCT m1.diary_no, reg_no_display, pet_name, res_name, pno, rno')
-            ->select('(CASE WHEN DATEDIFF(h1.next_dt, CURRENT_DATE()) BETWEEN 0 AND 60 THEN h1.next_dt ELSE "" END) AS next_date')
-            ->join('heardt h1', 'm1.diary_no = h1.diary_no', 'left')
-            ->join('advocate a1', 'm1.diary_no = a1.diary_no', 'left')
-            ->where('a1.advocate_id', $aor_code)
-            ->where('a1.display', 'Y')
-            ->where('m1.c_status', 'P')
-            ->where('a1.pet_res NOT IN', ['P', 'R'])
-            ->where('m1.active_fil_no IS NOT NULL')
-            ->where('m1.fil_no IS NOT NULL');
-        // Union Query: Combine results from subquery
+        $subquery1 = $this->db->table('main m1')
+        ->select('DISTINCT m1.diary_no, reg_no_display, pet_name, res_name, pno, rno')
+        ->select('(CASE WHEN DATEDIFF(h1.next_dt, CURRENT_DATE()) BETWEEN 0 AND 60 THEN h1.next_dt ELSE "" END) AS next_date')
+        ->join('heardt h1', 'm1.diary_no = h1.diary_no', 'left')
+        ->join('advocate a1', 'm1.diary_no = a1.diary_no', 'left')
+        ->where('a1.advocate_id', $aor_code)
+        ->where('a1.display', 'Y')
+        ->where('m1.c_status', 'P')
+        ->where('a1.pet_res NOT IN', ['P', 'R'])
+        ->where('m1.active_fil_no IS NOT NULL')
+        ->where('m1.fil_no IS NOT NULL');
         $unionQuery = $this->db->table('temp')
             ->union($subquery1)
             ->orderBy('diary_no');
-        // Final query to fetch results from union query
         $query = $this->db->table('(' . $unionQuery . ') temp')
             ->get();
         if ($query->getNumRows() > 0) {
@@ -80,10 +77,8 @@ class AdvocateModel extends Model {
         $builder = $this->db->table('main');
         $builder->where('diary_no', $diary_no);
         $sql = $builder->getCompiledSelect();
-        //  echo $sql; die;
         $query = $builder->get();
         $output = $query->getRow();
-        // pr($output);
         return $output; // Return the first row (similar to Laravel's first())
     }
 
@@ -110,11 +105,7 @@ class AdvocateModel extends Model {
         }
         $result = $query->getResult();
         return $result;
-        //  pr($result);
     }
-
-
-
 
     public function getSubmittedAdvocatesInDiary($data)
     {
@@ -244,25 +235,8 @@ class AdvocateModel extends Model {
             }else {
                 $result = $query->getResult();           
             }
-            // pr($result);
-
             return $result;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
