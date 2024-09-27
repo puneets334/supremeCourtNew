@@ -348,3 +348,15 @@ h6.htsmall {
     padding-left: 0;
 }
 /* End #############  */
+.banimg-sec img.img-fluid.logo-at-banner {width: 50%;}
+.banimg-sec {
+    background: #ddebfe;
+    border-radius: 21px 0 0 21px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login-banner-inner {
+    height: 100%;
+}

@@ -1265,6 +1265,14 @@
                         start: start
                     },
                     dataType: 'json',
+                    beforeSend: function() {
+                        $('#loader-wrapper').show();
+                        var loaderTimeout = setTimeout(function() {
+                            $('#loader-wrapper').fadeOut('slow', function() {
+                                $('#content').fadeIn('slow');
+                            });
+                        }, 1000);
+                    },
                     success: function(response) {
                         var Table = document.getElementById("efiling");
                         Table.innerHTML = "";

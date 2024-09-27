@@ -452,24 +452,7 @@
                             <?php } ?>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
-                        <?php
-                        if (!empty($uploaded_docs)) { ?>
-                            @push('script')
-                            <script>
-                                $("#nextButton").show();
-                            </script>
-                            @endpush
-                            @include('uploadDocuments.uploaded_doc_list');
-                        <?php } else { ?>
-                            @push('script')
-                            <script>
-                                $("#nextButton").hide();
-                            </script>
-                            @endpush
-                        <?php }
-                        ?>
-                    </div>
+                    
                 </div>
             </div>
         </div>
