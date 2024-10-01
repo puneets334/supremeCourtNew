@@ -34,14 +34,14 @@
                                                 <div class="panel-body">
                                                     <?= form_open() ?>
                                                     <div class="row">
-                                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <!-- <div class="col-sm-12 col-md-4 col-lg-2">
                                                             <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             <div class="form-group">
                                                                 <label>Enter E-filing Number:</label>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-md-4 col-sm-4 col-xs-12">
-                                                            <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                                        </div> -->
+                                                        <div class="col-sm-12 col-md-6  col-lg-4 ">
+                                                            <label>Enter E-filing Number:</label>
                                                             <div class="form-group">
                                                                 <input type="text" name="e_filing_num" id="e_filing_num"
                                                                     class="form-control cus-form-ctrl" value=" {{ isset($effilingNumber)?$effilingNumber:'' }}">
@@ -49,11 +49,11 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-3 col-sm-3 col-xs-3">
+                                                        <div class="col-md-3 col-sm-12 col-xs-12">
                                                             <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                                             <div class="form-group">
                                                                 <button type="submit" id="getResult"
-                                                                    class="btn btn-primary"> Search</button>
+                                                                    class="quick-btn"> Search</button>
                                                             </div>
                                                         </div>
                                                     </div>

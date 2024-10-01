@@ -14,21 +14,21 @@
                                 <h5 class="unerline-title">Select Dates </h5>
                             </div>
                             <div class="row">
-                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
                                     <label>From Date</label>
                                     <div class="form-group">
                                         <input type="text" name="from_date" id="from_date" class="form-control cus-form-ctrl">
                                         <span id="error_from_date"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
                                     <label>To Date</label>
                                     <div class="form-group">
                                         <input type="text" name="to_date" id="to_date" class="form-control cus-form-ctrl">
                                         <span id="error_to_date"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
                                     <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
                                     <div class="form-group">
                                         <button type="button" name="getResult" id="getResult" class="btn quick-btn"> Get Reports</button>

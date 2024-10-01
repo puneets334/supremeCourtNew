@@ -6597,7 +6597,7 @@ li.text-size a:last-child {
     right: 15px;
     height: 72px;
     width: 72px;
-    z-index: 1;
+    z-index: 0;
 }
 
 .dashboard-tiles-area .dashbord-tile:after {
@@ -6636,14 +6636,13 @@ li.text-size a:last-child {
     margin: 0;
     font-size: 18px;
     font-family: 'noto_sansmedium';
-    z-index: 1;
 }
 
 .dashbord-tile .tile-subtitle {
     font-size: 14px;
     line-height: 26px;
     margin: 0;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .dashbord-tile .main-count {
@@ -6668,7 +6667,7 @@ p.comnt-name {
     justify-content: space-between;
     align-items: center;
     gap: 5px;
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .tiles-comnts .tile-comnt {
@@ -7655,8 +7654,8 @@ textarea.form-control.cus-form-ctrl {
     height: 0;
     overflow: hidden;
     position: absolute;
-    top: 29px;
-    padding: 15px 0 0;
+    top: 20px;
+    padding: 25px 0 0;
     background: #fff0;
     width: 300% !important;
     z-index: 1;
@@ -7669,7 +7668,7 @@ textarea.form-control.cus-form-ctrl {
 .tiles-comnts .tile-comnt:hover .title-comnt-bref {
     height: fit-content;
     overflow: visible;
-    z-index: 9;
+    z-index: 999;
     width: fit-content;
     transition: height 0.4s;
 }
@@ -7706,6 +7705,7 @@ textarea.form-control.cus-form-ctrl {
     box-shadow: 0px 20px 60px 0px rgb(86 85 85 / 38%);
     height: 350px;
     overflow-y: auto;
+    z-index: 999;
 }
 
 .tiles-comnts .tile-comnt .title-comnt-bref .table-height-div .table-responsive {
@@ -7730,7 +7730,7 @@ textarea.form-control.cus-form-ctrl {
 .tiles-comnts .tile-comnt:hover .title-comnt-bref:after {
     content: '';
     position: absolute;
-    top: 6px;
+    top: 16px;
     left: 18px;
     border-left: 9px solid transparent;
     border-right: 9px solid transparent;
@@ -8275,13 +8275,15 @@ input[type="radio"] {
 
 /* 24 sept 2024 start  */
 .application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
-.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;    z-index: 1;}
+.application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;/* z-index: 1; */}
 .application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
 .application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
 .application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
 .application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
 .application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
 .dashbord-tile:focus-within , .dashbord-tile:focus{outline: 1px dotted #000;}
+.dashbord-tile:hover .tile-title, .dashbord-tile:hover .tile-subtitle, .dashbord-tile:hover .main-count, .dashbord-tile:hover .application-tile-sections ,  .dashbord-tile:hover .application-tile-sections .applictin-tile-sec .appliction-til-nam h6{z-index: 1;}
+.dashboard-tiles-area .dashbord-tile:hover:before {z-index: 1;}
 /* 24 sept 2024 start  */
 .dashboardLeftNav li:nth-child(1) a.active:before {  background-position: 0px -42px;}
 .dashboardLeftNav li:nth-child(2) a.active:before {  background-position: 4px -95px;}
@@ -8315,7 +8317,7 @@ label span {
     flex-wrap: wrap;
 }
 form label {
-    padding: 0 10px;
+    padding: 0 10px 5px;
 }
 .user-action-sec {
     width: 175px;
@@ -8523,4 +8525,10 @@ table.dataTable thead .sorting_asc:after {
     max-width: 100%;
 }
 /* Faq-Page End  */
-
+/* 1-10-24 start  */
+.x_content .nav-tabs .nav-link {padding: 15px 17px;border-radius: 21px 21px 0 0;background: #fff;font-size: 14px;color: #000;font-family: 'noto_sansregular';border: 1px solid #e9e9e9;}
+.x_content .nav-tabs .nav-item.show .nav-link, .x_content .nav-tabs .nav-link.active, .x_content .nav-tabs .nav-link:hover, .x_content .nav-tabs .nav-link:focus {background: #0D48BE;color: #fff;}
+.x_content .tab-content {border: 1px solid #e9e9e9;padding: 15px;border-radius: 21px;}
+.x_content .tab-pane> .col-md-4.col-sm-8.col-xs-12 {margin: 0 !important}
+.x_content .nav-tabs {border-bottom: none;margin-left: 30px;}
+label{font-size: 14px !important;margin-bottom: 0px !important;color: #000;font-family: 'noto_sansmedium';}

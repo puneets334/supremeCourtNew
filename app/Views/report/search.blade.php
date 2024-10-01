@@ -142,7 +142,7 @@
                                                                 <div class="col-sm-12 col-xs-12 justify-content-center">
                                                                     <div class="form-group">
                                                                         <div class="col-sm-12 col-xs-12" style="margin-top: 30px;">
-                                                                            <div class="text-center" style="width: fit-content;padding-left: 25%;">
+                                                                            <div class="center-buttons " >
                                                                                 <button type="button" class="quick-btn gradient-btn"> Pending With Advocate/PIP <span class="badge"> {{isset($pending_with_aor)?$pending_with_aor :''}}</span></button>
                                                                                 <button type="button" class="quick-btn" data-bs-toggle="modal" data-bs-target="#myModal"> Pending With Registry <span class="badge">{{isset($pending_with_registry)?$pending_with_registry :''}}</span></button>
                                                                             </div>
@@ -244,8 +244,8 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-2 col-xs-12">
+                                                            <div class="row mt-4">
+                                                                <div class="col-sm-12 col-md-3 col-lg-2">
                                                                     <div class="form-group">
                                                                         <!--<label class="control-label col-sm-2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>-->
                                                                         <!--<div class="col-sm-12">
@@ -265,12 +265,12 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-3 col-xs-12">
+                                                                <div class="col-sm-12 col-md-3 col-lg-3">
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
-                                                                        <div class="col-sm-8">
+                                                                        <!-- <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label> -->
+                                                                        <!-- <div class="col-sm-8"> -->
                                                                             <div class="input-group">
-                                                                                <center> <label class="control-label">Search Stages</label></center>
+                                                                                 <label class="control-label">Search Stages</label>
                                                                                 <select class="form-select cus-form-ctrl" name="stage_id" id="stage_id" aria-label="Default select example">
                                                                                     <?php
                                                                                     echo '<option  value="' . htmlentities(url_encryption('All'), ENT_QUOTES) . '" title="Select">All</option>';
@@ -282,7 +282,7 @@
                                                                                     ?>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
+                                                                        <!-- </div> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-2 col-xs-12 divdaterange">
@@ -298,12 +298,12 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-2 col-xs-12">
+                                                                <div class="col-sm-12 col-md-3 col-lg-3">
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                                        <div class="col-sm-8">
+                                                                        <!-- <label class="control-label"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
+                                                                        <!-- <div class="col-sm-8"> -->
                                                                             <div class="input-group">
-                                                                                <center> <label class="control-label">Filing Type</label></center>
+                                                                               <label class="control-label">Filing Type</label>
                                                                                 <select class="form-select cus-form-ctrl" aria-label="Default select example" name="filing_type_id" id="filing_type_id">
                                                                                     <?php
                                                                                     echo '<option  value="' . htmlentities(url_encryption('All'), ENT_QUOTES) . '" title="Select" selected="selected">All</option>';
@@ -313,15 +313,15 @@
                                                                                     ?>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
+                                                                        <!-- </div> -->
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-2 col-xs-12">
+                                                                <div class="col-sm-12 col-md-3 col-lg-3">
                                                                     <div class="form-group">
-                                                                        <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                                                        <div class="col-sm-8">
+                                                                        <!-- <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
+                                                                        <!-- <div class="col-sm-8"> -->
                                                                             <div class="input-group">
-                                                                                <center> <label class="control-label">User Types</label></center>
+                                                                               <label class="control-label">User Types</label>
                                                                                 <select class="form-select cus-form-ctrl" aria-label="Default select example" name="users_id" id="users_id">
                                                                                     <?php
                                                                                     echo '<option  value="' . htmlentities(url_encryption('All'), ENT_QUOTES) . '" title="Select" selected="selected">All</option>';
@@ -331,7 +331,7 @@
                                                                                     ?>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
+                                                                        <!-- </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -343,7 +343,8 @@
                                                                         <img id="loader_img" style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;" src="<?php echo base_url(); ?>/assets/images/loading-data.gif">
                                                                     </div>
                                                                     <div class="form-group" id="status_refresh">
-                                                                        <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport">
+                                                                        <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
+                                                                        <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
                                                                         <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
                                                                     </div>
                                                                 </div>
@@ -354,13 +355,13 @@
                                                 <div class="tab-pane fade" id="nav-ShowEfilingRequests" role="tabpanel" aria-labelledby="nav-ShowEfilingRequests-tab">
                                                     <br />
                                                     <div class="row">
-                                                        <div class="col-md-5">
+                                                        <div class="col-sm-12 col-md-5 col-lg-5">
                                                             <div class="form-group">
                                                                 <label class="form-label">E-Filing Number:</label>
                                                                 <input class="form-control cus-form-ctrl" id="efiling_no" name="efiling_no" placeholder="E-Filing Number..." type="text">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1">
+                                                        <div class="col-sm-12 col-md-2 col-lg-1">
                                                             <div class="form-group">
                                                                 <label for="" class="form-label">Select Year</label>
                                                                 <select class="form-select cus-form-ctrl" aria-label="Default select example" id="efiling_year" name="efiling_year" style="width: 100%">
@@ -375,9 +376,10 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1">
+                                                        <div class="col-sm-12 col-md-2 col-lg-1">
                                                             <div class="form-group" style="margin-top: 28%;">
-                                                                <input type="submit" id="SearchEfilingNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchEfilingNumbersubmit">
+                                                                <!-- <input type="submit" id="SearchEfilingNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchEfilingNumbersubmit"> -->
+                                                                <button type="submit" id="SearchEfilingNumbersubmit" name="add_notice" class="quick-btn gray-btn SearchEfilingNumbersubmit">Search</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -406,15 +408,17 @@
                                                     </div> -->
                                                 </div>
                                                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                                    <div class="col-md-4 col-sm-8 col-xs-12" style="margin-top: 30px;">
-                                                        <div style="width: fit-content;padding-left: 10px;">
-                                                            <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="register"> Registration No</label>
-                                                            <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="diary"> Diary Number</label>
+                                                    <div class="row mt-4">
+                                                        <div class="col-md-4 col-sm-12 col-xs-12">
+                                                            <div>
+                                                                <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="register"> Registration No</label>
+                                                                <label class="radio-inline input-lg"><input type="radio" name="search_filing_type" value="diary"> Diary Number</label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </div>                                                    
                                                     <!--</center><br><hr>-->
                                                     <div class="card-body diary box" style="display:none; background-color: #ffffff; border-color: #ffffff;">
-                                                        <div class="row">
+                                                        <div class="row mt-3">
                                                             <div class="col-md-2 col-sm-2 col-xs-12">
                                                                 <div class="form-group">
                                                                     <!--<label class="control-label input-lg"> Diary No. <span style="color: red">*</span>:</label>-->
@@ -464,8 +468,8 @@
                                                     </div>
                                                     <!--width: 714px;margin-left: 675px;     padding-left: 335px;;margin-top: -46px;-->
                                                     <div class="card-body register box" style="display: block;background-color: #ffffff;border-color: #ffffff;">
-                                                        <div class="row">
-                                                            <div class="col-md-3 col-sm-3 col-xs-12">
+                                                        <div class="row mt-3">
+                                                            <div class="col-sm-12 col-md-3 col-lg-3">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1"> Case Type <span style="color: red">*</span>:</label>
                                                                     <!--<label class="control-label col-md-4 col-sm-12 col-xs-12 input-lg"> Case Type <span style="color: red">*</span>:</label>-->
@@ -487,7 +491,7 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-3 col-sm-3 col-xs-12  ">
+                                                            <div class="col-sm-12 col-md-3 col-lg-3">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1"> Case No. <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
@@ -499,7 +503,7 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-2 col-xs-12  ">
+                                                            <div class="col-sm-12 col-md-3 col-lg-3">
                                                                 <div class="form-group">
                                                                     <label for="exampleInputEmail1"> Case Year <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
@@ -518,7 +522,7 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-2 col-sm-3 col-xs-12  ">
+                                                            <div class="col-sm-12 col-md-3 col-lg-3">
                                                                 <div class="col-md-offset-5" id="submitBtn_dynamicalayCase" style="display: block;margin-top: 25px;">
                                                                     <input type="submit" id="SearchCaseNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchCaseNumbersubmit">
                                                                 </div>
@@ -544,7 +548,7 @@
                                     </div>
                                 </div>
                                 <!------------Table--------------------->
-                                <div class="row">
+                                <div class="row mt-3">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_title">
