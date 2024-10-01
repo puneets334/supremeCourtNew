@@ -6565,7 +6565,7 @@ li.text-size a:last-child {
     padding: 17px;
     border-radius: 21px;
     color: #fff;
-    position: relative;
+    position: relative; height: 100%;
 }
 
 .dashbord-tile:hover * {

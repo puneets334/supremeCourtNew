@@ -1,10 +1,12 @@
 /* Mobile Screen CSS  */
+
+
 @media (max-width: 767px){
     /* Header CSS Start  */
     .mngmntHeader{padding-right: 0;}
     .mngmntHeader .menu-sec{flex-direction: column;position: relative;}    
     .mngmntHeader .mngmntLogoSection {padding-top: 80px;flex-direction: column-reverse;align-items: baseline;}
-    .mngmntHeader .mngmntUserSection .top-right-nav {position: absolute;top: 0;left: 0;}
+    .mngmntHeader .mngmntUserSection .top-right-nav {position: absolute;top: 0;left: 0;width:100%;}
     .mngmntHeader .top-right-nav ul li a {font-size: 12px;text-wrap: nowrap;}
     .mngmntHeader .top-right-nav ul li {padding: 0 8px;}    
     .mngmntHeader .top-right-nav ul {flex-wrap: wrap;justify-content: center;row-gap: 7px;padding: 7px 0;}    
@@ -58,6 +60,17 @@
     /* Footer CSS End  */
 }
 
+@media screen and (max-width:355px) and (min-width:300px){
+    .mngmntHeader .userInformation {display: flex;}
+    .mngmntHeader .account-details {flex-direction: column-reverse;justify-content: end;align-items: end;bottom: 57px;position: relative;height: 100%;}
+    .mngmntHeader .mngmntUserSection {width: 100%;float: none;}
+    .togglemenuSection {position: relative;bottom: -93px;}
+    .mngmntHeader .userInfo {position: relative;top: 35px;}
+}
+@media screen and (max-width:430px) and (min-width:300px){
+
+}
+
 /* Tablet CSS Start  */
 @media screen and (max-width: 991px) and (min-width: 768px){
     /* Header CSS Start  */
@@ -87,4 +100,9 @@
     /* Header CSS Start  */
     .top-right-nav ul li{padding: 0 12px;}
      /* Header CSS End  */
+    .dashboard-section.dashboard-tiles-area > .row > .col-md-6.col-lg-3 {width: 50%;margin-top: 15px;}
+    .dashboard-section.dashboard-tiles-area {margin-top: 0 !important;}
+}
+@media screen and (max-width: 1599px) and (min-width: 1201px){
+
 }
