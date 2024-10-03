@@ -40,7 +40,7 @@
                                                     @endforeach
                                                 @else
                                                 <tr>
-                                                    <td colspan="6">
+                                                    <td colspan="6" >
                                                         <span class="text-danger fw-bold">Record Not Found</span>
                                                     </td>
                                                 </tr>
