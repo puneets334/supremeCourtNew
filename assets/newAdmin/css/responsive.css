@@ -89,7 +89,7 @@
    .mngmntHeader .userInformation {display: flex;}
     .mngmntHeader .account-details {flex-direction: column-reverse;justify-content: end;align-items: end;bottom: 57px;position: relative;height: 100%;}
     .mngmntHeader .mngmntUserSection {width: 100%;float: none;}
-    .togglemenuSection {position: relative;bottom: -93px;}
+    .togglemenuSection {position: relative;bottom: -65px;}
     .mngmntHeader .userInfo {position: relative;top: 35px;}
     .dashbord-tile .title-comnt-bref {width: 275px !important;}
     .dashbord-tile .tiles-comnts .tile-comnt:nth-child(2) .title-comnt-bref {right: 0;}

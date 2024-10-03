@@ -16,11 +16,12 @@
                             {{-- Page Title Start --}}
                             <div class="title-sec">
                                 <h5 class="unerline-title">My Profile </h5>
+                                <div class="end-buttons my-0"><a class="quick-btn gray-btn" href="<?= base_url(); ?>profile/updateProfile/pass" style="float:right;">Change Password</a></div>
                             </div>
                             {{-- Page Title End --}}
                             {{-- Main Start --}}
                             <div class="profile-details">
-                                <div class="end-buttons"><a class="quick-btn gray-btn" href="<?= base_url(); ?>profile/updateProfile/pass" style="float:right;">Change Password</a></div>
+                                
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
@@ -50,7 +51,7 @@
                                     <div class="col-12 col-sm-12 col-md-10 col-lg-12">
                                         <div class="usrprofile-details">
                                             <div class="row">
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Name :</label>
@@ -63,7 +64,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Bar Reg No :</label>
@@ -75,7 +76,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">AOR Code :</label>
@@ -87,7 +88,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Enroll. Date :</label>
@@ -105,7 +106,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Gender :</label>
@@ -127,7 +128,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Permanent Address :</label>
@@ -139,7 +140,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-21 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Date of Birth :</label>
@@ -159,7 +160,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Chamber Address :</label>
@@ -171,7 +172,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Mobile No. :</label>
@@ -190,7 +191,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
                                                             <label class="prof-label">Email :</label>
