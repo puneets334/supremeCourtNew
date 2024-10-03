@@ -8281,8 +8281,9 @@ input[type="radio"] {
 .application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
 .application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
 .application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
-.dashbord-tile:focus-within , .dashbord-tile:focus{outline: 1px dotted #000;}
+.dashbord-tile:focus-within , .dashbord-tile:focus, .dashbord-tile:focus-within .tiles-comnts{outline: 1px dotted #000;}
 .dashbord-tile:hover .tile-title, .dashbord-tile:hover .tile-subtitle, .dashbord-tile:hover .main-count, .dashbord-tile:hover .application-tile-sections ,  .dashbord-tile:hover .application-tile-sections .applictin-tile-sec .appliction-til-nam h6{z-index: 1;}
+.dashbord-tile:focus .tile-title, .dashbord-tile:focus .tile-subtitle, .dashbord-tile:focus .main-count, .dashbord-tile:focus .application-tile-sections ,  .dashbord-tile:focus .application-tile-sections .applictin-tile-sec .appliction-til-nam h6, .dashbord-tile:focus .tiles-comnts{z-index: 1;}
 .dashboard-tiles-area .dashbord-tile:hover:before {z-index: 1;}
 /* 24 sept 2024 start  */
 .dashboardLeftNav li:nth-child(1) a.active:before {  background-position: 0px -42px;}

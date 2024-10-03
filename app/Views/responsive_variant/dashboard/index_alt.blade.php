@@ -72,10 +72,10 @@
                                             <div class="dashbord-tile pink-tile" tabindex="0">
                                                 <!-- Start 1st Grid -->
                                                 <div style="display: block;" id="showByMe">
-                                                    <h6 class="tile-title">Recent Documents</h6>
-                                                    <p class="tile-subtitle">By other Parties</p>
+                                                    <h6 class="tile-title" tabindex="0">Recent Documents</h6>
+                                                    <p class="tile-subtitle" tabindex="0">By other Parties</p>
                                                     <button id="byMe" class="btn btn-info pull-right">#By me</button>
-                                                    <h4 class="main-count">
+                                                    <h4 class="main-count" tabindex="0">
                                                         <?php
                                                         if (isset($recent_documents_by_others) && !empty($recent_documents_by_others)) {
                                                             echo count($recent_documents_by_others);
@@ -87,7 +87,7 @@
                                                     @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others])
                                                     @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->adjournment_requests,'type' => 'adjournment_requests'])
                                                     <div class="tiles-comnts">
-                                                        <div class="tile-comnt">
+                                                        <div class="tile-comnt" tabindex="0">
                                                             <h6 class="comts-no">
                                                                 <?php
                                                                 if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
@@ -100,7 +100,7 @@
                                                             <p class="comnt-name">Rejoinder</p>
                                                             @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->rejoinder])
                                                         </div>
-                                                        <div class="tile-comnt">
+                                                        <div class="tile-comnt" tabindex="0">
                                                             <h6 class="comts-no">
                                                                 <?php
                                                                 if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
@@ -113,7 +113,7 @@
                                                             <p class="comnt-name">Reply</p>
                                                             @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->reply])
                                                         </div>
-                                                        <div class="tile-comnt">
+                                                        <div class="tile-comnt" tabindex="0">
                                                             <h6 class="comts-no">
                                                                 <?php
                                                                 if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
@@ -126,7 +126,7 @@
                                                             <p class="comnt-name">IA</p>
                                                             @include('responsive_variant.dashboard.layouts.documents', ['documents' => $recent_documents_by_others_grouped_by_document_type->ia, 'type' => ''])
                                                         </div>
-                                                        <div class="tile-comnt">
+                                                        <div class="tile-comnt" tabindex="0">
                                                             <h6 class="comts-no">
                                                                 <?php
                                                                 if (isset($recent_documents_by_others_grouped_by_document_type) && !empty($recent_documents_by_others_grouped_by_document_type)) {
