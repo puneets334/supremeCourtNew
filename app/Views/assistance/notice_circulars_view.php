@@ -131,16 +131,16 @@
                                 $lbl_is_notice_circular = $tim['is_circular'] ? 'Circular' : 'Notice';
                                 ?>
                                 <tr>
-                                    <td width="5%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                    <td width="15%"><?php echo $lbl_is_notice_circular; ?></td>
-                                    <td><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>
+                                    <td width="5%" data-key="#"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                    <td width="15%" data-key="Item"><?php echo $lbl_is_notice_circular; ?></td>
+                                    <td data-key="Notice / Circualr"><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>
                                             &nbsp;<?php echo htmlentities($itm['news_title'], ENT_QUOTES); ?><br>
                                             (<?php echo htmlentities(date('d-m-Y', strtotime($itm['create_date'])), ENT_QUOTES); ?>)
                                         </a>
                                     </td> 
                                     <?php if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) { ?>
-                                        <td width="10%"> <?php echo htmlentities(date('d-m-Y', strtotime($itm['deactive_date'])), ENT_QUOTES); ?></td>                                    
-                                        <td width="15%">
+                                        <td data-key="Will Deactivate On" width="10%"> <?php echo htmlentities(date('d-m-Y', strtotime($itm['deactive_date'])), ENT_QUOTES); ?></td>                                    
+                                        <td width="15%" data-key="Action">
                                             <a href="<?php echo base_url('assistance/notice_circulars/edit/' . url_encryption($itm['id'])); ?>" class="btn btn-primary" role="button"><i class="fa fa-pencil"></i></a>
                                             <?php if ($itm['is_deleted'] == 'f') { ?>
                                                 <a href="<?php echo base_url('assistance/notice_circulars/action/' . url_encryption($itm['id'] . '$$' . 'D')); ?>" class="btn btn-danger" role="button" onclick="return confirm('Are you sure, want to Deactivate this Notice/Circular ?')">Deactivate</a><?php } ?>
