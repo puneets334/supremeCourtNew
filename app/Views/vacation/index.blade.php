@@ -85,8 +85,8 @@
                                                                                         }
                                                                                     @endphp
                                                                                     <tr style="line-height: 100px;">
-                                                                                        <td>{{ $k + 1 }}</td>
-                                                                                        <td>{{ isset($r->case_no) ? $r->case_no : '' }}
+                                                                                        <td data-key="#">{{ $k + 1 }}</td>
+                                                                                        <td data-key="Case Details">{{ isset($r->case_no) ? $r->case_no : '' }}
 
                                                                                             <br>
                                                                                             <?php if ($r->main_or_connected == 1) {
@@ -94,11 +94,11 @@
                                                                                             }
                                                                                             ?>
                                                                                         </td>
-                                                                                        <td>{{ isset($r->cause_title) ? $r->cause_title : '' }}
+                                                                                        <td data-key="Cause Title">{{ isset($r->cause_title) ? $r->cause_title : '' }}
                                                                                         </td>
 
-                                                                                        <td><?php echo $r->advocate; ?> </td>
-                                                                                        <td style="text-align: center">
+                                                                                        <td data-key="Advocate"><?php echo $r->advocate; ?> </td>
+                                                                                        <td data-key="Decline/Listed" style="text-align: center">
                                                                                             <?php
                                                                                                 if (!empty($r->declined_by_aor) && $r->declined_by_aor === 't') { $diary_no=$r->diary_no;
                                                                                                     echo "<a class='btn btn-sm quick-btn text-center'   title=\"List\"  onclick=\"javascript:confirmBeforeList($diary_no);\">Restore</a><br/>";
@@ -162,16 +162,16 @@
                                                                                 count($matters_declined_by_counter) > 0)
                                                                             @foreach ($matters_declined_by_counter as $k => $decline)
                                                                                 <tr>
-                                                                                    <td>{{ $k + 1 }}</td>
-                                                                                    <td>{{ isset($decline->diary_no) ? $decline->diary_no : '' }}
+                                                                                    <td data-key="#">{{ $k + 1 }}</td>
+                                                                                    <td data-key="Case No @ Diary No.">{{ isset($decline->diary_no) ? $decline->diary_no : '' }}
                                                                                     </td>
-                                                                                    <td>{{ isset($decline->cause_title) ? $decline->cause_title : '' }}
-                                                                                    </td>
-
-                                                                                    <td>{{ isset($decline->decline_by_advocate) ? $decline->decline_by_advocate : '' }}
+                                                                                    <td data-key="Cause Title">{{ isset($decline->cause_title) ? $decline->cause_title : '' }}
                                                                                     </td>
 
-                                                                                    <td>{{ isset($decline->aor_code) ? $decline->aor_code : '' }}
+                                                                                    <td data-key="Advocate">{{ isset($decline->decline_by_advocate) ? $decline->decline_by_advocate : '' }}
+                                                                                    </td>
+
+                                                                                    <td data-key="Decline/Listed">{{ isset($decline->aor_code) ? $decline->aor_code : '' }}
                                                                                     </td>
 
                                                                                 </tr>

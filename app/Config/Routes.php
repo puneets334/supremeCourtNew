@@ -100,7 +100,7 @@ $routes->post('vacation/advance/declineVacationListCasesAOR', 'Vacation\Advance:
 /****start-Responsive variant routes****/
 /*$routes->match(['GET', 'POST'],'add_approve_arguing_counsel','register/arguingCounsel');*/
 $routes->match(['GET', 'POST'], 'dashboard', 'ResponsiveVariantRouteController::showDashboard');
-$routes->match(['GET', 'POST'], 'dashboard_alt', 'ResponsiveVariantRouteController::showDashboardAlt');
+$routes->match(['GET', 'POST'], 'dashboard_alt', 'ResponsiveVariantRouteController::`showDashboardAlt`');
 $routes->match(['GET', 'POST'], 'cases', 'ResponsiveVariantRouteController::showCases');
 $routes->match(['GET', 'POST'], 'causelist', 'ResponsiveVariantRouteController::showCauselist');
 $routes->match(['GET', 'POST'], 'case/crud/(:any)', 'ResponsiveVariantRouteController::showCaseCrud/$1');
