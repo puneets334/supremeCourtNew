@@ -178,45 +178,45 @@
 												<tbody>
 													<tr>
 														<th>
-															<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">Stages</div>															 
+															<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><b>Stages</b></div>															 
 														</th>
 														<th>														 
-															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">Count</div>
+															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 														</th>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_new_efiling == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(New_Filing_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class = "fa fa-square green"></i>New Filing </a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(New_Filing_Stage, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class = "fa fa-square green"></i> New Filing </a></td>
 														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_new_efiling, ENT_QUOTES); ?></a>  </td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_not_accepted == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defected_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square red"></i>For Compliance </a> </td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defected_Stage, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class="fa fa-square red"></i> For Compliance </a> </td>
 														<td><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->total_not_accepted, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->deficit_crt_fee == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square dark_blue"></i>Pay Deficit Fee</a>  </td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class="fa fa-square dark_blue"></i> Pay Deficit Fee</a>  </td>
 														<td><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->deficit_crt_fee, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_refiled_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defects_Cured_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square purple"></i>Complied Objections</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defects_Cured_Stage, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class="fa fa-square purple"></i> Complied Objections</a></td>
 														<td><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->total_refiled_cases, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_transfer_to_efiling_sec == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Transfer_to_IB_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i>Transfer to ICMIS</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Transfer_to_IB_Stage, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Transfer to ICMIS</a></td>
 														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_transfer_to_efiling_sec, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_transfer_to_efiling_sec == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(HOLD, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i>Hold</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(HOLD, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Hold</a></td>
 														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_hold_cases ?? '', ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_transfer_to_efiling_sec == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DISPOSED, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i>Disposed</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DISPOSED, ENT_QUOTES))); ?>
+														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Disposed</a></td>
 														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_hold_disposed_cases, ENT_QUOTES); ?></a></td>
 													</tr>
 												</tbody>
@@ -236,25 +236,25 @@
 												<tbody>
 													<tr>
 														<th>
-															<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">Stages</div> 
+															<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><b>Stages</b></div> 
 														</th>
 														<th> 
-															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">Count</div>
+															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 														</th>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_pending_scrutiny == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Approval_Pending_Admin_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i>Pending Scrutiny</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Approval_Pending_Admin_Stage, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i> Pending Scrutiny</a></td>
 														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_pending_scrutiny, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_waiting_defect_cured == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i>Defective</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i> Defective</a></td>
 														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_waiting_defect_cured, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr> 
-														<?php $href = ($count_efiling_data[0]->total_defect_cured == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defects_Cured_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>Defects Cured</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defects_Cured_Stage, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i> Defects Cured</a></td>
 														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_defect_cured, ENT_QUOTES); ?></a></td>
 													</tr>
 												</tbody>
@@ -275,43 +275,43 @@
 												<tbody>
 													<tr>
 														<th>
-															<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">Stages</div>
+															<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><b>Stages</b></div>
 														</th>
 														<th>
-															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">Count</div>
+															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 														</th>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_efiled_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(E_Filed_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square aero "></i>Cases</td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(E_Filed_Stage, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square aero "></i> Cases</td>
 														<td><a href="<?php echo $href; ?>"> <?php echo htmlentities($count_efiling_data[0]->total_efiled_cases, ENT_QUOTES); ?> </a> </td>
 
 													</tr>
 													<tr> 
-														<?php $href = ($count_efiling_data[0]->total_efiled_docs == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Document_E_Filed, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i>Documents</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Document_E_Filed, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i> Documents</a></td>
 														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_efiled_docs, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_efiled_deficit == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE_E_FILED, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>Paid Deficit Fee</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE_E_FILED, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i> Paid Deficit Fee</a></td>
 														<td><a href="<?php echo $href; ?>">  <?php echo htmlentities($count_efiling_data[0]->total_efiled_deficit, ENT_QUOTES); ?></a></td>
 													</tr>
 													<?php if (ENABLE_E_FILE_IA_FOR_HC  || ENABLE_E_FILE_IA_FOR_ESTAB) { ?>
 														<tr>
-															<?php $href = ($count_efiling_data[0]->total_efiled_ia == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(IA_E_Filed, ENT_QUOTES))); ?>
-															<td><a href="<?php echo $href; ?>"><i class="fa fa-square green"></i>IA</a></p> </td>
+															<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(IA_E_Filed, ENT_QUOTES))); ?>
+															<td><a href="<?php echo $href; ?>"><i class="fa fa-square green"></i> IA</a></td>
 															<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_efiled_ia, ENT_QUOTES); ?></a></td>
 														</tr>
 													<?php } ?>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_rejected == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Rejected_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i>Rejected</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Rejected_Stage, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i> Rejected</a></td>
 														<td><a href="<?php echo $href; ?>"> <?php echo htmlentities($count_efiling_data[0]->total_rejected, ENT_QUOTES); ?></a></td>
 													</tr>
 													<tr>
-														<?php $href = ($count_efiling_data[0]->total_lodged_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage.'@'.MARK_AS_ERROR, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square yellow"></i>Idle/Unprocessed e-Filed No.'s</a></td>
+														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage.'@'.MARK_AS_ERROR, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><i class="fa fa-square yellow"></i> Idle/Unprocessed e-Filed No.'s</a></td>
 														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_lodged_cases, ENT_QUOTES); ?></a></td>
 													</tr>
 												</tbody>
@@ -343,10 +343,10 @@
 											<tbody>
 												<tr>
 													<th>
-														<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">Stages</div>															 
+														<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><b>Stages</b></div>															 
 													</th>
 													<th>														 
-														<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">Count</div>
+														<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 													</th>
 												</tr>
 											 
@@ -395,11 +395,11 @@
 													<tr>
 														<?php $users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
 														 if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?>
-														<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("report/search/list/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
+														<?php $href = base_url("report/search/list/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
 														<?php }else{ ?>
-															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
+															<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
 														<?php } ?>
-														<td> <a href="<?php echo $href; ?>" ><i class="fa fa-square purple"></i><?=$row->admin_stage_name ?></a></td>
+														<td> <a href="<?php echo $href; ?>" ><i class="fa fa-square purple"></i> <?=$row->admin_stage_name ?></a></td>
 														<td> <a href="<?php echo $href; ?>" ><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></td>
 													</tr>
 													 <?php } }?>
@@ -420,10 +420,10 @@
 											<tbody>
 												<tr>
 													<th>
-														<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">Stages</div> 
+														<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7"><b>Stages</b></div> 
 													</th>
 													<th> 
-														<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5">Count</div>
+														<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 													</th>
 												</tr>
 												<?php
@@ -469,8 +469,8 @@
                                                 }
                                                 ?>
                                                 <tr>
-                                                    <?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
-                                                    <td><a href="<?php echo $href; ?>" target="_blank"><i class="fa fa-square purple"></i><?=$row->admin_stage_name ?></a></td>
+                                                    <?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
+                                                    <td><a href="<?php echo $href; ?>" target="_blank"><i class="fa fa-square purple"></i> <?=$row->admin_stage_name ?></a></td>
                                                     <td><a href="<?php echo $href; ?>" target="_blank"><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></td>
                                                 </tr>
                                             <?php } }?>

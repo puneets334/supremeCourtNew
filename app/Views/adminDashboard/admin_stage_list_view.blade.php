@@ -17,11 +17,12 @@
             ?></div>
         <div class="x_panel">
             <div class="x_title"> 
-				<h3><?= htmlentities($tabs_heading, ENT_QUOTES) ?> 
-				<span style="float:right;">  
+				<h3><?= htmlentities($tabs_heading, ENT_QUOTES) ?>
+                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> 
+				<!-- <span style="float:right;">  
 					 
 					<button class="btn btn-info" type="button" onclick="window.history.back();">Back</button>
-				</span>
+				</span> -->
 			 </h3>
 			</div>
             <div class="x_content">  
@@ -38,8 +39,8 @@
                         <tbody>
                             <?php
                             $i = 1;
+                            if(isset($result) && !empty($result)) {
                             foreach ($result as $re) {
-								//pr($result);
                                 $fil_no = $reg_no = $case_details = $cnr_number = $cino = '';
                                 $fil_ia_no = $reg_ia_no = $cause_title = $fil_case_no = $reg_case_no = $dairy_no = $lbl_for_doc_no = $fil_misc_doc_ia_no = '';
 
@@ -492,7 +493,7 @@
                                     <td width="12%"><?php echo $re->efiling_type; ?></td>
                                 <?php } ?>
 
-                       <?php }
+                       <?php } }
                         ?>
                         </tr>
                         </tbody>
@@ -537,6 +538,9 @@
 
 <!-- footer content -->
 <script>
+    $(document).ready(function() {
+        $('#datatable-responsive').DataTable();
+    });
  
          
 
