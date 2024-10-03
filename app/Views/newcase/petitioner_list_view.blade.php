@@ -1,10 +1,13 @@
 <?php
 $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
-if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-    $hidepencilbtn='true';
-}else{
-    $hidepencilbtn='false';
+if(isset(getSessionData('efiling_details')['stage_id'])){
+    if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+        $hidepencilbtn='true';
+    }else{
+        $hidepencilbtn='false';
+    }  
 }
+
 
 ?>
 <div class="panel panel-default">
@@ -29,10 +32,13 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                         <th>Contact</th>
                         <th>Address</th>
                         <?php
-                        if($hidepencilbtn!='true'){ ?>
-                            <th class="efiling_search">Action</th>
-
-                        <?php } ?>
+                        if(isset($hidepencilbtn)){
+                            if($hidepencilbtn!='true'){ ?>
+                                <th class="efiling_search">Action</th>
+    
+                            <?php }  
+                        }
+                        ?>
 
                     </tr>
                 </thead>
@@ -86,10 +92,11 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                             </td>
                             <td><?php echo_data($party_address); ?></td>
                             <?php
+                            if(isset($hidepencilbtn)){
                             if($hidepencilbtn!='true'){ ?>
                                 <td class="efiling_search"><a href="<?php echo base_url('newcase/extra_party/' . url_encryption($exp['id'])); ?>">Edit</a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url('newcase/deleteParty/' . url_encryption($exp['id'])); ?>">Delete</a></td>
 
-                            <?php } ?>
+                            <?php } }?>
 
                         </tr>
                     <?php } } ?>

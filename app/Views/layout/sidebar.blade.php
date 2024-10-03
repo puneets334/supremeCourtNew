@@ -82,7 +82,7 @@ $segment = service('uri');
                             </ul>                        
                         </li>
                         <li class="premium">                    
-                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">Apearance<span><i class="fas fa-chevron-down"></i></span></a>
+                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">Appearance<span><i class="fas fa-chevron-down"></i></span></a>
                             <ul id="collapse6" class="submenu accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
                                 <li><a class="btn-link" href="<?php echo base_url('advocate/listed_cases') ?>">Cause List</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('advocate/report') ?>">Reports</a></li>                                

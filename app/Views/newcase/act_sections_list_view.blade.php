@@ -1,10 +1,14 @@
 <style>.select2-container {width: 100% !important;}</style>
 <?php
+    $hidepencilbtn='';
+
 $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
+if(isset(getSessionData('efiling_details')['stage_id'])){
 if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
     $hidepencilbtn='true';
 }else{
     $hidepencilbtn='false';
+}
 }
 
 ?>
