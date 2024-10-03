@@ -380,9 +380,7 @@ ul.innpg-ul {
     /* Top Header CSS Start  */
     .top-header .top-right-nav ul{display:inline-block;text-align:center;height:auto!important}
     .top-header .top-right-nav ul li{padding:0 4px;display:inline-block;margin:5px 0;}
-    .top-header .top-right-nav ul li.theme-color{
-    margin: 0;
-}
+    .top-header .top-right-nav ul li.theme-color{margin: 0;}
     .top-header .top-left-nav{justify-content:center;margin:5px 0;}
     .top-header li.search-btn a{font-size:13px!important;padding:3px 7px;}
     /* Logo CSS Start  */
@@ -402,6 +400,9 @@ ul.innpg-ul {
     .nav-wraper .custom-nav li a.active{background:#032c7e;}
     .login-section {border-radius: 0 0px 20px 20px;}
     .login-banner {padding-left: 0;}
+    .banimg-sec img.img-fluid.logo-at-banner {width: 0!important;}
+    .login-banner-inner .banner-txts {position: relative;top: 0;padding: 26px 0;text-align: center;right: 0;}
+    .banimg-sec {height: 0!important;}
     .login-s-inner {padding: 15px;margin: 15px;}
     .otp-row .round-input {height: 41px;width: 41px;}
     .otp-row > .col {padding: 0;}
@@ -410,6 +411,10 @@ ul.innpg-ul {
     .footer-top-sec .contact-txt p {margin-top: 15px;}
 }
 
+@media screen and (max-width: 390px) and (min-width: 300px){
+    .logo-sec-wraper a.logo-align{flex-direction:column;text-align:center;gap:15px;}
+    .regester-txts .regester-links {flex-direction: column;justify-content: center;text-align: center;gap: 10px;}
+}
 
 @media screen and (max-width: 991px) and (min-width: 768px){
     /* Menu Area CSS Start  */
@@ -428,9 +433,10 @@ ul.innpg-ul {
     .login-s-inner {padding: 20px;margin: 15px;}
     .login-banner-inner {height: 100%;}
     .login-banner-inner .banimg-sec {height: 100%;}
-    .login-banner-inner .banimg-sec img {height: 100%;object-fit: cover;}
+    .login-banner-inner .banimg-sec img {object-fit: cover;}
     .otp-row > .col {padding: 0;}
     .custom-nav .navbar-collapse.in {display: block;}
+    
 }
 
 

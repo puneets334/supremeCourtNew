@@ -35,40 +35,30 @@ use Hashids\Hashids;
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if (count($advocate_details) > 0)
-
-                                            @foreach($advocate_details as $res)
-                                            @php
-
-                                            $state_name = isset($res->first_name) ? ', ' . $res->first_name : '';
-                                            $dist_name = isset($res->office_state_name) ? ', ' . $res->office_state_name : '';
-                                            $m_pincode = isset($res->m_pincode) ? '- ' . $res->m_pincode : '';
-                                            $user_type = isset($res->ref_m_usertype_id) && $res->ref_m_usertype_id == USER_ADVOCATE ? 'Advocate' : '';
-                                            @endphp
-
+                                            <?php
+                                            if (count($advocate_details) > 0){
+                                                $k = 1;
+                                            foreach($advocate_details as $res){
+                                                $state_name = isset($res->first_name) ? ', ' . $res->first_name : '';
+                                                $dist_name = isset($res->office_state_name) ? ', ' . $res->office_state_name : '';
+                                                $m_pincode = isset($res->m_pincode) ? '- ' . $res->m_pincode : '';
+                                                $user_type = isset($res->ref_m_usertype_id) && $res->ref_m_usertype_id == USER_ADVOCATE ? 'Advocate' : '';
+                                            ?>
                                             <tr>
-                                                <td width="5%">{{ $loop->iteration }}</td>
+                                                <td width="5%"><?=$k; ?></td>
                                                 <td width="15%">
                                                     <?php
-
-
-                                                    $hashids = new Hashids();
-                                                    $encodedId = $hashids->encode($res->id);
-                                                    //$encodedId = integerEncreption($res->id);
+                                                    $encodedId = integerEncreption($res->id);
                                                     ?>
                                                     <a href="<?= base_url('NewRegister/Advocate/view/' . $encodedId) ?>" style="color: #385198;">
                                                         <?= strtoupper($res->first_name) ?>
                                                     </a>
                                                 </td>
-
-
-
                                                 <td width="8%">{{ $user_type }}</td>
                                                 <td width="10%">{{ $res->m_address1 . ' , ' . $res->m_city . $m_pincode }}</td>
                                                 <td width="15%">{{ date("d-m-Y h:i:s A", strtotime($res->created_on)) }}</td>
                                             </tr>
-                                            @endforeach
-                                            @endif
+                                            <?php $k++; }} ?>
                                         </tbody>
                                     </table>
                                 </div>
