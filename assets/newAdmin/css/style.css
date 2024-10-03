@@ -8531,5 +8531,5 @@ table.dataTable thead .sorting_asc:after {
 .x_content .tab-pane> .col-md-4.col-sm-8.col-xs-12 {margin: 0 !important}
 .x_content .nav-tabs , .dashboard-section .dash-card .nav-tabs{border-bottom: none;margin-left: 30px;}
 label{font-size: 14px !important;margin-bottom: 0px !important;color: #000;font-family: 'noto_sansmedium';}
-.dash-card > *:focus-within, .dashbord-tile .tile-title:focus-within , .dashbord-tile .tile-subtitle:focus-within, .dashbord-tile .main-count:focus-within, .application-tile-sections .applictin-tile-sec .appliction-til-nam:focus-within{outline: 1px dashed #000;}
+.dashbord-tile .tile-title:focus-within , .dashbord-tile .tile-subtitle:focus-within, .dashbord-tile .main-count:focus-within, .application-tile-sections .applictin-tile-sec .appliction-til-nam:focus-within{outline: 1px dashed #000;}
 table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;border-radius: 28px;}
