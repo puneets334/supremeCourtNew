@@ -83,13 +83,17 @@ if(isset($_SESSION['login'])){
                                                 <div class="x_content">
                                                     <div class="row">
                                                         <?php foreach($video_details as $key=>$value) { ?>
-                                                            <div class="col-lg-3 col-md-12 mb-3 mb-lg-0">
-                                                                <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" >
-                                                                    <a href="#" onclick="playVideo('<?=base_url();?><?=$value['videoURL'];?>','<?=$value['videoTitle'];?>')">
-                                                                        <img class="m-1 p-1 w-100" src="<?=base_url();?><?=$value['posterURL'];?>" alt="Introduction to eFiling" style="width:350px;height:350px;border: 1px dotted;">
-                                                                        <h2 class="mt-4 text-primary"><?=$value['videoTitle'];?></h2>
-                                                                    </a>
-                                                                </div>
+                                                            <div class="col-lg-3 col-md-4 col-sm-12 mb-3">
+                                                                <div class="card video-crd">
+                                                                    <!-- <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" > -->
+                                                                        <a href="#" onclick="playVideo('<?=base_url();?><?=$value['videoURL'];?>','<?=$value['videoTitle'];?>')">
+                                                                            <div class="img-sec">
+                                                                                 <img class="" src="<?=base_url();?><?=$value['posterURL'];?>" alt="Introduction to eFiling">
+                                                                            </div>                                                                            
+                                                                            <h5 class="card-title"><?=$value['videoTitle'];?></h5>
+                                                                        </a>
+                                                                    <!-- </div> -->
+                                                                </div>                                                                
                                                             </div>
                                                         <?php } ?>
                                                     </div>     
