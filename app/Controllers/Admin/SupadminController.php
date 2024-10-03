@@ -101,7 +101,7 @@ class SupadminController extends BaseController {
         if (empty($this->request->getPost('efil_no'))) {
             // $_SESSION['MSG'] = ("fail", "No Efiling number given !");
             // redirect('Admin/Supadmin/change_case_status');
-            $this->session->setFlashdata('MSG', "fail ,No Efiling number given !");
+            $this->session->setFlashdata('MSG', "No Efiling number given !");
             return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
             exit(0);
         }
@@ -111,7 +111,7 @@ class SupadminController extends BaseController {
         if (strlen(trim($this->request->getPost('efil_no'))) != 17) {
             // $_SESSION['MSG'] = message_show("fail", "Invalid Efiling number !");
             // redirect('admin/supadmin/change_case_status');
-            $this->session->setFlashdata('MSG', "fail ,Invalid Efiling number !");
+            $this->session->setFlashdata('MSG', "Invalid Efiling number !");
             return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
             exit(0);
         }
@@ -119,7 +119,7 @@ class SupadminController extends BaseController {
         if (preg_match('/[^0-9a-zA-Z]/i', trim($this->request->getPost('efil_no')))) {
             // $_SESSION['MSG'] = message_show("fail", "Efiling Number Can only contain characters, numbers and hyphens(-) !");
             // redirect('admin/supadmin/change_case_status');
-            $this->session->setFlashdata('MSG', "fail ,Efiling Number Can only contain characters, numbers and hyphens(-) !");
+            $this->session->setFlashdata('MSG', "Efiling Number Can only contain characters, numbers and hyphens(-) !");
             return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
             exit(0);
         }
@@ -129,7 +129,7 @@ class SupadminController extends BaseController {
         if (!$dat) {
             // $_SESSION['MSG'] = message_show("fail", "efiling number is not on the stages viz. For Compliance, Pay Deficit Fee, Transfer to CIS, Idle/Unprocessed, Mark as error  hence no action warranted!");
             // redirect('admin/supadmin/change_case_status');
-            $this->session->setFlashdata('MSG', "fail ,efiling number is not on the stages viz. For Compliance, Pay Deficit Fee, Transfer to CIS, Idle/Unprocessed, Mark as error hence no action warranted!");
+            $this->session->setFlashdata('MSG', "efiling number is not on the stages viz. For Compliance, Pay Deficit Fee, Transfer to CIS, Idle/Unprocessed, Mark as error hence no action warranted!");
             return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
             exit(0);
         } else {
@@ -141,7 +141,7 @@ class SupadminController extends BaseController {
                  // $_SESSION['MSG'] = message_show("fail ", "efiling number is not on the stages viz. For Compliance, Pay Deficit Fee, Transfer to CIS, Idle/Unprocessed, Mark as error hence no action warranted!");
                 // redirect('admin/supadmin/change_case_status');
 
-                $this->session->setFlashdata('MSG', "fail ,efiling number is not on the stages viz. For Compliance, Pay Deficit Fee, Transfer to CIS, Idle/Unprocessed, Mark as error hence no action warranted!");
+                $this->session->setFlashdata('MSG', "efiling number is not on the stages viz. For Compliance, Pay Deficit Fee, Transfer to CIS, Idle/Unprocessed, Mark as error hence no action warranted!");
                 return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
                 exit(0);
             }
@@ -176,7 +176,7 @@ class SupadminController extends BaseController {
         if (empty(getSessionData('change_filing_number'))) {
             // $_SESSION['MSG'] = message_show("fail", "No Efiling Number was set!");
             // redirect('admin/supadmin/change_case_status');
-            $this->session->setFlashdata('MSG', "fail ,No Efiling Number was set!");
+            $this->session->setFlashdata('MSG', "No Efiling Number was set!");
             return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
             exit(0);
         }
@@ -198,7 +198,7 @@ class SupadminController extends BaseController {
         if (empty(getSessionData('change_filing_number'))) {
             // $_SESSION['MSG'] = message_show("fail", "No Efiling Number was set!");
             // redirect('admin/supadmin/change_case_status');
-            $this->session->setFlashdata('MSG', "fail ,No Efiling Number was set!");
+            $this->session->setFlashdata('MSG', "No Efiling Number was set!");
             return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
             exit(0);
         }
@@ -206,7 +206,7 @@ class SupadminController extends BaseController {
         if (empty(getSessionData('last_stage_to_be_updated'))) {
             // $_SESSION['MSG'] = message_show("fail", "No Last Stage to be updated is set !");
             // redirect('admin/supadmin/change_case_status_main');
-            $this->session->setFlashdata('MSG', "fail ,No Last Stage to be updated is set !");
+            $this->session->setFlashdata('MSG', "No Last Stage to be updated is set !");
             return redirect()->to(base_url('admin/supadmin/change_case_status_main'));
             exit(0);
         }
@@ -214,7 +214,7 @@ class SupadminController extends BaseController {
         if (getSessionData('last_stage_to_be_updated') != $this->request->getPost('to_change_status_id')) {
             // $_SESSION['MSG'] = message_show("fail", "Status to be changed is not set !");
             // redirect('admin/supadmin/change_case_status_main');
-            $this->session->setFlashdata('MSG', "fail ,Status to be changed is not set !");
+            $this->session->setFlashdata('MSG', "Status to be changed is not set !");
             return redirect()->to(base_url('admin/supadmin/change_case_status_main'));
             exit(0);
         }
@@ -222,7 +222,7 @@ class SupadminController extends BaseController {
         if ($this->request->getPost('to_change_status_id') == NULL || $this->request->getPost('to_change_status_id') == '') {
             // $_SESSION['MSG'] = message_show("fail", "Status to be changed cannot be blank !");
             // redirect('admin/supadmin/final_case_status_change');
-           $this->session->setFlashdata('MSG', "fail ,Status to be changed cannot be blank !");
+           $this->session->setFlashdata('MSG', "Status to be changed cannot be blank !");
             return redirect()->to(base_url('admin/supadmin/final_case_status_change'));
 
             exit(0);
@@ -231,7 +231,7 @@ class SupadminController extends BaseController {
         if ($this->request->getPost('remark') == NULL || $this->request->getPost('remark') == '') {
             // $_SESSION['MSG'] = message_show("fail", "Remark Cannot be Blank !");
             // redirect('admin/supadmin/final_case_status_change');
-            $this->session->setFlashdata('MSG', "fail ,Remark Cannot be Blank !");
+            $this->session->setFlashdata('MSG', "Remark Cannot be Blank !");
             return redirect()->to(base_url('admin/supadmin/final_case_status_change'));
             exit(0);
         }
@@ -239,7 +239,7 @@ class SupadminController extends BaseController {
         if (!is_numeric($this->request->getPost('to_change_status_id'))) {
             // $_SESSION['MSG'] = message_show("fail", "Status to be changed should be numeric !");
             // redirect('admin/supadmin/final_case_status_change');
-            $this->session->setFlashdata('MSG', "fail ,Status to be changed should be numeric !");
+            $this->session->setFlashdata('MSG', "Status to be changed should be numeric !");
             return redirect()->to(base_url('admin/supadmin/final_case_status_change'));
             exit(0);
         }
@@ -247,7 +247,7 @@ class SupadminController extends BaseController {
         if (preg_match('/[^0-9a-zA-Z\s.,]/i', $this->request->getPost('remark'))) {
             // $_SESSION['MSG'] = message_show("fail", "Remark Can only contain numbers characters and spaces !");
             // redirect('admin/supadmin/final_case_status_change');
-            $this->session->setFlashdata('MSG', "fail ,Remark Can only contain numbers characters and spaces !");
+            $this->session->setFlashdata('MSG', "Remark Can only contain numbers characters and spaces !");
             return redirect()->to(base_url('admin/supadmin/final_case_status_change'));
             exit(0);
         }
@@ -255,7 +255,7 @@ class SupadminController extends BaseController {
         if (strlen($this->request->getPost('remark')) >= 201) {
             // $_SESSION['MSG'] = message_show("fail", "Remark length can only be of 200 characters !");
             // redirect('admin/supadmin/final_case_status_change');
-            $this->session->setFlashdata('MSG', "fail ,Remark length can only be of 200 characters !");
+            $this->session->setFlashdata('MSG', "Remark length can only be of 200 characters !");
             return redirect()->to(base_url('admin/supadmin/final_case_status_change'));
             exit(0);
         }
@@ -275,7 +275,7 @@ class SupadminController extends BaseController {
             } else {
                 // $_SESSION['MSG'] = message_show("fail", "Some Error Occoured. Contact Admin !");
                 // redirect('admin/supadmin/change_case_status');
-                $this->session->setFlashdata('MSG', "fail ,Some Error Occoured. Contact Admin !");
+                $this->session->setFlashdata('MSG', "Some Error Occoured. Contact Admin !");
                 return redirect()->to(base_url('Admin/Supadmin/change_case_status'));
                 exit(0);
             }
