@@ -42,6 +42,8 @@ $collapse_class = 'collapse';
 $area_extended = false;
 $diary_generate_button = '';
 $diary = '';
+$hidepencilbtn='';
+
 if (isset($new_case_details[0]->sc_diary_num) && !empty($new_case_details[0]->sc_diary_num)) {
     $diary = $new_case_details[0]->sc_diary_num;
 }
@@ -54,11 +56,14 @@ if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_i
     $diary_generate_button = '<a  href="javaScript:void(0)" class="btn btn-primary" data-efilingtype="new_case" id="generateDiaryNoPop" type="button" style="float: left;margin-right: 120px;">Generate Diary No.</a>';
 }
 $stages_array = ['', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE];
-if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-    $hidepencilbtn = 'true';
-} else {
-    $hidepencilbtn = 'false';
+if(isset(getSessionData('efiling_details')['stage_id'])){
+    if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+        $hidepencilbtn = 'true';
+    } else {
+        $hidepencilbtn = 'false';
+    }
 }
+
 ?>
 
 <body>
@@ -151,7 +156,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                 <div class="form-group">
                                                                                     <label
                                                                                         class="control-label col-md-6 text-right"
-                                                                                        for="filing_no"><b>Cause Title :</b> <?= echo_data($new_case_details[0]->cause_title);?>
+                                                                                        for="filing_no"><b>Cause Title :</b> <?= isset($new_case_details[0]->cause_title) ? echo_data($new_case_details[0]->cause_title) : '';?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
                                                                                         <p> <?php
@@ -163,7 +168,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                 <div class="form-group">
                                                                                     <label
                                                                                         class="control-label col-md-6 text-right"
-                                                                                        for="filing_no"><b>Case Type :</b> <?= echo_data(strtoupper($sc_case_type[0]->casename));?>
+                                                                                        for="filing_no"><b>Case Type :</b> <?= isset($sc_case_type[0]->casename) ?  echo_data(strtoupper($sc_case_type[0]->casename)) : '';?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
                                                                                         <p> <?php // echo_data(strtoupper($sc_case_type[0]->casename)); ?> </p>
@@ -177,8 +182,8 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                     <label
                                                                                         class="control-label col-md-6 text-right"
                                                                                         for="filing_no"><b>Subject Category :</b>  <?php
-                                                                                            echo_data(strtoupper($main_subject_cat[0]->sub_name1));
-                                                                                            echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '');
+                                                                                            isset($main_subject_cat[0]->sub_name1) ? echo_data(strtoupper($main_subject_cat[0]->sub_name1)) :'';
+                                                                                            isset($sub_subject_cat[0]->sub_name4) ? echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '') : '';
                                                                                             ?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
@@ -217,10 +222,10 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                             ?>
                                                                             <div class="col-md-6">
                                                                                 <div class="form-group">
-                                                                                    <labe class="control-label col-md-4 text-right" for="filing_no"><b>No. of Petitioner : </b><?= echo_data($new_case_details[0]->no_of_petitioners); ?>
+                                                                                    <labe class="control-label col-md-4 text-right" for="filing_no"><b>No. of Petitioner : </b><?= isset($new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
-                                                                                        <p><?php //echo_data($new_case_details[0]->no_of_petitioners); ?></p>
+                                                                                        <p><?php //isset(new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?></p>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -229,7 +234,7 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                                     <label
                                                                                         class="control-label col-md-4 text-right"
                                                                                         for="filing_no"><b> No. of
-                                                                                        Respondent :</b> <?= echo_data($new_case_details[0]->no_of_respondents);?>
+                                                                                        Respondent :</b> <?= isset($new_case_details[0]->no_of_respondents) ? echo_data($new_case_details[0]->no_of_respondents): '' ;?>
                                                                                     </label>
                                                                                     <div class="col-md-8">
                                                                                         <p><?php // echo_data($new_case_details[0]->no_of_respondents); ?></p>
@@ -282,13 +287,16 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                     </button>
                                                                 </h2>
                                                                 <?php
-                                                                if ($hidepencilbtn != 'true') { ?>
-                                                                    <div class="col-sm-1">
-                                                                        <a href="<?php echo base_url('newcase/petitioner'); ?>"><i
-                                                                                style="color:black; padding-top: 20px !important;"
-                                                                                class="fa fa-pencil efiling_search"></i></a>
-                                                                    </div>
-                                                                <?php } ?>
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                        <div class="col-sm-1">
+                                                                            <a href="<?php echo base_url('newcase/petitioner'); ?>"><i
+                                                                                    style="color:black; padding-top: 20px !important;"
+                                                                                    class="fa fa-pencil efiling_search"></i></a>
+                                                                        </div>
+                                                                    <?php }  }?>
+                                                               
+                                                               
                                                             </div>
                                                             <div id="collapseTwo"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -317,13 +325,14 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                     </button>
                                                                 </h2>
                                                                 <?php
+                                                                if(isset($hidepencilbtn)){
                                                                 if ($hidepencilbtn != 'true') { ?>
                                                                     <div class="col-sm-1">
                                                                         <a href="<?php echo base_url('newcase/respondent'); ?>"><i
                                                                                 style="color:black; padding-top:20px;"
                                                                                 class="fa fa-pencil efiling_search"></i></a>
                                                                     </div>
-                                                                <?php } ?>
+                                                                <?php } } ?>
                                                             </div>
                                                             <div id="collapseThree"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -354,13 +363,14 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                     </button>
                                                                 </h2>
                                                                 <?php
+                                                                if(isset($hidepencilbtn)){
                                                                 if ($hidepencilbtn != 'true') { ?>
                                                                     <div class="col-sm-1">
                                                                         <a href="<?php echo base_url('newcase/extra_party'); ?>"><i
                                                                                 style="color:black; padding-top:20px;"
                                                                                 class="fa fa-pencil efiling_search"></i></a>
                                                                     </div>
-                                                                <?php } ?>
+                                                                <?php } } ?>
                                                             </div>
                                                             <div id="collapseFour"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -392,13 +402,16 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                                     </button>
                                                                 </h2>
                                                                 <?php
+                                                            if(isset($hidepencilbtn)){
+
                                                                 if ($hidepencilbtn != 'true') { ?>
                                                                     <div class="col-sm-1">
                                                                         <a href="<?php echo base_url('newcase/lr_party'); ?>"><i
                                                                                 style="color:black; padding-top:20px;"
                                                                                 class="fa fa-pencil efiling_search"></i></a>
                                                                     </div>
-                                                                <?php } ?>
+                                                                <?php }
+                                                                } ?>
                                                             </div>
                                                             <div id="collapseFive"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -573,11 +586,11 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                 </div>
                                                 <div class="save-btns text-center">
                                                     <?php
-                                                    if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
+                                                    if (isset(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
                                                         $prev_url = base_url('documentIndex');
                                                         //$next_url = base_url('affirmation');
                                                         $next_url = base_url('newcase/view');
-                                                    } elseif (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
+                                                    } elseif (isset(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
                                                         $prev_url = base_url('documentIndex');
                                                         $next_url = base_url('caveat/view');
                                                     } else {
@@ -720,13 +733,14 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                     <h4 class="modal-title">
-                        <span class="fa fa-pencil"></span><?php echo $lbl = ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?>
+                        <span class="fa fa-pencil"></span><?php
+                         echo $lbl = (isset($_SESSION['efiling_details']['ref_m_efiled_type_id']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?>
                     </h4>
                 </div>
 
                 <?php
                 $attribute = array('name' => 'disapp_case', 'id' => 'disapp_case', 'autocomplete' => 'off');
-                if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
+                if (isset($_SESSION['efiling_details']['ref_m_efiled_type_id']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
                     echo form_open(base_url('admin/EfilingAction/submit_mentioning_order'), $attribute);
                 } else {
                     echo form_open(base_url('admin/EfilingAction/disapprove_case'), $attribute);
@@ -1309,7 +1323,13 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
 
                 var temp = $('.disapprovedText').text();
                 temp = $.trim(temp);
-                var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+                var efiling_type_id = '<?php 
+                if(isset($_SESSION['efiling_details']['ref_m_efiled_type_id'])){
+                    echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; 
+                }else{
+                    echo '' ;
+                }
+                ?>';
 
 
                 if (efiling_type_id != "") {
@@ -1333,7 +1353,14 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             $('#markaserror').click(function() {
                 var temp = $('.disapprovedText').text();
                 temp = $.trim(temp);
-                var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+                var efiling_type_id = '<?php 
+                if(isset($_SESSION['efiling_details']['ref_m_efiled_type_id'])){
+                    echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; 
+                }else{
+                    echo '' ;
+                }
+                // echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; 
+                ?>';
                 if (efiling_type_id != "") {
                     if (temp.length == 0) {
                         alert("Please fill error note.");

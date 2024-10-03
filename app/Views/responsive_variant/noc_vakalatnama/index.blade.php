@@ -30,12 +30,12 @@
                                                 @if ( isset($get_transferred_cases) && is_array($get_transferred_cases) && count($get_transferred_cases) > 0)
                                                     @foreach ($get_transferred_cases as $index=>$case)
                                                     <tr>
-                                                        <td>{{$index+1}}</td>
-                                                        <td>{{$case->efiling_no}}</td>
-                                                        <td>{{$case->efiling_year}}</td>
-                                                        <td>{{$case->diary_no}}</td>
-                                                        <td>{{$case->updated_on}}</td>
-                                                        <td>{{$case->name}} ({{$case->aor_code }})</td>
+                                                        <td data-key="#" >{{$index+1}}</td>
+                                                        <td data-key="E-filing Number" >{{$case->efiling_no}}</td>
+                                                        <td data-key="Year" >{{$case->efiling_year}}</td>
+                                                        <td data-key="Diary No." >{{$case->diary_no}}</td>
+                                                        <td data-key="Case Transferred On" >{{$case->updated_on}}</td>
+                                                        <td data-key="Transferred To AOR (AOR code)" >{{$case->name}} ({{$case->aor_code }})</td>
                                                     </tr>
                                                     @endforeach
                                                 @else

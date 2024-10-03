@@ -69,7 +69,7 @@
                 <div class="userInfo">
                     <!-- <a href="#"><span class="fa fa-envelope-o icon-animated-vertical"></span></a> -->
                     <!-- <a href="#"><span class="fa fa-question animated bounceInDown"></span></a>  -->
-                    <a href="#"	class="bell"><span class="fa fa-bell ringing"></span><span class="count">5</span></a>
+                    <!-- <a href="#"	class="bell"><span class="fa fa-bell ringing"></span><span class="count">5</span></a> -->
                     <!-- <a	href="login.html" class="signOut"><span class="fa fa-sign-out"></span></a> -->
                 </div>
                 <div class="userInformation">

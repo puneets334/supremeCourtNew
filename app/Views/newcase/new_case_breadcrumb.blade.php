@@ -67,19 +67,21 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     
                     <?php
                     $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
-                    if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
-                        ?>
-                    <a data-toggle="modal"
-                        href="#approveModal"
-                        class="btn btn-success btn-sm">Approve</a>
-                    <a data-toggle="modal"
-                        href="#disapproveModal"
-                        class="btn btn-danger btn-sm">Disapprove</a>
-                    <a data-toggle="modal"
-                        href="#markAsErrorModal"
-                        class="btn btn-warning btn-sm">Mark As Error</a>
-                    <?php } ?>
-                    <?php
+                    if(isset(getSessionData('efiling_details')['stage_id'])){
+                        if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
+                            ?>
+                        <a data-toggle="modal"
+                            href="#approveModal"
+                            class="btn btn-success btn-sm">Approve</a>
+                        <a data-toggle="modal"
+                            href="#disapproveModal"
+                            class="btn btn-danger btn-sm">Disapprove</a>
+                        <a data-toggle="modal"
+                            href="#markAsErrorModal"
+                            class="btn btn-warning btn-sm">Mark As Error</a>
+                        <?php } 
+                    }
+                 
                         // render('templates.user_efil_num_action_bar');
                     ?>
                     <div class="page-breifs">
