@@ -8281,7 +8281,7 @@ input[type="radio"] {
 .application-tile-sections .applictin-tile-sec .tile-comnt:last-child {padding: 0 4px;}
 .application-tile-sections .applictin-tile-sec:last-child:before {display: none;}
 .application-tile .tiles-comnts .tile-comnt:before {left: -2px;}
-.dashbord-tile:focus-within , .dashbord-tile:focus, .dashbord-tile:focus-within .tiles-comnts{outline: 1px dotted #000;}
+.dashbord-tile:focus-within , .dashbord-tile:focus, .dashbord-tile .tiles-comnts .tile-comnt:focus-within{outline: 1px dotted #000;}
 .dashbord-tile:hover .tile-title, .dashbord-tile:hover .tile-subtitle, .dashbord-tile:hover .main-count, .dashbord-tile:hover .application-tile-sections ,  .dashbord-tile:hover .application-tile-sections .applictin-tile-sec .appliction-til-nam h6{z-index: 1;}
 .dashbord-tile:focus .tile-title, .dashbord-tile:focus .tile-subtitle, .dashbord-tile:focus .main-count, .dashbord-tile:focus .application-tile-sections ,  .dashbord-tile:focus .application-tile-sections .applictin-tile-sec .appliction-til-nam h6, .dashbord-tile:focus .tiles-comnts{z-index: 1;}
 .dashboard-tiles-area .dashbord-tile:hover:before {z-index: 1;}
@@ -8522,14 +8522,14 @@ table.dataTable thead .sorting_asc:after {
 .main-inner-bg {
     margin-top: 25px;
 }
-.wrapper .mainPanel .dashboard-section .main-inner-area > .container {
-    max-width: 100%;
-}
+.wrapper .mainPanel .dashboard-section .main-inner-area > .container {max-width: 100%;}
 /* Faq-Page End  */
 /* 1-10-24 start  */
-.x_content .nav-tabs .nav-link {padding: 15px 17px;border-radius: 21px 21px 0 0;background: #fff;font-size: 14px;color: #000;font-family: 'noto_sansregular';border: 1px solid #e9e9e9;}
-.x_content .nav-tabs .nav-item.show .nav-link, .x_content .nav-tabs .nav-link.active, .x_content .nav-tabs .nav-link:hover, .x_content .nav-tabs .nav-link:focus {background: #0D48BE;color: #fff;}
-.x_content .tab-content {border: 1px solid #e9e9e9;padding: 15px;border-radius: 21px;}
+.x_content .nav-tabs .nav-link, .dashboard-section .dash-card .nav-tabs .nav-link  {padding: 15px 17px;border-radius: 21px 21px 0 0;background: #fff;font-size: 14px;color: #000;font-family: 'noto_sansregular';border: 1px solid #e9e9e9;}
+.x_content .nav-tabs .nav-item.show .nav-link, .x_content .nav-tabs .nav-link.active, .x_content .nav-tabs .nav-link:hover, .x_content .nav-tabs .nav-link:focus , .dashboard-section .dash-card .nav-tabs .nav-link.active, .dashboard-section .dash-card .nav-tabs .nav-link:hover, .dashboard-section .dash-card .nav-tabs .nav-link:focus {background: #0D48BE;color: #fff;}
+.x_content .tab-content, .dashboard-section .dash-card .tab-pane{border: 1px solid #e9e9e9;padding: 15px;border-radius: 21px;}
 .x_content .tab-pane> .col-md-4.col-sm-8.col-xs-12 {margin: 0 !important}
-.x_content .nav-tabs {border-bottom: none;margin-left: 30px;}
+.x_content .nav-tabs , .dashboard-section .dash-card .nav-tabs{border-bottom: none;margin-left: 30px;}
 label{font-size: 14px !important;margin-bottom: 0px !important;color: #000;font-family: 'noto_sansmedium';}
+.dash-card > *:focus-within, .dashbord-tile .tile-title:focus-within , .dashbord-tile .tile-subtitle:focus-within, .dashbord-tile .main-count:focus-within, .application-tile-sections .applictin-tile-sec .appliction-til-nam:focus-within{outline: 1px dashed #000;}
+table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;border-radius: 28px;}
