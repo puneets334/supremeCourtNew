@@ -383,6 +383,8 @@ ul.innpg-ul {
     .top-header .top-right-nav ul li.theme-color{margin: 0;}
     .top-header .top-left-nav{justify-content:center;margin:5px 0;}
     .top-header li.search-btn a{font-size:13px!important;padding:3px 7px;}
+    .top-header ul li.text-size .font-action-sec ul a {padding: 0;}
+    .top-header .font-action-sec ul li{padding: 4px 17px;}
     /* Logo CSS Start  */
     .logo-sec-wraper a.logo-align{justify-content: center;}
     /* Menu CSS Start  */
@@ -485,3 +487,16 @@ ul.innpg-ul {
 .login-banner-inner {
     height: 100%;
 }
+/* 03-10-24 start  */
+.top-header ul li.text-size:hover .font-action-sec{display: block;}
+.top-header .font-action-sec{position: absolute;z-index: 99;width: 100%;padding: 12px 0 0;background: #ff000000;top: 14px;display: none;}
+.top-header .font-action-sec:before {content: '';position: absolute;top: 3px;left: 19px;height: 10px;width: 16px;border-left: 7px solid transparent;border-right:7px solid transparent;border-bottom: 7px solid #3469d2;}
+.top-header .font-action-sec ul {list-style: none;padding: 15px 0;margin: 0;background: #3469d2;border-radius: 15px;display: inline-block;}
+.top-header ul li.text-size .font-action-sec ul a{padding: 12px;width: 100%;}
+.top-header .font-action-sec ul li {padding: 0 15px;}
+.top-header .font-action-sec ul li a{color: #fff !important;}
+.top-header .font-action-sec ul li:hover {background: #0d48be;}
+.top-header ul li.text-size {position: relative;}
+.video-crd {border-radius: 21px;overflow: hidden;height: 100%;}
+.video-crd img {width: 100% !important;object-fit: contain;}
+.video-crd h5.card-title {font-size: 16px;text-align: center;padding: 15px;margin: 0;line-height: 24px;color: #000;}
