@@ -388,22 +388,40 @@
     </div>
 </div>
 <!-- form--end  -->
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> -->
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
+<!-- <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script> -->
 <script src="<?= base_url(); ?>assets/js/sweetalert.min.js"></script>
 <link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert.css">
+
+<!-- jQuery (Ensure this is included first) -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Bootstrap Datepicker CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+
+<!-- Select2 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+
+
 <script>
     $(".sci_validation").keyup(function() {
         var initVal = $(this).val();
@@ -939,7 +957,7 @@
             }
         });
         $('#add_respondent').on('submit', function() {
-            if ($('#add_respondent').valid()) {
+            // if ($('#add_respondent').valid()) {
                 var is_dead_minor = $('input[name="is_dead_minor"]:checked').val();
                 var form_data = $(this).serialize();
                 form_data += '&is_dead_minor=' + is_dead_minor;
@@ -980,9 +998,9 @@
 
                 });
                 return false;
-            } else {
-                return false;
-            }
+            // } else {
+            //     return false;
+            // }
         });
     });
 

@@ -82,7 +82,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Cause Title Petitioner <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" oninput="validateInput(event)" type="text" style="text-transform: uppercase" required><?php echo_data(@$cause_title[0]); ?></textarea>
+                            <textarea tabindex='1' id="cause_pet" name="cause_pet" minlength="3" maxlength="99" class="form-control cus-form-ctrl" placeholder="Cause Title Petitioner" oninput="validateInput(event)" type="text" style="text-transform: uppercase" required ><?php echo_data(@$cause_title[0]); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>)." title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -1512,7 +1512,7 @@
                                     resArr[1] +
                                     "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                                 $('#msg').show();
-                                //window.location.href = resArr[2];
+                                //window.location.href = resArr[2]; 
                                 location.reload();
                             } else if (resArr[0] == 3) {
                                 $('#msg').show();

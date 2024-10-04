@@ -1,3 +1,4 @@
+.login-page.black-theme {background-color: #111111;color: #fff;}
 /* Header CSS Start  */
 .black-theme .top-right-nav ul{background: #222222;border-color: #ffffff5e;}
 .black-theme .top-header ul li a {color: #ff0;}
@@ -33,6 +34,9 @@
 .black-theme .regester-txts .gray-txt {color: #ffffff !important;}
 .black-theme a.blue-txt:hover, .black-theme a.blue-txt:focus {text-decoration: underline;color: #ff0 !important;}
 .black-theme .top-right-nav {background: #333333;border: 1px solid #dfdfdf38;}
+.black-theme .form-control::placeholder {color:#ffff00}
+.black-theme .form-control {background: #333333;border-color: #ffffff69;color: #ffffff;}
+.black-theme label{color: #ffffff;}
 /* Login Area End  */
 /* OTP Page CSS Start  */
 .black-theme .otp-row .round-input:hover, .black-theme .otp-row .round-input:focus, .black-theme .otp-row .round-input:active {background: #000;color: #ff0;}
@@ -57,6 +61,7 @@
 .black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:hover, .black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:focus {background: #000000 !important;color: #ff0 !important;}
 .black-theme .faq-sec .accordion .accordion-item {border: 1px solid #00000087 !important;}
 .black-theme .faq-sec .accordion button.accordion-button.collapsed:after { filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) !important;}
+.black-theme .accordion-body li , .black-theme .accordion-body{color: #fff;}
 /* FaQ Page CSS End  */
 /* Footer CSS Start  */
 .black-theme .footer-top-sec {background: #222222;}

@@ -122,8 +122,10 @@ $session = service('session');
                 <div class="col-12 col-sm-12 col-md-7 col-lg-7 login-banner">
                     <div class="login-banner-inner">
                         <div class="banimg-sec">
-                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt=""
-                                class="img-fluid">
+                            <!-- <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt=""
+                                class="img-fluid"> -->
+                                <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo-full.png" alt=""
+                                class="img-fluid logo-at-banner">
                         </div>
                         <div class="banner-txts">
                             <?php
@@ -192,9 +194,9 @@ $session = service('session');
                                 <input hidden id="user_login_type" name="adv_search1" value="<?php echo idEncryptionCustom('new_advocate_register'); ?>">
                                 <!--<input hidden id="user_login_type" name="adv_type1" value="<?php /*echo htmlentities(stringEncreption('1'), ENT_QUOTES); */?>">-->
                                 <input type="hidden" id="user_login_type" name="adv_type1" value="<?php echo idEncryptionCustom($adv_type_select); ?>">
-                                <p class="">
-                                    <a style="width: 90%;" class="btn quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
-                                    <button type="button" class="btn btn-primary" data-toggle="tooltip" data-html="true" title="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
+                                <p class="kyc-btns-aligns">
+                                    <a style="width: 90%;" class="quick-btn" target="_blank" href="https://resident.uidai.gov.in/offlineaadhaar">Visit to Download Offline Aadhaar Zip File</a>
+                                    <button type="button" class="quick-btn" data-toggle="tooltip" data-html="true" title="Enter ‘Aadhaar Number’ or ‘VID’ and mentioned ‘Security Code’ in screen, then click on ‘Send OTP’ or ‘Enter TOTP’. The OTP will be sent to the registered Mobile Number for the given Aadhaar number or VID. TOTP will be available on m-Aadhaar mobile Application of UIDAI. Enter the OTP received/TOTP. Enter a Share Code which be the password for the ZIP file and click on ‘Download’ button
                                     The Zip file containing the digitally signed XML will be downloaded to device wherein the above mentioned steps have been performed.">?</button>
                                 </p>
                                 <div class="row">
@@ -240,7 +242,9 @@ $session = service('session');
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <button class="btn quick-btn">SEND OTP</button>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <button class="btn quick-btn w-100">SEND OTP</button>
+                                    </div>
                                 </div>
                             <?php echo form_close(); ?>
                         </div>
@@ -294,7 +298,9 @@ $session = service('session');
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <button class="btn quick-btn">SEND OTP</button>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <button class="btn quick-btn w-100">SEND OTP</button>
+                                    </div>
                                 </div>
                             <?php echo form_close(); ?>
                         </div>

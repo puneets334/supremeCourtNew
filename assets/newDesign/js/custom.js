@@ -52,3 +52,29 @@ function getTheme() {
       setTheme('black');
   });
 // Theme JS End
+// Font Size Increse & Decrease 
+$(document).ready(function() {
+  var $affectedElements = $("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, Input, select");
+  $affectedElements.each( function(){
+    var $this = $(this);
+    $this.data("orig-size", $this.css("font-size") );
+  });
+  $("#text_resize_increase").click(function(){
+    changeFontSize(1);
+  })
+  $("#text_resize_decrease").click(function(){
+    changeFontSize(-1);
+  })
+  $("#text_resize_reset").click(function(){
+    $affectedElements.each( function(){
+          var $this = $(this);
+          $this.css( "font-size" , $this.data("orig-size") );
+     });
+  })
+  function changeFontSize(direction){
+      $affectedElements.each( function(){
+          var $this = $(this);
+          $this.css( "font-size" , parseInt($this.css("font-size"))+direction );
+      });
+  }
+});
