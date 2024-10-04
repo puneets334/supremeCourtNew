@@ -36,7 +36,7 @@ a:hover, a{text-decoration:none}
 .yellow-txt{color:#FF572E;}
 a.blue-txt:hover, a.blue-txt:focus{color: #0D48BE !important;}
 button.btn:hover, button.btn:hover{background: #0D48BE;}
-.quick-btn{display:inline-block;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s;border-radius:100px;position:relative;overflow:hidden;background-color: #0D48BE;color: #FFF;border: none;}
+.quick-btn{display:inline-block;transition:all 0.5s ease-in-out 0s;-webkit-transition:all 0.5s ease-in-out 0s;border-radius:100px;position:relative;overflow:hidden;background-color: #0D48BE;color: #FFF;border: none;padding: 6px 12px;}
 .quick-btn:before{left:-20px;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%)}
 .quick-btn:after{right:-20px;-webkit-transform:translate(50%, -50%);transform:translate(50%, -50%)}
 .quick-btn:before, .quick-btn:after{position:absolute;top:50%;content:"";width:20px;height:20px;background-color: #04318d;border-radius:50%}
@@ -209,7 +209,7 @@ h6.htsmall {
 .footer-top-sec {padding: 30px;}
 .footer-top-sec p {margin: 0;font-size: 16px;}
 .footer-top-sec .copyright-sec p {font-family: 'noto_sanssemibold';}
-.footer-top-sec .contact-txt p {color: #747474;font-family: 'noto_sanssemibold';text-align: right;}
+.footer-top-sec .contact-txt p {color:#000000;font-family: 'noto_sanssemibold';text-align: right;}
 /* Footer Section css End */
 /* Register Page Start  */
 .register-area .login-banner-inner .banimg-sec img {object-fit: contain;object-position: bottom;height: 100%;}
@@ -411,11 +411,14 @@ ul.innpg-ul {
     .footer-top-sec p {font-size: 14px;text-align: center !important;}
     .footer-top-sec {padding: 30px 0;}
     .footer-top-sec .contact-txt p {margin-top: 15px;}
+    .main-inner-area > .container > .row > .col-12 {padding: 0;}
+    .main-inner-area  .main-inner-bg {padding: 15px;}
+    .main-inner-area  .main-inner-bg .accordion-body {padding: 12px;}
 }
 
 @media screen and (max-width: 390px) and (min-width: 300px){
     .logo-sec-wraper a.logo-align{flex-direction:column;text-align:center;gap:15px;}
-    .regester-txts .regester-links {flex-direction: column;justify-content: center;text-align: center;gap: 10px;}
+    .regester-txts .regester-links {flex-direction: column;justify-content: center;text-align: center;gap: 10px;margin: 0;}
 }
 
 @media screen and (max-width: 991px) and (min-width: 768px){

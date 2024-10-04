@@ -17,6 +17,7 @@
     .hamburger-icon{width: 30px;height: 20px;}
     .hamburger-icon.hide span:nth-child(3) {left: 2px;top: 0;}    
     .hamburger-icon.hide span:nth-child(2) {left: 10px;top: 0;}
+    .top-header ul li.text-size .font-action-sec ul a {padding: 0;}
     
     /* Header CSS End  */
     /* Dashboard Main Content Start  */
@@ -39,8 +40,8 @@
     .pagination-inner a.page-link {padding: 6px 11px;}
     .pagination {margin: 15px 0;}
     .add-new-area:hover .add-new-options, .add-new-area:hover .add-new-options ul{width: 191px;}
-    .dashboard-bradcrumb .left-dash-breadcrumb{flex-direction:column;gap:15px;}
-    .dashboard-bradcrumb{flex-direction:column;gap:15px;}
+    .dashboard-bradcrumb .left-dash-breadcrumb{flex-direction:column;gap:15px;width: 100%;align-items: start;}
+    .dashboard-bradcrumb{/* flex-direction:column; */gap:15px;flex-wrap: wrap;justify-content: end !important;!i;!;}
     .crnt-page-head {flex-direction:column;}
     .current-pg-actions{flex-wrap:wrap;justify-content:center;}
     .dashboard-bradcrumb .page-title h5{font-size:20px;}
@@ -63,6 +64,10 @@
     .x_panel .table-sec {padding: 12px;}
     .center-buttons {flex-direction: column;}
     table.dataTable.nowrap th {text-wrap: nowrap;padding-right: 30px !important;}
+    .main-inner-area > .container > .row > .col-12 {padding: 0;}
+    .main-inner-area  .main-inner-bg {padding: 15px;}
+    .main-inner-area  .main-inner-bg .accordion-body {padding: 12px;}
+
     /* Dashboard Main Content End  */
     /* Footer CSS Start  */
     .footer-sec{font-size:14px;}

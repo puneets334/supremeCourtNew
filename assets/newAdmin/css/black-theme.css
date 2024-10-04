@@ -1,5 +1,5 @@
 /* black theme css old file 25-09-24  */
-
+.login-page.black-theme {background-color: #111111;color: #fff;}
 /* Header CSS Start  */
 .black-theme .mngmntHeader .top-right-nav{background: #222222;}
 .black-theme .mngmntHeader .top-right-nav img.txt-icon{filter: invert(0.45) sepia(1) saturate(10) hue-rotate(30deg) brightness(1.4);}
@@ -114,3 +114,10 @@
 /* black theme css old 25-09-24  */ 
 .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button {background: #555555 !important;color: #ff0 !important;border: 1px solid #ffffff52 !important;}
 .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button.current, .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button:hover { background: #333 !important;color: #ff0 !important;}
+.black-theme .card-body {background: #333333;}
+.black-theme .bg-white {background: #333333 !important;}
+.black-theme .bg-primary {background: #000000 !important;}
+.black-theme .card {border: 1px solid #0000006b !important;}
+.black-theme .text-black{color: #fff!important;}
+.black-theme .card-body .quick-btn {border: 1px solid #7c7c7c;}
+.login-page.black-theme {background-color: #111111;color: #fff;}

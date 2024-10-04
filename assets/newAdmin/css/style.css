@@ -8002,7 +8002,7 @@ textarea.form-control.cus-form-ctrl {
 }
 
 .dashboardLeftNav li a.btn-link i {
-    margin-right: 10px;
+    margin-right: 10px;font-size: 12px;
 }
 
 .dashboardLeftNav li a.btn-link:hover,
@@ -8013,9 +8013,9 @@ textarea.form-control.cus-form-ctrl {
     box-shadow: none;
 }
 
-/* .dashboardLeftNav a.btn.btn-link.collapsed i:before{content:'\f067';}
-.dashboardLeftNav a.btn.btn-link i:before{content:'\f068';}
-.dashboardLeftNav li.health.actve .collapsed[aria-expanded="true"] i:before{content:'\f068';} */
+.dashboardLeftNav .accordion-button.collapsed i:before{content:'\f078';}
+.dashboardLeftNav li .accordion-button i:before{content:'\f078';}
+.dashboardLeftNav li .accordion-button[aria-expanded="true"] i:before{content:'\f077';}
 
 
 
@@ -8533,3 +8533,22 @@ table.dataTable thead .sorting_asc:after {
 label{font-size: 14px !important;margin-bottom: 0px !important;color: #000;font-family: 'noto_sansmedium';}
 .dashbord-tile .tile-title:focus-within , .dashbord-tile .tile-subtitle:focus-within, .dashbord-tile .main-count:focus-within, .application-tile-sections .applictin-tile-sec .appliction-til-nam:focus-within{outline: 1px dashed #000;}
 table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;border-radius: 28px;}
+/* ---------- */
+.mngmntHeader  ul li.text-size:hover .font-action-sec{display: block;}
+.mngmntHeader .font-action-sec{position: absolute;z-index: 99;width: 100%;padding: 12px 0 0;background: #ff000000;top: 14px;display: none;}
+.mngmntHeader .font-action-sec:before {content: '';position: absolute;top: 3px;left: 19px;height: 10px;width: 16px;border-left: 7px solid transparent;border-right:7px solid transparent;border-bottom: 7px solid #3469d2;}
+.mngmntHeader .font-action-sec ul {list-style: none;padding: 15px 0;margin: 0;background: #3469d2;border-radius: 15px;display: inline-block;}
+.mngmntHeader ul li.text-size .font-action-sec ul a{padding: 12px;width: 100%;}
+.mngmntHeader .font-action-sec ul li {padding: 0 15px;}
+.mngmntHeader .font-action-sec ul li a{color: #fff !important;}
+.mngmntHeader .font-action-sec ul li:hover {background: #0d48be;}
+.mngmntHeader ul li.text-size {position: relative;}
+/* ---------- */
+.dash-card .table-sec table#datatable-responsive-sc_cases .btn {background: #0d48be;color: #fff;padding: 0px 7px;text-align: center;width: 100%;justify-content: space-between;font-size: 14px;}
+.dash-card .table-sec table#datatable-responsive-sc_cases .btn.collapsed:after{content:"\f078";font: normal normal normal 14px / 1 FontAwesome;font-size: 8px;}
+.dash-card .table-sec table#datatable-responsive-sc_cases .btn:after{content:"\f077";font: normal normal normal 14px / 1 FontAwesome;margin-left: 6px;font-size: 8px;}
+.dash-card .table-sec table#datatable-responsive-sc_cases td .accordion-collapse {background: #e3e3e3;padding: 9px;border-radius: 0 0 21px 21px;margin-bottom: 5px;}
+/* ---------- */
+.bg-primary {background-color: #0d48be!important;}
+.mob-p-sm-0 {padding: 0px !important;}
+p.kyc-btns-aligns {display: flex;gap: 5px;}
