@@ -8533,3 +8533,4 @@ table.dataTable thead .sorting_asc:after {
 label{font-size: 14px !important;margin-bottom: 0px !important;color: #000;font-family: 'noto_sansmedium';}
 .dashbord-tile .tile-title:focus-within , .dashbord-tile .tile-subtitle:focus-within, .dashbord-tile .main-count:focus-within, .application-tile-sections .applictin-tile-sec .appliction-til-nam:focus-within{outline: 1px dashed #000;}
 table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;border-radius: 28px;}
+.mycases-tbl th{width: 50% !important;}
