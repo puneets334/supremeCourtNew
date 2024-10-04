@@ -77,8 +77,8 @@
                         @else
                     <tr>
                         @endif
-                        <td><?php echo (int)($index+1); ?></td>
-                        <td>
+                        <td data-key="#"><?php echo (int)($index+1); ?></td>
+                        <td data-key="Case/App">
                             <div>
                                 <span class="uk-text-uppercase md-bg-grey-700 md-color-grey-50 uk-text-small" style="padding:0.2rem;">{{$application->efiling_type}}</span>
                                 <b class="uk-text-muted">{{$application->efiling_no}}</b>
@@ -107,7 +107,7 @@
                                                 {{$application->pendingstage}}</span></div>
                             @endif-->
                         </td>
-                        <td>{{date('d-m-Y H:i:s', strtotime($application->activated_on))}}</td>
+                        <td data-key="Started On">{{date('d-m-Y H:i:s', strtotime($application->activated_on))}}</td>
                     </tr>
                     @endforeach
                     </tbody>
