@@ -272,36 +272,41 @@ class AdvSignUp extends BaseController {
     }
 
     function upload_id_proof() {
+        $file = $this->request->getFile('advocate_image');
+        // pr($file);
+        // echo $fileName = $file->getName().'<br>';
+        // echo 'file size       '. $fileSize = $file->getSize().'<br>';
+        // die;
         if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Only JPEG/JPG are allowed in ID proof !</div>');
+            $this->session->setFlashdata('msg', 'Only JPEG/JPG are allowed in ID proof');
             redirect('register/AdvSignUp/upload');
             exit(0);
         }
         if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Only JPEG/JPG are allowed in ID proof !</div>');
+            $this->session->setFlashdata('msg', 'Only JPEG/JPG are allowed in ID proof');
             redirect('register/AdvSignUp/upload');
             exit(0);
         }
         if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
 
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Only JPEG/JPG are allowed in ID proof !</div>');
+            $this->session->setFlashdata('msg', 'Only JPEG/JPG are allowed in ID proof');
             redirect('register/AdvSignUp/upload');
             exit(0);
         }
         if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
 
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">ID proof Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !</div>');
+            $this->session->setFlashdata('msg', 'ID proof Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores');
             redirect('register/AdvSignUp/upload');
             exit(0);
         }
         if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">ID proof Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!</div>');
+            $this->session->setFlashdata('msg', 'ID proof Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores');
             redirect('register/AdvSignUp/upload');
             exit(0);
         }
         if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
             $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">ID proof Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!</div>');
+            $this->session->setFlashdata('msg', 'ID proof Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB');
             redirect('register/AdvSignUp/upload');
             exit(0);
         }
@@ -319,19 +324,15 @@ class AdvSignUp extends BaseController {
 
         $_SESSION['image_and_id_view'] = $data;
         $_SESSION['profile_image'] = $data;
-        echo '<pre>'; print_r($_SESSION); echo '<br>';
-        echo '<pre>'; print_r($data); echo '<br>';
-        echo '<pre>'; print_r($photo_file_path); echo '<br>';
-        echo '<pre>'; print_r($new_filename);  
         $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
 
         $file_path_thumbs = '';
         if (!$thumb) {
             $_SESSION['login']['photo_path'] = $file_path_thumbs;
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Please Upload Image!</div>');
+            $this->session->setFlashdata('msg', 'Please Upload Image!');
             return redirect()->to('register/AdvSignUp/upload');
         } else {
-            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center flashmessage">Successful!</div>');
+            $this->session->setFlashdata('msg', 'Successful!');
             return redirect()->to('register/AdvSignUp/upload');
         }
     }
@@ -403,7 +404,7 @@ class AdvSignUp extends BaseController {
         $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
 
         if (!empty($already_exist)) {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Already Registerd Email!</div>');
+            $this->session->setFlashdata('msg', 'Already Registerd Email!');
             redirect('register/AdvSignUp');
         } else {
             $one_time_password= $_SESSION['user_created_password']; //$this->generateRandomString();
@@ -414,10 +415,10 @@ class AdvSignUp extends BaseController {
                 $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
                 send_mail_msg($to_email, $subject, $message);
                 //END
-                $this->session->setFlashdata('msg', '<div class="uk-alert-success" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Successful</p> </div>');
+                $this->session->setFlashdata('msg', 'Registration Successful');
                 return redirect()->to(base_url('/'));
             } else {
-                $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">Registration Failed</p> </div>');
+                $this->session->setFlashdata('msg', 'Registration Failed');
                 return redirect()->to(base_url('register/AdvSignUp'));
             }
         }

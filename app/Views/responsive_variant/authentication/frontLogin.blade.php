@@ -58,14 +58,14 @@
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">User Name</label>
-                                    <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="txt_username" value="{{@$session->get('user')}}" placeholder="UserId/Mobile/Email Id" maxlength="60">
+                                    <label for="" class="form-label">User Name <span style="color: red;">*</span></label>
+                                    <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="txt_username" value="{{@$session->get('user')}}" placeholder="UserId/Mobile/Email Id" maxlength="60" required>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Password</label>
-                                    <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="Test@4321">
+                                    <label for="" class="form-label">Password <span style="color: red;">*</span></label>
+                                    <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="" required>
                                     @if(!empty($session->get('impersonated_user_authentication_mobile_otp')))
                                     <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
                                     @endif

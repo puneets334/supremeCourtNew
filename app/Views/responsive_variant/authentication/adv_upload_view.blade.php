@@ -57,7 +57,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
-                                            <img src="<?php echo $_SESSION['image_and_id_view']['profile_photo']; ?>" width="250" height="250" alt="profile photo" style="border: 1px solid;" uk-img>
+                                            <img src="<?php echo $_SESSION['image_and_id_view']['profile_photo']; ?>" width="250" height="250" alt="profile photo" style="border: 1px solid;">
                                         <?php } ?>
                                     </div>
                                 </div>

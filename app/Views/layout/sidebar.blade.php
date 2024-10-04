@@ -18,10 +18,10 @@ $segment = service('uri');
             </div>
             <?php
             $profile_model = new \App\Models\Profile\ProfileModel();
-            $profile = $profile_model->getProfileDetail(getSessionData('login')['userid']);
+            $profile = !empty(getSessionData('login')) ? $profile_model->getProfileDetail(getSessionData('login')['userid']) : '';
             $get_valu = help_id_url(uri_string());
             $help_page = explode('.', $get_valu);
-            $login_time = $profile_model->userLastLogin(getSessionData('login')['id']);
+            $login_time = !empty(getSessionData('login')) ? $profile_model->userLastLogin(getSessionData('login')['id']) : '';
             $last_login = (!empty($login_time) && $login_time->login_time != '') ? date('d-m-Y h:i:s A', strtotime($login_time->login_time)) : null;
             if (getSessionData('photo_path') != '') {
                 $profile_photo = str_replace('/photo/', '/' . 'thumbnail' . '/', getSessionData('login')['photo_path']);
@@ -35,7 +35,7 @@ $segment = service('uri');
                     <img src="<?= base_url() . 'assets/newAdmin/' ?>images/profile-img.png" alt="">
                 </div>
                 <div class="profile-info">
-                    <h6><?= getSessionData('login')['first_name'] ?> <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
+                    <h6><?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?> <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
                     <a href="<?= base_url('profile') ?>" class="profile-lnk link-txt">User Profile</a>
                 </div>
             </div>

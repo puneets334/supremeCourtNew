@@ -84,9 +84,19 @@ function playAudio() {
 function generateCaptcha(captcha) {
     const spokenText = Array.from(captcha)
         .map(char => {
-            return char === char.toUpperCase() ? `Capital ${char}` : `small ${char}`;
+            if(char === isInt(char)){
+                return char;
+            }else{
+                
+            }
+            return (char === char.toUpperCase() ? `Capital ${char}` : (char === isInt(char)) ? char : `small ${char}`) ;
         })
         .join(", ");
 
     return { captcha, spokenText };
 }
+
+function isInt(value) {
+    var x = parseFloat(value);
+    return !isNaN(value) && (x | 0) === x;
+  }
