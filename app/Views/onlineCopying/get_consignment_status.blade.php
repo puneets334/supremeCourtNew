@@ -36,10 +36,10 @@
                         ?>
 
                         <tr>
-                            <td><?= date('d-M-Y', strtotime($value['event_date'])) ?></td>
-                            <td><?= date('h:i A', strtotime($value['event_time'])) ?></td>
-                            <td><?= $value['event_type'] ?></td>
-                            <td><?= $value['office'] ?></td>
+                            <td data-key="Date"><?= date('d-M-Y', strtotime($value['event_date'])) ?></td>
+                            <td data-key="Time"><?= date('h:i A', strtotime($value['event_time'])) ?></td>
+                            <td data-key="Event"><?= $value['event_type'] ?></td>
+                            <td data-key="Office"><?= $value['office'] ?></td>
                         </tr>
 
 

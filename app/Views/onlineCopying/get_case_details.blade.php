@@ -592,7 +592,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
            }
        ?>
                        <tr>
-                           <td class="pt-0">
+                           <td class="pt-0" data-key="Checkbox">
                                <label class="d-none" title="Checkbox <?=$sno?>" for="chkdocjo_<?=$sno?>"><?=$sno?></label>
                                <input type="checkbox" name="chkdocjo_<?php echo $sno; ?>" id="chkdocjo_<?php echo $sno; ?>" data-order_type_id="<?=$row1['judgement_order_code']?>" class="cl_checks"/>
 
@@ -613,7 +613,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
 
 
                            </td>
-                           <td>
+                           <td data-key="Document Details">
                                 <span style="display:none;" id="spjudgementordercode_<?php echo $sno; ?>"><?=$row1['judgement_order_code'];?></span>                               
                                 <span id="spjudgementorder_<?php echo $sno; ?>"><?php
                                     if($row1['judgement_order'] == "Record of Proceedings" || $row1['judgement_order'] == "Judgement"){
@@ -630,17 +630,17 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
                                    ?>
                                 </span>
                            </td>
-                           <td>
+                           <td data-key="Order/File Date">
                                <?php
 
-                               $hide_order_dt = "";
+                               $hide_order_dt = "Order/File Date";
                                if($row1['orderdate'] == '1970-01-01 00:00:00' OR $row1['orderdate'] == '0000-00-00 00:00:00'){
                                    $hide_order_dt = "class='d-none'";
                                }
                                ?>
                                <span <?=$hide_order_dt?> id="sporderdate_<?php echo $sno; ?>"><?php echo date('d-m-Y',strtotime($row1['orderdate'])); ?></span>
                            </td>
-                           <td>
+                           <td data-key="No. of Pages">
                                <?php
                                //vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages
 

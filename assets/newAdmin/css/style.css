@@ -8552,3 +8552,4 @@ table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;bor
 .bg-primary {background-color: #0d48be!important;}
 .mob-p-sm-0 {padding: 0px !important;}
 p.kyc-btns-aligns {display: flex;gap: 5px;}
+.mycases-tbl th{width: 50% !important;}
