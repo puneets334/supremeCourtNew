@@ -30,7 +30,20 @@
                     <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
                     <li><a class="hide" href="<?php echo base_url('online_copying/screen_reader');?>">Screen Reader Access</a></li>
                     <li class="text-size">
-                    <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-icon.svg" alt="" class="txt-icon"></a>
+                        <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-icon.svg" alt="" class="txt-icon"></a>
+                        <div class="font-action-sec">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" id="text_resize_increase">A+</a>
+                                </li>
+                                <li>
+                                     <a href="javascript:void(0)" id="text_resize_reset">A</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" id="text_resize_decrease">A-</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <!-- <li>
                         <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>

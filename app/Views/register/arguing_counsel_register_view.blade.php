@@ -121,8 +121,10 @@ $session = service('session');
                 <div class="col-12 col-sm-12 col-md-7 col-lg-7 login-banner">
                     <div class="login-banner-inner">
                         <div class="banimg-sec">
-                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt=""
-                                class="img-fluid">
+                            <!-- <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt=""
+                                class="img-fluid"> -->
+                                <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo-full.png" alt=""
+                                class="img-fluid logo-at-banner">
                         </div>
                         <div class="banner-txts">
                             <?php

@@ -118,20 +118,32 @@ class ForgetPasswordController extends BaseController
             $this->session->setFlashdata('msg', 'Captcha is required!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }
-        $rules = [
-            "adv_email" => [
-                "label" => "Email",
-                "rules" => "valid_email"
-            ],
-            "adv_mobile" => [
-                "label" => "Mobile",
-                "rules" => "numeric|trim|min_length[10]|max_length[10]"
-            ],
-            "userCaptcha" => [
-                "label" => "Captcha",
-                "rules" => "required|trim"
-            ],
-        ];
+
+// pr($this->request->getPost('adv_mobile') . '--------' . $this->request->getPost('adv_email'));
+
+        if(!empty($this->request->getPost('adv_mobile')) && empty($this->request->getPost('adv_email'))) {
+            $rules = [
+                "adv_mobile" => [
+                    "label" => "Mobile",
+                    "rules" => "numeric|trim|min_length[10]|max_length[10]"
+                ],
+                "userCaptcha" => [
+                    "label" => "Captcha",
+                    "rules" => "required|trim"
+                ],
+            ];
+        } elseif (!empty($this->request->getPost('adv_email')) && empty($this->request->getPost('adv_mobile'))) {
+            $rules = [
+                "adv_email" => [
+                    "label" => "Email",
+                    "rules" => "valid_email|trim"
+                ],
+                "userCaptcha" => [
+                    "label" => "Captcha",
+                    "rules" => "required|trim"
+                ],
+            ];
+        }
         if ($this->validate($rules) === FALSE) {
             $data = [
                 'validation' => $this->validator,
@@ -153,18 +165,22 @@ class ForgetPasswordController extends BaseController
         }    
         // Check if mobile and email exist
         $mobile_exist = $this->Register_model->check_already_reg_mobile($adv_mobile);
+        
         $email_exist = $this->Register_model->check_already_reg_email(strtoupper($adv_email));    
         if (!$mobile_exist || !$email_exist) {
             $this->session->setFlashdata('msg', 'Not Registered With This Mobile Number or Email ID!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }    
+
         // Set name array based on input
         $name_array = [];
         if (!empty($adv_mobile)) {
+
             $name_array = ['first_name' => $mobile_exist[0]['first_name'], 'last_name' => $mobile_exist[0]['last_name']];
         } elseif (!empty($adv_email)) {
             $name_array = ['first_name' => $email_exist[0]['first_name'], 'last_name' => $email_exist[0]['last_name']];
         }    
+
         // Generate OTPs and set session data
         //$mobile_otp_is = $this->generateNumericOTP();
         //$email_otp_is = $this->generateNumericOTP();
@@ -181,14 +197,23 @@ class ForgetPasswordController extends BaseController
             'register_type' => $this->request->getPost('register_type'),
             'start_time' => $startTime,
             'end_time' => $endTime
-        ], $name_array);    
+        ], $name_array);
         // Send OTP via SMS or email
-        if (!empty($adv_mobile)) {
-            // Send SMS
+        if (!empty($adv_mobile)) {            
+            $typeId="38";
+            $mobileNo=trim($adv_mobile);
+            $smsText="OTP for changing SC-EFM password is: ".$mobile_otp_is." ,Please do not share it with any one. - Supreme Court of India";
+            sendSMS($typeId,$mobileNo,$smsText,SCISMS_Change_Password_OTP);
+            $this->session->setFlashdata('msg', 'OTP sent successfully!');
         } elseif (!empty($adv_email)) {
-            // Send email
+            $to_email=trim($adv_email);
+            $subject="SC-EFM forget password OTP";
+            $message="OTP for changing SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
+            send_mail_msg($to_email, $subject, $message);
+            $this->session->setFlashdata('msg', 'OTP sent successfully!');
         }    
         return redirect()->to(base_url('Register/AdvOtp'));
+        // return redirect()->route('Register/AdvOtp');
     }
     
     public function AdvOtp()

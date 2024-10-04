@@ -16,13 +16,13 @@
                         <div class="font-action-sec">
 									<ul>
 										<li>
-											<a href="javascript:void(0)" onclick="fontIncrease()">A+</a>
+											<a href="javascript:void(0)" id="text_resize_increase">A+</a>
 										</li>
 										<li>
-											<a href="javascript:void(0)" onclick="fontNormal()">A</a>
+											<a href="javascript:void(0)"  id="text_resize_reset">A</a>
 										</li>
 										<li>
-											<a href="javascript:void(0)" onclick="fontDecrease()">A-</a>
+											<a href="javascript:void(0)"   id="text_resize_decrease">A-</a>
 										</li>
 									</ul>
 								</div>

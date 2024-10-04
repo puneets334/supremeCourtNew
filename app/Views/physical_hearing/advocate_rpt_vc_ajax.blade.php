@@ -84,13 +84,13 @@
                                                 <?php foreach($list as $value) { ?>
                                                     <tr>
                                                         <th style="width:5%;">#</th>
-                                                        <td class="lead text-center"><?=  date("d-m-Y", strtotime($value['next_dt'])); ?> </td>
-                                                        <td class="lead text-center"><?= $value['court_no']; ?> </td>
-                                                        <td class="lead text-center"><?= $value['item_number'] ;?></td>
-                                                        <td class="lead text-center"><?= $value['case_count'] ;?></td>
-                                                        <td class="lead text-center"><?= $value['consent_for_cases'] ;?></td>
-                                                        <th class="lead text-center"><?= $value['consent'] ;?></th>
-                                                        <td class="lead text-center"><?= $value['updated_on'] ;?></td>
+                                                        <td class="lead text-center" data-key="List Date"><?=  date("d-m-Y", strtotime($value['next_dt'])); ?> </td>
+                                                        <td class="lead text-center" data-key="Court No"><?= $value['court_no']; ?> </td>
+                                                        <td class="lead text-center" data-key="Item No"><?= $value['item_number'] ;?></td>
+                                                        <td class="lead text-center" data-key="Total Cases"><?= $value['case_count'] ;?></td>
+                                                        <td class="lead text-center" data-key="Consent given for Cases"><?= $value['consent_for_cases'] ;?></td>
+                                                        <th class="lead text-center" data-key="Mode of Hearing"><?= $value['consent'] ;?></th>
+                                                        <td class="lead text-center" data-key="Updated On"><?= $value['updated_on'] ;?></td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>

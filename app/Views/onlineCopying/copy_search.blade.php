@@ -61,13 +61,13 @@
                             <br>
                             <div id="search_application_no">
                                 <div class="row">
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                        <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                    <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                        <div class="row mb-3">
+                                            <!-- <div class="row w-100 align-items-center"> -->
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">Type *</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <select id="application_type" name="application_type" class="form-select cus-form-ctrl"
                                                     aria-labelledby="application_type_addon">
                                                         <option value="-1">Select</option>
@@ -78,28 +78,28 @@
                                                         <?php } ?>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                        <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                    <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                        <div class="row mb-3">
+                                            <!-- <div class="row w-100 align-items-center"> -->
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">Application No</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <input class="form-control cus-form-ctrl" id="application_no" name="application_no" maxlength="10" placeholder="Application No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text" required>
                                                 </div>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
-                                        <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                    <div class="col-lg-2 col-md-3 col-sm-12 col-xs-12">
+                                        <div class="row mb-3">
+                                            <!-- <div class="row w-100 align-items-center"> -->
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label"> Application Year</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <select class="form-select cus-form-ctrl" aria-label="Default select example" id="application_year" name="application_year" style="width: 100%" required>
                                                         <?php
                                                         $end_year = 48;
@@ -111,16 +111,16 @@
                                                         ?>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            <!-- </div> -->
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
                                         <div class="save-form-details">
                                             <div class="save-btns">
                                                 <button type="button" class="quick-btn gray-btn" id="sub" value="SEARCH">Search</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <div id="search_crn">
