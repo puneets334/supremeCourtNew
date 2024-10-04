@@ -118,19 +118,19 @@
                                                                             @php $res_name = isset($advocate['diary_details']->res_name)?$advocate['diary_details']->res_name:''; @endphp
                                                                         @endif
                                                                         <tr>
-                                                                            <td>{{ $sno++ }}</td>
-                                                                            <td>{{ date('d-m-Y', strtotime($advocate['list_date'])) }}</td>
+                                                                            <td data-key="SNo.">{{ $sno++ }}</td>
+                                                                            <td data-key="Listed On">{{ date('d-m-Y', strtotime($advocate['list_date'])) }}</td>
 
-                                                                            <td>{{ $advocate['court_no'] }}</td>
-                                                                            <td>{{ $advocate['item_no'] }}</td>
-                                                                            <td> <?php  echo isset($advocate['diary_details']->reg_no_display)? $advocate['diary_details']->diary_no:''; ?></td>                                                                          
-                                                                            <td>
+                                                                            <td data-key="Court No.">{{ $advocate['court_no'] }}</td>
+                                                                            <td data-key="Item No.">{{ $advocate['item_no'] }}</td>
+                                                                            <td data-key="Case No."> <?php  echo isset($advocate['diary_details']->reg_no_display)? $advocate['diary_details']->diary_no:''; ?></td>                                                                          
+                                                                            <td data-key="Cause Title">
                                                                                 {{ $pet_name }}<br>
                                                                                 Vs.
                                                                                 <br>
                                                                                 {{ $res_name }}
                                                                             </td>
-                                                                            <td>
+                                                                            <td data-key="Name of Advocates">
                                                                                 <div>
                                                                                     @if( $advocate['appearing_for'] == 'P')
                                                                                         <u><b>For Petitioner</b></u>

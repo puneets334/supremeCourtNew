@@ -67,17 +67,17 @@
                                                         @php $res_name = $advocate['res_name']; @endphp
                                                     @endif
                                                 <tr>
-                                                    <td><?php  echo $sno; ?></td>
-                                                    <td>{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
-                                                    <td>{{ $advocate['courtno'] }}</td>
-                                                    <td>{{ $advocate['brd_slno'] }}</td>
-                                                    <td>{{ $advocate['reg_no_display'] ? $advocate['diary_no']:'' }}</td>
-                                                    <td> {{ $pet_name }}<br>
+                                                    <td data-key="SNo."><?php  echo $sno; ?></td>
+                                                    <td data-key="Listed On">{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
+                                                    <td data-key="Court No.">{{ $advocate['courtno'] }}</td>
+                                                    <td data-key="Item No.">{{ $advocate['brd_slno'] }}</td>
+                                                    <td data-key="Case No.">{{ $advocate['reg_no_display'] ? $advocate['diary_no']:'' }}</td>
+                                                    <td data-key="Cause Title"> {{ $pet_name }}<br>
                                                         Vs.
                                                         <br>
                                                         {{ $res_name }}
                                                     </td>
-                                                    <td>
+                                                    <td data-key="For Appearance">
 
                                                         @if($advocate['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME)
                                                             <span   data-courtno="{{$advocate['courtno']}}"
