@@ -124,7 +124,7 @@ class AdvOtp extends BaseController {
                     $this->session->setFlashdata('msg', 'OTP Verification Successful !');
                     if(!empty($_SESSION['adv_details']['register_type']) && $_SESSION['adv_details']['register_type'] == 'Advocate'){
                         $_SESSION['self_register_arguing_counsel'] = true;
-                        return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+                        return redirect()->to(base_url('arguingCounselCompleteDetails'));
                     } else{
                         $_SESSION['self_register_arguing_counsel'] = false;
                         return redirect()->to(base_url('register/AdvSignUp'));

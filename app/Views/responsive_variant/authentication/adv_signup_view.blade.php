@@ -11,9 +11,9 @@
     .mt22 p{margin-top: -22px;}
 </style>
 <style>
-    .datepicker-dropdown {
+    /* .datepicker-dropdown {
         margin-top: 300px !important;
-    }
+    } */
 
     span.select2 {
         width: 100% !important;
@@ -130,7 +130,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
 
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
+                                    <div class="mb-3" id="targetLayer">
                                         <?php if (!empty($_SESSION['profile_image']['profile_photo'])) { ?>
                                                 <img  src="<?php echo $_SESSION['profile_image']['profile_photo']; ?>"  height="94" width="94" />
                                             <?php } else if (!empty($_SESSION['kyc_configData']['UidData']['Pht'])) {
@@ -178,13 +178,13 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Name</label>
+                                        <label for="" class="form-label">Name <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Date of Birth</label>
+                                        <label for="" class="form-label">Date of Birth <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" value="<?php
                                                 if (!empty($post_datas[2])) {
                                                     echo date("d/m/Y", strtotime(htmlentities($post_datas[2], ENT_QUOTES)));
@@ -198,13 +198,13 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Mobile Number</label>
+                                        <label for="" class="form-label">Mobile Number <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" id="form-horizontal-text" name='mobile' type="text" value="<?php echo $_SESSION['adv_details']['mobile_no']; ?>" placeholder="Mobile" minlength="10" maxlength="10" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Email ID</label>
+                                        <label for="" class="form-label">Email ID <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" id="form-horizontal-text" value="<?php echo $_SESSION['adv_details']['email_id']; ?>" placeholder="Email ID" name='email_id' readonly>
                                     </div>
                                 </div>
@@ -219,7 +219,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 ?>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Gender</label><br>
+                                        <label for="" class="form-label">Gender <?php echo $star_requered; ?></label><br>
                                         <label class="radio-inline"><input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1"> Male </label>
                                             <label class="radio-inline"><input type="radio" <?php echo_data($female) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(2), ENT_QUOTES); ?>" maxlength="1"> Female </label>
                                             <label class="radio-inline"><input type="radio" id="gender" name="gender"  value="<?php echo htmlentities(url_encryption(3), ENT_QUOTES); ?>" maxlength="1"> Other </label>
@@ -258,7 +258,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Pin Code <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="pincode" name="pincode" <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?php echo htmlentities($uid_data_pincode, ENT_QUOTES); ?>" placeholder="Pincode" maxlength="6">
+                                        <input class="form-control cus-form-ctrl" id="pincode" name="pincode" <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?php echo htmlentities($uid_data_pincode, ENT_QUOTES); ?>" placeholder="Pincode" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                             </div>
@@ -295,20 +295,37 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
 @endsection
 @push('script')
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<!-- form--end  -->
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> -->
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
+<!-- <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script> -->
+
+<!-- jQuery (Ensure this is included first) -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Bootstrap Datepicker CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+
+<!-- Select2 CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<!-- Select2 JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
 <script type="text/javascript">
     var base_url = '<?php echo base_url(); ?>';
 </script>
@@ -322,7 +339,8 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
         changeYear: true,
         yearRange: "-100:-1",
         format: "dd/mm/yyyy",
-        defaultDate: '-40y'
+        // defaultDate: '-40y'
+        maxDate: new Date
     }); 
 
     $('#state_id').change(function () {

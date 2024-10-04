@@ -230,7 +230,6 @@ class RegisterModel extends Model
         if (isset($params['ref_m_usertype_id']) && !empty($params['ref_m_usertype_id'])) {
             $builder = $this->db->table('efil.tbl_users tu');
             $builder->SELECT('tu.id,case when (last_name is not null AND last_name !=\'NULL\') then concat(first_name,\' \' ,last_name) else first_name  end  as first_name');
-            // $builder->FROM();
             $builder->WHERE('tu.ref_m_usertype_id', (int)$params['ref_m_usertype_id']);
             $builder->WHERE('tu.is_deleted', FALSE);
             $builder->WHERE('tu.is_active', '1');
@@ -241,6 +240,7 @@ class RegisterModel extends Model
             $builder->orderBy('tu.first_name', 'ASC');
             $query = $builder->get();
             $output = $query->getResultArray();
+            return $output;
         }
         return $output;
     }
