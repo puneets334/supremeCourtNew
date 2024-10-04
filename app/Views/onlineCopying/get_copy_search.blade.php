@@ -202,16 +202,16 @@ $disposed_flag = array('F', 'R', 'D', 'C', 'W');
 
                                 ?>
                                     <tr>
-                                        <td>
+                                        <td data-key="SNo.">
                                             <?= $sno++; ?>
                                         </td>
-                                        <td>
+                                        <td data-key="Document Type">
                                             <?= $row1['order_name']; ?>
                                         </td>
-                                        <td>
+                                        <td data-key="Date">
                                             <?= date("d-m-Y", strtotime($row1['order_date'])); ?>
                                         </td>
-                                        <td>
+                                        <td data-key="Copies">
                                             <?= $row1['number_of_copies']; ?>
                                         </td>
                                     </tr>

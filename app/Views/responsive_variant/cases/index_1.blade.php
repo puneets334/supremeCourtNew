@@ -188,12 +188,12 @@ a.quick-btn.pull-right:hover {
                                     <table id="example" class="table table-striped custom-table">
                                         <tfoot>
                                             <tr>
-                                                <th><input type="hidden" placeholder="Search"></th>
-                                                <th><input type="hidden" placeholder="Search"></th>
-                                                <th><input type="hidden" placeholder="Search"></th>
-                                                <th><input type="hidden" placeholder="Search"  id="caseStatus" class="caseStatus"></th>
-                                                <th><input type="hidden" placeholder="Search" id="ADVStatus" class="ADVStatus"></th>
-                                                <th><input type="hidden" placeholder="Search" id="RegStatus" class="RegStatus"></th>
+                                                <td><input type="hidden" placeholder="Search"></td>
+                                                <td><input type="hidden" placeholder="Search"></td>
+                                                <td><input type="hidden" placeholder="Search"></td>
+                                                <td><input type="hidden" placeholder="Search"  id="caseStatus" class="caseStatus"></td>
+                                                <td><input type="hidden" placeholder="Search" id="ADVStatus" class="ADVStatus"></td>
+                                                <td><input type="hidden" placeholder="Search" id="RegStatus" class="RegStatus"></td>
                                             </tr>
                                         </tfoot>
                                         <thead>
@@ -314,8 +314,8 @@ a.quick-btn.pull-right:hover {
                                                     mandatory background hidden area search click top header (Registered Cases, Unregistered Cases)
                                                     <b class="scif" ng-if="case.registrationnumber==''">Unr</b><b class="scif" ng-if="case.registrationnumber!=''">Reg</b>
                                                 </td> -->
-                                                <td ng-bind="$index + 1"></td>
-                                                <td>
+                                                <td ng-bind="$index + 1" data-key="S.N"></td>
+                                                <td data-key="Diary / Reg. No.">
                                                     <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryid}}" data-diary_year="">
                                                         <span class="uk-text-muted" ng-bind="case.diaryid"></span>
                                                         <br>
@@ -324,7 +324,7 @@ a.quick-btn.pull-right:hover {
                                                     <!--mandatory background hidden area search click top header (Appearing for Petitioner,Appearing for Respondent)-->
                                                     <b class="scif" ng-if="case.advocatetype=='P'" >AfP</b><b class="scif" ng-if="case.advocatetype=='R' || case.advocatetype=='I'" >AfR</b>
                                                 </td>
-                                                <td>
+                                                <td data-key="Cause Title">
                                                     <div>
                                                         <div>
                                                             <b ng-if="case.advocatetype!='P'">P:</b>
@@ -339,8 +339,8 @@ a.quick-btn.pull-right:hover {
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td ng-bind="case.status=='P' ? 'Pending' : 'Disposed'"></td>
-                                                <td ng-if="case.assignedby">
+                                                <td ng-bind="case.status=='P' ? 'Pending' : 'Disposed'" data-key="Status"></td>
+                                                <td ng-if="case.assignedby" data-key="">
                                                     <span class="uk-text-muted" ng-bind="case.assignedby"></span>
                                                     <br>
                                                     <span class="uk-text-emphasis" ng-bind="case.filedon"></span>
@@ -354,7 +354,7 @@ a.quick-btn.pull-right:hover {
                                                     <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryid) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryid}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
                                                     <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b> <!--mandatory background hidden area search click top header (Listed Cases)-->
                                                 </td>
-                                                <td>
+                                                <td data-key="...">
                                                     <button type="button" class="uk-icon-button" uk-icon="more-vertical" ng-if="case.status=='P'"></button>
                                                     <div class="uk-padding-small md-bg-grey-700" uk-dropdown="pos:left-center;mode:click;" ng-if="case.status=='P'">
                                                         <ul class="uknav-parent-icon uk-dropdown-nav"  uk-nav>

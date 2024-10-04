@@ -42,50 +42,50 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>NVDA</td>
-                                            <td>Free</td>
-                                            <td><a href="http://www.nvda-project.org/" target="_blank" title="External website that opens in a new window :- Non Visual Desktop Access (NVDA)">http://www.nvda-project.org/</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">NVDA</td>
+                                            <td data-key="Free / Commercial">Free</td>
+                                            <td data-key="URL"><a href="http://www.nvda-project.org/" target="_blank" title="External website that opens in a new window :- Non Visual Desktop Access (NVDA)">http://www.nvda-project.org/</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>SAFA</td>
-                                            <td>Free</td>
-                                            <td><a href="http://safa-reader.software.informer.com/download/" target="_blank" title="External website that opens in a new window :- Screen Access For All (SAFA)">http://safa-reader.software.informer.com/download/</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">SAFA</td>
+                                            <td data-key="Free / Commercial">Free</td>
+                                            <td data-key="URL"><a href="http://safa-reader.software.informer.com/download/" target="_blank" title="External website that opens in a new window :- Screen Access For All (SAFA)">http://safa-reader.software.informer.com/download/</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>System Access To Go</td>
-                                            <td>Free</td>
-                                            <td><a href="http://www.satogo.com/" target="_blank" title="External website that opens in a new window :- System Access To Go">http://www.satogo.com/</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">System Access To Go</td>
+                                            <td data-key="Free / Commercial">Free</td>
+                                            <td data-key="URL"><a href="http://www.satogo.com/" target="_blank" title="External website that opens in a new window :- System Access To Go">http://www.satogo.com/</a><br />(External website, you are going to open a new window)</td>
 
                                         </tr>
                                         <tr>
-                                            <td>Thunder</td>
-                                            <td>Free</td>
-                                            <td><a href="http://www.screenreader.net/index.php?pageid=11" target="_blank" title="External website that opens in a new window :- Thunder">http://www.screenreader.net/index.php?pageid=11</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">Thunder</td>
+                                            <td data-key="Free / Commercial">Free</td>
+                                            <td data-key="URL"><a href="http://www.screenreader.net/index.php?pageid=11" target="_blank" title="External website that opens in a new window :- Thunder">http://www.screenreader.net/index.php?pageid=11</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>Web Anywhere</td>
-                                            <td>Free</td>
-                                            <td><a href="http://webanywhere.cs.washington.edu/wa.php" target="_blank" title="External website that opens in a new window :- Web Anywhere">http://webanywhere.cs.washington.edu/wa.php</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">Web Anywhere</td>
+                                            <td data-key="Free / Commercial">Free</td>
+                                            <td data-key="URL"><a href="http://webanywhere.cs.washington.edu/wa.php" target="_blank" title="External website that opens in a new window :- Web Anywhere">http://webanywhere.cs.washington.edu/wa.php</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>Hal</td>
-                                            <td>Commercial</td>
-                                            <td><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=5" target="_blank" title="External website that opens in a new window :- Hal">http://www.yourdolphin.co.uk/productdetail.asp?id=5</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">Hal</td>
+                                            <td data-key="Free / Commercial">Commercial</td>
+                                            <td data-key="URL"><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=5" target="_blank" title="External website that opens in a new window :- Hal">http://www.yourdolphin.co.uk/productdetail.asp?id=5</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>JAWS</td>
-                                            <td>Commercial</td>
-                                            <td><a href="http://www.freedomscientific.com/jaws-hq.asp" target="_blank" title="External website that opens in a new window :- JAWS">http://www.freedomscientific.com/jaws-hq.asp</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">JAWS</td>
+                                            <td data-key="Free / Commercial">Commercial</td>
+                                            <td data-key="URL"><a href="http://www.freedomscientific.com/jaws-hq.asp" target="_blank" title="External website that opens in a new window :- JAWS">http://www.freedomscientific.com/jaws-hq.asp</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>Supernova</td>
-                                            <td>Commercial</td>
-                                            <td><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=1" target="_blank" title="External website that opens in a new window :- Supernova">http://www.yourdolphin.co.uk/productdetail.asp?id=1</a><br />         (External website that opens in a new window)</td>
+                                            <td data-key="Screen Reader">Supernova</td>
+                                            <td data-key="Free / Commercial">Commercial</td>
+                                            <td data-key="URL"><a href="http://www.yourdolphin.co.uk/productdetail.asp?id=1" target="_blank" title="External website that opens in a new window :- Supernova">http://www.yourdolphin.co.uk/productdetail.asp?id=1</a><br />         (External website that opens in a new window)</td>
                                         </tr>
                                         <tr>
-                                            <td>Window-Eyes</td>
-                                            <td>Commercial</td>
-                                            <td><a href="http://www.gwmicro.com/Window-Eyes/" target="_blank" title="External website that opens in a new window :- Window-Eyes">http://www.gwmicro.com/Window-Eyes/</a><br />(External website, you are going to open a new window)</td>
+                                            <td data-key="Screen Reader">Window-Eyes</td>
+                                            <td data-key="Free / Commercial">Commercial</td>
+                                            <td data-key="URL"><a href="http://www.gwmicro.com/Window-Eyes/" target="_blank" title="External website that opens in a new window :- Window-Eyes">http://www.gwmicro.com/Window-Eyes/</a><br />(External website, you are going to open a new window)</td>
                                         </tr>
                                         </tbody>
                                     </table>
