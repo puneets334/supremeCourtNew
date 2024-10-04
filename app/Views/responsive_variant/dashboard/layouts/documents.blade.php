@@ -21,13 +21,13 @@
                         @foreach($documents as $index=>$document)
                             @if(isset($type) && !empty($type) && $type=='adjournment_requests')
                                 <tr>
-                                    <td><?php echo ($index+1); ?></td>
-                                    <td>
+                                    <td data-key="Sr. No."><?php echo ($index+1); ?></td>
+                                    <td data-key="Diary/Case No.">
                                         <?php if(isset($document->diary_number) && !empty($document->diary_number)) { echo (substr($document->diary_number,0,-4)."/".substr($document->diary_number,-4)); } ?>
                                         <br/>
                                         <?php if(isset($document->case_number) && !empty($document->case_number)) { echo $document->case_number; } ?>
                                     </td>
-                                    <td class="uk-table-link">
+                                    <td data-key="Listing Details" class="uk-table-link">
                                         <!--<a href="https://main.sci.gov.in/supremecourt/2018/27951/27951_2018_Order_05-Oct-2018.pdf" target="_blank">-->
                                         <!--<span class="uk-text-uppercase md-bg-grey-700 md-color-grey-50 uk-text-small" style="padding:0.2rem;">{{$document->typeName}}</span>-->
                                             <div>
@@ -40,7 +40,7 @@
                                             </div>
                                         <!--</a>-->
                                     </td>
-                                    <td>
+                                    <td data-key="Filed By/On">
                                         <?php if(isset($document->first_name) && !empty($document->first_name)) {
                                             echo $document->first_name;
                                         }
@@ -54,20 +54,20 @@
                                 </tr>
                             @else
                                 <tr>
-                                    <td><?php echo ($index+1); ?></td>
-                                    <td>
+                                    <td data-key="Sr. No."><?php echo ($index+1); ?></td>
+                                    <td data-key="Diary/Case No.">
                                         <?php if(isset($document->diaryId) && !empty($document->diaryId)) {
                                             echo (substr($document->diaryId,0,-4)."/".substr($document->diaryId,-4));
                                         }
                                         ?>
                                     </td>
-                                    <td class="uk-table-link">
+                                    <td data-key="Document" class="uk-table-link">
                                         <!--<a href="https://main.sci.gov.in/supremecourt/2018/27951/27951_2018_Order_05-Oct-2018.pdf" target="_blank">-->
                                             <span class="uk-text-uppercase md-bg-grey-700 md-color-grey-50 uk-text-small" style="padding:0.2rem;"><?php if(isset($document->typeName) && !empty($document->typeName)) { echo $document->typeName; } ?></span>
                                             <div><?php if(isset($document->title) && !empty($document->title)) { echo $document->title; } ?></div>
                                         <!--</a>-->
                                     </td>
-                                    <td>
+                                    <td data-key="Filed By/On">
                                         <?php if(isset($document->filedBy) && !empty($document->filedBy)) { echo $document->filedBy; }?><br><?php if(isset($document->filedAt) && !empty($document->filedAt)) { echo $document->filedAt; } ?>
                                     </td>
                                 </tr>
