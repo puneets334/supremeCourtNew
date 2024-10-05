@@ -231,7 +231,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Gender <?php echo $star_requered; ?></label><br>
-                                        <label class="radio-inline"><input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1"> Male </label>
+                                        <label class="radio-inline"><input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1" checked> Male </label>
                                             <label class="radio-inline"><input type="radio" <?php echo_data($female) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(2), ENT_QUOTES); ?>" maxlength="1"> Female </label>
                                             <label class="radio-inline"><input type="radio" id="gender" name="gender"  value="<?php echo htmlentities(url_encryption(3), ENT_QUOTES); ?>" maxlength="1"> Other </label>
                                             <?php if (isset($validation) && $validation->hasError('gender')): ?>
@@ -245,7 +245,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Address <?php echo $star_requered; ?></label>
-                                        <textarea name="address" id="address" rows="1" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl"><?php echo trim(htmlentities($uid_data_house_no, ENT_QUOTES)); ?><?php echo !empty($uid_data_landmark)?','.trim(htmlentities($uid_data_landmark, ENT_QUOTES)):''; ?><?php echo !empty($uid_data_locality)?','. trim(htmlentities($uid_data_locality, ENT_QUOTES)):''; ?>
+                                        <textarea name="address" id="address" rows="1" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl" required><?php echo trim(htmlentities($uid_data_house_no, ENT_QUOTES)); ?><?php echo !empty($uid_data_landmark)?','.trim(htmlentities($uid_data_landmark, ENT_QUOTES)):''; ?><?php echo !empty($uid_data_locality)?','. trim(htmlentities($uid_data_locality, ENT_QUOTES)):''; ?>
                                             </textarea>
                                             <?php if (isset($validation) && $validation->hasError('address')): ?>
                                             <div class="text-danger">
@@ -276,7 +276,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">District <?php echo $star_requered; ?></label>
-                                        <select name="district_list" id="district_list" class="form-control cus-form-ctrl" <?php echo $requerd; ?> >
+                                        <select name="district_list" id="district_list" class="form-control cus-form-ctrl" required <?php echo $requerd; ?> >
                                             <option value="" title="Select">Select District</option>
                                         </select>
                                         <?php if (isset($validation) && $validation->hasError('district_list')): ?>
@@ -462,9 +462,9 @@ $(document).ready(function (e) {
                     // $('#msg').show();
                     // $(".form-response").html("<p class='text-center alert alert-danger flashmessage message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' >X</span></p>");
                     alert(resArr[1]);
+                }else{
+                    $("#targetLayer").html(data);
                 }
-
-                $("#targetLayer").html(data);
             },
             error: function() 
             {

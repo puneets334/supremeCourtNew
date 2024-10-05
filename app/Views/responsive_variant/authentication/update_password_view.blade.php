@@ -150,7 +150,7 @@
                                 // pr($segment->getSegment(2));
                                 if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                                     $title = 'Advocate On Record';
-                                } elseif ($segment->getSegment(2) == 'verify') {
+                                } elseif ($segment->getSegment(3) == 'update_user_password') {
                                     $title = 'Update Password';
                                 } else {
                                     $title = 'Party In Person';
@@ -159,6 +159,7 @@
                                 <div class="httxt">
                                     <h4> <?php echo $title; ?> </h4>
                                 </div>
+                                <input type="hidden" name="salt" id="salt" value="<?= base64_encode(random_bytes(32)) ?>">
                                 <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                                 <?php if (session()->getFlashdata('msg')) : ?>
                                     <div class="alert alert-danger text-center flashmessage" role="alert">
@@ -167,7 +168,7 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                @if(isset($validation) && !empty($validation->getError('adv_email')))
+                                <!-- @if(isset($validation) && !empty($validation->getError('adv_email')))
                                 <div class="alert alert-danger text-center flashmessage" role="alert">
                                     <b>{{ $validation->getError('adv_email')}}</b>
                                 </div>
@@ -176,14 +177,15 @@
                                 <div class="alert alert-danger text-center flashmessage" role="alert">
                                     <b>{{ $validation->getError('adv_mobile')}}</b>
                                 </div>
-                                @endif
+                                @endif -->
                                 <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Password</label>
-                                            <input type="password" class="form-control cus-form-ctrl" id="txt_password" name="txt_password" maxlength="20" autocomplete="off" placeholder="Password" onchange="changeData(this)">
+                                            <input type="password" class="form-control cus-form-ctrl" id="password" name="password" maxlength="20" autocomplete="off" placeholder="Password" onchange="changeData(this)">
                                         </div>
+                                        <input id="txt_password" name="txt_password" type="hidden">
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
@@ -196,7 +198,7 @@
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="mb-3">
-                                                <button type="submit" name="btn_login" value="register" class="btn quick-btn">UPDATE PASSWORD</button>
+                                                <button type="submit" name="submit" value="submit" class="btn quick-btn">UPDATE PASSWORD</button>
                                                 <!-- <button class="btn quick-btn ">SEND OTP</button> -->
                                             </div>
                                         </div>
@@ -320,33 +322,6 @@
     </script>
     <script src="<?= base_url('assets/js/sha256.js'); ?>" type="text/javascript"></script>
     <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
-    <script type="text/javascript">
-        $(function() {
-            if(empty(getSessionData('user')))
-                $('[name="txt_username"]').focus();
-            else
-                $('[name="txt_password"]').focus();
-        });
-    </script>
-    <script>
-        function enableSubmit() {
-            var form = this;
-            var password = $('[name="txt_password"]').val(); //$('#txt_password').val();
-            $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= $_SESSION['login_salt'] ?>');
-            if (password != '') {
-                var pwd = sha256(password);
-                var pwd2 = pwd + '<?= $_SESSION['login_salt'] ?>';
-            }
-        }
-        var base_url = '{{ base_url() }}';
-    </script>
-    <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
-        <script>
-            setTimeout(function() {
-                window.location.href = "<?php echo base_url('login/logout') ?>";
-            }, 2000);
-        </script>
-    <?php } ?>
     <script>
         /*$("#loginform").submit(function () {
             alert('sdfsdf');
@@ -368,6 +343,8 @@
             var txtpass=$('#'+domElement).val()+'hgtsd12@_hjytr'+salt;
             var newpass=sha256($('#'+domElement).val());
             $('#'+domElement).val(newpass);
+
+
             for(var i=0;i<10;i++) {
                 txtpass = dataEncrypt(txtpass, salt);
             }

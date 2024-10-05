@@ -354,12 +354,13 @@
         }
         var base_url = '{{ base_url() }}';
     </script>
-    <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
+    <?php // if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
         <script>
-            setTimeout(function() {
-                window.location.href = "<?php echo base_url('login/logout') ?>";
-            }, 2000);
+            // setTimeout(function() {
+            //     window.location.href = "<?php // echo base_url('login/logout') ?>";
+            // }, 2000);
+            // setTimeout(function () { window.location.href="<?php // echo base_url('/')?>";  }, 2000);
         </script>
-    <?php } ?>
+    <?php // } ?>
 </body>
 </html>
