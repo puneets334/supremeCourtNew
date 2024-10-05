@@ -294,6 +294,7 @@ class ForgetPasswordController extends BaseController
         }
         $registerType = $session->get('adv_details')['register_type'];      
         $currentTime = date("H:i");
+        $validationRules = [];
         if ($registerType == 'Forgot Password') {
             if(!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
                 $validationRules = [
