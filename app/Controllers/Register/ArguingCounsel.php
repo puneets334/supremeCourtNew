@@ -213,7 +213,7 @@ class ArguingCounsel extends BaseController {
             redirect('login');
         }
         else if(!empty(getSessionData('self_register_arguing_counsel')) &&  (!empty(getSessionData('self_arguing_counsel')))){
-            $success = 'Registration has been successfully completed.<a href="'.base_url().'">Back</a>';
+            $success = 'Registration has been successfully completed.';
             $data['state_list'] = $this->Dropdown_list_model->get_states_list();
             $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
             $this->session->setFlashdata('success', $success);
@@ -223,7 +223,7 @@ class ArguingCounsel extends BaseController {
             $this->render('register.add_arguing_counsel',$data);
         }
         else if(!empty(getSessionData('arguingCounselId')) && !empty(getSessionData('aor_register'))){
-            $this->session->setFlashdata('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
+            $this->session->setFlashdata('success', 'Login credentials have been sent on email and mobile.');
             $data['state_list'] = $this->Dropdown_list_model->get_states_list();
             $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
             $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
@@ -261,7 +261,7 @@ class ArguingCounsel extends BaseController {
                 ],
                 "c_address" => [
                     "label" => "Bar Chamber address.",
-                    "rules" => "max_length[150]|min_length[3]"
+                    "rules" => "max_length[150]"
                 ],
                 "c_pincode" => [
                     "label" => "Pincode",
@@ -281,7 +281,7 @@ class ArguingCounsel extends BaseController {
                 ],
                 "r_address" => [
                     "label" => "Bar Chamber address.",
-                    "rules" => "max_length[150]|min_length[3]"
+                    "rules" => "max_length[150]"
                 ],
                 "r_pincode" => [
                     "label" => "Pincode",

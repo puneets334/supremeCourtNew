@@ -135,10 +135,10 @@
         function enableSubmit() {
             var form = this;
             var password= $('[name="txt_password"]').val(); //$('#txt_password').val();
-            $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= $_SESSION['login_salt'] ?>');
+            $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= isset($_SESSION['login_salt']) ? $_SESSION['login_salt'] : '' ?>');
             if (password !='') {
                 var pwd=sha256(password);
-                var pwd2=pwd+'<?=$_SESSION['login_salt'] ?>';
+                var pwd2=pwd+'<?= isset($_SESSION['login_salt']) ? $_SESSION['login_salt'] : '' ?>';
             }
         }
         var base_url = '{{ base_url() }}';
