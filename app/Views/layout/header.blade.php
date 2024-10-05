@@ -30,7 +30,20 @@
                     <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
                     <li><a class="hide" href="<?php echo base_url('online_copying/screen_reader');?>">Screen Reader Access</a></li>
                     <li class="text-size">
-                    <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-icon.svg" alt="" class="txt-icon"></a>
+                        <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-icon.svg" alt="" class="txt-icon"></a>
+                        <div class="font-action-sec">
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)" id="text_resize_increase">A+</a>
+                                </li>
+                                <li>
+                                     <a href="javascript:void(0)" id="text_resize_reset">A</a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)" id="text_resize_decrease">A-</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                     <!-- <li>
                         <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
@@ -50,12 +63,12 @@
             <div id="SkipContent" tabindex="-1"></div>
             <?php
                 $profile_model = new \App\Models\Profile\ProfileModel();
-                $profile = $profile_model->getProfileDetail(getSessionData('login')['userid']);
+                $profile = !empty(getSessionData('login')) ? $profile_model->getProfileDetail(getSessionData('login')['userid']) : '';
 
                 $get_valu = help_id_url(uri_string());
                 $help_page = explode('.', $get_valu);
 
-                $login_time = $profile_model->userLastLogin(getSessionData('login')['id']);
+                $login_time = !empty(getSessionData('login')) ? $profile_model->userLastLogin(getSessionData('login')['id']) : '';
                 $last_login = (!empty($login_time) && $login_time->login_time != '') ? date('d-m-Y h:i:s A', strtotime($login_time->login_time)) : NULL;
 
                 if (getSessionData('photo_path') != '') {
@@ -75,7 +88,7 @@
                 <div class="userInformation">
                     <!--userDetail-->
                     <div class="userDetail" id="usr-action-btn" tabindex="0" role="button">
-                        <div class="userName"> <?= getSessionData('login')['first_name']; ?> <i class="fas fa-chevron-down"></i>
+                        <div class="userName"> <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : ''; ?> <i class="fas fa-chevron-down"></i>
                             <span class="division"><?= '<strong>Last Login Details</strong>' . "<br>" . "Date : " . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '');
                             // . "<br>" . "IP : " . (!empty($login_time) ? htmlentities($login_time->ip_address, ENT_QUOTES) : '')
                             ?></span>

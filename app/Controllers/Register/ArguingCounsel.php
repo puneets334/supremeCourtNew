@@ -23,14 +23,10 @@ class ArguingCounsel extends BaseController {
     protected $form_validation;
     protected $session;
     protected $config;
+    protected $request;
 
     public function __construct() {
         parent::__construct();
-        // $this->load->library('encrypt');
-        // $this->load->model('register/Register_model');
-        // $this->load->library('webservices/efiling_webservices');
-        // $this->load->library('slice');
-        // $this->load->helper('security');
         $this->Register_model = new RegisterModel();
         $this->Citation_model = new CitationModel();
         $this->Common_model = new CommonModel();
@@ -38,6 +34,7 @@ class ArguingCounsel extends BaseController {
         $this->slice = new Slice();
         $this->efiling_webservices = new Efiling_webservices();
         $this->session = \Config\Services::session();
+        $this->request = \Config\Services::request();
         $this->config = \Config\Services::config();
         helper(['security']);
     }
@@ -67,26 +64,11 @@ class ArguingCounsel extends BaseController {
     }
 
     public function saveArguingCounselByAOR(){
-       
-
-       
         if (getSessionData('login')['ref_m_usertype_id'] != USER_ADVOCATE){
             redirect('login');
             exit(0);
         }
-      
-        // $this->form_validation->set_rules('name','Name','trim|required|xss_clean|max_length[100]|min_length[3]|validate_alphacharacters');
-        // $this->form_validation->set_rules('email','Email','trim|required|xss_clean|max_length[100]|valid_email');
-        // $this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|exact_length[10]|is_natural');
-        // $this->form_validation->set_rules('bar_reg_no','Bar Registration No.','trim|xss_clean');
-        // if(!empty($this->input->post('bar_reg_no'))){
-        //     $this->form_validation->set_rules('bar_reg_no','Bar Registration No.','trim|xss_clean|max_length[30]|min_length[3]|validate_alpha_numeric');
-        // }
-        // if(!$this->form_validation->run()) {
-        //     $this->index();
-        // }
         $validation =  \Config\Services::validation();
-        //---Commented line are used for disable captcha----------------->
         $rules=[
             "name" => [
                 "label" => "Name",
@@ -176,11 +158,7 @@ class ArguingCounsel extends BaseController {
                 $dataToSave['approved_on'] = date('Y-m-d H:i:s');
                 $dataToSave['approved_ip'] = get_client_ip();
                 $dataToSave['is_pre_approved']= true;
-                // $this->load->model('citation/Citation_model');
-                // $table = "dscr.tbl_arguing_counsels";
                 if(!empty($name) && !empty($email) && !empty($mobile)){
-                    // $insetId = $this->Citation_model->insertData($table,$dataToSave);
-                    // $builder = $this->db->table('dscr.tbl_arguing_counsels');
                     $this->Citation_model->insert($dataToSave);
                     $insetId = $this->Citation_model->getInsertID();
                     if(isset($insetId) && !empty($insetId)){
@@ -189,7 +167,6 @@ class ArguingCounsel extends BaseController {
                         $subject ="Registration For Advocate";
                         $email_message = 'Dear '.$name.', Your registration code for advocate is "'.$registration_code.'" Please click below link and verify registration code. <br><a href="'.$webUrl->getHeaderLine('Location').'">Verify Registration Code</a>';
                         $sms_message  = 'Dear '.$name.', Your registration code for advocate is "'.$registration_code.'" Please go to mail and verify registration code.';
-                        // echo '<pre>Hello_'; print($insetId); echo '<br>'; print_r($registration_code); echo '<br>'; print_r($webUrl->getHeaderLine('Location')); echo '<br>'; print_r($name); echo '<br>'; print_r($subject); echo '<br>'; print_r($email_message); echo '<br>'; print_r($sms_message); die();
                         send_mail_msg($email, $subject, $email_message,$to_user_name="arguing_counsel");
                         send_mobile_sms($mobile, $sms_message,ARGUING_COUNSEL_VERIFY_CODE);
                         $this->session->setFlashdata('success','Registration code has been sent successfully on email and sms! Please verify registration code.');
@@ -206,18 +183,30 @@ class ArguingCounsel extends BaseController {
     }
 
     private function generateWebLink($id,$registrationCode){
-        // $encrypter = \Config\Services::encrypter();
         $webLinkData=array('id'=>$id,'registration_code'=>$registrationCode);
         $webLinkDataDecoded=json_encode($webLinkData);
-        // $key = config('App')->encryptionKey;
-        // $key=$this->config->item('encryption_key');
-        // $encrypter = \Config\Services::encryption();
         $encrypter = \Config\Services::encrypter();
         $encrypted_string = $encrypter->encrypt($webLinkDataDecoded);
-        // $encrypted_string = $this->encrypt->encode($webLinkData, $key);
         return redirect()->to(base_url('register/arguingCounsel/landArguingCounsel/'.base64_encode($encrypted_string)));
     }
 
+    public function arguingCounselCompleteDetails(){
+        $data = array();
+        $data['state_list'] = $this->Dropdown_list_model->get_states_list();
+        $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
+        $params = array();
+        $params['ref_m_usertype_id'] = 1;
+        if($_SERVER['HTTP_HOST'] == '127.0.0.1')
+            $params['userid'] = 1777;
+        else
+            $params['userid'] = null;
+        $aorList = $this->Register_model->getAorData($params);
+        $data['aorList'] = !empty($aorList) ? $aorList : NULL;
+        $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
+        $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
+        $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
+        return $this->render('register.add_arguing_counsel',$data);
+    }
     public function saveArguingCounselCompleteDetails(){
         $data = array();
         if(empty(getSessionData('self_register_arguing_counsel'))  && empty(getSessionData('arguingCounselId'))){
@@ -225,66 +214,27 @@ class ArguingCounsel extends BaseController {
         }
         else if(!empty(getSessionData('self_register_arguing_counsel')) &&  (!empty(getSessionData('self_arguing_counsel')))){
             $success = 'Registration has been successfully completed.<a href="'.base_url().'">Back</a>';
+            $data['state_list'] = $this->Dropdown_list_model->get_states_list();
+            $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
             $this->session->setFlashdata('success', $success);
+            $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
+            $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
+            $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
             $this->render('register.add_arguing_counsel',$data);
         }
         else if(!empty(getSessionData('arguingCounselId')) && !empty(getSessionData('aor_register'))){
             $this->session->setFlashdata('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
+            $data['state_list'] = $this->Dropdown_list_model->get_states_list();
+            $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
+            $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
+            $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
+            $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
             $this->render('register.add_arguing_counsel',$data);
         }
         else{
-            // $this->load->model('newcase/Dropdown_list_model');
             $data['state_list'] = $this->Dropdown_list_model->get_states_list();
-            // $this->form_validation->set_rules('name','Name','trim|required|xss_clean|max_length[100]|min_length[3]|validate_alphacharacters');
-            // $this->form_validation->set_rules('email','Email','trim|required|xss_clean|max_length[100]|valid_email');
-            // $this->form_validation->set_rules('mobile','Mobile','trim|required|xss_clean|exact_length[10]|is_natural');
-            // $this->form_validation->set_rules('bar_reg_no','Bar Registration No.','trim|xss_clean');
-            // $this->form_validation->set_rules('relation','Relation','trim|xss_clean|required');
-            // $this->form_validation->set_rules('relation_name','Relation Name','trim|xss_clean|required|validate_alphacharacters');
-            // if(!empty($this->input->post('bar_reg_no'))){
-            //     $this->form_validation->set_rules('bar_reg_no','Bar Registration No.','trim|xss_clean|max_length[30]|min_length[3]|validate_alpha_numeric');
-            // }
-            // if(!empty($this->input->post('c_address'))){
-            //     $this->form_validation->set_rules('c_address','Bar Chamber address.','trim|xss_clean|max_length[150]|min_length[3]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters');
-            // }
-            // if(!empty($this->input->post('c_pincode'))){
-            //     $this->form_validation->set_rules('c_pincode','Pincode','trim|xss_clean|max_length[6]|is_natural');
-            // }
-            // if(!empty($this->input->post('c_city'))){
-            //     $this->form_validation->set_rules('c_city','City','trim|xss_clean|max_length[35]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters');
-            // }
-            // if(!empty($this->input->post('c_state'))){
-            //     $this->form_validation->set_rules('c_state','State','trim|xss_clean|required');
-            // }
-            // if(!empty($this->input->post('c_district'))){
-            //     $this->form_validation->set_rules('c_district','District','trim|xss_clean|required');
-            // }
-            // if(!empty($this->input->post('r_address'))){
-            //     $this->form_validation->set_rules('r_address','Bar Chamber address.','trim|xss_clean|max_length[150]|min_length[3]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters');
-            // }
-            // if(!empty($this->input->post('r_pincode'))){
-            //     $this->form_validation->set_rules('r_pincode','Pincode','trim|xss_clean|max_length[6]|is_natural');
-            // }
-            // if(!empty($this->input->post('r_city'))){
-            //     $this->form_validation->set_rules('r_city','City','trim|xss_clean|max_length[35]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters');
-            // }
-            // if(!empty($this->input->post('r_state'))){
-            //     $this->form_validation->set_rules('r_state','State','trim|xss_clean|required');
-            // }
-            // if(!empty($this->input->post('r_district'))){
-            //     $this->form_validation->set_rules('r_district','District','trim|xss_clean|required');
-            // }
-            // if(!empty($this->input->post('aor'))){
-            //     $this->form_validation->set_rules('aor','AOR','trim|xss_clean|required');
-            // }
-            // if(empty($_FILES['bar_id_card']['name']))
-            // {
-            //     $this->form_validation->set_rules('bar_id_card', 'Bar Id Card', 'required');
-            // }
-            
             $validation =  \Config\Services::validation();
-            //---Commented line are used for disable captcha----------------->
-            $rules=[
+            $validation->setRules([
                 "name" => [
                     "label" => "Name",
                     "rules" => "required|max_length[100]|min_length[3]"
@@ -353,11 +303,11 @@ class ArguingCounsel extends BaseController {
                     "label" => "AOR",
                     "rules" => "required"
                 ],
-                "bar_id_card" => [
-                    "label" => "Bar Id Card",
-                    "rules" => "required"
-                ],
-            ];
+                // "bar_id_card" => [
+                //     "label" => "Bar Id Card",
+                //     "rules" => "required"
+                // ],
+            ]);
             $arguingCounselId  = !empty(getSessionData('arguingCounselId')) ? trim(getSessionData('arguingCounselId')) : NULL;
             if(isset($arguingCounselId) && !empty($arguingCounselId)) {
                 $arguingCounselDetails = $this->getArguingCounselDetails($arguingCounselId);
@@ -367,16 +317,34 @@ class ArguingCounsel extends BaseController {
                 $params = array();
                 $params['ref_m_usertype_id'] = 1;
                 if($_SERVER['HTTP_HOST'] == '127.0.0.1')
-                    $params['userid'] = 1779;
+                    $params['userid'] = 1777;
+                else
+                    $params['userid'] = null;
+                $aorList = $this->Register_model->getAorData($params);
+                $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
+                $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
+                $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
+                $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
+                $data['aorList'] = !empty($aorList) ? $aorList : NULL;
+            }
+            if ($validation->withRequest($this->request)->run() === FALSE) {
+            // if ($this->validate($rules) === FALSE) {
+                $data = [
+                    'validation' => $validation->getErrors(),
+                ];
+                $data['state_list'] = $this->Dropdown_list_model->get_states_list();
+                $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
+                $params = array();
+                $params['ref_m_usertype_id'] = 1;
+                if($_SERVER['HTTP_HOST'] == '127.0.0.1')
+                    $params['userid'] = 1777;
                 else
                     $params['userid'] = null;
                 $aorList = $this->Register_model->getAorData($params);
                 $data['aorList'] = !empty($aorList) ? $aorList : NULL;
-            }
-            if ($this->validate($rules) === FALSE) {
-                $data = [
-                    'validation' => $this->validator,
-                ];
+                $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
+                $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
+                $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
                 return $this->render('register.add_arguing_counsel',$data);
             } else{
                 if (!empty(getSessionData('self_register_arguing_counsel')) && getSessionData('self_register_arguing_counsel') == true)
@@ -405,98 +373,94 @@ class ArguingCounsel extends BaseController {
                         $ext = !empty($extarr[1]) ? $extarr[1] : 'pdf';
                     }
                     $tmp_file_name = time() . rand() . '.' . $ext;
-                    $dir = "uploaded_docs/bar_id_card/";
-                    if (!file_exists($dir)) {
-                        mkdir($dir, 0755, true);
-                    }
-                    $config['upload_path'] = $dir;
-                    $config['allowed_types'] = 'pdf|jpeg|jpg';
-                    $config['max_size'] = BAR_ID_CARD_SIZE / 1024;
-                    $config['overwrite'] = TRUE;
-                    $config['file_name'] = $tmp_file_name;
-                    $this->load->library('upload', $config);
-                    $data = array();
-                    if (!$this->upload->do_upload('bar_id_card')) {
-                        setSessionData('bar_id_card_error', $this->upload->display_errors());
-                        setSessionData('success', '');
-                        $this->session->setFlashdata('error', 'Something went wrong! Please try again.');
-                    } else {
-                        $file_name = $this->upload->data('file_name');
-                        $userIn = array();
-                        $password = generateRandomString();
-                        $userIn['userid'] = $password;
-                        $userIn['password'] = NULL;
-                        $userIn['ref_m_usertype_id'] = ARGUING_COUNSEL;
-                        $userIn['first_name'] = $name;
-                        $userIn['moblie_number'] = $mobile;
-                        $userIn['emailid'] = $email;
-                        $userIn['bar_reg_no'] = $bar_reg_no;
-                        $userIn['account_status'] = 0;
-                        $userIn['created_on'] = date('Y-m-d H:i:s');
-                        $userIn['create_ip'] = getClientIP();
-                        $userIn['is_deleted'] = true;
-                        $userIn['is_active'] = 0;
-                        $userIn['photo_path'] = $dir . $file_name;
-                        $userIn['adv_sci_bar_id'] = null;
-                        $userIn['m_address1'] = $c_address;
-                        $userIn['m_pincode'] = $c_pincode;
-                        $userIn['m_city'] = $c_city;
-                        $userIn['m_state_id'] = url_decryption($c_state);
-                        $userIn['m_district_id'] = url_decryption($c_district);
-                        $userIn['alt_address1'] = $r_address;
-                        $userIn['alt_pincode'] = $r_pincode;
-                        $userIn['alt_city'] = $r_city;
-                        $userIn['alt_state_id'] = url_decryption($r_state);
-                        $userIn['alt_district_id'] = url_decryption($r_district);
-                        // $this->load->model('citation/Citation_model');
-                        $table = "efil.tbl_users";
-                        $insetId = $this->Citation_model->insertData($table, $userIn);
-                        if (isset($insetId) && !empty($insetId)) {
-                            $dataToSave=array();
-                            $dataToSave['advocate_name'] = $name;
-                            $dataToSave['mobile_number']= $mobile;
-                            $dataToSave['emailid'] = $email;
-                            $dataToSave['bar_reg_no']= $bar_reg_no;
-                            $dataToSave['relation_type'] = $relation;
-                            $dataToSave['relative_name'] = $relation_name;
-                            $dataToSave['tbl_users_id'] = $insetId;
-                            $dataToSave['is_deleted'] = true;
-                            $dataToSave['account_status']= 1;
-                            $dataToSave['created_on']= date('Y-m-d H:i:s');
-                            $dataToSave['registered_on'] = date('Y-m-d H:i:s');
-                            $dataToSave['created_by']= NULL;
-                            $dataToSave['created_ip'] = get_client_ip();
-                            $dataToSave['registered_ip'] = get_client_ip();
-                            $dataToSave['registration_code'] = NULL;
-                            $dataToSave['approving_user_id']= $aor;
-                            $dataToSave['approved_on'] = NULL;
-                            $dataToSave['approved_ip'] = NULL;
-                            $dataToSave['is_pre_approved']= FALSE;
-                            $dataToSave['is_user_registered'] = true;
-                            // $this->load->model('citation/Citation_model');
-                            $table = "dscr.tbl_arguing_counsels";
-                            if(!empty($name) && !empty($email) && !empty($mobile)){
-                                $insetIdArguingCounsel = $this->Citation_model->insertData($table,$dataToSave);
-                                if(isset($insetIdArguingCounsel) && !empty($insetIdArguingCounsel)){
-                                    $success = 'Registration has been successfully completed.<a href="'.base_url().'">Back</a>';
-                                    setSessionData('success', $success);
-                                    setSessionData('self_arguing_counsel', true);
-                                } else {
-                                    $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
-                                }
+                    $file = $this->request->getFile('bar_id_card');
+                    if ($file->isValid() && !$file->hasMoved()) {
+                        $uploadPath = 'uploaded_docs/bar_id_card/';
+                        if (!is_dir($uploadPath)) {
+                            mkdir($uploadPath, 0777, true);
+                        }
+                        $fileName = $file->getName();
+                        $filePath = $uploadPath . $fileName;
+                        if ($file->move($uploadPath, $fileName)) {
+                            $xfile = explode('.',$fileName);
+                            if($xfile != 'pdf' || $xfile != 'jpeg' || $xfile != 'jpg') {
+                                unlink($filePath);
+                                $this->session->setFlashdata('error', 'Please Upload Valid Bar Id Card.');
                             }
-                            else {
+                        }
+                    }
+                    $userIn = array();
+                    $password = generateRandomString();
+                    $userIn['userid'] = $password;
+                    $userIn['password'] = NULL;
+                    $userIn['ref_m_usertype_id'] = ARGUING_COUNSEL;
+                    $userIn['first_name'] = $name;
+                    $userIn['moblie_number'] = $mobile;
+                    $userIn['emailid'] = $email;
+                    $userIn['bar_reg_no'] = $bar_reg_no;
+                    $userIn['account_status'] = 0;
+                    $userIn['created_on'] = date('Y-m-d H:i:s');
+                    $userIn['create_ip'] = getClientIP();
+                    $userIn['is_deleted'] = true;
+                    $userIn['is_active'] = 0;
+                    $userIn['photo_path'] = $uploadPath . $fileName;
+                    $userIn['adv_sci_bar_id'] = null;
+                    $userIn['m_address1'] = $c_address;
+                    $userIn['m_pincode'] = $c_pincode;
+                    $userIn['m_city'] = $c_city;
+                    $userIn['m_state_id'] = url_decryption($c_state);
+                    $userIn['m_district_id'] = url_decryption($c_district);
+                    $userIn['alt_address1'] = $r_address;
+                    $userIn['alt_pincode'] = $r_pincode;
+                    $userIn['alt_city'] = $r_city;
+                    $userIn['alt_state_id'] = url_decryption($r_state);
+                    $userIn['alt_district_id'] = url_decryption($r_district);
+                    // $this->load->model('citation/Citation_model');
+                    $table = "efil.tbl_users";
+                    $insetId = $this->Citation_model->insertData($table, $userIn);
+                    if (isset($insetId) && !empty($insetId)) {
+                        $dataToSave=array();
+                        $dataToSave['advocate_name'] = $name;
+                        $dataToSave['mobile_number']= $mobile;
+                        $dataToSave['emailid'] = $email;
+                        $dataToSave['bar_reg_no']= $bar_reg_no;
+                        $dataToSave['relation_type'] = $relation;
+                        $dataToSave['relative_name'] = $relation_name;
+                        $dataToSave['tbl_users_id'] = $insetId;
+                        $dataToSave['is_deleted'] = true;
+                        $dataToSave['account_status']= 1;
+                        $dataToSave['created_on']= date('Y-m-d H:i:s');
+                        $dataToSave['registered_on'] = date('Y-m-d H:i:s');
+                        $dataToSave['created_by']= NULL;
+                        $dataToSave['created_ip'] = get_client_ip();
+                        $dataToSave['registered_ip'] = get_client_ip();
+                        $dataToSave['registration_code'] = NULL;
+                        $dataToSave['approving_user_id']= $aor;
+                        $dataToSave['approved_on'] = NULL;
+                        $dataToSave['approved_ip'] = NULL;
+                        $dataToSave['is_pre_approved']= FALSE;
+                        $dataToSave['is_user_registered'] = true;
+                        // $this->load->model('citation/Citation_model');
+                        $table = "dscr.tbl_arguing_counsels";
+                        if(!empty($name) && !empty($email) && !empty($mobile)){
+                            $insetIdArguingCounsel = $this->Citation_model->insertData($table,$dataToSave);
+                            if(isset($insetIdArguingCounsel) && !empty($insetIdArguingCounsel)){
+                                $success = 'Registration has been successfully completed.';
+                                setSessionData('success', $success);
+                                setSessionData('self_arguing_counsel', true);
+                            } else {
                                 $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
                             }
                         }
                         else {
                             $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
                         }
-                            setSessionData('bar_id_card_error', '');
-                            setSessionData('error', '');
-                        }
-                }
-                else {
+                    } else {
+                        $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');
+                    }
+                    setSessionData('bar_id_card_error', '');
+                    setSessionData('error', '');
+                } else {
                     $name = !empty($arguingCounselDetails[0]['advocate_name']) ? $arguingCounselDetails[0]['advocate_name'] : NULL;
                     $mobile = !empty($arguingCounselDetails[0]['mobile_number']) ? $arguingCounselDetails[0]['mobile_number'] : NULL;
                     $email = !empty($arguingCounselDetails[0]['emailid']) ? $arguingCounselDetails[0]['emailid'] : NULL;
@@ -515,95 +479,105 @@ class ArguingCounsel extends BaseController {
                     $r_city = !empty($this->request->getPost('r_city')) ? $this->request->getPost('r_city') : NULL;
                     $r_state = !empty($this->request->getPost('r_state')) ? $this->request->getPost('r_state') : NULL;
                     $r_district = !empty($this->request->getPost('r_district')) ? $this->request->getPost('r_district') : NULL;
-                        $ext = '';
-                        if (isset($file_type) && !empty($file_type)) {
-                            $extarr = explode('/', $file_type);
-                            $ext = !empty($extarr[1]) ? $extarr[1] : 'pdf';
+                    $ext = '';
+                    if (isset($file_type) && !empty($file_type)) {
+                        $extarr = explode('/', $file_type);
+                        $ext = !empty($extarr[1]) ? $extarr[1] : 'pdf';
+                    }
+                    $tmp_file_name = time() . rand() . '.' . $ext;
+                    // $dir = "uploaded_docs/bar_id_card/";
+                    // if (!file_exists($dir)) {
+                    //     mkdir($dir, 0755, true);
+                    // }
+                    $data = array();
+                    // if (!$this->upload->do_upload('bar_id_card')) {
+                    //     setSessionData('bar_id_card_error', $this->upload->display_errors());
+                    //     setSessionData('success', '');
+                    //     $this->session->setFlashdata('error', 'Something went wrong! Please try again.');
+                    // } else {
+                    $uploadPath = 'uploaded_docs/bar_id_card/';
+                    $fileName = '';
+                    $file = $this->request->getFile('bar_id_card');
+                    if ($file->isValid() && !$file->hasMoved()) {
+                        
+                        if (!is_dir($uploadPath)) {
+                            mkdir($uploadPath, 0777, true);
                         }
-                        $tmp_file_name = time() . rand() . '.' . $ext;
-                        $dir = "uploaded_docs/bar_id_card/";
-                        if (!file_exists($dir)) {
-                            mkdir($dir, 0755, true);
-                        }
-                        $config['upload_path'] = $dir;
-                        $config['allowed_types'] = 'pdf|jpeg|jpg';
-                        $config['max_size'] = BAR_ID_CARD_SIZE / 1024;
-                        $config['overwrite'] = TRUE;
-                        $config['file_name'] = $tmp_file_name;
-                        $this->load->library('upload', $config);
-                        $data = array();
-                        if (!$this->upload->do_upload('bar_id_card')) {
-                            setSessionData('bar_id_card_error', $this->upload->display_errors());
-                            setSessionData('success', '');
-                            $this->session->setFlashdata('error', 'Something went wrong! Please try again.');
-                        } else {
-                            $file_name = $this->upload->data('file_name');
-                            $userIn = array();
-                            $password = generateRandomString();
-                            $userIn['userid'] = $password;
-                            $userIn['password'] = hash('sha256', $password);
-                            $userIn['ref_m_usertype_id'] = ARGUING_COUNSEL;
-                            $userIn['first_name'] = $name;
-                            $userIn['moblie_number'] = $mobile;
-                            $userIn['emailid'] = $email;
-                            $userIn['bar_reg_no'] = $bar_reg_no;
-                            $userIn['account_status'] = 0;
-                            $userIn['created_on'] = date('Y-m-d H:i:s');
-                            $userIn['create_ip'] = getClientIP();
-                            $userIn['is_deleted'] = false;
-                            $userIn['is_active'] = 1;
-                            $userIn['photo_path'] = $dir . $file_name;
-                            $userIn['adv_sci_bar_id'] = null;
-                            $userIn['m_address1'] = $c_address;
-                            $userIn['m_pincode'] = $c_pincode;
-                            $userIn['m_city'] = $c_city;
-                            $userIn['m_state_id'] = url_decryption($c_state);
-                            $userIn['m_district_id'] = url_decryption($c_district);
-                            $userIn['alt_address1'] = $r_address;
-                            $userIn['alt_pincode'] = $r_pincode;
-                            $userIn['alt_city'] = $r_city;
-                            $userIn['alt_state_id'] = url_decryption($r_state);
-                            $userIn['alt_district_id'] = url_decryption($r_district);
-                            // $this->load->model('citation/Citation_model');
-                            $table = "efil.tbl_users";
-                            $insetId = $this->Citation_model->insertData($table, $userIn);
-                            if (isset($insetId) && !empty($insetId)) {
-                                $updateArr = array();
-                                $updateArr['tbl_users_id'] = $insetId;
-                                $updateArr['is_user_registered'] = true;
-                                $updateArr['registered_on'] = date('Y-m-d H:i:s');
-                                $updateArr['registration_code'] = NULL;
-                                $updateArr['relation_type'] = $relation;
-                                $updateArr['relative_name'] = $relation_name;
-                                $updateArr['registered_ip'] = getClientIP();
-                                $params = array();
-                                $params['table_name'] = "dscr.tbl_arguing_counsels";
-                                $params['whereFieldName'] = 'id';
-                                $params['whereFieldValue'] = $tableId;
-                                $params['updateArr'] = $updateArr;
-                                // $this->load->model('common/Common_model');
-                                $upRes = $this->Common_model->updateTableData($params);
-                                if (isset($upRes) && !empty($upRes)) {
-                                    $subject = "Login credentials";
-                                    $email_message = 'Dear ' . $name . ', Your email is "' . $email . '" and password is "' . $password . '" <br><a href="' . base_url() . '">Click To Login</a>';
-                                    $sms_message = 'Dear ' . $name . ', Your email is "' . $email . '" and password is "' . $password . '" <br><a href="' . base_url() . '">Click To Login</a>';
-                                    setSessionData('aor_register',true);
-                                    send_mail_msg($email, $subject, $email_message, $to_user_name = "arguing_counsel");
-                                    send_mobile_sms($mobile, $sms_message, SMS_EMAIL_API_USER);
-                                    setSessionData('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
-                                } else {
-                                    setSessionData('error', 'Something went wrong! Please try again later.<a href="'.base_url().'">Back</a>');
-                                }
-                            } else {
-                                setSessionData('error', 'Something went wrong! Please try again later.<a href="'.base_url().'">Back</a>');
+                        $fileName = $file->getName();
+                        $filePath = $uploadPath . $fileName;
+                        if ($file->move($uploadPath, $fileName)) {
+                            $xfile = explode('.',$fileName);
+                            if($xfile != 'pdf' || $xfile != 'jpeg' || $xfile != 'jpg') {
+                                unlink($filePath);
+                                $this->session->setFlashdata('error', 'Please Upload Valid Bar Id Card.');
                             }
-                            setSessionData('bar_id_card_error', '');
-                            setSessionData('error', '');
                         }
                     }
-                    $this->render('register.add_arguing_counsel', $data);
+                    $userIn = array();
+                    $password = generateRandomString();
+                    $userIn['userid'] = $password;
+                    $userIn['password'] = hash('sha256', $password);
+                    $userIn['ref_m_usertype_id'] = ARGUING_COUNSEL;
+                    $userIn['first_name'] = $name;
+                    $userIn['moblie_number'] = $mobile;
+                    $userIn['emailid'] = $email;
+                    $userIn['bar_reg_no'] = $bar_reg_no;
+                    $userIn['account_status'] = 0;
+                    $userIn['created_on'] = date('Y-m-d H:i:s');
+                    $userIn['create_ip'] = getClientIP();
+                    $userIn['is_deleted'] = false;
+                    $userIn['is_active'] = 1;
+                    $userIn['photo_path'] = $uploadPath . $fileName;
+                    $userIn['adv_sci_bar_id'] = null;
+                    $userIn['m_address1'] = $c_address;
+                    $userIn['m_pincode'] = $c_pincode;
+                    $userIn['m_city'] = $c_city;
+                    $userIn['m_state_id'] = url_decryption($c_state);
+                    $userIn['m_district_id'] = url_decryption($c_district);
+                    $userIn['alt_address1'] = $r_address;
+                    $userIn['alt_pincode'] = $r_pincode;
+                    $userIn['alt_city'] = $r_city;
+                    $userIn['alt_state_id'] = url_decryption($r_state);
+                    $userIn['alt_district_id'] = url_decryption($r_district);
+                    $table = "efil.tbl_users";
+                    $insetId = $this->Citation_model->insertData($table, $userIn);
+                    if (isset($insetId) && !empty($insetId)) {
+                        $updateArr = array();
+                        $updateArr['tbl_users_id'] = $insetId;
+                        $updateArr['is_user_registered'] = true;
+                        $updateArr['registered_on'] = date('Y-m-d H:i:s');
+                        $updateArr['registration_code'] = NULL;
+                        $updateArr['relation_type'] = $relation;
+                        $updateArr['relative_name'] = $relation_name;
+                        $updateArr['registered_ip'] = getClientIP();
+                        $params = array();
+                        $params['table_name'] = "dscr.tbl_arguing_counsels";
+                        $params['whereFieldName'] = 'id';
+                        $params['whereFieldValue'] = $tableId;
+                        $params['updateArr'] = $updateArr;
+                        // $this->load->model('common/Common_model');
+                        $upRes = $this->Common_model->updateTableData($params);
+                        if (isset($upRes) && !empty($upRes)) {
+                            $subject = "Login credentials";
+                            $email_message = 'Dear ' . $name . ', Your email is "' . $email . '" and password is "' . $password . '" <br><a href="' . base_url() . '">Click To Login</a>';
+                            $sms_message = 'Dear ' . $name . ', Your email is "' . $email . '" and password is "' . $password . '" <br><a href="' . base_url() . '">Click To Login</a>';
+                            setSessionData('aor_register',true);
+                            send_mail_msg($email, $subject, $email_message, $to_user_name = "arguing_counsel");
+                            send_mobile_sms($mobile, $sms_message, SMS_EMAIL_API_USER);
+                            setSessionData('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
+                        } else {
+                            setSessionData('error', 'Something went wrong! Please try again later.<a href="'.base_url().'">Back</a>');
+                        }
+                    } else {
+                        setSessionData('error', 'Something went wrong! Please try again later.<a href="'.base_url().'">Back</a>');
+                    }
+                    setSessionData('bar_id_card_error', '');
+                    setSessionData('error', '');
+                    // }
                 }
+                $this->render('register.add_arguing_counsel', $data);
             }
+        }
     }
     private function getArguingCounselDetails($id,$registration_code=""){
         //get all details which are saved earlier by AOR by id which is sent in weblink after encryption

@@ -1,9 +1,16 @@
-@extends('layout.app')
+<?php
+if(!empty(getSessionData('login'))){
+    $extends = 'layout.app';
+} else {
+    $extends = 'layout.frontApp';
+}
+?>
+@extends($extends)
 @section('content')
     <div class="container-fluid">
-        <div class="row">
+        <div class="row card">
             <div class="col-lg-12">
-                <div class="dashboard-section dashboard-tiles-area"></div>
+                <div class="card-body">
                 <div class="dashboard-section">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -11,7 +18,9 @@
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Add/Approve Advocate(s)</h5>
-                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                    @if(!empty(getSessionData('login')))
+                                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                    @endif
                                 </div>
                                 @if(!empty(getSessionData('emailExistMessage')))
                                     <div class="alert alert-dismissible text-center flashmessage">
@@ -23,110 +32,29 @@
                                         <b style="color: red;">{{ getSessionData('mobileExistMessage') }}</b>
                                     </div>
                                 @endif
+                                @if(!empty(getSessionData('success')))
+                                    <div class="alert alert-dismissible text-center flashmessage">
+                                        <b style="color: green;">{{ getSessionData('success') }}</b> <a href="'.base_url().'">Back</a>
+                                    </div>
+                                @endif
+                                @if(!empty(getSessionData('error')))
+                                    <div class="alert alert-dismissible text-center flashmessage">
+                                        <b style="color: red;">{{ getSessionData('error') }}</b>
+                                    </div>
+                                @endif
                                 @if(isset($validation))
+                                    <?php foreach($validation as $valid){?>
                                     <div class="validation-errors">
-                                    <b style="color: red;">{{ $validation->listErrors() }}</b>
+                                        <b style="color: red;">{{ $valid }}</b>
                                     </div>
+                                    <?php } ?>
                                 @endif
-                                <!-- @if(isset($validation) && !empty($validation->getError('name')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('name')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('mobile')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('mobile')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('relation')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('relation')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('aor')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('aor')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('c_address')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('c_address')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('c_pincode')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('c_pincode')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('c_city')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('c_city')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('c_state')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('c_state')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('c_district')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('c_district')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('bar_id_card')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('bar_id_card')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('email')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('email')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('bar_reg_no')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('bar_reg_no')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('relation_name')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('relation_name')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('same_as')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('same_as')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('r_address')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('r_address')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('r_pincode')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('r_pincode')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('r_city')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('r_city')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('r_state')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('r_state')}}</b>
-                                    </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('r_district')))
-                                    <div class="alert alert-dismissible text-center flashmessage">
-                                        <b>{{ $validation->getError('r_district')}}</b>
-                                    </div>
-                                @endif -->
+                                
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
                                 <div class="uk-margin-small-top uk-border-rounded">
                                     <?php
+                                    $bar_reg_no = '';
                                     if(isset($arguingCounselDetails['registration_code']) && !empty($arguingCounselDetails['registration_code'])){
                                         $advocate_name = !empty($arguingCounselDetails['advocate_name']) ? $arguingCounselDetails['advocate_name'] : '';
                                         $mobile_number = !empty($arguingCounselDetails['mobile_number']) ? $arguingCounselDetails['mobile_number'] : '';
@@ -146,14 +74,14 @@
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Mobile <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_number;?>" placeholder="9876543XXX" maxlength="10"   tabindex="3" readonly>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_number;?>" placeholder="9876543XXX" maxlength="10"   tabindex="2" readonly>
                                                         <div id="error_mobile"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">Relation <span style="color: red">*</span> :</label>
-                                                        <select class="uk-select" tabindex = '5' name="relation" id="relation"  >
+                                                        <select class="form-control cus-form-ctrl" tabindex = '3' name="relation" id="relation"  >
                                                             <option value="">Select Relation</option>
                                                             <option value="S">Son Of</option>
                                                             <option value="D">Daughter Of</option>
@@ -164,7 +92,7 @@
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">AOR <span style="color: red">*</span> :</label>
-                                                        <select class="uk-select"  tabindex = '5' name="aor" id="aor">
+                                                        <select class="form-control cus-form-ctrl"  tabindex = '4' name="aor" id="aor">
                                                             <option value="" >Select AOR</option>
                                                             <?php
                                                             if(isset($aorList) && !empty($aorList)){
@@ -182,24 +110,24 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Chamber Address :</label>
-                                                        <textarea class="uk-textarea" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="7"><?php echo set_value('c_address');?></textarea>
+                                                        <textarea class="form-control cus-form-ctrl" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="5"><?php echo set_value('c_address');?></textarea>
                                                         <div id="error_c_address"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Pincode :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="8" />
+                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="6" />
                                                         <div id="error_c_pincode"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">City :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="9" />
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="7" />
                                                         <div id="error_c_city"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">State :</label>
-                                                        <select class="uk-select" name="c_state"  id="c_state"   tabindex="10">
+                                                        <select class="form-control cus-form-ctrl" name="c_state"  id="c_state"   tabindex="8">
                                                             <option value="">Select State</option>
                                                             <?php
                                                             $stateArr = array();
@@ -220,14 +148,14 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">District :</label>
-                                                        <select class="uk-select" name="c_district" id="c_district"  tabindex="11">
+                                                        <select class="form-control cus-form-ctrl" name="c_district" id="c_district"  tabindex="9">
                                                             <option value="">Select District</option>
                                                         </select>
                                                         <div id="error_c_district"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Registration Bar Id Card <span style="color: red">*</span>Size: (<?php echo ((BAR_ID_CARD_SIZE/1024)/1024);?>MB) Type:(pdf/jpeg/jpg):</label>
-                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="14" />
+                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="10" />
                                                         <div id="error_bar_id_card"></div>
                                                     </div>
                                                 </div>
@@ -236,7 +164,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $emailid;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="2" readonly/>
+                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $emailid;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="11" readonly/>
                                                         <div id="error_email"></div>
                                                     </div>
                                                     <div class="col">
@@ -247,41 +175,41 @@
                                                             $readony = "readonly";
                                                         }
                                                         ?>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="4" <?php echo $readony;?>/>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="12" <?php echo $readony;?>/>
                                                         <div id="error_bar_reg_no"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Relative Name <span style="color: red">*</span>:</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="6" />
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="13" />
                                                         <div id="error_relation_name"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label style="margin-top: 35px;margin-bottom: 9px;" class="form-label"><input class="uk-checkbox" type="checkbox"  name="same_as" id="same_as"  tabindex="12" /> Same As Chamber Address :</label>
+                                                        <label style="margin-top: 35px;margin-bottom: 9px;" class="form-label"><input class="uk-checkbox" type="checkbox"  name="same_as" id="same_as"  tabindex="14" /> Same As Chamber Address :</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Residential Address :</label>
-                                                        <textarea class="uk-textarea" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="13"><?php echo set_value('r_address');?> </textarea>
+                                                        <textarea class="form-control cus-form-ctrl" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="15"><?php echo set_value('r_address');?> </textarea>
                                                         <div id="error_r_address"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Pincode :</label>
-                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="14" />
+                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="16" />
                                                         <div id="error_r_pincode"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">City :</label>
-                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="15" />
+                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="14" />
                                                         <div id="error_r_city"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">State :</label>
-                                                        <select class="uk-select" name="r_state"  id="r_state" tabindex="16">
+                                                        <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="18">
                                                             <option value="">Select State</option>
                                                             <?php
                                                             if (isset($state_list) && !empty($state_list)){
@@ -297,7 +225,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">District :</label>
-                                                        <select class="uk-select" name="r_district" id="r_district"  tabindex="17">
+                                                        <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="19">
                                                             <option>Select District</option>
                                                         </select>
                                                         <div id="error_r_district"></div>
@@ -305,7 +233,7 @@
                                                 </div>
                                                 <!-- right box end -->
                                                 <div style="text-align: center;">
-                                                    <input type="submit" class="uk-button uk-button-primary" name="register" id="register" value="Register">
+                                                    <input type="submit" class="btn btn-primary quick-btn mt-3" name="register" id="register" value="Register">
                                                 </div>
                                             </div>
                                             <?php
@@ -353,7 +281,7 @@
                                                 </div>
                                             </div>
                                             <div style="text-align: center;">
-                                                <input type="submit" class="btn quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register">
+                                                <input type="submit" class="btn btn-primary quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register">
                                             </div>
                                             <?php
                                         echo form_close();
@@ -380,14 +308,14 @@
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Mobile <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_no;?>" placeholder="9876543XXX" maxlength="10"   tabindex="3" readonly>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_no;?>" placeholder="9876543XXX" maxlength="10"   tabindex="2" readonly>
                                                         <div id="error_mobile"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">Relation <span style="color: red">*</span> :</label>
-                                                        <select class="uk-select" tabindex = '5' name="relation" id="relation"  >
+                                                        <select class="form-control cus-form-ctrl" tabindex = '3' name="relation" id="relation"  >
                                                             <option value="">Select Relation</option>
                                                             <option value="S">Son Of</option>
                                                             <option value="D">Daughter Of</option>
@@ -398,9 +326,10 @@
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">AOR <span style="color: red">*</span> :</label>
-                                                        <select class="uk-select"  tabindex = '5' name="aor" id="aor">
+                                                        <select class="form-control cus-form-ctrl"  tabindex = '4' name="aor" id="aor">
                                                             <option value="" >Select AOR</option>
                                                             <?php
+                                                            // pr($aorList);
                                                             if(isset($aorList) && !empty($aorList)){
                                                                 foreach($aorList as $k=>$v) {
                                                                     $name = '';
@@ -421,24 +350,24 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Chamber Address :</label>
-                                                        <textarea class="uk-textarea" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="7"><?php echo set_value('c_address');?></textarea>
+                                                        <textarea class="form-control cus-form-ctrl" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="5"><?php echo set_value('c_address');?></textarea>
                                                         <div id="error_c_address"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Pincode :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="8" />
+                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="6" />
                                                         <div id="error_c_pincode"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">City :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="9" />
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="7" />
                                                         <div id="error_c_city"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">State :</label>
-                                                        <select class="uk-select" name="c_state"  id="c_state"   tabindex="10">
+                                                        <select class="form-control cus-form-ctrl" name="c_state"  id="c_state"   tabindex="8">
                                                             <option value="">Select State</option>
                                                             <?php
                                                             $stateArr = array();
@@ -459,14 +388,14 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">District :</label>
-                                                        <select class="uk-select" name="c_district" id="c_district"  tabindex="11">
+                                                        <select class="form-control cus-form-ctrl" name="c_district" id="c_district"  tabindex="9">
                                                             <option value="">Select District</option>
                                                         </select>
                                                         <div id="error_c_district"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Registration Bar Id Card <span style="color: red">*</span>Size: (<?php echo ((BAR_ID_CARD_SIZE/1024)/1024);?>MB) Type:(pdf/jpeg/jpg):</label>
-                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="14" />
+                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="10" />
                                                         <div id="error_bar_id_card"></div>
                                                     </div>
                                                 </div>
@@ -475,7 +404,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $email_id;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="2" readonly/>
+                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $email_id;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="11" readonly/>
                                                         <div id="error_email"></div>
                                                     </div>
                                                     <div class="col">
@@ -486,43 +415,44 @@
                                                             $readony = "readonly";
                                                         }
                                                         ?>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="4" <?php echo $readony;?>/>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="12" <?php echo $readony;?>/>
                                                         <div id="error_bar_reg_no"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Relative Name <span style="color: red">*</span>:</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="6" />
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="13" />
                                                         <div id="error_relation_name"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label style="margin-top: 35px;margin-bottom: 9px;" class="form-label"><input class="uk-checkbox" type="checkbox"  name="same_as" id="same_as"  tabindex="12" /> Same As Chamber Address :</label>
+                                                        <label style="margin-top: 35px;margin-bottom: 9px;" class="form-label"><input class="uk-checkbox" type="checkbox"  name="same_as" id="same_as"  tabindex="14" /> Same As Chamber Address :</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Residential Address :</label>
-                                                        <textarea class="uk-textarea" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="13"><?php echo set_value('r_address');?> </textarea>
+                                                        <textarea class="form-control cus-form-ctrl" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="15"><?php echo set_value('r_address');?> </textarea>
                                                         <div id="error_r_address"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Pincode :</label>
-                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="14" />
+                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="16" />
                                                         <div id="error_r_pincode"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">City :</label>
-                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="15" />
+                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="17" />
                                                         <div id="error_r_city"></div>
                                                     </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">State :</label>
-                                                        <select class="uk-select" name="r_state"  id="r_state" tabindex="16">
+                                                        <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="18">
                                                             <option value="">Select State</option>
                                                             <?php
+
                                                             if (isset($state_list) && !empty($state_list)){
                                                                 foreach ($state_list as $dataRes) {
                                                                     echo '<option value="'.url_encryption(trim($dataRes->cmis_state_id)).'">'.strtoupper($dataRes->agency_state).'</option>';
@@ -536,7 +466,7 @@
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">District :</label>
-                                                        <select class="uk-select" name="r_district" id="r_district"  tabindex="17">
+                                                        <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="19">
                                                             <option>Select District</option>
                                                         </select>
                                                         <div id="error_r_district"></div>
@@ -544,7 +474,7 @@
                                                 </div>
                                                 <!-- right box end -->
                                                 <div style="text-align: center;">
-                                                    <input type="submit" class="uk-button uk-button-primary" name="register" id="register" value="Register">
+                                                    <input type="submit" class="btn btn-primary quick-btn mt-3" name="register" id="register" value="Register">
                                                 </div>
                                             </div>
                                             <?php
@@ -596,6 +526,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
