@@ -267,7 +267,7 @@ class AdvSignUp extends BaseController {
         }
 
         if ($thumb) {
-            echo '<img class="image-preview" src="' . $_SESSION['profile_image']['profile_photo'] . ' " class="upload-preview" height="40" width="50" />';
+            echo '<img class="image-preview" src="' . $_SESSION['profile_image']['profile_photo'] . ' " class="upload-preview" height="94" width="94" />';
         }
     }
 
