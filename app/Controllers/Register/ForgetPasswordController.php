@@ -6,6 +6,67 @@ use App\Models\Register\RegisterModel;
 use App\Libraries\Slice;
 use App\Libraries\webservices\Efiling_webservices;
 
+class Auto_Sanitize {
+    function hex2bin($hexstr)
+    {
+        $n = strlen($hexstr);
+        $sbin="";
+        $i=0;
+        while($i<$n)
+        {
+            $a =substr($hexstr,$i,2);
+            $c = pack("H*",$a);
+            if ($i==0){$sbin=$c;}
+            else {$sbin.=$c;}
+            $i+=2;
+        }
+        return $sbin;
+    }
+    function cryptoJsAesDecrypt($passphrase, $jsonString)
+    {
+        $jsondata = json_decode($jsonString, true);
+        try {
+            $salt = $this->hex2bin($jsondata["s"]);
+            $iv  = $this->hex2bin($jsondata["iv"]);
+        } catch(\Exception $e) { return null; }
+        $ct = base64_decode($jsondata["ct"]);
+        $concatedPassphrase = $passphrase.$salt;
+        $md5 = array();
+        $md5[0] = md5($concatedPassphrase, true);
+        $result = $md5[0];
+        for ($i = 1; $i < 3; $i++) {
+            $md5[$i] = md5($md5[$i - 1].$concatedPassphrase, true);
+            $result .= $md5[$i];
+        }
+        $key = substr($result, 0, 32);
+        $data = openssl_decrypt($ct, 'aes-256-cbc', $key, true, $iv);
+        return json_decode($data, true);
+    }
+
+    /**
+     * Encrypt value to a cryptojs compatiable json encoding string
+     *
+     * @param mixed $passphrase
+     * @param mixed $value
+     * @return string
+     */
+    function cryptoJsAesEncrypt($passphrase, $value)
+    {
+        $salt = openssl_random_pseudo_bytes(8);
+        $salted = '';
+        $dx = '';
+        while (strlen($salted) < 48) {
+            $dx = md5($dx.$passphrase.$salt, true);
+            $salted .= $dx;
+        }
+        $key = substr($salted, 0, 32);
+        $iv  = substr($salted, 32,16);
+        $encrypted_data = openssl_encrypt(json_encode($value), 'aes-256-cbc', $key, true, $iv);
+        $data = array("ct" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "s" => bin2hex($salt));
+        return json_encode($data);
+    }
+}
+
 class ForgetPasswordController extends BaseController
 {
     protected $Register_model;
@@ -364,17 +425,19 @@ class ForgetPasswordController extends BaseController
     }
 
 	function update_user_password(){
+        $forget_mobile = '';
+        $forget_email = '';
         // $this->form_validation->set_rules('password', 'New Passwrod', 'required|trim|is_required');
         // $this->form_validation->set_rules('confirm_password', 'Confirm Passwrod', 'required|trim|is_required');
         // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
         $rules = [
-            "txt_password" => [
+            "password" => [
                 "label" => "New Passwrod",
-                "rules" => "required|trim|is_required"
+                "rules" => "required|trim"
             ],
             "confirm_password" => [
                 "label" => "Confirm Passwrod",
-                "rules" => "required|trim|is_required"
+                "rules" => "required|trim"
             ],
         ];
         $password = $_POST['txt_password'];
@@ -395,18 +458,18 @@ class ForgetPasswordController extends BaseController
             $this->render('responsive_variant.authentication.update_password_view', $data);
         } else if(!$this->valid_password($decoded_password)) {
             $this->session->setFlashdata('msg', 'Password policy has to be followed.');
-            redirect('register/ForgetPassword/update_user_password');
+            return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
         } else {
             /* $data['captcha']['image'] = $captcha_value['image'];
             $data['captcha']['word'] = $captcha_value['word'];
             $userCaptcha = escape_data($_POST['userCaptcha']);
             if ($this->session->userdata("captchaWord") != $userCaptcha) {
                 setSessionData('msg', 'Invalid Captcha!');
-                redirect('register/ForgetPassword/update_password');
+                return redirect()->to(base_url('register/ForgetPassword/update_password');
             } */
             if($_POST['password'] != $_POST['confirm_password']){
                 $this->session->setFlashdata('msg', 'Confirm Passwrod not matched!');
-                redirect('register/ForgetPassword/update_user_password');
+                return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
             }
             if(!empty(getSessionData('adv_details')['mobile_no'])){
                 $forget_mobile = getSessionData('adv_details')['mobile_no'];
@@ -419,11 +482,13 @@ class ForgetPasswordController extends BaseController
             $passUpdate = $this->Register_model->update_user_password($data,$forget_mobile,$forget_email);
             if($passUpdate){
                 $_SESSION['adv_details']['ForgetPasswordDone']='ForgetPasswordDone';
-                $this->session->setFlashdata('msg', 'Passwrod Update Successful!');
-                redirect('login');
+                $this->session->setFlashdata('msg', 'Passwrod Update Successful.');
+                // return redirect()->to('/');
+                return redirect()->to(base_url('/'));
+                exit(0);
             } else{
                 $this->session->setFlashdata('msg', 'Failed Passwrod update!');
-                redirect('register/ForgetPassword/update_user_password');
+                return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
             }
         }
 	}
