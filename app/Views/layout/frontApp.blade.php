@@ -123,31 +123,36 @@
     <script src="<?=base_url('CaptchaResource/js/Captcha.js');?>"></script>
     <script type="text/javascript">
         $(function(){
-            @if(empty(@$session->get('user')))
+            <?php if(empty(session()->get('user'))) { ?>
                 $('[name="txt_username"]').focus();
-            @else
+            <?php } else { ?>
                 $('[name="txt_password"]').focus();
-            @endif
-    
+            <?php } ?>
+            // @if(empty(@$session->get('user')))
+            //     $('[name="txt_username"]').focus();
+            // @else
+            //     $('[name="txt_password"]').focus();
+            // @endif    
         });
     </script>
     <script>
         function enableSubmit() {
             var form = this;
             var password= $('[name="txt_password"]').val(); //$('#txt_password').val();
-            $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= $_SESSION['login_salt'] ?>');
+            $('[name="txt_password"]').val(sha256($('[name="txt_password"]').val()) + '<?= isset($_SESSION['login_salt']) ? $_SESSION['login_salt'] : '' ?>');
             if (password !='') {
                 var pwd=sha256(password);
-                var pwd2=pwd+'<?=$_SESSION['login_salt'] ?>';
+                var pwd2=pwd+'<?= isset($_SESSION['login_salt']) ? $_SESSION['login_salt'] : '' ?>';
             }
         }
         var base_url = '{{ base_url() }}';
     </script>
-    <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone']=='ForgetPasswordDone')){?>
+    <?php // if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone']=='ForgetPasswordDone')){?>
         <script>
-            setTimeout(function () { window.location.href="<?php echo base_url('login/logout')?>";  }, 2000);
+            // setTimeout(function () { window.location.href="<?php // echo base_url('login/logout')?>";  }, 2000);
+            // setTimeout(function () { window.location.href="<?php // echo base_url('/')?>";  }, 2000);
         </script>
-    <?php }?>   
+    <?php // } ?>   
     @stack('script')
 </body>
 

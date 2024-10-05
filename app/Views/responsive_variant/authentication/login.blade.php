@@ -121,7 +121,7 @@
                 <div class="col-12 col-sm-12 col-md-6 col-lg-5 login-section">
                     <div class="login-s-inner">
                         <?php $session = session(); ?>
-                        @if($session->has('msg'))
+                        <!-- @if($session->has('msg'))
                         <div class="uk-text-danger">
                             <b>{{ esc($session->get('msg')) }}</b>
                         </div>
@@ -140,11 +140,18 @@
                         <div class="uk-text-danger">
                             <b>{{ $validation->getError('txt_password')}}</b>
                         </div>
-                        @endif
+                        @endif -->
                         <div class="httxt">
                             <h4>Login</h4>
                         </div>
                         <div class="loin-form">
+                            <?php if (session()->getFlashdata('msg')) : ?>
+                                <div class="alert alert-danger text-center flashmessage" role="alert">
+                                    <div class="flas-msg-inner">
+                                        <?= session()->getFlashdata('msg') ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <?php  //echo $_SESSION["captcha"];
                             $attribute = array('class' => 'form_horizontal', 'name' => 'form_horizontal', 'id' => 'login-form', 'accept-charset' => 'utf-8', 'autocomplete' => 'off', 'onsubmit' => 'enableSubmit();');
                             echo form_open(base_url('login'), $attribute);
@@ -353,13 +360,14 @@
         }
         var base_url = '{{ base_url() }}';
     </script>
-    <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
+    <?php // if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
         <script>
-            setTimeout(function() {
-                window.location.href = "<?php echo base_url('login/logout') ?>";
-            }, 2000);
+            // setTimeout(function() {
+            //     window.location.href = "<?php // echo base_url('login/logout') ?>";
+            // }, 2000);
+            // setTimeout(function () { window.location.href="<?php // echo base_url('/')?>";  }, 2000);
         </script>
-    <?php } ?>
+    <?php // } ?>
 </body>
 
 </html>

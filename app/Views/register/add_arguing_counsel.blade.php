@@ -7,6 +7,11 @@ if(!empty(getSessionData('login'))){
 ?>
 @extends($extends)
 @section('content')
+<style>
+    .row{
+        padding-top: 10px;
+    }
+</style>
     <div class="container-fluid">
         <div class="row card">
             <div class="col-lg-12">
@@ -34,7 +39,7 @@ if(!empty(getSessionData('login'))){
                                 @endif
                                 @if(!empty(getSessionData('success')))
                                     <div class="alert alert-dismissible text-center flashmessage">
-                                        <b style="color: green;">{{ getSessionData('success') }}</b> <a href="'.base_url().'">Back</a>
+                                        <b style="color: green;">{{ getSessionData('success') }}</b> <a href="<?=base_url(); ?>">Back</a>
                                     </div>
                                 @endif
                                 @if(!empty(getSessionData('error')))
@@ -168,14 +173,14 @@ if(!empty(getSessionData('login'))){
                                                         <div id="error_email"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. :</label>
+                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span>  :</label>
                                                         <?php
                                                         $readony = "";
                                                         if(isset($bar_reg_no) && !empty($bar_reg_no)){
                                                             $readony = "readonly";
                                                         }
                                                         ?>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="12" <?php echo $readony;?>/>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="12" <?php echo $readony;?>/>
                                                         <div id="error_bar_reg_no"></div>
                                                     </div>
                                                 </div>
@@ -191,24 +196,24 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Residential Address :</label>
+                                                        <label class="form-label" for="form-stacked-text">Residential Address <span style="color: red">*</span> :</label>
                                                         <textarea class="form-control cus-form-ctrl" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="15"><?php echo set_value('r_address');?> </textarea>
                                                         <div id="error_r_address"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Pincode :</label>
+                                                        <label class="form-label" for="form-stacked-text">Pincode <span style="color: red">*</span> :</label>
                                                         <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="16" />
                                                         <div id="error_r_pincode"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">City :</label>
+                                                        <label class="form-label" for="form-stacked-text">City <span style="color: red">*</span> :</label>
                                                         <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="14" />
                                                         <div id="error_r_city"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-select">State :</label>
+                                                        <label class="form-label" for="form-stacked-select">State <span style="color: red">*</span> :</label>
                                                         <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="18">
                                                             <option value="">Select State</option>
                                                             <?php
@@ -224,7 +229,7 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-select">District :</label>
+                                                        <label class="form-label" for="form-stacked-select">District <span style="color: red">*</span> :</label>
                                                         <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="19">
                                                             <option>Select District</option>
                                                         </select>
@@ -269,14 +274,14 @@ if(!empty(getSessionData('login'))){
                                                    
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="form-label" for="form-stacked-text">Bar Registration No. :</label>
+                                                    <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span> :</label>
                                                     <?php
                                                     $readony = "";
                                                     if(isset($bar_reg_no) && !empty($bar_reg_no)){
                                                         $readony = "readonly";
                                                     }
                                                     ?>
-                                                    <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="4" <?php echo $readony;?>/>
+                                                    <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="4" <?php echo $readony;?>/>
                                                     <div id="error_bar_reg_no"></div>
                                                 </div>
                                             </div>
@@ -408,14 +413,14 @@ if(!empty(getSessionData('login'))){
                                                         <div id="error_email"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. :</label>
+                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span> :</label>
                                                         <?php
                                                         $readony = "";
                                                         if(isset($bar_reg_no) && !empty($bar_reg_no)){
                                                             $readony = "readonly";
                                                         }
                                                         ?>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder="abccd2314441"   tabindex="12" <?php echo $readony;?>/>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="12" <?php echo $readony;?>/>
                                                         <div id="error_bar_reg_no"></div>
                                                     </div>
                                                 </div>
@@ -431,24 +436,24 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Residential Address :</label>
+                                                        <label class="form-label" for="form-stacked-text">Residential Address <span style="color: red">*</span> :</label>
                                                         <textarea class="form-control cus-form-ctrl" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="15"><?php echo set_value('r_address');?> </textarea>
                                                         <div id="error_r_address"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Pincode :</label>
+                                                        <label class="form-label" for="form-stacked-text">Pincode <span style="color: red">*</span> :</label>
                                                         <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="16" />
                                                         <div id="error_r_pincode"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">City :</label>
+                                                        <label class="form-label" for="form-stacked-text">City <span style="color: red">*</span> :</label>
                                                         <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="17" />
                                                         <div id="error_r_city"></div>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-select">State :</label>
+                                                        <label class="form-label" for="form-stacked-select">State <span style="color: red">*</span> :</label>
                                                         <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="18">
                                                             <option value="">Select State</option>
                                                             <?php
@@ -465,7 +470,7 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-select">District :</label>
+                                                        <label class="form-label" for="form-stacked-select">District <span style="color: red">*</span> :</label>
                                                         <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="19">
                                                             <option>Select District</option>
                                                         </select>

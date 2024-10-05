@@ -216,7 +216,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <a href="{{base_url()}}" class="blue-txt login-anc">Login ?</a>
+                                        <a href="{{base_url()}}" class="btn quick-btn" style="width: 25% !important;">Login ?</a>
                                     </div>
                                     <div class="regester-txts">
                                         <h6 class="htsmall">Register As :</h6>
@@ -354,12 +354,13 @@
         }
         var base_url = '{{ base_url() }}';
     </script>
-    <?php if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
+    <?php // if (isset($_SESSION['adv_details']['ForgetPasswordDone']) && ($_SESSION['adv_details']['ForgetPasswordDone'] == 'ForgetPasswordDone')) { ?>
         <script>
-            setTimeout(function() {
-                window.location.href = "<?php echo base_url('login/logout') ?>";
-            }, 2000);
+            // setTimeout(function() {
+            //     window.location.href = "<?php // echo base_url('login/logout') ?>";
+            // }, 2000);
+            // setTimeout(function () { window.location.href="<?php // echo base_url('/')?>";  }, 2000);
         </script>
-    <?php } ?>
+    <?php // } ?>
 </body>
 </html>

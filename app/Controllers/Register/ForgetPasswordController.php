@@ -6,6 +6,67 @@ use App\Models\Register\RegisterModel;
 use App\Libraries\Slice;
 use App\Libraries\webservices\Efiling_webservices;
 
+class Auto_Sanitize {
+    function hex2bin($hexstr)
+    {
+        $n = strlen($hexstr);
+        $sbin="";
+        $i=0;
+        while($i<$n)
+        {
+            $a =substr($hexstr,$i,2);
+            $c = pack("H*",$a);
+            if ($i==0){$sbin=$c;}
+            else {$sbin.=$c;}
+            $i+=2;
+        }
+        return $sbin;
+    }
+    function cryptoJsAesDecrypt($passphrase, $jsonString)
+    {
+        $jsondata = json_decode($jsonString, true);
+        try {
+            $salt = $this->hex2bin($jsondata["s"]);
+            $iv  = $this->hex2bin($jsondata["iv"]);
+        } catch(\Exception $e) { return null; }
+        $ct = base64_decode($jsondata["ct"]);
+        $concatedPassphrase = $passphrase.$salt;
+        $md5 = array();
+        $md5[0] = md5($concatedPassphrase, true);
+        $result = $md5[0];
+        for ($i = 1; $i < 3; $i++) {
+            $md5[$i] = md5($md5[$i - 1].$concatedPassphrase, true);
+            $result .= $md5[$i];
+        }
+        $key = substr($result, 0, 32);
+        $data = openssl_decrypt($ct, 'aes-256-cbc', $key, true, $iv);
+        return json_decode($data, true);
+    }
+
+    /**
+     * Encrypt value to a cryptojs compatiable json encoding string
+     *
+     * @param mixed $passphrase
+     * @param mixed $value
+     * @return string
+     */
+    function cryptoJsAesEncrypt($passphrase, $value)
+    {
+        $salt = openssl_random_pseudo_bytes(8);
+        $salted = '';
+        $dx = '';
+        while (strlen($salted) < 48) {
+            $dx = md5($dx.$passphrase.$salt, true);
+            $salted .= $dx;
+        }
+        $key = substr($salted, 0, 32);
+        $iv  = substr($salted, 32,16);
+        $encrypted_data = openssl_encrypt(json_encode($value), 'aes-256-cbc', $key, true, $iv);
+        $data = array("ct" => base64_encode($encrypted_data), "iv" => bin2hex($iv), "s" => bin2hex($salt));
+        return json_encode($data);
+    }
+}
+
 class ForgetPasswordController extends BaseController
 {
     protected $Register_model;
@@ -118,9 +179,6 @@ class ForgetPasswordController extends BaseController
             $this->session->setFlashdata('msg', 'Captcha is required!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }
-
-// pr($this->request->getPost('adv_mobile') . '--------' . $this->request->getPost('adv_email'));
-
         if(!empty($this->request->getPost('adv_mobile')) && empty($this->request->getPost('adv_email'))) {
             $rules = [
                 "adv_mobile" => [
@@ -164,23 +222,19 @@ class ForgetPasswordController extends BaseController
             return redirect()->to(base_url('Register/ForgetPassword'));
         }    
         // Check if mobile and email exist
-        $mobile_exist = $this->Register_model->check_already_reg_mobile($adv_mobile);
-        
+        $mobile_exist = $this->Register_model->check_already_reg_mobile($adv_mobile);        
         $email_exist = $this->Register_model->check_already_reg_email(strtoupper($adv_email));    
         if (!$mobile_exist || !$email_exist) {
             $this->session->setFlashdata('msg', 'Not Registered With This Mobile Number or Email ID!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
-        }    
-
+        }
         // Set name array based on input
         $name_array = [];
         if (!empty($adv_mobile)) {
-
             $name_array = ['first_name' => $mobile_exist[0]['first_name'], 'last_name' => $mobile_exist[0]['last_name']];
         } elseif (!empty($adv_email)) {
             $name_array = ['first_name' => $email_exist[0]['first_name'], 'last_name' => $email_exist[0]['last_name']];
-        }    
-
+        } 
         // Generate OTPs and set session data
         //$mobile_otp_is = $this->generateNumericOTP();
         //$email_otp_is = $this->generateNumericOTP();
@@ -204,22 +258,24 @@ class ForgetPasswordController extends BaseController
             $mobileNo=trim($adv_mobile);
             $smsText="OTP for changing SC-EFM password is: ".$mobile_otp_is." ,Please do not share it with any one. - Supreme Court of India";
             sendSMS($typeId,$mobileNo,$smsText,SCISMS_Change_Password_OTP);
-            $this->session->setFlashdata('msg', 'OTP sent successfully!');
         } elseif (!empty($adv_email)) {
             $to_email=trim($adv_email);
             $subject="SC-EFM forget password OTP";
             $message="OTP for changing SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
             send_mail_msg($to_email, $subject, $message);
-            $this->session->setFlashdata('msg', 'OTP sent successfully!');
-        }    
-        return redirect()->to(base_url('Register/AdvOtp'));
+        }
+        $this->session->setFlashdata('msg', 'OTP sent successfully!');
+        // pr($_SESSION);
+        return $this->AdvOtp();    
+        // return redirect()->to(base_url('register/AdvOtp'));
         // return redirect()->route('Register/AdvOtp');
     }
     
     public function AdvOtp()
     {
         $session = session();        
-        if ($session->get('adv_details')['register_type'] != 'Forget Password') {
+        if ($session->get('adv_details')['register_type'] != 'Forgot Password') {
+            // pr($_SESSION);
             if (empty($session->get('adv_details')['mobile_no']) || empty($session->get('adv_details')['email_id'])) {               
                return redirect()->to(base_url('Register/ForgetPassword'));
             }
@@ -231,7 +287,7 @@ class ForgetPasswordController extends BaseController
     public function verify()
     {
         $request = \Config\Services::request();
-        //pr($request);       
+        // pr($request);       
         $session = session();
         if (!$session->has('adv_details')) {
             return redirect()->to('Register');
@@ -242,29 +298,44 @@ class ForgetPasswordController extends BaseController
             'adv_mobile_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
             'adv_email_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
         ];
-        if ($registerType == 'Forget Password') {
-            $validationRules['adv_mobile_otp'] = 'numeric|trim|min_length[6]|max_length[6]';
-            $this->session->setFlashdata('msg', 'Mobile OTP And Email OTP Required');
+        if ($registerType == 'Forgot Password') {
+            if(!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+                $validationRules = [
+                    'adv_mobile_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+                ];
+                $this->session->setFlashdata('msg', 'Mobile OTP Required');
+            } elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
+                $validationRules = [
+                    'adv_email_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+                ];
+                $this->session->setFlashdata('msg', 'Email OTP Required');
+            }
         }       
-        if (!$this->validate($validationRules)) {           
-            $captcha_value = captcha_generate();
-            $data['captcha']['image'] = $captcha_value['image'];
-            $data['captcha']['word'] = $captcha_value['word'];           
-            return $this->render('responsive_variant.authentication.adv_otp_view',$data);
-        } else {            
+        if (!$this->validate($validationRules)) {
+            // $captcha_value = captcha_generate();
+            // $data['captcha']['image'] = $captcha_value['image'];
+            // $data['captcha']['word'] = $captcha_value['word'];
+            return $this->render('responsive_variant.authentication.adv_otp_view');
+        } else {
             // Check OTP expiration and verification
             $mobile_status = $this->verifyOTP($currentTime, 'adv_mobile_otp', 'mobile_otp');
             $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
             $session->set('verify_details', ['mobile_verified' => $mobile_status, 'email_verified' => $email_status]);
-            if ($mobile_status == 'done' && $email_status == 'done') {
+            if ($mobile_status == 1 || $email_status == 1) {
+                // pr($registerType);
                 if ($registerType == 'Advocate') {               
                     $session->set('self_register_arguing_counsel', true);                    
                     return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+                } elseif ($registerType == 'Forgot Password') {               
+                    // $session->set('self_register_arguing_counsel', true);                    
+                    // return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+                    return $this->update_password();
                 } else {                   
                     $session->set('self_register_arguing_counsel', false);
                     return redirect()->to(base_url('Register/AdvSignUp'));
                 }
             } else {
+                // echo 'Hello'; pr($_SESSION);
                 // $captcha_value = captcha_generate_test();
                 // $data['captcha']['image'] = $captcha_value['image'];
                 // $data['captcha']['word'] = $captcha_value['word'];               
@@ -303,11 +374,11 @@ class ForgetPasswordController extends BaseController
         return $result;
     }    
 
-	function update_password(){
-		$captcha_value = captcha_generate();
-        $data['captcha']['image'] = $captcha_value['image'];
-        $data['captcha']['word'] = $captcha_value['word'];
-        return $this->render('responsive_variant.authentication.update_password_view',$data);
+	function update_password() {
+		// $captcha_value = captcha_generate();
+        // $data['captcha']['image'] = $captcha_value['image'];
+        // $data['captcha']['word'] = $captcha_value['word'];
+        return $this->render('responsive_variant.authentication.update_password_view');
 	}
 
     function valid_password($password = '')
@@ -358,17 +429,19 @@ class ForgetPasswordController extends BaseController
     }
 
 	function update_user_password(){
+        $forget_mobile = '';
+        $forget_email = '';
         // $this->form_validation->set_rules('password', 'New Passwrod', 'required|trim|is_required');
         // $this->form_validation->set_rules('confirm_password', 'Confirm Passwrod', 'required|trim|is_required');
         // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
         $rules = [
             "password" => [
                 "label" => "New Passwrod",
-                "rules" => "required|trim|is_required"
+                "rules" => "required|trim"
             ],
             "confirm_password" => [
                 "label" => "Confirm Passwrod",
-                "rules" => "required|trim|is_required"
+                "rules" => "required|trim"
             ],
         ];
         $password = $_POST['txt_password'];
@@ -389,18 +462,18 @@ class ForgetPasswordController extends BaseController
             $this->render('responsive_variant.authentication.update_password_view', $data);
         } else if(!$this->valid_password($decoded_password)) {
             $this->session->setFlashdata('msg', 'Password policy has to be followed.');
-            redirect('register/ForgetPassword/update_user_password');
+            return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
         } else {
             /* $data['captcha']['image'] = $captcha_value['image'];
             $data['captcha']['word'] = $captcha_value['word'];
             $userCaptcha = escape_data($_POST['userCaptcha']);
             if ($this->session->userdata("captchaWord") != $userCaptcha) {
                 setSessionData('msg', 'Invalid Captcha!');
-                redirect('register/ForgetPassword/update_password');
+                return redirect()->to(base_url('register/ForgetPassword/update_password');
             } */
             if($_POST['password'] != $_POST['confirm_password']){
                 $this->session->setFlashdata('msg', 'Confirm Passwrod not matched!');
-                redirect('register/ForgetPassword/update_user_password');
+                return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
             }
             if(!empty(getSessionData('adv_details')['mobile_no'])){
                 $forget_mobile = getSessionData('adv_details')['mobile_no'];
@@ -413,11 +486,13 @@ class ForgetPasswordController extends BaseController
             $passUpdate = $this->Register_model->update_user_password($data,$forget_mobile,$forget_email);
             if($passUpdate){
                 $_SESSION['adv_details']['ForgetPasswordDone']='ForgetPasswordDone';
-                $this->session->setFlashdata('msg', 'Passwrod Update Successful!');
-                redirect('login');
+                $this->session->setFlashdata('msg', 'Passwrod Update Successful.');
+                // return redirect()->to('/');
+                return redirect()->to(base_url('/'));
+                exit(0);
             } else{
                 $this->session->setFlashdata('msg', 'Failed Passwrod update!');
-                redirect('register/ForgetPassword/update_user_password');
+                return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
             }
         }
 	}

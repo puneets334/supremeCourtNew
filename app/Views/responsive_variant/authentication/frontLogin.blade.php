@@ -23,6 +23,11 @@
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 login-section">
                 <div class="login-s-inner">
                     <?php $session = session(); ?>
+                    @if($session->has('msg_success'))
+                    <div class="text-success" style="border: 2px solid green; background-color: #e6ffe6; padding: 10px; border-radius: 5px;">
+                        <b>{{ esc($session->get('msg_success')) }}</b>
+                    </div>
+                    @endif
                     @if($session->has('msg'))
                     <div class="text-danger">
                         <b>{{ esc($session->get('msg')) }}</b>

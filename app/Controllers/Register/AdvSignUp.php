@@ -103,7 +103,7 @@ class AdvSignUp extends BaseController {
             ],
         ];
         if ($this->validate($rules) === FALSE) {
-
+            $data['validation'] = $this->validator; 
             $data['select_state'] = $this->Register_model->get_state_list();
 
             /*$this->load->view('login/login_header');
@@ -188,7 +188,7 @@ class AdvSignUp extends BaseController {
                         $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." ,Please do not share it with any one.";
                         send_mail_msg($to_email, $subject, $message);
                         //END
-                        $this->session->setFlashdata('msg', 'Registration Successful');
+                        $this->session->setFlashdata('msg_success', 'Registration Successful');
                         return redirect()->to(base_url(''));
                     } else {
                         $this->session->setFlashdata('msg', 'Registration Failed');
@@ -267,7 +267,7 @@ class AdvSignUp extends BaseController {
         }
 
         if ($thumb) {
-            echo '<img class="image-preview" src="' . $_SESSION['profile_image']['profile_photo'] . ' " class="upload-preview" height="40" width="50" />';
+            echo '<img class="image-preview" src="' . $_SESSION['profile_image']['profile_photo'] . ' " class="upload-preview" height="94" width="94" />';
         }
     }
 
