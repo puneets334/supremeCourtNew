@@ -127,14 +127,14 @@
                         <div class="httxt">
                             <h4><?php echo $_SESSION['adv_details']['register_type']; ?></h4>
                         </div>
-                        <h5 class="mt-4 text-center" style="color: green; margin: 0;"> OTP Send (Verify)</h5> <br />
-                        <?php if (session()->getFlashdata('msg')) : ?>
+                        <!-- <h5 class="mt-4 text-center" style="color: green; margin: 0;"> OTP Send (Verify)</h5> <br /> -->
+                        <!-- <?php // if (session()->getFlashdata('msg')) : ?>
                             <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <div class="flas-msg-inner">
-                                    <?= session()->getFlashdata('msg') ?>
+                                    <?//= session()->getFlashdata('msg') ?>
                                 </div>
                             </div>
-                        <?php endif; ?>
+                        <?php // endif; ?> -->
                         @if(isset($validation) && !empty($validation->getError('adv_email')))
                         <div class="uk-text-danger">
                             <b>{{ $validation->getError('adv_email')}}</b>
@@ -155,7 +155,7 @@
                             $title = 'Party In Person';
                         }
                         ?>
-                        <h4> <strong><?php // echo $title; ?></strong></h4>
+                        <!-- <h4> <strong><?php // echo $title; ?></strong></h4> -->
                         <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                         <?php if (session()->getFlashdata('msg')) : ?>
                             <div class="alert alert-danger text-center flashmessage" role="alert">
@@ -214,7 +214,7 @@
                             </div>
                             </form>
                             <div class="text-center">
-                                <a href="{{base_url()}}" class="blue-txt login-anc">Login ?</a>
+                                <a href="{{base_url()}}" class="btn quick-btn" style="width: 25% !important;">Login ?</a>
                             </div>
                             <div class="regester-txts">
                                 <h6 class="htsmall">Register As :</h6>

@@ -194,13 +194,6 @@ $routes->match(['GET', 'POST'], 'Admin/Supadmin/change_case_status', 'Admin\Supa
 $routes->match(['GET', 'POST'], 'profile', 'Profile\DefaultController::index');
 $routes->match(['GET', 'POST'], 'profile/updateProfile/(:any)', 'Profile\DefaultController::updateProfile/$1');
 $routes->match(['GET', 'POST'], 'profile/updatePass', 'Profile\DefaultController::updatePass');
-// Forgot password
-$routes->match(['GET', 'POST'], 'Register/ForgetPassword', 'Register\ForgetPasswordController::index');
-$routes->match(['GET', 'POST'], 'Register/ForgetPassword/adv_get_otp', 'Register\ForgetPasswordController::adv_get_otp');
-$routes->match(['GET', 'POST'], 'Register/AdvOtp', 'Register\ForgetPasswordController::AdvOtp');
-$routes->match(['GET', 'POST'], 'Register/verify', 'Register\ForgetPasswordController::verify');
-$routes->match(['GET', 'POST'], 'Register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
-$routes->match(['GET', 'POST'], 'register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
 // $routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'App\Controllers\Mycases\CitationNotes::add_case_contact');
 $routes->post('mycases/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
 $routes->post('newcase/assignSrAdvocate', 'NewCase\Ajaxcalls::assignSrAdvocate');
@@ -220,6 +213,14 @@ $routes->get('matchRegistrationCode', 'Register\ArguingCounsel::matchRegistratio
 $routes->match(['GET', 'POST'], 'saveArguingCounselCompleteDetails', 'Register\ArguingCounsel::saveArguingCounselCompleteDetails');
 $routes->post('register/ArguingCounsel/approveRejectedArguingCounsel', 'Register\ArguingCounsel::approveRejectedArguingCounsel');
 $routes->post('register/arguingCounsel/landArguingCounsel/(:any)', 'Register\ArguingCounsel::landArguingCounsel/$1');
+// Forgot password
+$routes->match(['GET', 'POST'], 'Register/ForgetPassword', 'Register\ForgetPasswordController::index');
+$routes->match(['GET', 'POST'], 'Register/ForgetPassword/adv_get_otp', 'Register\ForgetPasswordController::adv_get_otp');
+$routes->match(['GET', 'POST'], 'Register/AdvOtp', 'Register\ForgetPasswordController::AdvOtp');
+$routes->match(['GET', 'POST'], 'Register/verify', 'Register\ForgetPasswordController::verify');
+$routes->match(['GET', 'POST'], 'Register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
+$routes->match(['GET', 'POST'], 'register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
+$routes->match(['GET', 'POST'], 'register/ForgetPassword/update_user_password', 'Register\ForgetPasswordController::update_user_password');
 // $routes->get('support/(:any)', 'ResponsiveVariantRouteController::showSupport/$1');
 // $routes->get('support', 'ResponsiveVariantRouteController::showSupport');
 $routes->get('assistance/notice_circulars', 'Assistance\NoticeCirculars::index');

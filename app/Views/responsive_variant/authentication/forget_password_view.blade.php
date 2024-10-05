@@ -216,7 +216,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <a href="{{base_url()}}" class="blue-txt login-anc">Login ?</a>
+                                        <a href="{{base_url()}}" class="btn quick-btn" style="width: 25% !important;">Login ?</a>
                                     </div>
                                     <div class="regester-txts">
                                         <h6 class="htsmall">Register As :</h6>
