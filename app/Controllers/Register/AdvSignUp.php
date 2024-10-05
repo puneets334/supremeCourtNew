@@ -103,7 +103,7 @@ class AdvSignUp extends BaseController {
             ],
         ];
         if ($this->validate($rules) === FALSE) {
-
+            $data['validation'] = $this->validator; 
             $data['select_state'] = $this->Register_model->get_state_list();
 
             /*$this->load->view('login/login_header');
