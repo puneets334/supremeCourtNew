@@ -650,7 +650,7 @@
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <?php
                     if (isset($payment_details) && !empty($payment_details)) {
-                        @include('shcilPayment.payment_list_view');
+                        render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]);
                     }
                     ?>
                 </div>

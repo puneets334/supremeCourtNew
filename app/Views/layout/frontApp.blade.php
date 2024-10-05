@@ -123,12 +123,16 @@
     <script src="<?=base_url('CaptchaResource/js/Captcha.js');?>"></script>
     <script type="text/javascript">
         $(function(){
-            @if(empty(@$session->get('user')))
+            <?php if(empty(session()->get('user'))) { ?>
                 $('[name="txt_username"]').focus();
-            @else
+            <?php } else { ?>
                 $('[name="txt_password"]').focus();
-            @endif
-    
+            <?php } ?>
+            // @if(empty(@$session->get('user')))
+            //     $('[name="txt_username"]').focus();
+            // @else
+            //     $('[name="txt_password"]').focus();
+            // @endif    
         });
     </script>
     <script>
