@@ -141,6 +141,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                                 echo "NO IMAGE";
                                             }
                                         ?>
+                                       
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -179,7 +180,12 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Name <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>" required>
+                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
+                                        <?php if (isset($validation) && $validation->hasError('name')): ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('name'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -193,7 +199,12 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                                 } else {
 
                                                 }
-                                                ?>" name="date_of_birth" id="date_of_birth" maxlength="10" placeholder="DD/MM/YYYY" value="<?php echo set_value('date_of_birth'); ?>" type="text" required>
+                                                ?>" name="date_of_birth" id="date_of_birth" maxlength="10" placeholder="DD/MM/YYYY" value="<?php echo set_value('date_of_birth'); ?>" type="text">
+                                                 <?php if (isset($validation) && $validation->hasError('date_of_birth')): ?>
+                                                    <div class="text-danger">
+                                                        <?= $validation->getError('date_of_birth'); ?>
+                                                    </div>
+                                                <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -223,6 +234,11 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <label class="radio-inline"><input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1" checked> Male </label>
                                             <label class="radio-inline"><input type="radio" <?php echo_data($female) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(2), ENT_QUOTES); ?>" maxlength="1"> Female </label>
                                             <label class="radio-inline"><input type="radio" id="gender" name="gender"  value="<?php echo htmlentities(url_encryption(3), ENT_QUOTES); ?>" maxlength="1"> Other </label>
+                                            <?php if (isset($validation) && $validation->hasError('gender')): ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('gender'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <?php $requerd = ''; $selected = '';?>
@@ -231,6 +247,11 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <label for="" class="form-label">Address <?php echo $star_requered; ?></label>
                                         <textarea name="address" id="address" rows="1" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl" required><?php echo trim(htmlentities($uid_data_house_no, ENT_QUOTES)); ?><?php echo !empty($uid_data_landmark)?','.trim(htmlentities($uid_data_landmark, ENT_QUOTES)):''; ?><?php echo !empty($uid_data_locality)?','. trim(htmlentities($uid_data_locality, ENT_QUOTES)):''; ?>
                                             </textarea>
+                                            <?php if (isset($validation) && $validation->hasError('address')): ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('address'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -245,6 +266,11 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                             }
                                             ?>
                                         </select>
+                                        <?php if (isset($validation) && $validation->hasError('state_id')): ?>
+        <div class="text-danger">
+            <?= $validation->getError('state_id'); ?>
+        </div>
+    <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
@@ -253,12 +279,22 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <select name="district_list" id="district_list" class="form-control cus-form-ctrl" required <?php echo $requerd; ?> >
                                             <option value="" title="Select">Select District</option>
                                         </select>
+                                        <?php if (isset($validation) && $validation->hasError('district_list')): ?>
+        <div class="text-danger">
+            <?= $validation->getError('district_list'); ?>
+        </div>
+    <?php endif; ?>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Pin Code <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="pincode" name="pincode" required <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?php echo htmlentities($uid_data_pincode, ENT_QUOTES); ?>" placeholder="Pincode" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                        <input class="form-control cus-form-ctrl" id="pincode" name="pincode" <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?php echo htmlentities($uid_data_pincode, ENT_QUOTES); ?>" placeholder="Pincode" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                        <?php if (isset($validation) && $validation->hasError('pincode')): ?>
+        <div class="text-danger">
+            <?= $validation->getError('pincode'); ?>
+        </div>
+    <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -333,15 +369,20 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
     // $(document).ready(function () {
     //     $('.filter_select_dropdown').select2();
     // });
-  
+    $(document).ready(function () {
+        var today = new Date();
+
     $('#date_of_birth').datepicker({
         changeMonth: true,
         changeYear: true,
         yearRange: "-100:-1",
         format: "dd/mm/yyyy",
         // defaultDate: '-40y'
+        endDate: today,
+
         maxDate: new Date
     }); 
+});
 
     $('#state_id').change(function () {
         $('#district_list').val('');
@@ -385,7 +426,29 @@ $(document).ready(function (e) {
 
     $("#uploadForm").on('submit',(function(e) {
         e.preventDefault();
-        $.ajax({
+
+        var fileInput = document.getElementById('advocate_image');
+            var file = fileInput.files[0];
+
+            // Allowed file types
+            var allowedTypes = ['image/jpeg', 'image/jpg'];
+            var maxSize = 1024 * 1024; // 1MB
+
+            if (file) {
+                // Check file size
+                if (file.size > maxSize) {
+                    alert("File size must be maximum 1MB.");
+                    fileInput.value = ''; // Clear the file input
+                    return false;
+                }
+
+                // Check file type
+                if (!allowedTypes.includes(file.type)) {
+                    alert("Invalid file type. Please upload a JPG or JPEG file.");
+                    fileInput.value = ''; // Clear the file input
+                    return false;
+                }
+                $.ajax({
             url: "<?php echo base_url('register/AdvSignUp/upload_photo'); ?>",
             type: "POST",
             data:  new FormData(this),
@@ -407,6 +470,11 @@ $(document).ready(function (e) {
             {
             }           
        });
+            }
+
+
+
+        
     }));
 });
 </script> 

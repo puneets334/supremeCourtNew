@@ -121,6 +121,11 @@ $security = service('security');
                                 class="img-fluid logo-at-banner">
                         </div>
                         <div class="banner-txts">
+                        <h5>SC-EFM </h5>
+                        <h6>E-Filing Module</h6>
+                        <h6>Supreme Court of India</h6>
+                    </div>
+                        <div class="banner-txts">
                             <?php
                             if ($segment->getSegment(2) == 'AdvocateOnRecord') {
                                 $title = 'Advocate On Record';
