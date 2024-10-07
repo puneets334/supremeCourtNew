@@ -52,11 +52,11 @@
                                                     }
                                                     ?>
                                                     <tr>
-                                                        <td width="5%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                        <td width="15%"><a href="<?= base_url('newRegister/Advocate/view/') ?><?php echo htmlentities(trim(url_encryption($res->id)), ENT_QUOTES); ?>" style="color: #385198;"><?php echo htmlentities(strtoupper($res->first_name), ENT_QUOTES); ?></a></td>
-                                                        <td width="8%"><?php echo htmlentities($user_type, ENT_QUOTES); ?></td> 
-                                                        <td width="10%"><?php echo htmlentities($res->m_address1 . ' , ' . $res->m_city . $m_pincode, ENT_QUOTES); ?></td>                                    
-                                                        <td width="15%"> <?php echo htmlentities(date("d-m-Y h:i:s A", strtotime($res->created_on)), ENT_QUOTES); ?> </td> 
+                                                        <td width="5%" data-key="#"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                        <td width="15%" data-key="Name"><a href="<?= base_url('newRegister/Advocate/view/') ?><?php echo htmlentities(trim(url_encryption($res->id)), ENT_QUOTES); ?>" style="color: #385198;"><?php echo htmlentities(strtoupper($res->first_name), ENT_QUOTES); ?></a></td>
+                                                        <td width="8%" data-key="Type"><?php echo htmlentities($user_type, ENT_QUOTES); ?></td> 
+                                                        <td width="10%" data-key="Address"><?php echo htmlentities($res->m_address1 . ' , ' . $res->m_city . $m_pincode, ENT_QUOTES); ?></td>                                    
+                                                        <td width="15%" data-key="Request On"> <?php echo htmlentities(date("d-m-Y h:i:s A", strtotime($res->created_on)), ENT_QUOTES); ?> </td> 
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
