@@ -6,7 +6,7 @@
     .mngmntHeader{padding-right: 0;}
     .mngmntHeader .menu-sec{flex-direction: column;position: relative;}    
     .mngmntHeader .mngmntLogoSection {padding-top:48px;flex-direction: column-reverse;align-items: baseline;}
-    .mngmntHeader .mngmntUserSection .top-right-nav {position: absolute;top: 0;left: 0;width:100%;}
+    .mngmntHeader .mngmntUserSection .top-right-nav {position: absolute;top: 0;left: 0;width:100%;z-index: 9;}
     .mngmntHeader .top-right-nav ul li a {font-size: 12px;text-wrap: nowrap;}
     .mngmntHeader .top-right-nav ul li {padding: 0 8px;}    
     .mngmntHeader .top-right-nav ul {flex-wrap: wrap;justify-content: center;row-gap: 7px;padding: 7px 0;}    
@@ -34,7 +34,7 @@
     .title-sec .unerline-title:before {height: 3px;}
     .custom-table thead th:first-child, .custom-table tbody td:first-child {padding-left: 20px;}
     .custom-table thead th:last-child, .custom-table tbody td:last-child {padding-right: 20px;}
-    .custom-table thead th, .custom-table tbody td {padding: 10px 15px;line-height: 18px;}
+    /* .custom-table thead th, .custom-table tbody td {padding: 10px 15px;line-height: 18px;} */
     .custom-table thead th {text-wrap: nowrap;}
     .pagination-area .sowing-pg p {font-size: 14px;}
     .pagination-inner a.page-link {padding: 6px 11px;}
@@ -43,7 +43,7 @@
     .dashboard-bradcrumb .left-dash-breadcrumb{flex-direction:column;gap:15px;width: 100%;align-items: start;}
     .dashboard-bradcrumb{/* flex-direction:column; */gap:15px;flex-wrap: wrap;justify-content: end !important}
     .crnt-page-head {flex-direction:column;}
-    .current-pg-actions{flex-wrap:wrap;justify-content:center;}
+    .current-pg-actions{flex-wrap:wrap;justify-content:start;}
     .dashboard-bradcrumb .page-title h5{font-size:20px;}
     .crnt-page-head .current-pg-title{margin-bottom:15px;}
     .save-form-details {flex-direction: column;gap: 20px;}
@@ -75,10 +75,10 @@
     .custom-table{width: 100%;border-collapse: collapse;border:1px solid #e1e1e1;border-radius: 0!important;}
     .custom-table thead {display: none;}
     .custom-table tbody tr {display: block;margin-bottom:0px;}
-    .custom-table tr td, .custom-table tbody tr td{display:block;position:relative;padding-left:50%!important;border-bottom: 1px solid #e1e1e1 !important;border-radius:0!important;margin:0 !important;width: 100%;text-align: left !important;}
+    .custom-table tr td, .custom-table tbody tr td{display:block;position:relative;padding-left:50%!important;border-bottom: 1px solid #e1e1e1 !important;border-radius:0!important;margin:0 !important;/* width: 100%; */width: fit-content !important;!im;!i;!;text-align: left !important;line-height: 20px !important;min-height: 21px;}
     .custom-table td::before {content: attr(data-key);position: absolute;left: 0;width: 45%;padding: 0 10px;font-weight: bold;text-align: left;}
-    .custom-table thead th:first-child, .custom-table tbody td:first-child{text-align:left;width:100%!important}
-    .custom-table td {width: fit-content;min-height: 21px;}
+    .custom-table thead th:first-child, .custom-table tbody td:first-child{text-align:left;/* width:100%!important; */width: fit-content !important;!i;!;}
+    /* .custom-table td {width: fit-content;min-height: 21px;} */
     .table-striped tr:nth-child(even){background: #ECEEF2;}
     .table-striped tbody tr:nth-of-type(odd){background-color: transparent !important;}
     /* .custom-table{width: 100%;border-collapse: collapse;border:1px solid #e1e1e1;} */
@@ -88,12 +88,17 @@
     /* .custom-table td::before {content: attr(data-key);position: absolute;left: 0;width: 45%;padding: 0 10px;font-weight: bold;} */
     /* .custom-table thead th:first-child, .custom-table tbody td:first-child{text-align:left;} */
 
+    .mngmntHeader .userDetail .userName {line-height: 14px;}
+    .mngmntHeader .userDetail .userName .division {margin-top: 3px;}
+    .page-breifs ul {flex-wrap: wrap;margin: 0;gap: 9px;row-gap: 5px;justify-content: start;}
+    .page-breifs ul li + li {margin-left: 10px;}
+    .crnt-page-head {flex-direction: column;gap:5px;}
+    .custom-table tbody tr td div span.uk-text-uppercase {margin-bottom: 3px !important;display: inline-block;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){
-    .mngmntHeader .mngmntLogoSection {
-        padding-top: 80px;
-    }
+    .mngmntHeader .mngmntLogoSection {padding-top: 80px;}
+    .mngmntHeader .userInformation {width: 235px;justify-content: end;}
 }
 @media screen and (max-width:430px) and (min-width:300px){
    .mngmntHeader .userInformation {display: flex;}

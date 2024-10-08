@@ -5,6 +5,8 @@ $disabled_status1 = 'pointer-events: none; cursor: default;';
 $allowed_users_array = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT];
 $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT];
 ?>
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 <style>
     .curemarked {
         font-weight: bold; text-decoration: line-through;
