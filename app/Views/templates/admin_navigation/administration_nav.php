@@ -32,8 +32,8 @@ if ($this->uri->segment(3) == 'change_case_status' || $this->uri->segment(2) == 
             <ul  class="administration_status6"> 
                 <a href="<?= base_url('assistance/performas') ?>">
                     <li>
-                        <div>Performas</div>
-                        <div class="hover_text_administration_status6 hover_text_css">Performas</div>
+                        <div>Proformas</div>
+                        <div class="hover_text_administration_status6 hover_text_css">Proformas</div>
                         <span><i class="fa fa-files-o icon_font_css"></i></span>
                     </li></a>
             </ul> 

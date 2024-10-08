@@ -61,10 +61,6 @@ class ArguingCounselRegister extends BaseController {
         //     $this->addAarguingCounsel();
         // } else {
         $rules = [
-            "userCaptcha" => [
-                "label" => "userCaptcha",
-                "rules" => "required|trim"
-            ],
             "adv_mobile" => [
                 "label" => "Mobile",
                 "rules" => "required|numeric|trim|min_length[10]|max_length[10]"
@@ -73,14 +69,29 @@ class ArguingCounselRegister extends BaseController {
                 "label" => "Email",
                 "rules" => "required|valid_email|trim"
             ],
+            "userCaptcha" => [
+                "label" => "userCaptcha",
+                "rules" => "required|trim"
+            ]
         ];
         if ($this->validate($rules) === FALSE) {
             $data = [
                 'validation' => $this->validator,
             ];
-            $captcha_value = captcha_generate();
-            $data['captcha']['image'] = $captcha_value['image'];
-            $data['captcha']['word'] = $captcha_value['word'];
+            $errors = $this->validator->getErrors();
+             
+            // $captcha_value = captcha_generate();
+            // $data['captcha']['image'] = $captcha_value['image'];
+            // $data['captcha']['word'] = $captcha_value['word'];
+            if($_REQUEST['register_type']=='Advocate'){
+                if(!empty($errors['adv_mobile'])){
+                    $this->session->setFlashdata('msg', $errors['adv_mobile']); 
+                }
+                if(!empty($errors['adv_email'])){
+                    $this->session->setFlashdata('msg', $errors['adv_email']); 
+                }
+                return redirect()->to(base_url('arguingCounselRegister')); 
+            } 
             $this->addAarguingCounsel();
         } else {
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
