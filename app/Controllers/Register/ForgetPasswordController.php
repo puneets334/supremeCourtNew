@@ -292,6 +292,7 @@ class ForgetPasswordController extends BaseController
         if (!$session->has('adv_details')) {
             return redirect()->to('Register');
         }
+        $userCaptcha = $this->request->getPost('userCaptcha');
         $registerType = $session->get('adv_details')['register_type'];      
         $currentTime = date("H:i");
         $validationRules = [
@@ -316,10 +317,15 @@ class ForgetPasswordController extends BaseController
             // $data['captcha']['image'] = $captcha_value['image'];
             // $data['captcha']['word'] = $captcha_value['word'];
             return $this->render('responsive_variant.authentication.adv_otp_view');
-        } else {
+        } elseif ($this->session->get('captcha') != $userCaptcha) {
+            // pr($this->session->getFlashdata('captcha'));
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');
+            return $this->render('responsive_variant.authentication.adv_otp_view');
+        }else {
             // Check OTP expiration and verification
             $mobile_status = $this->verifyOTP($currentTime, 'adv_mobile_otp', 'mobile_otp');
             $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
+            
             $session->set('verify_details', ['mobile_verified' => $mobile_status, 'email_verified' => $email_status]);
             if ($mobile_status == 1 || $email_status == 1) {
                 // pr($registerType);
