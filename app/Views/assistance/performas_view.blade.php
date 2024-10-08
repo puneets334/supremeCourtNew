@@ -139,7 +139,7 @@
                                                                     </td>
                                                                     <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                         <td width="15%" data-key="Action">
-                                                                            <a href="<?php echo base_url('assistance/performas/edit/' . url_encryption($itm['id'])); ?>" class="btn btn-primary" role="button"><i class="fa fa-pencil"></i></a>
+                                                                            <a href="<?php echo base_url('assistance/performas/edit/' . url_encryption($itm['id'])); ?>" class="btn btn-secondary" role="button">Edit</a>
                                                                             <?php if ($itm['is_deleted'] == 'f') { ?>
                                                                                 <a href="<?php echo base_url('assistance/performas/action/' . url_encryption($itm['id'] . '$$' . 'D')); ?>" class="btn btn-danger" role="button" onclick="return confirm('Are you sure, want to Deactivate this Notice/Circular ?')">Deactivate</a><?php } ?>
                                                                             <?php if ($itm['is_deleted'] == 't') { ?>
@@ -168,10 +168,9 @@
 </div>
 </div>
 @endsection
+@push('script')
 <?php if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) { ?>
     <script type="text/javascript">
-       
-
         $(document).ready(function() {
             $('.news_datepicker').datepicker({
                 changeMonth: true,
@@ -226,10 +225,9 @@
         });
     </script>
 <?php } ?>
-@push('script')
 <script>
- $(document).ready(function() {
-            $('#datatable-responsive').DataTable();
-        });
+    $(document).ready(function() {
+        $('#datatable-responsive').DataTable();
+    });
 </script>
 @endpush
