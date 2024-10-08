@@ -8,10 +8,10 @@
 <link href="<?= base_url() ?>assets/newAdmin/css/black-theme.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/newAdmin/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/newAdmin/css/fullcalendar.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/css/jquery-ui.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/css/select2.min.css" rel="stylesheet"> -->
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <style>
     /* .dataTables_wrapper {
         margin-top: .5rem !important;

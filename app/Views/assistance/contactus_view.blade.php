@@ -25,7 +25,7 @@
                                             <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link">Circulars</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link">Proformas</a>
+                                            <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link">Performas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="<?= base_url('contact_us'); ?>" aria-current="page" class="nav-link active">Contact Us</a>
