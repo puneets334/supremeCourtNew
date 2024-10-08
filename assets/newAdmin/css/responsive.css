@@ -5,7 +5,7 @@
     /* Header CSS Start  */
     .mngmntHeader{padding-right: 0;}
     .mngmntHeader .menu-sec{flex-direction: column;position: relative;}    
-    .mngmntHeader .mngmntLogoSection {padding-top: 80px;flex-direction: column-reverse;align-items: baseline;}
+    .mngmntHeader .mngmntLogoSection {padding-top:48px;flex-direction: column-reverse;align-items: baseline;}
     .mngmntHeader .mngmntUserSection .top-right-nav {position: absolute;top: 0;left: 0;width:100%;}
     .mngmntHeader .top-right-nav ul li a {font-size: 12px;text-wrap: nowrap;}
     .mngmntHeader .top-right-nav ul li {padding: 0 8px;}    
@@ -41,7 +41,7 @@
     .pagination {margin: 15px 0;}
     .add-new-area:hover .add-new-options, .add-new-area:hover .add-new-options ul{width: 191px;}
     .dashboard-bradcrumb .left-dash-breadcrumb{flex-direction:column;gap:15px;width: 100%;align-items: start;}
-    .dashboard-bradcrumb{/* flex-direction:column; */gap:15px;flex-wrap: wrap;justify-content: end !important;!i;!;}
+    .dashboard-bradcrumb{/* flex-direction:column; */gap:15px;flex-wrap: wrap;justify-content: end !important}
     .crnt-page-head {flex-direction:column;}
     .current-pg-actions{flex-wrap:wrap;justify-content:center;}
     .dashboard-bradcrumb .page-title h5{font-size:20px;}
@@ -74,10 +74,10 @@
     /* Footer CSS End  */
     .custom-table{width: 100%;border-collapse: collapse;border:1px solid #e1e1e1;border-radius: 0!important;}
     .custom-table thead {display: none;}
-    .custom-table tbody tr {display: block;margin-bottom: 15px;}
-    .custom-table tr td, .custom-table tbody tr td{display:block;position:relative;padding-left:50%!important;border-bottom:1px solid #e1e1e1;border-radius:0!important;margin:0 !important;}
+    .custom-table tbody tr {display: block;margin-bottom:0px;}
+    .custom-table tr td, .custom-table tbody tr td{display:block;position:relative;padding-left:50%!important;border-bottom: 1px solid #e1e1e1 !important;border-radius:0!important;margin:0 !important;width: 100%;text-align: left !important;}
     .custom-table td::before {content: attr(data-key);position: absolute;left: 0;width: 45%;padding: 0 10px;font-weight: bold;text-align: left;}
-    .custom-table thead th:first-child, .custom-table tbody td:first-child{text-align:left;}
+    .custom-table thead th:first-child, .custom-table tbody td:first-child{text-align:left;width:100%!important}
     .custom-table td {width: fit-content;min-height: 21px;}
     .table-striped tr:nth-child(even){background: #ECEEF2;}
     .table-striped tbody tr:nth-of-type(odd){background-color: transparent !important;}
@@ -90,14 +90,16 @@
 
 }
 
-@media screen and (max-width:355px) and (min-width:300px){
- 
+@media screen and (max-width:380px) and (min-width:300px){
+    .mngmntHeader .mngmntLogoSection {
+        padding-top: 80px;
+    }
 }
 @media screen and (max-width:430px) and (min-width:300px){
    .mngmntHeader .userInformation {display: flex;}
-    .mngmntHeader .account-details {flex-direction: column-reverse;justify-content: end;align-items: end;bottom: 57px;position: relative;height: 100%;}
+    .mngmntHeader .account-details {flex-direction: column-reverse;justify-content: end;align-items: end;bottom:0px; /* position: relative;*/height: 100%;}
     .mngmntHeader .mngmntUserSection {width: 100%;float: none;}
-    .togglemenuSection {position: relative;bottom: -65px;}
+    .togglemenuSection {position: relative;bottom:0px;}
     .mngmntHeader .userInfo {position: relative;top: 35px;}
     .dashbord-tile .title-comnt-bref {width: 275px !important;}
     .dashbord-tile .tiles-comnts .tile-comnt:nth-child(2) .title-comnt-bref {right: 0;}
