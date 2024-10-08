@@ -11,7 +11,7 @@ if ($this->uri->segment(2) == 'notice_circulars' || $this->uri->segment(1) == 'c
             <li><a href="<?= base_url('assistance/notice_circulars') ?>"><span class="text_color"><i class="fa fa-newspaper-o"></i>Circulars</span></a></li>
             <li><a href="<?= base_url('assistance/notice/listview/') ?>"><span class="text_color"><i class="fa fa-file-text-o"></i>Notice & Form</span></a></li>
             <li><a href="<?= base_url('contact_us') ?>"><span class="text_color"><i class="fa fa-users"></i> Contact us </span></a></li>
-            <li><a href="<?= base_url('assistance/performas') ?>"><span class="text_color"><i class="fa fa-file-text-o icon_font_css"></i> Performas </span></a></li>
+            <li><a href="<?= base_url('assistance/performas') ?>"><span class="text_color"><i class="fa fa-file-text-o icon_font_css"></i> Proformas </span></a></li>
             <li><a href="https://efiling.ecourts.gov.in/assets/downloads/efiling-User-manual.pdf" target="_blank"><span class="text_color"><i class="fa fa-info-circle"></i>User Manual</span></a></li>
         </ul>
     </div>
@@ -26,8 +26,8 @@ if ($this->uri->segment(2) == 'notice_circulars' || $this->uri->segment(1) == 'c
         </ul>
         <ul  class="user_noticeview">
             <a href="<?= base_url('assistance/performas') ?>"><li style="">
-                    <div> Performas </div>
-                    <div class="hover_text_user_noticeview hover_text_css"> Performas </div>
+                    <div> Proformas </div>
+                    <div class="hover_text_user_noticeview hover_text_css"> Proformas </div>
                     <span><i class="fa fa-file-text-o icon_font_css"></i></span></li></a>
         </ul>
         <ul  class="new_contact_us">

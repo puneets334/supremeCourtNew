@@ -286,6 +286,7 @@ class ForgetPasswordController extends BaseController
    
     public function verify()
     {
+
         $request = \Config\Services::request();
         // pr($request);       
         $session = session();
@@ -327,27 +328,57 @@ class ForgetPasswordController extends BaseController
             $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
             
             $session->set('verify_details', ['mobile_verified' => $mobile_status, 'email_verified' => $email_status]);
-            if ($mobile_status == 1 || $email_status == 1) {
-                // pr($registerType);
-                if ($registerType == 'Advocate') {               
+            if($registerType == 'Advocate'){
+
+                if ($mobile_status == 1 && $email_status == 1) {
                     $session->set('self_register_arguing_counsel', true);                    
                     return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
-                } elseif ($registerType == 'Forgot Password') {               
-                    // $session->set('self_register_arguing_counsel', true);                    
-                    // return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+                }else{
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+                    return $this->render('responsive_variant.authentication.adv_otp_view');
+                }
+            }
+            elseif($registerType == 'Forgot Password'){
+                if ($mobile_status == 1 || $email_status == 1) {
                     return $this->update_password();
-                } else {                   
+                }else{
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+                return $this->render('responsive_variant.authentication.adv_otp_view');
+                }
+            }else{
+                if ($mobile_status == 1 && $email_status == 1) {
                     $session->set('self_register_arguing_counsel', false);
                     return redirect()->to(base_url('Register/AdvSignUp'));
+                }else{
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+                    return $this->render('responsive_variant.authentication.adv_otp_view');
                 }
-            } else {
-                // echo 'Hello'; pr($_SESSION);
-                // $captcha_value = captcha_generate_test();
-                // $data['captcha']['image'] = $captcha_value['image'];
-                // $data['captcha']['word'] = $captcha_value['word'];               
-                $this->session->setFlashdata('msg', 'OTP Verification Failed');                
-                return $this->render('responsive_variant.authentication.adv_otp_view');
+
             }
+
+
+
+            // if ($mobile_status == 1 || $email_status == 1) {
+            //     // pr($registerType);
+            //     if ($registerType == 'Advocate') {               
+            //         $session->set('self_register_arguing_counsel', true);                    
+            //         return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+            //     } elseif ($registerType == 'Forgot Password') {               
+            //         // $session->set('self_register_arguing_counsel', true);                    
+            //         // return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+            //         return $this->update_password();
+            //     } else {                   
+            //         $session->set('self_register_arguing_counsel', false);
+            //         return redirect()->to(base_url('Register/AdvSignUp'));
+            //     }
+            // } else {
+            //     // echo 'Hello'; pr($_SESSION);
+            //     // $captcha_value = captcha_generate_test();
+            //     // $data['captcha']['image'] = $captcha_value['image'];
+            //     // $data['captcha']['word'] = $captcha_value['word'];               
+            //     $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+            //     return $this->render('responsive_variant.authentication.adv_otp_view');
+            // }
         }
     }
 
