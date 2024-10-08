@@ -37,6 +37,7 @@
 .black-theme .form-control::placeholder {color:#ffff00}
 .black-theme .form-control {background: #333333;border-color: #ffffff69;color: #ffffff;}
 .black-theme label{color: #ffffff;}
+.black-theme .banimg-sec {background: #000;}
 /* Login Area End  */
 /* OTP Page CSS Start  */
 .black-theme .otp-row .round-input:hover, .black-theme .otp-row .round-input:focus, .black-theme .otp-row .round-input:active {background: #000;color: #ff0;}
