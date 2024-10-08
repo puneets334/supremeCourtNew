@@ -123,6 +123,7 @@ class DefaultController extends BaseController {
     } */
 
     function adv_get_otp() {
+        
         $mobile_exist = array();
         $email_exist = array();
         $_SESSION['register_type_select'] = $_POST['adv_type_select'];
@@ -149,20 +150,39 @@ class DefaultController extends BaseController {
         // } else {
         $validation =  \Config\Services::validation();
         //---Commented line are used for disable captcha----------------->
-        $rules=[
-            "adv_mobile" => [
-                "label" => "Advocate Mobile",
-                "rules" => "required|trim|numeric|min_length[10]|max_length[10]"
-            ],
-            "adv_email" => [
-                "label" => "Advocate Email",
-                "rules" => "required|trim|valid_email"
-            ],
-            "userCaptcha" => [
-                "label" => "Captcha",
-                "rules" => "required|trim"
-            ],
-        ];
+        if ($_POST['register_type'] == 'Party In Person') {
+            $rules=[
+                "adv_mobile" => [
+                    "label" => "Mobile",
+                    "rules" => "required|trim|numeric|min_length[10]|max_length[10]"
+                ],
+                "adv_email" => [
+                    "label" => "Email",
+                    "rules" => "required|trim|valid_email"
+                ],
+                "userCaptcha" => [
+                    "label" => "Captcha",
+                    "rules" => "required|trim"
+                ],
+            ];
+        }
+        else{
+            $rules=[
+                "adv_mobile" => [
+                    "label" => "Advocate Mobile",
+                    "rules" => "required|trim|numeric|min_length[10]|max_length[10]"
+                ],
+                "adv_email" => [
+                    "label" => "Advocate Email",
+                    "rules" => "required|trim|valid_email"
+                ],
+                "userCaptcha" => [
+                    "label" => "Captcha",
+                    "rules" => "required|trim"
+                ],
+            ];
+        }
+        
         if ($this->validate($rules) === FALSE) {
             $data = [
                 'validation' => $this->validator,
@@ -182,6 +202,7 @@ class DefaultController extends BaseController {
                 //$mobile_already_bar = $this->Register_model->check_already_reg_mobile_bar($_POST['adv_mobile']);
                 //$email_already_bar = $this->Register_model->check_already_reg_email_bar($_POST['adv_email']);
                 if ($_POST['register_type'] == 'Party In Person') {
+
                     if (!empty($mobile_already_exist)) {
                         if ($mobile_already_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
                             $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');

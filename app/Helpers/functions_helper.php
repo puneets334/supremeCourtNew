@@ -3195,17 +3195,23 @@ function integerDecreption($id)
 
 function stringEncreption($id)
 {
+    // $encrypter = \Config\Services::encrypter();
+    // $encryptedID = $encrypter->encrypt($id);
+    // return $encryptedID;
     $encrypter = \Config\Services::encrypter();
-    $encryptedID = $encrypter->encrypt($id);
-    return $encryptedID;
+    $enc_id=bin2hex($encrypter->encrypt($id));
+    return $enc_id;
 }
 
 function stringDecreption($id)
 {
+    // $encrypter = \Config\Services::encrypter();
+    // $decryptedID = $encrypter->decrypt($id);
+    // $decryptedID = $decryptedID;
+    // return $decryptedID;
     $encrypter = \Config\Services::encrypter();
-    $decryptedID = $encrypter->decrypt($id);
-    $decryptedID = $decryptedID;
-    return $decryptedID;
+    $dec_id=$encrypter->decrypt(hex2bin($id));
+    return $dec_id;
 }
 
 function render($view, $data = [])
