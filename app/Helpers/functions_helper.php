@@ -2867,11 +2867,10 @@ function send_mail_cron($data)
             $string = base64_encode(json_encode(array("allowed_key" => LIVE_EMAIL_KEY, "sender" => "SCeFM", "mailTo" => $to_email, "subject" => $subject, "message" => $email_message, "files" => $files)));
             $content = http_build_query(array('a' => $string));
             $context = stream_context_create(array('http' => array('method' => 'POST', 'content' => $content,)));
-            $json_return = file_get_contents(NEW_MAIL_SERVER_HOST, false, $context);
+            $json_return = @file_get_contents(NEW_MAIL_SERVER_HOST, true, $context);
             $json2 = json_decode($json_return);
             if ($json2) {
                 $response = $json2->status;
-
                 if ($response == 'success') {
                     $result = 'success';
                 } else {
@@ -2881,8 +2880,8 @@ function send_mail_cron($data)
         }
         return $result;
     } //End of foreach loop..
-    $result = 'Data not found';
-    return $result;
+    // $result = 'Data not found';
+    // return $result;
 }
 
 function get_count_days_FromDate_Todate($from_date, $to_date)
