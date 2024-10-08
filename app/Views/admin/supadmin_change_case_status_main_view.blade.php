@@ -35,20 +35,20 @@
 
                                 if (($s['stage_id'] == Initial_Defected_Stage || $s['stage_id'] == DEFICIT_COURT_FEE || $s['stage_id'] == Transfer_to_IB_Stage || $s['stage_id'] == LODGING_STAGE || $s['stage_id'] == MARK_AS_ERROR)) {
                                     echo '<tr>';
-                                    echo '<td>' . ++$i . '</td>';
-                                    echo '<td>' . efile_preview($s['efiling_no']) . '</td>';
+                                    echo '<td data-key="Sno">' . ++$i . '</td>';
+                                    echo '<td data-key="Filing Number">' . efile_preview($s['efiling_no']) . '</td>';
 
                                     if ($s['stage_id'] == Initial_Defected_Stage)
-                                        echo '<td>' . 'For Compliance' . '</td>';
+                                        echo '<td data-key="Current Status">' . 'For Compliance' . '</td>';
                                     else if ($s['stage_id'] == DEFICIT_COURT_FEE)
-                                        echo '<td>' . 'Pay Deficit Fee' . '</td>';
+                                        echo '<td data-key="Current Status">' . 'Pay Deficit Fee' . '</td>';
                                     else if ($s['stage_id'] == Transfer_to_IB_Stage)
-                                        echo '<td>' . 'Transfer to CIS' . '</td>';
+                                        echo '<td data-key="Current Status">' . 'Transfer to CIS' . '</td>';
                                     else if ($s['stage_id'] == MARK_AS_ERROR)
-                                        echo '<td>' . 'Mark as error' . '</td>';
+                                        echo '<td data-key="Current Status">' . 'Mark as error' . '</td>';
                                     else
-                                        echo '<td>' . 'Idle / Unprocessed' . '</td>';
-                                    echo '<td>';
+                                        echo '<td data-key="Current Status">' . 'Idle / Unprocessed' . '</td>';
+                                    echo '<td data-key="Status To Be Updated and Remarks">';
                                     $attribute = array('class' => 'form-horizontal form-label-left', 'name' => 'status_change', 'id' => 'status_change', 'autocomplete' => 'off');
                                     echo form_open('admin/supadmin/final_case_status_change', $attribute);
                                     echo '<div class="row"><div class="col-4 col-sm-4 col-md-4 col-lg-4"><select class="form-select cus-form-ctrl" id="to_change_status_id" name="to_change_status_id" required="required">
@@ -97,3 +97,5 @@
 </div>
 </div>
 @endsection
+@push('script')
+@endpush
