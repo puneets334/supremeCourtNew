@@ -127,23 +127,23 @@
                                 <div class="row">
                                     <div class="col-md-4 col-sm-4 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12 ">
                                                     <label for="inputPassword6" class="col-form-label">CRN</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <input class="form-control cus-form-ctrl" id="crn" name="crn" maxlength="15" placeholder="CRN" placeholder="Diary No" type="text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <!-- <div class="col-md-3 col-sm-3 col-xs-12"> -->
                                         <div class="save-form-details">
                                             <div class="save-btns">
                                                 <button type="button" id="sub" class="quick-btn gray-btn">Search</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <?php echo form_close(); ?>

@@ -5,7 +5,7 @@
 <div class="container-fluid">
     <div class="row" id="printData">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="dashboard-section dashboard-tiles-area"></div>
+            <!-- <div class="dashboard-section dashboard-tiles-area"></div> -->
             <div class="dashboard-section">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -35,8 +35,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="result"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="result"></div>
                     </div>
                 </div>
             </div>
@@ -45,7 +49,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" />
+                    <!-- <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" /> -->
+                    <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
                     <div class="panel-body" id="tableData" style="display: none;">
                     </div>
                 </div>
@@ -139,7 +144,7 @@
                                 $("#error_" + res.id).html(res.msg);
                                 $("#error_" + res.id).css({
                                     "color": "red",
-                                    "margin": "10px 0px -55px 0px"
+                                    "margin": "10px 0px 0px 0px"
                                 });
                                 return false;
                             } else if (res.status == 'success') {
@@ -150,7 +155,7 @@
                                 $("#" + res.id).html(res.msg);
                                 $("#" + res.id).css({
                                     "color": "red",
-                                    "margin": "10px 0px -55px 0px"
+                                    "margin": "10px 0px 0px 0px"
                                 });
                                 $("#" + res.id).css({
                                     "text-align": "center"
