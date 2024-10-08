@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('content')
+<?php use App\Models\Register\RegisterModel; ?>
 <style>
         .tool_tip {
             display: none;
@@ -84,7 +85,10 @@
                                                 <div class="x_title">
                                                     <div class="col-md-12">
                                                         <div class="innerpg-sub-title">
-                                                            <h5>Change Password </h5>
+                                                            <h5>
+                                                                Change Password 
+                                                                <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            </h5>
                                                         </div>
                                                         <?php if (isset($updatedata) && $updatedata == 'estab') { ?>
                                                             <div class="col-md-9">
@@ -183,7 +187,7 @@
                                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="emailid"><?= $this->lang->line('new') . " " . $this->lang->line('email_id'); ?> <span style="color: red">*</span> : </label>
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                                     <input id="emailid" type="email" name="emailid" maxlength="50" placeholder="<?= $this->lang->line('new') . " " . $this->lang->line('email_id') ?>" required="required" class="form-control col-md-7 col-xs-12">
-                                                                    <span class="text-danger"><?php echo form_error('emailid'); ?></span>
+                                                                    <!-- <span class="text-danger"><?php // echo form_error('emailid'); ?></span> -->
                                                                 </div>
                                                             </div>
                                                             <div class="ln_solid"></div>
@@ -209,7 +213,7 @@
                                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="moblie_number"><?= $this->lang->line('new') . " " . $this->lang->line('mobile_no'); ?> <span style="color: red">*</span> : </label>
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                                     <input id="moblie_number" type="text" maxlength="10" name="moblie_number" placeholder="<?= $this->lang->line('new') . " " . $this->lang->line('mobile_no'); ?>" required="required" class="form-control col-md-7 col-xs-12">
-                                                                    <span class="text-danger"><?php echo form_error('moblie_number'); ?></span>
+                                                                    <!-- <span class="text-danger"><?php // echo form_error('moblie_number'); ?></span> -->
                                                                 </div>
                                                             </div>
                                                             <div class="ln_solid"></div>
@@ -233,7 +237,7 @@
                                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address1">Address1 <span style="color: red">*</span> : </label>
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                                     <input id="address1" type="text" name="address1" value="<?php echo htmlentities($profile[0]->address1, ENT_QUOTES); ?>" required="required" class="form-control col-md-7 col-xs-12">
-                                                                    <span class="text-danger"><?php echo form_error('address1'); ?></span>
+                                                                    <!-- <span class="text-danger"><?php // echo form_error('address1'); ?></span> -->
                                                                 </div>
                                                             </div>
                                                             <?php if ($profile[0]->address2 != '') { ?>
@@ -241,7 +245,7 @@
                                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="address2">Address2 : </label>
                                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                                         <input id="address2" type="text" name="address2" value="<?php echo htmlentities($profile[0]->address2, ENT_QUOTES); ?>" class="form-control col-md-7 col-xs-12">
-                                                                        <span class="text-danger"><?php echo form_error('address2'); ?></span>
+                                                                        <!-- <span class="text-danger"><?php // echo form_error('address2'); ?></span> -->
                                                                     </div>
                                                                 </div>
                                                             <?php } ?>
@@ -252,7 +256,7 @@
                                                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="city">City <span style="color: red">*</span> : </label>
                                                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                                                         <input id="city" type="text" name="city" value="<?php echo htmlentities($profile[0]->city, ENT_QUOTES); ?>" required="required" class="form-control col-md-7 col-xs-12">
-                                                                        <span class="text-danger"><?php echo form_error('city'); ?></span>
+                                                                        <!-- <span class="text-danger"><?php // echo form_error('city'); ?></span> -->
                                                                     </div>
                                                                 </div>
                                                                 <?php if ($this->session->userdata['login']['ref_m_usertype_id'] != USER_CLERK && $this->session->userdata['login']['ref_m_usertype_id'] != USER_DEPARTMENT) {
@@ -263,8 +267,9 @@
                                                                             <select id="ref_m_states_id" name="ref_m_states_id" required="required" class="form-control col-md-7 col-xs-12">
                                                                                 <option disabled="disabled" selected="selected">Select State</option>
                                                                                 <?php
-                                                                                $CI = &get_instance();
-                                                                                $CI->load->model('Register_model');
+                                                                                // $CI = &get_instance();
+                                                                                // $CI->load->model('Register_model');
+                                                                                $CI->Register_model = new RegisterModel();
                                                                                 $states = $CI->Register_model->get_all_states();
                                                                                 foreach ($states as $state) {
                                                                                     if ($state->state_id == $profile[0]->ref_m_states_id) {
@@ -331,7 +336,7 @@
                                                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pincode">Pincode <span style="color: red">*</span> : </label>
                                                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                                                     <input id="pincode" type="text" name="pincode" maxlength="6" value="<?php echo htmlentities($profile[0]->pincode, ENT_QUOTES); ?>" required="required" class="form-control col-md-7 col-xs-12">
-                                                                    <span class="text-danger"><?php echo form_error('pincode'); ?></span>
+                                                                    <!-- <span class="text-danger"><?php // echo form_error('pincode'); ?></span> -->
                                                                 </div>
                                                             </div>
                                                             <div class="ln_solid"></div>

@@ -58,7 +58,7 @@
                                         <div class="row mb-3">
                                             <!-- <div class="row w-100 align-items-center"> -->
                                                 <div class="col-12">
-                                                    <label for="inputPassword6" class="col-form-label">Consignment No. *</label>
+                                                    <label for="inputPassword6" class="col-form-label">Consignment No. <span style="color: red">*</span></label>
                                                 </div>
                                                 <div class="col-12 pe-0">
                                                     <input class="form-control cus-form-ctrl" id="cn" name="cn" minlength="10" maxlength="17" placeholder="Consignment No." type="text">

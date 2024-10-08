@@ -25,7 +25,7 @@
                                     <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link">Circulars</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link active">Proformas</a>
+                                    <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link active">Performas</a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="<?= base_url('contact_us'); ?>" aria-current="page" class="nav-link">Contact Us</a>
@@ -98,7 +98,7 @@
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 <?php } else { ?>
-                                                    <h2><i class="fa  fa-newspaper-o"></i> Proforma(s)</h2>
+                                                    <h2><i class="fa  fa-newspaper-o"></i> Performa(s)</h2>
                                                     <div class="clearfix"></div>
 
                                                 <?php } ?>
@@ -118,7 +118,7 @@
                                                         <thead>
                                                             <tr class="success input-sm" role="row">
                                                                 <th>#</th>
-                                                                <th> Proforma(s) </th>
+                                                                <th> Performa(s) </th>
                                                                 <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                     <th>Action</th>
                                                                 <?php } ?>
@@ -132,7 +132,7 @@
                                                             ?>
                                                                 <tr>
                                                                     <td width="5%" data-key="#"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                    <td data-key="Proforma(s)"><a href="<?php echo base_url('assistance/performas/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true" style="color:red"></i>
+                                                                    <td data-key="Performa(s)"><a href="<?php echo base_url('assistance/performas/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true" style="color:red"></i>
                                                                             &nbsp;<?php echo htmlentities($itm['performa_title'], ENT_QUOTES); ?><br>
                                                                             (<?php echo htmlentities(date('d-m-Y', strtotime($itm['create_date'])), ENT_QUOTES); ?>)
                                                                         </a>
