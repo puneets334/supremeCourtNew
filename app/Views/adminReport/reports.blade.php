@@ -12,6 +12,7 @@
                         <div class="dash-card">
                             <div class="title-sec">
                                 <h5 class="unerline-title">Select Dates </h5>
+                                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
