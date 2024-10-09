@@ -52,7 +52,7 @@
                                     echo '<td data-key="Status To Be Updated and Remarks">';
                                     $attribute = array('class' => 'form-horizontal form-label-left', 'name' => 'status_change', 'id' => 'status_change', 'autocomplete' => 'off');
                                     echo form_open('admin/supadmin/final_case_status_change', $attribute);
-                                    echo '<div class="row"><div class="col-4 col-sm-4 col-md-4 col-lg-4"><select class="form-select cus-form-ctrl" id="to_change_status_id" name="to_change_status_id" required="required">
+                                    echo '<div class="row"><div class="col-12 col-sm-12 col-md-4 col-lg-4"><select class="form-select cus-form-ctrl" id="to_change_status_id" name="to_change_status_id" required="required">
                                     <option disabled="disabled" selected="selected">Select Status to be Changed</option>';
                                     echo $s['last_stage_to_be_updated'];
                                     if ($s['last_stage_to_be_updated'] == New_Filing_Stage) {
@@ -76,8 +76,8 @@
                                  }
                                  echo '</select></div>';
 
-                                 echo '&nbsp;&nbsp;<div class="col-4 col-sm-4 col-md-4 col-lg-4"><input type="text" class="form-control cus-form-ctrl" id="remark" name="remark" required="required" placeholder=" Remarks "></div>';
-                                 echo '&nbsp;&nbsp;<div class="col-3 col-sm-3 col-md-3 col-lg-3"><button type="submit" class="quick-btn" name="submit" >Change Status</button></div>';
+                                 echo '&nbsp;&nbsp;<div class="col-12 col-sm-12 col-md-4 col-lg-4"><input type="text" class="form-control cus-form-ctrl" id="remark" name="remark" required="required" placeholder=" Remarks "></div>';
+                                 echo '&nbsp;&nbsp;<div class="col-12 col-sm-12 col-md-4 col-lg-3"><button type="submit" class="quick-btn" name="submit" >Change Status</button></div>';
                                     // <input type="submit" class="btn  quick-btn" name="submit" value="Change Status">';
 
                                  echo form_close();

@@ -9,6 +9,13 @@
     .add-new-area {
         display: none !important;
     }
+    table#filetransfer td:nth-child(5) {
+    min-height: 35px;
+}
+
+table#filetransfer td:nth-child(3) {
+    min-height: 30px;
+}
 </style>
     <div class="container-fluid">
     <div id="loader-wrapper" style="display: none;">
@@ -32,14 +39,14 @@
                               <form>
                                 <div class="row">
                                     <input type="text"  style="display: none;" name="CSRF_TOKEN" value="{{ csrf_hash() }}">
-                                    <div class="col-md-5 col-sm-5 col-xs-12">
+                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
+                                            <div class="row mb-3 w-100 align-items-center">
                                                
-                                                <div class="col-5">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">Select User</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <select id="file_transfer" name="file_transfer"  class="form-select cus-form-ctrl"
                                                         aria-label="Default select example">
                                                         <option selected>Select</option>
@@ -55,23 +62,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5 col-sm-5 col-xs-12" id="fileTransferUserDiv">
+                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12" id="fileTransferUserDiv">
                                         <div class="row" >
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">File Transfer To
                                                         User</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
 
-                                                    <select id="file_transfer_to_user" name="file_transfer_to_user" class="form-control input-sm" required>
+                                                    <select id="file_transfer_to_user" name="file_transfer_to_user" class="form-select cus-form-ctrl" required>
                                                     </select>
                                                 </div> 
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-2 col-sm-2 col-xs-12" id="buttonDiv">
-                                        <button type="button"  class="btn btn-primary" id="transferAll">File Transfer </button>
+                                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12" id="buttonDiv">
+                                        <button type="button"  class="quick-btn mrgT35" id="transferAll">File Transfer </button>
                                     </div>
                                 </div>
                             </form>
@@ -117,6 +124,21 @@
             "keys": false,
             "paging": false
         }); */
+        $("#filetransfer").DataTable({
+        "responsive": false,
+        "lengthChange": false,
+        "autoWidth": true,
+        "bProcessing": true,
+        "createdRow": function(row, data, dataIndex) {
+            // Adding data-key attribute to each cell dynamically
+            $(row).find('td').eq(0).attr('data-key', '#');
+            $(row).find('td').eq(1).attr('data-key', 'Efiling No.');
+            $(row).find('td').eq(2).attr('data-key', 'Cause Title');
+            $(row).find('td').eq(3).attr('data-key', 'File Type');
+            $(row).find('td').eq(4).attr('data-key', 'Diary No/Diary Year');
+            $(row).find('td').eq(5).attr('data-key', 'Select All');
+        }
+    });
         $("#fileTransferUserDiv").hide();
         $("#buttonDiv").hide();
         $(document).on('change', '#file_transfer', function() {   

@@ -403,3 +403,13 @@
         window.location.href = "<?= base_url('adminDashboard/DefaultController/ActionToAllUserCount?AllUserCount=') ?>" + AllUserCount;
     }
 </script>
+@push('script')
+<script>
+    $(document).ready(function() {
+            $('#datatable-responsive').DataTable({
+                dom: 'Bfrtip',
+            });
+        });
+</script>
+
+@endpush

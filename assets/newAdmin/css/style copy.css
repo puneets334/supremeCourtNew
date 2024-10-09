@@ -8217,3 +8217,9 @@ input[type="radio"] {
 }
 
 /* Close Loader  */
+.card.video-crd  .card-title {
+    font-size: 16px;
+    margin: 0;
+    padding: 15px;
+    color: #000;
+}

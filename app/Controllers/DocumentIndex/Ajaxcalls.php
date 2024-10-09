@@ -111,9 +111,9 @@ class Ajaxcalls extends BaseController
                 $st_indx = $end_indx + 1;
 
                 $index_data .= '<tr>
-                        <td width="1%">' . $i++ . '</td>
-                         <td width="20%">'  . $doc_list['docdesc'] . '</td>
-                        <td width="3%"> 
+                        <td data-key="#" width="1%">' . $i++ . '</td>
+                         <td data-key="Title" width="20%">'  . $doc_list['docdesc'] . '</td>
+                        <td data-key="Action" width="3%"> 
                         '.$delete_button.'
                         </td>
                   </tr>';
