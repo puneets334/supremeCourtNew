@@ -360,6 +360,7 @@ $routes->match(['GET', 'POST'], 'oldCaseRefiling/FinalSubmit', 'OldCaseRefiling\
 $routes->match(['GET', 'POST'], 'userActions/trash', 'UserActions\Trash::index');
 $routes->match(['GET', 'POST'], 'admin/efilingAction', 'Admin\EfilingAction::index');
 $routes->match(['GET', 'POST'], 'admin/efilingAction/hold', 'Admin\EfilingAction::hold');
+$routes->match(['GET', 'POST'], 'admin/EfilingAction/disapprove_case', 'Admin\EfilingAction::disapprove_case');
 
 $routes->match(['GET', 'POST'], 'shcilPayment/ViewPaymentChallan/(:any)', 'ShcilPayment\ViewPaymentChallan::index/$1');
 $routes->match(['GET', 'POST'], 'shcilPayment/paymentCheckStatus', 'ShcilPayment\PaymentCheckStatus::index');

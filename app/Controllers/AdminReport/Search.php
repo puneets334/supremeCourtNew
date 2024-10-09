@@ -174,7 +174,8 @@ class Search extends BaseController
                                 }
                             }
                         }
-                        // echo "200@@@" . 'Archive created successfully.'; exit(0);
+                        $this->download();
+                        echo "200@@@" . 'Archive created successfully.'; exit(0);
                         // echo "200@@@" . 'Please wait sometime awaiting download Diarized files.';
                         // exit(0);
                     } else {
@@ -184,8 +185,7 @@ class Search extends BaseController
                             $error .= "<br>$line";
                             // echo "<br>$line";
                         }
-                        echo "1@@@" . $error . 'Error creating the archive.';
-                        exit(0);
+                        echo "1@@@" . $error . 'Error creating the archive.'; exit(0);
                     }
                     // echo "4@@@".$error.'Something went wrong please check then try again';
                     // exit(0);
@@ -194,17 +194,16 @@ class Search extends BaseController
                     //     echo "Failed to create ZIP file.";
                     // }
                 } else {
-                    echo "Failed to open ZIP file.";
+                    echo "Failed to open ZIP file."; exit(0);
                 }
                 // pr();
             }
         } else {
-            echo "3@@@" . 'Data not found.';
-            exit(0);
+            echo "3@@@" . 'Data not found.'; exit(0);
         }
-        $data['sc_case_type'] = $this->Dropdown_list_model->get_sci_case_type();
+        // $data['sc_case_type'] = $this->Dropdown_list_model->get_sci_case_type();
         // $this->load->view('templates/admin_header');
-        $this->render('adminReport.search', $data);
+        // $this->render('adminReport.search', $data);
         // $this->load->view('templates/footer');
     }
 

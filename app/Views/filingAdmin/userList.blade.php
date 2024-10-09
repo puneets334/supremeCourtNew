@@ -23,7 +23,7 @@
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table first-th-left" id="datatable-responsive">
+                                    <table class="table table-striped custom-table" id="datatable-responsive">
                                         <thead>
                                             <tr class="success input-sm" role="row">
                                                 <th>#</th>
@@ -232,6 +232,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#datatable-responsive").DataTable({
+            "ordering": false,
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         // $('#filing_type').multiselect();

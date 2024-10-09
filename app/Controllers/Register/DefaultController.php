@@ -348,31 +348,28 @@ class DefaultController extends BaseController {
                         // Generate the destination path
                         $fileName = $file->getName();
                         $filePath = $uploadPath . $fileName;
-                        // pr($filePath);
                         // Move the file to the desired location
                         if ($file->move($uploadPath, $fileName)) {
                             $xfile = explode('.',$fileName);
-                            if($xfile != 'zip'){
+                            if($xfile[1] != 'zip'){
                                 unlink($filePath);
                                 return redirect()->to(base_url('register'))->with('msg', 'Please upload Zip file only.');
                             }
                             $isValidFiles = $this->inspect_files_within_zip($filePath);
-                            // pr($isValidFiles);
                             if ($isValidFiles) {
                                 // Process the zip file
                                 $zip = new ZipArchive;
                                 if ($zip->open($filePath) === TRUE) {
                                     $extractedPath = $uploadPath . explode('.',$fileName)[0] . '.xml';
-                                    // pr($extractedPath);
                                     if ($zip->setPassword($request->getPost('share_code'))) {
-                                        if (!$zip->extractTo($uploadPath)) {
+                                        if (!$zip->extractTo($uploadPath)) { 
                                             $zip->close();
                                             return redirect()->to(base_url('register'))->with('msg', 'Extraction failed (wrong password?)');
                                         }
                                     }
+
                                     $zip->close();
-                                    // pr($extractedPath);
-                                    $xml = simplexml_load_file($extractedPath);
+                                    $xml = simplexml_load_file($extractedPath); 
                                     $json = json_encode($xml);
                                     $dataConfig = json_decode($json, true);
                                     $_SESSION['kyc_configData'] = $dataConfig;

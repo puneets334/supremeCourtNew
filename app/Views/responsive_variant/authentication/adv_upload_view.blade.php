@@ -21,7 +21,9 @@ $star_requered = '<span style="color: red">*</span>'; ?>
             <div class="col-12 col-sm-12 col-md-6 col-lg-6 login-banner">
                 <div class="login-banner-inner">
                     <div class="banimg-sec">
-                        <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="Banner Image" title="Supreme Court of India" class="img-fluid">
+                        <!-- <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="Banner Image" title="Supreme Court of India" class="img-fluid"> -->
+                        <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo-full.png" alt="" class="img-fluid  logo-at-banner">
+
                     </div>
                     <div class="banner-txts">
                         <h5>SC-EFM </h5>
