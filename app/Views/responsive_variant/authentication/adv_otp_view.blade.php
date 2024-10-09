@@ -109,7 +109,9 @@
                 <div class="col-12 col-sm-12 col-md-7 col-lg-7 login-banner">
                     <div class="login-banner-inner">
                         <div class="banimg-sec">
-                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="" class="img-fluid">
+                            <!-- <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo-full.png" alt="" class="img-fluid"> -->
+                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo-full.png" alt="" class="img-fluid logo-at-banner">
+
                         </div>
                         <div class="banner-txts">
                             <h5>SC-EFM </h5>
@@ -182,7 +184,13 @@
                                     <label class="form-label">Mobile : <span class="blue-txt"><?php echo $_SESSION['adv_details']['mobile_no']; ?></span></label>
                                     <!--<input class="uk-input" type="text" value="<?php /*echo $_SESSION['adv_details']['mobile_otp']; */ ?>" name="adv_mobile_otp"  placeholder="Enter Mobile OTP" maxlength="6" minlength="6">-->
                                     <input class="form-control cus-form-ctrl" type="text" value="" name="adv_mobile_otp" placeholder="Enter Mobile OTP" maxlength="6" minlength="6">
+                                    <?php if (isset($validation) && $validation->hasError('adv_mobile_otp')): ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('adv_mobile_otp'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                 </div>
+                                
                             </div>
                         <?php } ?>
                         <?php if ($_SESSION['adv_details']['email_id']) { ?>
@@ -191,8 +199,13 @@
                                     <label class="form-label">Email Id : <span class="blue-txt"><?php echo $_SESSION['adv_details']['email_id']; ?></span></label>
                                     <!--<input class="uk-input" type="text" value="<?php /*echo $_SESSION['adv_details']['email_otp']; */ ?>" id="adv_email_otp" name="adv_email_otp" maxlength="6" minlength="6" placeholder="Enter Email OTP">-->
                                     <input class="form-control cus-form-ctrl" type="text" value="" id="adv_email_otp" name="adv_email_otp" maxlength="6" minlength="6" placeholder="Enter Email OTP">
-
+                                    <?php if (isset($validation) && $validation->hasError('adv_email_otp')): ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('adv_email_otp'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                 </div>
+                                
                             </div>
                         <?php } ?>
                         <div class="row">

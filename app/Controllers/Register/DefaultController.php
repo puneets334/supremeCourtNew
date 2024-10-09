@@ -369,7 +369,7 @@ class DefaultController extends BaseController {
                                     }
 
                                     $zip->close();
-                                    $xml = simplexml_load_file($extractedPath);
+                                    $xml = simplexml_load_file($extractedPath); 
                                     $json = json_encode($xml);
                                     $dataConfig = json_decode($json, true);
                                     $_SESSION['kyc_configData'] = $dataConfig;
