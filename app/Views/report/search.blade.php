@@ -738,7 +738,23 @@
                 ],
                 "bProcessing": true,
                 "extend": 'colvis',
-                "text": 'Show/Hide'
+                "text": 'Show/Hide',
+                "createdRow": function(row, data, dataIndex) {
+                    // Adding data-key attribute to each cell dynamically
+                    $(row).find('td').eq(0).attr('data-key', 'S.N0.');
+                    $(row).find('td').eq(1).attr('data-key', 'Filing No. ');
+                    $(row).find('td').eq(2).attr('data-key', 'Type');
+                    $(row).find('td').eq(3).attr('data-key', 'Diary No.');
+                    $(row).find('td').eq(4).attr('data-key', 'Causetitle');
+                    $(row).find('td').eq(5).attr('data-key', 'Filed By');
+                    $(row).find('td').eq(6).attr('data-key', 'Stages');
+                    $(row).find('td').eq(7).attr('data-key', 'Created On');
+                    $(row).find('td').eq(8).attr('data-key', 'Last Updated On');
+                    $(row).find('td').eq(9).attr('data-key', 'Allocated To');
+                    $(row).find('td').eq(10).attr('data-key', 'Pending Since Day(s)');
+                    $(row).find('td').eq(11).attr('data-key', 'Currently With');
+                    $(row).find('td').eq(12).attr('data-key', 'In Software');
+                },
             });
 
         });

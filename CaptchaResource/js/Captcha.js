@@ -84,19 +84,20 @@ function playAudio() {
 function generateCaptcha(captcha) {
     const spokenText = Array.from(captcha)
         .map(char => {
-            if(char === isInt(char)){
+            if(!isNaN(char)){
                 return char;
-            }else{
-                
             }
-            return (char === char.toUpperCase() ? `Capital ${char}` : (char === isInt(char)) ? char : `small ${char}`) ;
+            // else{
+                
+            // }
+            return (char === char.toUpperCase() ? `Capital ${char}` : (!isNaN(char)) ? char : `small ${char}`) ;
         })
         .join(", ");
 
     return { captcha, spokenText };
 }
 
-function isInt(value) {
-    var x = parseFloat(value);
-    return !isNaN(value) && (x | 0) === x;
-  }
+// function isInt(value) {
+//     var x = parseFloat(value);
+//     return !isNaN(value) && (x | 0) === x;
+//   }

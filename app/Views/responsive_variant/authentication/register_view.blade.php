@@ -174,6 +174,7 @@ $session = service('session');
                         </div>
 
                         <?php
+                        //pr(stringDecreption($_SESSION['session_not_register_type_user']));
                         $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
                         echo form_open("register/DefaultController/adv_get_otp", $attributes);
                         ?>
@@ -211,7 +212,7 @@ $session = service('session');
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Choose Offline Aadhaar Zip File (max size 5mb).</label>
-                                        <input type="file" class="form-control cus-form-ctrl" id="ekyc_zip_file" name="ekyc_zip_file">
+                                        <input type="file"  accept=".zip"  class="form-control cus-form-ctrl" id="ekyc_zip_file" name="ekyc_zip_file">
                                     </div>
                                 </div>
                             </div>
@@ -219,7 +220,17 @@ $session = service('session');
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <label for="" class="form-label"></label>
-                                        <input class="form-control cus-form-ctrl" type="password" name="share_code" placeholder="Share Code" minlength="4" maxlength="6">
+                                        <input class="form-control cus-form-ctrl" type="password" name="share_code" id="share_code" placeholder="Share Code" minlength="4" maxlength="4">
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div id="offline_proceed">
+                            <!-- <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label"></label>
+                                        <input class="form-control cus-form-ctrl ekyc_adv" type="text" name="adv_mobile" id="adv_mobile" maxlength="10" minlength="10" placeholder="Mobile" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                             </div>
@@ -227,25 +238,18 @@ $session = service('session');
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <label for="" class="form-label"></label>
-                                        <input class="form-control cus-form-ctrl" type="text" name="adv_mobile" id="adv_mobile" maxlength="10" minlength="10" placeholder="Mobile" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                        <input class="form-control cus-form-ctrl ekyc_adv" type="text" name="adv_email" id="adv_email" placeholder="Email ID">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <label for="" class="form-label"></label>
-                                        <input class="form-control cus-form-ctrl" type="text" name="adv_email" id="adv_email" placeholder="Email ID">
-                                    </div>
-                                </div>
-                            </div>
+                            </div> -->
+                        
+                            
                         </div>
-                        <div id="offline_proceed">
-                            <div class="row">
+                        <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <label for="" class="form-label"></label>
-                                        <input class="form-control cus-form-ctrl" type="text" name="adv_mobile" id="adv_mobile" maxlength="10" minlength="10" placeholder="Mobile" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                        <input class="form-control cus-form-ctrl " required type="text" name="adv_mobile" id="adv_mobile" maxlength="10" minlength="10" placeholder="Mobile" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                     </div>
                                 </div>
                             </div>
@@ -253,11 +257,10 @@ $session = service('session');
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <label for="" class="form-label"></label>
-                                        <input class="form-control cus-form-ctrl" type="text" name="adv_email" id="adv_email" placeholder="Email ID">
+                                        <input class="form-control cus-form-ctrl " required type="text" name="adv_email" id="adv_email" placeholder="Email ID">
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="captchaimage">
@@ -298,6 +301,15 @@ $session = service('session');
     <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
     <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
     <script type="text/javascript">
+        <?php if(isset($_SESSION['session_not_register_type_user']) && !empty($_SESSION['session_not_register_type_user'])){?>
+  <?php   if(stringDecreption($_SESSION['session_not_register_type_user'])=='not_register_other'){ ?>
+    showHideDiv('ekyc_upload_share');
+               
+                <?php }else{  ?>
+                    HideEkycDiv('offline_proceed');
+
+            <?php } }?>
+       // HideEkycDiv('offline_proceed');
         function showHideDiv(ele) {
             var srcElement = document.getElementById(ele);
             var srcElement2 = document.getElementById('offline_proceed');
@@ -309,6 +321,8 @@ $session = service('session');
                     document.getElementById("ekyc").checked = true;
                     $('#ekyc_zip_file').attr('required',true);
                     $('#share_code').attr('required',true);
+                 
+
                     //window.scrollBy(0, 60);
                 }
                 return false;
@@ -326,7 +340,9 @@ $session = service('session');
                     document.getElementById("ekyc").checked = false;
                     document.getElementById("new_advocate").checked = true;
                     $('#ekyc_zip_file').attr('required',false);
-                    $('#share_code').attr('required',false);
+                    $('#share_code').attr('required',false); 
+                 
+
                     //window.scrollBy(0, 60);
                 }
                 return false;

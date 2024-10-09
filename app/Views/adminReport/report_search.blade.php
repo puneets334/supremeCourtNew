@@ -1,5 +1,7 @@
 @extends('layout.app')
 @section('content')
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12">
@@ -10,6 +12,7 @@
 						{{-- Page Title Start --}}
 						<div class="title-sec">
 							<h5 class="unerline-title"> Send Mail </h5>
+							<a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
 						</div>
 						{{-- Page Title End --}}
 						{{-- Main Start --}}
@@ -46,7 +49,7 @@
 									</div>
 								</div>
 								<?php echo form_close();?>
-								<div id="result"></div>
+								<div id="result" class="text-center mt-3"></div>
 								<?php //echo $this->session->flashdata('msg');  ?>
 								<?php echo getSessionData('msg');  ?>
 							</div>
@@ -71,7 +74,16 @@
 @endsection
 @push('script')
 <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/1.0.10/datepicker.min.js"></script> -->
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script>
+	// $(function () {
+	// 	$('.datepick').datepicker({
+	// 		format: 'dd-mm-yyyy',
+	// 		todayHighlight: true,
+	// 		autoclose:true
+	// 	});
+	// });
 	$(document).ready(function(){
 		$('#from_date').datepicker({
 			changeMonth: true,
@@ -131,6 +143,7 @@
 				// alert("Ready to ZIP Archive created");
 				// return false;
 				// $('.Download').hide();
+				$(".msg").html("");
 				$('.loader_div').show();
 				var CSRF_TOKEN = 'CSRF_TOKEN';
 				var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
@@ -146,19 +159,10 @@
 							$('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
 						});
 						var resArr = data.split('@@@');
-						if (resArr[0] == 1) {
-							$('.msg').show();
-							$("#form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-							$('.loader_div').hide();
-							// $('.Download').show();
-						} else if (resArr[0] == 200) {
-							$("#form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-							$('.msg').show();
-							setTimeout(function(){
-								$("#form-response").html("");
-								$('.msg').hide();
-							}, 10000);
-						}
+						// alert(resArr);
+						$('.msg').show();
+						$("#result").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+						$('.loader_div').hide();						
 						$.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
 							$('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
 						});

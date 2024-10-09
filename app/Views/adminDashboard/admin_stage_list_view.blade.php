@@ -282,16 +282,16 @@
                                                 <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
                                             </a>
                                         </td>
-                                        <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
-                                        <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
-                                        <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                     <?php if (getSessionData('login')['userid'] != SC_ADMIN){ ?>
                                         <?php if($re->ref_m_efiled_type_id == E_FILING_TYPE_IA || $re->ref_m_efiled_type_id == E_FILING_TYPE_MISC_DOCS){
                                             ?>
-                                            <td width="16%" data-key="<?php echo htmlentities($data_key[4]); ?>"> <input type="submit" class="btn-success input-sm" Value="<?php echo htmlentities($button_label, ENT_QUOTES) ?>"  onclick="callController('<?php echo htmlentities(url_encryption(trim($re->icmis_diary_no .$re->icmis_diary_year.'#'.$re->registration_id), ENT_QUOTES)); ?>')"  />
+                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"> <input type="submit" class="btn-success input-sm" Value="<?php echo htmlentities($button_label, ENT_QUOTES) ?>"  onclick="callController('<?php echo htmlentities(url_encryption(trim($re->icmis_diary_no .$re->icmis_diary_year.'#'.$re->registration_id), ENT_QUOTES)); ?>')"  />
                                        <?php } else { ?>
                                         <!--<td width="12%"> <input type="submit" class="btn-success input-sm" Value="<?php /*echo htmlentities($button_label, ENT_QUOTES) */?>"  onclick="TransferToSection('<?php /*echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_case_reg_id . '#' . $re->efiling_no), ENT_QUOTES)); */?>')"  />-->
-                                            <td width="16%" data-key="<?php echo htmlentities($data_key[4]); ?>"><a class="btn-success input-sm" href="<?php  echo $redirect_url.'/'. htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no), ENT_QUOTES)); ?>"><?php echo $button_label;?></a></td>
+                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"><a class="btn-success input-sm" href="<?php  echo $redirect_url.'/'. htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no), ENT_QUOTES)); ?>"><?php echo $button_label;?></a></td>
                                     <?php } ?>
                                     <?php }else{ echo '<td width="16%"></td>';} ?>
                                     </tr>
@@ -330,10 +330,10 @@
                                
                                 ?> 
                                 <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defects_Cured_Stage)) ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?> </a></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                
-                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></a></td>                                
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
-                                <td width="14%" data-key="<?php echo htmlentities($data_key[4]); ?>">
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></a></td>                                
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td width="14%" data-key="<?php echo htmlentities($data_key[5]); ?>">
                                 <?php if (getSessionData('login')['userid'] != SC_ADMIN){ ?>
                                     <!--<input type="button"  class="btn btn-primary" Value="Get Scrutiny Status" onclick="submitAction_CIS('<?php /*echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defects_Cured_Stage . '#' . $re->efiling_no)), ENT_QUOTES); */?>', '<?php /*echo htmlentities($re->ref_m_efiled_type_id, ENT_QUOTES); */?>')"  />-->
                                 <?php } ?>
@@ -349,10 +349,10 @@
                                             <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
                                         </a>
                                     </td>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
-                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
-                                    <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo ($re->stage_id == MARK_AS_ERROR) ? 'Marked as errors' : 'Defected'; ?></td>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                    <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                    <td data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo ($re->stage_id == MARK_AS_ERROR) ? 'Marked as errors' : 'Defected'; ?></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[5]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                     <?php
                                 }
 
@@ -364,9 +364,9 @@
                                         <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
                                     </a>
                                 </td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                
-                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>                                
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>                                
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                 <?php
                             }
 
@@ -374,13 +374,13 @@
                             if ($stages == I_B_Rejected_Stage) {
                                 ?> 
                                 <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Rejected_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                    
-                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>                                
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                    
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>                                
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                 <?php if ($re->stage_id == I_B_Rejected_Stage) { ?>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities('Filing Section', ENT_QUOTES); ?></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[5]); ?>"><?php echo htmlentities('Filing Section', ENT_QUOTES); ?></td>
                                 <?php } elseif ($re->stage_id == E_REJECTED_STAGE) { ?>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities('eFiling Admin', ENT_QUOTES); ?></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[6]); ?>"><?php echo htmlentities('eFiling Admin', ENT_QUOTES); ?></td>
                                     <?php
                                 }
                             }
@@ -393,9 +393,9 @@
                                         <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
                                     </a>
                                 </td>
-                                <td data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo $type; ?></td>
-                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $type; ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                 <?php
                             }
                             //-----------------e-Filed Document List------------------------------//
@@ -403,8 +403,8 @@
                                 ?>
 
                                 <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Document_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>                                    
-                                <td data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo $case_details; ?></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                 <?php
                             }
                             //-----------------e-Filed Deficit List------------------------------//
@@ -413,8 +413,8 @@
 
                                 <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . DEFICIT_COURT_FEE_E_FILED . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                 </td>
-                                <td data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo $case_details; ?></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                          <?php
                            /* if ($stages == DEFICIT_COURT_FEE_PAID) {
                             */?><!--
@@ -433,9 +433,9 @@
                                         <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
                                     </a>
                                 </td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
-                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
 
                                 <?php
                             }
@@ -448,8 +448,8 @@
                                         <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
                                     </a>
                                 </td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
-                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
                                 <?php
                                 if ($re->stage_id == LODGING_STAGE) {
                                     $stages_name = 'Idle';
@@ -462,8 +462,8 @@
                                     $stages_name = 'Marked as errors';
                                 }
                                 ?>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo htmlentities($stages_name, ENT_QUOTES); ?></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities(date("d/m/Y h.i.s A", strtotime($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities($stages_name, ENT_QUOTES); ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[5]); ?>"><?php echo htmlentities(date("d/m/Y h.i.s A", strtotime($re->activated_on, ENT_QUOTES))); ?></td>
                             <?php }
                             ?>
 
@@ -472,9 +472,9 @@
                                 ?>
                                 <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                 </td>                                  
-                                <td data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a>
+                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a>
                                 </td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
                             </td>
                                 <?php }
                             ?>
@@ -483,23 +483,23 @@
                                 ?>
                                 <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . MENTIONING_E_FILED . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                 </td>                                  
-                                <td data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
-                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                 <?php }?>
                              <?php if ($stages == HOLD) {  
                                     ?>
                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                     </td>
-                                    <td data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $re->efiling_type; ?></td>
+                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo $re->efiling_type; ?></td>
                                 <?php } ?>
                                 <?php if ($stages == DISPOSED) {
                                     ?>
                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
-                                    <td data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
-                                    <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $re->efiling_type; ?></td>
+                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
+                                    <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo $re->efiling_type; ?></td>
                                 <?php } ?>
 
                        <?php } }

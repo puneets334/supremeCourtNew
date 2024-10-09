@@ -1,5 +1,8 @@
 @extends('layout.app')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -11,13 +14,14 @@
                             {{-- Page Title Start --}}
                             <div class="title-sec">
                                 <h5 class="unerline-title"> Download Efiled Cases </h5>
+                                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             {{-- Page Title End --}}
                             {{-- Main Start --}}
                             <div class="right_col" role="main">
                                 <?php
                                 $attributes = array("class" => "form-horizontal", "id" => "getResult", "name" => "getResult", 'autocomplete' => 'off');
-                                echo form_open(base_url('adminReport/search/#'), $attributes);
+                                echo form_open('#', $attributes);
                                 ?>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="row" id="printData">
@@ -28,7 +32,7 @@
                                                     <label class="col-form-label" for="sc_case_type">Case Type <span style="color: red">*</span>:</label>
                                                     </div>
                                                     <div class="col-7 pe-0">
-                                                        <select name="sc_case_type[]" id="sc_case_type" class="form-control cus-form-ctrl" aria-label="Default select example" required multiple="multiple" data-placeholder="Select Case Type.">
+                                                        <select name="sc_case_type[]" id="sc_case_type" class=" js-example-basic-multiple form-select input-sm form-control cus-form-ctrl" aria-label="Default select example" required multiple="multiple" data-placeholder="Select Case Type.">
                                                             <!--<option value="" title="Select">Select Case Type</option>-->
                                                             <?php
                                                             if (!empty($sc_case_type)) {
@@ -69,10 +73,11 @@
                                         </div>
                                     </div>
                                     <div class="save-btns" style="text-align: center;">
-                                        <button type="submit" class="quick-btn gray-btn"> Download</button>
+                                        <button type="button" class="btn btn-success Download"> Download</button>
                                         <div id="loader_div" class="loader_div" style="display: none;"></div>
                                     </div>
                                 <?php echo form_close(); ?>
+								<div id="result" class="text-center mt-3"></div>
                             </div>
                         </div>
                         {{-- Main End --}}
@@ -86,7 +91,14 @@
 @push('script')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
     $(document).ready(function(){
         $('#from_date').datepicker({
             changeMonth: true,
@@ -116,8 +128,7 @@
             newdate = newdate.split(',')[0];
             $("#to_date").val(newdate);
         }
-        // $(document).on('click','.Download',function(){
-        $('#getResult').on('submit', function() {
+        $(document).on('click','.Download',function(){
             var validationError = true;
             var selected=[];
             var sc_case_type = $("#sc_case_type").val();
@@ -131,6 +142,7 @@
             }
             var from_date = $("#from_date").val();
             var to_date = $("#to_date").val();
+            //alert('fromDate='+from_date+'fromDate='+to_date);
             var date1 = new Date(from_date.split('/')[0], from_date.split('/')[1] - 1, from_date.split('/')[2]);
             var date2 = new Date(to_date.split('/')[0], to_date.split('/')[1] - 1, to_date.split('/')[2]);
             if (date1 > date2) {
@@ -158,59 +170,23 @@
                 $('.Download').hide();
                 $('.loader_div').show();
                 var CSRF_TOKEN = 'CSRF_TOKEN';
-                var CSRF_TOKEN_VALUE = $('[name="_token"]').val();
-                // alert(CSRF_TOKEN_VALUE);
+                var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
                 $.ajax({
                     type: 'POST',
                     url: "<?php echo base_url('adminReport/Search/get_list_doc_fromDate_toDate'); ?>",
                     data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, from_date: from_date,to_date:to_date,sc_case_type:sc_case_type},
                     beforeSend: function() {
-                        $("#loader_div").html("<table widht='100%' align='center'><tr><td><img src='<?php echo base_url('images/load.gif');?>'></td></tr></table>");
+                        $("#loader_div").html("<table widht='100%' align='center'><tr><td><img src='<?php echo base_url('assets/physical_hearing/load.gif');?>'></td></tr></table>");
                     },
                     success: function (data) {
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                         });
+                        // alert(data);
                         var resArr = data.split('@@@');
-                        if (resArr[0] == 1) {
-                            $('.msg').show();
-                            $("#form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                            $('.loader_div').hide();
-                            $('.Download').show();
-                        } else if (resArr[0] == 200) {
-                            setTimeout(function(){
-                                /*$("#form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                $('.msg').show();*/
-                                /* $("<a>").prop({target: "_blank",href: "<//?php echo base_url('adminReport/search/download'); ?>"})[0].click();*/
-                                /*var url = "<//?php echo base_url('adminReport/search/download'); ?>";  window.open(url, '_blank');*/
-                                window.location.href = '<?php echo base_url('adminReport/search/download'); ?>';
-                            }, 3000);
-                        } else if (resArr[0] == 3) {
-                            $('.msg').show();
-                            $("#form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                            $('.loader_div').hide();
-                            $('.Download').show();
-                        } else if (resArr[0] == 4) {
-                            $('.msg').show();
-                            $("#form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                            $('.loader_div').hide();
-                            $('.Download').show();
-                        }
-                        if (resArr[0] == 200) {
-                            setTimeout(function () {
-                                $("#form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                $('.msg').show();
-                            }, 13000);
-                            setTimeout(function () {
-                                $('.msg').hide();
-                                $('.loader_div').hide();
-                                $('.Download').show();
-                            }, 23000);
-                        }else{
-                            setTimeout(function () {
-                                $('.msg').hide();
-                            }, 5000);
-                        }
+                        $('.msg').show();
+                        $("#result").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                        $('.loader_div').hide();						
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                         });

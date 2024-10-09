@@ -286,62 +286,184 @@ class ForgetPasswordController extends BaseController
    
     public function verify()
     {
+
         $request = \Config\Services::request();
         // pr($request);       
         $session = session();
         if (!$session->has('adv_details')) {
             return redirect()->to('Register');
         }
+        $userCaptcha = $this->request->getPost('userCaptcha');
         $registerType = $session->get('adv_details')['register_type'];      
         $currentTime = date("H:i");
-        $validationRules = [
-            'adv_mobile_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
-            'adv_email_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+        // $validationRules = [
+        //     'adv_mobile_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+        //     'adv_email_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+        // ];
+        // if ($registerType == 'Forgot Password') {
+        //     if(!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+        //         $validationRules = [
+        //             'adv_mobile_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+        //         ];
+        //         $this->session->setFlashdata('msg', 'Mobile OTP Required');
+        //     } elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
+        //         $validationRules = [
+        //             'adv_email_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
+        //         ];
+        //         $this->session->setFlashdata('msg', 'Email OTP Required');
+        //     }
+        // }  
+        if ($this->session->get('captcha') != $userCaptcha) {
+            // pr($this->session->getFlashdata('captcha'));
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');
+            return $this->render('responsive_variant.authentication.adv_otp_view');
+        }  
+            //     if ($registerType == 'Forgot Password') {
+            //         // If only Mobile OTP is provided and Email OTP is empty
+            //         if (!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+            //             $rules = [
+            //                 'adv_mobile_otp' => [
+            //                     "label" => "Mobile OTP",
+            //                     "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+            //                 ]
+            //             ];
+            //             $this->session->setFlashdata('msg', 'Mobile OTP Required');
+            //         }
+            //         // If only Email OTP is provided and Mobile OTP is empty
+            //         elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
+            //             $rules = [
+            //                 'adv_email_otp' => [
+            //                     "label" => "Email OTP",
+            //                     "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+            //                 ]
+            //             ];
+            //             $this->session->setFlashdata('msg', 'Email OTP Required');
+            //         }
+            //         // If neither OTP is provided, you can handle the error or reset rules as needed
+            //         elseif (empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+            //             $this->session->setFlashdata('msg', 'Either Mobile OTP or Email OTP is required.');
+            //         }
+            //     }else{
+            //     $rules = [
+            //         'adv_mobile_otp' => [
+            //         "label" => "Mobile OTP",
+            //         "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+        
+            //         ],
+            //         'adv_email_otp' => [
+            //             "label" => "Email OTP", 
+            //             "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+        
+            //         ],
+            //     ];
+            // }
+               // Initialize default validation rules for both OTPs, even before conditional logic
+$rules = [
+    'adv_mobile_otp' => [
+        "label" => "Mobile OTP",
+        "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+    ],
+    'adv_email_otp' => [
+        "label" => "Email OTP",
+        "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+    ],
+];
+
+// Specific handling for "Forgot Password"
+if ($registerType == 'Forgot Password') {
+    // If only Mobile OTP is provided and Email OTP is empty
+    if (!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+        $rules = [
+            'adv_mobile_otp' => [
+                "label" => "Mobile OTP",
+                "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+            ]
         ];
-        if ($registerType == 'Forgot Password') {
-            if(!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
-                $validationRules = [
-                    'adv_mobile_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
-                ];
-                $this->session->setFlashdata('msg', 'Mobile OTP Required');
-            } elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
-                $validationRules = [
-                    'adv_email_otp' => 'required|numeric|trim|min_length[6]|max_length[6]',
-                ];
-                $this->session->setFlashdata('msg', 'Email OTP Required');
-            }
-        }       
-        if (!$this->validate($validationRules)) {
+        $this->session->setFlashdata('msg', 'Mobile OTP Required');
+    }
+    // If only Email OTP is provided and Mobile OTP is empty
+    elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
+        $rules = [
+            'adv_email_otp' => [
+                "label" => "Email OTP",
+                "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+            ]
+        ];
+        $this->session->setFlashdata('msg', 'Email OTP Required');
+    }
+    // If neither OTP is provided, ensure a message is shown but rules remain intact
+    elseif (empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+        $this->session->setFlashdata('msg', 'Either Mobile OTP or Email OTP is required.');
+    }
+}
+                if ($this->validate($rules) === FALSE) {
+                    $data['validation'] = $this->validator; 
+           // pr($validationRules);
             // $captcha_value = captcha_generate();
             // $data['captcha']['image'] = $captcha_value['image'];
             // $data['captcha']['word'] = $captcha_value['word'];
+            return $this->render('responsive_variant.authentication.adv_otp_view',$data);
+        } elseif ($this->session->get('captcha') != $userCaptcha) {
+            // pr($this->session->getFlashdata('captcha'));
+            $this->session->setFlashdata('msg', 'Invalid Captcha!');
             return $this->render('responsive_variant.authentication.adv_otp_view');
-        } else {
+        }else {
             // Check OTP expiration and verification
             $mobile_status = $this->verifyOTP($currentTime, 'adv_mobile_otp', 'mobile_otp');
             $email_status = $this->verifyOTP($currentTime, 'adv_email_otp', 'email_otp');
+            
             $session->set('verify_details', ['mobile_verified' => $mobile_status, 'email_verified' => $email_status]);
-            if ($mobile_status == 1 || $email_status == 1) {
-                // pr($registerType);
-                if ($registerType == 'Advocate') {               
+            if($registerType == 'Advocate'){
+
+                if ($mobile_status == 1 && $email_status == 1) {
                     $session->set('self_register_arguing_counsel', true);                    
                     return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
-                } elseif ($registerType == 'Forgot Password') {               
-                    // $session->set('self_register_arguing_counsel', true);                    
-                    // return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+                }else{
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+                    return $this->render('responsive_variant.authentication.adv_otp_view');
+                }
+            }
+            elseif($registerType == 'Forgot Password'){
+                if ($mobile_status == 1 || $email_status == 1) {
                     return $this->update_password();
-                } else {                   
+                }else{
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+                return $this->render('responsive_variant.authentication.adv_otp_view');
+                }
+            }else{
+                if ($mobile_status == 1 && $email_status == 1) {
                     $session->set('self_register_arguing_counsel', false);
                     return redirect()->to(base_url('Register/AdvSignUp'));
+                }else{
+                    $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+                    return $this->render('responsive_variant.authentication.adv_otp_view');
                 }
-            } else {
-                // echo 'Hello'; pr($_SESSION);
-                // $captcha_value = captcha_generate_test();
-                // $data['captcha']['image'] = $captcha_value['image'];
-                // $data['captcha']['word'] = $captcha_value['word'];               
-                $this->session->setFlashdata('msg', 'OTP Verification Failed');                
-                return $this->render('responsive_variant.authentication.adv_otp_view');
+
             }
+
+
+
+            // if ($mobile_status == 1 || $email_status == 1) {
+            //     // pr($registerType);
+            //     if ($registerType == 'Advocate') {               
+            //         $session->set('self_register_arguing_counsel', true);                    
+            //         return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+            //     } elseif ($registerType == 'Forgot Password') {               
+            //         // $session->set('self_register_arguing_counsel', true);                    
+            //         // return redirect()->to(base_url('saveArguingCounselCompleteDetails'));
+            //         return $this->update_password();
+            //     } else {                   
+            //         $session->set('self_register_arguing_counsel', false);
+            //         return redirect()->to(base_url('Register/AdvSignUp'));
+            //     }
+            // } else {
+            //     // echo 'Hello'; pr($_SESSION);
+            //     // $captcha_value = captcha_generate_test();
+            //     // $data['captcha']['image'] = $captcha_value['image'];
+            //     // $data['captcha']['word'] = $captcha_value['word'];               
+            //     $this->session->setFlashdata('msg', 'OTP Verification Failed');                
+            //     return $this->render('responsive_variant.authentication.adv_otp_view');
+            // }
         }
     }
 

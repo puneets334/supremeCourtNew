@@ -69,11 +69,11 @@ class AdvocateOnRecord extends BaseController {
         //---Commented line are used for disable captcha----------------->
         $rules=[
             "adv_mobile" => [
-                "label" => "Advocate Mobile",
+                "label" => "Mobile",
                 "rules" => "required|trim|numeric|min_length[10]|max_length[10]"
             ],
             "adv_email" => [
-                "label" => "Advocate Email",
+                "label" => "Email",
                 "rules" => "required|trim|valid_email"
             ],
             "userCaptcha" => [

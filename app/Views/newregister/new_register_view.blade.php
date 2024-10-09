@@ -13,6 +13,7 @@ use Hashids\Hashids;
                         <div class="dash-card">
                             <div class="title-sec">
                                 <h5 class="unerline-title"> User List </h5>
+                                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
@@ -37,18 +38,18 @@ use Hashids\Hashids;
                                                     $user_type = isset($res->ref_m_usertype_id) && $res->ref_m_usertype_id == USER_ADVOCATE ? 'Advocate' : '';
                                                     ?>
                                                     <tr>
-                                                        <td width="5%"><?=$k; ?></td>
-                                                        <td width="15%">
+                                                        <td width="5%" data-key="#"><?=$k; ?></td>
+                                                        <td width="15%" data-key="Name">
                                                             <?php
-                                                            $encodedId = integerEncreption($res->id);
+                                                            $encodedId = iEncrypt($res->id);
                                                             ?>
-                                                            <a href="<?= base_url('NewRegister/Advocate/view/' . url_encryption($encodedId)) ?>" style="color: #385198;">
+                                                            <a href="<?= base_url('NewRegister/Advocate/view/' . url_encryption($res->id)) ?>" style="color: #385198;">
                                                                 <?= strtoupper($res->first_name) ?>
                                                             </a>
                                                         </td>
-                                                        <td width="8%">{{ $user_type }}</td>
-                                                        <td width="10%">{{ $res->m_address1 . ' , ' . $res->m_city . $m_pincode }}</td>
-                                                        <td width="15%">{{ date("d-m-Y h:i:s A", strtotime($res->created_on)) }}</td>
+                                                        <td width="8%"  data-key="Type">{{ $user_type }}</td>
+                                                        <td width="10%" data-key="Address">{{ $res->m_address1 . ' , ' . $res->m_city . $m_pincode }}</td>
+                                                        <td width="15%" data-key="Request On">{{ date("d-m-Y h:i:s A", strtotime($res->created_on)) }}</td>
                                                     </tr>
                                                     <?php
                                                     $k++;
@@ -67,3 +68,10 @@ use Hashids\Hashids;
     </div>
 </div>
 @endsection
+@push('script')
+<script>
+$(document).ready(function() {
+        $('#datatable-responsive').DataTable();
+    });
+</script>
+@endpush

@@ -63,11 +63,11 @@
                                 <div class="row">
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">Case Type *</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <select id="selct" name="selct" class="form-select cus-form-ctrl"
                                                     aria-labelledby="application_type_addon">
                                                         <option value="-1">Select</option>
@@ -83,11 +83,11 @@
                                     </div>
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">Case No. *</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <input class="form-control cus-form-ctrl" id="case_no" name="case_no" maxlength="6" placeholder="Case No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" onkeypress="return isNumber(event)" type="text" required>
                                                 </div>
                                             </div>
@@ -95,11 +95,11 @@
                                     </div>
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label"> Case Year</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <select class="form-select cus-form-ctrl" aria-label="Default select example" id="case_yr" name="case_yr" style="width: 100%" required>
                                                         <?php
                                                             $currently_selected = date('Y');
@@ -114,7 +114,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="save-form-details">
                                             <div class="save-btns">
                                                 <button type="button" class="quick-btn gray-btn" id="sub" value="SEARCH">Search</button>
@@ -127,11 +127,11 @@
                                 <div class="row">
                                     <div class="col-md-4 col-sm-4 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label">Diary No.</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <input class="form-control cus-form-ctrl" id="t_h_cno" name="t_h_cno" maxlength="5" placeholder="Diary No" type="text" onkeypress="return isNumber(event)">
                                                 </div>
                                             </div>
@@ -139,11 +139,11 @@
                                     </div>
                                     <div class="col-md-3 col-sm-3 col-xs-12">
                                         <div class="row">
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-5">
+                                            <div class="row mb-3 w-100 align-items-center">
+                                                <div class="col-12">
                                                     <label for="inputPassword6" class="col-form-label"> Diary Year</label>
                                                 </div>
-                                                <div class="col-7 pe-0">
+                                                <div class="col-12 pe-0">
                                                     <select class="form-select cus-form-ctrl" aria-label="Default select example" id="t_h_cyt" name="t_h_cyt" style="width: 100%" required>
                                                         <?php
                                                             $currently_selected = date('Y');
@@ -158,7 +158,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="save-form-details">
                                             <div class="save-btns">
                                                 <button type="button" id="sub" class="quick-btn gray-btn">Search</button>

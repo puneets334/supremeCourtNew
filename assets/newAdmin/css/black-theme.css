@@ -1,6 +1,14 @@
 /* black theme css old file 25-09-24  */
-.login-page.black-theme {background-color: #111111;color: #fff;}
+.black-theme {background-color: #111111;color: #fff;}
+.black-theme {background: #111111;color: #fff;}
 .black-theme select {color: #ff0;}
+.black-theme p, .black-theme h5, .black-theme h6, .black-theme .x_panel h2{color: #fff!important;}
+
+.black-theme table {background: transparent;}
+.black-theme caption, .black-theme th, .black-theme td {background: #000 !important;color: #fff;}
+.black-theme caption a, .black-theme th a, .black-theme td a {color: #ff0;}
+.black-theme caption a:hover, .black-theme th a:hover, .black-theme td a:hover {color: #ffffff;}
+.black-theme .btn-primary{background: #525252;color: #ff0;border-color: #8d8d8d;}
 /* Header CSS Start  */
 .black-theme .mngmntHeader .top-right-nav{background: #222222;}
 .black-theme .mngmntHeader .top-right-nav img.txt-icon{filter: invert(0.45) sepia(1) saturate(10) hue-rotate(30deg) brightness(1.4);}
@@ -24,6 +32,8 @@
 .black-theme .user-action-sec ul {background: #333333;}
 .black-theme .user-action-sec:before {border-bottom-color: #333333;}
 .black-theme .wrapper {background: #222222;}
+.black-theme .mngmntHeader .userDetail .userName{color: #ff0;}
+.black-theme span {color: #ffffff;}
 /* Header CSS End  */
 /* Menu CSS Start  */
 .black-theme .dashboardLeftNav li a.active:before, .black-theme .dashboardLeftNav li a.btn-link:hover:before {filter: invert(1);}
@@ -71,7 +81,7 @@
 .black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover {background: #000;color: #ff0;}
 .black-theme form label {color: #ffffff;}
 .black-theme .cus-form-ctrl {background: #222222;border-color: #ffffff4d !important;color: #ffffff !important;appearance: auto;}
-.black-theme .cus-form-ctrl:focus {border-color: #00ff0075 !important;background: #222222;}
+.black-theme .cus-form-ctrl:focus {border-color: #ffff008c !important;background: #222222;}
 .black-theme select.form-select option {background: #222222;}
 .black-theme .current-pg-title h6 {color:#ffffff;}
 .black-theme .crnt-page-head{border-color:#ffffff78;}
@@ -82,15 +92,9 @@
 .black-theme .common-modal .modal-body {color:#ff0;}
 .black-theme .common-modal .quick-btn {background: #000!important;}
 .black-theme input[type="search"] {color: white;}
-.black-theme .usrprofile-details label.prof-label {
-    font-size: 16px;
-    font-family: 'noto_sanssemibold';
-    color: #ffff00;
-}
-.black-theme .usrprofile-details .prof-outp {
-    color: #ffffff;
-    font-size: 16px;
-}
+.black-theme .usrprofile-details label.prof-label {font-size: 16px;font-family: 'noto_sanssemibold';color: #ffff00;}
+.black-theme .usrprofile-details .prof-outp {color: #ffffff;font-size: 16px;}
+
 /* Dashboard Main Section End  */       
 /* Footer CSS Start  */
 .black-theme .footer-sec{background:#333333;color:#ff0;}
@@ -108,19 +112,42 @@
 .black-theme .breadcrumb-area .breadcrumb-item:hover {background: #333;}
 .black-theme .breadcrumb-area .breadcrumb-item:hover a {color: #ff0;}
 .black-theme .discription-sec p, .black-theme .innner-sub-title h5 {color: #fff;}
-.black-theme .custom-table td a {color: #ff0;}
+.black-theme .custom-table td a {color: #ff0!important;}
 .black-theme .dataTables_length label, .black-theme .dataTables_filter label {color: #fff;}
 
 
 /* black theme css old 25-09-24  */ 
 .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button {background: #555555 !important;color: #ff0 !important;border: 1px solid #ffffff52 !important;}
+.black-theme .dataTables_wrapper .dataTables_paginate .ellipsis {color: #ff0;background: #333333;padding: 7px 12px;border: 1px solid #b1b1b18c;}
 .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button.current, .black-theme .dataTables_wrapper .dataTables_paginate a.paginate_button:hover { background: #333 !important;color: #ff0 !important;}
 .black-theme .card-body {background: #333333;}
 .black-theme .bg-white {background: #333333 !important;}
 .black-theme .bg-primary {background: #000000 !important;}
-.black-theme .card {border: 1px solid #0000006b !important;}
+.black-theme .card {border: 1px solid #0000006b !important;background: #333333; color: #fff;}
 .black-theme .text-black{color: #fff!important;}
 .black-theme .card-body .quick-btn {border: 1px solid #7c7c7c;}
-.login-page.black-theme {background-color: #111111;color: #fff;}
+
 .black-theme .dash-card .table-sec table#datatable-responsive-sc_cases .btn {background: #000;color: #ff0;}
 .black-theme .dash-card .table-sec table#datatable-responsive-sc_cases td .accordion-collapse {background: #333;}
+.black-theme .calender-sec .fc-toolbar-title {color: #ff0;}
+.black-theme #calendar .fc-button-group button:hover {background: #000 !important;color: #ff0 !important;}
+.black-theme #calendar .fc-button-group button {color: #ff0 !important;}
+.black-theme button.fc-today-button {color: #ff0 !important;}
+.black-theme .calender-sec div#calendar td, .calender-sec div#calendar th {background: transparent;color: #ff0 !important;}
+.black-theme .calender-sec div#calendar td.fc-day:hover{background:#555555 !important}
+.black-theme .calender-sec div#calendar tr:nth-child(even) td{background:#333 !important}
+.black-theme .calender-sec div#calendar td a, .black-theme .calender-sec div#calendar th a{color: #ff0 !important;}
+.black-theme .calender-sec div#calendar .fc .fc-day-other .fc-daygrid-day-top {opacity: 0.5!important;}
+.black-theme .tiles-comnts .tile-comnt:hover .title-comnt-bref .table-height-div {background: #555555;}
+.black-theme .tiles-comnts .tile-comnt:hover .title-comnt-bref:after{border-bottom-color: #555555}
+.black-theme .dash-card ul.nav-tabs a.nav-link {background: #333;border-color: #525252;color: #ff0;}
+.black-theme .x_content .nav-tabs .nav-item.show .nav-link, .black-theme .x_content .nav-tabs .nav-link.active, .black-theme .x_content .nav-tabs .nav-link:hover, .black-theme .x_content .nav-tabs .nav-link:focus, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link.active, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link:hover, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link:focus {background: #000;color: #ff0;border-color: #ff0;}
+/* FaQ Page CSS start  */
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button{color: #ff0 }
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button , .black-theme .breadcrum-bg .breadcrumb-item.active , .black-theme .accordion-body{background: #000;}
+.black-theme .accordion-button.collapsed {background: #222222!important;color: #ff0 !important;}
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:hover, .black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:focus {background: #000000 !important;color: #ff0 !important;}
+.black-theme .faq-sec .accordion .accordion-item {border: 1px solid #00000087 !important;}
+.black-theme .faq-sec .accordion button.accordion-button.collapsed:after { filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) !important;}
+.black-theme .accordion-body li , .black-theme .accordion-body{color: #fff;}
+/* FaQ Page CSS End  */

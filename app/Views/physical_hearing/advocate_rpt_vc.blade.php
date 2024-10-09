@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
-                <div class="dashboard-section dashboard-tiles-area"></div>
+                <!-- <div class="dashboard-section dashboard-tiles-area"></div> -->
                 <div class="dashboard-section">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -54,7 +54,7 @@
         </div>
     </div>
     @push('script')
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() ?>assets/newAdmin/js/jquery-3.3.1.min.js"></script>
     <!-- <script src="<?=base_url()?>assets/plugins/datepicker/bootstrap-datepicker.js"></script> -->   
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
@@ -72,9 +72,10 @@
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
             $.ajax({
                 type: 'POST',
-                url: "<?=base_url()?>Advocate_listing/advocate_rpt_srch",
+                url: "<?=base_url('Advocate_listing/advocate_rpt_srch')?>",
                 beforeSend: function (xhr) {
-                    $("#divConsentEntries").html("<div style='margin:0 auto;margin-top:20px;width:15%'><img src='<?=base_url()?>/assets/physical_hearing/load.gif'></div>");
+                    // $("#divConsentEntries").html("<div style='margin:0 auto;margin-top:20px;width:15%'><img src='<?=base_url()?>/assets/physical_hearing/load.gif'></div>");
+                    $("#divConsentEntries").html('');
                 },
                 data:{CSRF_TOKEN: CSRF_TOKEN_VALUE , srch_date_data: date_chk },
             })

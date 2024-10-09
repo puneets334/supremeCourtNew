@@ -35,7 +35,8 @@ $segment = service('uri');
                     <img src="<?= base_url() . 'assets/newAdmin/' ?>images/profile-img.png" alt="">
                 </div>
                 <div class="profile-info">
-                    <h6><?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?> <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a></h6>
+                    <h6><?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?> </h6>
+                    <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a>
                     <a href="<?= base_url('profile') ?>" class="profile-lnk link-txt">User Profile</a>
                 </div>
             </div>
@@ -124,7 +125,7 @@ $segment = service('uri');
                                     <ul id="collapse7" class="submenu accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
                                         <li><a class="btn-link" href="<?= base_url('Admin/Supadmin/change_case_status') ?>">Change Case Status</a></li>
                                         <li><a class="btn-link" href="<?= base_url('assistance/notice_circulars/') ?>">Notice and Circulars</a></li>
-                                        <li><a class="btn-link" href="<?= base_url('assistance/performas/') ?>">Performas</a></li>
+                                        <li><a class="btn-link" href="<?= base_url('assistance/performas/') ?>">Proformas</a></li>
                                     </ul>
                                 </li>
 
@@ -133,7 +134,7 @@ $segment = service('uri');
                                     <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">Assistance</a>
                                     <ul id="collapse6" class="submenu accordion-collapse collapse" aria-labelledby="heading6" data-bs-parent="#accordionExample">
                                         <li><a class="btn-link" href="<?= base_url('assistance/notice_circulars/') ?>">Notice and Circulars</a></li>
-                                        <li><a class="btn-link" href="<?= base_url('assistance/performas/') ?>">Performas</a></li>
+                                        <li><a class="btn-link" href="<?= base_url('assistance/performas/') ?>">Proformas</a></li>
                                         <li><a class="btn-link" href="<?= base_url('contact_us') ?>">Contact Us</a></li>
                                         <li><a class="btn-link" href="<?= base_url('/assets/downloads/User_manual_e_filing_Supreme_Court.pdf') ?>">User Manual</a></li>
                                     </ul>

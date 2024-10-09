@@ -53,7 +53,7 @@ class DefaultController extends BaseController {
         }
         //caveat view
         if (check_party() !=true) {  //func added on 15 JUN 2021
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Please enter every party details before moving to further tabs.</div>');
+            $this->session->setFlashdata('msg', 'Please enter every party details before moving to further tabs.');
             return redirect()->to(base_url('newcase/extra_party'));
         }
         
@@ -82,7 +82,7 @@ class DefaultController extends BaseController {
         $isdeaddata = $this->Get_details_model->getTotalIsDeadMinor($params);
         if(isset($isdeaddata[0]->total) && !empty($isdeaddata[0]->total)){
             $total = $isdeaddata[0]->total;
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Please fill '.$total.' remaining dead/minor party details</div>');
+            $this->session->setFlashdata('msg', 'Please fill '.$total.' remaining dead/minor party details');
             redirect('newcase/lr_party');
             exit(0);
         }

@@ -3,15 +3,19 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <div class="container-fluid">
+<div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+    </div>
     <div class="row" id="printData">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="dashboard-section dashboard-tiles-area"></div>
+            <!-- <div class="dashboard-section dashboard-tiles-area"></div> -->
             <div class="dashboard-section">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="dash-card">
                             <div class="title-sec">
                                 <h5 class="unerline-title">Select Dates </h5>
+                                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
@@ -35,8 +39,12 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div id="result"></div>
+                                </div>
+                            </div>
                         </div>
-                        <div id="result"></div>
                     </div>
                 </div>
             </div>
@@ -45,7 +53,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                    <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" />
+                    <!-- <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" /> -->
+                    <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
                     <div class="panel-body" id="tableData" style="display: none;">
                     </div>
                 </div>
@@ -85,95 +94,98 @@
                 newdate = newdate.split(',')[0];
                 $("#to_date").val(newdate);
             }
-            $(document).on('click', '#getResult', function() {
-                var from_date = $("#from_date").val();
-                var to_date = $("#to_date").val();
-
-               
-                var validationError = true;
-                if (from_date == '') {
-                    alert("Please select from date.")
-                    $("#from_date").focus();
-                    validationError = false;
-                    return fasle;
-                } else if (to_date == '') {
-                    alert("Please select to date.")
-                    $("#to_date").focus();
-                    validationError = false;
-                    return fasle;
-                }
-                if(to_date<from_date) {
-                    alert("To Date will be greater than From Date");
-                    $("#to_date").val('');
-                    $("#to_date").focus();
-                    return false;
-                }
-                if (validationError) {
-                    var CSRF_TOKEN = 'CSRF_TOKEN';
-                    var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-                    var postData = {
-                        CSRF_TOKEN: CSRF_TOKEN_VALUE,
-                        from_date: from_date,
-                        to_date: to_date
-                    };
-                    $.ajax({
-                        type: "POST",
-                        data: JSON.stringify(postData),
-                        url: "<?php echo base_url('adminReport/DefaultController/getReportData'); ?>",
-                        dataType: 'json',
-                        ContentType: 'application/json',
-                        cache: false,
-                        async: false,
-                        beforeSend: function() {
-                            $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: 130px;  margin-left: -100px;z-index: 99999;opacity: 1;" src="<?php echo base_url('assets/images/loading-data.gif'); ?>">');
-                            $('#getResult').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
-                        },
-                        success: function(res) {
-                            if (typeof res == 'string') {
-                                res = JSON.parse(res);
-                            }
-                            if (res.status == 'error') {
-                                $("#tableData").show();
-                                $("#" + res.id).focus();
-                                $("#error_" + res.id).html('');
-                                $("#error_" + res.id).html(res.msg);
-                                $("#error_" + res.id).css({
-                                    "color": "red",
-                                    "margin": "10px 0px -55px 0px"
-                                });
-                                return false;
-                            } else if (res.status == 'success') {
-                                $("#tableData").show();
-                                $("#loader_div").html('');
-                                $('#getResult').html('Get Reports');
-                                $("#" + res.id).html('');
-                                $("#" + res.id).html(res.msg);
-                                $("#" + res.id).css({
-                                    "color": "red",
-                                    "margin": "10px 0px -55px 0px"
-                                });
-                                $("#" + res.id).css({
-                                    "text-align": "center"
-                                });
-                                $("#tableData").html(res.table);
-                                $("#printButton").show();
-                                return false;
-                            }
-                            $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                                $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                            });
-                        },
-                        error: function() {
-                            $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                                $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                            });
-                        }
-                    });
-                }
-            });
+            
         });
 
-
+        $(document).on('click', '#getResult', function() {
+            var from_date = $("#from_date").val();
+            var to_date = $("#to_date").val();
+            
+            
+            var validationError = true;
+            if (from_date == '') {
+                alert("Please select from date.")
+                $("#from_date").focus();
+                validationError = false;
+                return fasle;
+            } else if (to_date == '') {
+                alert("Please select to date.")
+                $("#to_date").focus();
+                validationError = false;
+                return fasle;
+            }
+            if(to_date<from_date) {
+                alert("To Date will be greater than From Date");
+                $("#to_date").val('');
+                $("#to_date").focus();
+                return false;
+            }
+            if (validationError) {
+                var CSRF_TOKEN = 'CSRF_TOKEN';
+                var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                var postData = {
+                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
+                    from_date: from_date,
+                    to_date: to_date
+                };
+                
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(postData),
+                    url: "<?php echo base_url('adminReport/DefaultController/getReportData'); ?>",
+                    dataType: 'json',
+                    ContentType: 'application/json',
+                    cache: false,
+                    async: false,
+                    beforeSend: function() {
+                        $('#loader-wrapper').show();
+                        //("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: 130px;  margin-left: -100px;z-index: 99999;opacity: 1;" src="<?php //echo base_url('assets/images/loading-data.gif'); ?>">');
+                        //$('#getResult').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+                    },
+                    success: function(res) {
+                        document.getElementById('loader-wrapper').style.display = 'none';
+                        if (typeof res == 'string') {
+                            res = JSON.parse(res);
+                        }
+                        if (res.status == 'error') {
+                            $("#tableData").show();
+                            $("#" + res.id).focus();
+                            $("#error_" + res.id).html('');
+                            $("#error_" + res.id).html(res.msg);
+                            $("#error_" + res.id).css({
+                                "color": "red",
+                                "margin": "10px 0px 0px 0px"
+                            });
+                            return false;
+                        } else if (res.status == 'success') {
+                            $("#tableData").show();
+                            $("#loader_div").html('');
+                            $('#getResult').html('Get Reports');
+                            $("#" + res.id).html('');
+                            $("#" + res.id).html(res.msg);
+                            $("#" + res.id).css({
+                                "color": "red",
+                                "margin": "10px 0px 0px 0px"
+                            });
+                            $("#" + res.id).css({
+                                "text-align": "center"
+                            });
+                            $("#tableData").html(res.table);
+                            $("#printButton").show();
+                            return false;
+                        }
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                            $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                        });
+                    },
+                    error: function() {
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                            $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                        });
+                    }
+                });
+            }
+        });
 
         $(document).ready(function() {
             $('#datatable-responsive').DataTable({

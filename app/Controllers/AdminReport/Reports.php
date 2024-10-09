@@ -183,7 +183,10 @@ class Reports extends BaseController {
         $data['view']='Statistical Information';
         // var_dump($data);
         $result=send_mail_cron($data);
-        echo "200@@@sent mail ".$result.' please check your email'; exit();
+        if($result != 'success') {
+            echo "200@@@Sent Mail Failed. Please try again."; exit();
+        }
+        echo "200@@@Sent Mail".$result.' . Please Check Your Email.'; exit();
         // var_dump($result);
         // $this->load->view('templates/email/reports',$data);
     }
@@ -252,7 +255,10 @@ class Reports extends BaseController {
         $data['subject']='SC-eFM Statistics';
         $data['message']='Statistical Information';
         $result=send_mail_cron($data);
-        echo "200@@@sent mail ".$result.' please check your email';exit();
+        if($result != 'success') {
+            echo "200@@@Sent Mail Failed. Please try again."; exit();
+        }
+        echo "200@@@Sent Mail".$result.' . Please Check Your Email.'; exit();
         // var_dump($result);
         // $this->load->view('templates/email/reports',$data);
     }

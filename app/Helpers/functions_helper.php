@@ -129,7 +129,7 @@ if (!function_exists('isValidPDF')) {
         $msg = '';
         $doc_signed_used = '';
         if ($_FILES[$doc]['type'] != 'application/pdf') {
-            $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">only PDF are allowed in document upload!</p></center>';
+            $msg = 'only PDF are allowed in document upload!';
             return $msg;
         }
         if (mime_content_type($_FILES[$doc]['tmp_name']) != 'application/pdf') {
@@ -137,21 +137,21 @@ if (!function_exists('isValidPDF')) {
             return $msg;
         }
         if (substr_count($_FILES[$doc]['name'], '.') > 1) {
-            $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">No double extension allowed in pdf document!</p></center>';
+            $msg = 'No double extension allowed in pdf document!';
             return $msg;
         }
         if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES[$doc]['name'])) {
 
-            $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">PDF file name max. length can be 45 characters only. PDF file name may contain digits, characters, spaces, hyphens and underscores.</p></center>';
+            $msg = 'PDF file name max. length can be 45 characters only. PDF file name may contain digits, characters, spaces, hyphens and underscores.';
             return $msg;
         }
         if (strlen($_FILES[$doc]['name']) > File_FIELD_LENGTH) {
-            $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">PDF file name max. length can be 45 characters only. PDF file name may contain digits, characters, spaces, hyphens and underscores.</p></center>';
+            $msg = 'PDF file name max. length can be 45 characters only. PDF file name may contain digits, characters, spaces, hyphens and underscores.';
             return $msg;
         }
         if ($_FILES[$doc]['size'] > UPLOADED_FILE_SIZE) {
             $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
-            $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">PDF uploaded should be less than ' . $file_size . ' MB !</p></center>';
+            $msg = 'PDF uploaded should be less than ' . $file_size . ' MB !';
             return $msg;
         }
         if (isset(getSessionData('efiling_details')['doc_signed_used']) && !empty(getSessionData('efiling_details')['doc_signed_used'])) {
@@ -160,7 +160,7 @@ if (!function_exists('isValidPDF')) {
         if ($doc_signed_used == SIGNED_DIGITALLY_TOKEN) {
             $result = isDocumentSigned($_FILES[$doc]['tmp_name'], 'adbe.pkcs7.detached');
             if ($result != TRUE || $result != 1) {
-                $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">Please upload digitally signed document only!</p></center>';
+                $msg = 'Please upload digitally signed document only!';
                 return $msg;
             }
         }
@@ -943,18 +943,18 @@ function cino_decrypt($string, $secret_key)
     $output = openssl_decrypt($string, $encrypt_method, $key, 0, $iv);
     return $output;
 }
-// Encrypt data using the public key 
-function encrypt($data, $publicKey)
-{ // Encrypt the data using the public key 
-    openssl_public_encrypt($data, $encryptedData, $publicKey);
-    // Return encrypted data return
-    $encryptedData;
-} // Decrypt data using the private key 
-function decrypt($data, $privateKey)
-{ // Decrypt the data using the private key 
-    openssl_private_decrypt($data, $decryptedData, $privateKey); // Return decrypted data 
-    return $decryptedData;
-}
+// // Encrypt data using the public key 
+// function encrypt($data, $publicKey)
+// { // Encrypt the data using the public key 
+//     openssl_public_encrypt($data, $encryptedData, $publicKey);
+//     // Return encrypted data return
+//     $encryptedData;
+// } // Decrypt data using the private key 
+// function decrypt($data, $privateKey)
+// { // Decrypt the data using the private key 
+//     openssl_private_decrypt($data, $decryptedData, $privateKey); // Return decrypted data 
+//     return $decryptedData;
+// }
 function generate_public_private_key()
 { // Set the key parameters
     $config = array(
@@ -2783,7 +2783,7 @@ function getPendingCourtFee_old_working_till_101072023()
 function getPendingCourtFee()
 {
     $Common_model = new CommonModel();
-    $registration_id = getSessionData('efiling_details')['registration_id'];
+    $registration_id = !empty(getSessionData('efiling_details')) ? getSessionData('efiling_details')['registration_id'] : '';
     $total_pending_court_fee = 0;
     if (!empty($registration_id))
     {
@@ -2867,11 +2867,10 @@ function send_mail_cron($data)
             $string = base64_encode(json_encode(array("allowed_key" => LIVE_EMAIL_KEY, "sender" => "SCeFM", "mailTo" => $to_email, "subject" => $subject, "message" => $email_message, "files" => $files)));
             $content = http_build_query(array('a' => $string));
             $context = stream_context_create(array('http' => array('method' => 'POST', 'content' => $content,)));
-            $json_return = file_get_contents(NEW_MAIL_SERVER_HOST, false, $context);
+            $json_return = @file_get_contents(NEW_MAIL_SERVER_HOST, true, $context);
             $json2 = json_decode($json_return);
             if ($json2) {
                 $response = $json2->status;
-
                 if ($response == 'success') {
                     $result = 'success';
                 } else {
@@ -2881,8 +2880,8 @@ function send_mail_cron($data)
         }
         return $result;
     } //End of foreach loop..
-    $result = 'Data not found';
-    return $result;
+    // $result = 'Data not found';
+    // return $result;
 }
 
 function get_count_days_FromDate_Todate($from_date, $to_date)
@@ -3180,7 +3179,7 @@ function idEncryptionCustom($id) {
 function integerEncreption($id)
 {
     $encrypter = \Config\Services::encrypter();
-    $userIDString = (string) $id;
+    $userIDString = $id;
     $encryptedID = $encrypter->encrypt($userIDString);
     return $encryptedID;
 }
@@ -3195,17 +3194,45 @@ function integerDecreption($id)
 
 function stringEncreption($id)
 {
+    // $encrypter = \Config\Services::encrypter();
+    // $encryptedID = $encrypter->encrypt($id);
+    // return $encryptedID;
     $encrypter = \Config\Services::encrypter();
-    $encryptedID = $encrypter->encrypt($id);
-    return $encryptedID;
+    $enc_id=bin2hex($encrypter->encrypt($id));
+    return $enc_id;
 }
 
 function stringDecreption($id)
 {
+    // $encrypter = \Config\Services::encrypter();
+    // $decryptedID = $encrypter->decrypt($id);
+    // $decryptedID = $decryptedID;
+    // return $decryptedID;
     $encrypter = \Config\Services::encrypter();
-    $decryptedID = $encrypter->decrypt($id);
-    $decryptedID = $decryptedID;
-    return $decryptedID;
+    $dec_id=$encrypter->decrypt(hex2bin($id));
+    return $dec_id;
+}
+
+function iEncrypt($id){
+    $key = config('Encryption')->key;
+    $encrypted = encrypt($id, $key);
+    return $encrypted;
+}
+function iDecrypt($id){
+    $key = config('Encryption')->key;
+    $encrypted = decrypt($id, $key);
+    return $encrypted;
+}
+
+function encrypt($data, $key) {
+    $iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length('aes-256-cbc'));
+    $encrypted = openssl_encrypt($data, 'aes-256-cbc', $key, 0, $iv);
+    return base64_encode($encrypted . '::' . $iv);
+}
+
+function decrypt($data, $key) {
+    list($encryptedData, $iv) = explode('::', base64_decode($data), 2);
+    return openssl_decrypt($encryptedData, 'aes-256-cbc', $key, 0, $iv);
 }
 
 function render($view, $data = [])

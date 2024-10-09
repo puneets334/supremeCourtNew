@@ -95,10 +95,10 @@ class NoticeCirculars extends BaseController
             ],
         ]);
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
-            setSessionData('news_title', '<div class="text-danger">' . $this->validation->getError('news_title') . '</div>');
-            setSessionData('news_doc', '<div class="text-danger">' . $this->validation->getError('news_doc') . '</div>');
-            setSessionData('pdf_is', '<div class="text-danger">' . $this->validation->getError('news_view[]') . '</div>');
-            setSessionData('deactivate_date', '<div class="text-danger">' . $this->validation->getError('deactivate_date') . '</div>');
+            $this->session->setFlashdata('news_title', '<div class="text-danger">' . $this->validation->getError('news_title') . '</div>');
+            $this->session->setFlashdata('news_doc', '<div class="text-danger">' . $this->validation->getError('news_doc') . '</div>');
+            $this->session->setFlashdata('pdf_is', '<div class="text-danger">' . $this->validation->getError('news_view[]') . '</div>');
+            $this->session->setFlashdata('deactivate_date', '<div class="text-danger">' . $this->validation->getError('deactivate_date') . '</div>');
             // setSessionData('MSG', '<div class="alert alert-danger text-center">'.$error.'</div>');
             return redirect()->to(base_url('assistance/notice_circulars'));
             exit(0);
@@ -108,7 +108,7 @@ class NoticeCirculars extends BaseController
             $deactivate_date = ($InputArray['deactivate_date']) ? date('Y-m-d', strtotime($InputArray['deactivate_date'])) : NULL;
             if (!empty($_FILES['news_doc']['name'])) {
                 if ($msg = isValidPDF('news_doc')) {
-                    setSessionData('MSG', $msg);
+                    $this->session->setFlashdata('MSG', $msg);
                     return redirect()->to(base_url('assistance/notice_circulars'));
                     exit(0);
                 }
@@ -116,7 +116,7 @@ class NoticeCirculars extends BaseController
                 //$file_uploaded_path = base_url('news/' . $file_name);
                 $file_uploaded_path = 'news/' . $file_name;
             } elseif (empty($_FILES['news_doc']['name'])) {
-                setSessionData('MSG', '<center><p style="background: #f2dede;border: #f2dede;color: black;">Select Pdf File is Requerd!</p></center>');
+                $this->session->setFlashdata('MSG', '<center><p style="background: #f2dede;border: #f2dede;color: black;">Select Pdf File is Requerd!</p></center>');
                 return redirect()->to(base_url('assistance/notice_circulars'));
             } else {
                 $file_name = NULL;
@@ -148,20 +148,20 @@ class NoticeCirculars extends BaseController
                 );
                 $result = $this->NoticeCiruclarsModel->update_news_by_id(url_decryption($edit_id), $update_array, $_FILES['news_doc']['tmp_name']);
             } else {
-                setSessionData('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
+                $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
                 return redirect()->to(base_url('assistance/notice_circulars'));
                 exit(0);
             }
             if ($result) {
                 if (!empty(url_decryption($edit_id))) {
-                    setSessionData('MSG', '<div class="alert alert-success text-center">Updated Successfully</div>');
+                    $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Updated Successfully</div>');
                 } else {
-                    setSessionData('MSG', '<div class="alert alert-success text-center">Added Successfully</div>');
+                    $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Added Successfully</div>');
                 }
                 return redirect()->to(base_url('assistance/notice_circulars'));
                 exit(0);
             } else {
-                setSessionData('MSG', '<div class="alert alert-danger text-center">Some error ! Please try after some time.</div>');
+                $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Some error ! Please try after some time.</div>');
                 return redirect()->to(base_url('assistance/notice_circulars'));
                 exit(0);
             }
@@ -193,16 +193,16 @@ class NoticeCirculars extends BaseController
                 'update_by_ip' => $_SERVER['REMOTE_ADDR']
             );
         } else {
-            setSessionData('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
             return redirect()->to(base_url('assistance/notice_circulars'));
             exit(0);
         }
         $result = $this->NoticeCiruclarsModel->update_news_by_id($action[0], $update_array);
         if ($result) {
-            setSessionData('MSG', '<div class="alert alert-success text-center">News Status Change Successfully</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">News Status Change Successfully</div>');
             return redirect()->to(base_url('assistance/notice_circulars'));
         } else {
-            setSessionData('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
             // return redirect()->to(base_url('assistance/notice_circulars/' . $id));
             return redirect()->to(base_url('assistance/notice_circulars'));
         }
@@ -212,7 +212,7 @@ class NoticeCirculars extends BaseController
     {
         $id = url_decryption($id);
         if (!$id) {
-            setSessionData('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
             return redirect()->to(base_url('assistance/notice_circulars'));
             exit(0);
         } else {

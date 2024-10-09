@@ -26,6 +26,9 @@ class ArguingCounsel extends BaseController {
     protected $request;
 
     public function __construct() {
+        //after 1 min
+        
+        // session end
         parent::__construct();
         $this->Register_model = new RegisterModel();
         $this->Citation_model = new CitationModel();
@@ -37,6 +40,7 @@ class ArguingCounsel extends BaseController {
         $this->request = \Config\Services::request();
         $this->config = \Config\Services::config();
         helper(['security']);
+        
     }
 
     public function index(){
@@ -232,9 +236,10 @@ class ArguingCounsel extends BaseController {
             $this->render('register.add_arguing_counsel',$data);
         }
         else{
+             // pr($_POST);
             $data['state_list'] = $this->Dropdown_list_model->get_states_list();
             $validation =  \Config\Services::validation();
-            $validation->setRules([
+            $rules=[
                 "name" => [
                     "label" => "Name",
                     "rules" => "required|max_length[100]|min_length[3]"
@@ -307,7 +312,7 @@ class ArguingCounsel extends BaseController {
                 //     "label" => "Bar Id Card",
                 //     "rules" => "required"
                 // ],
-            ]);
+            ] ;
             $arguingCounselId  = !empty(getSessionData('arguingCounselId')) ? trim(getSessionData('arguingCounselId')) : NULL;
             if(isset($arguingCounselId) && !empty($arguingCounselId)) {
                 $arguingCounselDetails = $this->getArguingCounselDetails($arguingCounselId);
@@ -327,11 +332,28 @@ class ArguingCounsel extends BaseController {
                 $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
                 $data['aorList'] = !empty($aorList) ? $aorList : NULL;
             }
+            if ($this->validate($rules) === FALSE && !empty($_POST)) {
+                $data['validation'] = $this->validator; 
+                $data['state_list'] = $this->Dropdown_list_model->get_states_list();
+                $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
+                $params = array();
+                $params['ref_m_usertype_id'] = 1;
+                if($_SERVER['HTTP_HOST'] == '127.0.0.1')
+                    $params['userid'] = 1777;
+                else
+                    $params['userid'] = null;
+                $aorList = $this->Register_model->getAorData($params);
+                $data['aorList'] = !empty($aorList) ? $aorList : NULL;
+                $param['login_id'] = !empty(getSessionData('login')['id']) ? (int)getSessionData('login')['id'] : NULL;
+                $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
+                $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
+                return $this->render('register.add_arguing_counsel',$data); 
+            }
             if ($validation->withRequest($this->request)->run() === FALSE) {
             // if ($this->validate($rules) === FALSE) {
-                $data = [
-                    'validation' => $validation->getErrors(),
-                ];
+                // $data = [
+                //     'validation' => $validation->getErrors(),
+                // ];
                 $data['state_list'] = $this->Dropdown_list_model->get_states_list();
                 $data['stateArr'] = $this->Dropdown_list_model->get_states_list();
                 $params = array();
@@ -346,7 +368,8 @@ class ArguingCounsel extends BaseController {
                 $selfArguingCounselData = $this->Register_model->getArguingDataForApproval($param);
                 $data['selfArguingCounselData'] = !empty($selfArguingCounselData) ? $selfArguingCounselData : NULL;
                 return $this->render('register.add_arguing_counsel',$data);
-            } else{
+            }
+             else{
                 if (!empty(getSessionData('self_register_arguing_counsel')) && getSessionData('self_register_arguing_counsel') == true)
                 {
                     $name =  !empty($this->request->getPost('name')) ? $this->request->getPost('name') : NULL;
@@ -446,7 +469,8 @@ class ArguingCounsel extends BaseController {
                             $insetIdArguingCounsel = $this->Citation_model->insertData($table,$dataToSave);
                             if(isset($insetIdArguingCounsel) && !empty($insetIdArguingCounsel)){
                                 $success = 'Registration has been successfully completed.';
-                                setSessionData('success', $success);
+                                setSessionData('success', $success); 
+                                
                                 setSessionData('self_arguing_counsel', true);
                             } else {
                                 $this->session->setFlashdata('error', 'Something went wrong! Please try again later.');

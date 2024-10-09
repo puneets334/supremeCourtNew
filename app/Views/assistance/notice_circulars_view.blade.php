@@ -1,3 +1,5 @@
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
+<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 @if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @extends('layout.app')
 @else
@@ -25,7 +27,7 @@
                                             <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link active">Circulars</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link">Proformas</a>
+                                            <a href="<?= base_url('assistance/performas'); ?>" aria-current="page" class="nav-link">Performas</a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="<?= base_url('contact_us'); ?>" aria-current="page" class="nav-link">Contact Us</a>
@@ -37,7 +39,12 @@
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div id="msg">
-                                                    <?php echo getSessionData('MSG'); ?>
+                                                    <?php 
+                                                    $session = session();
+                                                    if ($session->getFlashdata('MSG')) {
+                                                        echo '<div class="alert alert-danger">'.$session->getFlashdata('MSG').'</div>';
+                                                    }
+                                                    ?>
                                                 </div> 
                                             </div>
                                         </div>    
@@ -65,7 +72,7 @@
                                                                             <label class="form-label"> Title <span style="color: red">*</span> :</label>
                                                                             <input id="news_title" name="news_title" value="<?php if(!empty($get_data[0]['news_title'])) echo htmlentities($get_data[0]['news_title'], ENT_QUOTES); ?>" placeholder="News Title" maxlength="250"  class="form-control cus-form-ctrl" type="text">
                                                                             <!-- <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Title only accept Charaters and Spaces(eg. ABC XYZ)."><i class="fa fa-question-circle-o" ></i></span> -->
-                                                                            <?php echo (getSessionData('news_title') != NULL) ? getSessionData('news_title') : NULL; ?>
+                                                                            <?php echo ($session->getFlashdata('news_title') != NULL) ? $session->getFlashdata('news_title') : NULL; ?>
                                                                         </div> 
                                                                     </div>
                                                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6" >
@@ -75,7 +82,7 @@
                                                                             <?php if (!empty($get_data[0]['file_name'])) { ?>
                                                                                 <span class="help-block"><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($get_data[0]['id'])); ?>" class="btn btn-link" target="_blank">View Old File</a></span>
                                                                             <?php } ?>
-                                                                            <?php echo (getSessionData('news_doc') != NULL) ? getSessionData('news_doc') : NULL; ?>
+                                                                            <?php echo ($session->getFlashdata('news_doc') != NULL) ? $session->getFlashdata('news_doc') : NULL; ?>
                                                                         </div> 
                                                                     </div>
                                                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6" >
@@ -83,7 +90,7 @@
                                                                             <label class="form-label"> Auto Deactivate On <span style="color: red">*</span> :</label>
                                                                             <input type="text" class="form-control cus-form-ctrl news_datepicker" id="deactivate_date" name="deactivate_date" placeholder="Deactivate Date" value="<?php if (!empty($get_data[0]['deactive_date']) && $get_data[0]['deactive_date'] != '') echo htmlentities(date('d-m-Y', strtotime($get_data[0]['deactive_date'])), ENT_QUOTES); ?>" readonly="" />
                                                                             <!-- <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Enter News Deactive Date"><i class="fa fa-question-circle-o" ></i></span> -->
-                                                                            <?php echo (getSessionData('deactivate_date') != NULL) ? getSessionData('deactivate_date') : NULL; ?>
+                                                                            <?php echo ($session->getFlashdata('deactivate_date') != NULL) ? $session->getFlashdata('deactivate_date') : NULL; ?>
                                                                         </div> 
                                                                     </div>
                                                                     <div class="col-12 col-sm-12 col-md-6 col-lg-6 mt-4">
@@ -91,7 +98,7 @@
                                                                             <label class="form-label">PDF is  <span style="color: red">*</span> :</label>
                                                                             <span>Notice</span>&nbsp;&nbsp;&nbsp;<label><input type="radio" class="radio-inline" value="Notice" name="pdf_is" <?php if(!empty($get_data[0]['is_notice']) && $get_data[0]['is_notice'] == 't') echo 'checked'; ?> ></label>
                                                                             <span>Circular</span>&nbsp;&nbsp;&nbsp;<label><input type="radio" class="radio-inline" value="Circular" name="pdf_is" <?php if(!empty($get_data[0]['is_circular']) && $get_data[0]['is_circular'] == 't') echo 'checked'; ?>></label>
-                                                                            <?php // echo (getSessionData('news_doc') != NULL) ? getSessionData('news_doc') : NULL; ?>
+                                                                            <?php echo ($session->getFlashdata('news_doc') != NULL) ? $session->getFlashdata('news_doc') : NULL; ?>
                                                                         </div> 
                                                                     </div>
                                                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
@@ -147,16 +154,16 @@
                                                                     $lbl_is_notice_circular = (!empty($itm['is_circular']) && $itm['is_circular'] == 't') ? 'Circular' : 'Notice';
                                                                     ?>
                                                                     <tr>
-                                                                        <td width="5%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                        <td width="15%"><?php echo $lbl_is_notice_circular; ?></td>
-                                                                        <td><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>
+                                                                        <td width="5%" data-key="#"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                                        <td width="15%" data-key="Item"><?php echo $lbl_is_notice_circular; ?></td>
+                                                                        <td data-key="Notice / Circualr &nbsp;&nbsp;(Dated) "><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>
                                                                                 &nbsp;<?php echo htmlentities($itm['news_title'], ENT_QUOTES); ?><br>
                                                                                 (<?php echo htmlentities(date('d-m-Y', strtotime($itm['create_date'])), ENT_QUOTES); ?>)
                                                                             </a>
                                                                         </td> 
                                                                         <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
-                                                                            <td width="10%"> <?php echo htmlentities(date('d-m-Y', strtotime($itm['deactive_date'])), ENT_QUOTES); ?></td>                                    
-                                                                            <td width="15%">
+                                                                            <td width="10%" data-key="Will Deactivate On"> <?php echo htmlentities(date('d-m-Y', strtotime($itm['deactive_date'])), ENT_QUOTES); ?></td>                                    
+                                                                            <td width="15%" data-key="Action">
                                                                                 <a href="<?php echo base_url('assistance/notice_circulars/edit/' . url_encryption($itm['id'])); ?>" class="btn btn-primary" role="button"><i class="fa fa-pencil"></i></a>
                                                                                 <?php if ($itm['is_deleted'] == 'f') { ?>
                                                                                     <a href="<?php echo base_url('assistance/notice_circulars/action/' . url_encryption($itm['id'] . '$$' . 'D')); ?>" class="btn btn-danger" role="button" onclick="return confirm('Are you sure, want to Deactivate this Notice/Circular ?')">Deactivate</a><?php } ?>
@@ -185,6 +192,8 @@
     </div>
 @endsection
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -206,6 +215,7 @@
                         required: true
                     }, deactivate_date: {
                         required: true
+
                     },
                     "pdf_is[]": {
                         required: true,
