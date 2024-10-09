@@ -41,9 +41,9 @@ use Hashids\Hashids;
                                                         <td width="5%" data-key="#"><?=$k; ?></td>
                                                         <td width="15%" data-key="Name">
                                                             <?php
-                                                            $encodedId = integerEncreption($res->id);
+                                                            $encodedId = iEncrypt($res->id);
                                                             ?>
-                                                            <a href="<?= base_url('NewRegister/Advocate/view/' . url_encryption($encodedId)) ?>" style="color: #385198;">
+                                                            <a href="<?= base_url('NewRegister/Advocate/view/' . url_encryption($res->id)) ?>" style="color: #385198;">
                                                                 <?= strtoupper($res->first_name) ?>
                                                             </a>
                                                         </td>

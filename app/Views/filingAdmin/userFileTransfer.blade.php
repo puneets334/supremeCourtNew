@@ -11,6 +11,9 @@
     }
 </style>
     <div class="container-fluid">
+    <div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+    </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="dashboard-section dashboard-tiles-area"></div>
@@ -130,6 +133,7 @@
                 $("#buttonDiv").hide();
                 return false;
             } else {
+                $('#loader-wrapper').show();
                 var CSRF_TOKEN = 'CSRF_TOKEN';
                 var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
                 $.ajax({
@@ -143,6 +147,7 @@
                     cache: false,
                     dataType: 'json',
                     success: function(res) {
+                        $('#loader-wrapper').hide();
                         if (res.caseData) {
                             $("#filetransfer_wrapper").show();
                             $("#fileTransferDiv").show();
