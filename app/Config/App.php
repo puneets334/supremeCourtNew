@@ -16,11 +16,8 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-<<<<<<< Updated upstream
-public string $baseURL = "http://10.25.80.170:82/";
-=======
-public string $baseURL = "http://10.40.186.78:94/";
->>>>>>> Stashed changes
+
+     public string $baseURL = "http://10.25.80.170:82/";
 
 
     /**

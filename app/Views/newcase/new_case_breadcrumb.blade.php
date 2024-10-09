@@ -144,16 +144,6 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         if(isset(getSessionData('efiling_details')['stage_id'])){
                             if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 ?>
-                            <!-- <a data-toggle="modal"
-                                href="#approveModal"
-                                class="btn btn-success btn-sm">Approve</a>
-                            <a data-toggle="modal"
-                                href="#disapproveModal"
-                                class="btn btn-danger btn-sm">Disapprove</a>
-                            <a data-toggle="modal"
-                                href="#markAsErrorModal"
-                                class="btn btn-warning btn-sm">Mark As Error</a> -->
-
                                 <a data-bs-toggle="modal" href="#approveModal" class="btn quick-btn success-btn btn-success btn-sm" style="background-color:#169F85;">Approve</a>
                                 <a data-bs-toggle="modal" href="#disapproveModal" class="btn quick-btn danger-btn btn-danger btn-sm" style="background-color:#C11900;">Disapprove</a>
                                 <a data-bs-toggle="modal" href="#markAsErrorModal" class="btn quick-btn success-btn btn-success btn-sm" style="background-color:#169F85;">Mark As Error</a>
@@ -807,14 +797,14 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             <div class="modal-header">
                 
                 <h4 class="modal-title">
-                    <span class="fa fa-pencil"></span><?php echo $lbl = ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
+                    <span class="fa fa-pencil"></span><?php echo $lbl = (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <?php
             $attribute = array('name' => 'disapp_case', 'id' => 'disapp_case', 'autocomplete' => 'off');
-            if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
+            if (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
                 echo form_open(base_url('admin/EfilingAction/submit_mentioning_order'), $attribute);
             } else {
                 echo form_open(base_url('admin/EfilingAction/disapprove_case'), $attribute);
@@ -1338,7 +1328,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
 
             
             if (efiling_type_id  !="") {
@@ -1362,7 +1352,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         $('#markaserror').click(function () {
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
             if (efiling_type_id  !="") {
                 if(temp.length == 0){
                     alert("Please fill error note.");

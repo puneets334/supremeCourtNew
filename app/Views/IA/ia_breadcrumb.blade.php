@@ -588,8 +588,9 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+            <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
             </div>
             <div class="modal-body">
                 <p>Are you sure to Approve this E-filing number ? </p>
@@ -608,8 +609,9 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+            <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                
             </div>
             <div class="modal-body">
                 <p>Are you sure to transfer this E-filing number to Sec-X? </p>
@@ -626,15 +628,16 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                
                 <h4 class="modal-title">
-                    <span class="fa fa-pencil"></span><?php echo $lbl = ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
+                    <span class="fa fa-pencil"></span><?php echo $lbl = (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
                 </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <?php
             $attribute = array('name' => 'disapp_case', 'id' => 'disapp_case', 'autocomplete' => 'off');
-            if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
+            if (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
                 echo form_open(base_url('admin/EfilingAction/submit_mentioning_order'), $attribute);
             } else {
                 echo form_open(base_url('admin/EfilingAction/disapprove_case'), $attribute);
@@ -688,10 +691,10 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">
                     <span class="fa fa-pencil"></span>Write reason to mark as error.
                 </h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <?php
@@ -739,13 +742,10 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
                 <h4 class="modal-title">
                     <span class="fa fa-pencil"></span> Deficit Fee
                 </h4>
-
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <?php
@@ -771,9 +771,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><span class="fa fa-pencil"></span> Check All Details </h4>
-
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="checkAllSections">
             </div>
@@ -792,9 +791,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         <div class="modal-content" style="width: 927px;height: 300px;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Diary Details</h5>
-                <button type="button" class="close closeButton" data-dismiss="modal" data-close="1" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <span id="customErrorMessage"></span>
@@ -813,8 +810,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure to Hold this E-filing number ? </p>
@@ -834,8 +831,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure to Disposed this E-filing number ? </p>
@@ -1164,7 +1161,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
 
             
             if (efiling_type_id  !="") {
@@ -1188,7 +1185,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         $('#markaserror').click(function () {
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
             if (efiling_type_id  !="") {
                 if(temp.length == 0){
                     alert("Please fill error note.");
