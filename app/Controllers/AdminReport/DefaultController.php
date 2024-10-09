@@ -310,7 +310,7 @@ class DefaultController extends BaseController
                 $tableData .= '</tr>';
             }
             $table = '';
-            $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0">
+            $table .= '<table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%">
                 <thead>
                     <tr>
                         <th>Date<hr>' . date('d/m/Y', strtotime($params['from_date'])) . ' - ' . date('d/m/Y', strtotime($params['to_date'])) . '</th>
@@ -320,7 +320,14 @@ class DefaultController extends BaseController
                     </tr>
                     <tbody>' . $tableData . '</tbody>
                 </thead>
-            </table>';
+            </table>
+            <script>
+                $(document).ready(function() {
+                    $("#datatable-responsive").DataTable({
+                        "ordering": false,
+                    });
+                });
+            </script>';
         }
         $output['table'] = $table;
         echo json_encode($output);

@@ -23,7 +23,7 @@
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table first-th-left" id="datatable-responsive">
+                                    <table class="table table-striped custom-table" id="datatable-responsive">
                                         <thead>
                                             <tr class="success input-sm" role="row">
                                                 <th>#</th>
@@ -58,13 +58,13 @@
                                                     }
                                                     @endphp
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $first_name }}</td>
-                                                        <td>{{ $emp_id }}</td>
-                                                        <td>{!! strtoupper($roleText) !!}</td>
-                                                        <td>{{ strtoupper($pp_a) }}</td>
-                                                        <td>{{ strtoupper($attend) }}</td>
-                                                        <td><a title="Update Role" href="javaScript:void(0)" class="editRole" data-userid="{{ $user_id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                                                        <td data-key="#">{{ $loop->iteration }}</td>
+                                                        <td data-key="Name">{{ $first_name }}</td>
+                                                        <td data-key="Emp ID">{{ $emp_id }}</td>
+                                                        <td data-key="Assigned File Type">{!! strtoupper($roleText) !!}</td>
+                                                        <td data-key="User Type">{{ strtoupper($pp_a) }}</td>
+                                                        <td data-key="Present/Absent">{{ strtoupper($attend) }}</td>
+                                                        <td data-key="Action"><a title="Update Role" href="javaScript:void(0)" class="editRole" data-userid="{{ $user_id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -232,6 +232,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#datatable-responsive").DataTable({
+            "ordering": false,
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         // $('#filing_type').multiselect();
