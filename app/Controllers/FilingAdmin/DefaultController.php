@@ -463,7 +463,7 @@ class DefaultController extends BaseController {
                             $fileallocationArr['whereFieldName']= "registration_id";
                             $fileallocationArr['whereFieldValue']=$registration_id;
                             $fileallocationArr['updateArr']=$updateArr;
-                            $res =$this->FilingAdminModel->updateTableData($fileallocationArr);
+                            $res =$this->FilingAdminModel->updateTableData($fileallocationArr['table_name'], $fileallocationArr['whereFieldName'], $fileallocationArr['whereFieldValue'], $fileallocationArr['updateArr']);
                             if(isset($res) && !empty($res)){
                                 $upEfilingAllocation = array();
                                 $upEfilingAllocation['admin_id'] = $toUserId;
@@ -476,22 +476,22 @@ class DefaultController extends BaseController {
                                 $fileArr['whereFieldName']= "registration_id";
                                 $fileArr['whereFieldValue']=$registration_id;
                                 $fileArr['updateArr']=$upEfilingAllocation;
-                                $result =$this->FilingAdminModel->updateTableData($fileArr);
+                                $result =$this->FilingAdminModel->updateTableData($fileArr['table_name'], $fileArr['whereFieldName'], $fileArr['whereFieldValue'], $fileArr['updateArr']);
                                 if(isset($result) && !empty($result)){
-                                    $output = json_encode(array('status'=>'success','message'=>'File allocation has been successfully.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
+                                    $output = json_encode(array('status'=>'success','message'=>'File allocation successful.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
                                 }
                                 else{
-                                    $output = json_encode(array('status'=>'error','message'=>'Something went wrong,please try again later!'));
+                                    $output = json_encode(array('status'=>'error','message'=>'Something went wrong. Please try again later.'));
                                 }
                             }
                             else{
-                                $output = json_encode(array('status'=>'error','message'=>'Something went wrong,please try again later!'));
+                                $output = json_encode(array('status'=>'error','message'=>'Something went wrong. Please try again later.'));
                             }
                         }
                         else{
                             $ctn++;
                             $efilingDetails .=$efiling_no.',';
-                            $output = json_encode(array('status'=>'error','message'=>'User has not authorized.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
+                            $output = json_encode(array('status'=>'error','message'=>'User is not authorized.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
                         }
                     }
                 }
@@ -525,7 +525,7 @@ class DefaultController extends BaseController {
                             $fileallocationArr['whereFieldName']= "registration_id";
                             $fileallocationArr['whereFieldValue']=$registration_id;
                             $fileallocationArr['updateArr']=$updateArr;
-                            $res =$this->FilingAdminModel->updateTableData($fileallocationArr);
+                            $res =$this->FilingAdminModel->updateTableData($fileallocationArr['table_name'], $fileallocationArr['whereFieldName'], $fileallocationArr['whereFieldValue'], $fileallocationArr['updateArr']);
                             if(isset($res) && !empty($res)){
                                 $upEfilingAllocation = array();
                                 $upEfilingAllocation['admin_id'] = $toUserId;
@@ -538,22 +538,22 @@ class DefaultController extends BaseController {
                                 $fileArr['whereFieldName']= "registration_id";
                                 $fileArr['whereFieldValue']=$registration_id;
                                 $fileArr['updateArr']=$upEfilingAllocation;
-                                $result =$this->FilingAdminModel->updateTableData($fileArr);
+                                $result =$this->FilingAdminModel->updateTableData($fileArr['table_name'], $fileArr['whereFieldName'], $fileArr['whereFieldValue'], $fileArr['updateArr']);
                                 if(isset($result) && !empty($result)){
-                                    $output = json_encode(array('status'=>'success','message'=>'File allocation has been successfully.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
+                                    $output = json_encode(array('status'=>'success','message'=>'File allocation successful.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
                                 }
                                 else{
-                                    $output = json_encode(array('status'=>'error','message'=>'Something went wrong,please try again later!'));
+                                    $output = json_encode(array('status'=>'error','message'=>'Something went wrong. Please try again later.'));
                                 }
                             }
                             else{
-                                $output = json_encode(array('status'=>'error','message'=>'Something went wrong,please try again later!'));
+                                $output = json_encode(array('status'=>'error','message'=>'Something went wrong. Please try again later.'));
                             }
                         }
                         else{
                             $ctn++;
                             $efilingDetails .=$efiling_no.',';
-                            $output = json_encode(array('status'=>'error','message'=>'User has not authorized.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
+                            $output = json_encode(array('status'=>'error','message'=>'User is not authorized.','failedTotal'=>$ctn,'efiling_no'=>$efilingDetails));
                         }
                     }
                 }
@@ -563,7 +563,7 @@ class DefaultController extends BaseController {
             }
         }
         else{
-            $output = json_encode(array('status'=>'error','message'=>'Something went wrong,please try again later!'));
+            $output = json_encode(array('status'=>'error','message'=>'Something went wrong. Please try again later.'));
         }
         echo $output; exit(0);
     }

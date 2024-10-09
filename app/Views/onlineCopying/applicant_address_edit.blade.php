@@ -88,12 +88,7 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
     <button id="btn_address_edit_action" class="btn btn-success" type="button" data-button_action_type="edit" data-address_table_id="<?=$address_id?>">Edit/Save</button>
 </div>
 <div id="result" class="show_msg_modal" style="overflow: auto;"></div>
-<script>
-    $(function () {
-        $('#modal').modal('toggle');
-    });
-</script>
