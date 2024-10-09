@@ -13,7 +13,7 @@ class AdminSearchModel extends Model {
         $output = false;
         if (isset($params['from_date']) && !empty($params['from_date']) && isset($params['to_date']) && !empty($params['to_date']) && isset($params['sc_case_type']) && !empty($params['sc_case_type']))
         {
-            $sql = "select distinct ten.efiling_no,tcd.sc_diary_num,tcd.sc_diary_year,date(tens.deactivated_on) diarized_on,ct.skey as casetype,'http://10.249.44.165:91/'||tup.file_path as path,tup.file_path as ducs_path from efil.tbl_efiling_nums ten
+            $sql = "select distinct ten.efiling_no,tcd.sc_diary_num,tcd.sc_diary_year,date(tens.deactivated_on) diarized_on,ct.skey as casetype,'".DOCUMENT_CASETYPE_URL."'||tup.file_path as path,tup.file_path as ducs_path from efil.tbl_efiling_nums ten
       inner join efil.tbl_efiling_num_status tens 
         on ten.registration_id=tens.registration_id and tens.stage_id=8 and cast(tens.deactivated_on as date) between '".$params['from_date']."' and '".$params['to_date']."'
         inner join efil.tbl_case_details tcd on ten.registration_id=tcd.registration_id 
