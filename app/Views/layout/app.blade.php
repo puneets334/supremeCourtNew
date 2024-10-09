@@ -29,7 +29,7 @@
 </head>
 
 <body>
-<div id="loader-wrapper">
+	<div id="loader-wrapper">
         <div id="loader"></div>
     </div>
 	<div class="wrapper">
@@ -80,7 +80,7 @@
 		});
 	</script> -->
 
-<script>
+	<script>
         $(document).ready(function() {
             $('#loader-wrapper').show();
             var loaderTimeout = setTimeout(function() {
