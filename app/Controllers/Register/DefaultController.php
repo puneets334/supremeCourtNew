@@ -361,6 +361,7 @@ class DefaultController extends BaseController {
                                 $zip = new ZipArchive;
                                 if ($zip->open($filePath) === TRUE) {
                                     $extractedPath = $uploadPath . explode('.',$fileName)[0] . '.xml';
+                                    // chmod($uploadPath, 777);
                                     if ($zip->setPassword($request->getPost('share_code'))) {
                                         if (!$zip->extractTo($uploadPath)) { 
                                             $zip->close();

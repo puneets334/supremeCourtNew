@@ -2783,7 +2783,7 @@ function getPendingCourtFee_old_working_till_101072023()
 function getPendingCourtFee()
 {
     $Common_model = new CommonModel();
-    $registration_id = getSessionData('efiling_details')['registration_id'];
+    $registration_id = !empty(getSessionData('efiling_details')) ? getSessionData('efiling_details')['registration_id'] : '';
     $total_pending_court_fee = 0;
     if (!empty($registration_id))
     {

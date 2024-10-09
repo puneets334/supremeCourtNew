@@ -83,7 +83,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         ?>
                         <?php
                             // echo getSessionData('msg');
-                            echo !empty(getSessionData('efiling_details')['stage_id']) ? remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']) : '';
+                            
                             $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
                             if (((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) || (getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN)) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (isset($efiling_civil_data[0]['orgid']) && $efiling_civil_data[0]['orgid'] == '0' && $efiling_civil_data[0]['not_in_list_org'] == 't' || isset($efiling_civil_data[0]['resorgid']) && $efiling_civil_data[0]['resorgid'] == '0' && $efiling_civil_data[0]['res_not_in_list_org'] == 't') {
@@ -106,8 +106,11 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         ?>
                         <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
+                    
                 </div>
+                
             </div>
+            
         </div>
     </div>
     <div class="row">
@@ -159,7 +162,11 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                     
                     
                 </div>
+                
             </div>
+            <div class="col-12">
+                        <?php echo !empty(getSessionData('efiling_details')['stage_id']) ? remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']) : ''; ?>
+                    </div>
         </div>
     </div>
 </div>
@@ -680,14 +687,14 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             <div class="modal-header">
                 
                 <h4 class="modal-title">
-                    <span class="fa fa-pencil"></span><?php echo $lbl = ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
+                    <span class="fa fa-pencil"></span><?php echo $lbl = (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <?php
             $attribute = array('name' => 'disapp_case', 'id' => 'disapp_case', 'autocomplete' => 'off');
-            if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
+            if (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
                 echo form_open(base_url('admin/EfilingAction/submit_mentioning_order'), $attribute);
             } else {
                 echo form_open(base_url('admin/EfilingAction/disapprove_case'), $attribute);
@@ -1211,7 +1218,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
 
             
             if (efiling_type_id  !="") {
@@ -1235,7 +1242,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         $('#markaserror').click(function () {
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>';
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
             if (efiling_type_id  !="") {
                 if(temp.length == 0){
                     alert("Please fill error note.");
