@@ -23,10 +23,11 @@ class DefaultController extends BaseController
     }
     public function index()
     {
+
     }
+
     public function reportForm()
     {
-
         if (empty(getSessionData('login')['ref_m_usertype_id'])) {
             redirect('login');
             exit(0);
@@ -187,7 +188,6 @@ class DefaultController extends BaseController
                         $data[$login_user_id][$login_user_id]['file_diaries'] = !empty($file_diaries[0]) ? $file_diaries[0] : NULL;
                         unset($params["type"]);
                         unset($params["stage_id"]);
-
                         $type = "file_pending_diary_or_document";
                         $params['type'] = $type;
                         $params['stage_id'] = New_Filing_Stage;
@@ -217,7 +217,7 @@ class DefaultController extends BaseController
                 $tmpData4 = '';
                 $tmpData5 = '';
                 $tableData .= '<tr>';
-                $tableData .= '<td>' . $userNameArr[$key] . '</td>';
+                $tableData .= '<td data-key="Date">' . $userNameArr[$key] . '</td>';
                 foreach ($arr[$key]['file_allocated'] as $k => $v) {
                     $fileTypeName = '';
                     $pipe = ' ';
@@ -233,7 +233,7 @@ class DefaultController extends BaseController
                     $ctn++;
                 }
                 $tmpData1 = rtrim($tmpData1, ' | ');
-                $tableData .= '<td>' . $tmpData1 . '</td>';
+                $tableData .= '<td data-key="Work Allocated">' . $tmpData1 . '</td>';
                 $ctn = 0;
                 if (isset($arr[$key]['file_approved'])) {
                     foreach ($arr[$key]['file_approved'] as $k => $v) {
@@ -287,7 +287,7 @@ class DefaultController extends BaseController
                     $tmpData4 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_diaries&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . '  ' . $pipe . ' </a>';
                     $ctn++;
                 }
-                $tableData .= '<td>' . $tmpData4 . '</td>';
+                $tableData .= '<td data-key="No. Of Diary/Document No. Generated">' . $tmpData4 . '</td>';
                 $tableData .= '';
                 $ctn = 0;
                 foreach ($arr[$key]['file_pending_diary_or_document'] as $k => $v) {
@@ -305,24 +305,22 @@ class DefaultController extends BaseController
                     $ctn++;
                 }
                 $tmpData5 = rtrim($tmpData5, ' | ');
-                $tableData .= '<td>' . $tmpData5 . '</td>';
+                $tableData .= '<td data-key="Pending for Diary/Document No.">' . $tmpData5 . '</td>';
                 $ctn = 0;
                 $tableData .= '</tr>';
             }
             $table = '';
             $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Date<hr>
-                                ' . date('d/m/Y', strtotime($params['from_date'])) . ' - ' . date('d/m/Y', strtotime($params['to_date'])) . '
-                            </th>
-                            <th>Work Allocated <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                            <th>No. Of Diary/Document No. Generated <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                            <th>Pending for Diary/Document No. <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                        </tr>
-                        <tbody>' . $tableData . '</tbody>
-                        </thead>
-                    </table>';
+                <thead>
+                    <tr>
+                        <th>Date<hr>' . date('d/m/Y', strtotime($params['from_date'])) . ' - ' . date('d/m/Y', strtotime($params['to_date'])) . '</th>
+                        <th>Work Allocated <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                        <th>No. Of Diary/Document No. Generated <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                        <th>Pending for Diary/Document No. <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                    </tr>
+                    <tbody>' . $tableData . '</tbody>
+                </thead>
+            </table>';
         }
         $output['table'] = $table;
         echo json_encode($output);
