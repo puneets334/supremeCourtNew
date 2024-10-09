@@ -41,6 +41,11 @@ if(isset($_SESSION['login'])){
                                 <?php } ?>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
+                                <div class="main-inner-area">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                                                    <div class="main-inner-bg">
                                 <div class="right_col" role="main">
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -51,7 +56,7 @@ if(isset($_SESSION['login'])){
                                     </div>    
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">            
-                                            <div class="x_panel">                
+                                        <div class="inner-page-title">                       
                                                 <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                     <div class="x_title">
                                                         <h2><i class="fa  fa-newspaper-o"></i> Resources Handbook</h2>
@@ -59,8 +64,9 @@ if(isset($_SESSION['login'])){
                                                     </div>
                                                     <div class="x_content"></div>
                                                 <?php } else { ?> 
-                                                    <h2><i class="fa  fa-newspaper-o"></i> Resources Handbook</h2>
-                                                    <div class="clearfix"></div>
+                                                    <!-- <h2><i class="fa  fa-newspaper-o"></i> Resources Handbook</h2>
+                                                    <div class="clearfix"></div> -->
+                                                    <h5>Resources Handbook</h5>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -77,6 +83,11 @@ if(isset($_SESSION['login'])){
                                         <!------------Table--------------------->
                                     </div>
                                 </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
+                                                    </div>
                                 {{-- Main End --}}
                             </div>
                         </div>

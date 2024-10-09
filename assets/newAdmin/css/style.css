@@ -6389,7 +6389,7 @@ table thead th {
     font-size: 16px;
     margin-left: 5px;
     position: absolute;
-    right: -30px;
+    right: 65px;
     color: #fff;
 }
 
@@ -8553,3 +8553,20 @@ table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;bor
 .mob-p-sm-0 {padding: 0px !important;}
 p.kyc-btns-aligns {display: flex;gap: 5px;}
 .mycases-tbl th{width: 50% !important;}
+.video-crd {border-radius: 21px;overflow: hidden;height: 100%;}
+.video-crd img {width: 100% !important;object-fit: contain;}
+.video-crd h5.card-title {font-size: 16px;text-align: center;padding: 15px;margin: 0;line-height: 24px;color: #000;}
+.mrgT35 {
+    margin-top: 35px;
+}
+.common-modal .uk-modal-dialog {
+    border-radius: 21px;
+}
+
+.common-modal .uk-modal-dialog > h4 {
+    font-size: 24px;
+    font-family: 'noto_sansmedium';
+    margin-bottom: 11px;
+    color: #000;
+    padding: 15px 15px 0;
+}

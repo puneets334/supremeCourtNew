@@ -1,5 +1,6 @@
 @extends('layout.app')
 @section('content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -28,7 +29,7 @@
                                                     <label class="col-form-label" for="sc_case_type">Case Type <span style="color: red">*</span>:</label>
                                                     </div>
                                                     <div class="col-7 pe-0">
-                                                        <select name="sc_case_type[]" id="sc_case_type" class="form-control cus-form-ctrl" aria-label="Default select example" required multiple="multiple" data-placeholder="Select Case Type.">
+                                                        <select name="sc_case_type[]" id="sc_case_type" class=" js-example-basic-multiple form-select input-sm form-control cus-form-ctrl" aria-label="Default select example" required multiple="multiple" data-placeholder="Select Case Type.">
                                                             <!--<option value="" title="Select">Select Case Type</option>-->
                                                             <?php
                                                             if (!empty($sc_case_type)) {
@@ -86,7 +87,12 @@
 @push('script')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
+    $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
     $(document).ready(function(){
         $('#from_date').datepicker({
             changeMonth: true,

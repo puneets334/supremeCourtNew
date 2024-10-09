@@ -44,16 +44,16 @@
                                 }
                             ?>
                                 <tr>
-                                    <td><?= $sr++; ?></td>
-                                    <td><a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/' . url_encryption($doc['doc_id'])); ?>">
+                                    <td data-key="#"><?= $sr++; ?></td>
+                                    <td data-key="Uploaded Documents(s)"><a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/' . url_encryption($doc['doc_id'])); ?>">
                                             <?php echo_data($doc['doc_title']); ?>
                                             <img src="<?= base_url('assets/images/pdf.png') ?>"> <br />
                                             <?php echo_data($doc['doc_hashed_value']); ?></a>
                                     </td>
-                                    <td><?= date('d-m-Y H:i:s', strtotime($doc['uploaded_on'])) ?></td>
-                                    <td><?= htmlentities($doc['page_no'], ENT_QUOTES); ?></td>
+                                    <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($doc['uploaded_on'])) ?></td>
+                                    <td data-key="Pages"><?= htmlentities($doc['page_no'], ENT_QUOTES); ?></td>
                                     <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
-                                        <td>
+                                        <td data-key="Delete">
                                             <?php
                                             if (isset($result) && strtotime($doc['uploaded_on']) > strtotime($result[0]->max_date) || in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage))) {
                                             ?>
@@ -102,15 +102,15 @@
                                     }
                                 ?>
                                     <tr>
-                                        <td><?= $sr++; ?></td>
-                                        <td><a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/showDeletedFiles/' . url_encryption($deleted_doc['doc_id'])); ?>">
+                                        <td data-key="#"><?= $sr++; ?></td>
+                                        <td data-key="Uploaded Documents (Files deleted by AOR while re-filing)"><a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/showDeletedFiles/' . url_encryption($deleted_doc['doc_id'])); ?>">
                                                 <?php echo_data($deleted_doc['doc_title']); ?>
                                                 <img src="<?= base_url('assets/images/pdf.png') ?>"> <br />
                                                 <?php echo_data($deleted_doc['doc_hashed_value']); ?></a>
                                         </td>
-                                        <td><?= date('d-m-Y H:i:s', strtotime($deleted_doc['uploaded_on'])) ?></td>
-                                        <td><?= date('d-m-Y H:i:s', strtotime($deleted_doc['deleted_on'])) ?></td>
-                                        <td><?= htmlentities($deleted_doc['page_no'], ENT_QUOTES); ?></td>
+                                        <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($deleted_doc['uploaded_on'])) ?></td>
+                                        <td data-key="Deleted On"><?= date('d-m-Y H:i:s', strtotime($deleted_doc['deleted_on'])) ?></td>
+                                        <td data-key="Pages"><?= htmlentities($deleted_doc['page_no'], ENT_QUOTES); ?></td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

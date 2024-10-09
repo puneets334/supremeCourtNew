@@ -1596,22 +1596,26 @@ td {
             </div>
         </div>
     </div>
-    <div id="mail" uk-modal>
+    <div id="mail" uk-modal class="common-modal">
         <div class="uk-modal-dialog" id="view_contacts_text" align="center">
             <h4> SMS CASE DETAILS <div id="mail_d"></div>
             </h4>
             <!-- <input type="text" name="<?php // echo $this->security->get_csrf_token_name();?>" value="<?php // echo $this->security->get_csrf_hash();?>" placeholder="csrf token"> -->
-            <button class="uk-modal-close-default" type="button" uk-close></button>
+            <button class="uk-modal-close-default quick-btn"  type="button" uk-close></button>
             <div class="uk-modal-body">
                 To: <input type="text" class="form-control cus-form-ctrl" size="60" id="recipient_mobile_no"
                     name="recipient_mobile_no" maxlength="250" placeholder="Recipient's Mobile Number">
                 <br>
                 Message Text: <div id='caseinfosms'></div>
             </div>
-            <div class="uk-modal-footer uk-text-right" id="con_footer">
-                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                <input type="button" id="send_sms" value="Send SMS " class="uk-button uk-button-primary"
-                    onclick="send_sms()">
+            <div class="uk-modal-footer uk-text-right modal-footer" id="con_footer">
+            <div class="center-buttons">
+                <button class="quick-btn gray-btn uk-button-default uk-modal-close" type="button">Cancel</button>
+                <!-- <input type="button" id="send_sms" value="Send SMS " class="quick-btn"
+                    onclick="send_sms()"> -->
+                    <button type="button" id="send_sms"  class="quick-btn"
+                    onclick="send_sms()">Send SMS</button>
+            </div>
             </div>
         </div>
     </div>

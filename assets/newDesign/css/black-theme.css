@@ -83,3 +83,11 @@
 .black-theme .table tr td, .black-theme .table tr th {color: #ffffff;border-bottom: 1px solid #ffffff59;border-top: 1px solid #ffffff63;}
 .black-theme .table-striped tr:hover td {background: #111111 !important;color: #ff0;}
 .black-theme .top-header ul li.text-size img.txt-icon{filter:invert(0.45) sepia(1) saturate(10) hue-rotate(30deg) brightness(1.4);}
+.black-theme  .video-crd h5.card-title {
+    background: #333;
+    color: #ff0;
+}
+
+.black-theme  .card.video-crd {
+    border-color: #595959;
+}

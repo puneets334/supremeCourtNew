@@ -2,7 +2,8 @@
 .black-theme {background-color: #111111;color: #fff;}
 .black-theme {background: #111111;color: #fff;}
 .black-theme select {color: #ff0;}
-.black-theme p{color: #fff;}
+.black-theme p, .black-theme h5, .black-theme h6, .black-theme .x_panel h2{color: #fff!important;}
+
 .black-theme table {background: transparent;}
 .black-theme caption, .black-theme th, .black-theme td {background: #000 !important;color: #fff;}
 .black-theme caption a, .black-theme th a, .black-theme td a {color: #ff0;}
@@ -139,3 +140,14 @@
 .black-theme .calender-sec div#calendar .fc .fc-day-other .fc-daygrid-day-top {opacity: 0.5!important;}
 .black-theme .tiles-comnts .tile-comnt:hover .title-comnt-bref .table-height-div {background: #555555;}
 .black-theme .tiles-comnts .tile-comnt:hover .title-comnt-bref:after{border-bottom-color: #555555}
+.black-theme .dash-card ul.nav-tabs a.nav-link {background: #333;border-color: #525252;color: #ff0;}
+.black-theme .x_content .nav-tabs .nav-item.show .nav-link, .black-theme .x_content .nav-tabs .nav-link.active, .black-theme .x_content .nav-tabs .nav-link:hover, .black-theme .x_content .nav-tabs .nav-link:focus, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link.active, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link:hover, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link:focus {background: #000;color: #ff0;border-color: #ff0;}
+/* FaQ Page CSS start  */
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button{color: #ff0 }
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button , .black-theme .breadcrum-bg .breadcrumb-item.active , .black-theme .accordion-body{background: #000;}
+.black-theme .accordion-button.collapsed {background: #222222!important;color: #ff0 !important;}
+.black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:hover, .black-theme .faq-sec .accordion .accordion-item h2 .accordion-button:focus {background: #000000 !important;color: #ff0 !important;}
+.black-theme .faq-sec .accordion .accordion-item {border: 1px solid #00000087 !important;}
+.black-theme .faq-sec .accordion button.accordion-button.collapsed:after { filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) !important;}
+.black-theme .accordion-body li , .black-theme .accordion-body{color: #fff;}
+/* FaQ Page CSS End  */

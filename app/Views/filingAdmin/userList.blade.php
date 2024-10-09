@@ -58,13 +58,13 @@
                                                     }
                                                     @endphp
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $first_name }}</td>
-                                                        <td>{{ $emp_id }}</td>
-                                                        <td>{!! strtoupper($roleText) !!}</td>
-                                                        <td>{{ strtoupper($pp_a) }}</td>
-                                                        <td>{{ strtoupper($attend) }}</td>
-                                                        <td><a title="Update Role" href="javaScript:void(0)" class="editRole" data-userid="{{ $user_id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                                                        <td data-key="#">{{ $loop->iteration }}</td>
+                                                        <td data-key="Name">{{ $first_name }}</td>
+                                                        <td data-key="Emp ID">{{ $emp_id }}</td>
+                                                        <td data-key="Assigned File Type">{!! strtoupper($roleText) !!}</td>
+                                                        <td data-key="User Type">{{ strtoupper($pp_a) }}</td>
+                                                        <td data-key="Present/Absent">{{ strtoupper($attend) }}</td>
+                                                        <td data-key="Action"><a title="Update Role" href="javaScript:void(0)" class="editRole" data-userid="{{ $user_id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -396,3 +396,13 @@
         window.location.href = "<?= base_url('adminDashboard/DefaultController/ActionToAllUserCount?AllUserCount=') ?>" + AllUserCount;
     }
 </script>
+@push('script')
+<script>
+    $(document).ready(function() {
+            $('#datatable-responsive').DataTable({
+                dom: 'Bfrtip',
+            });
+        });
+</script>
+
+@endpush
