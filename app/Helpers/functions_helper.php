@@ -3474,22 +3474,22 @@ function copyFormSentOn($row1){
 
 function eCopyingGetDiaryNo($ct, $cn, $cy){
     $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+    $results = [];
     $builder = $db2->table('public.main');
 
-    $results = $builder->select("SUBSTRING(diary_no, 1, LENGTH(diary_no) - 4) AS dn, SUBSTRING(diary_no, -4) AS dy")
+    $builder->select("SUBSTRING(diary_no, 1, LENGTH(diary_no) - 4) AS dn, SUBSTRING(diary_no, -4) AS dy")
         ->where("SUBSTRING_INDEX(fil_no, '-', 1) =", $ct)
         ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(fil_no, '-', 2), '-', -1) AND SUBSTRING_INDEX(fil_no, '-', -1)")
         ->where("(IF(reg_year_mh = 0 OR DATE(fil_dt) > DATE('2017-05-10'), 
                     YEAR(fil_dt) = {$cy}, 
-                    reg_year_mh = {$cy}))")
-        ->get();
+                    reg_year_mh = {$cy}))");
         $query = $builder->get();
         if ($query === false) {
             $error = $db2->error();
             // echo "<pre>Error: " . $error['message'] . "</pre>";
             $result = [];
         } else {
-            $result = $query->getResult();
+            $result = $query->getRow();
         }
         return $result;
 }
@@ -3499,7 +3499,7 @@ function eCopyingCheckDiaryNo($ct, $cn, $cy){
     $builder = $db2->table('public.main_casetype_history h');
 
 
-    $results = $builder->select("SUBSTRING(h.diary_no, 1, LENGTH(h.diary_no) - 4) AS dn, SUBSTRING(h.diary_no, -4) AS dy, IF(h.new_registration_number != '',  SUBSTRING_INDEX(h.new_registration_number, '-', 1), '') AS ct1, IF(h.new_registration_number != '', SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1), '') AS crf1, IF(h.new_registration_number != '', SUBSTRING_INDEX(h.new_registration_number, '-', -1), '') AS crl1")
+    $builder->select("SUBSTRING(h.diary_no, 1, LENGTH(h.diary_no) - 4) AS dn, SUBSTRING(h.diary_no, -4) AS dy, IF(h.new_registration_number != '',  SUBSTRING_INDEX(h.new_registration_number, '-', 1), '') AS ct1, IF(h.new_registration_number != '', SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1), '') AS crf1, IF(h.new_registration_number != '', SUBSTRING_INDEX(h.new_registration_number, '-', -1), '') AS crl1")
         ->groupStart()
             ->where("SUBSTRING_INDEX(h.new_registration_number, '-', 1) =", $ct)
             ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1) AND SUBSTRING_INDEX(h.new_registration_number, '-', -1)")
@@ -3511,10 +3511,16 @@ function eCopyingCheckDiaryNo($ct, $cn, $cy){
             ->where("h.old_registration_year", $cy)
             ->where("h.is_deleted", 't')
         ->groupEnd()
-        ->where("h.is_deleted", 'f')
-        ->get()
-        ->getResult();
-        return $results;
+        ->where("h.is_deleted", 'f');
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            // echo "<pre>Error: " . $error['message'] . "</pre>";
+            $result = [];
+        } else {
+            $result = $query->getResult();
+        }
+        return $result;
 }
 
 function eCopyingGetFileDetails($diary_no){
