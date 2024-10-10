@@ -42,7 +42,7 @@
                                                     <?php 
                                                     $session = session();
                                                     if ($session->getFlashdata('MSG')) {
-                                                        echo '<div class="alert alert-danger">'.$session->getFlashdata('MSG').'</div>';
+                                                        echo $session->getFlashdata('MSG');
                                                     }
                                                     ?>
                                                 </div> 
