@@ -528,7 +528,7 @@ class ResponsiveVariantRouteController extends BaseController
                 $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
                 // $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
                 $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                pr($sr_advocate_data);
+                // pr($sr_advocate_data);
                 if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
                     $arr = array();
                     $arr['sr_advocate_id'] = $advocate_id;
