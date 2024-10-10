@@ -180,7 +180,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                         $status_color = '';
                     }
                     ?>
-                    <a href="<?= $cnr_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:10;">
+                    <a href="<?= $cnr_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:10;">
                         <span class="tab-num" style="<?php echo $ColorCode; ?>">1</span> Case Details
                     </a>
                 </li>
@@ -198,7 +198,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     }
                     ?>
 
-                    <a href="<?= $appearing_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="
+                    <a href="<?= $appearing_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="
                      <?php if (!in_array(MISC_BREAD_CASE_DETAILS, $StageArray)) {
                             echo $disabled_status;
                         } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Appearing for</a>
@@ -216,7 +216,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                         $status_color = '';
                     }
                     ?>
-                    <a href="<?= $onbehlaf_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style=" 
+                    <a href="<?= $onbehlaf_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style=" 
                     <?php if (!in_array(MISC_BREAD_APPEARING_FOR, $StageArray)) {
                         echo $disabled_status;
                     } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span> Filing For</a>
@@ -236,7 +236,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                         $status_color = '';
                     }
                     ?>
-                    <a href="<?= $doc_index_url ?? '' ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style=" 
+                    <a href="<?= $doc_index_url ?? '' ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style=" 
                     <?php if (!in_array(MISC_BREAD_ON_BEHALF_OF, $StageArray)) {
                         echo $disabled_status;
                     } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span> Upload Document / Index</a>
@@ -261,7 +261,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                         }
                     }
                     ?>
-                    <a href="<?= $fee_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="  
+                    <a href="<?= $fee_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="  
                     <?php if (!in_array(MISC_BREAD_DOC_INDEX, $StageArray)) {
                         echo $disabled_status;
                     } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span> Court Fee </a>
@@ -279,7 +279,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                         $status_color = '';
                     }
                     ?>
-                    <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> View </a>
+                    <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> View </a>
                 </li>
             </ul>
             <div class="row m-3 ">

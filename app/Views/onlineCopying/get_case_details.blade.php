@@ -9,6 +9,7 @@ if (isset($_SESSION['is_user_address_found']) && $_SESSION['is_user_address_foun
 }
 
 $OLD_ROP = OLD_ROP_DB;
+$diary_no = 0;
 if(isset($_REQUEST['chk_status']) && $_REQUEST['chk_status']==1)
 {
     $ct = $_REQUEST['ct']; 
@@ -16,18 +17,22 @@ if(isset($_REQUEST['chk_status']) && $_REQUEST['chk_status']==1)
     $cy = $_REQUEST['cy'];
     
     $sql_dno = eCopyingGetDiaryNo($ct, $cn, $cy);
-pr(count($sql_dno));
+// pr($sql_dno);
     if(count($sql_dno) > 0){
-        $diary_no = $sql_dno['dn'].$sql_dno['dy'];
-        $_SESSION['session_d_no'] = $sql_dno['dn'];
-        $_SESSION['session_d_year'] = $sql_dno['dy'];
+        if(isset($sql_dno['diary_no'])){
+            $diary_no = $sql_dno['diary_no'].substr($sql_dno['diary_no'], -4);
+            $_SESSION['session_d_no'] = $sql_dno['diary_no'];
+            $_SESSION['session_d_year'] = substr($sql_dno['diary_no'], -4);
+        }else{
+            $diary_no = 0;
+        }
     }
     else{
         $sql_dno = eCopyingCheckDiaryNo($ct, $cn, $cy);
         if(count($sql_dno) > 0){
-            $diary_no = $sql_dno['dn'].$sql_dno['dy'];
-            $_SESSION['session_d_no'] = $sql_dno['dn'];
-            $_SESSION['session_d_year'] = $sql_dno['dy'];
+            $diary_no = $sql_dno['diary_no'].substr($sql_dno['diary_no'], -4);
+            $_SESSION['session_d_no'] = $sql_dno['diary_no'];
+            $_SESSION['session_d_year'] = substr($sql_dno['diary_no'], -4);
         }
     }
 }

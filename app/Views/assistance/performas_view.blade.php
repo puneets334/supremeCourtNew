@@ -37,7 +37,12 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div id="msg">
-                                                <?php echo getSessionData('MSG'); ?>
+                                                <?php 
+                                                $session = session();
+                                                if ($session->getFlashdata('MSG')) {
+                                                    echo $session->getFlashdata('MSG');
+                                                }
+                                                ?>
                                             </div>
                                         </div>
                                     </div>
@@ -66,7 +71,7 @@
                                                                 <div class="mb-3">
                                                                     <label for="" class="form-label">Title<span style="color: red">*</span></label>
                                                                     <input id="performa_title" name="performa_title" value="<?php if (!empty($get_data[0]['performa_title'])) echo htmlentities($get_data[0]['performa_title'], ENT_QUOTES); ?>" placeholder="News Title" maxlength="250" class="form-control cus-form-ctrl" type="text">
-                                                                    <?php echo (getSessionData('performa_title') != NULL) ? getSessionData('performa_title') : NULL; ?>
+                                                                    <?php echo ($session->getFlashdata('performa_title') != NULL) ? $session->getFlashdata('performa_title') : NULL; ?>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -76,7 +81,7 @@
                                                                     <?php if (!empty($get_data[0]['file_name'])) { ?>
                                                                         <span class="help-block"><a href="<?php echo base_url('assistance/performas/view/' . url_encryption($get_data[0]['id'])); ?>" class="btn btn-link" target="_blank">View Old File</a></span>
                                                                     <?php } ?>
-                                                                    <?php echo (getSessionData('news_doc') != NULL) ? getSessionData('news_doc') : NULL; ?>
+                                                                    <?php echo ($session->getFlashdata('news_doc') != NULL) ? $session->getFlashdata('news_doc') : NULL; ?>
                                                                 </div>
                                                             </div>
                                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
