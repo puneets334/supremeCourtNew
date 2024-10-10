@@ -650,7 +650,7 @@ td {
                                                                     <td class="uk-table-expand" uk-margin
                                                                         data-key="Date & Bench" tabindex="0">
                                                                         <div>
-                                                                            <li>
+                                                                            <li class="mycases-li">
                                                                                 <button type="button"
                                                                                     class="btn btn-primary accordion-button collapsed"
                                                                                     data-bs-toggle="collapse"
