@@ -213,6 +213,7 @@ class DefaultController extends BaseController
         $inArr['pp_a'] = $pp_a;
         $tableName = "efil.tbl_users";
         // check to update
+        
         $params['table_name'] = "efil.tbl_users";
         $params['whereFieldName'] = "emp_id";
         $params['whereFieldValue'] = (int)$empid;
