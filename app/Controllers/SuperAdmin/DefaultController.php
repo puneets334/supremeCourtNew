@@ -215,7 +215,7 @@ class DefaultController extends BaseController
         // check to update
         $params['table_name'] = "efil.tbl_users";
         $params['whereFieldName'] = "emp_id";
-        $params['whereFieldValue'] = (int)$emp_id;
+        $params['whereFieldValue'] = (int)$empid;
         $params['is_active'] = '1';
         $userData = $this->SuperAdminModel->getData($params);
         if (isset($userData) && !empty($userData)) {
