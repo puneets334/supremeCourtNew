@@ -289,7 +289,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
         color: #0D48BE;
         padding: 20px;
     }
-        .dashboard-section.tabs-section{margin-top: 30px!important;}
+        /* .dashboard-section.tabs-section{margin-top: 30px!important;} */
         .tabs-section .tab-content{padding:0!important}
 </style>
 <!-- tabs-section -start  -->
