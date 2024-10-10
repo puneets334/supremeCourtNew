@@ -8570,3 +8570,6 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
     color: #000;
     padding: 15px 15px 0;
 }
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li {position: relative;}
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse {position: absolute;box-shadow: 0px 0px 7px 0px rgb(6 6 6 / 52%);}
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li button.accordion-button {z-index: 1;}
