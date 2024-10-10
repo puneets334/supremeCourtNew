@@ -13,34 +13,34 @@
                             ?>
                             <input type="text" style="display: none" name="CSRF_TOKEN" value="{{ csrf_token() }}">
                             <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-xs-12">
+                                <div class="col-md-5 col-sm-12 col-xs-12">
+                                    <!-- <div class="row">
+                                        <div class="col-sm-12 col-xs-12"> -->
                                             <div class="form-group">
-                                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Emp.No.
+                                                <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Emp.No.
                                                     <span style="color: red">*</span></label>
-                                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <input type="text" name="empNo" id="empNo" placeholder="Emp.No." maxlength="15" class="form-control cus-form-ctrl" />
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        <!-- </div>
+                                    </div> -->
                                 </div>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-xs-12">
+                                    <!-- <div class="row">
+                                        <div class="col-sm-12 col-xs-12"> -->
                                             <div class="form-group">
-                                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">
+                                                <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">
                                                 </label>
-                                                <div class="col-md-7 col-sm-12 col-xs-12">
-                                                    <div class="input-group">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="input-group mrgT20">
                                                         <button id="empButton" class="btn quick-btn" type="button">Get Details</button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            <!-- </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -67,10 +67,10 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group mb-3">
                                                         <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Name</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                            class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Name</label>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="text"
                                                                     autocomplete="off"
@@ -86,10 +86,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Emp.No.
+                                                    <div class="form-group mb-3">
+                                                        <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Emp.No.
                                                         </label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="text"
                                                                     autocomplete="off"
@@ -105,10 +105,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group mb-3">
                                                         <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Mobile</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                            class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Mobile</label>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="text"
                                                                     autocomplete="off"
@@ -124,10 +124,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Filing
+                                                    <div class="form-group mb-3">
+                                                        <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Filing
                                                             Type</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <select id="filing_type"
                                                                     name="filing_type"
@@ -150,9 +150,9 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"></label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                    <div class="form-group mb-3">
+                                                        <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"></label>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="submit"
                                                                     autocomplete="off"
@@ -169,10 +169,10 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group mb-3">
                                                         <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Email</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                            class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Email</label>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="text"
                                                                     autocomplete="off"
@@ -188,10 +188,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group mb-3">
                                                         <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Attend</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                            class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Attend</label>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="text"
                                                                     autocomplete="off"
@@ -207,10 +207,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Party In
+                                                    <div class="form-group mb-3">
+                                                        <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">Party In
                                                             Person / Advocate</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <select id="pp_a"
                                                                     name="pp_a"
@@ -228,10 +228,10 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
+                                                    <div class="form-group mb-3">
                                                         <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">DOB</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                                            class="control-label col-md-12 col-sm-12 col-xs-12 input-sm">DOB</label>
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-group">
                                                                 <input type="text"
                                                                     autocomplete="off"
