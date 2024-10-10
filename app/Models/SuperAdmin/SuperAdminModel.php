@@ -1,14 +1,22 @@
 <?php
+
 namespace App\Models\SuperAdmin;
 
 use CodeIgniter\Model;
-class SuperAdminModel extends Model {
+
+class SuperAdminModel extends Model
+{
+
     protected $db;
-    function __construct() {
+
+    function __construct()
+    {
         parent::__construct();
-        $db      = \Config\Database::connect();
+        $db = \Config\Database::connect();
     }
-    public function insertData($tableName,$data){
+
+    public function insertData($tableName,$data)
+    {
         $output = false;
         if(isset($tableName) && !empty($tableName) && isset($data) && !empty($data)){
             $builder = $this->db->table($tableName);
@@ -17,7 +25,9 @@ class SuperAdminModel extends Model {
         }
         return $output;
     }
-    public function insertBatchData($tableName,$data){
+
+    public function insertBatchData($tableName,$data)
+    {
         $output = false;
         if(isset($tableName) && !empty($tableName) && isset($data) && !empty($data)){
             $builder = $this->db->table($tableName);
@@ -26,79 +36,56 @@ class SuperAdminModel extends Model {
         }
         return $output;
     }
-    public function getData($params = array()){
-        $output =false;
-        if(isset($params['table_name']) && !empty($params['table_name'])
-            && !empty($params['whereFieldName']) && isset($params['whereFieldName'])
-            && isset($params['whereFieldValue']) && !empty($params['whereFieldValue']))
-        {
+    
+    public function getData($params = array())
+    {
+        $output = false;
+        if(isset($params['table_name']) && !empty($params['table_name']) && !empty($params['whereFieldName']) && isset($params['whereFieldName']) && isset($params['whereFieldValue']) && !empty($params['whereFieldValue'])) {
             $builder = $this->db->table($params['table_name']);
-            if(isset($params['is_active']) && !empty($params['is_active'])){
-                $builder->where('is_active',$params['is_active']);
+            $builder->WHERE($params['whereFieldName'], $params['whereFieldValue']);
+            if(isset($params['is_active']) && !empty($params['is_active'])) {
+                $builder->where('is_active', $params['is_active']);
             }
             $query = $builder->get();
             $output = $query->getResult();
-            
-            // $this->db->SELECT('*');
-            // $this->db->FROM($params['table_name']);
-            // $this->db->WHERE($params['whereFieldName'],$params['whereFieldValue']);
-            // if(isset($params['is_active']) && !empty($params['is_active'])){
-            //     $this->db->WHERE('is_active',$params['is_active']);
-            // }
-            // $query = $this->db->get();
-            // $output = $query->result();
         }
         return $output;
     }
-    public function updateTableData($params = array()){
+
+    public function updateTableData($params = array())
+    {
         $output =false;
-        if(isset($params['table_name']) && !empty($params['table_name'])
-            && !empty($params['whereFieldName']) && isset($params['whereFieldName'])
-            && isset($params['whereFieldValue']) && !empty($params['whereFieldValue'])
-            && isset($params['updateArr']) && !empty($params['updateArr'])
-            )
-        {
+        if(isset($params['table_name']) && !empty($params['table_name']) && !empty($params['whereFieldName']) && isset($params['whereFieldName']) && isset($params['whereFieldValue']) && !empty($params['whereFieldValue']) && isset($params['updateArr']) && !empty($params['updateArr'])) {
             $this->db->WHERE($params['whereFieldName'],$params['whereFieldValue']);
-            if($this->db->UPDATE($params['table_name'], $params['updateArr']) == true){
+            if($this->db->UPDATE($params['table_name'], $params['updateArr']) == true) {
                 $output = true;
             }
         }
         return $output;
     }
-    public function getAllRecordFromTable($params = array()){
+
+    public function getAllRecordFromTable($params = array())
+    {
         $output =false;
-        if(isset($params['table_name']) && !empty($params['table_name']))
-        {
+        if(isset($params['table_name']) && !empty($params['table_name'])) {
             $builder = $this->db->table($params['table_name']);
-            if(isset($params['is_active']) && !empty($params['is_active'])){
+            if(isset($params['is_active']) && !empty($params['is_active'])) {
                 $builder->where('is_active',$params['is_active']);
             }
-            if(isset($params['id']) && !empty($params['id'])){
+            if(isset($params['id']) && !empty($params['id'])) {
                 $builder->whereIn('id',$params['id']);
             }
             $query = $builder->get();
             $output = $query->getResult();
-            
-            // $this->db->SELECT('*');
-            // $this->db->FROM($params['table_name']);
-            // if(isset($params['is_active']) && !empty($params['is_active'])){
-            //     $this->db->WHERE('is_active',$params['is_active']);
-            // }
-            // if(isset($params['id']) && !empty($params['id'])){
-            //     $this->db->WHERE_IN('id',$params['id']);
-            // }
-            // $query = $this->db->get();
-            // $output = $query->result();
         }
         return $output;
     }
-    public function getAssignedUser($params =array()){
-        $output =false;
-        if(isset($params['user_type']) && !empty($params['user_type']) && isset($params['not_in_user_id']) && !empty($params['not_in_user_id']))
-        {
-            // $builder = $this->db->table('efil.tbl_users tu');
-            $builder = $this->db->table('efil.tbl_users tu');
 
+    public function getAssignedUser($params =array())
+    {
+        $output =false;
+        if(isset($params['user_type']) && !empty($params['user_type']) && isset($params['not_in_user_id']) && !empty($params['not_in_user_id'])) {
+            $builder = $this->db->table('efil.tbl_users tu');
             $builder->select('
                 tu.first_name, 
                 tu.emp_id, 
@@ -118,14 +105,10 @@ class SuperAdminModel extends Model {
             $builder->whereNotIn('tu.id', $params['not_in_user_id']);
             $builder->groupBy('tu.first_name, tu.emp_id, tu.attend, tu.moblie_number, tu.emailid, tu.pp_a, tfaaf.user_id');
             $builder->orderBy('tfaaf.user_id', 'DESC');
-
             $query = $builder->get();
             $output = $query->getResult();
         }
         return $output;
-
     }
 
 }
-
-

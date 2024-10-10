@@ -47,10 +47,8 @@ class DefaultController extends BaseController
         $filingType = $this->SuperAdminModel->getAllRecordFromTable($params);
         $data['filingType'] = $filingType;
         return $this->render('superAdmin.userlisting', $data);
-        // $this->load->view('templates/admin_header');
-        // $this->load->view('superAdmin/userlisting', $data);
-        // $this->load->view('templates/footer');
     }
+
     public function registrationForm()
     {
         if (empty($this->session->get('login')['ref_m_usertype_id'])) {
@@ -70,10 +68,8 @@ class DefaultController extends BaseController
         $filingType = $this->SuperAdminModel->getAllRecordFromTable($params);
         $data['filingType'] = $filingType;
         return $this->render('superAdmin.registration', $data);
-        // $this->load->view('templates/admin_header');
-        // $this->load->view('superAdmin/registration', $data);
-        // $this->load->view('templates/footer');
     }
+
     public function getEmpDetails()
     {
         if (empty($this->session->get('login')['ref_m_usertype_id'])) {
@@ -94,15 +90,10 @@ class DefaultController extends BaseController
             $params['whereFieldName'] = "emp_id";
             $params['whereFieldValue'] = (int)$emp_id;
             $params['is_active'] = '1';
-            // pr($params);
             $userData = $this->SuperAdminModel->getData($params);
-            // echo '<pre>';
-            // print_r($userData);
-            // pr($userData[0]->emp_id);
             if (isset($userData[0]->emp_id)) {
                 $output = json_encode(array('status' => 'already', 'message' => 'User already exist!'));
             } else {
-
                 $response = $this->efiling_webservices->getEmpDetailsByempId($emp_id);
                 if (isset($response['user_details']) && !empty($response['user_details'])) {
                     $response['user_details'][0]['status'] = 'success';
@@ -116,6 +107,7 @@ class DefaultController extends BaseController
         echo $output;
         exit(0);
     }
+
     public function addSciUser()
     {
         if (empty($this->session->get('login')['ref_m_usertype_id'])) {
@@ -220,48 +212,64 @@ class DefaultController extends BaseController
         $inArr['icmis_usercode'] = $usercode;
         $inArr['pp_a'] = $pp_a;
         $tableName = "efil.tbl_users";
-        if (isset($validationError) && !empty($validationError) && $validationError == true) {
-            $insert_id = $this->SuperAdminModel->insertData($tableName, $inArr);
-            $fileTypeInsert = array();
-            $table_name = "efil.tbl_filing_admin_assigned_file";
-            if (isset($insert_id) && !empty($insert_id)) {
-                if (isset($filing_type) && !empty($filing_type)) {
-                    foreach ($filing_type as $k => $v) {
-                        $tmp = array();
-                        $tmp['user_id']  = $insert_id;
-                        $tmp['createdby']  = !empty($this->session->userdata['login']['id']) ? $this->session->userdata['login']['id'] : NULL;
-                        $tmp['createdat']  = date('Y-m-d H:i:s');
-                        $tmp['file_type_id']  = $v;
-                        $tmp['created_ip'] = getClientIP();
-                        $fileTypeInsert[] = $tmp;
-                    }
-                    $response = $this->SuperAdminModel->insertBatchData($table_name, $fileTypeInsert);
-                    if (isset($response) && !empty($response)) {
-                        $smsRes = '';
-                        if (isset($mobile_no) && !empty($mobile_no)) {
-                            $message = 'Your userId: ' . $userid . ' and password: ' . $password;
-                            //$smsRes = send_mobile_sms($mobile_no,$message);
+        // check to update
+        $params['table_name'] = "efil.tbl_users";
+        $params['whereFieldName'] = "emp_id";
+        $params['whereFieldValue'] = (int)$emp_id;
+        $params['is_active'] = '1';
+        $userData = $this->SuperAdminModel->getData($params);
+        if (isset($userData) && !empty($userData)) {
+            $inArr['table_name'] = "efil.tbl_users";
+            $response = $this->SuperAdminModel->updateTableData($inArr);
+            if($response) {
+                $messageArr['status'] = "success";
+                $messageArr['message'] = "User has been updated successfully!";
+            }
+        } else {
+            if (isset($validationError) && !empty($validationError) && $validationError == true) {
+                $insert_id = $this->SuperAdminModel->insertData($tableName, $inArr);
+                $fileTypeInsert = array();
+                $table_name = "efil.tbl_filing_admin_assigned_file";
+                if (isset($insert_id) && !empty($insert_id)) {
+                    if (isset($filing_type) && !empty($filing_type)) {
+                        foreach ($filing_type as $k => $v) {
+                            $tmp = array();
+                            $tmp['user_id']  = $insert_id;
+                            $tmp['createdby']  = !empty($this->session->userdata['login']['id']) ? $this->session->userdata['login']['id'] : NULL;
+                            $tmp['createdat']  = date('Y-m-d H:i:s');
+                            $tmp['file_type_id']  = $v;
+                            $tmp['created_ip'] = getClientIP();
+                            $fileTypeInsert[] = $tmp;
                         }
-                        if (isset($email) && !empty($email)) {
-                            $message = 'Your userId: ' . $userid . ' and password: ' . $password;
-                            $to_email = $email;
-                            $subject = "User Registration.";
-                            send_mail_msg($to_email, $subject, $message, $to_user_name = "");
+                        $response = $this->SuperAdminModel->insertBatchData($table_name, $fileTypeInsert);
+                        if (isset($response) && !empty($response)) {
+                            $smsRes = '';
+                            if (isset($mobile_no) && !empty($mobile_no)) {
+                                $message = 'Your userId: ' . $userid . ' and password: ' . $password;
+                                //$smsRes = send_mobile_sms($mobile_no,$message);
+                            }
+                            if (isset($email) && !empty($email)) {
+                                $message = 'Your userId: ' . $userid . ' and password: ' . $password;
+                                $to_email = $email;
+                                $subject = "User Registration.";
+                                send_mail_msg($to_email, $subject, $message, $to_user_name = "");
+                            }
+                            $messageArr['status'] = "success";
+                            $messageArr['message'] = "User has been added successfully!";
+                        } else {
+                            $messageArr['status'] = "error";
+                            $messageArr['message'] = "Something went wrong,Please try again later!";
                         }
-                        $messageArr['status'] = "success";
-                        $messageArr['message'] = "User has been added successfully!";
-                    } else {
-                        $messageArr['status'] = "error";
-                        $messageArr['message'] = "Something went wrong,Please try again later!";
                     }
+                } else {
+                    $messageArr['status'] = "error";
+                    $messageArr['message'] = "Something went wrong,Please try again later!";
                 }
-            } else {
-                $messageArr['status'] = "error";
-                $messageArr['message'] = "Something went wrong,Please try again later!";
             }
         }
         echo json_encode($messageArr);
     }
+
     public function userListing()
     {
         if (empty($this->session->get('login')['ref_m_usertype_id'])) {
@@ -279,7 +287,6 @@ class DefaultController extends BaseController
         $params['loginId'] = !empty($this->session->userdata['login']['id']) ? $this->session->userdata['login']['id'] : NULL;
         $params['not_in_user_id'] = unserialize(USER_NOT_IN_LIST); // array(2660,2659,2658,2657,2656,2647);
         $response = $this->SuperAdminModel->getAssignedUser($params);
-        //echo '<pre>';print_R($response); exit;
         $data['users'] = $response;
         $params = array();
         $params['table_name'] = "efil.m_tbl_efiling_type";
@@ -291,4 +298,5 @@ class DefaultController extends BaseController
         $this->load->view('superAdmin/userlisting', $data);
         $this->load->view('templates/footer');
     }
+
 }
