@@ -33,7 +33,7 @@
 .black-theme .user-action-sec:before {border-bottom-color: #333333;}
 .black-theme .wrapper {background: #222222;}
 .black-theme .mngmntHeader .userDetail .userName{color: #ff0;}
-.black-theme span {color: #ffffff;}
+.black-theme span {color: #ffffff !important;}
 /* Header CSS End  */
 /* Menu CSS Start  */
 .black-theme .dashboardLeftNav li a.active:before, .black-theme .dashboardLeftNav li a.btn-link:hover:before {filter: invert(1);}
@@ -151,3 +151,6 @@
 .black-theme .faq-sec .accordion button.accordion-button.collapsed:after { filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) !important;}
 .black-theme .accordion-body li , .black-theme .accordion-body{color: #fff;}
 /* FaQ Page CSS End  */
+.black-theme .select2-container--open .select2-dropdown--below{background:#000;}
+.black-theme  .select2-container--default .select2-results__option[aria-selected=true], .black-theme .select2-container--default .select2-results__option--highlighted[aria-selected] , .black-theme .datepicker table tr td.day.focused, .black-theme .datepicker table tr td.day:hover{background:#333 !important;}
+.black-theme .datepicker-dropdown{background:#555;}
