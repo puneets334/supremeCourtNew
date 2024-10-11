@@ -221,6 +221,8 @@ $security = service('security');
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?=base_url('CaptchaResource/js/Captcha.js');?>"></script>
     <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
+<script type="text/javascript" src="<?= base_url().'assets'?>/js/case_status/bootstrap.min.js"></script>
+
     <script type="text/javascript">
         $(function(){
         // grecaptcha.ready(function () {
