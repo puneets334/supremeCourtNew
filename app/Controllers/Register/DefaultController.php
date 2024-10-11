@@ -123,33 +123,17 @@ class DefaultController extends BaseController {
     } */
 
     function adv_get_otp() {
-        
+        pr($_POST);
         $mobile_exist = array();
         $email_exist = array();
         $_SESSION['register_type_select'] = $_POST['adv_type_select'];
         $_SESSION['session_not_register_type_user'] = $_POST['not_register_type_user'];
-        // $sess_reg_data = array(
-        //     'register_type_select' => integerDecreption($_POST['adv_type_select']),
-        //     'session_not_register_type_user' => stringDecreption($_POST['not_register_type_user'])
-        // );
-        // setSessionData('reg_details', $sess_reg_data);
         if (empty($_POST['userCaptcha'])) {
             $this->session->setFlashdata('msg', 'Captcha is required!');
             return redirect()->to(base_url('register'));
             exit(0);
         }
-        // $this->form_validation->set_rules('userCaptcha', 'Captcha', 'required|trim|is_required');
-        // $this->form_validation->set_rules('adv_mobile', 'Mobile', 'required|numeric|trim|is_required|min_length[10]|max_length[10]');
-        // $this->form_validation->set_rules('adv_email', 'Email', 'required|valid_email|trim|is_required');
-        // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
-        // if ($this->form_validation->run() === FALSE) {
-        //     /*$captcha_value = captcha_generate();
-        //     $data['captcha']['image'] = $captcha_value['image'];
-        //     $data['captcha']['word'] = $captcha_value['word'];*/
-        //     $this->slice->view('responsive_variant.authentication.register_view');
-        // } else {
         $validation =  \Config\Services::validation();
-        //---Commented line are used for disable captcha----------------->
         if ($_POST['register_type'] == 'Party In Person') {
             $rules=[
                 "adv_mobile" => [
@@ -199,8 +183,12 @@ class DefaultController extends BaseController {
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
                 $mobile_already_exist = $this->Register_model->check_already_reg_mobile($_POST['adv_mobile']);
                 $email_already_exist = $this->Register_model->check_already_reg_email($_POST['adv_email']);
-                //$mobile_already_bar = $this->Register_model->check_already_reg_mobile_bar($_POST['adv_mobile']);
-                //$email_already_bar = $this->Register_model->check_already_reg_email_bar($_POST['adv_email']);
+                $uploaded_file_size=$_FILES["ekyc_zip_file"]['size'];
+                if($uploaded_file_size > OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE) // allow  upto 50 kb size
+                {
+                    $this->session->setFlashdata('msg', 'File size are beyond allowable limit.');
+                    return redirect()->to(base_url('register'));
+                } 
                 if ($_POST['register_type'] == 'Party In Person') {
 
                     if (!empty($mobile_already_exist)) {
@@ -325,12 +313,6 @@ class DefaultController extends BaseController {
                     $name_array = array('first_name'=> $first_name, 'last_name'=> $last_name);
                 $mobile_otp_is = $this->generateNumericOTP();
                 $email_otp_is = $this->generateNumericOTP();
-                /* $_SESSION['adv_details'] = array(
-                    'mobile_no' => $_POST['adv_mobile'],
-                    'mobile_otp' => $mobile_otp_is,
-                    'email_id' => $_POST['adv_email'],
-                    'email_otp' => $email_otp_is,
-                    'register_type' => $_POST['register_type']);*/
                 /* Code Added on 13-03-2023 by Amit Tripathi for OTP expiration */
                 date_default_timezone_set('Asia/Kolkata');
                 $startTime=date("H:i");
@@ -345,12 +327,6 @@ class DefaultController extends BaseController {
                     'end_time' => $endTime), $name_array);
                 setSessionData('adv_details', $sess_data);
                 /* END */
-                /*$_SESSION['adv_details'] =  array_merge(array(
-                    'mobile_no'=>$_POST['adv_mobile'],
-                    'mobile_otp'=>$mobile_otp_is,
-                    'email_id'=>$_POST['adv_email'],
-                    'email_otp'=>$email_otp_is,
-                    'register_type'=>$_POST['register_type'],), $name_array);*/
                 if(!empty($_POST['adv_mobile'])) {
                     $typeId="38";
                     $mobileNo=trim($_POST['adv_mobile']);
@@ -363,7 +339,6 @@ class DefaultController extends BaseController {
                     $message="OTP for Registration SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
                     send_mail_msg($to_email, $subject, $message);
                     // relay_mail_api($to_email, $subject, $message);
-                    // var_dump($test);exit;
                 }
                 return redirect()->to(base_url('register/AdvOtp'));
             } else {

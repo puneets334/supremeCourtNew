@@ -176,15 +176,15 @@ $session = service('session');
                         <?php
                         //pr(stringDecreption($_SESSION['session_not_register_type_user']));
                         $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
-                        echo form_open("register/DefaultController/adv_get_otp", $attributes);
+                        echo form_open(base_url("register/DefaultController/adv_get_otp"), $attributes);
                         ?>
-                        <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="text" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo idEncryptionCustom($adv_type_select); ?>">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                     <label for="" class="form-label"></label>
-                                    <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo idEncryptionCustom($adv_type_select); ?>">
+                                    <!-- <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php //echo idEncryptionCustom($adv_type_select); ?>"> -->
                                     <!-- <a class=""> -->
                                     <label><input class="form-check-input" type="radio" name="not_register_type_user" id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo stringEncreption('not_register_ekyc'); ?>" checked> Offline</label>
                                     <!-- </a> -->
