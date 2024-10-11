@@ -212,7 +212,7 @@ h6.htsmall {
 .footer-top-sec .contact-txt p {color:#000000;font-family: 'noto_sanssemibold';text-align: right;}
 /* Footer Section css End */
 /* Register Page Start  */
-.register-area .login-banner-inner .banimg-sec img {object-fit: contain;object-position: bottom;height: 100%;}
+.register-area .login-banner-inner .banimg-sec img {object-fit: contain;object-position: bottom;/* height: 100%;*/}
 .register-area .login-banner-inner .banimg-sec {background: #f6faff;border-radius: 21px 0px 0px 21px;height: 100%;}
 .image-note{font-size: 12px;}
 .register-area .login-banner-inner {
@@ -414,6 +414,7 @@ ul.innpg-ul {
     .main-inner-area > .container > .row > .col-12 {padding: 0;}
     .main-inner-area  .main-inner-bg {padding: 15px;}
     .main-inner-area  .main-inner-bg .accordion-body {padding: 12px;}
+    .regester-txts .regester-links {flex-direction: column;text-align: center;gap: 10px;margin: 0;}
 }
 
 @media screen and (max-width: 390px) and (min-width: 300px){

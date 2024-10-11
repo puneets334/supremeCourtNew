@@ -19,11 +19,11 @@
                                     </label> -->
                 </center>
                 <hr>
-                <div class="form-group ">  
-                    <div class="col-md-6 col-sm-6 col-xs-12 " > 
+                <div class="form-group mb-3">  
+                    <div class="col-md-6 col-sm-12 col-xs-12 " > 
                         <label style="float: right;"> Upload ID Proof :</label>
                     </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12 " > 
+                    <div class="col-md-6 col-sm-12 col-xs-12 " > 
                         <input type="file" required id="advocate_image" name="advocate_image">  
                     </div>
                 </div>

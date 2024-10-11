@@ -66,7 +66,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
                                         <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
                                                 <input class="form-control cus-form-ctrl"  type="file" required id="advocate_image" name="advocate_image">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
