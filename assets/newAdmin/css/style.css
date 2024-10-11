@@ -8570,3 +8570,18 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
     color: #000;
     padding: 15px 15px 0;
 }
+
+/* New Pagination Area Start  */
+.pagination-btns {display: flex;}
+.pagination-btns .paging{display: flex;align-items: center;}
+.pagination-btns .paging.paging-input input#page_input {height: 31px;margin: 0 15px;width: fit-content !important;padding: 5px;}   
+.pagination-btns .paging .btn {background: #fff !important;font-size: 14px;padding: 8px 11px !important;color: #0D4382 !important;border: 1px solid #e1e4e8 !important;margin: 0;border-radius: 0;}
+.pagination-btns .paging.paging-prev .btn:first-child {border-radius: 100px 0 0 100px;}
+.pagination-btns .paging.paging-next .btn:last-child {border-radius:0 100px 100px 0;}
+.pagination-btns .paging .btn:hover, .pagination-btns .paging .btn:focus {    background: #0d48be !important;color: #fff !important;}
+.pagination-area-new .pagination-new-inner {display: flex;justify-content: space-between;align-items: center;margin-top: 15px;}
+.pagination-area-new .showing-details-limit .page-label {padding: 0;}
+.pagination-area-new .showing-details-limit {display: flex;align-items: center;gap: 5px;}
+.no-paginations div#datatable-responsive_info {display: none;}
+.no-paginations div#datatable-responsive_paginate {display: none;}
+/* New Pagination Area End  */

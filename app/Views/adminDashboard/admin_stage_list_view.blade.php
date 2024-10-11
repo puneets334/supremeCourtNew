@@ -1,5 +1,17 @@
 @extends('layout.app')
 @section('content')
+<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+
+<style>
+    th{font-size: 13px;color: #000;} 
+    td{font-size: 13px;color: #000;}
+    
+    
+    .no-paginations div#datatable-responsive_length {
+    display: none;
+}
+</style>   <!-- /page content -->
+
 <div class="container-fluid">
  <div class="row" >
 	<div class="col-lg-12">
@@ -25,8 +37,10 @@
 				</span> -->
 			 </h3>
 			</div>
+           
+
             <div class="x_content">  
-                <div class="table-wrapper-scroll-y my-custom-scrollbar ">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar no-paginations">
                     <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%">
                         <thead>
                             <tr class="success input-sm" role="row" >
@@ -39,6 +53,8 @@
                         <tbody>
                             <?php
                             $i = 1;
+
+                            // pr($result);
                             if(isset($result) && !empty($result)) {
                             foreach ($result as $re) {
                                 $fil_no = $reg_no = $case_details = $cnr_number = $cino = '';
@@ -230,8 +246,8 @@
 
                                     //-----------------For Compliance------------------------------//
                                     if ($stages == Initial_Defected_Stage) {
-                                        ?>
-
+                                       ?>
+ 
                                         <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
                                         <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
                                         <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
@@ -490,7 +506,7 @@
                                     ?>
                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                     </td>
-                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo $case_details; ?></td>
                                     <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?></td>
                                     <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo $re->efiling_type; ?></td>
                                 <?php } ?>
@@ -508,6 +524,50 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="pagination-area-new">
+                        <form method="post" action="<?= base_url('adminDashboard/stageList/' . url_encryption($stages)); ?>">
+                            <div class="pagination-new-inner">
+                            <div class="showing-details-limit" >
+                                <label for="limit" class="pull-left page-label"> Limit:</label>
+                                <div class="pull-left">
+                                    <select id="limit" name="limit" class="form-control" onchange="$('#page_input').val(1);this.form.submit(); updateNames(this)">
+                                        <option value="10" <?php if ($limit == '10') { ?> selected="selected"<?php } ?> > 10</option>
+                                        <option value="25" <?php if ($limit == '25') { ?> selected="selected"<?php } ?> > 25</option>
+                                        <option value="50" <?php if ($limit == '50') { ?> selected="selected"<?php } ?>  > 50</option>
+                                        <option value="100" <?php if ($limit == '100') { ?> selected="selected"<?php } ?>  > 100</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="pagination-btns">
+                                <input type="hidden" name="page_no_use" id="page" value="<?php echo $page; ?>" class="form-control">
+                                <div class="paging paging-prev">
+                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(1); this.form.submit();">
+                                        <!-- <i class="fa fa-angle-double-left" aria-hidden="true"></i> -->First
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo ($page == 1) ? 1 : ($page - 1); ?>); this.form.submit();">
+                                        <!-- <i class="fa fa-angle-left" aria-hidden="true"></i> -->Prev
+                                    </button>
+                                </div>
+
+                                <div class="paging paging-input">
+                                    &nbsp;Page
+                                    <input type="text" name="page" id="page_input" value="<?php echo $page; ?>" class="form-control" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+                                    of <?php echo $pages; ?> &nbsp;
+                                </div>
+
+                                <div class="paging paging-next">
+                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo ($page == $pages) ? $pages : ($page + 1); ?>); this.form.submit();">
+                                        <!-- <i class="fa fa-angle-right" aria-hidden="true"></i> -->Next
+                                    </button>
+                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo $pages; ?>); this.form.submit();">
+                                        <!-- <i class="fa fa-angle-double-right" aria-hidden="true"></i> -->Last
+                                    </button>
+                                </div>
+                            </div> 
+                            </div>
+                        </form>
+                </div>
             </div>
         </div>
     </div>
@@ -516,44 +576,45 @@
 	</div>
 </div>
 
+
+<div class="modal fade" id="bsModal3" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-sm">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <button type="button" class="close close_cis" data-dismiss="modal" aria-hidden="true">&times;</button>
+                   <h4 class="modal-title" id="mySmallModalLabel"></h4>
+               </div>
+               <div class="modal-body formresponse">
+
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-default close_cis" >OK</button>
+
+               </div>
+           </div>
+       </div>
+   </div>
+
 @endsection
 @push('script')
+<script>
+    $(document).ready(function() {
+    window.onload = function() {
+        var limitValue = '<?php echo $limit; ?>'; // PHP variable from server-side
+        $('select[name="datatable-responsive_length"]').val(limitValue).change(); 
+    };
+});
+</script>
 
-
- <div class="modal fade" id="bsModal3" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close close_cis" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="mySmallModalLabel"></h4>
-                </div>
-                <div class="modal-body formresponse">
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default close_cis" >OK</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-
-<style>
-    th{font-size: 13px;color: #000;} 
-    td{font-size: 13px;color: #000;} 
-</style>   <!-- /page content -->
-
+<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 <!-- footer content -->
 <script>
     $(document).ready(function() {
-        $('#datatable-responsive').DataTable();
+        $('#datatable-responsive').DataTable({
+            // 'sorting': true,
+            // 'paging': true,
+        });
     });
- 
-         
-
-
     function TransferToSection(frm_num) {
 
         y = confirm("Are you sure want to transfer ?");

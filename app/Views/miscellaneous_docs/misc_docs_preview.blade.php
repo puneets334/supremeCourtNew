@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html>
-
+@extends('layout.app')
+@section('content')
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -27,6 +28,7 @@ if (!isset($efiling_search_header)) { ?>
 
     @include('miscellaneous_docs.misc_docs_breadcrumb')
 <?php }
+
 
 $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
 if (isset(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
@@ -234,6 +236,7 @@ $collapse_class = '';
 </div>
 </div>
 </div>
+@endsection
 
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
