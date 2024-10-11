@@ -753,8 +753,7 @@ td {
                                                 @endif
                                                 <div class="dash-card">
                                                     <div class="title-sec">
-                                                        <h5 class="unerline-title">My cases <small
-                                                                class="uk-text-muted">soon to be listed</small></h5>
+                                                        <h5 class="unerline-title">My cases <small class="uk-text-muted">soon to be listed</small></h5>
                                                     </div>
                                                     <div class="table-sec">
                                                         <div class="table-responsive">
@@ -869,62 +868,59 @@ td {
                                         <!-- end sr advocate soon -->
                                         <!-- start sr advocate data -->
                                         @if(!empty($sr_advocate_data))
-                                        <div class="uk-width-expand uk-margin-medium-top uk-overflow-hidden">
-                                            <h4 class="uk-heading-bullet uk-text-bold">My Cases <small
-                                                    class="uk-text-muted">assigned by AOR</small></h4>
-                                            <table class="table table-striped table-bordered dt-responsive"
-                                                cellspacing="0" width="100%" id="efiled-cases-table">
-                                                <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Case Number</th>
-                                                        <th>Cause Title</th>
-                                                        <th style="width: 90px;">Status</th>
-                                                        <th>Engaged By/Date</th>
-                                                        <th>Paper Book</th>
-                                                        <!-- <th>...</th>-->
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php
-                                                    $n=1;
-                                                    if(isset($sr_advocate_data['details']) && !empty($sr_advocate_data['details'])){
-                                                        foreach ($sr_advocate_data['details'] as $k=>$v){
-                                                            $diary_no = !empty($v->diary_no) ? $v->diary_no : '';
-                                                            $reg_no_display = !empty($v->reg_no_display) ? $v->reg_no_display : '';
-                                                            $cause_title = (!empty($v->pet_name) && !empty($v->res_name))  ? ($v->pet_name.' Vs '.$v->res_name) : '';
-                                                            $c_status = (!empty($v->c_status) && $v->c_status == 'P') ? 'Pending' : '';
-                                                            $createdAt = !empty($v->createdAt) ? date('d/m/Y H:i:s',strtotime($v->createdAt)) : '';
-                                                            $assignedby = !empty($v->assignedby) ? $v->assignedby : '';
-                                                            echo '<tr>
-                                                                <td>'.$n.'</td>
-                                                                <td>'.$diary_no.'<br/>'.$reg_no_display.'</td>
-                                                                <td>'.$cause_title.'</td>
-                                                                <td>'.$c_status.'</td>
-                                                                <td>'.$assignedby.'<br/>'.$createdAt.'</td>
-                                                                <td>
-                                                                    <a href="#" onclick="javascript:loadPaperBookViewer(this);" data-paper-book-viewer-url="'.base_url("case/paper_book_viewer").'/'.$diary_no.'" target="_blank" data-diary_no="'.$diary_no.'" data-diary_year="">View</a>
-                                                                </td>
-                                                            </tr>';
-                                                            $n++;
-                                                        }
-                                                    }
-                                                    ?>
-                                                    <!-- <a href="javaScript:void(0)" onClick="open_paper_book()" class="" data-diary_no="'.$diary_no.'" data-diary_year="">View</a>-->
-                                                </tbody>
-                                                <tfoot>
-                                                    <tr class="uk-text-bold">
-                                                        <th class="uk-text-bold d-print-none">#</th>
-                                                        <th class="uk-text-bold">Case Number</th>
-                                                        <th class="uk-text-bold">Cause Title</th>
-                                                        <th class="uk-text-bold" style="width: 90px;">Status</th>
-                                                        <th class="uk-text-bold">Engaged By/Date</th>
-                                                        <th class="uk-text-bold">Paper Book</th>
-                                                        <!-- <th class="uk-text-bold d-print-none">...</th>-->
-                                                    </tr>
-                                                </tfoot>
-                                                <!--END-->
-                                            </table>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="dash-card">
+                                                <div class="title-sec">
+                                                    <h5 class="unerline-title">My Cases <small class="uk-text-muted">assigned by AOR</small></h5>
+                                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                </div>
+                                                <div class="table-sec">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped custom-table" id="efiled-cases-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Case Number</th>
+                                                                    <th>Cause Title</th>
+                                                                    <th style="width: 90px;">Status</th>
+                                                                    <th>Engaged By/Date</th>
+                                                                    <th>Paper Book</th>
+                                                                    <!-- <th>...</th>-->
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php
+                                                                $n=1;
+                                                                if(isset($sr_advocate_data['details']) && !empty($sr_advocate_data['details']))
+                                                                {
+                                                                    foreach ($sr_advocate_data['details'] as $k=>$v)
+                                                                    {
+                                                                        $diary_no = !empty($v->diary_no) ? $v->diary_no : '';
+                                                                        $reg_no_display = !empty($v->reg_no_display) ? $v->reg_no_display : '';
+                                                                        $cause_title = (!empty($v->pet_name) && !empty($v->res_name))  ? ($v->pet_name.' Vs '.$v->res_name) : '';
+                                                                        $c_status = (!empty($v->c_status) && $v->c_status == 'P') ? 'Pending' : '';
+                                                                        $createdAt = !empty($v->createdAt) ? date('d/m/Y H:i:s',strtotime($v->createdAt)) : '';
+                                                                        $assignedby = !empty($v->assignedby) ? $v->assignedby : '';
+                                                                        echo '<tr>
+                                                                            <td data-key="#">'.$n.'</td>
+                                                                            <td data-key="Case Number">'.$diary_no.'<br/>'.$reg_no_display.'</td>
+                                                                            <td data-key="Cause Title">'.$cause_title.'</td>
+                                                                            <td data-key="Status">'.$c_status.'</td>
+                                                                            <td data-key="Engaged By/Date">'.$assignedby.'<br/>'.$createdAt.'</td>
+                                                                            <td data-key="Paper Book">
+                                                                                <a href="#" class="btn btn-primary" onclick="javascript:loadPaperBookViewer(this);" target="blank" data-paper-book-viewer-url="'.base_url("case/paper_book_viewer").'/'.$diary_no.'" data-diary_no="'.$diary_no.'" data-diary_year="">View</a>
+                                                                            </td>
+                                                                        </tr>';
+                                                                        $n++;
+                                                                    }
+                                                                }
+                                                                ?>
+                                                                <!-- <a href="javaScript:void(0)" onClick="open_paper_book()" class="" data-diary_no="'.$diary_no.'" data-diary_year="">View</a>-->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         @endif
                                         <!-- end sr advocate data -->
@@ -1619,6 +1615,12 @@ td {
             </div>
         </div>
     </div>
+    <div id="paper-book-viewer-modal" class="uk-modal-full" uk-modal="bg-close:false;esc-close:false;">
+        <div class="uk-modal-dialog" uk-overflow-auto>
+            <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+            <iframe src="" height="100%" width="100%" scrolling frameborder="no" uk-height-viewport></iframe>
+        </div>
+    </div>
     @endsection
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
@@ -1629,8 +1631,14 @@ td {
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
     <script>
+    function loadPaperBookViewer(obj){
+        // alert(obj);
+        $('#paper-book-viewer-modal iframe').attr('src', $(obj).data('paper-book-viewer-url'));
+        UIkit.modal('#paper-book-viewer-modal').show();
+    }
     $(document).ready(function() {
         $('#datatable-responsive-srAdv').DataTable();
+        $('#efiled-cases-table').DataTable();
     });
     $(document).ready(function() {
         $('#datatable-responsive-sc_cases').DataTable({
