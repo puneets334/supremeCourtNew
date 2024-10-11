@@ -123,33 +123,17 @@ class DefaultController extends BaseController {
     } */
 
     function adv_get_otp() {
-        
+        pr($_POST);
         $mobile_exist = array();
         $email_exist = array();
         $_SESSION['register_type_select'] = $_POST['adv_type_select'];
         $_SESSION['session_not_register_type_user'] = $_POST['not_register_type_user'];
-        // $sess_reg_data = array(
-        //     'register_type_select' => integerDecreption($_POST['adv_type_select']),
-        //     'session_not_register_type_user' => stringDecreption($_POST['not_register_type_user'])
-        // );
-        // setSessionData('reg_details', $sess_reg_data);
         if (empty($_POST['userCaptcha'])) {
             $this->session->setFlashdata('msg', 'Captcha is required!');
             return redirect()->to(base_url('register'));
             exit(0);
         }
-        // $this->form_validation->set_rules('userCaptcha', 'Captcha', 'required|trim|is_required');
-        // $this->form_validation->set_rules('adv_mobile', 'Mobile', 'required|numeric|trim|is_required|min_length[10]|max_length[10]');
-        // $this->form_validation->set_rules('adv_email', 'Email', 'required|valid_email|trim|is_required');
-        // $this->form_validation->set_error_delimiters('<div class="uk-alert-danger">', '</div>');
-        // if ($this->form_validation->run() === FALSE) {
-        //     /*$captcha_value = captcha_generate();
-        //     $data['captcha']['image'] = $captcha_value['image'];
-        //     $data['captcha']['word'] = $captcha_value['word'];*/
-        //     $this->slice->view('responsive_variant.authentication.register_view');
-        // } else {
         $validation =  \Config\Services::validation();
-        //---Commented line are used for disable captcha----------------->
         if ($_POST['register_type'] == 'Party In Person') {
             $rules=[
                 "adv_mobile" => [
@@ -199,8 +183,12 @@ class DefaultController extends BaseController {
             if (isset($_POST['adv_mobile']) && !empty($_POST['adv_mobile']) || isset($_POST['adv_email']) && !empty($_POST['adv_email'])) {
                 $mobile_already_exist = $this->Register_model->check_already_reg_mobile($_POST['adv_mobile']);
                 $email_already_exist = $this->Register_model->check_already_reg_email($_POST['adv_email']);
-                //$mobile_already_bar = $this->Register_model->check_already_reg_mobile_bar($_POST['adv_mobile']);
-                //$email_already_bar = $this->Register_model->check_already_reg_email_bar($_POST['adv_email']);
+                $uploaded_file_size=$_FILES["ekyc_zip_file"]['size'];
+                if($uploaded_file_size > OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE) // allow  upto 50 kb size
+                {
+                    $this->session->setFlashdata('msg', 'File size are beyond allowable limit.');
+                    return redirect()->to(base_url('register'));
+                } 
                 if ($_POST['register_type'] == 'Party In Person') {
 
                     if (!empty($mobile_already_exist)) {
@@ -234,106 +222,7 @@ class DefaultController extends BaseController {
                     {
                         $this->session->setFlashdata('msg', 'File size are beyond allowable limit.');
                         return redirect()->to(base_url('register'));
-                    } else {
-                        //$is_valid_files=$this->inspect_files_within_zip($_FILES["ekyc_zip_file"]['name']);
-                        $is_valid_files=true;
-                    }
-                    //$DIR = 'assets/ekyc/dir';
-                    //$config['upload_path'] = 'assets/ekyc/';
-                    // $DIR = 'uploaded_docs/ekyc/dir';
-                    // $config['upload_path'] = 'uploaded_docs/ekyc/';
-                    // $config['allowed_types'] = array('zip','application/x-zip','application/x-zip-compressed','application/zip');
-                    // $config['max_size'] = OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE; // max_size in kb (50 KB)
-                    // $config['file_name'] = $_FILES["ekyc_zip_file"]['name'];
-                    // $config['overwrite'] = TRUE;
-                    // // Load upload library
-                    // $imageExtention = pathinfo($_FILES["ekyc_zip_file"]["name"], PATHINFO_EXTENSION);
-                    // // $this->load->library('upload', $config);
-                    // $this->upload = Services::upload($config);
-                    // //only ZIP file allowed
-                    // if($imageExtention=='zip'){
-                    //     // File upload
-                    //     // if ($this->upload->do_upload('ekyc_zip_file')) {
-                    //     if($this->upload->doUpload('ekyc_zip_file')) {
-                    //         $file_path=$config['upload_path'].$_FILES["ekyc_zip_file"]['name'];
-                    //         $is_valid_files = $this->inspect_files_within_zip($file_path);
-                    //         if (!empty($is_valid_files)) {
-                    //             // Get data about the file
-                    //             $uploadData = $this->upload->data();
-                    //             $filename = $uploadData['file_name'];
-                    //             ## Extract the zip file ---- start
-                    //             $_SESSION['filename'] = str_replace('.zip', '', $filename);
-                    //             $zip = new ZipArchive;
-                    //             //$res = $zip->open("assets/ekyc/" . $filename);
-                    //             $res = $zip->open("uploaded_docs/ekyc/" . $filename);
-                    //             $_SESSION['uploaded_file_name'] = $filename;
-                    //             if ($res === TRUE) {
-                    //                 $DIR2 = $DIR . '/' . $_SESSION['filename'] . '.xml';
-                    //                 if ($zip->setPassword($_POST['share_code'])) {
-                    //                     if (!$zip->extractTo($DIR)) {
-                    //                         $this->session->setFlashdata('msg', 'Extraction failed (wrong password?)');
-                    //                         return redirect()->to(base_url('register'));
-                    //                     }
-                    //                 }
-                    //                 $zip->close();
-                    //                 $xml = simplexml_load_file($DIR2);
-                    //                 $json = json_encode($xml);
-                    //                 $data_config = json_decode($json, true);
-                    //                 $_SESSION['kyc_configData'] = $data_config;
-                    //                 $data['configData'] = $_SESSION['kyc_configData'];
-                    //                 $data['mobile_addhar'] = $_POST['mobile'];
-                    //                 $data['email_addhar'] = $_POST['emailid'];
-                    //                 // $this->load->library('encryption');
-                    //                 //Check if mobile & email matched with aadhar data dated 29-12-2020
-                    //                 $reference_id = $data_config['@attributes']['referenceId'];
-                    //                 $get_adhar_last_digit = substr(substr($reference_id, 0 , 4),-1);
-                    //                 if($get_adhar_last_digit == 0){
-                    //                     $get_adhar_last_digit = 1;
-                    //                 }
-                    //                 $share_code = $_POST['share_code'];
-                    //                 $mobile_sha256_hash = $_POST['adv_mobile'].$share_code;
-                    //                 $email_sha256_hash = $_POST['adv_email'].$share_code;
-                    //                 for($i=1;$i<=$get_adhar_last_digit;$i++){
-                    //                     $mobile_sha256_hash = hash('sha256', $mobile_sha256_hash);
-                    //                     $email_sha256_hash = hash('sha256', $email_sha256_hash);
-                    //                 }
-                    //                 $Poi = $data_config['UidData']['Poi']['@attributes'];
-                    //                 //if($mobile_sha256_hash != $Poi['m'] || $email_sha256_hash != $Poi['e']){
-                    //                 if($mobile_sha256_hash != $Poi['m']){
-                    //                     $this->session->setFlashdata('msg', 'Mobile should be same as registered with Aadhar! ');
-                    //                     return redirect()->to(base_url('register'));
-                    //                 } else {
-                    //                     $responseString = file_get_contents($DIR2);
-                    //                     $signature_match = $this->offlineKycResponse($responseString);
-                    //                     if($signature_match != 'Signature validated') {
-                    //                         $this->session->setFlashdata('msg', 'Aadhar file tampered, please try with fresh offline aadhar! ');
-                    //                         return redirect()->to(base_url('register'));
-                    //                     }
-                    //                 }
-                    //                 $aadhar_no = $data['configData']['@attributes']['referenceId'];
-                    //                 $aadhar_last_disit_no = substr($aadhar_no, -18, -17);
-                    //                 // $this->load->library('encryption');
-                    //                 $share_code = '8976';
-                    //                 $mob = "9582551896";
-                    //                 $l_digit = "3";
-                    //                 $this->session->setFlashdata('msg', 'Upload & Extract successfully.');
-                    //             } else {
-                    //                 $this->session->setFlashdata('msg', 'Failed to extract.');
-                    //                 return redirect()->to(base_url('register'));
-                    //             }
-                    //         } else {
-                    //             unlink($file_path);
-                    //             $this->session->setFlashdata('msg', 'Pls. upload the original offline Aadhaar eKYC Zip file.');
-                    //             return redirect()->to(base_url('register'));
-                    //         }
-                    //     } else {
-                    //         $this->session->setFlashdata('msg', 'Failed to upload (only zip file upload allowed). Some problem');
-                    //         return redirect()->to(base_url('register'));
-                    //     }
-                    // } else {
-                    //     $this->session->setFlashdata('msg', 'Only zip file upload allowed.');
-                    //     return redirect()->to(base_url('register'));
-                    // }
+                    } 
                     // Load the request object
                     $request = \Config\Services::request();
                     // Get the uploaded file
@@ -424,12 +313,6 @@ class DefaultController extends BaseController {
                     $name_array = array('first_name'=> $first_name, 'last_name'=> $last_name);
                 $mobile_otp_is = $this->generateNumericOTP();
                 $email_otp_is = $this->generateNumericOTP();
-                /* $_SESSION['adv_details'] = array(
-                    'mobile_no' => $_POST['adv_mobile'],
-                    'mobile_otp' => $mobile_otp_is,
-                    'email_id' => $_POST['adv_email'],
-                    'email_otp' => $email_otp_is,
-                    'register_type' => $_POST['register_type']);*/
                 /* Code Added on 13-03-2023 by Amit Tripathi for OTP expiration */
                 date_default_timezone_set('Asia/Kolkata');
                 $startTime=date("H:i");
@@ -444,12 +327,6 @@ class DefaultController extends BaseController {
                     'end_time' => $endTime), $name_array);
                 setSessionData('adv_details', $sess_data);
                 /* END */
-                /*$_SESSION['adv_details'] =  array_merge(array(
-                    'mobile_no'=>$_POST['adv_mobile'],
-                    'mobile_otp'=>$mobile_otp_is,
-                    'email_id'=>$_POST['adv_email'],
-                    'email_otp'=>$email_otp_is,
-                    'register_type'=>$_POST['register_type'],), $name_array);*/
                 if(!empty($_POST['adv_mobile'])) {
                     $typeId="38";
                     $mobileNo=trim($_POST['adv_mobile']);
@@ -462,7 +339,6 @@ class DefaultController extends BaseController {
                     $message="OTP for Registration SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
                     send_mail_msg($to_email, $subject, $message);
                     // relay_mail_api($to_email, $subject, $message);
-                    // var_dump($test);exit;
                 }
                 return redirect()->to(base_url('register/AdvOtp'));
             } else {

@@ -80,15 +80,15 @@ class Performas extends BaseController {
             // ],
         ]);
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
-            setSessionData('performa_title', '<div class="text-danger">' . $this->validation->getError('performa_title') . '</div>');
-            setSessionData('pdf_is', '<div class="text-danger">' . $this->validation->getError('news_view[]') . '</div>');
+            $this->session->setFlashdata('performa_title', '<div class="text-danger">' . $this->validation->getError('performa_title') . '</div>');
+            $this->session->setFlashdata('pdf_is', '<div class="text-danger">' . $this->validation->getError('news_view[]') . '</div>');
             return redirect()->to(base_url('assistance/performas'));
             exit(0);
         } else{
             $deactivate_date = 'NULL';
             if (!empty($_FILES['news_doc']['name'])) {
                 if ($msg = isValidPDF('news_doc')) {
-                    setSessionData('MSG', $msg);
+                    $this->session->setFlashdata('MSG', $msg);
                     return redirect()->to(base_url('assistance/performas'));
                     exit(0);
                 }
@@ -96,7 +96,7 @@ class Performas extends BaseController {
                 //$file_uploaded_path = base_url('news/' . $file_name);
                 $file_uploaded_path = 'news/' . $file_name;
             } elseif (empty($_FILES['news_doc']['name'])) {
-                setSessionData('MSG', '<center><p style="background: #f2dede;border: #f2dede;color: black;">Select Pdf File is Requerd!</p></center>');
+                $this->session->setFlashdata('MSG', '<center><p style="background: #f2dede;border: #f2dede;color: black;">Select Pdf File is Requerd!</p></center>');
                 return redirect()->to(base_url('assistance/performas'));
             } else{
                 $file_name = NULL;
@@ -122,20 +122,20 @@ class Performas extends BaseController {
                 );
                 $result = $this->Performas_model->update_news_by_id(url_decryption($edit_id), $update_array, $_FILES['news_doc']['tmp_name']);
             } else{
-                setSessionData('MSG', '<div class="alert alert-danger text-center">Invalid Request!</div>');
+                $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request!</div>');
                 return redirect()->to(base_url('assistance/performas'));
                 exit(0);
             }
             if ($result) {
                 if (!empty(url_decryption($edit_id))) {
-                    setSessionData('MSG', '<div class="alert alert-success text-center">Updated Successfully.</div>');
+                    $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Updated Successfully.</div>');
                 } else{
-                    setSessionData('MSG', '<div class="alert alert-success text-center">Added Successfully.</div>');
+                    $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Added Successfully.</div>');
                 }
                 return redirect()->to(base_url('assistance/performas'));
                 exit(0);
             } else{
-                setSessionData('MSG', '<div class="alert alert-danger text-center">Some error ! Please try after some time.</div>');
+                $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Some error ! Please try after some time.</div>');
                 return redirect()->to(base_url('assistance/performas'));
                 exit(0);
             }
@@ -166,16 +166,16 @@ class Performas extends BaseController {
                 'update_by_ip' => getClientIP()
             );
         } else{
-            setSessionData('MSG', '<div class="alert alert-danger text-center">Invalid Request!</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request!</div>');
             return redirect()->to(base_url('assistance/performas'));
             exit(0);
         }
         $result = $this->Performas_model->update_news_by_id($action[0], $update_array);
         if ($result) {
-            setSessionData('MSG', '<div class="alert alert-success text-center">News Status Changed Successfully.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">News Status Changed Successfully.</div>');
             return redirect()->to(base_url('assistance/performas'));
         } else{
-            setSessionData('MSG', '<div class="alert alert-danger text-center">Something Went Wrong! Please try Again.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Something Went Wrong! Please try Again.</div>');
             return redirect('assistance/notice_circulars/' . $id);
         }
     }
@@ -183,7 +183,7 @@ class Performas extends BaseController {
     function view($id) {
         $id = url_decryption($id);
         if (!$id) {
-            setSessionData('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
             return redirect()->to(base_url('assistance/performas'));
             exit(0);
         } else{

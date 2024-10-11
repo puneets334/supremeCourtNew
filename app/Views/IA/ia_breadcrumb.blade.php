@@ -164,7 +164,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                                 $final_submit_continue_action = TRUE;
                             ?>
-                                <a class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a>
+                                <a class="quick-btn gradient-btn" style="cursor: pointer;" onclick="ActionToTrash('UAT')">Trash</a>
                             <?php
                             } ?>
                         </div>
@@ -315,7 +315,7 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                                 <div class="col-md-2 offset-md-4">
                                     <?php
                                     if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { ?>
-                                        <a class="btn btn-danger btn-sm" onclick="ActionToTrash('SLT')">Trash</a>
+                                        <a class="btn btn-danger btn-sm" style="cursor: pointer;" onclick="ActionToTrash('SLT')">Trash</a>
 
 
                                     <?php
@@ -344,8 +344,6 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                             <a href="<?= $case_details_url; ?>"
                                 class="nav-link <?php echo $status_color; ?>"
                                 id="home-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#home"
                                 type="button"
                                 role="tab"
                                 aria-controls="home"
@@ -371,8 +369,6 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                             <a href="<?= $appearing_url; ?>"
                                 class="nav-link <?php echo $status_color; ?>"
                                 id="home-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#home"
                                 type="button"
                                 role="tab"
                                 aria-controls="home"
@@ -398,8 +394,6 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                             <a href="<?= $onbehlaf_url; ?>"
                                 class="nav-link <?php echo $status_color; ?>"
                                 id="home-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#home"
                                 type="button"
                                 role="tab"
                                 aria-controls="home"
@@ -424,8 +418,6 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                             <a href="<?= $index_url ?>"
                                 class="nav-link <?php echo $status_color; ?>"
                                 id="home-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#home"
                                 type="button"
                                 role="tab"
                                 aria-controls="home"
@@ -456,8 +448,6 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                             <a href="<?= $fee_url; ?>"
                                 class="nav-link <?php echo $status_color; ?>"
                                 id="home-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#home"
                                 type="button"
                                 role="tab"
                                 aria-controls="home"
@@ -482,8 +472,6 @@ echo remark_preview(getSessionData('efiling_details')['registration_id'], getSes
                             <a href="<?= base_url('IA/view') ?>"
                                 class="nav-link <?php echo $status_color; ?>"
                                 id="home-tab"
-                                data-bs-toggle="tab"
-                                data-bs-target="#home"
                                 type="button"
                                 role="tab"
                                 aria-controls="home"
@@ -846,8 +834,59 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     </div>
 </div>
 
-
+<script src="<?= base_url(); ?>assets/js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="<?= base_url(); ?>assets/css/sweetalert.css">
 <script>
+    function ActionToTrash(trash_type) {
+            event.preventDefault();
+            var trash_type = trash_type;
+            var url = "";
+            if (trash_type == '') {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                return false;
+            } else if (trash_type == 'UAT') {
+                url = "<?php echo base_url('userActions/trash'); ?>";
+            } else if (trash_type == 'SLT') {
+                url = "<?php echo base_url('stage_list/trash'); ?>";
+            } else if (trash_type == 'EAT') {
+                url = "<?php echo base_url('userActions/trash'); ?>";
+            } else {
+                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                return false;
+            }
+            //    alert('trash_type'+trash_type+'url='+url);//return false;
+            swal({
+                    title: "Do you really want to trash this E-Filing,",
+                    text: "once it will be trashed you can't restore the same.",
+                    type: "warning",
+                    position: "top",
+                    showCancelButton: true,
+                    confirmButtonColor: "green",
+                    confirmButtonText: "Yes",
+                    cancelButtonText: "No",
+                    buttons: ["Make Changes", "Yes!"],
+                    closeOnConfirm: false,
+                    closeOnCancel: true
+                },
+                function(isConfirm) {
+                    if (isConfirm) { // submitting the form when user press yes
+                        var link = document.createElement("a");
+                        link.href = url;
+                        link.target = "_self";
+                        link.click();
+                        swal({
+                            title: "Deleted!",
+                            text: "E-Filing has been deleted.",
+                            type: "success",
+                            timer: 2000
+                        });
+
+                    } else {
+                        //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+                    }
+
+                });
+        }
     function get_objection(obj_id, obj_checked) {
         if (obj_checked.is(':checked')) {
             var obj = $("#obj_" + obj_id).text();

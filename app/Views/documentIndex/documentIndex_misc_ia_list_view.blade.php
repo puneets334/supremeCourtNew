@@ -30,6 +30,7 @@ $uris = service('uri');
                 <tbody>
                     <?php
                     $sr = 1;
+                    if(!empty($efiled_docs_list)){
                     foreach ($efiled_docs_list as $doc_list) {
                         ?>
                         <tr>
@@ -97,7 +98,7 @@ $uris = service('uri');
                                 </td>-->
                             <?php } ?>
                         </tr>
-                    <?php } ?>
+                    <?php } } ?>
 
                 </tbody>
             </table>

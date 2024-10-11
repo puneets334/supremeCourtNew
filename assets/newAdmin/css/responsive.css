@@ -76,7 +76,7 @@
     .custom-table thead {display: none;}
     .custom-table tbody tr {display: block;margin-bottom:0px;}
     .custom-table tr td, .custom-table tbody tr td, .first-th-left th:first-child, .first-th-left td:first-child{display:block;position:relative;padding-left:50%!important;/* border-bottom: 1px solid #e1e1e1 !important; */border-radius:0!important;margin:0 !important;/* width: 100%; */width: fit-content !important;text-align: left !important;line-height: 20px !important;min-height: 21px;text-wrap: wrap !important;word-break: break-all;}
-    .custom-table td::before {content: attr(data-key);position: absolute;left: 0;width: 45%;padding: 0 10px;font-weight: bold;text-align: left;}
+    .custom-table td::before {content: attr(data-key);position: absolute;left: 0;width: 45%;padding: 0 10px;font-weight: bold;text-align: left;text-wrap: pretty;word-break: auto-phrase;}
     .custom-table thead th:first-child, .custom-table tbody td:first-child{text-align:left;/* width:100%!important; */width: fit-content !important;}
     /* .custom-table td {width: fit-content;min-height: 21px;} */
     .table-striped tr:nth-child(even){background: #ECEEF2;}

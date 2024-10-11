@@ -3,7 +3,12 @@
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div id="msg">
-                <?php echo getSessionData('MSG'); ?>
+                <?php 
+                $session = session();
+                if ($session->getFlashdata('MSG')) {
+                    echo $session->getFlashdata('MSG');
+                }
+                ?>
             </div> 
             <div class="x_panel">
                 <div class="x_title">
@@ -31,7 +36,7 @@
                                             <i class="fa fa-question-circle-o" ></i>
                                         </span>
                                     </div> 
-                                    <?php echo (getSessionData('news_title') != NULL) ? getSessionData('news_title') : NULL; ?>
+                                    <?php echo ($session->getFlashdata('news_title') != NULL) ? $session->getFlashdata('news_title') : NULL; ?>
                                 </div>
                             </div>
                 
@@ -43,7 +48,7 @@
                                     
                                         <span class="help-block"><a href="<?php echo base_url('assistance/news_event/news_pdf/' . url_encryption($get_data[0]['id'])); ?>" class="btn btn-link" target="_blank">View Old File</a></span>
                                     <?php } ?>
-                                    <?php echo (getSessionData('news_doc') != NULL) ? getSessionData('news_doc') : NULL; ?>
+                                    <?php echo ($session->getFlashdata('news_doc') != NULL) ? $session->getFlashdata('news_doc') : NULL; ?>
                                 </div>
                             </div>
                         </div>

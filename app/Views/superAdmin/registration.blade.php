@@ -1,267 +1,199 @@
 @extends('layout.app')
 @section('content')
+    <style>
+        .multiselect {
+            display: none;
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 sm-12 col-md-12 col-lg-12">
+            <div class="col-lg-12">
+                <div class="dashboard-section dashboard-tiles-area"></div>
                 <div class="dashboard-section">
-                    <!-- <div class="row"> -->
-                        <div class="dash-card">
-                            <!--<form action="#" class="form-horizontal" name="search_user" id="search_user" autocomplete="off" method="post" accept-charset="utf-8">-->
-                            <?php
-                            $attribute = ['class' => 'form_horizontal', 'name' => 'search_user', 'id' => 'search_user', 'accept-charset' => 'utf-8', 'autocomplete' => 'off'];
-                            echo form_open(base_url(), $attribute);
-                            ?>
-                            <input type="text" style="display: none" name="CSRF_TOKEN" value="{{ csrf_token() }}">
-                            <div class="row">
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card">
+                                {{-- Page Title Start --}}
+                                <div class="title-sec">
+                                    <h5 class="unerline-title"> Registration </h5>
+                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                </div>
+                                {{-- Page Title End --}}
+                                {{-- Main Start --}}
+                                <?php
+                                $attribute = ['class' => 'row g-3', 'name' => 'search_user', 'id' => 'search_user', 'accept-charset' => 'utf-8', 'autocomplete' => 'off'];
+                                echo form_open(base_url(), $attribute);
+                                ?>
+                                    <input type="hidden" name="CSRF_TOKEN" value="{{ csrf_token() }}">
+                                    <div class="row mt-3">
+                                        <div class="col-md-5 col-sm-12 col-xs-12">
                                             <div class="form-group">
-                                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Emp.No.
-                                                    <span style="color: red">*</span></label>
-                                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Emp.No.<span style="color: red">*</span> </label>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="form-group">
                                                         <input type="text" name="empNo" id="empNo" placeholder="Emp.No." maxlength="15" class="form-control cus-form-ctrl" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-xs-12">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">
                                             <div class="form-group">
-                                                <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">
-                                                </label>
-                                                <div class="col-md-7 col-sm-12 col-xs-12">
-                                                    <div class="input-group">
+                                                <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"></label>
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                    <div class="input-group mrgT20">
                                                         <button id="empButton" class="btn quick-btn" type="button">Get Details</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            </form>
-                            <hr>
-                            <div class="row"
-                                    id="norecordDiv"
-                                    style="display: none;">
+                                <?php echo form_close(); ?>
+                                <div class="row" id="norecordDiv" style="display: none;">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div id="norecord"
-                                            class="text-center"></div>
+                                        <div id="norecord" class="text-center mt-3"></div>
                                     </div>
                                 </div>
-
-                                <div class="panel-body"
-                                    id="addUserDiv"
-                                    style="display: none;">
-                                    <!--<form action="#" class="form-horizontal" name="addsciuser" id="addsciuser" autocomplete="off" method="post" accept-charset="utf-8">-->
+                                <div class="panel-body" id="addUserDiv" style="display: none;">
                                     <?php
                                     $attribute = ['class' => 'form_horizontal', 'name' => 'addsciuser', 'id' => 'addsciuser', 'accept-charset' => 'utf-8', 'autocomplete' => 'off'];
                                     echo form_open(base_url(), $attribute);
                                     ?>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Name</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="text"
-                                                                    autocomplete="off"
-                                                                    name="emp_name"
-                                                                    id="emp_name"
-                                                                    placeholder="Name"
-                                                                    maxlength="35"
-                                                                    class="form-control cus-form-ctrl" />
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Name </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="text" autocomplete="off" name="emp_name" id="emp_name" placeholder="Name" maxlength="35" class="form-control cus-form-ctrl" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Emp.No.
-                                                        </label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="text"
-                                                                    autocomplete="off"
-                                                                    name="empid"
-                                                                    id="empid"
-                                                                    placeholder="Emp.No."
-                                                                    maxlength="15"
-                                                                    class="form-control cus-form-ctrl" />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Emp.No. </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="text" autocomplete="off" name="empid" id="empid" placeholder="Emp.No." maxlength="15" class="form-control cus-form-ctrl" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Mobile</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="text"
-                                                                    autocomplete="off"
-                                                                    name="mobile"
-                                                                    id="mobile"
-                                                                    placeholder="Mobile"
-                                                                    maxlength="10"
-                                                                    class="form-control cus-form-ctrl" />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Mobile </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="text" autocomplete="off" name="mobile" id="mobile" placeholder="Mobile" maxlength="10" class="form-control cus-form-ctrl" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Filing
-                                                            Type</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <select id="filing_type"
-                                                                    name="filing_type"
-                                                                    class="form-control cus-form-ctrl"
-                                                                    multiple="multiple"
-                                                                    required>
-                                                                    <option value="">Select Filing Type</option>
-                                                                    <?php
-                                                                    if (isset($filingType) && !empty($filingType)) {
-                                                                        foreach ($filingType as $k => $v) {
-                                                                            echo '<option value="' . $v->id . '">' . str_replace('_', ' ', $v->efiling_type) . '</option>';
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Filing Type </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <select id="filing_type" name="filing_type" class="form-control cus-form-ctrl" multiple="multiple" required>
+                                                                        <option value="">Select Filing Type</option>
+                                                                        <?php
+                                                                        if (isset($filingType) && !empty($filingType)) {
+                                                                            foreach ($filingType as $k => $v) {
+                                                                                echo '<option value="' . $v->id . '">' . str_replace('_', ' ', $v->efiling_type) . '</option>';
+                                                                            }
                                                                         }
-                                                                    }
-                                                                    ?>
-                                                                </select>
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"></label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="submit" autocomplete="off" name="adduser" value="Add User" id="adduser" class="btn quick-btn" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"></label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="submit"
-                                                                    autocomplete="off"
-                                                                    name="adduser"
-                                                                    value="Add User"
-                                                                    id="adduser"
-                                                                    class="btn quick-btn" />
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Email </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="text" autocomplete="off" name="email" id="email" placeholder="Email" maxlength="35" class="form-control cus-form-ctrl" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-12">
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Email</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="text"
-                                                                    autocomplete="off"
-                                                                    name="email"
-                                                                    id="email"
-                                                                    placeholder="Email"
-                                                                    maxlength="35"
-                                                                    class="form-control cus-form-ctrl" />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Attend </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="text" autocomplete="off" name="attend" id="attend" placeholder="Mobile" maxlength="1" class="form-control cus-form-ctrl" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Attend</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="text"
-                                                                    autocomplete="off"
-                                                                    name="attend"
-                                                                    id="attend"
-                                                                    placeholder="Mobile"
-                                                                    maxlength="1"
-                                                                    class="form-control cus-form-ctrl" />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> Party In Person / Advocate </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <select id="pp_a" name="pp_a" class="form-control cus-form-ctrl" required>
+                                                                        <option value="">Select Party In Person / Advocate</option>
+                                                                        <option value="P">Party In Person</option>
+                                                                        <option value="A">Advocate</option>
+                                                                    </select>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Party In
-                                                            Person / Advocate</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <select id="pp_a"
-                                                                    name="pp_a"
-                                                                    class="form-control cus-form-ctrl"
-                                                                    required>
-                                                                    <option value="">Select Party In Person / Advocate
-                                                                    </option>
-                                                                    <option value="P">Party In Person</option>
-                                                                    <option value="A">Advocate</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                        <label
-                                                            class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">DOB</label>
-                                                        <div class="col-md-7 col-sm-12 col-xs-12">
-                                                            <div class="form-group">
-                                                                <input type="text"
-                                                                    autocomplete="off"
-                                                                    name="dob"
-                                                                    id="dob"
-                                                                    placeholder="DOB"
-                                                                    maxlength="10"
-                                                                    class="form-control cus-form-ctrl user_dob" />
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-xs-12">
+                                                        <div class="form-group mb-3">
+                                                            <label class="control-label col-md-12 col-sm-12 col-xs-12 input-sm"> DOB </label>
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="form-group">
+                                                                    <input type="text" autocomplete="off" name="dob" id="dob" placeholder="DOB" maxlength="10" class="form-control cus-form-ctrl user_dob" />
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <input type="hidden"
-                                        name="usercode"
-                                        id="usercode" />
-                                    </form>
+                                        <input type="hidden" name="usercode" id="usercode" />
+                                    <?php echo form_close(); ?>
                                 </div>
+                            </div>
                         </div>
-                        <!-- <div class="row"> -->
-                            <!-- <div class="dash-card">
-                              
-                            </div> -->
-                        <!-- </div> -->
-                    <!-- </div> -->
+                    </div>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
@@ -269,11 +201,6 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#filing_type').multiselect();
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
             $('.user_dob').datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -374,8 +301,6 @@
                 var usercode = $.trim($("#usercode").val());
                 var filing_type = $("select#filing_type").val();
                 var pp_a = $("select#pp_a option:selected").val();
-                // alert(pp_a);
-                // return false;
                 var numRegExp = /^\d+$/;
                 var mobileRegExp = /^\d{10}$/;
                 var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -492,8 +417,6 @@
                         }
                     });
                 }
-
-
             })
         });
     </script>

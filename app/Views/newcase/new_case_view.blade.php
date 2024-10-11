@@ -1,3 +1,5 @@
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 <div class="mainPanel ">
     <div class="panelInner">
         <div class="middleContent">
@@ -53,6 +55,7 @@
 </div>
 <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
     <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css">
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 @push('script')
     <script>
         $('#party_dob').datepicker({

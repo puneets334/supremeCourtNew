@@ -1,6 +1,6 @@
 <?php
 $segment = service('uri');
-$StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : [];
+$StageArray = !empty(getSessionData('breadcrumb_enable') && !empty($_SESSION['efiling_details'])) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : [];
 $disabled_status1 = 'pointer-events: none; cursor: default;';
 $allowed_users_array = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT];
 $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT];
@@ -289,7 +289,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
         color: #0D48BE;
         padding: 20px;
     }
-        .dashboard-section.tabs-section{margin-top: 30px!important;}
+        /* .dashboard-section.tabs-section{margin-top: 30px!important;} */
         .tabs-section .tab-content{padding:0!important}
 </style>
 <!-- tabs-section -start  -->

@@ -107,8 +107,13 @@ $(document).ready(function() {
 
 
 // Table TD height JS 
-document.querySelectorAll('.custom-table td').forEach(function(td) {
+// document.querySelectorAll('.custom-table td').forEach(function(td) {
+//   const contentHeight = td.scrollHeight; 
+//   const minHeight = 40; 
+//   td.style.minHeight = Math.max(contentHeight, minHeight) + 'px'; 
+// });
+document.querySelectorAll('.custom-table td').forEach(td => {
   const contentHeight = td.scrollHeight; 
   const minHeight = 40; 
-  td.style.minHeight = Math.max(contentHeight, minHeight) + 'px'; 
+  td.style.minHeight = `${Math.max(contentHeight, minHeight)}px`; 
 });
