@@ -528,7 +528,6 @@ class ResponsiveVariantRouteController extends BaseController
                 $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
                 // $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
                 $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                // pr($sr_advocate_data);
                 if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
                     $arr = array();
                     $arr['sr_advocate_id'] = $advocate_id;
@@ -627,7 +626,6 @@ class ResponsiveVariantRouteController extends BaseController
     //Start
     public function showCaseDocumentCrudByRegistrationId($registration_id = null)
     {
-        // pr(registration_id));
         $registration_id = str_replace('_', '#', @$registration_id);
         $tab = @$_REQUEST['tab'];
         $this->render('responsive_variant.case.document.crud_registration', @compact('registration_id', 'tab'));
@@ -993,7 +991,7 @@ class ResponsiveVariantRouteController extends BaseController
     public function showCasePaperBookViewer($diary_id)
     {
         $filename = $diary_id . "_" . date('d-m-Y_H_i_s') . ".pdf";
-        list($case_file_paper_books, $response_code) = (curl_get_contents(env('API_SCI_INTERACT_PAPERBOOK_PDF') . $diary_id . "/get/paper_book?taskStage=live", array(), true));
+        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book?taskStage=live", array(), true));
         if ($response_code == 417) {
             echo $case_file_paper_books;
         } else {

@@ -152,7 +152,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                             NOTE: Please upload only JPG or JPEG. File name maximun length can be 40 characters including digits characters, spaces, hypens and underscore. maximum file size 1MB.
                                         </p>
                                         <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
                                                 <input type="file" class="form-control cus-form-ctrl" value="<?php echo_data($user_addar_img) ?>" placeholder="" name="advocate_image" id="advocate_image" required>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">

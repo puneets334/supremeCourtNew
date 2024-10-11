@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" type="image/png" />
-    <title>SC-eFM</title>
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/bootstrap.min.css" rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/font-awesome.min.css" rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/material.css" rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/glyphicons.css" rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/owl.carousel.min.css" rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/owl.theme.default.css" rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/animate.css" rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/style.css" rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newDesign/' ?>css/black-theme.css" rel="stylesheet" />
-</head>
+@extends('layout.frontApp')
+@section('content')
 <?php
 $segment = service('uri');
 $session = service('session');
@@ -31,94 +14,6 @@ $session = service('session');
     }
 </style>
 
-<body class="login-page">
-    <header>
-        <!-- Top Header Section End -->
-        <div class="top-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-6 top-left-nav wow fadeInDown"></div>
-                    <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
-
-                        <ul>
-                            <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
-                            <li><a class="hide" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader Access</a></li>
-                            <li class="text-size">
-                                <a href="javascript:void(0)"><img src="<?= base_url() . 'assets/newAdmin/' ?>images/text-ixon.png" alt="" class="txt-icon"></a>
-                            </li>
-                            <!-- <li>
-                        <a href="javascript:void(0)" class="toph-icon"><i class="fas fa-sitemap"></i></a>
-                    </li> -->
-                            <li class="theme-color">
-                                <a href="javascript:void(0)" class="whitebg">A</a>
-                                <a href="javascript:void(0)" class="blackbg">A</a>
-                            </li>
-                            <!-- <li>
-                        <select name="" id="" class="select-lang">
-                            <option value="">English</option>
-                            <option value="">Hindi</option>
-                        </select>
-                    </li> -->
-                        </ul>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Top Header Section End -->
-        <div id="SkipContent" tabindex="-1"></div>
-        <!-- Logo Section Header Start -->
-        <div class="logo-sec-wraper">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-4 logo-sec wow fadeInUp">
-                        <a class="logo-align" href="<?= base_url(); ?>">
-                            <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo.png" alt="emblem">
-                            <div class="brand-text">
-                                <h4>भारत का सर्वोच्च न्यायालय
-                                    <span> Supreme Court of India </span>
-                                    <span class="logo-sm-txt">|| यतो धर्मस्ततो जय: ||</span>
-                                </h4>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-8 loginbtn-sec wow fadeInUp">
-                        <div class="nav-wraper">
-                            <nav class="navbar navbar-expand-lg navbar-light custom-nav  w-100 wow fadeInUp">
-                                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                    data-target="#navbarSupportedContent">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button>
-                                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                                    <ul class="navbar-nav mr-auto">
-                                        <li class="nav-item">
-                                            <!-- <a class="active" href="index.html">Handbook </a> -->
-                                            <!-- <a class="active"  href="<?php echo base_url('e-resources') ?>">Handbook </a> -->
-                                            <a class="nav-link <?= (current_url() == base_url('resources/hand_book')) ? 'active' : '' ?>" href="<?= base_url('resources/hand_book') ?>">Handbook </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('resources/video_tutorial/view')) ? 'active' : '' ?>" href="<?= base_url('resources/video_tutorial/view') ?>">Video Tutorial</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('resources/FAQ')) ? 'active' : '' ?>" href="<?= base_url('resources/FAQ') ?>">FAQs</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('resources/hand_book_old_efiling')) ? 'active' : '' ?>" href="<?= base_url('resources/hand_book_old_efiling') ?>">Stats</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link <?= (current_url() == base_url('resources/Three_PDF_user_manual')) ? 'active' : '' ?>" href="<?= base_url('resources/Three_PDF_user_manual') ?>">3PDF User Manual</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Logo Section Header End -->
-    </header>
-    <!-- Login Area Start  -->
     <div class="login-area">
         <div class="container">
             <div class="row">
@@ -176,15 +71,15 @@ $session = service('session');
                         <?php
                         //pr(stringDecreption($_SESSION['session_not_register_type_user']));
                         $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
-                        echo form_open("register/DefaultController/adv_get_otp", $attributes);
+                        echo form_open(base_url("register/DefaultController/adv_get_otp"), $attributes);
                         ?>
-                        <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="text" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo idEncryptionCustom($adv_type_select); ?>">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                     <label for="" class="form-label"></label>
-                                    <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php echo idEncryptionCustom($adv_type_select); ?>">
+                                    <!-- <input type="hidden" name="adv_type_select" id="adv_type_select" value="<?php //echo idEncryptionCustom($adv_type_select); ?>"> -->
                                     <!-- <a class=""> -->
                                     <label><input class="form-check-input" type="radio" name="not_register_type_user" id="new_advocate" onclick="HideEkycDiv('offline_proceed')" name="not_register_type_user" value="<?php echo stringEncreption('not_register_ekyc'); ?>" checked> Offline</label>
                                     <!-- </a> -->
@@ -211,7 +106,7 @@ $session = service('session');
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Choose Offline Aadhaar Zip File (max size 5mb).</label>
+                                        <label for="" class="form-label">Choose Offline Aadhaar Zip File (max size 2mb).</label>
                                         <input type="file"  accept=".zip"  class="form-control cus-form-ctrl" id="ekyc_zip_file" name="ekyc_zip_file">
                                     </div>
                                 </div>
@@ -272,7 +167,7 @@ $session = service('session');
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <button class="btn quick-btn">SEND OTP</button>
+                            <button class="btn quick-btn" id="submit">SEND OTP</button>
                         </div>
                         <?php echo form_close(); ?>
                         <div class="regester-txts">
@@ -296,20 +191,22 @@ $session = service('session');
     </div>
     </div>
     <!-- Login Area End  -->
-    <script src="<?= base_url('assets/js/jquery.min.js'); ?>" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<?= base_url('CaptchaResource/js/Captcha.js'); ?>"></script>
+    @endsection
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery.easy-ticker.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/wow.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/owl.carousel.js"></script>
     <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
     <script type="text/javascript">
         <?php if(isset($_SESSION['session_not_register_type_user']) && !empty($_SESSION['session_not_register_type_user'])){?>
-  <?php   if(stringDecreption($_SESSION['session_not_register_type_user'])=='not_register_other'){ ?>
-    showHideDiv('ekyc_upload_share');
-               
-                <?php }else{  ?>
-                    HideEkycDiv('offline_proceed');
-
-            <?php } }?>
+        <?php   if(stringDecreption($_SESSION['session_not_register_type_user'])=='not_register_other'){ ?>
+            showHideDiv('ekyc_upload_share');
+        <?php }else{  ?>
+                HideEkycDiv('offline_proceed');
+        <?php } }?>
        // HideEkycDiv('offline_proceed');
+       var ty = 1;
         function showHideDiv(ele) {
             var srcElement = document.getElementById(ele);
             var srcElement2 = document.getElementById('offline_proceed');
@@ -322,7 +219,7 @@ $session = service('session');
                     $('#ekyc_zip_file').attr('required',true);
                     $('#share_code').attr('required',true);
                  
-
+                    ty = 2;
                     //window.scrollBy(0, 60);
                 }
                 return false;
@@ -341,14 +238,42 @@ $session = service('session');
                     document.getElementById("new_advocate").checked = true;
                     $('#ekyc_zip_file').attr('required',false);
                     $('#share_code').attr('required',false); 
-                 
-
+                    
+                    ty = 1;
                     //window.scrollBy(0, 60);
                 }
                 return false;
             }
         }
-    </script>
-</body>
 
-</html>
+        $(document).ready(function() {
+            $(document).on('click', '#submit', function(event) {
+                // event.preventDefault(); // Prevent default form submission
+// Check file size (optional)
+                if(ty == 2){
+                    const maxSizeInBytes = '<?=OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE; ?>';
+                    const file = $('#ekyc_zip_file')[0].files[0];
+                    // Check file type (optional)
+                    const allowedTypes = ['application/zip'];
+                    // Check if a file has been selected
+                    if ($('#ekyc_zip_file').val() === '') {
+                        event.preventDefault();
+                        alert('Please select a file.');
+                        return;
+                    }else if (file.size > maxSizeInBytes) {
+                        event.preventDefault();
+                        alert('File is too large. Maximum allowed size is 2 MB.');
+                        return;
+                    }else if (!allowedTypes.includes(file.type)) {
+                        event.preventDefault();
+                        alert('Invalid file type. Please select a ZIP file.');
+                        return;
+                    }else{
+                        $('#loginform').submit();
+                    }
+                }else{
+                    $('#loginform').submit();
+                }
+            });
+        });
+    </script>

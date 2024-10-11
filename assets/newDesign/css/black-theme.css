@@ -17,7 +17,7 @@
 .black-theme .logo-sec-wraper .loginbtn-sec{background: #000000;}
 /* Header CSS End  */
 /* Login Area Start  */
-.black-theme .login-area {background: #222222;}
+.black-theme .login-area {background: #222222;padding-top: 30px;}
 .black-theme button.btn:hover, .black-theme button.btn:hover{background: #cfc53a;}
 .black-theme .login-section {background: #000;}
 .black-theme .httxt h4 {color: #fff;}
@@ -89,5 +89,5 @@
 }
 
 .black-theme  .card.video-crd {
-    border-color: #595959;
+    border-color: #595959;background: #333333;
 }

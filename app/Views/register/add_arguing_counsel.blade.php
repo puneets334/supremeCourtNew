@@ -376,7 +376,7 @@ if(!empty(getSessionData('login'))){
                                                    
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span> :</label>
+                                                    <label class="form-label" for="form-stacked-text">Bar Registration No. :</label>
                                                     <?php
                                                     $readony = "";
                                                     if(isset($bar_reg_no) && !empty($bar_reg_no)){
@@ -394,8 +394,7 @@ if(!empty(getSessionData('login'))){
                                             </div>
                                             <div style="text-align: center;">
                                                 <input type="submit" class="btn btn-primary quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register">
-                                                 
-                                                    <button type="button" class=" btn-grey quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
+                                                <button type="button" class=" btn-grey quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                             </div>
                                             <?php
                                         echo form_close();

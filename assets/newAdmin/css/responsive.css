@@ -95,6 +95,9 @@
     .crnt-page-head {flex-direction: column;gap:5px;}
     .custom-table tbody tr td div span.uk-text-uppercase {margin-bottom: 3px !important;display: inline-block;}
     form .quick-btn.mrgT35{margin-top: 10px;}
+    .pagination-area-new .pagination-new-inner {flex-direction: column;gap: 15px;}
+    .pagination-area-new .pagination-btns {justify-content: center;align-items: center;flex-wrap: wrap;}
+    .pagination-area-new .pagination-btns .paging.paging-input {order: 1;margin-top: 10px;justify-content: center;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){

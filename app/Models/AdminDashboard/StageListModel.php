@@ -15,7 +15,7 @@ class StageListModel extends Model
     }
 
     //  START : Function used to get efiled types wise list of efiling nums from admin dashboard
-    public function get_efilied_nums_stage_wise_list_admin($stage_ids, $admin_for_type_id, $admin_for_id)
+    public function get_efilied_nums_stage_wise_list_admin($stage_ids, $admin_for_type_id, $admin_for_id, $limit = null, $offset= null)
     {
 
         $builder =  $this->db->table('efil.tbl_efiling_nums as en');
@@ -58,11 +58,16 @@ class StageListModel extends Model
         }
         $builder->whereIn('cs.stage_id', $stage_ids);
         //$this->db->WHERE_IN('cs.stage_id', [14]);
+            // Apply limit and offset for pagination
+    if ($limit !== null) {
+        $builder->limit($limit,$offset);
+    }
         if (in_array(New_Filing_Stage, $stage_ids) && ($admin_for_type_id == E_FILING_TYPE_CAVEAT)) {
             $builder->orderBy('cs.activated_on', 'ASC');
         } else {
             $builder->orderBy('cs.activated_on', 'DESC');
         }
+        // $builder->limit(2000);
         //$this->db->ORDER_BY('cs.activated_on','DESC');
         $query = $builder->get();
         //echo $this->db->last_query();die;
