@@ -123,7 +123,6 @@ class DefaultController extends BaseController {
     } */
 
     function adv_get_otp() {
-        pr($_POST);
         $mobile_exist = array();
         $email_exist = array();
         $_SESSION['register_type_select'] = $_POST['adv_type_select'];
