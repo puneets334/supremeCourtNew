@@ -18,6 +18,7 @@ class App extends BaseConfig
      */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     public string $baseURL = "http://10.25.78.48:81/";
 =======
     
@@ -25,6 +26,8 @@ class App extends BaseConfig
 
 >>>>>>> origin
 =======
+=======
+>>>>>>> origin
     
     public string $baseURL = "http://10.25.80.170:82/";
 
