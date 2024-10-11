@@ -11,6 +11,9 @@
     }
 </style>
 <div class="container-fluid">
+    <div id="loader-wrapper" style="display: none;">
+        <div id="loader"></div>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="dashboard-section dashboard-tiles-area"></div>
@@ -232,15 +235,13 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+@push('script')
 <script>
     $(document).ready(function() {
         $("#datatable-responsive").DataTable({
             "ordering": false,
+            dom: 'Bfrtip',
         });
-    });
-</script>
-<script>
-    $(document).ready(function() {
         // $('#filing_type').multiselect();
         $(document).on('click', '.editRole', function() {
             var userId = $(this).attr('data-userid');
@@ -396,20 +397,9 @@
             }
         });
     });
-</script>
-<script>
     function ActionToAllUserCount() {
         var AllUserCount = document.querySelector('#AllUserCount').checked;
         window.location.href = "<?= base_url('adminDashboard/DefaultController/ActionToAllUserCount?AllUserCount=') ?>" + AllUserCount;
     }
 </script>
-@push('script')
-<script>
-    $(document).ready(function() {
-            $('#datatable-responsive').DataTable({
-                dom: 'Bfrtip',
-            });
-        });
-</script>
-
 @endpush
