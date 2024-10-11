@@ -106,7 +106,7 @@ $session = service('session');
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                     <div class="mb-3">
-                                        <label for="" class="form-label">Choose Offline Aadhaar Zip File (max size 5mb).</label>
+                                        <label for="" class="form-label">Choose Offline Aadhaar Zip File (max size 2mb).</label>
                                         <input type="file"  accept=".zip"  class="form-control cus-form-ctrl" id="ekyc_zip_file" name="ekyc_zip_file">
                                     </div>
                                 </div>
@@ -167,7 +167,7 @@ $session = service('session');
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <button class="btn quick-btn">SEND OTP</button>
+                            <button class="btn quick-btn" id="submit">SEND OTP</button>
                         </div>
                         <?php echo form_close(); ?>
                         <div class="regester-txts">
@@ -192,17 +192,21 @@ $session = service('session');
     </div>
     <!-- Login Area End  -->
     @endsection
-
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery.easy-ticker.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/wow.min.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/owl.carousel.js"></script>
+    <script src="<?= base_url() . 'assets/newDesign/' ?>js/custom.js"></script>
     <script type="text/javascript">
         <?php if(isset($_SESSION['session_not_register_type_user']) && !empty($_SESSION['session_not_register_type_user'])){?>
-  <?php   if(stringDecreption($_SESSION['session_not_register_type_user'])=='not_register_other'){ ?>
-    showHideDiv('ekyc_upload_share');
-               
-                <?php }else{  ?>
-                    HideEkycDiv('offline_proceed');
-
-            <?php } }?>
+        <?php   if(stringDecreption($_SESSION['session_not_register_type_user'])=='not_register_other'){ ?>
+            showHideDiv('ekyc_upload_share');
+        <?php }else{  ?>
+                HideEkycDiv('offline_proceed');
+        <?php } }?>
        // HideEkycDiv('offline_proceed');
+       var ty = 1;
         function showHideDiv(ele) {
             var srcElement = document.getElementById(ele);
             var srcElement2 = document.getElementById('offline_proceed');
@@ -215,7 +219,7 @@ $session = service('session');
                     $('#ekyc_zip_file').attr('required',true);
                     $('#share_code').attr('required',true);
                  
-
+                    ty = 2;
                     //window.scrollBy(0, 60);
                 }
                 return false;
@@ -234,11 +238,42 @@ $session = service('session');
                     document.getElementById("new_advocate").checked = true;
                     $('#ekyc_zip_file').attr('required',false);
                     $('#share_code').attr('required',false); 
-                 
-
+                    
+                    ty = 1;
                     //window.scrollBy(0, 60);
                 }
                 return false;
             }
         }
+
+        $(document).ready(function() {
+            $(document).on('click', '#submit', function(event) {
+                // event.preventDefault(); // Prevent default form submission
+// Check file size (optional)
+                if(ty == 2){
+                    const maxSizeInBytes = '<?=OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE; ?>';
+                    const file = $('#ekyc_zip_file')[0].files[0];
+                    // Check file type (optional)
+                    const allowedTypes = ['application/zip'];
+                    // Check if a file has been selected
+                    if ($('#ekyc_zip_file').val() === '') {
+                        event.preventDefault();
+                        alert('Please select a file.');
+                        return;
+                    }else if (file.size > maxSizeInBytes) {
+                        event.preventDefault();
+                        alert('File is too large. Maximum allowed size is 2 MB.');
+                        return;
+                    }else if (!allowedTypes.includes(file.type)) {
+                        event.preventDefault();
+                        alert('Invalid file type. Please select a ZIP file.');
+                        return;
+                    }else{
+                        $('#loginform').submit();
+                    }
+                }else{
+                    $('#loginform').submit();
+                }
+            });
+        });
     </script>
