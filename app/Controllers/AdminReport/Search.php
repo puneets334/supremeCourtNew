@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\AdminReport\AdminSearchModel;
 use App\Models\NewCase\DropdownListModel;
 use App\Libraries\Zip;
-
+use DateTime;
 class Search extends BaseController
 {
     protected $AdminSearchModel;
@@ -50,10 +50,11 @@ class Search extends BaseController
         $output = array();
         // $exitCode = 0;
         $validatinError = true;
-        // pr(date('Y-m-d', strtotime(str_replace('/','-',$this->request->getPost('from_date')))));
+    //    pr($this->request->getPost('from_date'));
         if (!empty($this->request->getPost('from_date'))) {
             // $from_date = !empty($this->request->getPost('from_date')) ? date('Y-m-d',strtotime(str_replace('/','-',$this->request->getPost('from_date')))) : NULL;
             $from_date = !empty($this->request->getPost('from_date')) ? date('Y-m-d', strtotime($this->request->getPost('from_date'))) : NULL;
+
             $params['from_date'] = $from_date;
         } else {
             $output['status'] = 'error';
@@ -63,9 +64,23 @@ class Search extends BaseController
             echo "1@@@" . 'Please select from date.';
             exit(0);
         }
+        // pr($this->request->getPost('to_date'));
+            
+
         if (!empty($this->request->getPost('to_date'))) {
+
+            $to_date_str = $this->request->getPost('to_date');
+            $to_date = !empty($to_date_str) ? DateTime::createFromFormat('d/m/Y', $to_date_str) : NULL;
+
+            if ($to_date) {
+                $to_date = $to_date->format('Y-m-d');
+            } else {
+                $to_date = NULL; // Or handle the error as needed
+            } 
             // $to_date = !empty($this->request->getPost('to_date')) ? date('Y-m-d',strtotime(strtr($this->request->getPost('to_date'), '/', '-'))) : NULL;
-            $to_date = !empty($this->request->getPost('to_date')) ? date('Y-m-d', strtotime($this->request->getPost('to_date'))) : NULL;
+        //     $to_date = !empty($this->request->getPost('to_date')) ? date('Y-m-d', strtotime($this->request->getPost('to_date'))) : NULL;
+        // pr($to_date);
+
             $params['to_date'] = $to_date;
         } else {
             $output['status'] = 'error';
@@ -78,6 +93,8 @@ class Search extends BaseController
         // $params['sc_case_type'] = $this->input->post("sc_case_type");
         $params['sc_case_type'] = $this->request->getPost('sc_case_type');
         $userNameArr = array();
+
+        // pr($params);
         $doc_list = $this->AdminSearchModel->get_list_doc_fromDate_toDate($params);
         $data['doc_list'] = $doc_list;
         if (!empty($doc_list)) {

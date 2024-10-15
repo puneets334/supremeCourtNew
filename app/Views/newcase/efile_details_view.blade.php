@@ -1164,7 +1164,8 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                             if (typeof data == 'string') {
                                 data = JSON.parse(data);
                             }
-                            // console.log(data);
+                           console.log(data);
+
                             // return false;
                             if (data) {
                                 $("#exampleModal").modal('show');
@@ -1177,6 +1178,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                 var alloted_to = '';
                                 var insertedDocNums = '';
                                 if (data.status == 'SUCCESS') {
+                                    alert('here');
                                     diaryStatus = 'new_diary';
                                     if (data.diary_no) {
                                         diaryNo = data.diary_no;
@@ -1235,10 +1237,12 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                     if (file_type == 'new_case') {
                                         $('#createDiaryNo').html('Generate Diary No.');
                                         var errorMessage = 'Diary no. generation has been successfully!';
+                           
                                     } else {
                                         $('#createDiaryNo').html('Generate Caveat No.');
                                         var errorMessage = 'Caveat no. generation has been successfully!';
                                     }
+
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(errorMessage);
                                     $("#customErrorMessage").css('color', 'green');
@@ -1256,9 +1260,11 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                             $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                         },
                                         success: function(updateData) {
-                                            // console.log(updateData);
+                                        
+                                           console.log(updateData);
                                             // return false;
                                             $("#loader_div").html('');
+ 
                                             if (updateData.success == 'success') {
                                                 $("#customErrorMessage").html('');
                                                 $("#customErrorMessage").html(updateData.message);

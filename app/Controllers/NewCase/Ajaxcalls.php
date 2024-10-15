@@ -805,6 +805,7 @@ class Ajaxcalls extends BaseController {
                     $output;
             }
         }
+        
         echo json_encode($output);
         exit;
     }

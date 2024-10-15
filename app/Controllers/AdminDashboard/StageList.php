@@ -86,7 +86,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Submitted On', 'Action');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(New_Filing_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(New_Filing_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -96,7 +96,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Updated On');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DEFICIT_COURT_FEE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DEFICIT_COURT_FEE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count']) && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -105,7 +105,7 @@ class StageList extends BaseController {
                 $data['tab_head'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Defect Raised On');
                 $data['data_key']  = array('#', 'eFiling No.', 'Type', 'Case Details', 'Defect Raised On');
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
@@ -118,7 +118,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Updated On', 'Action');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Transfer_to_CIS_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Transfer_to_CIS_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -128,7 +128,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Updated On', 'Action');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Get_From_CIS_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Get_From_CIS_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -138,7 +138,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Complied On', 'Action');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -148,7 +148,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Updated On', 'Action');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Transfer_to_IB_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Transfer_to_IB_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -158,7 +158,7 @@ class StageList extends BaseController {
                 $data['data_key'] =  array('#', 'eFiling No.', 'Type', 'Case Details', 'Updated On', 'Action');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Approval_Pending_Admin_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);                
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Approval_Pending_Admin_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -168,7 +168,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Defect Raised On');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -178,7 +178,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Rejected On', 'Rejected From');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Rejected_Stage, E_REJECTED_STAGE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Rejected_Stage, E_REJECTED_STAGE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -188,7 +188,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Cured On', 'Check Status');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Defects_Cured_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(I_B_Defects_Cured_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -207,7 +207,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', $lbl_efiling_no, 'Type', 'Case Details', 'Updated on');
                 // $data['result'] = $this->StageList_model->get_efiled_list_admin(array(E_Filed_Stage, CDE_ACCEPTED_STAGE), array(E_FILING_TYPE_NEW_CASE, E_FILING_TYPE_CDE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 // $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                // $totalRecords = count($data['count']);
+                // $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // // pr($totalRecords);
                 // $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -218,7 +218,7 @@ class StageList extends BaseController {
                 // $data['result'] = $this->StageList_model->get_efiled_list_admin(array($stages), array(E_FILING_TYPE_MISC_DOCS), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Document_E_Filed), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Document_E_Filed), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -229,7 +229,7 @@ class StageList extends BaseController {
                 // $data['result'] = $this->StageList_model->get_efiled_list_admin(array($stages), array(E_FILING_TYPE_DEFICIT_COURT_FEE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DEFICIT_COURT_FEE_E_FILED), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DEFICIT_COURT_FEE_E_FILED), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -246,7 +246,7 @@ class StageList extends BaseController {
                 // $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(LODGING_STAGE, DELETE_AND_LODGING_STAGE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(LODGING_STAGE,DELETE_AND_LODGING_STAGE,MARK_AS_ERROR), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(LODGING_STAGE,DELETE_AND_LODGING_STAGE,MARK_AS_ERROR), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -257,7 +257,7 @@ class StageList extends BaseController {
                 // $data['result'] = $this->StageList_model->get_efiled_list_admin(array($stages), array(E_FILING_TYPE_IA), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(IA_E_Filed), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(IA_E_Filed), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -267,7 +267,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'E-filing Type');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(HOLD), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(HOLD), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
@@ -277,7 +277,7 @@ class StageList extends BaseController {
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'E-filing Type');
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DISPOSED), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DISPOSED), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                $totalRecords = count($data['count']);
+                $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }

@@ -429,10 +429,10 @@ class EfilingAction extends BaseController {
     public function getCISData()
     {
 
-        if (!($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ACTION_ADMIN )) {
-            echo 'ERROR||||<div class="alert alert-danger text-center">Invalid access.</div>';
-            exit(0);
-        }
+        // if (!($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ACTION_ADMIN )) {
+        //     echo 'ERROR||||<div class="alert alert-danger text-center">Invalid access.</div>';
+        //     exit(0);
+        // }
 
         $diary = $this->request->getGet('diaryno');
         $diary= url_decryption($diary);
@@ -471,10 +471,11 @@ class EfilingAction extends BaseController {
         $data['registeredDocs']=$registeredDocs;
         $data['documents']=$this->Common_model->get_uploaded_documents($registration_id);
         $data['payment_details'] = $this->View_model->get_payment_details($registration_id);
-       //echo '<pre>';print_r($data['efiling_data']);echo '</pre>';exit();
-        $this->load->view('templates/admin_header');
-        $this->load->view('adminDashboard/showDetailsForIARegistration', $data);
-        $this->load->view('templates/footer');
+        // echo '<pre>';print_r($data);echo '</pre>';exit();
+        // $this->load->view('templates/admin_header');
+        return $this->render('adminDashboard.showDetailsForIARegistration', $data);
+        // $this->load->view('adminDashboard/showDetailsForIARegistration', $data);
+        // $this->load->view('templates/footer');
     }
 
 

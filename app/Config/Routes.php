@@ -422,3 +422,10 @@ $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload', 'Register\AdvSignUp
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload_id_proof', 'Register\AdvSignUp::upload_id_proof');
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit', 'Register\AdvSignUp::final_submit');
 
+
+
+
+//code started --14-10-2024
+$routes->match(['GET', 'POST'], 'admin/EfilingAction/getCISData', 'Admin\EfilingAction::getCISData');
+
+
