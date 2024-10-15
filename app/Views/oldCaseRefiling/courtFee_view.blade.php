@@ -33,9 +33,9 @@
                             <!--  //comment 16 march 2021 by akg
                              <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php /*echo_data(url_encryption($uploaded_pages_count
                                 .'$$'.$printing_cost_total.'$$'.$printing_cost_already_paid.'$$'.$printing_cost_to_be_paid)); */ ?>" />-->
-                            <td><?php echo_data($_SESSION['estab_details']['printing_cost']); ?></td>
-                            <td><?php echo_data($uploaded_pages_count); ?></td>
-                            <td><?php echo_data($printing_cost_total); ?></td>
+                            <td data-key='Cost Per Page ( <i class="fa fa-rupee"></i> )'><?php echo_data($_SESSION['estab_details']['printing_cost']); ?></td>
+                            <td data-key='Uploaded Page(s)'><?php echo_data($uploaded_pages_count); ?></td>
+                            <td data-key='Total Cost ( <i class="fa fa-rupee"></i> )'><?php echo_data($printing_cost_total); ?></td>
                             <!-- <td><?php /*echo_data($printing_cost_already_paid); */ ?></td>
                             <td><?php /*echo_data($printing_cost_to_be_paid); */ ?></td>-->
                         </tr>
@@ -125,9 +125,9 @@
 
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                            <td data-key='#'><?= $sr_no ?></td>
+                                            <td data-key='Court Fee Details '> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
 
                                     <?php
@@ -165,9 +165,9 @@
 
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?> <?= $doc_extra_details ?> <?= $affidavit_no_of_copies ?></td>
-                                            <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> <?= $doc_extra_details ?> <?= $affidavit_no_of_copies ?></td>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
 
                                     <?php
@@ -193,21 +193,21 @@
                                             }
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no;
+                                            <td data-key="#"><?= $sr_no;
                                                 $doc ?></td>
-                                            <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
                                     <?php
                                             $sr_no++;
                                         } elseif (in_array((int)$doc, $doc_list_for_per_petition_calculation, TRUE)) {
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?> <br> (No. of petitioners
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> <br> (No. of petitioners
                                                 : <?= $row['total_petitioners']; ?>)
                                             </td>
-                                            <td align="center"><i class="fa fa-rupee"></i>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
                                                 <?php if ($case_nature == 'C')
                                                     $doc_court_fee = $row['docfee'];
                                                 else
@@ -227,14 +227,14 @@
 
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?>
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?>
                                                 <?php if ($row['order_challanged'] > 0) { ?>
                                                     (No. of order Challanged
                                                     : <?= $row['order_challanged']; ?>)
                                                 <?php } ?>
                                             </td>
-                                            <td align="center"><i class="fa fa-rupee"></i>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
                                                 <?php if ($case_nature == 'C')
                                                     $doc_court_fee = $row['docfee'];
                                                 else
@@ -270,19 +270,19 @@
 
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?>
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?>
                                             </td>
-                                            <td align="center"><i class="fa fa-rupee"></i> <?= (int)$doc_court_fee; ?></td>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= (int)$doc_court_fee; ?></td>
                                         </tr>
                                     <?php
                                             $sr_no++;
                                         } else {
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no; ?></td>
-                                            <td> <?= $row['docdesc']; ?> </td>
-                                            <td align="center"><i class="fa fa-rupee"></i>
+                                            <td data-key="#"><?= $sr_no; ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc']; ?> </td>
+                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
                                                 <?php if ($case_nature == 'C')
                                                     $doc_court_fee = (int)$row['docfee'];
                                                 else
@@ -306,9 +306,9 @@
                                     foreach ($payment_details as $Efee) { ?>
                                         <?php if ($Efee['payment_status'] == 'Y' && $Efee['user_declared_extra_fee'] != 0) { ?>
                                             <tr style="color: #0055aa;size: 20px;">
-                                                <td><?= $sr_no; ?></td>
-                                                <td> Extra Court Fee </td>
-                                                <td align="center"><i class="fa fa-rupee"></i> <?= (int)$Efee['user_declared_extra_fee']; ?></td>
+                                                <td data-key="#"><?= $sr_no; ?></td>
+                                                <td data-key="Court Fee Details"> Extra Court Fee </td>
+                                                <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= (int)$Efee['user_declared_extra_fee']; ?></td>
                                             </tr>
                                         <?php $sr_no++;
                                         } ?>
@@ -377,7 +377,7 @@
                         </div>
                     </div>
                     <!--<label style="margin-top: 2px;font-weight: bold;color: red;><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY.ANY DEFICIT COURT FEE WHICH REMAINS AS DIFFERENCE SHALL BE RAISED AS DEFECT AT SCRUTINY STAGE AND THE PAYMENT TO SUCH EFFECT COMPLYING THE DEFECT RAISED SHALL BE MADE BY THE AOR/PARTY-IN-PERSON."</label>-->
-                    <label style="margin-top: 2px;font-weight: bold;color: red;><i class=" fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
+                    <label style="margin-top: 2px;font-weight: bold;color: red;"><i class=" fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
                 </div>
             </div>
             <div class="col-lg-6 ccol-md-6 col-sm-12 col-xs-12">

@@ -202,6 +202,7 @@
     <script>
         $(document).ready(function() {
             $('#datatable-decline').DataTable();
+            $('#datatable-responsive').DataTable();
         });
     </script>
 

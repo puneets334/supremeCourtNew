@@ -50,16 +50,16 @@
                         }
                         ?>
                         <tr>
-                            <td><?= htmlentities($sno++, ENT_QUOTES); ?></td>
-                            <td><?= htmlentities($resData['order_no'], ENT_QUOTES) .'</br>'.$order_date ?></td>
-                            <td><?= htmlentities($resData['transaction_num'], ENT_QUOTES) . '<br>' . htmlentities($txn_status_updated_on, ENT_QUOTES); ?></td>
-                            <td><?= htmlentities($resData['bank_name'], ENT_QUOTES); ?></td>
-                            <td><?= htmlentities($resData['user_declared_court_fee'], ENT_QUOTES); ?></td>
+                            <td data-key="#"><?= htmlentities($sno++, ENT_QUOTES); ?></td>
+                            <td data-key="Order Number / Date"><?= htmlentities($resData['order_no'], ENT_QUOTES) .'</br>'.$order_date ?></td>
+                            <td data-key="SHCIL Ref.No. / Date"><?= htmlentities($resData['transaction_num'], ENT_QUOTES) . '<br>' . htmlentities($txn_status_updated_on, ENT_QUOTES); ?></td>
+                            <td data-key="Bank Name"><?= htmlentities($resData['bank_name'], ENT_QUOTES); ?></td>
+                            <td data-key="Amount"><?= htmlentities($resData['user_declared_court_fee'], ENT_QUOTES); ?></td>
                             <?php if ((bool) $_SESSION['estab_details']['is_charging_printing_cost']) { ?>
-                                <td><?= htmlentities($resData['printing_total'], ENT_QUOTES); ?></td>
-                                <td><?= htmlentities($resData['user_declared_total_amt'], ENT_QUOTES); ?></td>
+                                <td data-key='Printing Cost ( <i class="fa fa-rupee"></i> )'><?= htmlentities($resData['printing_total'], ENT_QUOTES); ?></td>
+                                <td data-key='Total Amount  ( <i class="fa fa-rupee"></i> )'><?= htmlentities($resData['user_declared_total_amt'], ENT_QUOTES); ?></td>
                             <?php } ?>
-                            <td>  <?php echo $paymentPdf ;
+                            <td data-key="Status">  <?php echo $paymentPdf ;
                                 $efiling_stages_array = array(Transfer_to_IB_Stage, DEFICIT_COURT_FEE_E_FILED,I_B_Approval_Pending_Admin_Stage,I_B_Defects_Cured_Stage);
                                 if(!empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && !empty($stage_id) && in_array($stage_id, $efiling_stages_array))
                                 //if(!empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && !empty($stage_id) && $stage_id == Transfer_to_IB_Stage)
