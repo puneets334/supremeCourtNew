@@ -167,7 +167,7 @@
             }
             if(validationError){
                 //alert("Ready to ZIP Archive created");//return false;
-                $('.Download').hide();
+                // $('.Download').hide();
                 $('.loader_div').show();
                 var CSRF_TOKEN = 'CSRF_TOKEN';
                 var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

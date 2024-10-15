@@ -1,8 +1,8 @@
 /* black theme css old file 25-09-24  */
 .black-theme {background-color: #111111;color: #fff;}
-.black-theme {background: #111111;color: #fff;}
-.black-theme select {color: #ff0;}
-.black-theme p, .black-theme h5, .black-theme h6, .black-theme .x_panel h2{color: #fff!important;}
+.black-theme {background: #111111;}
+.black-theme select {color: #ff0;background: #000;}
+.black-theme p, .black-theme h5, .black-theme h6, .black-theme h1, .black-theme h2, .black-theme h3, .black-theme h4, .black-theme label, .black-theme span, .black-theme div{color: #fff!important;}
 
 .black-theme table {background: transparent;}
 .black-theme caption, .black-theme th, .black-theme td {background: #000 !important;color: #fff;}
@@ -33,7 +33,6 @@
 .black-theme .user-action-sec:before {border-bottom-color: #333333;}
 .black-theme .wrapper {background: #222222;}
 .black-theme .mngmntHeader .userDetail .userName{color: #ff0;}
-.black-theme span {color: #ffffff !important;}
 /* Header CSS End  */
 /* Menu CSS Start  */
 .black-theme .dashboardLeftNav li a.active:before, .black-theme .dashboardLeftNav li a.btn-link:hover:before {filter: invert(1);}
@@ -60,6 +59,7 @@
 .black-theme .table-striped tr:nth-child(odd), .black-theme .table-striped tr:nth-child(odd) td {background-color: #333333 !important;}
 .black-theme .table-striped tr td {border-bottom: 1px solid #ffffff59;}
 .black-theme .table tr td, .black-theme .table tr th {color: #ffffff;}
+.black-theme .table tr th {background: #222222 !important;}
 .black-theme .table-striped tr:hover td {background: #111111 !important;color: #ff0;}
 .black-theme .title-sec .unerline-title {color: #fff;}
 .black-theme .title-sec .unerline-title:before {background: #fff !important;}
@@ -90,7 +90,7 @@
 .black-theme .common-modal .modal-dialog .modal-content {background: #000;box-shadow: 0px 0px 13px 0px rgb(255 255 255 / 58%);}
 .black-theme .common-modal .modal-footer{background: #333333;}
 .black-theme .common-modal .modal-body {color:#ff0;}
-.black-theme .common-modal .quick-btn {background: #000!important;}
+.black-theme .common-modal .quick-btn {background: #333!important;border: 1px solid #ffff0036;}
 .black-theme input[type="search"] {color: white;}
 .black-theme .usrprofile-details label.prof-label {font-size: 16px;font-family: 'noto_sanssemibold';color: #ffff00;}
 .black-theme .usrprofile-details .prof-outp {color: #ffffff;font-size: 16px;}
@@ -154,3 +154,33 @@
 .black-theme .select2-container--open .select2-dropdown--below{background:#000;}
 .black-theme  .select2-container--default .select2-results__option[aria-selected=true], .black-theme .select2-container--default .select2-results__option--highlighted[aria-selected] , .black-theme .datepicker table tr td.day.focused, .black-theme .datepicker table tr td.day:hover{background:#333 !important;}
 .black-theme .datepicker-dropdown{background:#555;}
+.black-theme a.blue-dot .mdi {color: #0D48BE !important;}
+.black-theme a.green-dot .mdi {color: #337700!important;}
+.black-theme a.yellow-dot .mdi {color: #F1B800!important;}
+.black-theme a.red-dot .mdi {color: #BE0D0D!important;}
+.black-theme .radio-btns-inp .form-check{color:#fff!important;}
+.black-theme table tr:nth-child(even) td {background: #111 !important;}
+.black-theme .datepicker .datepicker-switch:hover, .black-theme .datepicker .next:hover, .black-theme .datepicker .prev:hover, .black-theme .datepicker tfoot tr th:hover {background: #333 !important;}
+.black-theme .select2-dropdown{background: #000;border: 1px solid #5c5c5c;}
+.black-theme .accordion-item {border-color: #555555;background: #222222;}
+.black-theme .accordion-item .accordion-button {background: #555555;color: #ff0;box-shadow: none;}
+.black-theme .accordion .accordion-button[aria-expanded="false"]:after {filter: invert(21%) sepia(86%) saturate(9%) hue-rotate(20deg) brightness(10%) contrast(10%);}
+.black-theme .accordion-item a i {color: #ff0 !important;}
+.black-theme .pagination-btns .paging .btn {background: #000 !important;color: #ff0 !important;border-color: #726f6f !important;}
+.black-theme .pagination-btns .paging.paging-input input#page_input {background: #000;color: #ff0;border-color: #726f6f;}
+.black-theme .dataTables_wrapper .dataTables_info{color: #fff;}
+.black-theme .x_content .nav-tabs .nav-link, .black-theme .dashboard-section .dash-card .nav-tabs .nav-link {background: #333;color: #ff0;border-color: #626262;}
+.black-theme .form-control:disabled, .black-theme .form-control[readonly] {background: #444;}
+.black-theme span.select2.select2-container.select2-container--default {background: #000 !important;}
+.black-theme .select2-container--default .select2-selection--multiple {background: #333;}
+.black-theme .select2-container--default .select2-selection--multiple .select2-selection__choice {background: #000;color: #ff0;}
+/* --- Modal CSS Start  */
+.black-theme .common-modal .modal-header .btn-close:before {color: #ff0;}
+.black-theme .common-modal .modal-header .btn-close {background: #333;}
+.black-theme .common-modal .modal-header .btn-close:hover {background: #555;}
+.black-theme .common-modal .modal-header .btn-close:hover:before {color: #ff0;}
+.black-theme .common-modal .uk-modal-dialog {background: #000;box-shadow: 0px 0px 20px rgb(221 221 221 / 61%);}
+.black-theme .common-modal .uk-modal-dialog svg line {fill: #fff !important;stroke: rgb(255 255 255);}
+/* --- Modal CSS End  */
+.black-theme .custom-table td a svg path {fill: #ff0;}
+.black-theme .custom-table td a svg polygon{stroke: #ff0;}

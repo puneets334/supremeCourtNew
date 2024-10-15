@@ -24,6 +24,8 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
         padding: 15px;
         color: #000;
     }
+    div#disapproveModal form#disapp_case .editor-wrapper {text-align: left;border: 1px solid #ccc;}
+    div#disapproveModal form#disapp_case .btn-toolbar.editor {border: 1px solid #ccc;border-bottom: none;}
 </style>
 
 <div class="dash-card dashboard-section">
@@ -77,7 +79,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                 </div>
 
                 <div class="ryt-dash-breadcrumb">
-                    <div class="">
+                    <div class="btns-sec">
                         <?php
                         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
                         $ArrayHOLD = array(HOLD);
@@ -112,11 +114,12 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         }
                         ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn gray-btn" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a> -->
-                    </div>
-                    <div class="btns-sec">
-
                         <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a>
                     </div>
+                    <!-- <div class="btns-sec">
+
+                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a>
+                    </div> -->
                 </div>
             </div>
 
@@ -571,21 +574,24 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 //echo "dd: ".$pending_court_fee; exit;
 ?>
 
-<div class="modal fade" id="approveModal" role="dialog">
+<div class="modal common-modal fade" id="approveModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-            <h4 class="modal-title"><span class="fa fa-pencil"></span> Confirmation</h4>
+           
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 
             </div>
             <div class="modal-body">
+            <h4 class="modal-title mb-3"><span class="fa fa-pencil"></span> Confirmation</h4>
                 <p>Are you sure to Approve this E-filing number ? </p>
             </div>
             <div class="modal-footer">
-                <a href="" class="btn btn-default">No</a>
-                <a href="<?php echo base_url('admin/efilingAction'); ?>" class="btn btn-success">Yes</a>
+                <div class="center-buttons">
+                    <a href="" class="quick-btn gray-btn" data-bs-dismiss="modal">No</a>
+                    <a href="<?php echo base_url('admin/efilingAction'); ?>" class="quick-btn">Yes</a>
+                </div>
             </div>
         </div>
 
@@ -612,14 +618,12 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 
     </div>
 </div>
-<div class="modal fade" id="disapproveModal" role="dialog">
+<div class="modal common-modal fade" id="disapproveModal" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 
-                <h4 class="modal-title">
-                    <span class="fa fa-pencil"></span><?php echo $lbl = (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
-                </h4>
+               
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -632,6 +636,10 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             }
             ?>
             <div class="modal-body">
+                <h4 class="modal-title mb-3">
+                    <span class="fa fa-pencil"></span><?php echo $lbl = (isset($_SESSION['efiling_details']) && $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) ? "Write Orders" : "Write Reason to Disapprove"; ?> 
+                </h4>
+
                 <div id="disapprove_alerts"></div>                
                 <div class="clearfix"><br></div>
 
@@ -667,8 +675,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 <div class="clearfix"><br></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a class="btn btn-success" id="disapprove_me" >Submit</a>
+                <button type="button" class="quick-btn gray-btn" data-bs-dismiss="modal" >Close</button>
+                <a class="quick-btn" id="disapprove_me" >Submit</a>
             </div>
             <?php echo form_close(); ?>  
         </div>

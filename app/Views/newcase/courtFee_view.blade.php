@@ -71,9 +71,9 @@
                                     $printing_cost_total = (int) $uploaded_pages_count * (int) getSessionData('estab_details')['printing_cost'];
                                     $printing_cost = getSessionData('estab_details')['printing_cost'];
                                     ?>
-                                    <td><?php echo_data($printing_cost); ?></td>
-                                    <td><?php echo_data($uploaded_pages_count); ?></td>
-                                    <td><?php echo_data($printing_cost_total); ?></td>
+                                    <td data-key="Cost Per Page (₹)"><?php echo_data($printing_cost); ?></td>
+                                    <td data-key="Uploaded Page(s)"><?php echo_data($uploaded_pages_count); ?></td>
+                                    <td data-key="Total Cost (₹)"><?php echo_data($printing_cost_total); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -156,8 +156,8 @@
                                         //  Vakalatnama need to add automatically once subject category selected
                                 ?>
                                         <tr style="color: #0d6aad;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td>
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details ">
                                                 Case Nature : <?php if ($row['nature'] == 'C') {
                                                                     echo 'Civil';
                                                                 } else {
@@ -203,7 +203,7 @@
                                                 : <?= (int)$row['total_petitioners']; ?> => Total Court Fee=500 * <?= (int)$row['total_petitioners']; ?>)
                                             <?php } ?>
                                             </td>
-                                            <td align="center">
+                                            <td data-key="Amount ( ₹ )" align="center">
                                                 <?php
                                                 if ($sc_case_type_id == 19) {
                                                     $case_nature = 'R';
@@ -315,8 +315,8 @@
                                             }
                                             if ($display_vakalatnama == 'Y' || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
                                         ?> <tr style="color: #0055aa;size: 20px;">
-                                                    <td><?= $sr_no ?></td>
-                                                    <td> <?= $row['docdesc'] ?>
+                                                    <td data-key="#"><?= $sr_no ?></td>
+                                                    <td data-key="Court Fee Details"> <?= $row['docdesc'] ?>
                                                         <?php
                                                         if ($case_type_id == '5') { ?>
                                                             (No. of Petitioners
@@ -328,7 +328,7 @@
                                                         <?php }
                                                         } ?>
                                                     </td>
-                                                    <td align="center">₹
+                                                    <td data-key='Amount ( ₹ )' align="center">₹
                                                         <?php
                                                         //print_r($case_nature);
                                                         if (($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
@@ -388,9 +388,9 @@
                                         }
                                         ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center">₹ <?= $doc_court_fee ?></td>
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
+                                            <td data-key="Amount ( ₹ )" align="center">₹ <?= $doc_court_fee ?></td>
                                         </tr>
                                     <?php
                                         $sr_no++;
@@ -410,9 +410,9 @@
                                         }
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center">₹
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
+                                            <td data-key="Amount ( ₹ )" align="center">₹
                                                 <?php if ($no_of_affidavit_copies > 0)
                                                     echo (int)$doc_court_fee * (int)$no_of_affidavit_copies;
                                                 else
@@ -437,21 +437,21 @@
                                         }
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no;
+                                            <td data-key="#"><?= $sr_no;
                                                 $doc ?></td>
-                                            <td> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td align="center">₹ <?= $doc_court_fee ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
+                                            <td data-key="Amount ( ₹ )" align="center">₹ <?= $doc_court_fee ?></td>
                                         </tr>
                                     <?php
                                         $sr_no++;
                                     } elseif (in_array((int)$doc, $doc_list_for_per_petition_calculation, TRUE)) {
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?> <br> (No. of petitioners
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> <br> (No. of petitioners
                                                 : <?= $row['total_petitioners']; ?>)
                                             </td>
-                                            <td align="center">₹
+                                            <td data-key="Amount ( ₹ )" align="center">₹
                                                 <?php
                                                 if ($row['nature'] == 'C')
                                                     $doc_court_fee = $row['docfee'];
@@ -468,11 +468,11 @@
                                     } elseif (in_array((int)$doc, $doc_list_for_per_lower_court_order_challanged_number, TRUE)) {
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?> <br> (No. of order Challanged
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> <br> (No. of order Challanged
                                                 : <?= $row['order_challanged']; ?>)
                                             </td>
-                                            <td align="center">₹
+                                            <td data-key="Amount ( ₹ )" align="center">₹
                                                 <?php
                                                 if ($row['nature'] == 'C')
                                                     $doc_court_fee = $row['docfee'];
@@ -495,21 +495,21 @@
                                             $doc_court_fee = 0;
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?>
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?>
                                             </td>
-                                            <td align="center">₹ <?= (int)$doc_court_fee; ?></td>
+                                            <td data-key="Amount ( ₹ )" align="center">₹ <?= (int)$doc_court_fee; ?></td>
                                         </tr>
                                     <?php
                                         $sr_no++;
                                     } elseif (in_array((int)$doc, $doc_list_no_of_non_party_appellant, TRUE)) {
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no ?></td>
-                                            <td> <?= $row['docdesc'] ?> <br> No of Petitioners / appellant (Non-party)
+                                            <td data-key="#"><?= $sr_no ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> <br> No of Petitioners / appellant (Non-party)
                                                 : <?= $row['no_of_petitioner_appellant']; ?>
                                             </td>
-                                            <td align="center">₹
+                                            <td data-key="Amount ( ₹ )" align="center">₹
                                                 <?php
                                                 if ($row['nature'] == 'C') {
                                                     if ((int)$row['no_of_petitioner_appellant'] > 0) {
@@ -527,9 +527,9 @@
                                         echo $row['no_of_petitioner_appellant'];
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
-                                            <td><?= $sr_no; ?></td>
-                                            <td> <?= $row['docdesc'] ?> </td>
-                                            <td align="center">₹
+                                            <td data-key="#"><?= $sr_no; ?></td>
+                                            <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> </td>
+                                            <td data-key="Amount ( ₹ )" align="center">₹
                                                 <?php
                                                 if (($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
                                                     $doc_court_fee = (int)$row['docfee'];
@@ -548,9 +548,9 @@
                                         <?php
                                         if ($Efee['payment_status'] == 'Y' && $Efee['user_declared_extra_fee'] != 0) { ?>
                                             <tr style="color: #0055aa;size: 20px;">
-                                                <td><?= $sr_no; ?></td>
-                                                <td> Extra Court Fee </td>
-                                                <td align="center"><?= $user_declared_extra_fee = $user_declared_extra_fee + (int)$Efee['user_declared_extra_fee']; ?></td>
+                                                <td data-key="#"><?= $sr_no; ?></td>
+                                                <td data-key="Court Fee Details"> Extra Court Fee </td>
+                                                <td data-key="Amount ( ₹ )" align="center"><?= $user_declared_extra_fee = $user_declared_extra_fee + (int)$Efee['user_declared_extra_fee']; ?></td>
                                             </tr>
                                         <?php $sr_no++;
                                         } ?>
@@ -558,8 +558,9 @@
                                 }
                                 ?>
                                 <tr>
-                                    <td></td><td></td>
-                                    <td colspan="3" style="text-align: center;padding-right: 71px;">
+                                    <td data-key="#"></td>
+                                    <td data-key="Court Fee Details"></td>
+                                    <td data-key="Amount ( ₹ )" colspan="3" style="text-align: center;padding-right: 71px;">
                                         <label style="margin-top: 10px;font-weight: bold">Total : ₹ <?= $court_fee ?></label>
                                     </td>
                                 </tr>

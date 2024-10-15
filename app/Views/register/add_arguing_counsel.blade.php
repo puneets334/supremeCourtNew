@@ -323,9 +323,9 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <!-- right box end -->
                                                 <div style="text-align: center;">
-                                                    <input type="submit" class="btn btn-primary quick-btn mt-3" name="register" id="register" value="Register">
-                                                     
-                                                    <button type="button" class=" btn-grey quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
+                                                    <!-- <input type="submit" class="quick-btn mt-3" name="register" id="register" value="Register"> -->
+                                                    <button type="submit" class="quick-btn mt-3" name="register" id="register" >Register</button>
+                                                    <button type="button" class=" quick-btn gray-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                                 </div>
 
                                             </div>
@@ -393,8 +393,9 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                             </div>
                                             <div style="text-align: center;">
-                                                <input type="submit" class="btn btn-primary quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register">
-                                                <button type="button" class=" btn-grey quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
+                                                <!-- <input type="submit" class="btn btn-primary quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register"> -->
+                                                <Button type="submit" class="quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" >Register</Button>
+                                                <button type="button" class=" gray-btn quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                             </div>
                                             <?php
                                         echo form_close();
@@ -689,9 +690,9 @@ if(!empty(getSessionData('login'))){
                                     if(isset($selfArguingCounselData) && !empty($selfArguingCounselData)){
                                         echo '<div class="x_content">
                                             <h2 class="textwhite uk-margin-remove uk-visible@m ukwidth-expand">Advocate Approval/Rejected</h2>
-                                            <button class="uk-button-medium uk-button-primary actionType" id="rejected" style="float: right;">Rejected</button>
-                                            <button class="uk-button-medium uk-button-primary actionType" id="approved" style="float: right;margin-right: 8px;margin-bottom: 12px;">Approved</button>
-                                            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                                            <button class="uk-button-medium uk-button-primary actionType quick-btn" id="rejected" style="float: right;">Rejected</button>
+                                            <button class="uk-button-medium uk-button-primary actionType quick-btn" id="approved" style="float: right;margin-right: 8px;margin-bottom: 12px;">Approved</button>
+                                            <table id="datatable-responsive" class="table custom-table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                                                 <thead>
                                                     <tr class="success input-sm" role="row" >
                                                         <th>S.No.</th>
@@ -700,7 +701,7 @@ if(!empty(getSessionData('login'))){
                                                         <th>Email</th>
                                                         <th>Bar Reg.No.</th>
                                                         <th><label class="control-label" for="selectAll"><input type="checkbox" name="selectAll" id="selectAll">
-                                                        <span style="margin-left: 7px; font-size: 12px;" id="selectSpan">Select All</span></label></th>
+                                                        <span style="margin-left: 7px; font-size: 12px;color:#fff" id="selectSpan">Select All</span></label></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>';

@@ -99,7 +99,7 @@
                                                                 <label for="inputPassword6" class="col-form-label">Diary No</label>
                                                             </div>
                                                             <div class="col-7 pe-0">
-                                                                <input class="form-control cus-form-ctrl" id="diaryno" name="diaryno" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text" required>
+                                                                <input class="form-control cus-form-ctrl" id="diaryno" name="diaryno" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -111,7 +111,7 @@
                                                                 <label for="inputPassword6" class="col-form-label"> Diary Year</label>
                                                             </div>
                                                             <div class="col-7 pe-0">
-                                                                <select class="form-select cus-form-ctrl" aria-label="Default select example" id="diary_year" name="diary_year" style="width: 100%" required>
+                                                                <select class="form-select cus-form-ctrl" aria-label="Default select example" id="diary_year" name="diary_year" style="width: 100%">
                                                                     <?php
                                                                     $end_year = 48;
                                                                     for ($i = 0; $i <= $end_year; $i++) {
@@ -167,7 +167,7 @@
                                                                 <label for="inputPassword6" class="col-form-label">Case No</label>
                                                             </div>
                                                             <div class="col-7 pe-0">
-                                                                <input class="form-control cus-form-ctrl" id="case_number" name="case_number" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
+                                                                <input class="form-control cus-form-ctrl" id="case_number" name="case_number" maxlength="10" placeholder="Case No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -239,15 +239,28 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script> -->
         <script>
             $(document).ready(function() {
+                $('#diaryno').attr('required', true);
+                $('#diary_year').attr('required', true);
+
                 var inputValue = $('input[type="radio"]:checked').val();
                 if (inputValue == 'register') {
                     $('#diaryno').val('');
                     $('#diary_year').val('');
+                    $('#diaryno').attr('required', false);
+                    $('#diary_year').attr('required', false);
+                    $('#sc_case_type').attr('required', true);
+                    $('#case_number').attr('required', true);
+                    $('#case_year').attr('required', true);
                     $("#show_search_result_diary").css("display", "none");
                     $("#show_search_result").css("display", "block");
                     $("#diarySec").css("display", "none");
                     $("#RegSec").css("display", "block");
                 } else if (inputValue == 'diary') {
+                    $('#diaryno').attr('required', true);
+                    $('#diary_year').attr('required', true);
+                    $('#sc_case_type').attr('required', false);
+                    $('#case_number').attr('required', false);
+                    $('#case_year').attr('required', false);
                     $('#sc_case_type').val('');
                     $('#case_number').val('');
                     $('#case_year').val('');
@@ -264,11 +277,21 @@
                     if (inputValue == 'register') {
                         $('#diaryno').val('');
                         $('#diary_year').val('');
+                        $('#diaryno').attr('required', false);
+                        $('#diary_year').attr('required', false);
+                        $('#sc_case_type').attr('required', true);
+                        $('#case_number').attr('required', true);
+                        $('#case_year').attr('required', true);
                         $("#show_search_result_diary").css("display", "none");
                         $("#show_search_result").css("display", "block");
                         $("#diarySec").css("display", "none");
                         $("#RegSec").css("display", "block");
                     } else if (inputValue == 'diary') {
+                        $('#diaryno').attr('required', true);
+                        $('#diary_year').attr('required', true);
+                        $('#sc_case_type').attr('required', false);
+                        $('#case_number').attr('required', false);
+                        $('#case_year').attr('required', false);
                         $('#sc_case_type').val('');
                         $('#case_number').val('');
                         $('#case_year').val('');
@@ -300,58 +323,139 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#search_case_details').on('submit', function() {
-                    // if ($('#search_case_details').valid()) {
-                    var diary_no = $('#diaryno').val();
-                    var form_data = $(this).serialize();
-                    if(diary_no=='') {
-                        alert("Please Enter Diary Number");
-                        $('#diaryno').focus();
-                        return false;
-                    }
+                    var inputValue = $('input[type="radio"]:checked').val();
+                    //  alert(inputValue);
+                    if(inputValue == 'diary'){
+                        $('#diaryno').attr('required', true);
+                        $('#diary_year').attr('required', true);
+                        $('#sc_case_type').attr('required', false);
+                        $('#case_number').attr('required', false);
+                        $('#case_year').attr('required', false);
 
-                    // console.log(form_data); exit;
-                    var CSRF_TOKEN = 'CSRF_TOKEN';
-                    var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-                    $('#show_search_result_diary').html('');
-                    $('#show_search_result').html('');
-                    $(".form-response").html('');
-                    $(".form-response").hide();
-                    $.ajax({
-                        type: "GET",
-                        url: "<?php echo base_url('case/search/search_case_details'); ?>",
-                        data: form_data,
-                        async: false,
-                        beforeSend: function() {
-                            $('#search_sc_case').val('Please wait...');
-                            $('#search_sc_case').prop('disabled', true);
-                        },
-                        success: function(data) {
+                        var diary_no = $('#diaryno').val();
+                        var diary_year = $('#diary_year').val();
+                        // alert(diary_year);
+                        var form_data = $(this).serialize();
+                        if(diary_no==''){
+                            alert('Please Enter Diary Number');
+                            $('#diaryno').focus(); 
+                            return false;
+                        }
+                        if(diary_year=='' || diary_year==null ){
+                            alert('Please Select Diary Year'); 
+                            $('#diary_year').focus(); 
+                            return false;
+                        }
 
+                            var CSRF_TOKEN = 'CSRF_TOKEN';
+                            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                            $('#show_search_result_diary').html('');
+                            $('#show_search_result').html('');
+                            $(".form-response").html('');
+                            $(".form-response").hide();
+                            $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('case/search/search_case_details'); ?>",
+                            data: form_data,
+                            async: false,
+                            beforeSend: function() {
+                                $('#search_sc_case').val('Please wait...');
+                                $('#search_sc_case').prop('disabled', true);
+                            },
+                            success: function(data) { 
+                                $('#search_sc_case').val('SEARCH');
+                                $('#search_sc_case').prop('disabled', false);
+                                var resArr = data.split('@@@');
+                                console.log(resArr[1]);
 
-                            $('#search_sc_case').val('SEARCH');
-                            $('#search_sc_case').prop('disabled', false);
-                            var resArr = data.split('@@@');
-                            console.log(resArr[1]);
-
-                            if (resArr[0] == 1) {
-                                $('#show_search_result_diary').html(resArr[1]);
-                            } else if (resArr[0] == 2) {
-                                $('#show_search_result').html(resArr[1]);
-                            } else if (resArr[0] == 3) {
-                                alert(resArr[1]);
-                                // $(".form-response").show();
-                                // $('#msg').show();
-                                // $(".form-response").html(
-                                //     "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
-                                //     resArr[1] +
-                                //     "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
-                                // );
+                                if (resArr[0] == 1) {
+                                    $('#show_search_result_diary').html(resArr[1]);
+                                } else if (resArr[0] == 2) {
+                                    $('#show_search_result').html(resArr[1]);
+                                } else if (resArr[0] == 3) {
+                                    alert(resArr[1]); 
+                                }
+                                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                                });
                             }
-                            $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                                $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                             });
                         }
-                    });
+
+
+                        if(inputValue == 'register'){
+                        $('#diaryno').attr('required', false);
+                        $('#diary_year').attr('required', false);
+                        $('#sc_case_type').attr('required', true);
+                        $('#case_number').attr('required', true);
+                        $('#case_year').attr('required', true);
+
+                        var sc_case_type = $('#sc_case_type').val();
+                        var case_number = $('#case_number').val();
+                        var case_year = $('#case_year').val();
+                        // alert(diary_year);
+                        var form_data = $(this).serialize();
+                        if(sc_case_type=='' || sc_case_type==null ){
+                            alert('Please Select Case Type');
+                            $('#sc_case_type').focus(); 
+                            return false;
+                        }
+                        if(case_number=='' || case_number==null ){
+                            alert('Please Enter Case Number'); 
+                            $('#case_number').focus(); 
+                            return false;
+                        }
+                        if(case_year=='' || case_year==null ){
+                            alert('Please Select Case Year'); 
+                            $('#case_year').focus(); 
+                            return false;
+                        }
+
+                            var CSRF_TOKEN = 'CSRF_TOKEN';
+                            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                            $('#show_search_result_diary').html('');
+                            $('#show_search_result').html('');
+                            $(".form-response").html('');
+                            $(".form-response").hide();
+                            $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('case/search/search_case_details'); ?>",
+                            data: form_data,
+                            async: false,
+                            beforeSend: function() {
+                                $('#search_sc_case').val('Please wait...');
+                                $('#search_sc_case').prop('disabled', true);
+                            },
+                            success: function(data) { 
+                                $('#search_sc_case').val('SEARCH');
+                                $('#search_sc_case').prop('disabled', false);
+                                var resArr = data.split('@@@');
+                                console.log(resArr[1]);
+
+                                if (resArr[0] == 1) {
+                                    $('#show_search_result_diary').html(resArr[1]);
+                                } else if (resArr[0] == 2) {
+                                    $('#show_search_result').html(resArr[1]);
+                                } else if (resArr[0] == 3) {
+                                    alert(resArr[1]); 
+                                }
+                                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                                });
+                            }
+                            });
+                        }
+                    // if ($('#search_case_details').valid()) {
+                    // var diary_no = $('#diaryno').val();
+                    // var form_data = $(this).serialize();
+                    // if(diary_no=='') {
+                    //     alert("Please Enter Diary Number");
+                    //     $('#diaryno').focus();
+                    //     return false;
+                    // }
+
+                    // console.log(form_data); exit;
+                    
                     return false;
                     // } else {
                     //     alert("Form is invalid!");
