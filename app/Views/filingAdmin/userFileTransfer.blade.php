@@ -10,9 +10,11 @@
         display: none !important;
     }
     table#filetransfer td:nth-child(5) {
-    min-height: 35px;
+    min-height: 55px;
 }
-
+table#filetransfer td:nth-child(6) {
+    min-height: 40px;
+}
 table#filetransfer td:nth-child(3) {
     min-height: 30px;
 }
@@ -39,7 +41,7 @@ table#filetransfer td:nth-child(3) {
                               <form>
                                 <div class="row">
                                     <input type="text"  style="display: none;" name="CSRF_TOKEN" value="{{ csrf_hash() }}">
-                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12">
+                                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                                         <div class="row">
                                             <div class="row mb-3 w-100 align-items-center">
                                                
@@ -62,7 +64,7 @@ table#filetransfer td:nth-child(3) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-5 col-md-4 col-sm-12 col-xs-12" id="fileTransferUserDiv">
+                                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12" id="fileTransferUserDiv">
                                         <div class="row" >
                                             <div class="row mb-3 w-100 align-items-center">
                                                 <div class="col-12">
@@ -83,7 +85,13 @@ table#filetransfer td:nth-child(3) {
                                 </div>
                             </form>
                                 <div class="row mt-5" style="display:none" id="fileTransferDiv">
-                                    <div class="table-sec">
+                                    <div class="table-sec mob-view-selectall-tbl">
+                                        <div class="mobile-view-selectall">
+                                            <label for="selectAll">
+                                                <span style="margin-left: 7px;" id="selectSpan">Select All</span>
+                                                <input type="checkbox" name="selectAll" id="selectAll">
+                                            </label>
+                                        </div>
                                         <div class="table-responsive">
                                             <table class="table table-striped custom-table first-th-left" id="filetransfer">
                                                 <thead>
@@ -136,7 +144,8 @@ table#filetransfer td:nth-child(3) {
             $(row).find('td').eq(2).attr('data-key', 'Cause Title');
             $(row).find('td').eq(3).attr('data-key', 'File Type');
             $(row).find('td').eq(4).attr('data-key', 'Diary No/Diary Year');
-            $(row).find('td').eq(5).attr('data-key', 'Select All');
+            // $(row).find('td').eq(5).attr('data-key', 'Select All');
+            $(row).find('td').eq(5).attr('data-key', 'Select');
         }
     });
         $("#fileTransferUserDiv").hide();

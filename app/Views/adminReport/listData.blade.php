@@ -1,6 +1,13 @@
 @extends('layout.app')
 @section('content')
-
+<style>
+    .custom-table td:nth-child(5) {
+    min-height: 50px !important;
+}
+.custom-table td:nth-child(3) {
+    min-height: 50px !important;
+}
+</style>
 <div class="container-fluid">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="dashboard-section dashboard-tiles-area"></div>
@@ -98,12 +105,12 @@
                                 $efiling_no = '<a target="_blank" href="' . $redirect_url . '">' . $efiling_number . '</a>';
                                 ?>
                                 <tr>
-                                    <td><?php echo $i;?></td>
-                                    <td><?php echo $efiling_no;?></td>
-                                    <td><?php echo $cause_title;?></td>
-                                    <td><?php echo $user_stage_name;?></td>
-                                    <td><?php if(!empty($type) && $type=='File Diaries'){ echo $diaryNo_diaryYear;}else{echo '---';}?></td>
-                                    <td><?php echo $activated_on;?></td>
+                                    <td data-key="#"><?php echo $i;?></td>
+                                    <td data-key="Efiling No."><?php echo $efiling_no;?></td>
+                                    <td data-key="Cause Title"><?php echo $cause_title;?></td>
+                                    <td data-key="Stage"><?php echo $user_stage_name;?></td>
+                                    <td data-key="<?php echo $diaryCaveatType;?>"><?php if(!empty($type) && $type=='File Diaries'){ echo $diaryNo_diaryYear;}else{echo '---';}?></td>
+                                    <td data-key="<?php echo $dateLevel;?>"><?php echo $activated_on;?></td>
                                 </tr>
 
                                 <?php $i++; }?>
