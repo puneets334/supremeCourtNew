@@ -8560,6 +8560,7 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 .mrgT35 {
     margin-top: 35px;
 }
+.mrgT40{  margin-top:40px;}
 .common-modal .uk-modal-dialog {
     border-radius: 21px;
 }
