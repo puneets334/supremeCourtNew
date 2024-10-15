@@ -1589,7 +1589,7 @@ class Efiling_webservices {
     }
 
     public function get_case_details_from_SCIS($case_type_id, $case_no, $case_year) {
-        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
+        $data = @file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
 
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
         if ($data != false) {
@@ -1993,7 +1993,7 @@ class Efiling_webservices {
         );
         $context  = stream_context_create($opts);
         $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/PutInICMIS/getScruitinyOfficialDetails?diaryNo='.$diaryNo);
+        $result = @file_get_contents($url.'/PutInICMIS/getScruitinyOfficialDetails?diaryNo='.$diaryNo);
         return json_decode($result,true);
     }
 //
