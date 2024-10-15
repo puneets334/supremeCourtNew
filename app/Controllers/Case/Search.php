@@ -157,7 +157,6 @@ class Search extends BaseController
                 $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
             } else if ($diary_type == 'register') {
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($this->request->getGet('sc_case_type'))), escape_data($this->request->getGet('case_number')), escape_data($this->request->getGet('case_year')));
-                // pr($web_service_result);
             }
             if (!empty($web_service_result->message)) {
                 echo '3@@@ No Record found!';
@@ -186,11 +185,13 @@ class Search extends BaseController
                         $registration_id = $this->ConsumeDataModel->getRegistrationIdByDiaryNo($diary_no . $diary_year);
                         if (!empty($registration_id)) {
                             $current_stage = $this->DefaultModel->get_current_stage($registration_id);
-                            // pr($current_stage);
                             $allowed_case_types = array('39', '9', '10', '25', '26', '19', '20');
+                            // pr($current_stage);
+                            // pr($web_service_result->case_details[0]->casetype_id);
+
                             //var_dump($web_service_result->case_details[0]);exit();
                             if ($current_stage &&  !(in_array($web_service_result->case_details[0]->active_casetype_id, $allowed_case_types) || in_array($web_service_result->case_details[0]->casetype_id, $allowed_case_types))) {
-                                if ($current_stage[0]->stage_id != E_Filed_Stage) {
+                                if ($current_stage[0]['stage_id'] != E_Filed_Stage) {
                                     echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                                     exit(0);
                                 }
