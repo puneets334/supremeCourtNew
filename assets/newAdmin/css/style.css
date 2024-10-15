@@ -414,7 +414,7 @@ ul.bulletText {
 }
 
 ul.bulletText li {
-    backgroundurl(../images/right-arrow.gif) no-repeat left 7px;
+    background:url(../images/right-arrow.gif) no-repeat left 7px;
     padding: 2px 0 2px 15px;
 }
 
@@ -882,7 +882,7 @@ td {
 }
 
 table tr:nth-child(even) td {
-    background: #f5f5f5;
+    background: #f5f5f5 !important
 }
 
 .tableDataLine th {
@@ -7356,7 +7356,8 @@ iframe.iframe-scroll-bar {
 
 .icon-input span.fa {
     position: absolute;
-    top: 39px;
+    /* top: 39px; */
+    top:55px;
     right: 16px;
     font-size: 14px;
 }
@@ -8589,3 +8590,5 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li {position: relative;}
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse {position: absolute;box-shadow: 0px 0px 7px 0px rgb(6 6 6 / 52%);}
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li button.accordion-button {z-index: 1;}
+.custom-table label span {color: #fff;}
+.mobile-view-selectall {display: none;}

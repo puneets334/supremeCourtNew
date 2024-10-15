@@ -54,8 +54,12 @@ function getTheme() {
       var storedTheme = getTheme();
       if (storedTheme === 'blue') {
           jQuery('body').addClass('blue-theme');
+          $("iframe").contents().find("body").addClass("blue-theme");
+          $("iframe").contents().find("body").removeClass("black-theme");
       } else if (storedTheme === 'black') {
           jQuery('body').addClass('black-theme');
+          $("iframe").contents().find("body").addClass("black-theme");
+          $("iframe").contents().find("body").removeClass("blue-theme");
       }
   }
 
@@ -67,14 +71,18 @@ function getTheme() {
 // Event handler for the blue theme
   jQuery('.whitebg').on('click', function() {
       jQuery('body').addClass('blue-theme');
+      $("iframe").contents().find("body").addClass("blue-theme");
       jQuery('body').removeClass('black-theme');
+      $("iframe").contents().find("body").removeClass("black-theme");
       setTheme('blue');
   });
 
 // Event handler for the black theme
   jQuery('.blackbg').on('click', function() {
       jQuery('body').addClass('black-theme');
+      $("iframe").contents().find("body").addClass("black-theme");
       jQuery('body').removeClass('blue-theme');
+      $("iframe").contents().find("body").removeClass("blue-theme");
       setTheme('black');
   });
 // Theme JS End

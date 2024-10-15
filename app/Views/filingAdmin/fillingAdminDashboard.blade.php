@@ -88,7 +88,7 @@
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table first-th-left">
+                                    <table class="table table-striped custom-table first-th-left mob-simple-table">
                                         <thead>
                                             <tr>
                                                 <th>Stages</th>
@@ -162,7 +162,7 @@
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
-                                    <table class="table table-striped custom-table  first-th-left">
+                                    <table class="table table-striped custom-table  first-th-left mob-simple-table">
                                         <thead>
                                             <tr>
                                                 <th style="text-align: left" class="ml-2">Stages</th>
