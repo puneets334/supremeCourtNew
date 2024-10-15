@@ -393,8 +393,9 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                             </div>
                                             <div style="text-align: center;">
-                                                <input type="submit" class="btn btn-primary quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register">
-                                                <button type="button" class=" btn-grey quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
+                                                <!-- <input type="submit" class="btn btn-primary quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" value="Register"> -->
+                                                <Button type="submit" class="quick-btn mt-3" name="add_arguing_counsel_submit" id="add_arguing_counsel_submit" >Register</Button>
+                                                <button type="button" class=" gray-btn quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                             </div>
                                             <?php
                                         echo form_close();

@@ -112,7 +112,7 @@
     .table-sec.mob-view-selectall-tbl .dataTables_wrapper .dataTables_filter {position: relative;top: -27px;z-index: 999;}
     .table-sec.mob-view-selectall-tbl div#filetransfer_wrapper {padding-top: 25px;}
     /* ---------  */
-
+    .dashboard-bradcrumb .ryt-dash-breadcrumb .btns-sec {flex-wrap: wrap;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){

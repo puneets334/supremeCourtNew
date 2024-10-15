@@ -23,10 +23,10 @@
         color: #000;
     }
     div.box {
-        height: 109px;
+        /* height: 109px; */
         /* padding: 10px; */
         /*overflow: auto;*/
-        border: 1px solid #8080FF;
+        /* border: 1px solid #8080FF; */
         /*background-color: #E5E5FF;*/
     }
 </style>
@@ -245,8 +245,8 @@
                                                                 </div>
                                                             </div>
                                                             <div class="row mt-4">
-                                                                <div class="col-sm-12 col-md-3 col-lg-2">
-                                                                    <div class="form-group">
+                                                                <div class="col-sm-12 col-md-4 col-lg-2">
+                                                                    <div class="form-group  mb-3">
                                                                         <!--<label class="control-label col-sm-2"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>-->
                                                                         <!--<div class="col-sm-12">
                                                                             <div class="input-group">
@@ -265,8 +265,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                    <div class="form-group">
+                                                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                    <div class="form-group  mb-3">
                                                                         <!-- <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label> -->
                                                                         <!-- <div class="col-sm-8"> -->
                                                                             <div class="input-group">
@@ -285,8 +285,8 @@
                                                                         <!-- </div> -->
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-2 col-xs-12 divdaterange">
-                                                                    <div class="form-group">
+                                                                <div class="col-sm-12 col-md-4 col-lg-3 divdaterange">
+                                                                    <div class="form-group  mb-3">
                                                                         <label class="control-label col-sm-4 mt-4">
                                                                             <center>Date Range</center>
                                                                             <div class="checkbox" style="display: none; margin-top: 6px;">
@@ -298,8 +298,8 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                    <div class="form-group">
+                                                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                    <div class="form-group  mb-3">
                                                                         <!-- <label class="control-label"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
                                                                         <!-- <div class="col-sm-8"> -->
                                                                             <div class="input-group">
@@ -316,8 +316,8 @@
                                                                         <!-- </div> -->
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                    <div class="form-group">
+                                                                <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                    <div class="form-group mb-3">
                                                                         <!-- <label class="control-label col-sm-4"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
                                                                         <!-- <div class="col-sm-8"> -->
                                                                             <div class="input-group">
@@ -355,14 +355,14 @@
                                                 <div class="tab-pane fade" id="nav-ShowEfilingRequests" role="tabpanel" aria-labelledby="nav-ShowEfilingRequests-tab">
                                                     <br />
                                                     <div class="row">
-                                                        <div class="col-sm-12 col-md-5 col-lg-5">
-                                                            <div class="form-group">
+                                                        <div class="col-sm-12 col-md-4 col-lg-3">
+                                                            <div class="form-group mb-3">
                                                                 <label class="form-label">E-Filing Number:</label>
                                                                 <input class="form-control cus-form-ctrl" id="efiling_no" name="efiling_no" placeholder="E-Filing Number..." type="text">
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-12 col-md-2 col-lg-1">
-                                                            <div class="form-group">
+                                                            <div class="form-group mb-3">
                                                                 <label for="" class="form-label">Select Year</label>
                                                                 <select class="form-select cus-form-ctrl" aria-label="Default select example" id="efiling_year" name="efiling_year" style="width: 100%">
                                                                     <?php
@@ -376,8 +376,8 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-12 col-md-2 col-lg-1">
-                                                            <div class="form-group" style="margin-top: 28%;">
+                                                        <div class="col-sm-12 col-md-12 col-lg-12">
+                                                            <div class="form-group">
                                                                 <!-- <input type="submit" id="SearchEfilingNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchEfilingNumbersubmit"> -->
                                                                 <button type="submit" id="SearchEfilingNumbersubmit" name="add_notice" class="quick-btn gray-btn SearchEfilingNumbersubmit">Search</button>
                                                             </div>
@@ -467,10 +467,10 @@
                                                         </div>
                                                     </div>
                                                     <!--width: 714px;margin-left: 675px;     padding-left: 335px;;margin-top: -46px;-->
-                                                    <div class="card-body register box" style="display: block;background-color: #ffffff;border-color: #ffffff;">
+                                                    <div class="card-body register box">
                                                         <div class="row mt-3">
-                                                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                <div class="form-group">
+                                                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                <div class="form-group mb-3">
                                                                     <label for="exampleInputEmail1"> Case Type <span style="color: red">*</span>:</label>
                                                                     <!--<label class="control-label col-md-4 col-sm-12 col-xs-12 input-lg"> Case Type <span style="color: red">*</span>:</label>-->
                                                                     <!--<div class="col-md-8 col-sm-12 col-xs-12">-->
@@ -491,8 +491,8 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                <div class="form-group">
+                                                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                <div class="form-group mb-3">
                                                                     <label for="exampleInputEmail1"> Case No. <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
                                                                         <input id="case_number" name="case_number" maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl age_calculate" type="text" required>
@@ -503,8 +503,8 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                <div class="form-group">
+                                                            <div class="col-sm-12 col-md-4 col-lg-3">
+                                                                <div class="form-group mb-3">
                                                                     <label for="exampleInputEmail1"> Case Year <span style="color: red">*</span>:</label>
                                                                     <div class="input-group">
                                                                         <select class="form-control cus-form-ctrl filter_select_dropdown" id="case_year" name="case_year" style="width: 100%">
@@ -522,9 +522,10 @@
                                                                     <!--</div>-->
                                                                 </div>
                                                             </div>
-                                                            <div class="col-sm-12 col-md-3 col-lg-3">
-                                                                <div class="col-md-offset-5" id="submitBtn_dynamicalayCase" style="display: block;margin-top: 25px;">
-                                                                    <input type="submit" id="SearchCaseNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchCaseNumbersubmit">
+                                                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                <div class="col-md-offset-5" id="submitBtn_dynamicalayCase" >
+                                                                    <!-- <input type="submit" id="SearchCaseNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchCaseNumbersubmit"> -->
+                                                                    <button type="submit" id="SearchCaseNumbersubmit" name="add_notice" class="quick-btn gray-btn SearchCaseNumbersubmit">Search</button>
                                                                 </div>
                                                             </div>
                                                         </div>
