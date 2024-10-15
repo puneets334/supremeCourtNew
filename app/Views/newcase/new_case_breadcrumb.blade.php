@@ -7,6 +7,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
 ?>
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+
 <style>
     .curemarked {
         font-weight: bold; text-decoration: line-through;
@@ -1013,7 +1014,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     </div>
 </div>
 
-
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 <script>
     function get_objection(obj_id, obj_checked) {
         if (obj_checked.is(':checked')) {

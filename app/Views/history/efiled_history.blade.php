@@ -78,10 +78,10 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="dash-card">
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <a class="btn btn-info" type="button" onclick="window.history.back()"> Back</a>
                                                 </div>
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title"><?php echo $lbl_history; ?></h5>
+                                                    <a class="quick-btn" type="button" onclick="window.history.back()"> Back</a>
                                                 </div>
                                                 <!-- <h3 style="text-align: center"> <strong><?php echo $lbl_history; ?></strong> </h3> -->
                                                 <div class="table-sec">
@@ -295,7 +295,7 @@
                                                     </div>
                                                 <?php } ?>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <a class="btn btn-info" type="button" onclick="window.history.back()"> Back</a>
+                                                    <a class="quick-btn" type="button" onclick="window.history.back()"> Back</a>
                                                 </div>
                                             </div>
                                         </div>

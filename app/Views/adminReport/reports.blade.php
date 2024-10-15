@@ -2,8 +2,13 @@
 @section('content')
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+<style>
+    div#tableData .custom-table tr td:nth-child(3) {
+    min-height: 55px;
+}
+</style>
 <div class="container-fluid">
-<div id="loader-wrapper" style="display: none;">
+    <div id="loader-wrapper" style="display: none;">
         <div id="loader"></div>
     </div>
     <div class="row" id="printData">
@@ -50,15 +55,30 @@
             </div>
 
         </div>
+
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_panel">
-                <div class="x_content">
+
+            <!-- <div class="x_panel">
+                <div class="x_content"> -->
                     <!-- <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" /> -->
-                    <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
-                    <div class="panel-body" id="tableData" style="display: none;">
-                    </div>
-                </div>
-            </div>
+                   
+                    <!-- <div class="panel-body" > -->
+                        <div class="dashboard-section" >
+                            <div class="row">
+                                <div class="col-12">
+                                 <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="dash-card" id="tableData" style="display: none;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                <!-- </div>
+            </div> -->
         </div>
     </div>
     @endsection
@@ -94,14 +114,14 @@
                 newdate = newdate.split(',')[0];
                 $("#to_date").val(newdate);
             }
-            
+
         });
 
         $(document).on('click', '#getResult', function() {
             var from_date = $("#from_date").val();
             var to_date = $("#to_date").val();
-            
-            
+
+
             var validationError = true;
             if (from_date == '') {
                 alert("Please select from date.")
@@ -114,7 +134,7 @@
                 validationError = false;
                 return fasle;
             }
-            if(to_date<from_date) {
+            if (to_date < from_date) {
                 alert("To Date will be greater than From Date");
                 $("#to_date").val('');
                 $("#to_date").focus();
@@ -128,7 +148,7 @@
                     from_date: from_date,
                     to_date: to_date
                 };
-                
+
                 $.ajax({
                     type: "POST",
                     data: JSON.stringify(postData),
@@ -139,7 +159,8 @@
                     async: false,
                     beforeSend: function() {
                         $('#loader-wrapper').show();
-                        //("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: 130px;  margin-left: -100px;z-index: 99999;opacity: 1;" src="<?php //echo base_url('assets/images/loading-data.gif'); ?>">');
+                        //("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: 130px;  margin-left: -100px;z-index: 99999;opacity: 1;" src="<?php //echo base_url('assets/images/loading-data.gif'); 
+                                                                                                                                                                                ?>">');
                         //$('#getResult').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                     },
                     success: function(res) {
