@@ -1054,9 +1054,9 @@ class ResponsiveVariantRouteController extends BaseController
         $requestedBy = @ucfirst(@trim(@strtolower($this->session->userdata['login']['first_name']))) . ' ' . @ucfirst(@trim(@strtolower($this->session->userdata['login']['last_name'])));
         $requestedBy = ucwords($requestedBy);
         $designation = "";
-        if ($this->session->userdata['login']['ref_m_usertype_id'] == USER_ADVOCATE) {
-            $designation = "(AOR - " . $this->session->userdata['login']['aor_code'] . ")";
-        } else if ($this->session->userdata['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
+            $designation = "(AOR - " . getSessionData('login')['aor_code'] . ")";
+        } else if (getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
             $designation = "(PIP)";
         }
         $requestedBy = $requestedBy . ' ' . $designation;

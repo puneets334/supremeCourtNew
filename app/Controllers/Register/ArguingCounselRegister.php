@@ -108,7 +108,9 @@ class ArguingCounselRegister extends BaseController {
                         $this->session->setFlashdata('msg', 'Email ID Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('arguingCounselRegister'));
                     }
-                    if (isset($mobile_arguing_counsel_exist) && !empty($mobile_arguing_counsel_exist) && $mobile_arguing_counsel_exist[0]['moblie_number'] == $_POST['adv_mobile']) {
+            // pr($mobile_arguing_counsel_exist);
+
+                    if (isset($mobile_arguing_counsel_exist) && !empty($mobile_arguing_counsel_exist) && $mobile_arguing_counsel_exist[0]['mobile_number'] == $_POST['adv_mobile']) {
                         $this->session->setFlashdata('msg', 'Mobile Number Already Registerd! Please click on forgot password and reset your password!');
                         return redirect()->to(base_url('arguingCounselRegister'));
                     }

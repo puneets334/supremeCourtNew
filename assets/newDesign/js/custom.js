@@ -54,7 +54,7 @@ function getTheme() {
 // Theme JS End
 // Font Size Increse & Decrease 
 $(document).ready(function() {
-  var $affectedElements = $("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, Input, select");
+  var $affectedElements = $("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, Input, select, button, li");
   $affectedElements.each( function(){
     var $this = $(this);
     $this.data("orig-size", $this.css("font-size") );

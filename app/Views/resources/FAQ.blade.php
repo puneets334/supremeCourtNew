@@ -94,7 +94,7 @@ if(isset($_SESSION['login'])){
                                                                                         </h2>
                                                                                         <div id="sub-collapseOne" class="accordion-collapse collapse" aria-labelledby="sub-headingOne" data-bs-parent="#sub-accordionExample">
                                                                                             <div class="accordion-body">
-                                                                                                <p>If the details of the AOR are already available with the Registry then such AOR is only required to create a new password in the new efiling Portal by taking the following steps:
+                                                                                                <p>If the details of the AOR are already available with the Registry then such AOR is only required to create a new password in the new efiling Portal by taking the following steps:</p>
                                                                                                     <ol>
                                                                                                         <li>On the login page, click on forgot password option;</li>
                                                                                                         <li>Enter your registered mobile number, enter captcha and then click on send OTP button.</li>
@@ -102,8 +102,8 @@ if(isset($_SESSION['login'])){
                                                                                                         <li>Enter the OTP and click ‘verify’ button</li>
                                                                                                         <li>Create new password</li>
                                                                                                     </ol>
-                                                                                                    Once new password is set, the AOR can login by using his AOR code or registered mobile number or registered email id along with the new password.
-                                                                                                </p>
+                                                                                                  <p> Once new password is set, the AOR can login by using his AOR code or registered mobile number or registered email id along with the new password.
+                                                                                                  </p> 
                                                                                                 <div class="faq-img-sec">
                                                                                                     <img src="<?php echo base_url('/uploaded_docs/faq_images/1.png'); ?>" alt="Registration" class="img-fluid">
                                                                                                     <!-- <h6 class="faq-img-title">Screenshot of Welcome Page of SC-EFM</h6> -->

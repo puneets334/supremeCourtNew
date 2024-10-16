@@ -113,6 +113,7 @@
     .table-sec.mob-view-selectall-tbl div#filetransfer_wrapper {padding-top: 25px;}
     /* ---------  */
     .dashboard-bradcrumb .ryt-dash-breadcrumb .btns-sec {flex-wrap: wrap;}
+    .start-buttons{flex-direction:column;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){

@@ -29,6 +29,9 @@
         /* border: 1px solid #8080FF; */
         /*background-color: #E5E5FF;*/
     }
+    .custom-table td:nth-child(10), .custom-table td:nth-child(11), .custom-table td:nth-child(12), .custom-table td:nth-child(13) {
+    min-height: 30px;
+}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -287,7 +290,7 @@
                                                                 </div>
                                                                 <div class="col-sm-12 col-md-4 col-lg-3 divdaterange">
                                                                     <div class="form-group  mb-3">
-                                                                        <label class="control-label col-sm-4 mt-4">
+                                                                        <label class="control-label col-sm-4">
                                                                             <center>Date Range</center>
                                                                             <div class="checkbox" style="display: none; margin-top: 6px;">
                                                                                 &nbsp;<label><input type="radio" value="All" name="ActionFiledOn">All</label><label><input type="radio" value="Action" name="ActionFiledOn">Action</label><label><input type="radio" value="FiledOn" name="ActionFiledOn" checked>Filed On</label>
@@ -343,9 +346,12 @@
                                                                         <img id="loader_img" style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;" src="<?php echo base_url(); ?>/assets/images/loading-data.gif">
                                                                     </div>
                                                                     <div class="form-group" id="status_refresh">
-                                                                        <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
-                                                                        <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
+                                                                        <div class="start-buttons my-0">
+ <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
+ <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
                                                                         <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
+                                                                        </div>
+                                                                       
                                                                     </div>
                                                                 </div>
                                                             </div>
