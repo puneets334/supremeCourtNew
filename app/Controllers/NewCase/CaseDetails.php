@@ -500,7 +500,7 @@ class CaseDetails extends BaseController
                 //GENERATE NEW EFILING NUM AND ADD NEW CASE DETAILS, CREATE DRAFT STAGE
                 $result = $this->New_case_model->generate_efil_num_n_add_case_details($case_details);
 
-                if ($result['registration_id']) {
+                if (isset($result) && !empty($result) && $result['registration_id']) {
                     //SESSION efiling_details
                     $this->Common_model->get_efiling_num_basic_Details($result['registration_id']);
 

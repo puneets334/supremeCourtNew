@@ -179,12 +179,12 @@ class NewCaseModel extends Model {
             }
         } else {
             $builder = $this->db->table('efil.tbl_efiling_num_status');
-            $builder->insert( $activate_next_stage);
+           $result = $builder->insert( $activate_next_stage);
             $sData = getSessionData('estab_details');
             $mdata = array_merge($sData, $activate_next_stage);
             // pr($mdata);
             setSessionData('efiling_details', $mdata);
-            if ($this->db->insertID()) {
+            if ($result) {
                 return TRUE;
             } else {
                 return FALSE;
@@ -363,8 +363,8 @@ class NewCaseModel extends Model {
 
     function add_update_adv_details($registration_id, $data) {
         $builder = $this->db->table('efil.tbl_case_advocates');
-        $builder->insert($data);
-        if ($this->db->insertID()) {
+        // $builder->insert($data);
+        if ($builder->insert($data)) {
             return true;
         } else {
             return false;
