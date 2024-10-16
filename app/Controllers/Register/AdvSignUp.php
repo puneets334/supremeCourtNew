@@ -56,16 +56,16 @@ class AdvSignUp extends BaseController {
         }else if (!empty($_SESSION['kyc_configData']['UidData']['Pht'])) {
         }else {
             if (empty($_SESSION['profile_image']['profile_photo'])) {
-                $this->session->setFlashdata('msg', 'Please Choose profile Photo!');
+                $this->session->setFlashdata('msg', 'Please Choose profile Photo.');
                 return redirect()->to(base_url('register/AdvSignUp'));
             }
         }
         if (!empty($_POST['mobile']) || !empty($_POST['email_id'])) {
             if ($_SESSION['adv_details']['mobile_no'] != $_POST['mobile']) {
-                $this->session->setFlashdata('msg', 'Invalid Mobile number!');
+                $this->session->setFlashdata('msg', 'Invalid Mobile number.');
                 return redirect()->to(base_url('register'));
             } elseif ($_SESSION['adv_details']['email_id'] != $_POST['email_id']) {
-                $this->session->setFlashdata('msg', 'Invalid Emai ID!');
+                $this->session->setFlashdata('msg', 'Invalid Emai ID.');
 
                 return redirect()->to(base_url('register'));
             }
@@ -177,7 +177,7 @@ class AdvSignUp extends BaseController {
                 $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
 
                 if (!empty($already_exist)) {
-                    $this->session->setFlashdata('msg', 'Already Registerd Email!');
+                    $this->session->setFlashdata('msg', 'Already Registerd Email.');
                     return redirect()->to(base_url('register/AdvSignUp'));
                 } else {
                     $add_adv = $this->Register_model->add_new_advocate_details($final_data);
@@ -221,29 +221,29 @@ class AdvSignUp extends BaseController {
 
     function upload_photo() {
         if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
-            echo "1@@@" . 'Profile Image Only JPEG/JPG are allowed in document upload !';
+            echo "1@@@" . 'Profile Image Only JPEG/JPG are allowed in document upload .';
             exit(0);
         }
         if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
-            echo "1@@@" . 'Profile Image Only JPEG/JPG are allowed in document upload !';
+            echo "1@@@" . 'Profile Image Only JPEG/JPG are allowed in document upload .';
             exit(0);
         }
         if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
-            echo "1@@@" . 'Profile Image No double extension allowed in JPEG/JPG !';
+            echo "1@@@" . 'Profile Image No double extension allowed in JPEG/JPG .';
             exit(0);
         }
         if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
-            echo "1@@@" . 'Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !';
+            echo "1@@@" . 'Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores .';
             exit(0);
         }
         if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
-            echo "1@@@" . 'Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!';
+            echo "1@@@" . 'Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores.';
             exit(0);
         }
         if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
 
             $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
-            echo "1@@@" . 'Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!';
+            echo "1@@@" . 'Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB.';
             exit(0);
         }
 
@@ -263,7 +263,7 @@ class AdvSignUp extends BaseController {
         $file_path_thumbs = '';
         if (!$thumb) {
             $_SESSION['login']['photo_path'] = $file_path_thumbs;
-            echo "1@@@" . 'Please Upload Image Is Requerd!';
+            echo "1@@@" . 'Please Upload Image Is Requerd.';
         }
 
         if ($thumb) {
@@ -329,10 +329,10 @@ class AdvSignUp extends BaseController {
         $file_path_thumbs = '';
         if (!$thumb) {
             $_SESSION['login']['photo_path'] = $file_path_thumbs;
-            $this->session->setFlashdata('msg', 'Please Upload Image!');
+            $this->session->setFlashdata('msg', 'Please Upload Image.');
             return redirect()->to('register/AdvSignUp/upload');
         } else {
-            $this->session->setFlashdata('msg', 'Successful!');
+            $this->session->setFlashdata('msg', 'Successful.');
             return redirect()->to('register/AdvSignUp/upload');
         }
     }
@@ -404,7 +404,7 @@ class AdvSignUp extends BaseController {
         $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
 
         if (!empty($already_exist)) {
-            $this->session->setFlashdata('msg', 'Already Registerd Email!');
+            $this->session->setFlashdata('msg', 'Already Registerd Email.');
             redirect('register/AdvSignUp');
         } else {
             $one_time_password= $_SESSION['user_created_password']; //$this->generateRandomString();
