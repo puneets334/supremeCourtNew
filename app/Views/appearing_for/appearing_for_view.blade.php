@@ -126,10 +126,10 @@ $parties_details = $data['parties_details'];
                                 $appearing_contact_id = $appearing_for_details[0]['contact_tbl_id'];
                         ?>
                                 <tr>
-                                    <td><input class="form-control" name="party_name[]" type="text" value="<?php echo_data($value); ?>"></td>
-                                    <td><input class="form-control" name="party_email[]" type="email" placeholder="Email" value="<?php echo ($email); ?>"></td>
-                                    <td><input class="form-control" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
-                                    <td class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>" <?php echo $selected; ?>></td>
+                                    <td data-key="Party Name"><input class="form-control" name="party_name[]" type="text" value="<?php echo_data($value); ?>"></td>
+                                    <td data-key="Email"><input class="form-control" name="party_email[]" type="email" placeholder="Email" value="<?php echo ($email); ?>"></td>
+                                    <td data-key="Mobile"><input class="form-control" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
+                                    <td data-key="Select" class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>" <?php echo $selected; ?>></td>
                                 </tr>
                         <?php
                                 $i++;
@@ -248,12 +248,12 @@ $parties_details = $data['parties_details'];
                                 $appearing_contact_id = isset($appearing_for_details[0]['contact_tbl_id']) ? $appearing_for_details[0]['contact_tbl_id'] : '';
                         ?>
                                 <tr>
-                                    <td>
+                                    <td data-key="Party Name">
                                         <input class="form-control cus-form-ctrl" name="party_name[]" type="text" value="<?php echo_data($value); ?>" readonly="">
                                     </td>
-                                    <td><input class="form-control cus-form-ctrl" name="party_email[]" type="email" placeholder="Email" value="<?php echo_data($email); ?>"></td>
-                                    <td><input class="form-control cus-form-ctrl" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
-                                    <td class="text-center"><input data-index='{{$appearing_contact_id}}' class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>"
+                                    <td data-key="Email"><input class="form-control cus-form-ctrl" name="party_email[]" type="email" placeholder="Email" value="<?php echo_data($email); ?>"></td>
+                                    <td data-key="Mobile"><input class="form-control cus-form-ctrl" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
+                                    <td data-key="Select" class="text-center"><input data-index='{{$appearing_contact_id}}' class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>"
                                             <?php echo $selected; ?>>
                                     </td>
                                 </tr>
