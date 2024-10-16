@@ -486,8 +486,8 @@ class FinalSubmit extends BaseController
             ));
             $response = curl_exec($curl);
             curl_close($curl);
-            $response=(array)json_decode($response,true);
-            if($response['status'] == 'success')
+            $response = (array)json_decode($response,true);
+            if(isset($response) && !empty($response) && $response['status'] == 'success')
             {
                 $this->session->setFlashdata('msg', '<div style="font-size=24px;font-weight: bolder" class="alert alert-success text-center font-weight-bold"> E-filing number ' . $efiling_no. ' has been re-filed successfully.</div>');
                 $_SESSION['efiling_details']['stage_id'] = Initial_Approaval_Pending_Stage;
