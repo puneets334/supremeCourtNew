@@ -141,7 +141,7 @@
                                                                 <label for="inputPassword6" class="col-form-label">Case Type</label>
                                                             </div>
                                                             <div class="col-7 pe-0">
-                                                                <select class="form-select cus-form-ctrl" name="sc_case_type" id="sc_case_type" aria-label="Default select example">
+                                                                <select class="form-select cus-form-ctrl" name="sc_case_type" id="sc_case_type" aria-label="Default select example" required>
                                                                     <option value="">Case Type</option>;
                                                                     <?php
                                                                     if (count($sc_case_type)) {
