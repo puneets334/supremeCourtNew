@@ -37,9 +37,16 @@ $star_requered = '<span style="color: red">*</span>'; ?>
             <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
                 <div class="login-s-inner">
                     <?php $session = session(); ?>
+                    <?php if($session->getFlashData('msg') == 'Successful.'){ ?>
+                        <div class="text-success">
+                        <?php echo "<div style='color:green; border: 2px solid green; background-color: #d4edda; padding: 10px; margin: 10px 0;'>" . $session->getFlashData('msg') . "</div>";
+ ?> 
+                    </div>
+                    <?php }else{ ?>
                     <div class="text-danger">
                         <b><?php echo $session->getFlashData('msg'); ?></b>
                     </div>
+                    <?php } ?>
                     <div class="httxt">
                         <h4>Verify Your Self</h4>
                     </div>
@@ -67,7 +74,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                                     <div class="mb-3">
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
-                                                <input class="form-control cus-form-ctrl"  type="file" required id="advocate_image" name="advocate_image">
+                                                <input accept=".jpg, .jpeg" class="form-control cus-form-ctrl"  type="file" required id="advocate_image" name="advocate_image" onchange="validateImage()">
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                 <input type="submit" value="UPLOAD" id="info_save" class="btnSubmit btn btn-sm quick-btn btn-primary" >
@@ -94,3 +101,25 @@ $star_requered = '<span style="color: red">*</span>'; ?>
 @endsection
 
 
+<script>
+function validateImage() {
+    var fileInput = document.getElementById('advocate_image');
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg|\.jpeg)$/i;
+    var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+    
+    // Check file type
+    if (!allowedExtensions.exec(filePath)) {
+        alert('Please upload a file with .jpg or .jpeg extension.');
+        fileInput.value = ''; // Clear the input
+        return false;
+    }
+    
+    // Check file size
+    if (fileInput.files[0].size > maxSize) {
+        alert('The file size should not exceed 1 MB.');
+        fileInput.value = ''; // Clear the input
+        return false;
+    }
+}
+</script>

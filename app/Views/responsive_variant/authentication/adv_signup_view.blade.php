@@ -153,7 +153,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         </p>
                                         <div class="row">
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
-                                                <input type="file" class="form-control cus-form-ctrl" value="<?php echo_data($user_addar_img) ?>" placeholder="" name="advocate_image" id="advocate_image" required>
+                                                <input type="file" class="form-control cus-form-ctrl" value="<?php echo_data($user_addar_img) ?>" placeholder="" name="advocate_image"  accept=".jpg, .jpeg" id="advocate_image" required><span>Please Choose <b>Profile Picture</b> ( Upto 1MB )</span>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                 <input type="submit" value="UPLOAD" class="btnSubmit btn btn-sm quick-btn btn-primary" >
@@ -182,7 +182,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Name <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
+                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" oninput="validateInput(event)" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
                                         <?php if (isset($validation) && $validation->hasError('name')): ?>
                                             <div class="text-danger">
                                                 <?= $validation->getError('name'); ?>
@@ -368,6 +368,13 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
     var base_url = '<?php echo base_url(); ?>';
 </script>
 <script>
+    function validateInput(event) {
+        const input = event.target.value;
+        const regex = /^[a-zA-Z@_ ]*$/;
+        if (!regex.test(input)) {
+            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        }
+    }
     // $(document).ready(function () {
     //     $('.filter_select_dropdown').select2();
     // });
