@@ -415,6 +415,7 @@ ul.innpg-ul {
     .main-inner-area  .main-inner-bg {padding: 15px;}
     .main-inner-area  .main-inner-bg .accordion-body {padding: 12px;}
     .regester-txts .regester-links {flex-direction: column;text-align: center;gap: 10px;margin: 0;}
+    .top-header .font-action-sec {left:-11px;}
 }
 
 @media screen and (max-width: 390px) and (min-width: 300px){
@@ -496,8 +497,8 @@ ul.innpg-ul {
 .top-header .font-action-sec{position: absolute;z-index: 99;width: 100%;padding: 12px 0 0;background: #ff000000;top: 14px;display: none;}
 .top-header .font-action-sec:before {content: '';position: absolute;top: 3px;left: 19px;height: 10px;width: 16px;border-left: 7px solid transparent;border-right:7px solid transparent;border-bottom: 7px solid #3469d2;}
 .top-header .font-action-sec ul {list-style: none;padding: 15px 0;margin: 0;background: #3469d2;border-radius: 15px;display: inline-block;}
-.top-header ul li.text-size .font-action-sec ul a{padding: 12px;width: 100%;}
-.top-header .font-action-sec ul li {padding: 0 15px;}
+.top-header ul li.text-size .font-action-sec ul a{padding: 12px 20px;width: 100%;}
+.top-header .font-action-sec ul li {padding: 0;}
 .top-header .font-action-sec ul li a{color: #fff !important;}
 .top-header .font-action-sec ul li:hover {background: #0d48be;}
 .top-header ul li.text-size {position: relative;}

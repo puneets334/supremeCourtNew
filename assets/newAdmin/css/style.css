@@ -8593,3 +8593,6 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li button.accordion-button {z-index: 1;}
 .custom-table label span {color: #fff;}
 .mobile-view-selectall {display: none;}
+/* 16-10-24 start  */
+.panel h4 {font-size: 24px;margin: 0;padding-bottom: 15px;color: #000;position: relative;font-family: 'noto_sanssemibold';}
+/* 16-10-24 End  */
