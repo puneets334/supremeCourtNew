@@ -9,15 +9,11 @@
     .add-new-area {
         display: none !important;
     }
-    table#filetransfer td:nth-child(5) {
-    min-height: 55px;
-}
-table#filetransfer td:nth-child(6) {
-    min-height: 40px;
-}
-table#filetransfer td:nth-child(3) {
-    min-height: 30px;
-}
+    @media (max-width: 767px){
+        table#filetransfer td:nth-child(5) {min-height: 55px;}
+        table#filetransfer td:nth-child(6) {min-height: 40px;}
+        table#filetransfer td:nth-child(3) {min-height: 30px;}
+    }
 </style>
     <div class="container-fluid">
     <div id="loader-wrapper" style="display: none;">
