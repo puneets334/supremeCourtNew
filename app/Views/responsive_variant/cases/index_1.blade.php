@@ -131,7 +131,7 @@ a.quick-btn.pull-right:hover {
                             <section>
                                 <div class="mt-4" id="myFilter" ukfilter="target: .js-filter">
                                     <table id="example" class="table table-striped custom-table">
-                                        <tfoot>
+                                        <!-- <tfoot>
                                             <tr>
                                                 <td><input type="hidden" placeholder="Search"></td>
                                                 <td><input type="hidden" placeholder="Search"></td>
@@ -140,7 +140,7 @@ a.quick-btn.pull-right:hover {
                                                 <td><input type="hidden" placeholder="Search" id="ADVStatus" class="ADVStatus"></td>
                                                 <td><input type="hidden" placeholder="Search" id="RegStatus" class="RegStatus"></td>
                                             </tr>
-                                        </tfoot>
+                                        </tfoot> -->
                                         <thead>
                                             <tr role="row">
                                                 <th class="sorting_asc" tabindex="0" aria-controls="example">S.N</th>

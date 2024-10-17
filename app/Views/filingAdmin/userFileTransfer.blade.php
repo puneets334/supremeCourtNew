@@ -1,24 +1,20 @@
-<?php
-    
-    declare(strict_types=1);
-    
-?>
+<?php declare(strict_types=1); ?>
 @extends('layout.app')
 @section('content')
-<style>
-    .add-new-area {
-        display: none !important;
-    }
-    @media (max-width: 767px){
-        table#filetransfer td:nth-child(5) {min-height: 55px;}
-        table#filetransfer td:nth-child(6) {min-height: 40px;}
-        table#filetransfer td:nth-child(3) {min-height: 30px;}
-    }
-</style>
+    <style>
+        .add-new-area {
+            display: none !important;
+        }
+        @media (max-width: 767px){
+            table#filetransfer td:nth-child(5) {min-height: 55px;}
+            table#filetransfer td:nth-child(6) {min-height: 40px;}
+            table#filetransfer td:nth-child(3) {min-height: 30px;}
+        }
+    </style>
     <div class="container-fluid">
-    <div id="loader-wrapper" style="display: none;">
-        <div id="loader"></div>
-    </div>
+        <div id="loader-wrapper" style="display: none;">
+            <div id="loader"></div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="dashboard-section dashboard-tiles-area"></div>
@@ -29,57 +25,56 @@
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
                                     <h5 class="unerline-title">User File Transfer </h5>
-                                
+                                    <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>                                
                                 </div>
                                 {{-- Page Title End --}}
-                                {{-- Main Start --}}
-                               
-                              <form>
-                                <div class="row">
-                                    <input type="text"  style="display: none;" name="CSRF_TOKEN" value="{{ csrf_hash() }}">
-                                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
-                                        <div class="row">
-                                            <div class="row mb-3 w-100 align-items-center">
-                                               
-                                                <div class="col-12">
-                                                    <label for="inputPassword6" class="col-form-label">Select User</label>
-                                                </div>
-                                                <div class="col-12 pe-0">
-                                                    <select id="file_transfer" name="file_transfer"  class="form-select cus-form-ctrl"
-                                                        aria-label="Default select example">
-                                                        <option selected>Select</option>
-                                                        @if(count($users) > 0)
-                                                            @foreach($users as $k=>$v)
-                                                                <option value="{{isset($v->id)?$v->id:''}}">{{isset($v->first_name)?$v->first_name:''}}</option>
-                                                            @endforeach
-                                                        @else                                                    
-                                                            <option value="0">File Not Allocated</option>
-                                                        @endif
-                                                    </select>
+                                {{-- Main Start --}}                               
+                                <?php echo form_open(); ?>
+                                    <div class="row">
+                                        <input type="text"  style="display: none;" name="CSRF_TOKEN" value="{{ csrf_hash() }}">
+                                        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
+                                            <div class="row">
+                                                <div class="row mb-3 w-100 align-items-center">
+                                                
+                                                    <div class="col-12">
+                                                        <label for="inputPassword6" class="col-form-label">Select User</label>
+                                                    </div>
+                                                    <div class="col-12 pe-0">
+                                                        <select id="file_transfer" name="file_transfer"  class="form-select cus-form-ctrl"
+                                                            aria-label="Default select example">
+                                                            <option selected>Select</option>
+                                                            @if(count($users) > 0)
+                                                                @foreach($users as $k=>$v)
+                                                                    <option value="{{isset($v->id)?$v->id:''}}">{{isset($v->first_name)?$v->first_name:''}}</option>
+                                                                @endforeach
+                                                            @else                                                    
+                                                                <option value="0">File Not Allocated</option>
+                                                            @endif
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12" id="fileTransferUserDiv">
-                                        <div class="row" >
-                                            <div class="row mb-3 w-100 align-items-center">
-                                                <div class="col-12">
-                                                    <label for="inputPassword6" class="col-form-label">File Transfer To
-                                                        User</label>
-                                                </div>
-                                                <div class="col-12 pe-0">
+                                        <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12" id="fileTransferUserDiv">
+                                            <div class="row" >
+                                                <div class="row mb-3 w-100 align-items-center">
+                                                    <div class="col-12">
+                                                        <label for="inputPassword6" class="col-form-label">File Transfer To
+                                                            User</label>
+                                                    </div>
+                                                    <div class="col-12 pe-0">
 
-                                                    <select id="file_transfer_to_user" name="file_transfer_to_user" class="form-select cus-form-ctrl" required>
-                                                    </select>
-                                                </div> 
+                                                        <select id="file_transfer_to_user" name="file_transfer_to_user" class="form-select cus-form-ctrl" required>
+                                                        </select>
+                                                    </div> 
+                                                </div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12" id="buttonDiv">
+                                            <button type="button"  class="quick-btn mrgT35" id="transferAll">File Transfer </button>
+                                        </div>
                                     </div>
-                                    <div class="col-lg-2 col-md-4 col-sm-12 col-xs-12" id="buttonDiv">
-                                        <button type="button"  class="quick-btn mrgT35" id="transferAll">File Transfer </button>
-                                    </div>
-                                </div>
-                            </form>
+                                <?php echo form_close(); ?>
                                 <div class="row mt-5" style="display:none" id="fileTransferDiv">
                                     <div class="table-sec mob-view-selectall-tbl">
                                         <div class="mobile-view-selectall">
