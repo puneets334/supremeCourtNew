@@ -179,6 +179,7 @@ class ForgetPasswordController extends BaseController
             $this->session->setFlashdata('msg', 'Captcha is required!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }
+
         if(!empty($this->request->getPost('adv_mobile')) && empty($this->request->getPost('adv_email'))) {
             $rules = [
                 "adv_mobile" => [
@@ -195,6 +196,17 @@ class ForgetPasswordController extends BaseController
                 "adv_email" => [
                     "label" => "Email",
                     "rules" => "valid_email|trim"
+                ],
+                "userCaptcha" => [
+                    "label" => "Captcha",
+                    "rules" => "required|trim"
+                ],
+            ];
+        }else{
+            $rules = [
+                "adv_mobile" => [
+                    "label" => "Mobile",
+                    "rules" => "numeric|trim|min_length[10]|max_length[10]"
                 ],
                 "userCaptcha" => [
                     "label" => "Captcha",
@@ -371,6 +383,7 @@ $rules = [
 
 // Specific handling for "Forgot Password"
 if ($registerType == 'Forgot Password') {
+   
     // If only Mobile OTP is provided and Email OTP is empty
     if (!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
         $rules = [
