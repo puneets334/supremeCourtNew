@@ -38,7 +38,7 @@ class DefaultController extends BaseController
         } else {
             is_user_status();
         }
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL, USER_SUPER_ADMIN);
         if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
             exit(0);
@@ -129,6 +129,7 @@ class DefaultController extends BaseController
             $aor_code = (int) $session->get('login')['aor_code'];
             $session->remove('email_id_for_updation');
             $session->remove('mobile_no_for_updation');
+            // pr($_SESSION);
             $data['high_court_list'] = $this->Dropdown_list_model->get_high_court_list();
             $data['profile'] = $this->Profile_model->getProfileDetail($session->get('login')['userid']);
             $user_type_id = session()->get('login.ref_m_usertype_id');

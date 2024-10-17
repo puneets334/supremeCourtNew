@@ -1599,8 +1599,7 @@ td {
             <!-- <input type="text" name="<?php // echo $this->security->get_csrf_token_name();?>" value="<?php // echo $this->security->get_csrf_hash();?>" placeholder="csrf token"> -->
             <button class="uk-modal-close-default quick-btn"  type="button" uk-close></button>
             <div class="uk-modal-body">
-                To: <input type="text" class="form-control cus-form-ctrl" size="60" id="recipient_mobile_no"
-                    name="recipient_mobile_no" maxlength="250" placeholder="Recipient's Mobile Number">
+                To: <input type="text" class="form-control cus-form-ctrl" id="recipient_mobile_no" name="recipient_mobile_no" minlength="10" maxlength="10" placeholder="Recipient's Mobile Number">
                 <br>
                 Message Text: <div id='caseinfosms'></div>
             </div>

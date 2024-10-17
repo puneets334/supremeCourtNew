@@ -14,9 +14,9 @@
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 @stack('style')
 <style>
-    .datepicker-dropdown {
+    /* .datepicker-dropdown {
         margin-top: 231px !important;
-    }
+    } */
 
     .datepicker-dropdown {
         background-color: #fff;
@@ -170,7 +170,7 @@
                                 $party_age = @$party_details[0]['party_age'];
                             }
                             ?>
-                            <input id="party_age" tabindex='6' name="party_age" min="0" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text"  >
+                            <input id="party_age" tabindex='6' name="party_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($party_age); ?>" class="form-control cus-form-ctrl age_calculate" type="text"  >
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -435,6 +435,11 @@
     });
 </script>
 <script type="text/javascript">
+        $(document).ready(function() {
+        $("input[name='party_age']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    });
     var state_Arr = '<?php echo json_encode($stateArr); ?>';
     //----------Get District List----------------------//
     $('#party_state').change(function() {

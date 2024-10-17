@@ -554,14 +554,17 @@
                                 <div class="paging paging-input">
                                     &nbsp;Page
                                     <input type="text" name="page" id="page_input" value="<?php echo $page; ?>" class="form-control" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
-                                    of <?php echo $pages; ?> &nbsp;
+                                    of <?php echo isset($pages) ? $pages : ''; ?>
+                                    &nbsp;
                                 </div>
 
                                 <div class="paging paging-next">
-                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo ($page == $pages) ? $pages : ($page + 1); ?>); this.form.submit();">
+                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo (isset($pages) && $page == $pages) ? $pages : ($page + 1); ?>
+); this.form.submit();">
                                         <!-- <i class="fa fa-angle-right" aria-hidden="true"></i> -->Next
                                     </button>
-                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo $pages; ?>); this.form.submit();">
+                                    <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo isset($pages) ? $pages : ''; ?>
+); this.form.submit();">
                                         <!-- <i class="fa fa-angle-double-right" aria-hidden="true"></i> -->Last
                                     </button>
                                 </div>

@@ -3,9 +3,16 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <style>
+    @media (max-width: 767px){
+        div#tableData .custom-table tr td:nth-child(3) {min-height: 55px;}
     div#tableData .custom-table tr td:nth-child(3) {
     min-height: 55px;
 }
+@media (max-width: 767px){
+    .custom-table td:nth-child(4) {
+        min-height: 56px;
+    }
+    }
 </style>
 <div class="container-fluid">
     <div id="loader-wrapper" style="display: none;">
@@ -127,12 +134,12 @@
                 alert("Please select from date.")
                 $("#from_date").focus();
                 validationError = false;
-                return fasle;
+                return false;
             } else if (to_date == '') {
                 alert("Please select to date.")
                 $("#to_date").focus();
                 validationError = false;
-                return fasle;
+                return false;
             }
             if (to_date < from_date) {
                 alert("To Date will be greater than From Date");
@@ -154,17 +161,17 @@
                     data: JSON.stringify(postData),
                     url: "<?php echo base_url('adminReport/DefaultController/getReportData'); ?>",
                     dataType: 'json',
-                    ContentType: 'application/json',
+                    contentType: 'application/json',
                     cache: false,
                     async: false,
                     beforeSend: function() {
-                        $('#loader-wrapper').show();
+                        $('#loader-wrapper').show(); // Show loader here
                         //("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: 130px;  margin-left: -100px;z-index: 99999;opacity: 1;" src="<?php //echo base_url('assets/images/loading-data.gif'); 
                                                                                                                                                                                 ?>">');
                         //$('#getResult').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                     },
                     success: function(res) {
-                        document.getElementById('loader-wrapper').style.display = 'none';
+                        $('#loader-wrapper').hide(); 
                         if (typeof res == 'string') {
                             res = JSON.parse(res);
                         }

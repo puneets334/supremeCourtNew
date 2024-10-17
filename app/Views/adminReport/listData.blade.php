@@ -1,12 +1,10 @@
 @extends('layout.app')
 @section('content')
 <style>
-    .custom-table td:nth-child(5) {
-    min-height: 50px !important;
-}
-.custom-table td:nth-child(3) {
-    min-height: 50px !important;
-}
+    @media (max-width: 767px){
+        .custom-table td:nth-child(5) {min-height: 50px !important;}
+        .custom-table td:nth-child(3) {min-height: 50px !important;}
+    }
 </style>
 <div class="container-fluid">
     <div class="col-md-12 col-sm-12 col-xs-12">

@@ -15,24 +15,22 @@
                             <div class="dash-card">
                                 {{-- Page Title Start --}}
                                 <div class="title-sec">
-                                    <h5 class="unerline-title">NOC Vakalatnama </h5>
+                                    <h5 class="unerline-title"> NOC Vakalatnama </h5>
+                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
-
-                                <?php if ($message = \Config\Services::session()->getFlashdata('message')): ?>
-                                <?= $message; ?>
-                                <?php endif; ?>
-
-
-
-
                                 <div class="row" id="printData">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="x_panel">
                                             <div class="x_content">
                                                 <div class="panel-body">
                                                     <?= form_open() ?>
+                                                    <?php
+                                                    if (!empty(getSessionData('message'))) {
+                                                        echo getSessionData('message');
+                                                    }
+                                                    ?>
                                                     <div class="row">
                                                         <!-- <div class="col-sm-12 col-md-4 col-lg-2">
                                                             <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -59,7 +57,7 @@
                                                     </div>
                                                 </div>
                                                 <?= form_close() ?>
-                                                @if (isset($case_details))
+                                                @if (isset($case_details) && !empty($case_details))
                                                     <?= form_open() ?>
                                                     <div class="row">
                                                         <div class="col-md-3 col-sm-3 col-xs-3">
