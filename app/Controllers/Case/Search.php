@@ -547,127 +547,135 @@ class Search extends BaseController
     public function search_old_efiling_case_details()
     {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
-
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');
             exit(0);
         }
-
         // $diary_type = $_POST['search_filing_type'];
         $diary_type = $_REQUEST['search_filing_type'];
-
-        $this->validation->setRules([
+        $validation = \Config\Services::validation();
+        $rules = [
             "search_filing_type" => [
-                "label" => "case type",
+                "label" => "Case Type",
                 "rules" => "required|trim|in_list[diary,register]"
             ]
-        ]);
+        ];
         if ($diary_type == 'diary') {
-            $this->validation->setRules([
+            $rules = [
                 "diaryno" => [
                     "label" => "Diary Number",
-                    "rules" => "required|trim|min_length[1]|max_length[10]|numeric|is_required"
+                    "rules" => "required|trim|min_length[1]|max_length[10]|numeric"
                 ],
                 "diary_year" => [
                     "label" => "Diary Year",
-                    "rules" => "required|trim|min_length[4]|max_length[4]|numeric|is_required"
+                    "rules" => "required|trim|min_length[4]|max_length[4]|numeric"
                 ]
-            ]);
-        } elseif ($diary_type == 'register') {
-            $this->validation->setRules([
+            ];
+        } 
+        if ($diary_type == 'register') {
+            $rules = [
                 "sc_case_type" => [
                     "label" => "Case Type",
-                    "rules" => "required|trim|is_required|encrypt_check"
+                    "rules" => "required|trim"
                 ],
                 "case_number" => [
                     "label" => "Case Number",
-                    "rules" => "required|trim|min_length[1]|max_length[10]|numeric|is_required"
+                    "rules" => "required|trim|min_length[1]|max_length[10]|numeric"
                 ],
                 "case_year" => [
                     "label" => "Case Year",
-                    "rules" => "required|trim|min_length[4]|max_length[4]|numeric|is_required"
+                    "rules" => "required|trim|min_length[4]|max_length[4]|numeric"
                 ]
-            ]);
+            ];
         }
-        // $this->form_validation->set_error_delimiters('<br/>', '');
-        if ($diary_type == 'diary') {
+        if ($this->validate($rules) === FALSE) {
+            $data = [
+                'validation' => $this->validator
+            ];
+            return $this->render('casesearchForOldEfilingCases.case_search_view', $data);
+            // exit(0);
+        } else {
+            // $this->form_validation->set_error_delimiters('<br/>', '');
+            if ($diary_type == 'diary') {
 
-            // $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($_POST['diaryno']), escape_data($_POST['diary_year']));
+                // $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($_POST['diaryno']), escape_data($_POST['diary_year']));
 
-            $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
-        } else if ($diary_type == 'register') {
-
-            $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_POST['sc_case_type'])), escape_data($_POST['case_number']), escape_data($_POST['case_year']));
-        }
-        // pr($web_service_result);
-        if (!empty($web_service_result->message)) {
-            echo '3@@@ No Record found!';
-            exit(0);
-        } elseif (!empty($web_service_result->case_details[0])) {
-            $diary_no = $web_service_result->case_details[0]->diary_no;
-            $diary_year = $web_service_result->case_details[0]->diary_year;
-            if (!empty($diary_no) && !empty($diary_year)) {
-                $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                
-                $data['listing_details'] = !empty($listing_data->listed) ? $listing_data->listed[0] : '';
-                $_SESSION['listing_details'] = $data['listing_details'];
-                $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
-                
-                if (empty($data['old_efiling_cases'])) {
-                    echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
-                    exit(0);
-                } else {
-                    // logic written for aor can only refile the already file old efilinf case after 3 days
-                    $data['case_last_refiled_details'] = $this->efiling_webservices->checkInTheOldEfilingCasesList($diary_no, $diary_year);
-                    // pr($data['case_last_refiled_details']);
-                    if (!empty($data['case_last_refiled_details'])) {
-                        $last_refiled_on = ($data['case_last_refiled_details']->case_refiling_status[0]->created_at);
-                        $last_refiled_on = date('d-m-Y', strtotime($last_refiled_on));
-                        $curDate = date('d-m-Y');
-
-                        $datediff = strtotime($curDate) - strtotime($last_refiled_on);
-                        $date_diff_in_no_of_days = round($datediff / (60 * 60 * 24));
-                        if ($date_diff_in_no_of_days <= 3) {
-                            echo '3@@@ Please note, You can re-filed this case again after 3 days from the last refiling date i.e.' . $last_refiled_on;
-                            exit(0);
-                        }
-                    }
-                }
-                $data['case_uncured_defects_details'] = $this->efiling_webservices->getCaseDefectDetails($diary_no, $diary_year); // add by kbpujari : To restrict AOR to file Misc.Document(s)/IA(s) in any of the defective matters, whether the case is filed  through efiling, new filing or filed physically
-                // pr($data['case_uncured_defects_details']);
-                if (empty($data['case_uncured_defects_details']->defects)) {
-                    echo '3@@@ Please note, All the notified defects of this case,filed through old -efiling application has been already cured.';
-                    exit(0);
-                }
-                //print_r($data['mentioning_request_details']);
-                $data['searched_case_details'] = $web_service_result->case_details[0];
-                // $result = $this->load->view('casesearchForOldEfilingCases/search_result_view', $data, TRUE);
-                $result = $this->render('casesearchForOldEfilingCases.search_result_view', $data);
-
-
-                if ($diary_type == 'diary') {
-                    if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
-                        // $this->load->view('templates/header');
-                        echo $result;
-                        $this->Common_model->get_establishment_details();
-                        echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
-                        // $this->load->view('templates/footer');
-                    } else {
-                        echo '1@@@' . $result;
-
-                        echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
-                    }
-                } else if ($diary_type == 'register') {
-                    echo '2@@@' . $result;
-                    echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
-                }
-            } else {
+                $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
+            } else if ($diary_type == 'register') {
+                // pr($_GET);
+                $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_GET['sc_case_type'])), escape_data($_GET['case_number']), escape_data($_GET['case_year']));
+            }
+            // pr($web_service_result);
+            if (!empty($web_service_result->message)) {
                 echo '3@@@ No Record found!';
                 exit(0);
+            } elseif (!empty($web_service_result->case_details[0])) {
+                $diary_no = $web_service_result->case_details[0]->diary_no;
+                $diary_year = $web_service_result->case_details[0]->diary_year;
+                if (!empty($diary_no) && !empty($diary_year)) {
+                    $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
+                    
+                    $data['listing_details'] = !empty($listing_data->listed) ? $listing_data->listed[0] : '';
+                    $_SESSION['listing_details'] = $data['listing_details'];
+                    $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
+                    
+                    if (empty($data['old_efiling_cases'])) {
+                        echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
+                        exit(0);
+                    } else {
+                        // logic written for aor can only refile the already file old efilinf case after 3 days
+                        $data['case_last_refiled_details'] = $this->efiling_webservices->checkInTheOldEfilingCasesList($diary_no, $diary_year);
+                        // pr($data['case_last_refiled_details']);
+                        if (!empty($data['case_last_refiled_details'])) {
+                            $last_refiled_on = ($data['case_last_refiled_details']->case_refiling_status[0]->created_at);
+                            $last_refiled_on = date('d-m-Y', strtotime($last_refiled_on));
+                            $curDate = date('d-m-Y');
+
+                            $datediff = strtotime($curDate) - strtotime($last_refiled_on);
+                            $date_diff_in_no_of_days = round($datediff / (60 * 60 * 24));
+                            if ($date_diff_in_no_of_days <= 3) {
+                                echo '3@@@ Please note, You can re-filed this case again after 3 days from the last refiling date i.e.' . $last_refiled_on;
+                                exit(0);
+                            }
+                        }
+                    }
+                    $data['case_uncured_defects_details'] = $this->efiling_webservices->getCaseDefectDetails($diary_no, $diary_year); // add by kbpujari : To restrict AOR to file Misc.Document(s)/IA(s) in any of the defective matters, whether the case is filed  through efiling, new filing or filed physically
+                    // pr($data['case_uncured_defects_details']);
+                    if (empty($data['case_uncured_defects_details']->defects)) {
+                        echo '3@@@ Please note, All the notified defects of this case,filed through old -efiling application has been already cured.';
+                        exit(0);
+                    }
+                    //print_r($data['mentioning_request_details']);
+                    $data['searched_case_details'] = $web_service_result->case_details[0];
+                    // $result = $this->load->view('casesearchForOldEfilingCases/search_result_view', $data, TRUE);
+                    $result = $this->render('casesearchForOldEfilingCases.search_result_view', $data);
+
+
+                    if ($diary_type == 'diary') {
+                        if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
+                            // $this->load->view('templates/header');
+                            echo $result;
+                            $this->Common_model->get_establishment_details();
+                            echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
+                            // $this->load->view('templates/footer');
+                        } else {
+                            echo '1@@@' . $result;
+
+                            echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
+                        }
+                    } else if ($diary_type == 'register') {
+                        echo '2@@@' . $result;
+                        echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
+                    }
+                } else {
+                    echo '3@@@ No Record found!';
+                    exit(0);
+                }
+            } else {
+                echo '3@@@ Some error!';
+                exit(0);
             }
-        } else {
-            echo '3@@@ Some error!';
-            exit(0);
         }
     }
+
 }

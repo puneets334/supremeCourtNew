@@ -82,7 +82,38 @@
                                             if (!empty(getSessionData('msg'))) {
                                                 echo getSessionData('msg');
                                             }
+                                            $session = session();
                                             ?>
+                                            @if(isset($validation) && !empty($validation->getError('search_filing_type')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('search_filing_type')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('diaryno')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('diaryno')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('diary_year')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('diary_year')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('sc_case_type')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('sc_case_type')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('case_number')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('case_number')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('case_year')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('case_year')}}</b>
+                                            </div>
+                                            @endif
                                             <br>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Diary Number  &nbsp;</label><label class="radio-inline input-lg"><b>OR</b> </label>
@@ -205,10 +236,40 @@
                                         <?php echo form_close(); ?>
 
                                         <br>
-                                        <div id="msg"></div>
-                                        <div id="show_search_result_diary">
-
+                                        <div id="msg">
+                                            <?php $session = session(); ?>
+                                            @if(isset($validation) && !empty($validation->getError('search_filing_type')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('search_filing_type')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('diaryno')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('diaryno')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('diary_year')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('diary_year')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('sc_case_type')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('sc_case_type')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('case_number')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('case_number')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('case_year')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('case_year')}}</b>
+                                            </div>
+                                            @endif
                                         </div>
+                                        <div id="show_search_result_diary"></div>
                                         <div id="show_search_result"></div>
 
                                     </div>

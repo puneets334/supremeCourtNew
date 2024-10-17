@@ -41,7 +41,39 @@
                                                     ?>
                                                     <h5><i class="fa fa-file"></i> {{$commonHeading}}</h5>
                                                 </div>
-                                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
+                                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                                                    <?php $session = session(); ?>
+                                                    @if(isset($validation) && !empty($validation->getError('search_filing_type')))
+                                                    <div class="text-danger">
+                                                        <b>{{ $validation->getError('search_filing_type')}}</b>
+                                                    </div>
+                                                    @endif
+                                                    @if(isset($validation) && !empty($validation->getError('diaryno')))
+                                                    <div class="text-danger">
+                                                        <b>{{ $validation->getError('diaryno')}}</b>
+                                                    </div>
+                                                    @endif
+                                                    @if(isset($validation) && !empty($validation->getError('diary_year')))
+                                                    <div class="text-danger">
+                                                        <b>{{ $validation->getError('diary_year')}}</b>
+                                                    </div>
+                                                    @endif
+                                                    @if(isset($validation) && !empty($validation->getError('sc_case_type')))
+                                                    <div class="text-danger">
+                                                        <b>{{ $validation->getError('sc_case_type')}}</b>
+                                                    </div>
+                                                    @endif
+                                                    @if(isset($validation) && !empty($validation->getError('case_number')))
+                                                    <div class="text-danger">
+                                                        <b>{{ $validation->getError('case_number')}}</b>
+                                                    </div>
+                                                    @endif
+                                                    @if(isset($validation) && !empty($validation->getError('case_year')))
+                                                    <div class="text-danger">
+                                                        <b>{{ $validation->getError('case_year')}}</b>
+                                                    </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                             <div class="ryt-dash-breadcrumb">
                                                 <div class="btns-sec">
@@ -80,7 +112,38 @@
                                             if (!empty(getSessionData('msg'))) {
                                                 echo getSessionData('msg');
                                             }
+                                            $session = session();
                                             ?>
+                                            @if(isset($validation) && !empty($validation->getError('search_filing_type')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('search_filing_type')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('diaryno')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('diaryno')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('diary_year')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('diary_year')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('sc_case_type')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('sc_case_type')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('case_number')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('case_number')}}</b>
+                                            </div>
+                                            @endif
+                                            @if(isset($validation) && !empty($validation->getError('case_year')))
+                                            <div class="text-danger">
+                                                <b>{{ $validation->getError('case_year')}}</b>
+                                            </div>
+                                            @endif
                                             <br>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <label class="radio-inline input-lg"><input type="radio" checked name="search_filing_type" value="diary"> Diary Number &nbsp;</label><label class="radio-inline input-lg"><b>OR</b> </label>
@@ -99,6 +162,11 @@
                                                             <div class="col-7 pe-0">
                                                                 <input class="form-control cus-form-ctrl" id="diaryno" name="diaryno" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text" required>
                                                             </div>
+                                                            <?php if (isset($validation) && $validation->hasError('diaryno')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('diaryno'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -144,7 +212,7 @@
                                                                 <select class="form-select cus-form-ctrl" name="sc_case_type" id="sc_case_type" aria-label="Default select example" required>
                                                                     <option value="">Case Type</option>;
                                                                     <?php
-                                                                    if (count($sc_case_type)) {
+                                                                    if (!empty($sc_case_type)) {
                                                                         foreach ($sc_case_type as $dataRes) {
                                                                             $sel = (isset($new_case_details[0]->sc_case_type_id) && $new_case_details[0]->sc_case_type_id == (string) $dataRes->casecode) ? "selected=selected" : '';
                                                                     ?>
@@ -201,12 +269,10 @@
                                             </div>
                                         </div>
                                         <?php echo form_close(); ?>
-
                                         <br>
                                         <div id="msg"></div>
                                         <div id="show_search_result_diary"></div>
                                         <div id="show_search_result"></div>
-
                                     </div>
                                 </div>
                             </div>
@@ -298,51 +364,192 @@
             $(document).ready(function() {
                 $('#search_case_details').on('submit', function() {
                     // if ($('#search_case_details').valid()) {
-                    var diary_no = $(this).val();
-                    var form_data = $(this).serialize();
-                    // console.log(form_data); exit;
-                    var CSRF_TOKEN = 'CSRF_TOKEN';
-                    var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-                    $('#show_search_result_diary').html('');
-                    $('#show_search_result').html('');
-                    $(".form-response").html('');
-                    $(".form-response").hide();
-                    $.ajax({
-                        type: "GET",
-                        url: "<?php echo base_url('case/search/search_old_efiling_case_details'); ?>",
-                        data: form_data,
-                        async: false,
-                        beforeSend: function() {
-                            $('#search_sc_case').val('Please wait...');
-                            $('#search_sc_case').prop('disabled', true);
-                        },
-                        success: function(data) {
-                            $('#search_sc_case').val('SEARCH');
-                            $('#search_sc_case').prop('disabled', false);
-                            var resArr = data.split('@@@');
-                            console.log(resArr[1]);
-                            $('#show_search_result_diary').html(resArr[1]);
+                //     var diary_no = $(this).val();
+                //     var form_data = $(this).serialize();
+                //     // console.log(form_data); exit;
+                //     var CSRF_TOKEN = 'CSRF_TOKEN';
+                //     var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                //     $('#show_search_result_diary').html('');
+                //     $('#show_search_result').html('');
+                //     $(".form-response").html('');
+                //     $(".form-response").hide();
+                //     $.ajax({
+                //         type: "GET",
+                //         url: "<?php echo base_url('case/search/search_old_efiling_case_details'); ?>",
+                //         data: form_data,
+                //         async: false,
+                //         beforeSend: function() {
+                //             $('#search_sc_case').val('Please wait...');
+                //             $('#search_sc_case').prop('disabled', true);
+                //         },
+                //         success: function(data) {
+                //             $('#search_sc_case').val('SEARCH');
+                //             $('#search_sc_case').prop('disabled', false);
+                //             var resArr = data.split('@@@');
+                //             console.log(resArr[1]);
+                //             $('#show_search_result_diary').html(resArr[1]);
 
-                            if (resArr[0] == 1) {
-                                $('#show_search_result_diary').html(resArr[1]);
+                //             if (resArr[0] == 1) {
+                //                 $('#show_search_result_diary').html(resArr[1]);
                                 
-                                // $("#show_search_result_diary").css("display", "block");
-                            } else if (resArr[0] == 2) {
-                                $('#show_search_result').html(resArr[1]);
-                            } else if (resArr[0] == 3) {
-                                $(".form-response").show();
-                                $('#msg').show();
-                                $(".form-response").html(
-                                    "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
-                                    resArr[1] +
-                                    "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
-                                );
+                //                 // $("#show_search_result_diary").css("display", "block");
+                //             } else if (resArr[0] == 2) {
+                //                 $('#show_search_result').html(resArr[1]);
+                //             } else if (resArr[0] == 3) {
+                //                 $(".form-response").show();
+                //                 $('#msg').show();
+                //                 $(".form-response").html(
+                //                     "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
+                //                     resArr[1] +
+                //                     "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
+                //                 );
+                //             }
+                //             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                //                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                //             });
+                //         }
+                //     });
+                //     return false;
+                //     // } else {
+                //     //     alert("Form is invalid!");
+                //     //     return false;
+                //     // }
+                // });
+
+
+                var inputValue = $('input[type="radio"]:checked').val();
+                    //  alert(inputValue);
+                    if(inputValue == 'diary'){
+                        $('#diaryno').attr('required', true);
+                        $('#diary_year').attr('required', true);
+                        $('#sc_case_type').attr('required', false);
+                        $('#case_number').attr('required', false);
+                        $('#case_year').attr('required', false);
+
+                        var diary_no = $('#diaryno').val();
+                        var diary_year = $('#diary_year').val();
+                        // alert(diary_year);
+                        var form_data = $(this).serialize();
+                        if(diary_no==''){
+                            alert('Please Enter Diary Number');
+                            $('#diaryno').focus(); 
+                            return false;
+                        }
+                        if(diary_year=='' || diary_year==null ){
+                            alert('Please Select Diary Year'); 
+                            $('#diary_year').focus(); 
+                            return false;
+                        }
+
+                            var CSRF_TOKEN = 'CSRF_TOKEN';
+                            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                            $('#show_search_result_diary').html('');
+                            $('#show_search_result').html('');
+                            $(".form-response").html('');
+                            $(".form-response").hide();
+                            $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('case/search/search_old_efiling_case_details'); ?>",
+                            data: form_data,
+                            async: false,
+                            beforeSend: function() {
+                                $('#search_sc_case').val('Please wait...');
+                                $('#search_sc_case').prop('disabled', true);
+                            },
+                            success: function(data) { 
+                                $('#search_sc_case').val('SEARCH');
+                                $('#search_sc_case').prop('disabled', false);
+                                var resArr = data.split('@@@');
+                                console.log(resArr[1]);
+
+                                if (resArr[0] == 1) {
+                                    $('#show_search_result_diary').html(resArr[1]);
+                                } else if (resArr[0] == 2) {
+                                    $('#show_search_result').html(resArr[1]);
+                                } else if (resArr[0] == 3) {
+                                    alert(resArr[1]); 
+                                }
+                                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                                });
                             }
-                            $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                                $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                             });
                         }
-                    });
+
+
+                        if(inputValue == 'register'){
+                        $('#diaryno').attr('required', false);
+                        $('#diary_year').attr('required', false);
+                        $('#sc_case_type').attr('required', true);
+                        $('#case_number').attr('required', true);
+                        $('#case_year').attr('required', true);
+
+                        var sc_case_type = $('#sc_case_type').val();
+                        var case_number = $('#case_number').val();
+                        var case_year = $('#case_year').val();
+                        // alert(diary_year);
+                        var form_data = $(this).serialize();
+                        if(sc_case_type=='' || sc_case_type==null ){
+                            alert('Please Select Case Type');
+                            $('#sc_case_type').focus(); 
+                            return false;
+                        }
+                        if(case_number=='' || case_number==null ){
+                            alert('Please Enter Case Number'); 
+                            $('#case_number').focus(); 
+                            return false;
+                        }
+                        if(case_year=='' || case_year==null ){
+                            alert('Please Select Case Year'); 
+                            $('#case_year').focus(); 
+                            return false;
+                        }
+
+                            var CSRF_TOKEN = 'CSRF_TOKEN';
+                            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                            $('#show_search_result_diary').html('');
+                            $('#show_search_result').html('');
+                            $(".form-response").html('');
+                            $(".form-response").hide();
+                            $.ajax({
+                            type: "GET",
+                            url: "<?php echo base_url('case/search/search_old_efiling_case_details'); ?>",
+                            data: form_data,
+                            async: false,
+                            beforeSend: function() {
+                                $('#search_sc_case').val('Please wait...');
+                                $('#search_sc_case').prop('disabled', true);
+                            },
+                            success: function(data) { 
+                                $('#search_sc_case').val('SEARCH');
+                                $('#search_sc_case').prop('disabled', false);
+                                var resArr = data.split('@@@');
+                                console.log(resArr[1]);
+
+                                if (resArr[0] == 1) {
+                                    $('#show_search_result_diary').html(resArr[1]);
+                                } else if (resArr[0] == 2) {
+                                    $('#show_search_result').html(resArr[1]);
+                                } else if (resArr[0] == 3) {
+                                    alert(resArr[1]); 
+                                }
+                                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                                });
+                            }
+                            });
+                        }
+                    // if ($('#search_case_details').valid()) {
+                    // var diary_no = $('#diaryno').val();
+                    // var form_data = $(this).serialize();
+                    // if(diary_no=='') {
+                    //     alert("Please Enter Diary Number");
+                    //     $('#diaryno').focus();
+                    //     return false;
+                    // }
+
+                    // console.log(form_data); exit;
+                    
                     return false;
                     // } else {
                     //     alert("Form is invalid!");

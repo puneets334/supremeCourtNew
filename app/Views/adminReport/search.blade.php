@@ -25,13 +25,13 @@
                                 ?>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                     <div class="row" id="printData">
-                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <div class="col-md-6 col-sm-12 col-xs-12">
                                             <div class="row">
-                                                <div class="row w-100 align-items-center">
-                                                    <div class="col-5">
+                                                <div class="row mb-3 w-100 align-items-center">
+                                                    <div class="col-12">
                                                     <label class="col-form-label" for="sc_case_type">Case Type <span style="color: red">*</span>:</label>
                                                     </div>
-                                                    <div class="col-7 pe-0">
+                                                    <div class="col-12 pe-0">
                                                         <select name="sc_case_type[]" id="sc_case_type" class=" js-example-basic-multiple form-select input-sm form-control cus-form-ctrl" aria-label="Default select example" required multiple="multiple" data-placeholder="Select Case Type.">
                                                             <!--<option value="" title="Select">Select Case Type</option>-->
                                                             <?php
@@ -49,22 +49,22 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="row">
-                                                <div class="row w-100 align-items-center">
-                                                    <div class="col-5"><label class="col-form-label" for="from_date">From Date</label></div>
-                                                    <div class="col-7 pe-0">
+                                                <div class="row mb-3 w-100 align-items-center">
+                                                    <div class="col-12"><label class="col-form-label" for="from_date">From Date</label></div>
+                                                    <div class="col-12 pe-0">
                                                         <input type="text" name="from_date" id="from_date" class="form-control cus-form-ctrl">
                                                         <span id="error_from_date"></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <div class="col-md-3 col-sm-12 col-xs-12">
                                             <div class="row">
-                                                <div class="row w-100 align-items-center">
-                                                    <div class="col-5"><label class="col-form-label" for="to_date">To Date</label></div>
-                                                    <div class="col-7 pe-0">
+                                                <div class="row mb-3 w-100 align-items-center">
+                                                    <div class="col-12"><label class="col-form-label" for="to_date">To Date</label></div>
+                                                    <div class="col-12 pe-0">
                                                         <input type="text" name="to_date" id="to_date" class="form-control cus-form-ctrl">
                                                         <span id="error_to_date"></span>
                                                     </div>
@@ -73,8 +73,8 @@
                                         </div>
                                     </div>
                                     <div class="save-btns" style="text-align: center;">
-                                        <button type="button" class="btn btn-success Download"> Download</button>
-                                        <div id="loader_div" class="loader_div" style="display: none;"></div>
+                                        <button type="button" class="quick-btn Download"> Download</button>
+                                        <!-- <div id="loader_div" class="loader_div" style="display: none;"></div> -->
                                     </div>
                                 <?php echo form_close(); ?>
 								<div id="result" class="text-center mt-3"></div>
@@ -176,7 +176,8 @@
                     url: "<?php echo base_url('adminReport/Search/get_list_doc_fromDate_toDate'); ?>",
                     data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, from_date: from_date,to_date:to_date,sc_case_type:sc_case_type},
                     beforeSend: function() {
-                        $("#loader_div").html("<table widht='100%' align='center'><tr><td><img src='<?php echo base_url('assets/physical_hearing/load.gif');?>'></td></tr></table>");
+                        // $("#loader_div").html("<table widht='100%' align='center'><tr><td><img src='<?php // echo base_url('assets/physical_hearing/load.gif');?>'></td></tr></table>");
+                        $('.loader_div').show();
                     },
                     success: function (data) {
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
@@ -186,7 +187,8 @@
                         var resArr = data.split('@@@');
                         $('.msg').show();
                         $("#result").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
-                        $('.loader_div').hide();						
+                        $('.loader_div').hide();
+                        $(".Download").prop("enabled", true);						
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                         });

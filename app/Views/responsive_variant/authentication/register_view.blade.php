@@ -245,16 +245,15 @@ $session = service('session');
                 return false;
             }
         }
-
         $(document).ready(function() {
             $(document).on('click', '#submit', function(event) {
                 // event.preventDefault(); // Prevent default form submission
-// Check file size (optional)
+                // Check file size (optional)
                 if(ty == 2){
                     const maxSizeInBytes = '<?=OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE; ?>';
                     const file = $('#ekyc_zip_file')[0].files[0];
                     // Check file type (optional)
-                    const allowedTypes = ['application/zip'];
+                    const allowedTypes = ['application/zip', 'application/x-zip-compressed'];
                     // Check if a file has been selected
                     if ($('#ekyc_zip_file').val() === '') {
                         event.preventDefault();
