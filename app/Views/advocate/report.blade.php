@@ -4,7 +4,7 @@
 
 
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -14,12 +14,14 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
-<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet"> -->
 
 <style>
     .dateSymbol {
@@ -39,13 +41,14 @@
                                     <h5 class="unerline-title">Advocates Appearing</h5>
                                     <a href="javascript:void(0)" class="quick-btn pull-right mb-2" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
-                                <h6>Search </h6>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2">
-                                    <div class="crnt-page-head">
-                                        <div class="current-pg-title">
-                                           
+                                <div class="row">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2">
+                                        <div class="crnt-page-head mx-2 mb-3">
+                                            <div class="current-pg-title">
+                                             <h6>Search </h6>
+                                            </div>
+                                            <div class="current-pg-actions"> </div>
                                         </div>
-                                        <div class="current-pg-actions"> </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -55,20 +58,20 @@
                                        
                                        
                                             <div class="row">
-                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                <div class="col-md-3 col-sm-12 col-xs-12">
                                                     <div class="row">
-                                                        <div class="row w-100 align-items-center">
-                                                            <div class="col-5">
+                                                        <div class="row mb-3 w-100 align-items-center">
+                                                            <div class="col-12">
                                                                 <label for="inputPassword6" class="col-form-label" style="position:relative; top:-8px !important;">List Date</label>
                                                             </div>
-                                                            <div class="col-7 pe-0">
+                                                            <div class="col-12 pe-0">
                                                             <input class="form-control cus-form-ctrl  has-feedback-left" id="cause_list_date"  name="cause_list_date" placeholder="List Date" type="text" required />
                                                              <span class="fa fa-calendar-o form-control-feedback left dateSymbol" aria-hidden="true" ></span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 col-sm-4 col-xs-12">
+                                                <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
                                                             <button type="submit" class="quick-btn gray-btn" id="search_sc_case" value="SEARCH">Search</button>
@@ -78,7 +81,7 @@
                                             </div>  
                                         </form>
                                         @if(isset($list))
-                                            <div class="row">
+                                            <div class="row mt-3">
                                                 <div class="col-12">
                                                     <div class="card">
                                                         <div class="card-header">
