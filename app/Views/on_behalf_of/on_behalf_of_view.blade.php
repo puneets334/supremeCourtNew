@@ -111,9 +111,9 @@ if ($segment->getSegment(2) != 'view') {
                                 $saved_sr_no = array_search($key, $saved_filing_for);
                             ?>
                                 <tr>
-                                    <td>
+                                    <td data-key="Party Name">
                                         <input class="form-control cus-form-ctrl" name="party_name[]" type="text"  value="<?php echo_data($value); ?>" readonly=""></td>                                
-                                    <td class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_for_details[0]['partytype']); ?>" <?php   echo $selected; ?> ></td>
+                                    <td data-key="Select" class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_for_details[0]['partytype']); ?>" <?php   echo $selected; ?> ></td>
                                 </tr>
                                 <?php
                                 $i++;

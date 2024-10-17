@@ -114,6 +114,10 @@
     /* ---------  */
     .dashboard-bradcrumb .ryt-dash-breadcrumb .btns-sec {flex-wrap: wrap;}
     .start-buttons{flex-direction:column;}
+    /* 17-10-24 start  */
+    .tabs-section .nav-tabs li.nav-item .nav-link {border-radius: 21px;}
+    .dash-card .tabs-section .nav-tabs li.nav-item .nav-link {border-bottom: 1px solid #e1e1e1;}
+    .add-new-area {bottom: 10% !important;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){
