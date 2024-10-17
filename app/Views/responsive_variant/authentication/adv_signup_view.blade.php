@@ -60,29 +60,17 @@
 // }
 $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_QUOTES);
 ?>
-<?php $star_requered = '<span style="color: red">*</span>'; ?>
-<?php $session = session(); ?>
-<div class="login-area register-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 login-banner">
-                <div class="login-banner-inner">
-                    <div class="banimg-sec">
-                        <!-- <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="Banner Image" title="Supreme Court of India" class="img-fluid"> -->
-                        <img src="<?= base_url() . 'assets/newDesign/' ?>images/logo-full.png" alt="" class="img-fluid  logo-at-banner">
-                    
-                    </div>
-                    <div class="banner-txts">
-                        <h5>SC-EFM </h5>
-                        <h6>E-Filing Module</h6>
-                        <h6>Supreme Court Of India</h6>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
-                <div class="login-s-inner">
+        <?php $star_requered = '<span style="color: red">*</span>'; ?>
+        <?php $session = session(); ?>
+ 
+        <div class="container-fluid">
+        <div class="row card">
+            <div class="col-lg-12">
+                <div class="card-body">
+                <div class="dashboard-section">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card">
                     <?php $session = session(); ?>
                     <div class="text-danger">
                         <b><?php echo $session->getFlashData('msg'); ?></b>
@@ -123,7 +111,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                         </div>
                         <?php } ?>
                     </div>
-                    <div class="loin-form">
+                    <div class="">
                         <?php
                             $attribute = array('id' => 'uploadForm', 'enctype' => "multipart/form-data");
                             echo form_open(base_url(), $attribute);
@@ -131,7 +119,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                             <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
 
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-sm-12 col-md-2 col-lg-1">
                                     <div class="mb-3" id="targetLayer">
                                         <?php if (!empty($_SESSION['profile_image']['profile_photo'])) { ?>
                                                 <img  src="<?php echo $_SESSION['profile_image']['profile_photo']; ?>"  height="94" width="94" />
@@ -146,14 +134,14 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                        
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-sm-12 col-md-10 col-lg-9">
                                     <div class="mb-3">
                                         <p class="image-note mb-2">
-                                            NOTE: Please upload only JPG or JPEG. File name maximun length can be 40 characters including digits characters, spaces, hypens and underscore. maximum file size 1MB.
+                                            <b>NOTE:</b> Please upload only JPG or JPEG.File name maximun length can be 40 characters <br> including digits characters, spaces, hypens and underscore. maximum file size 1MB.
                                         </p>
                                         <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
-                                                <input type="file" class="form-control cus-form-ctrl" value="<?php echo_data($user_addar_img) ?>" placeholder="" name="advocate_image" id="advocate_image" required>
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 mb-3">
+                                                <input type="file" class="form-control cus-form-ctrl" value="<?php echo_data($user_addar_img) ?>" placeholder="" name="advocate_image"  accept=".jpg, .jpeg" id="advocate_image" required><span>Please Choose <b>Profile Picture</b> ( Upto 1MB )</span>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                 <input type="submit" value="UPLOAD" class="btnSubmit btn btn-sm quick-btn btn-primary" >
@@ -179,10 +167,10 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                             <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
 
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Name <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
+                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" oninput="validateInput(event)" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
                                         <?php if (isset($validation) && $validation->hasError('name')): ?>
                                             <div class="text-danger">
                                                 <?= $validation->getError('name'); ?>
@@ -190,7 +178,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Date of Birth <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" value="<?php
@@ -209,13 +197,13 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                                 <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Mobile Number <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" id="form-horizontal-text" name='mobile' type="text" value="<?php echo $_SESSION['adv_details']['mobile_no']; ?>" placeholder="Mobile" minlength="10" maxlength="10" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Email ID <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" id="form-horizontal-text" value="<?php echo $_SESSION['adv_details']['email_id']; ?>" placeholder="Email ID" name='email_id' readonly>
@@ -230,7 +218,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         $female = 'checked';
                                     }
                                 ?>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Gender <?php echo $star_requered; ?></label><br>
                                         <label class="radio-inline"><input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1" checked> Male </label>
@@ -244,7 +232,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                     </div>
                                 </div>
                                 <?php $requerd = ''; $selected = '';?>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Address <?php echo $star_requered; ?></label>
                                         <textarea name="address" id="address" rows="1" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl" required><?php echo trim(htmlentities($uid_data_house_no, ENT_QUOTES)); ?><?php echo !empty($uid_data_landmark)?','.trim(htmlentities($uid_data_landmark, ENT_QUOTES)):''; ?><?php echo !empty($uid_data_locality)?','. trim(htmlentities($uid_data_locality, ENT_QUOTES)):''; ?>
@@ -256,7 +244,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">State <?php echo $star_requered; ?></label>
                                         <select name="state_id" id="state_id" class="form-control cus-form-ctrl" <?php echo $requerd; ?>>
@@ -269,65 +257,59 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                             ?>
                                         </select>
                                         <?php if (isset($validation) && $validation->hasError('state_id')): ?>
-        <div class="text-danger">
-            <?= $validation->getError('state_id'); ?>
-        </div>
-    <?php endif; ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('state_id'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">District <?php echo $star_requered; ?></label>
                                         <select name="district_list" id="district_list" class="form-control cus-form-ctrl" required <?php echo $requerd; ?> >
                                             <option value="" title="Select">Select District</option>
                                         </select>
                                         <?php if (isset($validation) && $validation->hasError('district_list')): ?>
-        <div class="text-danger">
-            <?= $validation->getError('district_list'); ?>
-        </div>
-    <?php endif; ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('district_list'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Pin Code <?php echo $star_requered; ?></label>
                                         <input class="form-control cus-form-ctrl" id="pincode" name="pincode" <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?php echo htmlentities($uid_data_pincode, ENT_QUOTES); ?>" placeholder="Pincode" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                         <?php if (isset($validation) && $validation->hasError('pincode')): ?>
-        <div class="text-danger">
-            <?= $validation->getError('pincode'); ?>
-        </div>
-    <?php endif; ?>
+                                            <div class="text-danger">
+                                                <?= $validation->getError('pincode'); ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="row">
-                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="mb-3">
+                                <div class="center-buttons">
+                                <a href="<?php echo base_url('register'); ?>" class="quick-btn gray-btn" >CANCEL</a>
+
                                                 <button type="submit"  class="quick-btn" id="info_save" value="SUBMIT">SUBMIT</button>
-                                            </div>
-                                        </div>
-                                        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                                            <div class="mb-3">
-                                                <a href="<?php echo base_url('register'); ?>" class="quick-btn gray-btn" >CANCEL</a>
-                                            </div>
-                                        </div>
+                                                </div>
                                     </div>
                                 </div>
                             </div>
                         <?php echo form_close(); ?>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
+            </div>   
+            </div>   
+            </div>   
+            </div>   
+            </div>   
+            </div>   
+            </div>   
+            </div>   
+            </div>   
 </div>
 
 @endsection
@@ -368,6 +350,13 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
     var base_url = '<?php echo base_url(); ?>';
 </script>
 <script>
+    function validateInput(event) {
+        const input = event.target.value;
+        const regex = /^[a-zA-Z@_ ]*$/;
+        if (!regex.test(input)) {
+            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        }
+    }
     // $(document).ready(function () {
     //     $('.filter_select_dropdown').select2();
     // });

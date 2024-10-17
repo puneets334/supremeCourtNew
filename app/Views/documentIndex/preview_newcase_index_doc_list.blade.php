@@ -66,7 +66,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                                     ?>
 
                                     <a target="_blank" href="<?php echo base_url('documentIndex/viewIndexItem/' . url_encryption($doc_list->doc_id)); ?>">
-                                        <?php echo_data(@$doc_list->docdesc); ?>
+                                        <?php echo_data(@$doc_list->docdesc); ?> <img src="<?= base_url('assets/images/pdf.png') ?>"> </a>
                                 <?php } ?>
 
                                 <?php }//end of else condition efiling_search .. ?>
