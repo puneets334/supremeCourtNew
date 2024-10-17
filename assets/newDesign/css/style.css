@@ -337,7 +337,30 @@ ul.innpg-ul {
     margin-bottom: 8px;
 }
 /* Faq-Page End  */
+.center-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+    gap: 15px;
+}
 
+.end-buttons {
+    display: flex;
+    justify-content: end;
+    margin: 15px 0;
+    gap: 15px;
+}
+
+.start-buttons {
+    display: flex;
+    justify-content: start;
+    margin: 15px 0;
+    gap: 15px;
+}
+.center-buttons .quick-btn {
+    width: fit-content;
+    padding: 12px 20px;
+}
 /* Inner - Pages CSS End  */
 
 
@@ -416,6 +439,8 @@ ul.innpg-ul {
     .main-inner-area  .main-inner-bg .accordion-body {padding: 12px;}
     .regester-txts .regester-links {flex-direction: column;text-align: center;gap: 10px;margin: 0;}
     .top-header .font-action-sec {left:-11px;}
+    .center-buttons , .end-buttons , .start-buttons{flex-wrap: wrap;}
+
 }
 
 @media screen and (max-width: 390px) and (min-width: 300px){

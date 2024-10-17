@@ -14,9 +14,9 @@
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 @stack('style')
 <style>
-    .datepicker-dropdown {
+    /* .datepicker-dropdown {
         margin-top: 305px !important;
-    }
+    } */
 
     .datepicker-dropdown {
         background-color: #fff;
