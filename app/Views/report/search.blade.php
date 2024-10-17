@@ -29,9 +29,9 @@
         /* border: 1px solid #8080FF; */
         /*background-color: #E5E5FF;*/
     }
-    .custom-table td:nth-child(10), .custom-table td:nth-child(11), .custom-table td:nth-child(12), .custom-table td:nth-child(13) {
-    min-height: 30px;
-}
+    @media (max-width: 767px){
+        .custom-table td:nth-child(10), .custom-table td:nth-child(11), .custom-table td:nth-child(12), .custom-table td:nth-child(13) {    min-height: 30px;}
+    }
 </style>
 <div class="container-fluid">
     <div class="row">

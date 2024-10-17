@@ -8596,3 +8596,6 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 /* 16-10-24 start  */
 .panel h4 {font-size: 24px;margin: 0;padding-bottom: 15px;color: #000;position: relative;font-family: 'noto_sanssemibold';}
 /* 16-10-24 End  */
+/* 17-10-24 start  */
+.common-modal .uk-modal-dialog .uk-icon svg line {stroke: #fff;}
+/* 17-10-24 End  */

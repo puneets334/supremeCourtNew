@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <style>
-    div#tableData .custom-table tr td:nth-child(3) {
-    min-height: 55px;
-}
+    @media (max-width: 767px){
+        div#tableData .custom-table tr td:nth-child(3) {min-height: 55px;}
+    }
 </style>
 <div class="container-fluid">
     <div id="loader-wrapper" style="display: none;">
