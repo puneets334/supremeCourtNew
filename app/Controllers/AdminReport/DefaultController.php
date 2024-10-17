@@ -201,7 +201,9 @@ class DefaultController extends BaseController
                 }
                 $output['status'] = 'success';
                 $output['id'] = 'result';
-                $output['msg'] = 'Record has been fetched successfully';
+                $output['msg'] = '<div style="background-color: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px; border-radius: 5px;">
+                    Record has been fetched successfully
+                 </div>';
             } else {
                 $output['status'] = 'success';
                 $output['id'] = 'result';
