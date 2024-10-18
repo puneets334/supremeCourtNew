@@ -5,62 +5,56 @@ use App\Models\Caveat\ViewModel;
 use App\Models\UploadDocuments\UploadDocsModel;
 use App\Models\Common\CommonModel;
 use App\Models\NewCase\GetDetailsModel;
-
-//require_once APPPATH .'controllers/Auth_Controller.php';
+use App\Libraries\webservices\Efiling_webservices;
+use TCPDF;
+// require_once APPPATH .'controllers/Auth_Controller.php';
 class View extends BaseController {
 
 	protected $View_model;
     protected $UploadDocs_model;
     protected $Caveator_model;
-    
+    protected $GetDetailsModel;
+    protected $Common_model;
     protected $request;
     protected $validation;
-
     protected $session;
+    protected $efiling_webservices;
 	
     public function __construct() {
         parent::__construct();
-		
         $this->request = \Config\Services::request();
-    
 		$this->View_model = new ViewModel();
         $this->UploadDocs_model = new UploadDocsModel();
-        
-        
         $this->GetDetailsModel = new GetDetailsModel();
         $this->Common_model = new CommonModel();
+        $this->efiling_webservices = new Efiling_webservices();
     }
 
     public function index() {
-
         $this->check_caveator_info();
-
         if (!empty(getSessionData('efiling_details')) && (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) {
             $registration_id = getSessionData('efiling_details')['registration_id'];
-    
         } else {
             redirect('dashboard');
             exit(0);
         }
         $data['efiling_civil_data'] = $this->View_model->get_efiling_civil_details($registration_id);
         // pr($data);
-        //$data['efiling_civil_data'] = $this->View_model->get_efiling_civil_caveat_details($registration_id);
+        // $data['efiling_civil_data'] = $this->View_model->get_efiling_civil_caveat_details($registration_id);
         $session = session();
         $session->set([
             'breadcrumb_enable' => [
                 'efiling_type' => $data['efiling_civil_data'][0]['ref_m_efiled_type_id']
             ]
         ]);
-       // $_SESSION['breadcrumb_enable']['efiling_type'] = $data['efiling_civil_data'][0]['ref_m_efiled_type_id'];
-	  // pr($registration_id);
+        // $_SESSION['breadcrumb_enable']['efiling_type'] = $data['efiling_civil_data'][0]['ref_m_efiled_type_id'];
+	    // pr($registration_id);
         $data['extra_party_details'] = $this->View_model->get_extra_party_preview_details($registration_id);
         $data['uploaded_docs'] = $this->UploadDocs_model->get_uploaded_pdfs($registration_id);
         $subordinate_data = $this->View_model->get_sub_qj_hc_court_details($registration_id);
-       
-
         $creaedBy = !empty($data['efiling_civil_data'][0]['created_by']) ? $data['efiling_civil_data'][0]['created_by'] : NULL;
         if(isset($creaedBy) && !empty($creaedBy)){
-         //   $this->load->model('common/Common_model');
+            // $this->load->model('common/Common_model');
             $params = array();
             $params['table_name'] ='efil.tbl_users';
             $params['whereFieldName'] ='id';
@@ -74,20 +68,15 @@ class View extends BaseController {
                     $data['filedByData'] = !empty($getBarData) ?  $getBarData[0] : NULL;
                 }
             }
-        }
-    
+        }    
         $data['subordinate_court_details'] = $this->GetDetailsModel->get_subordinate_court_details($registration_id);
-		//pr($data['subordinate_court_details']);
-      
-        $data['efiled_docs_list'] = $this->View_model->get_caveat_index_items_list($registration_id);
-      
-        $data['payment_details'] = $this->View_model->get_payment_details($registration_id);
-      
-      return $this->render('caveat.caveat_view', $data);
+		//pr($data['subordinate_court_details']);      
+        $data['efiled_docs_list'] = $this->View_model->get_caveat_index_items_list($registration_id);      
+        $data['payment_details'] = $this->View_model->get_payment_details($registration_id);      
+        return $this->render('caveat.caveat_view', $data);
     }
 
     function check_caveator_info() {
-
         if (isset(getSessionData('efiling_for_details')['case_type_pet_title']) && !empty(getSessionData('efiling_for_details')['case_type_pet_title'])) {
             $case_type_pet_title = htmlentities(getSessionData('efiling_for_details')['case_type_pet_title'], ENT_QUOTES);
         } else {
@@ -101,7 +90,6 @@ class View extends BaseController {
     }
 
     public function pdf() {
-
         $this->check_caveator_info();
         if (isset($_SESSION['efiling_details']) && !empty($_SESSION['efiling_details']) && ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT || $_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CDE)) {
             $registration_id = $_SESSION['efiling_details']['registration_id'];
@@ -109,7 +97,6 @@ class View extends BaseController {
             redirect('dashboard');
             exit(0);
         }
-
         $data['efiling_civil_data'] = $this->View_model->get_efiling_civil_details($registration_id);
         $_SESSION['breadcrumb_enable']['efiling_type'] = $data['efiling_civil_data'][0]['ref_m_efiled_type_id'];
 

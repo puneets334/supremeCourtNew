@@ -289,6 +289,7 @@ class NewCaseModel extends Model {
     }
 
     function add_update_case_details($registration_id, $data, $breadcrumb_step, $case_details_id = null) {
+
         if ($case_details_id) {
             $this->db->transStart();
             if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_DEPARTMENT]) && !is_null(getSessionData('login')['aor_code'])) {
@@ -1068,7 +1069,7 @@ class NewCaseModel extends Model {
 
     function get_esign_doc_pet($reg_id) {
         $sql = "SELECT * from efil.esign_logs WHERE ( ref_registration_id = '" . $reg_id . "' AND is_data_valid = 'TRUE' AND (  type = " . ESIGNED_DOCS_BY_PET .
-                "or type = " . ESIGNED_DOCS_BY_ADV2 . "  ) )";
+                "or type = " . ESIGNED_DOCS_BY_ADV . "  ) )";
         $query = $this->db->query($sql);
         if (($query->getNumRows())) {
             $result = $query->getResult();
