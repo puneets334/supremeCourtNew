@@ -14,6 +14,7 @@
         min-height: 56px;
 
     }
+}
     @media (max-width: 767px){
         .custom-table td:nth-child(4) {
             min-height: 56px;
