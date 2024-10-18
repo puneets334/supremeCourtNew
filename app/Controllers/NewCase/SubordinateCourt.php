@@ -287,7 +287,6 @@ class SubordinateCourt extends BaseController {
                 $decision_date = DateTime::createFromFormat('d/m/Y', $_POST['order_date']);
 		if ($decision_date) {
 		$decision_date = $decision_date->format('Y-m-d'); // Convert to Y-m-d format
-		 
 		}
             } else {
                 $decision_date = $_SESSION['search_case_data_save']['date_of_decision'];

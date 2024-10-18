@@ -2114,8 +2114,8 @@ class CommonModel extends Model
                         $builder->WHERE('eparty.ref_m_efiling_nums_registration_id', $registration_id);
                         $builder->WHERE('eparty.parentid', NULL);
                         $builder->WHERE('eparty.display', 'Y');
-                        $builder->ORDER_BY("eparty.type", "asc");
-                        $builder->ORDER_BY("eparty.party_id", "asc");
+                        $builder->orderBy("eparty.type", "asc");
+                        $builder->orderBy("eparty.party_id", "asc");
                         $query = $builder->get();
                         $output = $query->getResult();
                         break;

@@ -16,7 +16,7 @@ $var = (empty(@$registration_id) ? base_url((@$tab == 'case/caveat/crud/' ? @$ta
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">                     
-                        <iframe name="content-iframe" class="col-12" style="height: 100vh;" src="{{ $var }}"></iframe>
+                        <iframe name="content-iframe" class="col-12 iframe-scroll-bar" style="height: 100vh;" src="{{ $var }}"></iframe>
                     </div>
                 </div>
             </div>
