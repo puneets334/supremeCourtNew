@@ -41,7 +41,7 @@
 .black-theme .user-action-sec ul a {color: #ff0;}
 .black-theme .sidePanel {background: #111111;}
 .black-theme .hamburger-icon span {background: #ff0;}
-.black-theme .dashboardLeftNav li a.active, .black-theme .dashboardLeftNav li a.btn-link:hover {background: #000 !important;color: #ff0 !important;box-shadow: none !important}
+.black-theme .dashboardLeftNav li a.active, .black-theme .dashboardLeftNav li a.btn-link:hover, .black-theme .dashboardLeftNav li a.btn-link:focus {background: #000 !important;color: #ff0 !important;box-shadow: none !important}
 .black-theme .dashLeftNavSection .menu-close-sec .main-menu-close span {color: #ff0;}
 .black-theme .menu-profile-sec .profile-info h6, .black-theme .menu-profile-sec .profile-info a.profile-lnk {color: #ff0;}
 .black-theme .menu-profile-sec .profile-link span.mdi {color: #ff0;}
@@ -182,5 +182,8 @@
 .black-theme .common-modal .uk-modal-dialog {background: #000;box-shadow: 0px 0px 20px rgb(221 221 221 / 61%);}
 .black-theme .common-modal .uk-modal-dialog svg line {fill: #fff !important;stroke: rgb(255 255 255);}
 /* --- Modal CSS End  */
+/* 17-10-24 start  */
 .black-theme .custom-table td a svg path {fill: #ff0;}
 .black-theme .custom-table td a svg polygon{stroke: #ff0;}
+.black-theme .alert-warning {background: #000;border-color: #ffff0085;}
+.black-theme input[type="text"]::placeholder, .black-theme input[type="date"]::placeholder, .black-theme input[type="email"]::placeholder, .black-theme input[type="tel"]::placeholder, .black-theme input[type="number"]::placeholder, .black-theme input[type="url"]::placeholder, .black-theme input[type="password"]::placeholder, .black-theme input[type="search"]::placeholder, .black-theme select::placeholder, .black-theme textarea::placeholder{color:#d6d6d6}

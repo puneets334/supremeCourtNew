@@ -231,7 +231,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData1 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_allocated&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                    $tmpData1 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_allocated&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tmpData1 = rtrim($tmpData1, ' | ');
@@ -249,7 +249,7 @@ class DefaultController extends BaseController
                         }
                         $total = !empty($v) ? $v : 0;
                         $user_id = (is_numeric($key) == true) ? $key : 0;
-                        $tmpData2 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_approved&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date .  '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                        $tmpData2 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_approved&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date .  '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                         $ctn++;
                     }
                 }
@@ -268,7 +268,7 @@ class DefaultController extends BaseController
                         }
                         $total = !empty($v) ? $v : 0;
                         $user_id = (is_numeric($key) == true) ? $key : 0;
-                        $tmpData3 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_rejected&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                        $tmpData3 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_rejected&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                         $ctn++;
                     }
                 }
@@ -286,7 +286,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData4 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_diaries&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . '  ' . $pipe . ' </a>';
+                    $tmpData4 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_diaries&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . '  ' . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tableData .= '<td data-key="No. Of Diary/Document No. Generated">' . $tmpData4 . '</td>';
@@ -303,7 +303,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData5 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_pending_diary_or_document&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                    $tmpData5 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_pending_diary_or_document&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tmpData5 = rtrim($tmpData5, ' | ');
@@ -1299,7 +1299,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData1 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_allocated&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                    $tmpData1 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_allocated&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tmpData1 = rtrim($tmpData1, ' | ');
@@ -1316,7 +1316,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData2 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_approved&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date .  '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                    $tmpData2 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_approved&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date .  '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tableData .= '<td>' . $tmpData2 . '</td>';
@@ -1332,7 +1332,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData3 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_rejected&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
+                    $tmpData3 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_rejected&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tableData .= '<td>' . $tmpData3 . '</td>';
@@ -1348,7 +1348,7 @@ class DefaultController extends BaseController
                     }
                     $total = !empty($v) ? $v : 0;
                     $user_id = (is_numeric($key) == true) ? $key : 0;
-                    $tmpData4 .= '<a class="pointer" target="_blank" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_diaries&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . '  ' . $pipe . ' </a>';
+                    $tmpData4 .= '<a class="pointer" href="' . base_url('adminReport/DefaultController/getFilingStageTypeData/?type=file_diaries&fileType=' . $fileTypeName . '&from_date=' . $from_date . '&to_date=' . $to_date . '&allocated_to=' . $user_id . ' ') . '">' . $total . '  ' . $pipe . ' </a>';
                     $ctn++;
                 }
                 $tableData .= '<td>' . $tmpData4 . '</td>';
@@ -1356,22 +1356,30 @@ class DefaultController extends BaseController
             }
             $table = '';
             $table .= '<table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Date<hr>
-                                ' . date('d/m/Y', strtotime($params['from_date'])) . ' - ' . date('d/m/Y', strtotime($params['to_date'])) . '
-                            </th>
-                            <th>No. Of Applications Allocated <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                            <th>No. Of Applications Approved<br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                            <th>No. Of Applications Rejected <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                            <th>No. Of Applications Diaries <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
-                        </tr>
-                        <tbody>' . $tableData . '</tbody>
-                        </thead>
-                    </table>';
+                <thead>
+                    <tr>
+                        <th>Date<hr>
+                            ' . date('d/m/Y', strtotime($params['from_date'])) . ' - ' . date('d/m/Y', strtotime($params['to_date'])) . '
+                        </th>
+                        <th>No. Of Applications Allocated <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                        <th>No. Of Applications Approved<br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                        <th>No. Of Applications Rejected <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                        <th>No. Of Applications Diaries <br><hr>CASE | MISC | IA | CAVEAT | ALL</th>
+                    </tr>
+                </thead>
+                <tbody>' . $tableData . '</tbody>
+            </table>
+            <script>
+                $(document).ready(function() {
+                    $("#datatable-responsive").DataTable({
+                        "ordering": false,
+                    });
+                });
+            </script>';
         }
         $output['table'] = $table;
         echo json_encode($output);
         exit(0);
     }
+    
 }

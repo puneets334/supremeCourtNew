@@ -3,15 +3,21 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <style>
-    @media (max-width: 767px){
+    @media (max-width: 767px) {
         div#tableData .custom-table tr td:nth-child(3) {min-height: 55px;}
+
     div#tableData .custom-table tr td:nth-child(3) {
     min-height: 55px;
 }}
 @media (max-width: 767px){
     .custom-table td:nth-child(4) {
         min-height: 56px;
+
     }
+    @media (max-width: 767px){
+        .custom-table td:nth-child(4) {
+            min-height: 56px;
+        }
     }
 </style>
 <div class="container-fluid">
@@ -78,8 +84,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="dash-card" id="tableData" style="display: none;">
-                                    </div>
+                                    <div class="dash-card" id="tableData" style="display: none;"></div>
                                 </div>
                             </div>
                         </div>
