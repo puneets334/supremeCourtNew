@@ -287,7 +287,7 @@ class SubordinateCourt extends BaseController {
             } else {
                 $decision_date = $_SESSION['search_case_data_save']['date_of_decision'];
             }
-            $Is_Judgment_Challenged = !empty($_POST['judgement_challenged']) ? $_POST['judgement_challenged'] : '';
+            $Is_Judgment_Challenged = isset($_POST['judgement_challenged']) ? $_POST['judgement_challenged'] : '';
             $Judgment_Type = !empty($_POST['judgement_type']) ? $_POST['judgement_type'] : '';
         }
         $cnr_number = '';

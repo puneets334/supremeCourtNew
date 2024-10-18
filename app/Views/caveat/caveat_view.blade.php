@@ -1,10 +1,12 @@
+@extends('layout.app')
+@section('content')
 <div class="mainPanel ">
-    <div class="panelInner">
-        <div class="middleContent">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
-                        <div class="center-content-inner comn-innercontent">
+    <!-- <div class="panelInner">
+        <div class="middleContent"> -->
+            <!-- <div class="container-fluid"> -->
+                <!-- <div class="row"> -->
+                    <!-- <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left"> -->
+                        <!-- <div class="center-content-inner comn-innercontent"> -->
                             <?php
                             $segment = service('uri');
 							//echo $segment->getSegment(1);
@@ -52,13 +54,14 @@
 							 @include('caveat.caveat_preview')
                             @endif
                             --}}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                        <!-- </div> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </div>
     </div>
-</div>
+</div> -->
+@endsection
 @push('script')
 <script>
     $('#pet_dob').datepicker({
