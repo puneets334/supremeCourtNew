@@ -55,21 +55,10 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     </div>
                     <div class="page-breifs">
                         <ul>
-                            <li>
-                                <a href="" class="blue-dot"><span class="mdi mdi-record"></span> Active
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="green-dot"> <span class="mdi mdi-record"></span> Done </a>
-                            </li>
-                            <li>
-                                <a href="" class="yellow-dot"> <span class="mdi mdi-record"></span> Optional
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" class="red-dot"> <span class="mdi mdi-record"></span> Required
-                                </a>
-                            </li>
+                            <li><a class="blue-dot"><span class="mdi mdi-record"></span> Active </a></li>
+                            <li><a class="green-dot"> <span class="mdi mdi-record"></span> Done </a></li>
+                            <li><a class="yellow-dot"> <span class="mdi mdi-record"></span> Optional </a></li>
+                            <li><a class="red-dot"> <span class="mdi mdi-record"></span> Required </a></li>
                         </ul>
                     </div>
                 </div>

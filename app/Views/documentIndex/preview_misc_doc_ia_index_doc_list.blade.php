@@ -1,11 +1,9 @@
 <?php
 $allowed_users = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
 $user_stages = array(I_B_Approval_Pending_Stage, I_B_Defected_Stage, Document_E_Filed, IA_E_Filed);
-
 $allowed_admins = array(USER_ADMIN);
 $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pending_Admin_Stage, I_B_Defected_Stage, I_B_Defects_Cured_Stage, Document_E_Filed, IA_E_Filed);
 $segment = service('uri');
-
 ?>
 <div class="panel panel-default">
     <div class="panel-body">        
@@ -17,8 +15,7 @@ $segment = service('uri');
                         <!--<th>Document(s) Title</th>-->
                         <th>Index - Title</th>
                         <!--<th>Page No.</th>-->
-                        <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
-                            ?>
+                        <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) { ?>
                             <th>Doc No.</th>
                         <?php } ?>
                         <?php if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) { ?>                        
@@ -29,44 +26,46 @@ $segment = service('uri');
                 <tbody>
                     <?php
                     $sr = 1;
-                    if(isset($efiled_docs_list)){
-                    foreach ($efiled_docs_list as $doc_list) {
-                        ?>
-                        <tr>
-                            <td><?= $sr++; ?></td>
-                            <td>
-                                <?php
-                                if($segment->getSegment(1) == 'efiling_search'){
-                                $encrypted_string = $this->encryption->encrypt($doc_list['doc_id']);
-                                    
-                                ?>
-                                <a target="_blank" href="<?php echo base_url('documentIndex/WithoutLoginViewIndex/' . $encrypted_string ); ?>">
-                                    <?php }else{ ?>
-                                <a target="_blank" href="<?php echo base_url('documentIndex/viewIndexItem/' . url_encryption($doc_list['doc_id'])); ?>">
+                    if(isset($efiled_docs_list)) {
+                        foreach ($efiled_docs_list as $doc_list) {
+                            ?>
+                            <tr>
+                                <td><?= $sr++; ?></td>
+                                <td>
+                                    <?php
+                                    if($segment->getSegment(1) == 'efiling_search') {
+                                        // $encrypted_string = $this->encryption->encrypt($doc_list['doc_id']);
+                                        $encrypted_string = integerEncreption($doc_list['doc_id']);
+                                        ?>
+                                        <a target="_blank" href="<?php echo base_url('documentIndex/WithoutLoginViewIndex/' . $encrypted_string ); ?>">
+                                    <?php } else{ ?>
+                                        <a target="_blank" href="<?php echo base_url('documentIndex/viewIndexItem/' . url_encryption($doc_list['doc_id'])); ?>">
                                     <?php } ?>
                                     <?php echo_data($doc_list['docdesc']); ?>
-                            </td>
-                            <!--<td><?/*= htmlentities($doc_list['page_no'], ENT_QUOTES); */?></td>-->
-                            <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
-                                ?>
-                                <td><?= echo_data($doc_list['icmis_docnum'] . ' / ' . $doc_list['icmis_docyear']); ?></td>
-                            <?php } ?>
+                                </td>
+                                <!--<td><?/*= htmlentities($doc_list['page_no'], ENT_QUOTES); */?></td>-->
+                                <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
+                                    ?>
+                                    <td><?= echo_data($doc_list['icmis_docnum'] . ' / ' . $doc_list['icmis_docyear']); ?></td>
+                                <?php } ?>
+                                <?php
+                                if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) {
+                                    //$lbl_verified = $doc_list['page_no']['is_admin_checked'] == 't' ? 'Yes' : '';
+                                    ?>                        
+                                    <!--<td>
+                                        <?php /*echo $lbl_verified; */?>
+                                    </td>-->
+                                <?php } ?>
+                            </tr>
                             <?php
-                            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) {
-                                //$lbl_verified = $doc_list['page_no']['is_admin_checked'] == 't' ? 'Yes' : '';
-                                ?>                        
-                                <!--<td>
-                                    <?php /*echo $lbl_verified; */?>
-                                </td>-->
-                            <?php } ?>
-                        </tr>
-                    <?php }  } ?>
-
+                        }
+                    }
+                    ?>
                 </tbody>
             </table>
             <?php if (!empty($uploaded_docs )) {  ?> 
-            @include('uploadDocuments.uploaded_doc_list')
-           <?php } ?>
+                @include('uploadDocuments.uploaded_doc_list')
+            <?php } ?>
         </div>
     </div>
 </div>

@@ -23,6 +23,7 @@
                         <div class="dash-card">
                             <div class="title-sec">
                                 <h5 class="unerline-title">User List </h5>
+                                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             <div class="table-sec">
                                 <div class="table-responsive">
@@ -240,7 +241,7 @@
     $(document).ready(function() {
         $("#datatable-responsive").DataTable({
             "ordering": false,
-            dom: 'Bfrtip',
+            // dom: 'Bfrtip',
         });
         // $('#filing_type').multiselect();
         $(document).on('click', '.editRole', function() {
