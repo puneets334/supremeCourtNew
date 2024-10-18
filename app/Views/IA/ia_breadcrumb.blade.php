@@ -55,25 +55,10 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     <!-- Response End -->
                     <div class="page-breifs">
                         <ul>
-                            <li>
-                                <a href=""
-                                    class="blue-dot"><span class="mdi mdi-record"></span> Active
-                                </a>
-                            </li>
-                            <li>
-                                <a href=""
-                                    class="green-dot"> <span class="mdi mdi-record"></span> Done </a>
-                            </li>
-                            <li>
-                                <a href=""
-                                    class="yellow-dot"> <span class="mdi mdi-record"></span> Optional
-                                </a>
-                            </li>
-                            <li>
-                                <a href=""
-                                    class="red-dot"> <span class="mdi mdi-record"></span> Required
-                                </a>
-                            </li>
+                            <li><a class="blue-dot"><span class="mdi mdi-record"></span> Active </a></li>
+                            <li><a class="green-dot"> <span class="mdi mdi-record"></span> Done </a></li>
+                            <li><a class="yellow-dot"> <span class="mdi mdi-record"></span> Optional </a></li>
+                            <li><a class="red-dot"> <span class="mdi mdi-record"></span> Required </a></li>
                         </ul>
                     </div>
                 </div>
@@ -770,10 +755,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 <h4 class="modal-title"><span class="fa fa-pencil"></span> Check All Details </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="checkAllSections">
-            </div>
-            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style="">
-            </div>
+            <div class="modal-body" id="checkAllSections"></div>
+            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div"></div>
             <a data-efilingType="<?php echo strtolower($filing_type);?>" class="btn btn-primary" id="createDiaryNo" type="button" style="margin-left: 224px;margin-bottom: 23px;">Generate Diary No.</a>
         </div>
 
