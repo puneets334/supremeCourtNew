@@ -22,7 +22,9 @@
     @include('layout.frontHeader')
     @yield('content')
     @include('layout.frontFooter')
-    <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script>
+    <!-- <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery-3.3.1.min.js"></script> -->
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
+
     <script src="<?= base_url() . 'assets/newDesign/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newDesign/' ?>js/jquery.easy-ticker.min.js"></script>
     <script src="<?= base_url() . 'assets/newDesign/' ?>js/wow.min.js"></script>

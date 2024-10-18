@@ -198,7 +198,7 @@ $(document).ready(function() {
 
 })
 </script>   
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> 
 
     @endpush
