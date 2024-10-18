@@ -604,10 +604,10 @@
     <!-- Case Status modal-end-->
     <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script src="<?= base_url() ?>assets/js/sha256.js"></script>
@@ -618,7 +618,7 @@
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/daterangepicker/daterangepicker.css">
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script>
         function openSearch(cityName,elmnt,color) {
