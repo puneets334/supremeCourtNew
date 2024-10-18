@@ -5,9 +5,14 @@
 <style>
     @media (max-width: 767px) {
         div#tableData .custom-table tr td:nth-child(3) {min-height: 55px;}
-        div#tableData .custom-table tr td:nth-child(3) {
-            min-height: 55px;
-        }
+
+    div#tableData .custom-table tr td:nth-child(3) {
+    min-height: 55px;
+}}
+@media (max-width: 767px){
+    .custom-table td:nth-child(4) {
+        min-height: 56px;
+
     }
     @media (max-width: 767px){
         .custom-table td:nth-child(4) {
@@ -94,6 +99,7 @@
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script>
         $(document).ready(function() {
+            
             $('#from_date').datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -125,6 +131,7 @@
         });
 
         $(document).on('click', '#getResult', function() {
+
             var from_date = $("#from_date").val();
             var to_date = $("#to_date").val();
 
@@ -171,6 +178,7 @@
                         //$('#getResult').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                     },
                     success: function(res) {
+ 
                         $('#loader-wrapper').hide(); 
                         if (typeof res == 'string') {
                             res = JSON.parse(res);
@@ -200,6 +208,9 @@
                             });
                             $("#tableData").html(res.table);
                             $("#printButton").show();
+                            setTimeout(function() {
+                            $('#result').fadeOut('slow'); // jQuery fade out effect
+                        }, 5000);
                             return false;
                         }
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
