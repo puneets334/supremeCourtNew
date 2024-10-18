@@ -87,31 +87,127 @@ function getTheme() {
   });
 // Theme JS End
 // Font Size Increse & Decrease 
+// $(document).ready(function() {
+//   var $affectedElements = $("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, Input, select, button, li");
+//   $affectedElements.each( function(){
+//     var $this = $(this);
+//     $this.data("orig-size", $this.css("font-size") );
+//   });
+//   $("#text_resize_increase").click(function(){
+//     changeFontSize(1);
+//   })
+//   $("#text_resize_decrease").click(function(){
+//     changeFontSize(-1);
+//   })
+//   $("#text_resize_reset").click(function(){
+//     $affectedElements.each( function(){
+//           var $this = $(this);
+//           $this.css( "font-size" , $this.data("orig-size") );
+//      });
+//   })
+//   function changeFontSize(direction){
+//       $affectedElements.each( function(){
+//           var $this = $(this);
+//           $this.css( "font-size" , parseInt($this.css("font-size"))+direction );
+//       });
+//   }
+// });
+// ----------------------
 $(document).ready(function() {
-  var $affectedElements = $("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, Input, select, button, li");
-  $affectedElements.each( function(){
+  // Cache elements in the main document that need font size adjustments
+  var $affectedElements = $("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, input, textarea, select, button, li");
+  $affectedElements.each(function() {
     var $this = $(this);
-    $this.data("orig-size", $this.css("font-size") );
+    $this.data("orig-size", $this.css("font-size"));
+    $this.data("orig-line", $this.css("line-height"));
   });
-  $("#text_resize_increase").click(function(){
+
+  // Cache iframe and define variables for iframe content elements
+  var $iframe = $(".iframe-scroll-bar");
+  var $iframeContent, $iframeSelect2Span;
+
+  // Function to set up iframe content elements when iframe is loaded
+  $iframe.on('load', function() {
+    $iframeContent = $iframe.contents().find("p, h1, h2, h3, h4, h5, h6, blockquote, td, th, a, span, label, input, textarea, select, button, li");
+    $iframeSelect2Span = $iframe.contents().find('body .select2, body , .select2-container--default');
+    
+    // Save original font sizes for iframe content
+    $iframeContent.each(function() {
+      var $this = $(this);
+      $this.data("orig-size", $this.css("font-size"));
+      $this.data("orig-line", $this.css("line-height"));
+    });
+
+    // Save original font sizes for .select2 elements in the iframe
+    $iframeSelect2Span.each(function() {
+      var $this = $(this);
+      $this.data("orig-size", $this.css("font-size"));
+      $this.data("orig-line", $this.css("line-height"));
+    });
+  });
+
+  // Increase font size button click handler
+  $("#text_resize_increase").click(function() {
     changeFontSize(1);
-  })
-  $("#text_resize_decrease").click(function(){
+  });
+
+  // Decrease font size button click handler
+  $("#text_resize_decrease").click(function() {
     changeFontSize(-1);
-  })
-  $("#text_resize_reset").click(function(){
-    $affectedElements.each( function(){
-          var $this = $(this);
-          $this.css( "font-size" , $this.data("orig-size") );
-     });
-  })
-  function changeFontSize(direction){
-      $affectedElements.each( function(){
-          var $this = $(this);
-          $this.css( "font-size" , parseInt($this.css("font-size"))+direction );
+  });
+
+  // Reset font size button click handler
+  $("#text_resize_reset").click(function() {
+    resetFontSize($affectedElements);
+    resetFontSize($iframeContent);
+    resetFontSize($iframeSelect2Span);
+  });
+
+  // Function to change font size
+  function changeFontSize(direction) {
+    // Change font size for main document elements
+    $affectedElements.each(function() {
+      var $this = $(this);
+      var newSize = parseInt($this.css("font-size")) + direction;
+      $this.css("font-size", newSize + "px");
+      $this.css("line-height", newSize + "px");
+    });
+
+    // Change font size for iframe content elements
+    if ($iframeContent) {
+      $iframeContent.each(function() {
+        var $this = $(this);
+        var newSize = parseInt($this.css("font-size")) + direction;
+        $this.css("font-size", newSize + "px");
+        $this.css("line-height", newSize + "px");
       });
+    }
+
+    // Change font size for .select2 elements inside the iframe
+    // if ($iframeSelect2Span) {
+      $iframeSelect2Span.each(function() {
+        var $this = $(this);
+        var currentSize = parseInt($this.css("font-size")) + direction;
+        if (currentSize >= 12 && currentSize <= 28) {
+          $this.css('font-size', currentSize + 'px');
+        }
+      });
+    // }
+  }
+
+  // Function to reset font size to original values
+  function resetFontSize($elements) {
+    if ($elements) {
+      $elements.each(function() {
+        var $this = $(this);
+        $this.css("font-size", $this.data("orig-size"));
+        $this.css("line-height", $this.data("orig-line"));
+      });
+    }
   }
 });
+
+
 
 
 // Table TD height JS 

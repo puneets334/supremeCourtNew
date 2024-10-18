@@ -1015,6 +1015,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 </div>
 
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+
 <script>
     function get_objection(obj_id, obj_checked) {
         if (obj_checked.is(':checked')) {

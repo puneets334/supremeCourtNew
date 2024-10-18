@@ -74,6 +74,10 @@
 	<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 	<script type="text/javascript" src="<?= base_url() . 'assets' ?>/multiselect/bootstrap-multiselect.js"></script>
 	<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script> 
+
+
+	
+
 	<!-- Vinit -->
 	<!-- <script>
 		$(document).ready(function() {

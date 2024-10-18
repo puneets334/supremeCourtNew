@@ -33,6 +33,27 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
     $efiling_num_button_background_class = 'btn-success';
 }
 ?>
+<style>
+    .obj_wrapper{
+        min-height: 140px;
+        max-height: 180px;
+        background-color: #fff;
+        border-collapse: separate;
+        border: 1px solid #ccc;
+        padding: 4px;
+        box-sizing: content-box;
+        box-shadow: rgba(0,0,0,.07451) 0 1px 1px 0 inset;
+        overflow-y: scroll;
+        outline: 0;
+        border-radius: 3px;
+
+    }
+
+    .editor-wrapper {
+        min-height: 200px !important;
+        max-height: 250px;
+    }
+</style>
 <div class="dash-card dashboard-section">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -491,151 +512,6 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
         </div>
     </div>
 </div>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-<script src="<?= base_url() ?>assets/js/sha256.js"></script>
-<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
-<script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
-<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
-<script>
-    function ActionToTrash(trash_type) {       
-        event.preventDefault();
-        var trash_type =trash_type;
-        var url="";
-        if (trash_type=='') {
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
-            return false;
-        } else if (trash_type=='UAT') {
-            url="<?php echo base_url('userActions/trash'); ?>";
-        } else if (trash_type=='SLT') {
-            url="<?php echo base_url('stage_list/trash'); ?>";
-        } else if (trash_type=='EAT') {
-            url="<?php echo base_url('userActions/trash'); ?>";
-        } else {
-            swal("Cancelled", "Your imaginary file is safe :)", "error");
-            return false;
-        }
-        // alert('trash_type'+trash_type+'url='+url);//return false;
-        swal({
-            title: "Do you really want to trash this E-Filing,",
-            text: "once it will be trashed you can't restore the same.",
-            type: "warning",
-            position: "top",
-            showCancelButton: true,
-            confirmButtonColor: "green",
-            confirmButtonText: "Yes",
-            cancelButtonText: "No",
-            buttons: ["Make Changes", "Yes!"],
-            closeOnConfirm: false,
-            closeOnCancel: true
-        },
-        function(isConfirm){
-            if (isConfirm) {  // submitting the form when user press yes
-                var link = document.createElement("a");
-                link.href = url;
-                link.target = "_self";
-                link.click();
-                swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
-            } else {
-                //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
-            }
-        });
-    }
-</script>
-
-<script>
-            document.getElementById("copyButton").addEventListener("click", function() {
-                copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
-            });
-
-            document.getElementById("copyButton2").addEventListener("click", function() {
-                copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
-            });
-
-            document.getElementById("pasteTarget").addEventListener("mousedown", function() {
-                this.value = "";
-            });
-
-
-            function copyToClipboardMsg(elem, msgElem) {
-                var EfilingNumber = document.getElementById('copyTarget_EfilingNumber').innerHTML;
-                var succeed = copyToClipboard(elem);
-                var msg;
-                if (!succeed) {
-                    msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
-                } else {
-                    //msg = 'E-Filing Number: ' +EfilingNumber+' Copied.';
-                    msg = 'Copied';
-                }
-                if (typeof msgElem === "string") {
-                    msgElem = document.getElementById(msgElem);
-                }
-                msgElem.innerHTML = msg;
-                /* setTimeout(function() {
-                     msgElem.innerHTML = "";
-                 }, 5000);*/
-            }
-
-            function copyToClipboard(elem) {
-                // create hidden text element, if it doesn't already exist
-                var targetId = "_hiddenCopyText_";
-                var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA" || elem.tagName === "INPUT";
-                var origSelectionStart, origSelectionEnd;
-                if (isInput) {
-                    // can just use the original source element for the selection and copy
-                    target = elem;
-                    origSelectionStart = elem.selectionStart;
-                    origSelectionEnd = elem.selectionEnd;
-                } else {
-                    // must use a temporary form element for the selection and copy
-                    target = document.getElementById(targetId);
-                    if (!target) {
-                        var target = document.createElement("textarea");
-                        target.style.position = "absolute";
-                        target.style.left = "-9999px";
-                        target.style.top = "0";
-                        target.id = targetId;
-                        document.body.appendChild(target);
-                    }
-                    target.textContent = elem.textContent;
-                }
-                // select the content
-                var currentFocus = document.activeElement;
-                target.focus();
-                target.setSelectionRange(0, target.value.length);
-
-                // copy the selection
-                var succeed;
-                try {
-                    succeed = document.execCommand("copy");
-                } catch (e) {
-                    succeed = false;
-                }
-                // restore original focus
-                if (currentFocus && typeof currentFocus.focus === "function") {
-                    currentFocus.focus();
-                }
-
-                if (isInput) {
-                    // restore prior selection
-                    elem.setSelectionRange(origSelectionStart, origSelectionEnd);
-                } else {
-                    // clear temporary content
-                    target.textContent = "";
-                }
-                return succeed;
-            }
-        </script>
 
 <?php
 $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
@@ -904,6 +780,152 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 
     </div>
 </div>
+@push('script')
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+<script src="<?= base_url() ?>assets/js/sha256.js"></script>
+<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+<script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
+<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
+<script>
+    function ActionToTrash(trash_type) {       
+        event.preventDefault();
+        var trash_type =trash_type;
+        var url="";
+        if (trash_type=='') {
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        } else if (trash_type=='UAT') {
+            url="<?php echo base_url('userActions/trash'); ?>";
+        } else if (trash_type=='SLT') {
+            url="<?php echo base_url('stage_list/trash'); ?>";
+        } else if (trash_type=='EAT') {
+            url="<?php echo base_url('userActions/trash'); ?>";
+        } else {
+            swal("Cancelled", "Your imaginary file is safe :)", "error");
+            return false;
+        }
+        // alert('trash_type'+trash_type+'url='+url);//return false;
+        swal({
+            title: "Do you really want to trash this E-Filing,",
+            text: "once it will be trashed you can't restore the same.",
+            type: "warning",
+            position: "top",
+            showCancelButton: true,
+            confirmButtonColor: "green",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            buttons: ["Make Changes", "Yes!"],
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm){
+            if (isConfirm) {  // submitting the form when user press yes
+                var link = document.createElement("a");
+                link.href = url;
+                link.target = "_self";
+                link.click();
+                swal({ title: "Deleted!",text: "E-Filing has been deleted.",type: "success",timer: 2000 });
+            } else {
+                //swal({title: "Cancelled",text: "Your imaginary file is safe.",type: "error",timer: 1300});
+            }
+        });
+    }
+</script>
+
+<script>
+    document.getElementById("copyButton").addEventListener("click", function() {
+        copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
+    });
+
+    document.getElementById("copyButton2").addEventListener("click", function() {
+        copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
+    });
+
+    document.getElementById("pasteTarget").addEventListener("mousedown", function() {
+        this.value = "";
+    });
+
+
+    function copyToClipboardMsg(elem, msgElem) {
+        var EfilingNumber = document.getElementById('copyTarget_EfilingNumber').innerHTML;
+        var succeed = copyToClipboard(elem);
+        var msg;
+        if (!succeed) {
+            msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+        } else {
+            //msg = 'E-Filing Number: ' +EfilingNumber+' Copied.';
+            msg = 'Copied';
+        }
+        if (typeof msgElem === "string") {
+            msgElem = document.getElementById(msgElem);
+        }
+        msgElem.innerHTML = msg;
+        /* setTimeout(function() {
+                msgElem.innerHTML = "";
+            }, 5000);*/
+    }
+
+    function copyToClipboard(elem) {
+        // create hidden text element, if it doesn't already exist
+        var targetId = "_hiddenCopyText_";
+        var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA" || elem.tagName === "INPUT";
+        var origSelectionStart, origSelectionEnd;
+        if (isInput) {
+            // can just use the original source element for the selection and copy
+            target = elem;
+            origSelectionStart = elem.selectionStart;
+            origSelectionEnd = elem.selectionEnd;
+        } else {
+            // must use a temporary form element for the selection and copy
+            target = document.getElementById(targetId);
+            if (!target) {
+                var target = document.createElement("textarea");
+                target.style.position = "absolute";
+                target.style.left = "-9999px";
+                target.style.top = "0";
+                target.id = targetId;
+                document.body.appendChild(target);
+            }
+            target.textContent = elem.textContent;
+        }
+        // select the content
+        var currentFocus = document.activeElement;
+        target.focus();
+        target.setSelectionRange(0, target.value.length);
+
+        // copy the selection
+        var succeed;
+        try {
+            succeed = document.execCommand("copy");
+        } catch (e) {
+            succeed = false;
+        }
+        // restore original focus
+        if (currentFocus && typeof currentFocus.focus === "function") {
+            currentFocus.focus();
+        }
+
+        if (isInput) {
+            // restore prior selection
+            elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+        } else {
+            // clear temporary content
+            target.textContent = "";
+        }
+        return succeed;
+    }
+</script>
 
 
 <script>
@@ -1334,24 +1356,4 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         }
     }
 </script>
-<style>
-    .obj_wrapper{
-        min-height: 140px;
-        max-height: 180px;
-        background-color: #fff;
-        border-collapse: separate;
-        border: 1px solid #ccc;
-        padding: 4px;
-        box-sizing: content-box;
-        box-shadow: rgba(0,0,0,.07451) 0 1px 1px 0 inset;
-        overflow-y: scroll;
-        outline: 0;
-        border-radius: 3px;
-
-    }
-
-    .editor-wrapper {
-        min-height: 200px !important;
-        max-height: 250px;
-    }
-</style>
+@endpush
