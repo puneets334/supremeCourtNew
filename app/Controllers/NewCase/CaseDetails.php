@@ -13,7 +13,7 @@ use App\Models\NewCase\GetDetailsModel;
 use App\Models\NewCase\NewCaseModel;
 use App\Models\ShcilPayment\PaymentModel;
 use App\Models\UploadDocuments\UploadDocsModel;
-
+use DateTime;
 class CaseDetails extends BaseController
 {
 
@@ -397,7 +397,12 @@ class CaseDetails extends BaseController
             $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
 
             $special_category = !empty($_POST["special_category"]) ? url_decryption(escape_data($_POST["special_category"])) : 0;
-//   pr($jailsignDt);
+            if(isset($jailsignDt)){ 
+            
+            $jailsignDt = DateTime::createFromFormat('d/m/Y', $jailsignDt);
+            $jailsignDt = $jailsignDt->format('Y-m-d'); // Convert to Y-m-d format
+             }
+    
             $case_details = array(
                 'cause_title' => $cause_title,
                 'sc_case_type_id' => !empty($sc_case_type[0]) ? $sc_case_type[0] : null,
@@ -500,7 +505,7 @@ class CaseDetails extends BaseController
                 //GENERATE NEW EFILING NUM AND ADD NEW CASE DETAILS, CREATE DRAFT STAGE
                 $result = $this->New_case_model->generate_efil_num_n_add_case_details($case_details);
 
-                if (isset($result) && !empty($result) && $result['registration_id']) {
+                if ($result['registration_id']) {
                     //SESSION efiling_details
                     $this->Common_model->get_efiling_num_basic_Details($result['registration_id']);
 
