@@ -34,6 +34,7 @@
         color: red !important;
     }
 </style>
+
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -459,8 +460,9 @@
         var party_as_sel = '<?php echo @$party_details[0]['party_type']; ?>';
         if (party_as_sel != '') {
             get_party_as(party_as_sel); //--call to selected
-        }
+        }  
     });
+
     $(document).ready(function() {
         $("input[name='party_age']").on('input', function(e) {
             $(this).val($(this).val().replace(/[^0-9]/g, ''));
@@ -472,25 +474,14 @@
         if (!regex.test(input)) {
             event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
         }
-    }
-    $(document).ready(function() {
-        $('input[name="party_gender"]').attr('required', 'required');
-
-        // $('.party_name').bind('keyup blur', function() {
-        //     var node = $(this);
-        //     node.val(node.val().replace(/[^a-z]/g, ''));
-        // })
-        // $('.relative_name').bind('keyup blur', function() {
-        //     var node = $(this);
-        //     node.val(node.val().replace(/[^a-z]/g, ''));
-        // })
-    });
+    } 
 
     //$('.party_gender1').attr('required', 'required');
     $('.party_name').attr('required', 'required');
     $('.relative_name').attr('required', 'required');
     $('#relation').attr('required', 'required');
     $('#org_state').removeAttr('required', 'required'); 
+    $('input[name="party_gender"]').attr('required', 'required');
 
 
     function get_party_as(value) {
@@ -517,6 +508,8 @@
         } else {
             $('#party_age').attr('required', false);
             $('input[name="party_gender"]').attr('required', false);
+            $('.party_name').attr('required', false);
+
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
@@ -528,7 +521,7 @@
                 $('.org_dept').attr('required', 'required');
                 $('.org_post').attr('required', 'required');
                 //$('.party_gender1').removeAttr('required', 'required');
-                $('.party_name').removeAttr('required', 'required');
+                // $('.party_name').removeAttr('required', 'required');
                 $('.relative_name').removeAttr('required', 'required');
                 $('#relation').removeAttr('required', 'required');
                 $('#org_state').removeAttr('required', 'required');
@@ -545,7 +538,7 @@
                 $('#org_form').show();
                 $('#org_state_row').show();
                 //$('.party_gender1').removeAttr('required', 'required');
-                $('.party_name').removeAttr('required', 'required');
+                // $('.party_name').removeAttr('required', 'required');
                 $('.relative_name').removeAttr('required', 'required');
                 $('#relation').removeAttr('required', 'required');
                 $('#org_state').attr('required', 'required');
@@ -649,7 +642,9 @@
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
         <?php $pos_id = !empty(@$party_details[0]['org_post_id']) ? url_encryption(@$party_details[0]['org_post_id']) : ''; ?>
-        var selected_post_id = '';
+        
+        var selected_post_id = '<?php echo isset($party_details[0]['org_post_id']) ? url_encryption($party_details[0]['org_post_id']) : '' ?>';
+        //alert(selected_post_id);
         $.ajax({
             type: "POST",
             data: {
