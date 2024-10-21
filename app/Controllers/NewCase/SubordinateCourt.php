@@ -290,7 +290,11 @@ class SubordinateCourt extends BaseController {
             $Is_Judgment_Challenged = isset($_POST['judgement_challenged']) ? $_POST['judgement_challenged'] : '';
             $Judgment_Type = !empty($_POST['judgement_type']) ? $_POST['judgement_type'] : '';
         }
-        $cnr_number = '';
+        $cnr_number = ''; 
+        $case_number = '';
+        $case_year = '';
+        $state_name = '';
+        $district_name = '';
         if ($_POST['radio_selected_court'] == '1') {
 
             $case_type_array = !empty($_POST['case_type_id']) ? url_decryption($_POST['case_type_id']) : '';
@@ -338,6 +342,12 @@ class SubordinateCourt extends BaseController {
             $state_name = 0;
             $district_name = null;
         }
+        // elseif ($_POST['radio_selected_court'] == '5') {
+        //     $case_number = !empty($_POST['case_number']) ? $_POST['case_number'] : '';
+        //     $case_year = !empty($_POST['case_year']) ? url_decryption($_POST['case_year']) : '';
+        //     $state_name = !empty($state) ? $state[1] : '';
+        //     $district_name = !empty($district) ? $district[1] : '';
+        // }
 
         if(!empty($case_type_ids)){
             if ($case_type_ids[0]=='0'){
@@ -355,8 +365,8 @@ class SubordinateCourt extends BaseController {
         $pet_name = isset($_SESSION['search_case_data_save']['pet_name']) ? $_SESSION['search_case_data_save']['pet_name'] : NULL;
         $res_name = isset($_SESSION['search_case_data_save']['res_name']) ? $_SESSION['search_case_data_save']['res_name'] : NULL;
         $session_case_type_id = isset($_SESSION['search_case_data_save']['case_type_id']) ? $_SESSION['search_case_data_save']['case_type_id'] : NULL;
-        $case_num = isset($_SESSION['search_case_data_save']['case_num'])?$_SESSION['search_case_data_save']['case_num'] : $case_number;
-        $case_year = isset($_SESSION['search_case_data_save']['case_year'])?$_SESSION['search_case_data_save']['case_year']:$case_year;
+        $case_num = isset($_SESSION['search_case_data_save']['case_num']) ? $_SESSION['search_case_data_save']['case_num'] : $case_number;
+        $case_year = isset($_SESSION['search_case_data_save']['case_year']) ? $_SESSION['search_case_data_save']['case_year']:$case_year;
         $cnr_number = isset($_SESSION['search_case_data_save']['cnr_num']) && !empty($_SESSION['search_case_data_save']['cnr_num'])?$_SESSION['search_case_data_save']['cnr_num']:$cnr_number;
         $session_case_type_name = isset($_SESSION['search_case_data_save']['case_type_name']) ? $_SESSION['search_case_data_save']['case_type_name'] : NULL;
 
@@ -392,30 +402,31 @@ class SubordinateCourt extends BaseController {
             'state_name' => $state_name,
             'district_name' => $district_name
         );
-        //echo '<pre>';print_r($case_details);echo '</pre>';exit();
+       // echo '<pre>';print_r($case_details);echo '</pre>';exit();
         // State Agency
+       
         if($_POST['radio_selected_court'] == '5'){
             $agency_state = !empty($_POST['agency_state']) ? explode('#$', url_decryption($_POST['agency_state'])) : '';
-            $case_details['state_id']= !empty($agency_state) ? $agency_state[0] : '';
+            $case_details['state_id']= !empty($agency_state) ? $agency_state[0] : 0;
             $case_details['state_name']= !empty($agency_state) ? $agency_state[1] : '';
             $agency = !empty($_POST['agency']) ? explode('##', url_decryption($_POST['agency'])) : '';
             $case_details['agency_code']='1';
-            $case_details['estab_id']= !empty($agency) ? $agency[0] : '';
+            $case_details['estab_id']= !empty($agency) ? $agency[0] : 0;
             $case_details['estab_name']= !empty($agency) ? $agency[1] : '';
             $case_details['estab_code']= !empty($agency) ? $agency[2] : '';
             $agency_case_type = !empty($_POST['agency_case_type_id']) ? explode('##', url_decryption($_POST['agency_case_type_id'])) : '';
-            $case_details['case_type_id']= !empty($agency_case_type) ? $agency_case_type[0] : '';
-            if ($agency_case_type[0]=='0'){
+            $case_details['case_type_id']= !empty($agency_case_type) ? $agency_case_type[0] : 0;
+            if (isset($agency_case_type[0]) && $agency_case_type[0]=='0'){
                 $case_details['casetype_name']=$_POST['agency_case_type_name'];
             }else{
-                $case_details['casetype_name']=$agency_case_type[1];
+                $case_details['casetype_name']= isset($agency_case_type[1]) ? $agency_case_type[1] : '';
             }
 
 
             $case_details['case_num']= !empty($_POST['case_number']) ? $_POST['case_number'] : '';
             $case_details['case_year']= !empty($_POST['case_year']) ? url_decryption($_POST['case_year']) : '';
         }
-        // echo '<pre>';print_r($case_details);echo '</pre>';exit();
+        //  echo '<pre>';print_r($case_details);echo '</pre>';exit();
         $casedetails=$this->Get_details_model->get_new_case_details($registration_id);
         $sc_casetype=isset($casedetails[0]->sc_case_type_id)?$casedetails[0]->sc_case_type_id:'';
         $criminal_case_type_id=array(10,12,14,26,2,28,6,4,8,18,20,29,16,33,35,36,41);
@@ -433,7 +444,8 @@ class SubordinateCourt extends BaseController {
                 $fir_police_station_id = !empty($fir_police_station) ? $fir_police_station[0] : '';
                 $fir_police_station_name = !empty($fir_police_station) ? $fir_police_station[1] : '';
                 $complete_fir_no = '';
-                $fir_year = url_decryption($_POST['fir_year']);
+                
+                $fir_year = isset($_POST['fir_year']) ? url_decryption($_POST['fir_year']) : '' ;
                 if (!empty($fir_police_station_id)) {
                     $no = $_POST['fir_number'];
                     $filled_int = sprintf("%04d", $no);
