@@ -512,6 +512,16 @@ class DefaultController extends BaseController {
 
         //  echo "Welcome To Dashboard";
     }
+
+    public function notFound()
+    {
+        return view('errors/html/error_404');
+    }
+    
+    public function internalServerError()
+    {
+        return view('errors/html/error_500');
+    }
 }
 
 
