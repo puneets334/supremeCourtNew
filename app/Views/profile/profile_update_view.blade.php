@@ -87,7 +87,8 @@
                                                         <div class="innerpg-sub-title">
                                                             <h5>
                                                                 Change Password 
-                                                                <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                                <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                                <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                             </h5>
                                                         </div>
                                                         <?php if (isset($updatedata) && $updatedata == 'estab') { ?>

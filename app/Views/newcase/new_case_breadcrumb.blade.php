@@ -135,7 +135,8 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     
                             // render('templates.user_efil_num_action_bar');
                         ?>
-                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                        <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
             </div>

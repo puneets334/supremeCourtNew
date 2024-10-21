@@ -127,7 +127,8 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
                             $Array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                         ?>
-                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                        <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                     
                 </div>

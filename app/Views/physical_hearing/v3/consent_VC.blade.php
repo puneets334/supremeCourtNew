@@ -72,7 +72,8 @@ $this->hearing_model = new HearingModel();
                                 </div>
                                 <div class="title-sec">
                                     <h5 class="unerline-title"> Physical Hearing </h5>
-                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 <div class="row g-3 align-items-center">
                                     <div class="col-auto">
