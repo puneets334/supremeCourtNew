@@ -1567,9 +1567,11 @@ td {
                                                     <div id="calendar"></div>
                                                 </div>
                                                 <div id='efiling-details'>
+                                                    <div class="title-sec">
+                                                        <h5 class="unerline-title"> Active Cases </h5>
+                                                    </div>
                                                     <div class="table-responsive">
-                                                        <table id="calendar-cases"
-                                                            class="table table-striped custom-table">
+                                                        <table id="calendar-cases" class="table table-striped custom-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th>eFiling No.</th>
@@ -1721,7 +1723,6 @@ td {
                         var Table = document.getElementById("efiling");
                         Table.innerHTML = "";
                         if(response.length > 0) {
-                            alert(1);
                             for (var i = 0; i < response.length; i++) {
                                 $('#efiling').append(
                                     '<tr><td data-key="eFiling No."><a href="<?php echo base_url('case/paper_book_viewer/'); ?>' +
