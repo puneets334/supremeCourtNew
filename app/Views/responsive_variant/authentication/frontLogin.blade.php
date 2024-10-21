@@ -64,13 +64,13 @@
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                     <label for="" class="form-label">User Name <span style="color: red;">*</span></label>
-                                    <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="txt_username" value="{{@$session->get('user')}}" placeholder="UserId/Mobile/Email Id" maxlength="60" required>
+                                    <input type="text" class="form-control cus-form-ctrl" id="exampleInputEmail1" name="txt_username" value="<?php isset($_POST['txt_username']) ? $_POST['txt_username'] : ''; ?>" placeholder="UserId/Mobile/Email Id" maxlength="60" required>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Password <span style="color: red;">*</span></label>
-                                    <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="" required>
+                                    <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="<?php isset($_POST['txt_password']) ? $_POST['txt_password'] : ''; ?>" required>
                                     @if(!empty($session->get('impersonated_user_authentication_mobile_otp')))
                                     <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
                                     @endif
@@ -82,9 +82,6 @@
                                 <div class="captchaimage">
                                     <div class="mb-3">
                                         @include('Captcha.Captcha_view')
-
-                                        {{-- <input type="text" value="" placeholder="HrT5709KL"
-                                                id="" name="" class="form-control cus-form-ctrl"> --}}
                                     </div>
                                 </div>
                             </div>
