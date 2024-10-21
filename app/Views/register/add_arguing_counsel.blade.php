@@ -7,6 +7,8 @@ if(!empty(getSessionData('login'))){
 ?>
 @extends($extends)
 @section('content')
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 <style>
     .row{
         padding-top: 10px;
@@ -739,6 +741,7 @@ if(!empty(getSessionData('login'))){
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script>
         $(document).ready(function(){
             var state_Arr = '<?php echo json_encode($stateArr)?>';
