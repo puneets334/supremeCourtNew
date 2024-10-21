@@ -26,7 +26,8 @@ if(!empty(getSessionData('login'))){
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Add/Approve Advocate(s)</h5>
                                     @if(!empty(getSessionData('login')))
-                                        <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                        <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                        <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                     @endif
                                 </div>
                                 @if(!empty(getSessionData('emailExistMessage')))

@@ -30,7 +30,8 @@
         <div class="x_panel">
             <div class="x_title"> 
 				<h3><?= htmlentities($tabs_heading, ENT_QUOTES) ?>
-                <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> 
+                <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>  -->
+                <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
 				<!-- <span style="float:right;">  
 					 
 					<button class="btn btn-info" type="button" onclick="window.history.back();">Back</button>
