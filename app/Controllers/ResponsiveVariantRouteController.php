@@ -1244,7 +1244,7 @@ class ResponsiveVariantRouteController extends BaseController
             if ($day_wise_cases == false) {
                 header('Content-Type: application/json');
                 http_response_code(400);
-                return json_encode(array('error' => 'No Data Found!'));
+                return json_encode(array('error' => 'No Active Records Found.'));
             } else {
                 foreach ($day_wise_cases as $case) {
                     $activated_date = date('Y-m-d h:i:s', strtotime($case->activated_on));
@@ -1252,7 +1252,7 @@ class ResponsiveVariantRouteController extends BaseController
                         $cases[] = array(
                             'diary_id' => $case->sc_diary_year,
                             'efiling_no' => $case->efiling_no,
-                            'activated_on' => date("d/m/Y h.i.s A", strtotime($case->activated_on))
+                            'activated_on' => date("d/m/Y h:i:s A", strtotime($case->activated_on))
                         );
                     }
                 }
