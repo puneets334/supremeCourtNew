@@ -397,7 +397,7 @@ class CaseDetails extends BaseController
             $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
 
             $special_category = !empty($_POST["special_category"]) ? url_decryption(escape_data($_POST["special_category"])) : 0;
-            if(isset($jailsignDt)){ 
+            if(isset($jailsignDt) && !empty($jailsignDt)){ 
             
             $jailsignDt = DateTime::createFromFormat('d/m/Y', $jailsignDt);
             $jailsignDt = $jailsignDt->format('Y-m-d'); // Convert to Y-m-d format
