@@ -474,6 +474,7 @@
         }
     }
     $(document).ready(function() {
+        $('input[name="party_gender"]').attr('required', 'required');
 
         // $('.party_name').bind('keyup blur', function() {
         //     var node = $(this);
@@ -485,7 +486,7 @@
         // })
     });
 
-    $('.party_gender1').attr('required', 'required');
+    //$('.party_gender1').attr('required', 'required');
     $('.party_name').attr('required', 'required');
     $('.relative_name').attr('required', 'required');
     $('#relation').attr('required', 'required');
@@ -498,7 +499,7 @@
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
-            $('.party_gender1').attr('required', 'required');
+            //$('.party_gender1').attr('required', 'required');
             $('.party_name').attr('required', 'required');
             $('.relative_name').attr('required', 'required');
             $('#relation').attr('required', 'required');
@@ -526,7 +527,7 @@
                 $('#otherOrgState').hide();
                 $('.org_dept').attr('required', 'required');
                 $('.org_post').attr('required', 'required');
-                $('.party_gender1').removeAttr('required', 'required');
+                //$('.party_gender1').removeAttr('required', 'required');
                 $('.party_name').removeAttr('required', 'required');
                 $('.relative_name').removeAttr('required', 'required');
                 $('#relation').removeAttr('required', 'required');
@@ -543,7 +544,7 @@
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
-                $('.party_gender1').removeAttr('required', 'required');
+                //$('.party_gender1').removeAttr('required', 'required');
                 $('.party_name').removeAttr('required', 'required');
                 $('.relative_name').removeAttr('required', 'required');
                 $('#relation').removeAttr('required', 'required');
