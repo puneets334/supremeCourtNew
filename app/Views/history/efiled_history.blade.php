@@ -1,9 +1,10 @@
-@extends('layout.app')
-@section('content')
 <!DOCTYPE HTML>
 <html>
     <head>
-        <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	    <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>SC</title>
         <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
@@ -17,7 +18,9 @@
         <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
         <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
         <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
-        <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet"> -->
+        <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+        <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+        <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
         @stack('style')
         <style>
             th {
@@ -308,4 +311,3 @@
         @endpush
     </body>
 </html>
-@endsection

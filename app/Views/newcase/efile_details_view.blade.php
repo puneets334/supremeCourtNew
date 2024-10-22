@@ -1,14 +1,16 @@
 <!DOCTYPE HTML>
 <html>
-
+@extends('layout.app')
+@section('content')
 <head>
     <meta http-equiv="Content-Type"
         content="text/html; charset=utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0" />
     <title>SC</title>
-    <link rel="shortcut icon"
-        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+	<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+    <!-- <link rel="shortcut icon"
+        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
         rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
@@ -81,7 +83,9 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
-                            <?php if (!isset($efiling_search_header)) {
+                            <?php 
+                            
+                            if (!isset($efiling_search_header)) {
                                 render('newcase.new_case_breadcrumb');
                             } ?>
                             <div class="center-content-inner comn-innercontent">
@@ -128,7 +132,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                     <a title="Click Here To Close All Information"
                                                         href="javascript:void(0);"
                                                         class="btn btn-outline btn-info btn-sm closeall"
-                                                        style="float: right; ">
+                                                        style="float: right; display:none;">
                                                         <span class="fa fa-eye-slash"></span> Close All 
                                                     </a>
                                                 </div>
@@ -273,7 +277,15 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header 
+                                                                <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>
+                                                                "
                                                                     id="headingTwo">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -311,7 +323,15 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header 
+                                                                    <?php
+                                                                    if(isset($hidepencilbtn)){
+                                                                        if ($hidepencilbtn != 'true') { ?>
+                                                                    col-sm-11
+                                                                    <?php } else { ?>
+                                                                        col-sm-12
+                                                                        <?php } } ?>
+                                                                "
                                                                     id="headingThree">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -348,7 +368,13 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         <div class="accordion-item"
                                                             style="display: none">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>"
                                                                     id="headingFour">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -386,7 +412,13 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         <div class="accordion-item"
                                                             style="display: none">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>"
                                                                     id="headingFive">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -427,7 +459,13 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         <div class="accordion-item"
                                                             style="display: none">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>"
                                                                     id="headingSix">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -462,7 +500,13 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>"
                                                                     id="headingSeven">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -500,7 +544,13 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>"
                                                                     id="headingEight">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -535,7 +585,13 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+<h2 class="accordion-header <?php
+                                                                if(isset($hidepencilbtn)){
+                                                                    if ($hidepencilbtn != 'true') { ?>
+                                                                col-sm-11
+                                                                <?php } else { ?>
+                                                                    col-sm-12
+                                                                    <?php } } ?>"
                                                                     id="headingNine">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -959,7 +1015,9 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
         </div>
     </div>
 
+    @endsection
 
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
     <script>
         function get_objection(obj_id, obj_checked) {
             if (obj_checked.is(':checked')) {

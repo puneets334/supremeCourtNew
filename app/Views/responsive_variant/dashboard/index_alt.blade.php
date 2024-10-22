@@ -635,7 +635,7 @@ td {
                                                                 is_object($scheduled_case))
                                                                 @foreach($scheduled_case as $scheduled)
                                                                 <tr>
-                                                                    <td class="uk-width-small@m" data-key="Case" tabindex="0">
+                                                                    <td class="uk-width-small@m" data-key="Case" tabindex="0" width=50%>
                                                                         <div>
                                                                             <span
                                                                                 class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span>
@@ -648,7 +648,7 @@ td {
                                                                         </div>
                                                                     </td>
                                                                     <td class="uk-table-expand" uk-margin
-                                                                        data-key="Date & Bench" tabindex="0">
+                                                                        data-key="Date & Bench" tabindex="0" width=50%>
                                                                         <div>
                                                                             <li class="mycases-li">
                                                                                 <button type="button"
@@ -770,7 +770,7 @@ td {
                                                                     @foreach($sr_advocate_soon_cases as
                                                                     $sr_advocate_soon_case)
                                                                     <tr>
-                                                                        <td class="uk-width-small@m">
+                                                                        <td class="uk-width-small@m" width=50%>
                                                                             <div>
                                                                                 <span
                                                                                     class="uk-text-muted">{{$sr_advocate_soon_case->registration_number ?: ('D. No.' . $sr_advocate_soon_case->diary_number . '/' . $sr_advocate_soon_case->diary_year)}}</span>
@@ -785,7 +785,7 @@ td {
                                                                                 <span class="uk-label uk-background-muted uk-text-primary" style="text-transform: none;font-size:11px;">{{ucwords(strtolower(str_replace(']','',str_replace('[','',$scheduled_case->meta->listing->court->listing_sub_type))))}}</span>
                                                         </div>--}}
                                                         </td>
-                                                        <td class="uk-table-expand" uk-margin>
+                                                        <td class="uk-table-expand" uk-margin width=50%>
                                                             <div>
                                                                 <li>
                                                                     <button type="button"
@@ -1569,7 +1569,7 @@ td {
                                                 </div>
                                                 <div id='efiling-details'>
                                                     <div class="title-sec">
-                                                        <h5 class="unerline-title">Active Cases</h5>
+                                                        <h5 class="unerline-title">Allocated Cases</h5>
                                                     </div>
                                                     <div class="table-responsive">
                                                         <table id="calendar-cases" class="table table-striped custom-table">

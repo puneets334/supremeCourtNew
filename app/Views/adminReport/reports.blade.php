@@ -1,107 +1,90 @@
 @extends('layout.app')
 @section('content')
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<style>
-    @media (max-width: 767px) {
-        div#tableData .custom-table tr td:nth-child(3) {min-height: 55px;}
-
-    div#tableData .custom-table tr td:nth-child(3) {
-    min-height: 55px;
-}}
-@media (max-width: 767px){
-    .custom-table td:nth-child(4) {
-        min-height: 56px;
-
-    }
-}
-    @media (max-width: 767px){
-        .custom-table td:nth-child(4) {
-            min-height: 56px;
+    <style>
+        @media (max-width: 767px) {
+            div#tableData .custom-table tr td:nth-child(3) {min-height: 55px;}
+            div#tableData .custom-table tr td:nth-child(3) {
+                min-height: 55px;
+            }
         }
-    }
-</style>
-<div class="container-fluid">
-    <div id="loader-wrapper" style="display: none;">
-        <div id="loader"></div>
-    </div>
-    <div class="row" id="printData">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="dashboard-section dashboard-tiles-area"></div> -->
-            <div class="dashboard-section">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="dash-card">
-                            <div class="title-sec">
-                                <h5 class="unerline-title">Select Dates </h5>
-                                <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
-                                    <label>From Date</label>
-                                    <div class="form-group">
-                                        <input type="text" name="from_date" id="from_date" class="form-control cus-form-ctrl">
-                                        <span id="error_from_date"></span>
+        @media (max-width: 767px){
+            .custom-table td:nth-child(4) {
+                min-height: 56px;
+
+            }
+        }
+        @media (max-width: 767px){
+            .custom-table td:nth-child(4) {
+                min-height: 56px;
+            }
+        }
+    </style>
+    <div class="container-fluid">
+        <div id="loader-wrapper" style="display: none;">
+            <div id="loader"></div>
+        </div>
+        <div class="row" id="printData">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard-section">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card">
+                                <div class="title-sec">
+                                    <h5 class="unerline-title">Select Dates </h5>
+                                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
+                                        <label>From Date</label>
+                                        <div class="form-group">
+                                            <input autocomplete="off" type="text" name="from_date" id="from_date" class="form-control cus-form-ctrl">
+                                            <span id="error_from_date"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
+                                        <label>To Date</label>
+                                        <div class="form-group">
+                                            <input autocomplete="off" type="text" name="to_date" id="to_date" class="form-control cus-form-ctrl">
+                                            <span id="error_to_date"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
+                                        <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <div class="form-group">
+                                            <button type="button" name="getResult" id="getResult" class="btn quick-btn"> Get Reports</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
-                                    <label>To Date</label>
-                                    <div class="form-group">
-                                        <input type="text" name="to_date" id="to_date" class="form-control cus-form-ctrl">
-                                        <span id="error_to_date"></span>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div id="result"></div>
                                     </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4 col-lg-3 col-xs-3">
-                                    <label>&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                    <div class="form-group">
-                                        <button type="button" name="getResult" id="getResult" class="btn quick-btn"> Get Reports</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12">
-                                    <div id="result"></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div>
-
-        <div class="col-md-12 col-sm-12 col-xs-12">
-
-            <!-- <div class="x_panel">
-                <div class="x_content"> -->
-                    <!-- <input class="pull-right" style="display: none; margin: 10px;" id="printButton" type="button" onclick="PrintDiv();" value="Print" /> -->
-                   
-                    <!-- <div class="panel-body" > -->
-                        <div class="dashboard-section" >
-                            <div class="row">
-                                <div class="col-12">
-                                 <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="dash-card" id="tableData" style="display: none;"></div>
-                                </div>
-                            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard-section" >
+                    <div class="row">
+                        <div class="col-12">
+                            <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
                         </div>
-                    <!-- </div> -->
-                <!-- </div>
-            </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card" id="tableData" style="display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    @endsection
-    @push('script')
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+@endsection
+@push('script')    
     <script>
         $(document).ready(function() {
-            
             $('#from_date').datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -129,34 +112,32 @@
                 newdate = newdate.split(',')[0];
                 $("#to_date").val(newdate);
             }
-
         });
-
         $(document).on('click', '#getResult', function() {
-
             var from_date = $("#from_date").val();
             var to_date = $("#to_date").val();
-
-
             var validationError = true;
-            if (from_date == '') {
+            if (fromDateObj == '') {
                 alert("Please select from date.")
                 $("#from_date").focus();
                 validationError = false;
                 return false;
-            } else if (to_date == '') {
+            } else if (toDateObj == '') {
                 alert("Please select to date.")
                 $("#to_date").focus();
                 validationError = false;
                 return false;
             }
-            if (to_date < from_date) {
-                alert("To Date will be greater than From Date");
-                $("#to_date").val('');
-                $("#to_date").focus();
+            var fromDateString = from_date.split('/').reverse().join('-');
+            var toDateString = to_date.split('/').reverse().join('-');
+            var fromDateObj = new Date(fromDateString);
+            var toDateObj = new Date(toDateString);
+            if (toDateObj <= fromDateObj) {
+                alert('To Date Must be Greater Than From Date.');
+                var validationError = false;
                 return false;
             }
-            if (validationError) {
+            if (validationError) { 
                 var CSRF_TOKEN = 'CSRF_TOKEN';
                 var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
                 var postData = {
@@ -164,7 +145,6 @@
                     from_date: from_date,
                     to_date: to_date
                 };
-
                 $.ajax({
                     type: "POST",
                     data: JSON.stringify(postData),
@@ -174,13 +154,9 @@
                     cache: false,
                     async: false,
                     beforeSend: function() {
-                        $('#loader-wrapper').show(); // Show loader here
-                        //("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: 130px;  margin-left: -100px;z-index: 99999;opacity: 1;" src="<?php //echo base_url('assets/images/loading-data.gif'); 
-                                                                                                                                                                                ?>">');
-                        //$('#getResult').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+                        $('#loader-wrapper').show();
                     },
                     success: function(res) {
- 
                         $('#loader-wrapper').hide(); 
                         if (typeof res == 'string') {
                             res = JSON.parse(res);
@@ -211,7 +187,7 @@
                             $("#tableData").html(res.table);
                             $("#printButton").show();
                             setTimeout(function() {
-                            $('#result').fadeOut('slow'); // jQuery fade out effect
+                            $('#result').fadeOut('slow');
                         }, 5000);
                             return false;
                         }
@@ -227,7 +203,6 @@
                 });
             }
         });
-
         $(document).ready(function() {
             $('#datatable-responsive').DataTable({
                 dom: 'Bfrtip',
@@ -251,7 +226,6 @@
 
             });
         });
-
         function PrintDiv() {
             var divContents = document.getElementById("tableData").innerHTML;
             var printWindow = window.open('', '', 'height=1000,width=1200');
@@ -262,4 +236,4 @@
             printWindow.print();
         }
     </script>
-    @endpush
+@endpush

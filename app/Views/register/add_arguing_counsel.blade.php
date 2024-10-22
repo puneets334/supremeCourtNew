@@ -13,7 +13,11 @@ if(!empty(getSessionData('login'))){
     .row{
         padding-top: 10px;
     }
+    form label {
+        font-size: 17px;
+    }
 </style>
+ 
     <div class="container-fluid">
         <div class="row card">
             <div class="col-lg-12">
@@ -72,6 +76,7 @@ if(!empty(getSessionData('login'))){
                                         $attribute = array('class' => 'form-horizontal form-label-left', 'enctype'=>'multipart/form-data', 'id' => 'saveArguingCounselCompleteDetails', 'name' => 'saveArguingCounselCompleteDetails', 'autocomplete' => 'off');
                                         echo form_open($action, $attribute);
                                         ?>
+                                       
                                             <div class="uk-child-width-1-1 uk-child-width-1-2@m uk-grid-small uk-grid" uk-grid="" uk-height-viewport="offset-top:true" style="min-height: calc(100vh - 60.4062px);">
                                                 <!-- left box start -->
                                                 <div class="row">

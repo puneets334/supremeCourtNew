@@ -8,7 +8,8 @@ if (($_SESSION['efiling_details']['stage_id'] == DRAFT_STAGE) || ($_SESSION['efi
     $efiling_num_button_background_class = 'btn-success';
 }
 ?>
-<link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+<!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
