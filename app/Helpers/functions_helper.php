@@ -1894,17 +1894,17 @@ function get_challanged_sc_base_case_details($registration_id)
     $Get_details_model = new GetDetailsModel();
 
     $base_disposed_cases = $Get_details_model->get_subordinate_court_details($registration_id);
-    $lower_court_type = $base_disposed_cases[0]['court_type'];
+    $lower_court_type = (!empty($base_disposed_cases) && is_array($base_disposed_cases)) ? $base_disposed_cases[0]['court_type'] : '';
     $subject_category = null;
     $subcode1 = null;
     $sc_case_type_id = null;
     if ($lower_court_type == 4)  //court type=4 belongs to supreme court
     {
-        $case_type_id = $base_disposed_cases[0]['case_type_id'];
-        $case_no = $base_disposed_cases[0]['case_num'];
-        $case_year = $base_disposed_cases[0]['case_year'];
+        $case_type_id = (!empty($base_disposed_cases) && is_array($base_disposed_cases)) ? $base_disposed_cases[0]['case_type_id'] : '';
+        $case_no = (!empty($base_disposed_cases) && is_array($base_disposed_cases)) ? $base_disposed_cases[0]['case_num'] : '';
+        $case_year = (!empty($base_disposed_cases) && is_array($base_disposed_cases)) ? $base_disposed_cases[0]['case_year'] : '';
         $case_data = json_decode(curl_get_contents(ICMIS_SERVICE_URL . "/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year"));
-        $case_data = $case_data->case_details[0];
+        $case_data = !empty($case_data) ? $case_data->case_details[0] : '';
         $base_disposed_case_diary_no = $case_data->diary_no . $case_data->diary_year;
 
         // get the submaster id of the base case
