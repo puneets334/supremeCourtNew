@@ -8604,3 +8604,8 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
     width: fit-content !important;
 }
 /* 18-10-24 end  */
+
+
+.slect-date-two {display: flex;}
+.slect-date-two .cus-form-ctrl:first-child {border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
+.slect-date-two .cus-form-ctrl:last-child {border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;}
