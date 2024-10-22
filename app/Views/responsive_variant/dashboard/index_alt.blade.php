@@ -1569,7 +1569,7 @@ td {
                                                 </div>
                                                 <div id='efiling-details'>
                                                     <div class="title-sec">
-                                                        <h5 class="unerline-title">Active Cases</h5>
+                                                        <h5 class="unerline-title">Allocated Cases</h5>
                                                     </div>
                                                     <div class="table-responsive">
                                                         <table id="calendar-cases" class="table table-striped custom-table">
