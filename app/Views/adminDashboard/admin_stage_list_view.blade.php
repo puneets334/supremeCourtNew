@@ -1,45 +1,33 @@
 @extends('layout.app')
 @section('content')
 <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-
 <style>
     th{font-size: 13px;color: #000;} 
     td{font-size: 13px;color: #000;}
-    
-    
     .no-paginations div#datatable-responsive_length {
-    display: none;
-}
-</style>   <!-- /page content -->
-
+        display: none;
+    }
+</style>
+<!-- /page content -->
 <div class="container-fluid">
- <div class="row" >
-	<div class="col-lg-12">
-
-    
-   
-    <div class="col-md-12 col-sm-12 col-xs-12 dash-card">
-
-        <div class="form-response" id="msg" >
-            <?php
-			 
-            if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
-                echo $_SESSION['MSG'];
-            } unset($_SESSION['MSG']);
-            ?></div>
-        <div class="x_panel">
-            <div class="x_title"> 
-				<h3><?= htmlentities($tabs_heading, ENT_QUOTES) ?>
-                <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>  -->
-                <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
-				<!-- <span style="float:right;">  
-					 
-					<button class="btn btn-info" type="button" onclick="window.history.back();">Back</button>
-				</span> -->
-			 </h3>
-			</div>
-           
-
+    <div class="row" >
+        <div class="col-lg-12">
+            <div class="col-md-12 col-sm-12 col-xs-12 dash-card">
+                <div class="form-response" id="msg" >
+                    <?php
+                    if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
+                        echo $_SESSION['MSG'];
+                    } unset($_SESSION['MSG']);
+                    ?>
+                </div>
+                <div class="x_panel">
+                    <div class="x_title"> 
+                        <h3>
+                            <?= htmlentities($tabs_heading, ENT_QUOTES) ?>
+                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>  -->
+                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right mb-2"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        </h3>
+                    </div>
             <div class="x_content">  
                 <div class="table-wrapper-scroll-y my-custom-scrollbar no-paginations">
                     <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%">

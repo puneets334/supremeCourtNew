@@ -5,8 +5,9 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0" />
     <title>SC</title>
-    <link rel="shortcut icon"
-        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+    <!-- <link rel="shortcut icon"
+        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
+	<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
         rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
