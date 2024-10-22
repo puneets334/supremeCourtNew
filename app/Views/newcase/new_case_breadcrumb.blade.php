@@ -279,13 +279,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
-        <?php
-        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-            echo '<div class="row mb-5"><div class="col-md-12 "><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
-        }
-        echo !empty(getSessionData('efiling_details')['stage_id']) ? '<div class="row">
-        <div class="col-12">'.remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']).'</div></div>' : '';
-        ?>
+        
         <!-- form--start  -->
 
         <form action="">
@@ -336,6 +330,86 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 !empty(getSessionData('efiling_details')['stage_id']) &&
                     (getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage ||
                         getSessionData('efiling_details')['stage_id'] == I_B_Defects_Cured_Stage))
+
+                <?php 
+                $segment = service('uri');
+                $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : array();
+                $disabled_status1='pointer-events: none; cursor: default;';?>
+                <ul class="nav nav-tabs"
+                    id="myTab"
+                    role="tablist">
+
+                    <li class="nav-item"
+                        role="presentation"> 
+                        <?php
+                        if ($segment->getSegment(2) == 'upload_docs' || $segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                            //$disabled_status='';
+                        } elseif (in_array(NEW_CASE_UPLOAD_DOCUMENT, $StageArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                        // $disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                        // $disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= $url_case_upload_docs ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:5;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
+                            type="button"
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">1</span> Upload Document / Index </a>
+                    </li> 
+
+                    <li class="nav-item"
+                        role="presentation">
+                        <?php
+                        if ($segment->getSegment(2) == 'courtFee') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                        //  $disabled_status='';
+                        } elseif (in_array(NEW_CASE_COURT_FEE, $StageArray)) {
+                            //$ColorCode = $bgcolor . ";color:#ffffff";
+                            $bgcolor='background-color: #169F85;';
+                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $status_color = '';
+                        // $disabled_status='';
+                        } else {
+
+                            $bgcolor='background-color: #C11900;';
+                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $status_color = '';
+                        // $disabled_status='pointer-events: none; cursor: default;';
+                        }
+
+                        ?>
+                        <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:3;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;} ?>"
+                            type="button"
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Pay Court Fee </a>
+                    </li>                        
+
+                    <li class="nav-item"
+                        role="presentation"> 
+                        <?php
+                        if ($segment->getSegment(2) == 'view') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                            //$disabled_status='';
+                        } elseif (in_array(NEW_CASE_PETITIONER, $StageArray) && in_array(NEW_CASE_RESPONDENT, $StageArray) && in_array(NEW_CASE_UPLOAD_DOCUMENT, $StageArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff';
+                            $status_color = '';
+                            //$disabled_status='';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff';
+                            $status_color = '';
+                            //$disabled_status='pointer-events: none; cursor: default;';
+                        }
+                        ?>
+                        <a href="<?= base_url('newcase/view') ?>" class="nav-link <?php echo $status_color; ?>" style="z-index:1;<?php if(!in_array(NEW_CASE_RESPONDENT, $StageArray)){ echo $disabled_status1;}?>"
+                            type="button"
+                            aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">3</span>  View </a>
+                    </li>
+                </ul>
             @else
                 <ul class="nav nav-tabs"
                     id="myTab"
@@ -521,7 +595,13 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 </ul>
             @endif
         </form>
-
+        <?php
+        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+            echo '<div class="row mb-5"><div class="col-md-12 "><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
+        }
+        echo !empty(getSessionData('efiling_details')['stage_id']) ? '<div class="row">
+        <div class="col-12">'.remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']).'</div></div>' : '';
+        ?>
         <div class="modal fade"
             id="FinalSubmitModal"
             role="dialog">
@@ -730,8 +810,9 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
             });
         </script>
 <?php
-$pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
-//echo "dd: ".$pending_court_fee; exit;
+    $chkFee = getPendingCourtFee();
+    $pending_court_fee= !empty($chkFee) ? $chkFee : 0;
+    //echo "dd: ".$pending_court_fee; exit;
 ?>
 
 <div class="modal fade" id="approveModal" role="dialog">
