@@ -40,7 +40,6 @@ class ResponsiveVariantRouteController extends BaseController
         $this->MentioningModel = new MentioningModel();
         $this->CitationModel = new CitationModel();
         $this->efiling_webservices = new Efiling_webservices();
-        // pr(getSessionData('login'));
         if(empty(getSessionData('login')['ref_m_usertype_id'])){
             return response()->redirect(base_url('/')); 
         }
@@ -251,8 +250,6 @@ class ResponsiveVariantRouteController extends BaseController
             $url = $serviceUrl . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date_encoded . '%20to%20' . $to_date_encoded;
             // Fetch the data from the external service
             $recent_documents_str = file_get_contents($url);
-            // print_r($recent_documents_str); die;
-
             // Handle the response (convert to JSON, process it, etc.)
             $recent_documents = json_decode($recent_documents_str, true);
             // $recent_documents_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date . '%20to%20' . $to_date . '');
@@ -423,8 +420,6 @@ class ResponsiveVariantRouteController extends BaseController
             $or_request_params = [];
             $or_request_params['documentType'] = 'or';
             $or_request_params['diaryIds'] = array_column($scheduled_cases, 'diary_id');
-            // print_r(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params));die;
-
             $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
             $office_reports = (!empty($or_response)) ? $or_response->data : [];
             $rop_judgment_request_params = [];
@@ -1210,15 +1205,17 @@ class ResponsiveVariantRouteController extends BaseController
             } else {
                 $dateCounts = [];
                 foreach ($final_submitted_applications as $obj) {
-                    $activatedDate = (isset($obj->activated_on) && !empty($obj->activated_on)) ? substr($obj->activated_on, 0, 10) : 0;
-                    if($activatedDate != 0){
-                        if (isset($dateCounts[$activatedDate]) && !empty($dateCounts[$activatedDate])) {
-                            $dateCounts[$activatedDate]++;
+                    if(!empty($obj->allocated_on)) {
+                        $activatedDate = (isset($obj->allocated_on) && !empty($obj->allocated_on)) ? substr($obj->allocated_on, 0, 10) : 0;
+                        if($activatedDate != 0){
+                            if (isset($dateCounts[$activatedDate]) && !empty($dateCounts[$activatedDate])) {
+                                $dateCounts[$activatedDate]++;
+                            } else {
+                                $dateCounts[$activatedDate] = 1;
+                            }
                         } else {
                             $dateCounts[$activatedDate] = 1;
                         }
-                    } else {
-                        $dateCounts[$activatedDate] = 1;
                     }
                 }
                 $passedArray = json_encode($dateCounts);
@@ -1247,12 +1244,12 @@ class ResponsiveVariantRouteController extends BaseController
                 return json_encode(array('error' => 'No Active Records Found.'));
             } else {
                 foreach ($day_wise_cases as $case) {
-                    $activated_date = date('Y-m-d h:i:s', strtotime($case->activated_on));
+                    $activated_date = date('Y-m-d h:i:s', strtotime($case->allocated_on));
                     if ($activated_date >= $start && $activated_date <= $end) {
                         $cases[] = array(
                             'diary_id' => $case->sc_diary_year,
                             'efiling_no' => $case->efiling_no,
-                            'activated_on' => date("d/m/Y h:i:s A", strtotime($case->activated_on))
+                            'activated_on' => date("d/m/Y h:i:s A", strtotime($case->allocated_on))
                         );
                     }
                 }
