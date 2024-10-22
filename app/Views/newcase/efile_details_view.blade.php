@@ -1,14 +1,16 @@
 <!DOCTYPE HTML>
 <html>
-
+@extends('layout.app')
+@section('content')
 <head>
     <meta http-equiv="Content-Type"
         content="text/html; charset=utf-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0" />
     <title>SC</title>
-    <link rel="shortcut icon"
-        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+	<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+    <!-- <link rel="shortcut icon"
+        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
         rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
@@ -321,7 +323,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header 
+<h2 class="accordion-header 
                                                                     <?php
                                                                     if(isset($hidepencilbtn)){
                                                                         if ($hidepencilbtn != 'true') { ?>
@@ -366,7 +368,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         <div class="accordion-item"
                                                             style="display: none">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php
+<h2 class="accordion-header <?php
                                                                 if(isset($hidepencilbtn)){
                                                                     if ($hidepencilbtn != 'true') { ?>
                                                                 col-sm-11
@@ -410,7 +412,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         <div class="accordion-item"
                                                             style="display: none">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php
+<h2 class="accordion-header <?php
                                                                 if(isset($hidepencilbtn)){
                                                                     if ($hidepencilbtn != 'true') { ?>
                                                                 col-sm-11
@@ -457,7 +459,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         <div class="accordion-item"
                                                             style="display: none">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php
+<h2 class="accordion-header <?php
                                                                 if(isset($hidepencilbtn)){
                                                                     if ($hidepencilbtn != 'true') { ?>
                                                                 col-sm-11
@@ -498,7 +500,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php
+<h2 class="accordion-header <?php
                                                                 if(isset($hidepencilbtn)){
                                                                     if ($hidepencilbtn != 'true') { ?>
                                                                 col-sm-11
@@ -542,7 +544,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php
+<h2 class="accordion-header <?php
                                                                 if(isset($hidepencilbtn)){
                                                                     if ($hidepencilbtn != 'true') { ?>
                                                                 col-sm-11
@@ -583,7 +585,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php
+<h2 class="accordion-header <?php
                                                                 if(isset($hidepencilbtn)){
                                                                     if ($hidepencilbtn != 'true') { ?>
                                                                 col-sm-11
@@ -1013,7 +1015,9 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
         </div>
     </div>
 
+    @endsection
 
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
     <script>
         function get_objection(obj_id, obj_checked) {
             if (obj_checked.is(':checked')) {
