@@ -48,15 +48,22 @@ class AdvSignUp extends BaseController {
         }
     }
 
-    function add_advocate() {
-        
-
-
+    function add_advocate() { 
+         
         if (!empty($_SESSION['profile_image']['profile_photo'])) {
         }else if (!empty($_SESSION['kyc_configData']['UidData']['Pht'])) {
         }else {
             if (empty($_SESSION['profile_image']['profile_photo'])) {
                 $this->session->setFlashdata('msg', 'Please Choose profile Photo.');
+                $this->session->setFlashdata('old_name', isset($_POST['name']) && !empty($_POST['name']) ? $_POST['name'] : '' );
+                $this->session->setFlashdata('old_date_of_birth', isset($_POST['date_of_birth']) && !empty($_POST['date_of_birth']) ? $_POST['date_of_birth'] : '' );
+                $this->session->setFlashdata('old_mobile', isset($_POST['mobile']) && !empty($_POST['mobile']) ? $_POST['mobile'] : '' );
+                $this->session->setFlashdata('old_email_id', isset($_POST['email_id']) && !empty($_POST['email_id']) ? $_POST['email_id'] : '' );
+                $this->session->setFlashdata('old_gender', isset($_POST['gender']) && !empty($_POST['gender']) ? $_POST['gender'] : '' );
+                $this->session->setFlashdata('old_address', isset($_POST['address']) && !empty($_POST['address']) ? $_POST['address'] : '' );
+                $this->session->setFlashdata('old_state_id', isset($_POST['state_id']) && !empty($_POST['state_id']) ? $_POST['state_id'] : '' );
+                $this->session->setFlashdata('old_district_list', isset($_POST['district_list']) && !empty($_POST['district_list']) ? $_POST['district_list'] : '' );
+                $this->session->setFlashdata('old_pincode', isset($_POST['pincode']) && !empty($_POST['pincode']) ? $_POST['pincode'] : '' );
                 return redirect()->to(base_url('register/AdvSignUp'));
             }
         }
