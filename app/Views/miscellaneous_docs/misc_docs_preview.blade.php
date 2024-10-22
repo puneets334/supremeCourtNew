@@ -6,13 +6,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SC</title>
-    <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+	<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+    <!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
+    <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
@@ -20,16 +21,10 @@
     <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
     @stack('style')
 </head>
-
-
 <?php
-
 if (!isset($efiling_search_header)) { ?>
-
     @include('miscellaneous_docs.misc_docs_breadcrumb')
 <?php }
-
-
 $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
 if (isset(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
     $hidepencilbtn = 'true';
@@ -52,18 +47,18 @@ $collapse_class = '';
                                         if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
                                             $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
                                             if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
-                                        ?>
+                                                ?>
                                                 <a class="btn btn-success btn-sm" target="_blank" href="<?php echo base_url('acknowledgement/view'); ?>">
                                                     <i class="fa fa-download blink"></i> eFiling Acknowledgement
                                                 </a>
-                                        <?php
+                                                <?php
                                             }
                                         }
                                         ?>
                                         <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 visible-lg visible-md">
-                                                    <button class="btn btn-primary btn-sm openall" style="float: right">Expand All <i class="fa fa-eye"></i></button>
-                                                    <button class="btn btn-info btn-sm closeall hidden" style="float: right">Collapse All <i class="fa fa-eye-slash"></i></button>
-                                                </div> -->
+                                            <button class="btn btn-primary btn-sm openall" style="float: right">Expand All <i class="fa fa-eye"></i></button>
+                                            <button class="btn btn-info btn-sm closeall hidden" style="float: right">Collapse All <i class="fa fa-eye-slash"></i></button>
+                                        </div> -->
                                         <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right"><span class="fa fa-eye"></span>&nbsp;&nbsp; Expand All</a>
                                         <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; "> <span class="fa fa-eye-slash"></span> Collapse All</a>
                                     </div>
@@ -123,20 +118,18 @@ $collapse_class = '';
                                             </div>
                                             <div class="accordion-item">
                                                 <div class="row">
-                                                    <h2 class="accordion-header col-sm-11" id="headingTwo">
+                                                    <h2 class="accordion-header col-sm-12" id="headingTwo">
                                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                                             <?php
                                                             if (!isset($filing_for_details) || empty($filing_for_details)) { ?>
-                                                                <font style="color:red;"> <b>Filing For</b>
-                                                                </font>
+                                                                <font style="color:red;"><b>Filing For</b></font>
                                                             <?php } else { ?><b>Filing For</b><?php } ?>
                                                         </button>
                                                     </h2>
                                                     <?php
                                                     if ($hidepencilbtn != 'true') { ?>
                                                         <div class="col-sm-1">
-                                                            <!-- <a href="<?php //echo base_url('on_behalf_of'); 
-                                                                            ?>"><i style="color:black; padding-top: 20px !important;" class="fa fa-pencil efiling_search"></i></a> -->
+                                                            <!-- <a href="<?php //echo base_url('on_behalf_of'); ?>"><i style="color:black; padding-top: 20px !important;" class="fa fa-pencil efiling_search"></i></a> -->
                                                         </div>
                                                     <?php } ?>
                                                 </div>
@@ -148,7 +141,7 @@ $collapse_class = '';
                                             </div>
                                             <div class="accordion-item">
                                                 <div class="row">
-                                                    <h2 class="accordion-header col-sm-11" id="headingThree">
+                                                    <h2 class="accordion-header col-sm-12" id="headingThree">
                                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" <?php echo $collapse_class; ?>>
                                                             <?php
                                                             if (!isset($hidepencilbtn) || empty($hidepencilbtn)) { ?><font style="color:red;">
@@ -173,10 +166,9 @@ $collapse_class = '';
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="accordion-item">
                                                 <div class="row">
-                                                    <h2 class="accordion-header col-sm-11" id="headingFour">
+                                                    <h2 class="accordion-header col-sm-12" id="headingFour">
                                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" <?php echo $collapse_class; ?>>
                                                             <b>Fees Paid</b>
                                                         </button>
@@ -194,13 +186,12 @@ $collapse_class = '';
                             </div>
                             <?php render('modals'); ?>
                         </div>
-
                     </div>
                 </div>
                 <div class="row m-3">
                     <div class="col-md-12 text-end">
                         <?php $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                        //    echo '<pre>'; print_r($Array);
+                        // echo '<pre>'; print_r($Array);
                         $segment = service('uri');
                         $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
                         if ($segment->getSegment(2) == 'view') {
@@ -208,13 +199,11 @@ $collapse_class = '';
                                 if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
                                     if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
                                         //    print_r($_SESSION['efiling_details']['breadcrumb_status']);
-
                                         if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
                                             (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
                                                 (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't')
                                             )
                                         ) {
-
                                             echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                             // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                         } else {
@@ -224,21 +213,23 @@ $collapse_class = '';
                                     if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { ?>
                                         <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
                                         <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
-                        <?php }
+                                        <?php
+                                    }
                                 }
                             }
-                        } ?>
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
+<!-- </div>
+</div> -->
 @endsection
-
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
@@ -251,12 +242,8 @@ $collapse_class = '';
 <script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/sha256.js"></script>
-<script src="<?= base_url() . 'assets' ?>/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-
-
 </body>
-
 </html>
