@@ -616,44 +616,101 @@
         }
     });
 
+    // function get_departments(party_is) {
+    //     var CSRF_TOKEN = 'CSRF_TOKEN';
+    //     var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+    //     <?php $st_id = !empty(@$party_details[0]->org_state_id) ? url_encryption(@$party_details[0]->org_state_id) : ''; ?>
+    //     var selected_org_st_id = '<?php echo $st_id; ?>';
+    //     <?php $dpt_id = !empty(@$party_details[0]->org_dept_id) ? url_encryption(@$party_details[0]->org_dept_id) : ''; ?>
+    //     var selected_dept_id = '<?php echo $dpt_id; ?>';
+    //     $.ajax({
+    //         type: "POST",
+    //         data: {
+    //             CSRF_TOKEN: CSRF_TOKEN_VALUE,
+    //             party_is: party_is,
+    //             selected_org_st_id: selected_org_st_id,
+    //             selected_dept_id: selected_dept_id
+    //         },
+    //         url: "<?php echo base_url('newcase/Ajaxcalls/get_org_departments'); ?>",
+    //         success: function(data) {
+    //             $('.filter_select_dropdown').select2();
+    //             var response = data.split('$$$$$');
+    //             $('.org_state').html(response[0]);
+    //             $('.org_dept').html(response[1]);
+    //             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+    //                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+    //             });
+    //         },
+    //         error: function() {
+    //             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+    //                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+    //             });
+    //         }
+    //     });
+    // }
+
     function get_departments(party_is) {
+
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        <?php $st_id = !empty(@$party_details[0]->org_state_id) ? url_encryption(@$party_details[0]->org_state_id) : ''; ?>
-        var selected_org_st_id = '<?php echo $st_id; ?>';
-        <?php $dpt_id = !empty(@$party_details[0]->org_dept_id) ? url_encryption(@$party_details[0]->org_dept_id) : ''; ?>
-        var selected_dept_id = '<?php echo $dpt_id; ?>';
+
+        var selected_org_st_id = '<?php echo isset($party_details[0]['org_state_id']) ?  url_encryption($party_details[0]['org_state_id']) : '' ?>';
+        var selected_dept_id = '<?php echo isset($party_details[0]['org_dept_id']) ?  url_encryption($party_details[0]['org_dept_id']) : '' ?>';
+
         $.ajax({
             type: "POST",
-            data: {
-                CSRF_TOKEN: CSRF_TOKEN_VALUE,
-                party_is: party_is,
-                selected_org_st_id: selected_org_st_id,
-                selected_dept_id: selected_dept_id
-            },
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, party_is: party_is, selected_org_st_id: selected_org_st_id, selected_dept_id: selected_dept_id},
             url: "<?php echo base_url('newcase/Ajaxcalls/get_org_departments'); ?>",
-            success: function(data) {
+            success: function (data)
+            {
                 $('.filter_select_dropdown').select2();
                 var response = data.split('$$$$$');
                 $('.org_state').html(response[0]);
                 $('.org_dept').html(response[1]);
-                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                 });
             },
-            error: function() {
-                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+            error: function () {
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                 });
             }
         });
-    }
+        }
 
+    // function get_posts() {
+    //     var CSRF_TOKEN = 'CSRF_TOKEN';
+    //     var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+    //     <?php $pos_id = !empty(@$party_details[0]->org_post_id) ? url_encryption(@$party_details[0]->org_post_id) : ''; ?>
+    //     var selected_post_id = '';
+    //     $.ajax({
+    //         type: "POST",
+    //         data: {
+    //             CSRF_TOKEN: CSRF_TOKEN_VALUE,
+    //             selected_post_id: selected_post_id
+    //         },
+    //         url: "<?php echo base_url('newcase/Ajaxcalls/get_org_posts'); ?>",
+    //         success: function(data) {
+    //             $('.org_post').html(data);
+    //             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+    //                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+    //             });
+    //         },
+    //         error: function() {
+    //             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+    //                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+    //             });
+    //         }
+    //     });
+    // }
     function get_posts() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        <?php $pos_id = !empty(@$party_details[0]->org_post_id) ? url_encryption(@$party_details[0]->org_post_id) : ''; ?>
-        var selected_post_id = '';
+        <?php $pos_id = !empty(@$party_details[0]['org_post_id']) ? url_encryption(@$party_details[0]['org_post_id']) : ''; ?>
+        
+        var selected_post_id = '<?php echo isset($party_details[0]['org_post_id']) ? url_encryption($party_details[0]['org_post_id']) : '' ?>';
+        //alert(selected_post_id);
         $.ajax({
             type: "POST",
             data: {
@@ -674,6 +731,10 @@
             }
         });
     }
+
+
+
+
 </script>
 <script type="text/javascript">
     $(document).ready(function() {

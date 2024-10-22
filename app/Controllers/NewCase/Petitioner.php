@@ -199,7 +199,7 @@ class Petitioner extends BaseController {
                     "rules" => "required|trim|validate_encrypted_value"
                 ],
             ]);
-            if (url_decryption($_POST['org_dept']) == 0) {
+            if (isset($_POST['org_dept']) && url_decryption($_POST['org_dept']) == 0) {
                 $this->validation->setRules([
                     "org_dept_name" => [
                         "label" => "Other Department name",
@@ -214,7 +214,7 @@ class Petitioner extends BaseController {
                     "rules" => "required|trim|validate_encrypted_value"
                 ],
             ]);
-            if (url_decryption($_POST['org_post']) == 0) {
+            if (isset($_POST['org_post']) && url_decryption($_POST['org_post']) == 0) {
                 $this->validation->setRules([
                     "org_post_name" => [
                         "label" => "Other Post",
@@ -256,7 +256,7 @@ class Petitioner extends BaseController {
         $party_relation = !empty($_POST["relation"]) ? $_POST["relation"] : '';
         $relative_name = !empty($_POST["relative_name"]) ? $_POST["relative_name"] : '';
 
-        if (!empty($_POST['party_dob'])) {
+        if (isset($_POST['party_dob']) && !empty($_POST['party_dob'])) {
 
             // $party_dob = $_POST["party_dob"];
 

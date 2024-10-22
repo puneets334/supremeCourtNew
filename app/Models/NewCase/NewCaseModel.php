@@ -403,8 +403,9 @@ class NewCaseModel extends Model {
         } else {
             $this->update_breadcrumbs($registration_id, $breadcrumb_step);
         }
+        // pr($data);
         $builder = $this->db->table('efil.tbl_lower_court_details');
-        $builder->insert($data);
+        $builder->insert($data);  
         $insert_id = $this->db->insertID();
         if($fir_data!=null) {
             $fir_data['ref_tbl_lower_court_details_id']=$insert_id;

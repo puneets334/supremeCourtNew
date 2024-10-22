@@ -612,7 +612,7 @@ td {
                                 <div class="dashboard-section">
                                     <div class="row">
                                         @if(!empty($scheduled_cases))
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                             <div class="dash-card" >
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title" tabindex="0">My Cases <small
@@ -747,7 +747,7 @@ td {
                                             <h4 class="uk-heading-bullet uk-text-bold">My cases <small class="uk-text-muted">soon to be listed</small></h4>
                                             <table class="uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" id="soon-to-be-listed-cases-table"> -->
                                         @if(!empty($sr_advocate_data))
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-4">
                                             @else
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                                 @endif
@@ -872,7 +872,8 @@ td {
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">My Cases <small class="uk-text-muted">assigned by AOR</small></h5>
-                                                    <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive">
@@ -925,7 +926,7 @@ td {
                                         @endif
                                         <!-- end sr advocate data -->
                                         @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
@@ -1567,9 +1568,11 @@ td {
                                                     <div id="calendar"></div>
                                                 </div>
                                                 <div id='efiling-details'>
+                                                    <div class="title-sec">
+                                                        <h5 class="unerline-title">Active Cases</h5>
+                                                    </div>
                                                     <div class="table-responsive">
-                                                        <table id="calendar-cases"
-                                                            class="table table-striped custom-table">
+                                                        <table id="calendar-cases" class="table table-striped custom-table">
                                                             <thead>
                                                                 <tr>
                                                                     <th>eFiling No.</th>
@@ -1721,7 +1724,6 @@ td {
                         var Table = document.getElementById("efiling");
                         Table.innerHTML = "";
                         if(response.length > 0) {
-                            alert(1);
                             for (var i = 0; i < response.length; i++) {
                                 $('#efiling').append(
                                     '<tr><td data-key="eFiling No."><a href="<?php echo base_url('case/paper_book_viewer/'); ?>' +

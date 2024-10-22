@@ -1,10 +1,12 @@
 <?php
 
 use CodeIgniter\Router\RouteCollection;
-
+use App\Controllers\DefaultController;
 /**
  * @var RouteCollection $routes
  */
+$routes->set404Override('App\Controllers\DefaultController::notFound');
+// $routes->set404Override('App\Controllers\DefaultController::internalServerError');
 $routes->get('/', 'DefaultController::index');
 $routes->post('/login', 'DefaultController::login');
 $routes->get('/logout', 'Login\Logout::index');

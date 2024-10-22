@@ -569,10 +569,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row text-center">
                         <div class="col-md-12 col-sm-12 col-xs-12"
                             id="search_button_div">
-                            <div class="col-sm-4 col-xs-12 col-md-offset-5">
+                            <div class="col-sm-12 col-xs-12 col-md-offset-5">
                                 <div class="form-group">
                                     <div class="col-md-offset-3">
                                         <input tabindex='17'
@@ -594,7 +594,7 @@
                             src="<?php echo base_url(); ?>assets/images/loading-data.gif" />
                     </div>
                     <!----START : Show search Ressult---->
-                    <div id="case_result"></div>
+                    <div class="mt-2" id="case_result"></div>
                     <!----END : Show search Ressult---->
                     <div class="clearfix"></div><br><br>
                     <input type="hidden"
@@ -607,6 +607,24 @@
                             id="transfer_pet_DivBox">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                        <div class="mb-3">
+                                        <label class="form-label">Impugned Order Date <span
+                                                style="color: red"
+                                                class="astriks">*</span></label>
+                                            <div class="slect-date-two">
+                                                <input tabindex='18'
+                                                    class="form-control cus-form-ctrl"
+                                                    id="order_date"
+                                                    name="order_date"
+                                                    maxlength="10"
+                                                    placeholder="DD/MM/YYYY"
+                                                    type="text">
+                                                <select id="order_dates_list" style="width: 10% !important;" class="form-select cus-form-ctrl" aria-label="Default select example">
+                                                </select>
+                                            </div>                                                                          
+                                        </div>
+                                </div>
+                                <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">
                                         <label class="form-label">Impugned Order Date <span
                                                 style="color: red"
@@ -630,7 +648,7 @@
 
 
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">
                                         <label class="form-label">Impugned Order Challenged

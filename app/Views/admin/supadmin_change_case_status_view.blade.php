@@ -6,20 +6,20 @@
         <div class="col-12 sm-12 col-md-12 col-lg-12  ">
             <div class="center-content-inner comn-innercontent">
                 <div class="dashboard-section">
-                 <div class="row">
-                  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                   <div class="dash-card">
-                    <div class="title-sec">
-                     <h5 class="unerline-title"><i class="fa fa-recycle"></i> Change Case Status </h5>
-                     <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>                
-                 </div>
-
-                 <?php 
-                 $session = session();
-                    if ($session->getFlashdata('MSG')) {
-                        echo '<div class="alert alert-danger">'.$session->getFlashdata('MSG').'</div>';
-                    }
-                 ?>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="dash-card">
+                                <div class="title-sec">
+                                    <h5 class="unerline-title"><i class="fa fa-recycle"></i> Change Case Status </h5>
+                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a>                 -->
+                                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                </div>
+                                <?php 
+                                $session = session();
+                                    if ($session->getFlashdata('MSG')) {
+                                        echo '<div class="alert alert-danger">'.$session->getFlashdata('MSG').'</div>';
+                                    }
+                                ?>
                  <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="form-sec">
