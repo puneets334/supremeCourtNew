@@ -11,10 +11,7 @@ use App\Models\NewCase\DropdownListModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\NewCase\NewCaseModel;
 use DateTime;
-<<<<<<< HEAD
-=======
 
->>>>>>> origin
 class SubordinateCourt extends BaseController {
 
     protected $Dropdown_list_model;
@@ -287,17 +284,9 @@ class SubordinateCourt extends BaseController {
                 }
                 // $date = explode('/', $_POST['order_date']);
                 // $decision_date = $date[2] . '-' . $date[1] . '-' . $date[0];
-<<<<<<< HEAD
-                //$decision_date = date('Y-m-d', strtotime($_POST['order_date']));
-                $decision_date = DateTime::createFromFormat('d/m/Y', $_POST['order_date']);
-		if ($decision_date) {
-		$decision_date = $decision_date->format('Y-m-d'); // Convert to Y-m-d format
-		}
-=======
                 // $decision_date = date('Y-m-d', strtotime($_POST['order_date']));
                 $decision_date = $_POST['order_date'];
                 
->>>>>>> origin
             } else {
                 $decision_date = $_SESSION['search_case_data_save']['date_of_decision'];
             }
@@ -306,7 +295,7 @@ class SubordinateCourt extends BaseController {
                 $decision_date = $decision_date->format('Y-m-d'); // Convert to Y-m-d format
             }
             $Is_Judgment_Challenged = isset($_POST['judgement_challenged']) ? $_POST['judgement_challenged'] : '';
-            $Judgment_Type = isset($_POST['judgement_type']) ? $_POST['judgement_type'] : '';
+            $Judgment_Type = !empty($_POST['judgement_type']) ? $_POST['judgement_type'] : '';
         }
         $cnr_number = ''; 
         $case_number = '';
@@ -704,3 +693,4 @@ class SubordinateCourt extends BaseController {
 
 
 }
+
