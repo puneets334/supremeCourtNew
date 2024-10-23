@@ -200,7 +200,8 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         }
                                                     }
                                                     ?>
-                                                    <a title="Click Here To View All Information"
+                                                    <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
+                                                    <!-- <a title="Click Here To View All Information"
                                                         href="javascript:void(0);"
                                                         class="btn btn-outline btn-primary btn-sm openall"
                                                         style="float: right">
@@ -211,7 +212,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         class="btn btn-outline btn-info btn-sm closeall"
                                                         style="float: right; ">
                                                         <span class="fa fa-eye-slash"></span> Close All
-                                                    </a>
+                                                    </a> -->
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="accordion"
@@ -331,7 +332,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         </div>
                                                         <div class="accordion-item custom-table">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
                                                                     id="headingTwo">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -366,7 +367,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         </div>
                                                         <div class="accordion-item custom-table">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
                                                                     id="headingThree">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -401,7 +402,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         </div>
                                                         <div class="accordion-item custom-table">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
                                                                     id="headingFour">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -436,7 +437,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         </div>
                                                         <div class="accordion-item custom-table">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
                                                                     id="headingFive">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -473,7 +474,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
 
                                                         <div class="accordion-item custom-table">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
                                                                     id="headingSix">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -509,7 +510,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         
                                                         <div class="accordion-item custom-table">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
                                                                     id="headingNine">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button"
@@ -622,7 +623,34 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
         src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
         @stack('script')
     {{-- @endsection --}}
-<script>
+    <script>
+        function toggleAllAccordions() {
+            var button = document.getElementById("collapseAll");
+            var accordionHeaders = document.querySelectorAll(".accordion-header button");
+            var accordionCollapses = document.querySelectorAll(".accordion-collapse");
+            var isCollapsed = Array.from(accordionHeaders).some(function (header) {
+                return !header.classList.contains("collapsed");
+            });
+            if (isCollapsed) {
+                button.innerHTML = "Expand all";
+                accordionHeaders.forEach(function (header) {
+                    header.classList.add("collapsed");
+                });
+                accordionCollapses.forEach(function (collapse) {
+                    collapse.classList.remove("show");
+                });
+            } else {
+                button.innerHTML = "Collapse all";
+                accordionHeaders.forEach(function (header) {
+                    header.classList.remove("collapsed");
+                });
+                accordionCollapses.forEach(function (collapse) {
+                    collapse.classList.add("show");
+                });
+            }
+        }
+    </script>
+<!-- <script>
     $(document).ready(function () {
         $('.closeall').click(function () {
             $('.collapse.in').collapse('hide');
@@ -635,7 +663,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
             $('.openall').hide();
         });
     });
-</script>
+</script> -->
 <script type="text/javascript">
     $("#cde").click(function () {
         $.ajax({
@@ -781,7 +809,3 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
         return false;
     });
 </script>
-
-
-			
-	

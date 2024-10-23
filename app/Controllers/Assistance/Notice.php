@@ -57,7 +57,7 @@ class Notice extends BaseController {
 
         if (!empty($_FILES['notice_doc']['name'])) {
             if ($msg = isValidPDF('notice_doc')) {
-                $this->session->set_flashdata('MSG', $msg);
+                $this->session->setFlashdata('MSG', $msg);
                 redirect('assistance/notice');
             }
 
@@ -85,10 +85,10 @@ class Notice extends BaseController {
         $result = $this->Notice_model->insert_notice($insert_array, $_FILES['notice_doc']['tmp_name']);
 
         if ($result) {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-success text-center">Notice Added Successfully</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Notice Added Successfully</div>');
             redirect('assistance/notice/view');
         } else {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
             redirect('assistance/notice/view');
         }
     }
@@ -106,13 +106,13 @@ class Notice extends BaseController {
 
 
         if (empty($get_data)) {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-danger text-danger">Invalid Request</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-danger">Invalid Request</div>');
             redirect('assistance/notice/view');
         }
 
         if ($this->form_validation->run() == FALSE) {
             $error = $this->form_validation->error_array();
-            $this->session->set_flashdata('notice_title', '<div class="text-danger">' . $error['notice_title'] . '</div>');
+            $this->session->setFlashdata('notice_title', '<div class="text-danger">' . $error['notice_title'] . '</div>');
             redirect('assistance/notice/view' . url_encryption($id));
         } else {
 
@@ -126,7 +126,7 @@ class Notice extends BaseController {
             if (!empty($_FILES['notice_doc']['name'])) {
 
                 if ($msg = isValidPDF('notice_doc')) {
-                    $this->session->set_flashdata('MSG', $msg);
+                    $this->session->setFlashdata('MSG', $msg);
                     redirect('noitce/view');
                 }
                 $file_name = time() . rand() . ".pdf";
@@ -148,10 +148,10 @@ class Notice extends BaseController {
 
             $result = $this->Notice_model->update_notice_by_id($id, $_SESSION['login']['id'], $update_array, $_FILES['notice_doc']['tmp_name']);
             if ($result) {
-                $this->session->set_flashdata('MSG', '<div class="alert alert-success text-center">Notice Updated Successfully</div>');
+                $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Notice Updated Successfully</div>');
                 redirect('assistance/notice/view');
             } else {
-                $this->session->set_flashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
+                $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
                 redirect('assistance/notice/view/' . $id);
             }
         }
@@ -178,10 +178,10 @@ class Notice extends BaseController {
         }
         $result = $this->Notice_model->update_status_notice_by_id($id, $_SESSION['login']['id'], $update_array);
         if ($result) {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-success text-center">Notice ' . $message . ' Successfully</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-success text-center">Notice ' . $message . ' Successfully</div>');
             redirect('assistance/notice/view');
         } else {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Something Wrong Please try Again.</div>');
             redirect('assistance/notice/view/' . $id);
         }
     }
@@ -190,7 +190,7 @@ class Notice extends BaseController {
         $id = url_decryption($id);
 
         if (!$id) {
-            $this->session->set_flashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
+            $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Invalid Request.</div>');
             redirect('assistance/notice/view');
         } else {
             $result = $this->notice_model->view_notice_pdf($id);
