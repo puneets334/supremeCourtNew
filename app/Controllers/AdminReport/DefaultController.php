@@ -325,6 +325,7 @@ class DefaultController extends BaseController
             </table>
             <script>
                 $(document).ready(function() {
+                    $("#loader-wrapper").show();
                     $("#datatable-responsive").DataTable({
                         "ordering": false,
                     });
@@ -1371,6 +1372,7 @@ class DefaultController extends BaseController
             </table>
             <script>
                 $(document).ready(function() {
+                    $("#loader-wrapper").show();
                     $("#datatable-responsive").DataTable({
                         "ordering": false,
                     });

@@ -627,7 +627,8 @@ class Search extends BaseController
                         $data['case_last_refiled_details'] = $this->efiling_webservices->checkInTheOldEfilingCasesList($diary_no, $diary_year);
                         // pr($data['case_last_refiled_details']);
                         if (!empty($data['case_last_refiled_details'])) {
-                            $last_refiled_on = ($data['case_last_refiled_details']->case_refiling_status[0]->created_at);
+                            // pr($data['case_last_refiled_details']->case_refiling_status);
+                            $last_refiled_on = !empty($data['case_last_refiled_details']->case_refiling_status) ? $data['case_last_refiled_details']->case_refiling_status[0]->created_at : NULL;
                             $last_refiled_on = date('d-m-Y', strtotime($last_refiled_on));
                             $curDate = date('d-m-Y');
 
