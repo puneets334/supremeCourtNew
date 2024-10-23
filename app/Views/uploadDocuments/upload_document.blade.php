@@ -72,7 +72,7 @@
 		</div>
 	<?php echo form_close(); ?>
 </div>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <?php
 if (!empty($uploaded_docs)) {
 	echo '<script>$("#nextButton").show();</script>';
