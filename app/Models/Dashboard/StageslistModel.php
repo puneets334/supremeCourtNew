@@ -99,7 +99,7 @@ class StageslistModel extends Model
     //         }
     //     }
 
-    public function get_efilied_nums_stage_wise_list($stageIds, $createdBy, $notIn = 0)
+    public function get_efilied_nums_stage_wise_list($stageIds, $createdBy, $notIn = 0 , $limit = null, $offset= null)
     {
         $builder = $this->db->table('efil.tbl_efiling_nums as en');
 
@@ -175,7 +175,9 @@ class StageslistModel extends Model
             $builder->orWhereIn('en.created_by', [1597]);
         }
         $builder->groupEnd();
-
+        if ($limit !== null) {
+            $builder->limit($limit,$offset);
+        }
         $builder->orderBy('cs.activated_on', 'DESC');
 
         $query = $builder->get();
