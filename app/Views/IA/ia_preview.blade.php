@@ -1,46 +1,44 @@
 <!DOCTYPE HTML>
 <html>
-
+@extends('layout.app')
+@section('content')
 <head>
-    <meta http-equiv="Content-Type"
-        content="text/html; charset=utf-8">
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SC</title>
 	<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-    <!-- <link rel="shortcut icon"
-        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
-        rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
-        rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css"
-        rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css"
-        rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css"
-        rel="stylesheet">
-    <link rel="stylesheet"
-        type="text/css"
-        href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css"
-        rel="stylesheet">
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/jquery-ui.css">
-    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
-        rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
     @stack('style')
 </head>
 <?php
+$collapse_class = 'collapse';
 $area_extended = false;
-$collapse_class = 'collapse in';
-
+$hidepencilbtn='';
+if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && isset($stage_id) && !empty($stage_id) && $stage_id == Transfer_to_IB_Stage) {
+    $collapse_class = 'collapse in';
+    $area_extended = true;
+}
+$stages_array = array('', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE);
+if(isset(getSessionData('efiling_details')['stage_id'])){
+    if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+        $hidepencilbtn = 'true';
+    } else {
+        $hidepencilbtn = 'false';
+    }
+}
 ?>
-
 <body>
     <div class="mainPanel ">
         <div class="panelInner">
@@ -55,17 +53,10 @@ $collapse_class = 'collapse in';
                                         visibility: hidden !important;
                                     }
                                 </style>
-                            <?php } ?>
-                            <?php
+                                <?php
+                            }
                             if (!isset($efiling_search_header)) {
                                 render('IA.ia_breadcrumb', $details);
-                            }
-
-                            $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
-                            if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-                                $hidepencilbtn = 'true';
-                            } else {
-                                $hidepencilbtn = 'false';
                             }
                             ?>
                             <div class="center-content-inner comn-innercontent">
@@ -88,13 +79,25 @@ $collapse_class = 'collapse in';
                                                         }
                                                         ?>
                                                     </div>
-
-                                                    <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right">
+                                                    <!-- <a title="Click Here To View All Information"
+                                                        href="javascript:void(0);"
+                                                        class="btn btn-outline btn-primary btn-sm openall"
+                                                        style="float: right">
+                                                        <span class="fa fa-eye"></span>&nbsp;&nbsp; View All
+                                                    </a>
+                                                    <a title="Click Here To Close All Information"
+                                                        href="javascript:void(0);"
+                                                        class="btn btn-outline btn-info btn-sm closeall"
+                                                        style="float: right; display:none;">
+                                                        <span class="fa fa-eye-slash"></span> Close All 
+                                                    </a> -->
+                                                    <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
+                                                    <!-- <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right">
                                                         <span class="fa fa-eye"></span>&nbsp;&nbsp; Expand All
                                                     </a>
                                                     <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; ">
                                                         <span class="fa fa-eye-slash"></span> Collapse All
-                                                    </a>
+                                                    </a> -->
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="accordion" id="accordionExample">
@@ -107,22 +110,15 @@ $collapse_class = 'collapse in';
                                                             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
                                                                     <div class="x_panel">
-                                                                        <?php render('case_details.case_details_view', ['case_details' => $case_details]);  ?>
-
+                                                                        <?php render('case_details.case_details_view', ['case_details' => $case_details]); ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11" id="headingTwo">
-                                                                    <button class="accordion-button collapsed"
-                                                                        type="button"
-                                                                        data-bs-toggle="collapse"
-                                                                        data-bs-target="#collapseTwo"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="collapseTwo" <?php echo $area_extended; ?>>
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" id="headingTwo">
+                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" <?php echo $area_extended; ?>>
                                                                         <?php
                                                                         if (!isset($filing_for_details) || empty($filing_for_details)) { ?>
                                                                             <font style="color:red;"> <b>Filing For</b></font>
@@ -132,28 +128,19 @@ $collapse_class = 'collapse in';
                                                                 <?php
                                                                 if ($hidepencilbtn != 'true') { ?>
                                                                     <div class="col-sm-1">
-                                                                        <a href="<?php echo base_url('on_behalf_of'); ?>""><i
-                                                                            style=" color:black; padding-top: 20px !important;"
-                                                                            class="fa fa-pencil efiling_search"></i></a>
+                                                                        <a href="<?php echo base_url('on_behalf_of'); ?>"><i style=" color:black; padding-top: 20px !important;" class="fa fa-pencil efiling_search"></i></a>
                                                                     </div>
                                                                 <?php } ?>
-
                                                             </div>
-                                                            <div id="collapseTwo"
-                                                                class="accordion-collapse collapse <?php echo $collapse_class; ?>"
-                                                                aria-labelledby="headingTwo"
-                                                                data-bs-parent="#accordionExample">
+                                                            <div id="collapseTwo" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
                                                                     <?php render('on_behalf_of.filing_for_parties_list_view', ['filing_for_details' => $filing_for_details]); ?>
-
                                                                 </div>
                                                             </div>
-
                                                         </div>
-
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11" id="headingThree">
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" id="headingThree">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button" data-bs-toggle="collapse"
                                                                         data-bs-target="#collapseThree"
@@ -180,44 +167,32 @@ $collapse_class = 'collapse in';
                                                                 data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
                                                                     <?php render('documentIndex.documentIndex_misc_ia_list_view', ['efiled_docs_list' => $efiled_docs_list]); ?>
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header col-sm-11"
-                                                                    id="headingNine">
-                                                                    <button class="accordion-button collapsed"
-                                                                        type="button"
-                                                                        data-bs-toggle="collapse"
-                                                                        data-bs-target="#collapseNine"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="collapseNine"
-                                                                        <?php echo $area_extended; ?>>
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" id="headingFour">
+                                                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" <?php echo $area_extended; ?>>
                                                                         <?php if (!isset($payment_details) || empty($payment_details)) { ?><span style="color:red;"> <b>Fees Paid</b></span><?php } else { ?> <b>Fees Paid</b><?php } ?>
                                                                     </button>
                                                                 </h2>
                                                                 <?php
                                                                 if ($hidepencilbtn != 'true') { ?>
                                                                     <div class="col-sm-1">
-                                                                        <a href="<?php echo base_url('IA/courtFee'); ?>"><i
-                                                                                style="color:black; padding-top:10px;"
-                                                                                class="fa fa-pencil efiling_search"></i></a>
+                                                                        <a href="<?php echo base_url('IA/courtFee'); ?>"><i style="color:black; padding-top:10px;" class="fa fa-pencil efiling_search"></i></a>
                                                                     </div>
                                                                 <?php } ?>
                                                             </div>
-                                                            <div id="collapseNine"
+                                                            <div id="collapseFour"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
-                                                                aria-labelledby="headingNine"
+                                                                aria-labelledby="headingFour"
                                                                 data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
                                                                     <?php render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]); ?>
-
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -227,13 +202,10 @@ $collapse_class = 'collapse in';
                             </div>
                             <div class="row m-3">
                                 <div class="col-md-12 text-end">
-
-
                                     <?php
                                     $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                                     if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
                                         if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
-
                                             if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                                 $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
                                                 if ((isset(getSessionData('efiling_details')['gras_payment_status']) &&    getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
@@ -245,16 +217,14 @@ $collapse_class = 'collapse in';
                                                     echo '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
                                                 }
                                             }
-
                                             if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                                                 $final_submit_continue_action = TRUE;
-                                    ?>
+                                                ?>
                                                 <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
-                                            <?php
+                                                <?php
                                             }
                                         }
                                     }
-
                                     if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
                                         if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                             if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
@@ -273,7 +243,7 @@ $collapse_class = 'collapse in';
                                                 $final_submit_continue_action = TRUE;
                                             ?>
                                                 <a class="btn btn-danger btn-sm" onclick="ActionToTrash('SLT')">Trash</a>
-                                    <?php
+                                                <?php
                                             }
                                         }
                                     }
@@ -293,109 +263,90 @@ $collapse_class = 'collapse in';
                                             if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) { ?>
                                                 <ul>
                                                     <?php
-
                                                     if ($final_submit_action && $final_submit_continue_action) {
                                                     ?>
                                                         <li> Are you sure, you want to submit this case?</li>
-                                                    <?php
+                                                        <?php
                                                     }
-
                                                     if ($final_submit_action && $final_submit_continue_action) {
-                                                    ?>
+                                                        ?>
                                                         <li> Click on <b> Submit</b> to submit this case to Selected Panel Advocate.</li>
                                                         <li> Click on <b> Submit & File IA </b> to submit this case to Selected Panel Advocate and continue with IA filing in this case.</li>
-                                                    <?php
-                                                    }
-                                                    ?>
+                                                    <?php } ?>
                                                     <br>
                                                 </ul>
-                                            <?php
+                                                <?php
                                             } else { ?>
                                                 <ul>
                                                     <?php if (isset($final_submit_action) && $final_submit_continue_action) { ?>
                                                         <li> Are you sure, you want to submit this case?</li>
-                                                    <?php
+                                                        <?php
                                                     }
-
                                                     if (isset($final_submit_action) && $final_submit_continue_action) {
-                                                    ?>
+                                                        ?>
                                                         <li> Click on <b> Final Submit</b> to submit this case to eFiling admin.</li>
-
-                                                    <?php
-                                                    } ?>
+                                                    <?php } ?>
                                                     <br>
                                                 </ul>
-                                            <?php
-                                            }
-                                            ?>
+                                            <?php } ?>
                                             <div class=" text-center">
                                                 <?php
-
-
                                                 if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
-
-
                                                     $dept_all_adv_panel_list = $this->DepartmentModel->get_all_advocate_panel(getSessionData('login')['id']);
                                                     $dept_adv_panel_list = $ci->Department_model->get_advocate_panel(getSessionData('login')['id']);
                                                     $advocate = $ci->Department_model->get_alloted_advocate(getSessionData('efiling_details')['registration_id']);
                                                     $action = base_url('stage_list1/final_submit');
                                                     $attribute = array('name' => 'submit_adv_panel', 'id' => 'submit_adv_panel', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
                                                     echo form_open($action, $attribute);
-                                                ?>
-                                                    <div class="col-md-5 col-sm-6 col-xs-10">
-
-                                                        <select id="advocate_list" name="advocate_list" class="form-control " style="width: 100%">
-                                                            <option value="">Practicing On this establishment</option>
-                                                            <?php
-                                                            foreach ($dept_adv_panel_list as $adv_panel) {
-
-                                                                if ($advocate[0]['id'] == $adv_panel['user_id']) {
-                                                                    $sel = 'selected=selected';
-                                                                } else {
-                                                                    $sel = "";
-                                                                }
-                                                                if (!empty($adv_panel['last_name']) && $adv_panel['last_name'] != NULL && $adv_panel['last_name'] != 'NULL') {
-                                                                    $adv_last_name = ' ' . $adv_panel['last_name'];
-                                                                }
-                                                            ?>
-                                                                <option value="<?php echo url_encryption($adv_panel['user_id']); ?>" <?php echo $sel; ?>><?php echo htmlentities(strtoupper($adv_panel['first_name'] . $adv_last_name), ENT_QUOTES); ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-6 col-xs-10">
-
-                                                        <select id="advocate_list1" name="advocate_list1" class="form-control" style="width: 100%">
-                                                            <option value="">Select Panel Advocate</option>
-                                                            <?php
-                                                            foreach ($dept_all_adv_panel_list as $adv_panel1) {
-                                                                if ($advocate[0]['id'] == $adv_panel1['user_id']) {
-                                                                    $sel = 'selected=selected';
-                                                                } else {
-                                                                    $sel = "";
-                                                                }
-                                                                if (!empty($adv_panel1['last_name']) && $adv_panel1['last_name'] != NULL && $adv_panel1['last_name'] != 'NULL') {
-                                                                    $adv_last_name = ' ' . $adv_panel1['last_name'];
-                                                                }
-                                                            ?>
-                                                                <option value="<?php echo url_encryption($adv_panel1['user_id']); ?>" <?php echo $sel; ?>><?php echo htmlentities(strtoupper($adv_panel1['first_name'] . $adv_last_name), ENT_QUOTES); ?></option>
-                                                            <?php } ?>
-                                                        </select>
-
-                                                    </div>
-                                                    <input type="submit" class="btn btn-success btn-sm" name="Submit" value="Submit">
-
+                                                        ?>
+                                                        <div class="col-md-5 col-sm-6 col-xs-10">
+                                                            <select id="advocate_list" name="advocate_list" class="form-control " style="width: 100%">
+                                                                <option value="">Practicing On this establishment</option>
+                                                                <?php
+                                                                foreach ($dept_adv_panel_list as $adv_panel) {
+                                                                    if ($advocate[0]['id'] == $adv_panel['user_id']) {
+                                                                        $sel = 'selected=selected';
+                                                                    } else {
+                                                                        $sel = "";
+                                                                    }
+                                                                    if (!empty($adv_panel['last_name']) && $adv_panel['last_name'] != NULL && $adv_panel['last_name'] != 'NULL') {
+                                                                        $adv_last_name = ' ' . $adv_panel['last_name'];
+                                                                    }
+                                                                    ?>
+                                                                    <option value="<?php echo url_encryption($adv_panel['user_id']); ?>" <?php echo $sel; ?>><?php echo htmlentities(strtoupper($adv_panel['first_name'] . $adv_last_name), ENT_QUOTES); ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-6 col-xs-10">
+                                                            <select id="advocate_list1" name="advocate_list1" class="form-control" style="width: 100%">
+                                                                <option value="">Select Panel Advocate</option>
+                                                                <?php
+                                                                foreach ($dept_all_adv_panel_list as $adv_panel1) {
+                                                                    if ($advocate[0]['id'] == $adv_panel1['user_id']) {
+                                                                        $sel = 'selected=selected';
+                                                                    } else {
+                                                                        $sel = "";
+                                                                    }
+                                                                    if (!empty($adv_panel1['last_name']) && $adv_panel1['last_name'] != NULL && $adv_panel1['last_name'] != 'NULL') {
+                                                                        $adv_last_name = ' ' . $adv_panel1['last_name'];
+                                                                    }
+                                                                    ?>
+                                                                    <option value="<?php echo url_encryption($adv_panel1['user_id']); ?>" <?php echo $sel; ?>><?php echo htmlentities(strtoupper($adv_panel1['first_name'] . $adv_last_name), ENT_QUOTES); ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </div>
+                                                        <input type="submit" class="btn btn-success btn-sm" name="Submit" value="Submit">
                                                     <?php echo form_close(); ?>
                                                     <?php
                                                 } else {
-
                                                     if (isset($final_submit_action)) {
-                                                    ?>
+                                                        ?>
                                                         <a href="<?php echo base_url('IA/FinalSubmit'); ?>" class="btn btn-success btn-sm">Final Submit</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                    <?php
+                                                        <?php
                                                     }
                                                     if (isset($final_submit_action) && $final_submit_continue_action) { ?>
                                                         <!--<a href="<?php echo base_url('IA/final_submit_with_ia'); ?>" class="btn btn-info btn-sm">Final Submit & File IA</a> -->
-                                                <?php
+                                                        <?php
                                                     }
                                                 }
                                                 ?>
@@ -413,22 +364,10 @@ $collapse_class = 'collapse in';
                 </div>
             </div>
         </div>
-    </div>
-
-
-
-    <div class="col-md-12 col-sm-12 col-xs-12">
-
-
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <!-- </div> -->
+    @endsection
+    <div class="col-md-12 col-sm-12 col-xs-12"></div>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
@@ -441,12 +380,34 @@ $collapse_class = 'collapse in';
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-    <script type="text/javascript"
-        src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-
+    <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
     <script>
+        function toggleAllAccordions() {
+            var button = document.getElementById("collapseAll");
+            var accordionHeaders = document.querySelectorAll(".accordion-header button");
+            var accordionCollapses = document.querySelectorAll(".accordion-collapse");
+            var isCollapsed = Array.from(accordionHeaders).some(function (header) {
+                return !header.classList.contains("collapsed");
+            });
+            if (isCollapsed) {
+                button.innerHTML = "Expand all";
+                accordionHeaders.forEach(function (header) {
+                    header.classList.add("collapsed");
+                });
+                accordionCollapses.forEach(function (collapse) {
+                    collapse.classList.remove("show");
+                });
+            } else {
+                button.innerHTML = "Collapse all";
+                accordionHeaders.forEach(function (header) {
+                    header.classList.remove("collapsed");
+                });
+                accordionCollapses.forEach(function (collapse) {
+                    collapse.classList.add("show");
+                });
+            }
+        }
         $(document).ready(function() {
-
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
             $.ajax({
@@ -471,3 +432,5 @@ $collapse_class = 'collapse in';
             });
         });
     </script>
+</body>
+</html>

@@ -55,12 +55,13 @@ $collapse_class = '';
                                             }
                                         }
                                         ?>
+                                        <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
                                         <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 visible-lg visible-md">
                                             <button class="btn btn-primary btn-sm openall" style="float: right">Expand All <i class="fa fa-eye"></i></button>
                                             <button class="btn btn-info btn-sm closeall hidden" style="float: right">Collapse All <i class="fa fa-eye-slash"></i></button>
                                         </div> -->
-                                        <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right"><span class="fa fa-eye"></span>&nbsp;&nbsp; Expand All</a>
-                                        <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; "> <span class="fa fa-eye-slash"></span> Collapse All</a>
+                                        <!-- <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right"><span class="fa fa-eye"></span>&nbsp;&nbsp; Expand All</a>
+                                        <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; "> <span class="fa fa-eye-slash"></span> Collapse All</a> -->
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="accordion" id="accordionExample">
@@ -245,5 +246,32 @@ $collapse_class = '';
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+<script>
+    function toggleAllAccordions() {
+        var button = document.getElementById("collapseAll");
+        var accordionHeaders = document.querySelectorAll(".accordion-header button");
+        var accordionCollapses = document.querySelectorAll(".accordion-collapse");
+        var isCollapsed = Array.from(accordionHeaders).some(function (header) {
+            return !header.classList.contains("collapsed");
+        });
+        if (isCollapsed) {
+            button.innerHTML = "Expand all";
+            accordionHeaders.forEach(function (header) {
+                header.classList.add("collapsed");
+            });
+            accordionCollapses.forEach(function (collapse) {
+                collapse.classList.remove("show");
+            });
+        } else {
+            button.innerHTML = "Collapse all";
+            accordionHeaders.forEach(function (header) {
+                header.classList.remove("collapsed");
+            });
+            accordionCollapses.forEach(function (collapse) {
+                collapse.classList.add("show");
+            });
+        }
+    }
+</script>
 </body>
 </html>
