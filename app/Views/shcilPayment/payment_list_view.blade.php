@@ -33,7 +33,7 @@
     //                    $is_verified = 't';
     //                    $is_locked='t';
                         if ($resData['bank_name'] != '-' || $resData['bank_name'] != 'NA') {
-                            $bank_name = '<b>' . htmlentities(strtoupper($resData['bank_name']), ENT_QUOTES) . '</b>';
+                            $bank_name = '<b>' . strtoupper($resData['bank_name']) . '</b>';
                         } else {
                             $bank_name = 'NA';
                         }
