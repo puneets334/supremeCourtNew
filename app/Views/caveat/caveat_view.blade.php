@@ -45,7 +45,7 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 
 @push('script')
 <script>
     $('#pet_dob').datepicker({
