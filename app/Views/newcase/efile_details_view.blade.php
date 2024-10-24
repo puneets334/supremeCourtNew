@@ -1,7 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-@extends('layout.app')
-@section('content')
 <head>
     <meta http-equiv="Content-Type"
         content="text/html; charset=utf-8">
@@ -1016,7 +1014,6 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
         </div>
     </div>
 
-    @endsection
 
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
     <script>
