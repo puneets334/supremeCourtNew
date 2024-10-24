@@ -117,6 +117,7 @@ class DefaultController extends BaseController {
                 elseif ($this->session->get('captcha') != $userCaptcha) {
                     // pr($this->session->getFlashdata('captcha'));
                     $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                    $this->session->setFlashdata('old_username', $username);
                     return response()->redirect(base_url('/'));
                 }
                 else {

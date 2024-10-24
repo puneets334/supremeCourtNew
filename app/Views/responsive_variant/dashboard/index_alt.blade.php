@@ -221,6 +221,10 @@ td {
 #calendar-cases {
     text-align: center;
 }
+
+.no-paginations div#datatable-responsive_length {
+        display: none;
+    }
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -504,8 +508,9 @@ td {
                                                     <div class="tile-comnt" tabindex="0">
                                                         <h6 class="comts-no">
                                                             <?php
-                                                                    if (isset($defect_notified) && !empty($defect_notified)) {
-                                                                        echo count($defect_notified);
+                                                            
+                                                                    if (isset($online->disposed_appl) && !empty($online->disposed_appl)) {
+                                                                        echo $online->disposed_appl;
                                                                     } else {
                                                                         echo '00';
                                                                     }
@@ -517,8 +522,8 @@ td {
                                                     <div class="tile-comnt" tabindex="0">
                                                         <h6 class="comts-no">
                                                             <?php
-                                                                    if (isset($pending_scrutiny) && !empty($pending_scrutiny)) {
-                                                                        echo count($pending_scrutiny);
+                                                                    if (isset($online->pending_appl) && !empty($online->pending_appl)) {
+                                                                        echo $online->pending_appl;
                                                                     } else {
                                                                         echo '00';
                                                                     }
@@ -537,8 +542,8 @@ td {
                                                     <div class="tile-comnt" tabindex="0">
                                                         <h6 class="comts-no">
                                                             <?php
-                                                                    if (isset($defect_notified) && !empty($defect_notified)) {
-                                                                        echo count($defect_notified);
+                                                                    if (isset($offline->disposed_appl) && !empty($offline->disposed_appl)) {
+                                                                        echo $offline->disposed_appl;
                                                                     } else {
                                                                         echo '00';
                                                                     }
@@ -549,8 +554,8 @@ td {
                                                     <div class="tile-comnt" tabindex="0">
                                                         <h6 class="comts-no">
                                                             <?php
-                                                                    if (isset($pending_scrutiny) && !empty($pending_scrutiny)) {
-                                                                        echo count($pending_scrutiny);
+                                                                    if (isset($offline->pending_appl) && !empty($offline->pending_appl)) {
+                                                                        echo $offline->pending_appl;
                                                                     } else {
                                                                         echo '00';
                                                                     }
@@ -569,8 +574,8 @@ td {
                                                     <div class="tile-comnt" tabindex="0">
                                                         <h6 class="comts-no">
                                                             <?php
-                                                                    if (isset($defect_notified) && !empty($defect_notified)) {
-                                                                        echo count($defect_notified);
+                                                                    if (isset($request->disposed_request) && !empty($request->disposed_request)) {
+                                                                        echo $request->disposed_request;
                                                                     } else {
                                                                         echo '00';
                                                                     }
@@ -581,8 +586,8 @@ td {
                                                     <div class="tile-comnt" tabindex="0">
                                                         <h6 class="comts-no">
                                                             <?php
-                                                                    if (isset($pending_scrutiny) && !empty($pending_scrutiny)) {
-                                                                        echo count($pending_scrutiny);
+                                                                    if (isset($request->pending_request) && !empty($request->pending_request)) {
+                                                                        echo $request->pending_request;
                                                                     } else {
                                                                         echo '00';
                                                                     }
@@ -618,8 +623,8 @@ td {
                                                     <h5 class="unerline-title" tabindex="0">My Cases <small
                                                             class="uk-text-muted">soon to be listed</small></h5>
                                                 </div>
-                                                <div class="table-sec">
-                                                    <div class="table-responsive">
+                                                <div class="table-sec ">
+                                                    <div class="table-responsive ">
                                                         <table id="datatable-responsive-sc_cases"
                                                             class="table table-striped custom-table">
                                                             <thead>
@@ -932,7 +937,7 @@ td {
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec">
-                                                    <div class="table-responsive">
+                                                    <div class="table-responsive  no-paginations">
                                                         <table id="datatable-responsive"
                                                             class="table table-striped custom-table">
                                                             <thead>
@@ -1546,9 +1551,57 @@ td {
                                                             </tbody>
                                                         </table>
                                                     </div>
+                                                    <!-- pagination by saurabh -->
+                                                    <div class="pagination-area-new">
+<form method="post" action="<?= base_url('dashboard_alt'); ?>">
+<div class="pagination-new-inner">
+<div class="showing-details-limit" >
+<label for="limit" class="pull-left page-label"> Limit:</label>
+<div class="pull-left">
+<select id="limit" name="limit" class="form-control" onchange="$('#page_input').val(1);this.form.submit(); updateNames(this)">
+<option value="10" <?php if ($limit == '10') { ?> selected="selected"<?php } ?> > 10</option>
+<option value="25" <?php if ($limit == '25') { ?> selected="selected"<?php } ?> > 25</option>
+<option value="50" <?php if ($limit == '50') { ?> selected="selected"<?php } ?>  > 50</option>
+<option value="100" <?php if ($limit == '100') { ?> selected="selected"<?php } ?>  > 100</option>
+</select>
+</div>
+</div>
+
+<div class="pagination-btns">
+<input type="hidden" name="page_no_use" id="page" value="<?php echo $page; ?>" class="form-control">
+<div class="paging paging-prev">
+<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(1); this.form.submit();">
+<!-- <i class="fa fa-angle-double-left" aria-hidden="true"></i> -->First
+</button>
+<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo ($page == 1) ? 1 : ($page - 1); ?>); this.form.submit();">
+<!-- <i class="fa fa-angle-left" aria-hidden="true"></i> -->Prev
+</button>
+</div>
+
+<div class="paging paging-input">
+&nbsp;Page
+<input type="text" name="page" id="page_input" value="<?php echo $page; ?>" class="form-control" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+of <?php echo isset($pages) ? $pages : ''; ?>
+&nbsp;
+</div>
+
+<div class="paging paging-next">
+<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo (isset($pages) && $page == $pages) ? $pages : ($page + 1); ?> ); this.form.submit();">
+<!-- <i class="fa fa-angle-right" aria-hidden="true"></i> -->Next
+</button>
+<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo isset($pages) ? $pages : ''; ?> ); this.form.submit();">
+<!-- <i class="fa fa-angle-double-right" aria-hidden="true"></i> -->Last
+</button>
+</div>
+</div> 
+</div>
+</form>
+</div>
+                                                     <!-- end pagination -->
                                                 </div>
                                             </div>
                                         </div>
+
                                         @endif
                                     </div>
                                 </div>
@@ -1624,14 +1677,22 @@ td {
         </div>
     </div>
     @endsection
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
+    <script>
+    $(document).ready(function() {
+    window.onload = function() {
+        var limitValue = '<?php echo $limit; ?>'; // PHP variable from server-side
+        $('select[name="datatable-responsive_length"]').val(limitValue).change(); 
+    };
+});
+</script>
     <script>
     function loadPaperBookViewer(obj){
         // alert(obj);
@@ -1713,12 +1774,12 @@ td {
                     },
                     dataType: 'json',
                     beforeSend: function() {
-                        $('#loader-wrapper').show();
-                        var loaderTimeout = setTimeout(function() {
-                            $('#loader-wrapper').fadeOut('slow', function() {
-                                $('#content').fadeIn('slow');
-                            });
-                        }, 1000);
+                        // $('#loader-wrapper').show();
+                        // var loaderTimeout = setTimeout(function() {
+                        //     $('#loader-wrapper').fadeOut('slow', function() {
+                        //         $('#content').fadeIn('slow');
+                        //     });
+                        // }, 1000);
                     },
                     success: function(response) {
                         var Table = document.getElementById("efiling");

@@ -1,10 +1,10 @@
 <div class="mainPanel ">
-    <!-- <div class="panelInner">
-        <div class="middleContent"> -->
-            <!-- <div class="container-fluid"> -->
-                <!-- <div class="row"> -->
-                    <!-- <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left"> -->
-                        <!-- <div class="center-content-inner comn-innercontent"> -->
+    <div class="panelInner">
+        <div class="middleContent">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+                        <div class="center-content-inner comn-innercontent">
                             <?php
                             $segment = service('uri');
 							//echo $segment->getSegment(1);
@@ -35,30 +35,18 @@
                            @elseif ($lastSegment == 'view')
                             @include('caveat.caveat_preview')
                            @endif						
-                          {{--
-                            @if ($segment->getSegment(1) == 'caveat')
-							 @include('caveat.caveator_form')
-                            @elseif ($segment->getSegment(2) == 'caveatee')
-                                @include('caveat.caveatee_form')
-                            @elseif ($segment->getSegment(2) == 'subordinate_court')
-                               @include('caveat.caveat_subordinate_court_view')
-                            @elseif ($segment->getSegment(2) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex')
-                                @include('documentIndex.documentIndex_view')
-                            @elseif ($segment->getSegment(2) == 'documentIndex')
-                                @include('documentIndex.documentIndex_view')
-                            @elseif ($segment->getSegment(1) == 'courtFee')
-                                @include('newcase.courtFee_view')
-                            @elseif ($segment->getSegment(1) == 'view')
-							 @include('caveat.caveat_preview')
-                            @endif
-                            --}}
-                        <!-- </div> -->
-                    <!-- </div> -->
-                <!-- </div> -->
-            <!-- </div> -->
-        <!-- </div>
+                     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div> -->
+
+</div>
+@endsection
+@push('script')
+
 <script>
     $('#pet_dob').datepicker({
         onSelect: function (value) {

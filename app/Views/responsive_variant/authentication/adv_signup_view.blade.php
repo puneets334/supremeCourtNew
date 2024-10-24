@@ -1,6 +1,6 @@
 @extends('layout.frontApp')
 @section('content')
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <style type="text/css">
     @media only screen and (min-width: 960px)    {
@@ -170,7 +170,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Name <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" oninput="validateInput(event)" id="name" name="name" placeholder="Name" maxlength="50" value="<?php echo $value; ?>">
+                                        <input class="form-control cus-form-ctrl" id="form-horizontal-text" type="text" oninput="validateInput(event)" id="name" name="name" placeholder="Name" maxlength="50" value="<?= session()->getFlashdata('old_name') ? session()->getFlashdata('old_name') : '' ?>">
                                         <?php if (isset($validation) && $validation->hasError('name')): ?>
                                             <div class="text-danger">
                                                 <?= $validation->getError('name'); ?>
@@ -178,18 +178,14 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <?php endif; ?>
                                     </div>
                                 </div>
+                                <?php 
+                                // Set the old date of birth value from session flashdata if it exists, else leave it blank
+                                $old_dob = session()->getFlashdata('old_date_of_birth') ?? '';
+                                ?>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Date of Birth <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" value="<?php
-                                                if (!empty($post_datas[2])) {
-                                                    echo date("d/m/Y", strtotime(htmlentities($post_datas[2], ENT_QUOTES)));
-                                                } elseif (!empty($uid_data_dob)) {
-                                                    echo $uid_data_dob;
-                                                } else {
-
-                                                }
-                                                ?>" name="date_of_birth" id="date_of_birth" maxlength="10" placeholder="DD/MM/YYYY" value="<?php echo set_value('date_of_birth'); ?>" type="text">
+                                        <input class="form-control cus-form-ctrl"   name="date_of_birth" id="date_of_birth" maxlength="10" placeholder="DD/MM/YYYY" value="<?= $old_dob ?>" type="text">
                                                  <?php if (isset($validation) && $validation->hasError('date_of_birth')): ?>
                                                     <div class="text-danger">
                                                         <?= $validation->getError('date_of_birth'); ?>
@@ -218,12 +214,20 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         $female = 'checked';
                                     }
                                 ?>
+                                <?php 
+                                    // Get old gender from session flashdata if available
+                                    $old_gender = session()->getFlashdata('old_gender');
+
+                                    ?>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Gender <?php echo $star_requered; ?></label><br>
-                                        <label class="radio-inline"><input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1" checked> Male </label>
-                                            <label class="radio-inline"><input type="radio" <?php echo_data($female) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(2), ENT_QUOTES); ?>" maxlength="1"> Female </label>
-                                            <label class="radio-inline"><input type="radio" id="gender" name="gender"  value="<?php echo htmlentities(url_encryption(3), ENT_QUOTES); ?>" maxlength="1"> Other </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" <?php echo_data($male) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(1), ENT_QUOTES); ?>" maxlength="1" checked <?= ($old_gender == url_encryption(1)) ? 'checked' : ''; ?> > Male </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" <?php echo_data($female) ?> id="gender" name="gender" value="<?php echo htmlentities(url_encryption(2), ENT_QUOTES); ?>" maxlength="1" <?= ($old_gender == url_encryption(2)) ? 'checked' : ''; ?> > Female </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" id="gender" name="gender"  value="<?php echo htmlentities(url_encryption(3), ENT_QUOTES); ?>" maxlength="1" <?= ($old_gender == url_encryption(3)) ? 'checked' : ''; ?> > Other </label>
                                             <?php if (isset($validation) && $validation->hasError('gender')): ?>
                                             <div class="text-danger">
                                                 <?= $validation->getError('gender'); ?>
@@ -235,7 +239,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Address <?php echo $star_requered; ?></label>
-                                        <textarea name="address" id="address" rows="1" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl" required><?php echo trim(htmlentities($uid_data_house_no, ENT_QUOTES)); ?><?php echo !empty($uid_data_landmark)?','.trim(htmlentities($uid_data_landmark, ENT_QUOTES)):''; ?><?php echo !empty($uid_data_locality)?','. trim(htmlentities($uid_data_locality, ENT_QUOTES)):''; ?>
+                                        <textarea name="address" id="address" rows="1" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl" required><?php echo trim(htmlentities($uid_data_house_no, ENT_QUOTES)); ?><?= session()->getFlashdata('old_address') ? session()->getFlashdata('old_address') : '' ?>
                                             </textarea>
                                             <?php if (isset($validation) && $validation->hasError('address')): ?>
                                             <div class="text-danger">
@@ -244,14 +248,21 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                         <?php endif; ?>
                                     </div>
                                 </div>
+
+                                <?php 
+                                    // Get old state from session flashdata if available
+                                    $old_state_id = session()->getFlashdata('old_state_id');
+                                    ?>
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">State <?php echo $star_requered; ?></label>
                                         <select name="state_id" id="state_id" class="form-control cus-form-ctrl" <?php echo $requerd; ?>>
                                             <option value="" title="Select">Select State</option>
                                             <?php
-                                            
+                                           
                                             foreach ($select_state as $state) {
+                                                $state_value = htmlentities($state['state_code'] . '#$' . $state['state_name'], ENT_QUOTES);
+                                                $selected = ($old_state_id == $state_value) ? 'selected' : '';
                                                 echo '<option ' . $selected . ' value="' . htmlentities($state['state_code'] . '#$' . $state['state_name'], ENT_QUOTES) . '">' . htmlentities(strtoupper($state['state_name']), ENT_QUOTES) . '</option>';
                                             }
                                             ?>
@@ -279,7 +290,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Pin Code <?php echo $star_requered; ?></label>
-                                        <input class="form-control cus-form-ctrl" id="pincode" name="pincode" <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?php echo htmlentities($uid_data_pincode, ENT_QUOTES); ?>" placeholder="Pincode" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
+                                        <input class="form-control cus-form-ctrl" id="pincode" name="pincode" <?php echo htmlentities($requerd, ENT_QUOTES); ?> value="<?= session()->getFlashdata('old_pincode') ? session()->getFlashdata('old_pincode') : '' ?>" placeholder="Pincode" maxlength="6" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                         <?php if (isset($validation) && $validation->hasError('pincode')): ?>
                                             <div class="text-danger">
                                                 <?= $validation->getError('pincode'); ?>
@@ -317,35 +328,36 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <!-- form--end  -->
 <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>-->
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> 
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <!-- <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script> -->
 
 <!-- jQuery (Ensure this is included first) -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
 
 <!-- Bootstrap Datepicker CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" /> -->
 
 <!-- Select2 CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
 <!-- Bootstrap Datepicker JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> -->
 
 <!-- Select2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script> -->
 <script type="text/javascript">
     var base_url = '<?php echo base_url(); ?>';
 </script>
@@ -408,6 +420,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
         });
     }); 
 
+
      
 </script>
 
@@ -461,13 +474,73 @@ $(document).ready(function (e) {
             {
             }           
        });
-            }
-
-
-
+            } 
         
     }));
+
+
 });
 </script> 
+
+<?php 
+// Get old state from session flashdata if available
+$old_state_id = session()->getFlashdata('old_state_id');
+?>
+
+<script type="text/javascript">
+    // Get old state ID from PHP
+    var oldStateId = '<?= isset($old_state_id) ? $old_state_id : ''; ?>';
+
+    // If oldStateId exists, call the getdist function and trigger AJAX call
+    if (oldStateId) { 
+
+        // Trigger the AJAX request to get the district list
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+
+        $.ajax({
+            type: "POST",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: oldStateId},
+            url: "<?= base_url('register/AdvSignUp/get_dist_list'); ?>", // Correct PHP echo
+            success: function (data) {
+                if (data.indexOf('ERROR') != -1) {
+                    $('#msg').show();
+                    $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + data + " <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                    $('#district_list').html('<option value=""> Select District </option>');
+                } else {
+                    $('#msg').hide();
+                    $('#district_list').html(data);
+                }
+
+                // Refresh the CSRF token
+                $.getJSON("<?= base_url() . 'csrftoken'; ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            },
+            error: function () {
+                // Handle AJAX error
+                $.getJSON("<?= base_url() . 'csrftoken'; ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            }
+        });
+
+        
+        <?php 
+            // Get old state from session flashdata if available
+            $old_district_list = session()->getFlashdata('old_district_list');
+            ?>
+        var oldDistId = '<?= isset($old_district_list) ? $old_district_list : ''; ?>';
+    
+        setTimeout(function() {
+        if (oldDistId) {
+            document.getElementById('district_list').value = oldDistId;
+        }
+    }, 500);  
+
+    }
+    
+</script>
+
 @endpush
 

@@ -62,8 +62,7 @@ class ResponsiveVariantRouteController extends BaseController
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
             exit(0);
-        }
-        // return $this->render('responsive_variant.dashboard.index_alt');
+        } 
         $advocate_id = getSessionData('login')['adv_sci_bar_id'];
         $sr_advocate_data = '';
         if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE || getSessionData('login')['ref_m_usertype_id']  == ARGUING_COUNSEL) {
@@ -224,6 +223,8 @@ class ResponsiveVariantRouteController extends BaseController
                 default:
             }
         } else {
+
+        
         //  echo "AOR id is: ".getSessionData('login')['adv_sci_bar_id']; die;
             $from_date = date("Y-m-d", strtotime("-3 months"));
             $to_date = date('Y-m-d');
@@ -478,14 +479,76 @@ class ResponsiveVariantRouteController extends BaseController
             }
             //echo "Draft Case End:".date('H:i:s').'<br/>';
             //echo "Efiled Case Start:".date('H:i:s').'<br/>';
-            $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1));
+            $limit = $this->request->getVar('limit') ?? 10;  
+            $page = $this->request->getVar('page') ?? 1;  
+             $offset = ($page - 1) * $limit; 
+            // pr($data);    
+            $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 , $limit,$offset));
+            $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
+            $pages = ceil($totalRecords / $limit);
             if ($final_submitted_applications == false) {
                 $final_submitted_applications = array();
             }
             //echo "Efiled Case Start:".date('H:i:s').'<br/>';
             $my_cases_recently_updated = [];
         }
-        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny'));
+       
+ 
+        $mobile = $_SESSION['login']['mobile_number'];
+        $email = $_SESSION['login']['emailid'];
+        
+        // Connect to the second database
+        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');
+        
+        // Online applications
+        $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
+        $builder->select([
+            'COUNT(mobile) AS total_online_application',
+            "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
+            "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('source', 6);
+        $builder->where('is_deleted', FALSE);
+        $builder->groupBy('is_deleted');
+        $online = $builder->get()->getRow(); // Fetch online applications
+        
+        // Reset builder for the next query (offline applications)
+        $builder->resetQuery();
+        
+        // Offline applications
+        $builder->select([
+            'COUNT(mobile) AS total_offline_application',
+            "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
+            "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('source !=', 6);
+        $builder->where('is_deleted', FALSE);
+        $builder->groupBy('is_deleted');
+        $offline = $builder->get()->getRow(); // Fetch offline applications
+        
+        // Reset builder again for the next query (requests)
+        $builder->resetQuery();
+        
+        // Requests
+        $builder = $sci_cmis_final->table('copying_request_verify');
+        $builder->select([
+            'COUNT(mobile) AS total_request',
+            "SUM(CASE WHEN application_status = 'D' THEN 1 ELSE 0 END) AS disposed_request",
+            "SUM(CASE WHEN application_status = 'P' THEN 1 ELSE 0 END) AS pending_request",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('allowed_request', 'request_to_available');
+        $builder->where('is_deleted', FALSE); 
+        $builder->groupBy('is_deleted');
+        $request = $builder->get()->getRow(); // Fetch request data
+                
+        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','totalRecords','pages','limit','page','online','offline','request'));
     }
 
     public function showCases()
@@ -1257,6 +1320,21 @@ class ResponsiveVariantRouteController extends BaseController
                 return json_encode($cases);
             }
         }
+    }
+    function dashboard_alt_test(){
+        $data = [];
+        $limit = $this->request->getVar('limit') ?? 10;  
+        $page = $this->request->getVar('page') ?? 1;  
+         $offset = ($page - 1) * $limit; 
+        // pr($data);    
+        $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 , $limit,$offset));
+        $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+        $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
+        $pages = ceil($totalRecords / $limit);
+        if ($final_submitted_applications == false) {
+            $final_submitted_applications = array();
+        }
+        return $this->render('responsive_variant.dashboard.index_alt_test', @compact('final_submitted_applications', 'totalRecords','pages','limit','page'));
     }
     
 }

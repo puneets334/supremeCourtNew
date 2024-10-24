@@ -450,7 +450,7 @@
                             <?php if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) { ?>
                                 <button type="submit" tabindex='15' class="quick-btn btn-success" value="">UPDATE
                                 </button>
-                                <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn gray-btn" type="button" id="nextButton">Next</a>
+                                <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn gray-btn" type="button" id="nextButton">NEXT</a>
                             <?php } else { ?>
                                 <button tabindex='14' type="submit" tabindex='16' class="quick-btn" id="pet_save" value="">SAVE
                                 </button>
