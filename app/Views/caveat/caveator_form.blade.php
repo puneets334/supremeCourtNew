@@ -5,14 +5,13 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
-	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css"> 
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 
 @stack('style')
 <style>
@@ -46,9 +45,9 @@ select,
 textarea {
     text-transform: uppercase;
 }
-.datepicker-dropdown {
+/* .datepicker-dropdown {
     margin-top: 260px; !important;background-color: #fff;
-}
+} */
 
 
 
@@ -542,42 +541,26 @@ textarea {
 </div>
 
 <div class="overlay"></div>
-@push('script')
-<!-- form--end  -->
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+ <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<!--<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+@push('script') 
 
 
-<!-- jQuery (Ensure this is included first) -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-
-<!-- Select2 CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-
-
-<!-- Bootstrap Datepicker CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
-<!-- Bootstrap Datepicker JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-<!-- Select2 JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.19.3/jquery.validate.min.js"></script>
 <script>
-   $(document).ready(function() {
-    var jq = jQuery.noConflict(true);
+   $(document).ready(function() { 
 
         $('#org_state').change(function () {     
             var CSRF_TOKEN = 'CSRF_TOKEN';
@@ -911,6 +894,44 @@ textarea {
                 });
             }
         });
+        function setSelectedDistrict(stateId, district_name) {
+        if (stateId && district_name) {
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: "POST",
+                data: {
+                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
+                    state_id: stateId
+                },
+                url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
+                success: function(resData) {
+                    if (resData) {
+                        var districtObj = JSON.parse(resData);
+                        var singleObj = districtObj.find(
+                            item => item['district_name'] === district_name
+                        );
+                        if (singleObj) {
+                            $('#party_district').val('');
+                            $('#party_district').val(singleObj.id).select2().trigger("change");
+                        } else {
+                            $('#party_district').val('');
+                        }
+                    } else {
+                        $('#party_district').val('');
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function() {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    }
         $('#add_caveator').on('submit', function () {
             // alert("TESTTSGDSGDSFGDSG");
             if ($('#add_caveator').valid()){
