@@ -4,16 +4,14 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet"> 
-
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
-	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css"> 
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 @stack('style')
 <style>
 .overlay{
@@ -39,15 +37,12 @@ select,
 textarea {
     text-transform: uppercase;
 }
-
+span.select2.select2-container.select2-container--default {
+    width: 100% !important;
+    height: 40px;
+}
 </style>
-<style>
-    .datepicker-dropdown {
-        margin-top: 260px !important; background-color: #fff;
-    }
-   
-</style>
-    <div class="center-content-inner comn-innercontent">
+ 
         <div class="tab-content">
             <div class="tab-pane Active" id="profile" role="tabpanel"
                 aria-labelledby="profile-tab">
@@ -102,7 +97,7 @@ textarea {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Caveatee Name <span style="color: red" class="astriks">*</span></label>
-                                <input  tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  value=" <?php echo isset($caveatee_details[0]['res_name'])?$caveatee_details[0]['res_name']:''; ?>">
+                                <input type="text" tabindex = "2" id="pet_complainant" name="pet_complainant" minlength="3" maxlength="250" class="form-control cus-form-ctrl sci_validation" placeholder="First Name Middle Name Last Name"  value="<?php  if(isset($caveatee_details)){ echo $caveatee_details[0]['res_name']; }?>" >
                                 <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                     <i class="fa fa-question-circle-o" ></i>
                                 </span>
@@ -474,20 +469,24 @@ textarea {
         </div>
     </div>
 
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+ <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<!--<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
+<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script> 
+
+@push('script') 
+
 <script>
     function get_caveator_as(value) {        
         var party_as = value;
@@ -563,10 +562,38 @@ textarea {
             age = new Date(today - dob).getFullYear() - 1970;
             $('#pet_age').val(age);
         });
+    //----------Get District List----------------------//
 
-    })
+    
+    var state_Arr = '<?php echo json_encode($stateArr)?>';
+    //----------Get District List----------------------//
+    $('#party_state').change(function () {
 
-    $('#party_pincode').blur(function(){
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        $('#party_district').val('');
+
+        var get_state_id = $(this).val();
+        $.ajax({
+            type: "POST",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: get_state_id},
+            url: "<?php echo base_url('newcase/Ajaxcalls/get_districts'); ?>",
+            success: function (data) {
+                $('#party_district').html(data);
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            },
+            error: function () {
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            }
+        });
+
+    });
+
+        $('#party_pincode').blur(function(){
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
         var pincode = $("#party_pincode").val();
@@ -635,6 +662,50 @@ textarea {
             });
         }
     });
+
+
+    function setSelectedDistrict(stateId,district_name){
+        if(stateId && district_name){
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: "POST",
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: stateId},
+                url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
+                success: function (resData)
+                {
+                    if(resData){
+                        var districtObj = JSON.parse(resData);
+                        var singleObj = districtObj.find(
+                            item => item['district_name'] === district_name
+                        );
+                        if(singleObj){
+                            $('#party_district').val('');
+                            $('#party_district').val(singleObj.id).select2().trigger("change");
+                        }
+                        else{
+                            $('#party_district').val('');
+                        }
+                    }
+                    else{
+                        $('#party_district').val('');
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function () {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    }
+
+    })
+
+    
 </script>
 
 
@@ -947,36 +1018,7 @@ textarea {
     });
 
     //----------------------end---------------------------------//
-    //----------Get District List----------------------//
 
-    
-   var state_Arr = '<?php echo json_encode($stateArr)?>';
-    //----------Get District List----------------------//
-    $('#party_state').change(function () {
-
-        var CSRF_TOKEN = 'CSRF_TOKEN';
-        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        $('#party_district').val('');
-
-        var get_state_id = $(this).val();
-        $.ajax({
-            type: "POST",
-            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: get_state_id},
-            url: "<?php echo base_url('newcase/Ajaxcalls/get_districts'); ?>",
-            success: function (data) {
-                $('#party_district').html(data);
-                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                });
-            },
-            error: function () {
-                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                });
-            }
-        });
-
-    });
    
 
     //----------Get Taluka and Town List----------------------//
@@ -1170,79 +1212,12 @@ textarea {
             document.getElementById('address_label_name').innerHTML = 'Address <span style="color: red">*</span> :';
         }
     }
-
-    // $(document).ready(function () {
-    //     $('#pet_dob').datepicker({
-    //         onSelect: function (value) {
-    //             var parts = value.split("/");
-    //             var day = parts[0] && parseInt(parts[0], 10);
-    //             var month = parts[1] && parseInt(parts[1], 10);
-    //             var year = parts[2] && parseInt(parts[2], 10);
-    //             var str = month + '/' + day + '/' + year;
-    //             var today = new Date(),
-    //                 dob = new Date(str),
-    //                 age = new Date(today - dob).getFullYear() - 1970;
-    //             $('#pet_age').val(age);
-    //         },
-    //         changeMonth: true,
-    //         changeYear: true,
-    //         yearRange: "-100:-1",
-    //         dateFormat: "dd/mm/yy",
-    //         defaultDate: '-40y'
-    //     });
-    // });
-    
-
-  
-
-
-
-
-
-
-
-    function setSelectedDistrict(stateId,district_name){
-        if(stateId && district_name){
-            var CSRF_TOKEN = 'CSRF_TOKEN';
-            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-            $.ajax({
-                type: "POST",
-                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: stateId},
-                url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
-                success: function (resData)
-                {
-                    if(resData){
-                        var districtObj = JSON.parse(resData);
-                        var singleObj = districtObj.find(
-                            item => item['district_name'] === district_name
-                        );
-                        if(singleObj){
-                            $('#party_district').val('');
-                            $('#party_district').val(singleObj.id).select2().trigger("change");
-                        }
-                        else{
-                            $('#party_district').val('');
-                        }
-                    }
-                    else{
-                        $('#party_district').val('');
-                    }
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                },
-                error: function () {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                }
-            });
-        }
-    }
-
+ 
+    <?php  pr("Step ffffff"); ?>   
 
 
 </script>
+@endpush
 
 
 <?php if ((isset($efiling_civil_data[0]['resorgid']) && !empty($efiling_civil_data[0]['resorgid']) && $efiling_civil_data[0]['resorgid'] != '0') || (isset($efiling_civil_data[0]['res_not_in_list_org']) && !empty($efiling_civil_data[0]['res_not_in_list_org']) && $efiling_civil_data[0]['res_not_in_list_org'] == 't')) { ?>
