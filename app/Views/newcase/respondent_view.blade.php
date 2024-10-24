@@ -362,13 +362,13 @@
                             </div>
                         </div>
                         <div class="save-btns text-center">
-                            <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn gray-btn" type="button" tabindex='27'>Previous</a>
+                            <a href="<?= base_url('newcase/petitioner') ?>" class="quick-btn gray-btn" type="button" tabindex='27'>PREVIOUS</a>
                             <?php if (!empty(getSessionData('case_table_ids')) && !empty(getSessionData('case_table_ids')->m_respondent_id)) { ?>
                                 <input type="submit" class="btn btn-success" id="pet_save" tabindex='25' value="UPDATE">
                                 <?php if (isset($IsDeadMinor) && !empty($IsDeadMinor) && $IsDeadMinor == 'Y') { ?>
-                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="btn btn-primary" type="button">Next</a>
+                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="btn btn-primary" type="button">NEXT</a>
                                 <?php } else { ?>
-                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="btn quick-btn" type="button">Next</a>
+                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="btn quick-btn" type="button">NEXT</a>
                                 <?php } ?>
                             <?php } else { ?>
                                 <input type="submit" class="quick-btn gray-btn" id="pet_save" value="SAVE" tabindex='24'>

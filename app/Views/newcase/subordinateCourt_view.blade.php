@@ -846,7 +846,7 @@
                         <a tabindex='30'
                             href="<?= base_url('newcase/respondent') ?>"
                             class="btn quick-btn gray-btn"
-                            type="button">Previous</a>
+                            type="button">PREVIOUS</a>
                         <input tabindex='28'
                             type="submit"
                             class="btn quick-btn"
@@ -854,7 +854,7 @@
                             value="SAVE">
                         <?php
                         if (isset($subordinate_court_details) && !empty($subordinate_court_details)) {
-                            echo ' <a  tabindex = "29" href="' . base_url('uploadDocuments') . '" class="btn quick-btn btnNext" type="button">Next</a>';
+                            echo ' <a  tabindex = "29" href="' . base_url('uploadDocuments') . '" class="btn quick-btn btnNext" type="button">NEXT</a>';
                         }
                         ?>
                     </div>

@@ -119,7 +119,7 @@
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>
     <!-- scutum JS -->
     <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor.min.js')}}"></script>
-    <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor/loadjs.js')}}"></script>
+    <!-- <script type="text/javascript" src="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/js/vendor/loadjs.js')}}"></script> -->
     <script type="text/javascript" src="{{base_url('/assets/responsive_variant/templates/uikit_scutum_2/assets/js/scutum_common.js')}}"></script>
     @stack('script')
     <script>
@@ -237,7 +237,7 @@
                 $('#loader-wrapper').fadeOut('slow', function() {
                     $('#content').fadeIn('slow');
                 });
-            }, 3000);
+            }, 1000);
 
             $(window).on('load', function() {
                 clearTimeout(loaderTimeout);

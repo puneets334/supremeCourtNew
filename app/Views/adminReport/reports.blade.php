@@ -114,6 +114,7 @@
             }
         });
         $(document).on('click', '#getResult', function() {
+            $('#loader-wrapper').show(); 
             var from_date = $("#from_date").val();
             var to_date = $("#to_date").val();
             var validationError = true;
@@ -137,7 +138,7 @@
                 var validationError = false;
                 return false;
             }
-            if (validationError) { 
+            if (validationError) {
                 var CSRF_TOKEN = 'CSRF_TOKEN';
                 var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
                 var postData = {
@@ -156,8 +157,8 @@
                     beforeSend: function() {
                         $('#loader-wrapper').show();
                     },
-                    success: function(res) {
-                        $('#loader-wrapper').hide(); 
+                    success: function(res) { 
+                        $('#loader-wrapper').show();
                         if (typeof res == 'string') {
                             res = JSON.parse(res);
                         }
@@ -187,8 +188,9 @@
                             $("#tableData").html(res.table);
                             $("#printButton").show();
                             setTimeout(function() {
-                            $('#result').fadeOut('slow');
-                        }, 5000);
+                                $('#loader-wrapper').hide(); 
+                                $('#result').fadeOut('slow');
+                            }, 1000);
                             return false;
                         }
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {

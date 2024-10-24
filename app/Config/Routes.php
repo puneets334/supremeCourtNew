@@ -42,6 +42,7 @@ $routes->match(['GET', 'POST'], 'newcase/view', 'NewCase\View::index');
 $routes->match(['GET', 'POST'], 'newcase/view/(:any)', 'NewCase\View::index/$1');
 $routes->match(['GET', 'POST'], 'documentIndex', 'DocumentIndex\DefaultController::index');
 $routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/load_document_index', 'DocumentIndex\Ajaxcalls::load_document_index');
+$routes->match(['GET', 'POST'], 'newcase/Ajaxcalls/load_document_index', 'DocumentIndex\Ajaxcalls::load_document_index');
 $routes->match(['GET', 'POST'], 'uploadDocuments/DefaultController/upload_pdf', 'UploadDocuments\DefaultController::upload_pdf');
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_hc_case_type_list', 'NewCase\AjaxcallsSubordinateCourt::get_hc_case_type_list');
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_sci_case_type', 'NewCase\AjaxcallsSubordinateCourt::get_sci_case_type');

@@ -4428,3 +4428,18 @@ function bharatKoshRequest($reqeust)
     $signedXML = $doc->saveXML();
     return $signedXML_encode64 = base64_encode($signedXML);
 }
+
+function encrypt_doc_id($doc_id) {
+
+    $doc_parameter = $doc_id . '|1';
+
+    $aes = new Crypt_AES();
+    $secret = base64_decode(env('SBI_PAYMENT_DOUBLE_VARIFICATION_SECRET_KEY'));
+    $aes->setKey($secret);
+    $encrypted_doc_id = base64_encode($aes->encrypt($doc_parameter));
+    $encrypted_doc_id = str_replace('/', '-', $encrypted_doc_id);
+    $encrypted_doc_id = str_replace('=', ':', $encrypted_doc_id);
+    $encrypted_doc_id = str_replace('+', '.', $encrypted_doc_id);
+
+    return $encrypted_doc_id;
+}

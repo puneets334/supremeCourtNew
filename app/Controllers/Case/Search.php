@@ -84,23 +84,25 @@ class Search extends BaseController
 
     public function index($efiling_type = null)
     {
-        
-        $efiling_type =getSessionData('efiling_type');
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $efiling_type = getSessionData('efiling_type');
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('login'));
         }
         // $_SESSION['efiling_type'] = $efiling_type = url_decryption($efiling_type);
-        if (!($efiling_type == 'misc' || $efiling_type == 'ia' || $efiling_type == 'mentioning' || $efiling_type == 'citation' || $efiling_type == 'certificate' || $efiling_type == 'adjournment_letter' || $efiling_type == 'refile_old_efiling_cases')) {
+        // var_dump($efiling_type); die();
+        if ($efiling_type != 'misc' && $efiling_type != "ia" && $efiling_type != 'mentioning' && $efiling_type != 'citation' && $efiling_type != 'certificate' && $efiling_type != 'adjournment_letter' && $efiling_type != 'refile_old_efiling_cases') {
+            // pr('Hi');
             unset($_SESSION['efiling_type']);
             return response()->redirect(base_url('dashboard'));
-        } 
-        $data['estab_details'] =  $this->Common_model->get_establishment_details(); //for responsive__variant
-        $data['sc_case_type'] = $this->CaseSearchModel->get_sci_case_type();
-        if ($efiling_type == 'refile_old_efiling_cases') {
-            $this->render('casesearchForOldEfilingCases.case_search_view', $data, TRUE);
-        } else {
-            $this->render('casesearch.case_search_view', $data, TRUE);
+        } else{
+            $data['estab_details'] =  $this->Common_model->get_establishment_details(); //for responsive__variant
+            $data['sc_case_type'] = $this->CaseSearchModel->get_sci_case_type();
+            if ($efiling_type == 'refile_old_efiling_cases') {
+                $this->render('casesearchForOldEfilingCases.case_search_view', $data, TRUE);
+            } else {
+                $this->render('casesearch.case_search_view', $data, TRUE);
+            }
         }
     }
 
@@ -627,7 +629,8 @@ class Search extends BaseController
                         $data['case_last_refiled_details'] = $this->efiling_webservices->checkInTheOldEfilingCasesList($diary_no, $diary_year);
                         // pr($data['case_last_refiled_details']);
                         if (!empty($data['case_last_refiled_details'])) {
-                            $last_refiled_on = ($data['case_last_refiled_details']->case_refiling_status[0]->created_at);
+                            // pr($data['case_last_refiled_details']->case_refiling_status);
+                            $last_refiled_on = !empty($data['case_last_refiled_details']->case_refiling_status) ? $data['case_last_refiled_details']->case_refiling_status[0]->created_at : NULL;
                             $last_refiled_on = date('d-m-Y', strtotime($last_refiled_on));
                             $curDate = date('d-m-Y');
 

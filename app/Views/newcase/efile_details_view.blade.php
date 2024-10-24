@@ -1,7 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-@extends('layout.app')
-@section('content')
 <head>
     <meta http-equiv="Content-Type"
         content="text/html; charset=utf-8">
@@ -123,7 +121,8 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         }
                                                     }
                                                     ?>
-                                                    <a title="Click Here To View All Information"
+                                                    <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
+                                                    <!-- <a title="Click Here To View All Information"
                                                         href="javascript:void(0);"
                                                         class="btn btn-outline btn-primary btn-sm openall"
                                                         style="float: right">
@@ -134,7 +133,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         class="btn btn-outline btn-info btn-sm closeall"
                                                         style="float: right; display:none;">
                                                         <span class="fa fa-eye-slash"></span> Close All 
-                                                    </a>
+                                                    </a> -->
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="accordion"
@@ -1015,7 +1014,6 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
         </div>
     </div>
 
-    @endsection
 
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
     <script>
@@ -1569,7 +1567,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
         100% { transform: rotate(360deg); }
     }
 </style> -->
-    <script>
+    <!-- <script>
         $(document).ready(function() {
             $('.closeall').click(function() {
                 $('.collapse.in').collapse('hide');
@@ -1582,6 +1580,33 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                 $('.openall').hide();
             });
         });
+    </script> -->
+    <script>
+        function toggleAllAccordions() {
+            var button = document.getElementById("collapseAll");
+            var accordionHeaders = document.querySelectorAll(".accordion-header button");
+            var accordionCollapses = document.querySelectorAll(".accordion-collapse");
+            var isCollapsed = Array.from(accordionHeaders).some(function (header) {
+                return !header.classList.contains("collapsed");
+            });
+            if (isCollapsed) {
+                button.innerHTML = "Expand all";
+                accordionHeaders.forEach(function (header) {
+                    header.classList.add("collapsed");
+                });
+                accordionCollapses.forEach(function (collapse) {
+                    collapse.classList.remove("show");
+                });
+            } else {
+                button.innerHTML = "Collapse all";
+                accordionHeaders.forEach(function (header) {
+                    header.classList.remove("collapsed");
+                });
+                accordionCollapses.forEach(function (collapse) {
+                    collapse.classList.add("show");
+                });
+            }
+        }
     </script>
     <script type="text/javascript">
         $("#cde").click(function() {
