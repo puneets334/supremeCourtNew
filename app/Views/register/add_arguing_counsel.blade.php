@@ -127,7 +127,7 @@ if(!empty(getSessionData('login'))){
                                                                 foreach($aorList as $k=>$v) {
                                                                         $name = '';
                                                                         $name = $v['first_name'];
-                                                                    echo '<option value="'.$v['id'].'">'.$name.'</option>';
+                                                                    echo '<option value="'.$v['id'].'">'.$name.' - ( <b>'.$v['userid'].'</b> )</option>';
                                                                 }
                                                             }
                                                             ?>
@@ -476,7 +476,7 @@ if(!empty(getSessionData('login'))){
                                                                     else  if(isset($v['first_name']) && !empty($v['first_name'])){
                                                                         $name .= $v['first_name'];
                                                                     }
-                                                                    echo '<option value="'.$v['id'].'">'.$name.'</option>';
+                                                                    echo '<option value="'.$v['id'].'">'.$name.' - ( <b>'.$v['userid'].'</b> )</option>';
                                                                 }
                                                             }
                                                             ?>

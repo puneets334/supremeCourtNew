@@ -1,4 +1,3 @@
-{{-- @extends('responsive_variant.layouts.master.uikit_scutum_2.index') --}}
 @extends('layout.advocateApp')
 @section('title', 'Caveat Request in a Case')
 @section('heading', 'Caveat Request in a Case')
