@@ -45,11 +45,9 @@ select,
 textarea {
     text-transform: uppercase;
 }
-
 /* .datepicker-dropdown {
     margin-top: 260px; !important;background-color: #fff;
 } */
-
 
 
 
@@ -543,7 +541,6 @@ textarea {
 </div>
 
 <div class="overlay"></div>
-
 <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
@@ -553,16 +550,13 @@ textarea {
 <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
 <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
-
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
  <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <!--<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-
 @push('script') 
-
 
 
 <script>
@@ -1099,119 +1093,14 @@ textarea {
             $('#otherOrgPost').hide();
         }
     });   
+
+    <?php  pr("Step ffffff"); ?>   
     
-    // function setSelectedDistrict(stateId, district_name) {
-    //     if (stateId && district_name) {
-    //         var CSRF_TOKEN = 'CSRF_TOKEN';
-    //         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-    //         $.ajax({
-    //             type: "POST",
-    //             data: { CSRF_TOKEN: CSRF_TOKEN_VALUE, state_id: stateId },
-    //             url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
-    //             success: function (resData) {
-    //                 try {
-    //                     var districtObj = JSON.parse(resData);
+   
 
-    //                     // Check if districtObj is an array
-    //                     if (Array.isArray(districtObj)) {
-    //                         console.log(districtObj);
-    //                         // alert(districtObj);
-    //                         var singleObj = districtObj.find(
-    //                             item => item['district_name'].replace(/[\s*]/g, '').toLowerCase() === district_name.replace(/[\s*]/g, '').toLowerCase()
-    //                         );
-
-    //                         if (singleObj) {
-    //                             $('#party_district').val('');
-    //                             $('#party_district').val(singleObj.id).select2().trigger("change");
-    //                         } else {
-    //                             $('#party_district').val('');
-    //                             console.error('District not found:', district_name);
-    //                         }
-    //                     } else {
-    //                         console.error('Invalid response data:', resData);
-    //                     }
-    //                 } catch (error) {
-    //                     console.error('Error parsing JSON:', error);
-    //                 } finally {
-    //                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-    //                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-    //                     });
-    //                 }
-    //             },
-    //             error: function () {
-    //                 $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-    //                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-    //                 });
-    //             }
-    //         });
-    //     }
-    // }
-
-    $('#party_state').change(function() {
-        var CSRF_TOKEN = 'CSRF_TOKEN';
-        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        $('#party_district').val('');
-        var get_state_id = $(this).val();
-        $.ajax({
-            type: "POST",
-            data: {
-                CSRF_TOKEN: CSRF_TOKEN_VALUE,
-                state_id: get_state_id
-            },
-            url: "<?php echo base_url('newcase/Ajaxcalls/get_districts'); ?>",
-            success: function(data) {
-                $('.party_district').html(data);
-                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                });
-            },
-            error: function() {
-                $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                });
-            }
-        });
-    });
-
-    function setSelectedDistrict(stateId, district_name) {
-        if (stateId && district_name) {
-            var CSRF_TOKEN = 'CSRF_TOKEN';
-            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-            $.ajax({
-                type: "POST",
-                data: {
-                    CSRF_TOKEN: CSRF_TOKEN_VALUE,
-                    state_id: stateId
-                },
-                url: "<?php echo base_url('newcase/Ajaxcalls/getSelectedDistricts'); ?>",
-                success: function(resData) {
-                    if (resData) {
-                        var districtObj = JSON.parse(resData);
-                        var singleObj = districtObj.find(
-                            item => item['district_name'] === district_name
-                        );
-                        if (singleObj) {
-                            $('#party_district').val('');
-                            $('#party_district').val(singleObj.id).select2().trigger("change");
-                        } else {
-                            $('#party_district').val('');
-                        }
-                    } else {
-                        $('#party_district').val('');
-                    }
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                },
-                error: function() {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                }
-            });
-        }
-    }
+ 
     
 
 </script>
+@endpush
