@@ -196,9 +196,9 @@
                                                         ?>
                                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                                             <div class="form-response" id="msg"></div>
-                                                            <div id="modal_loader">
+                                                            <!-- <div id="modal_loader">
                                                                 <img id="loader_img" style="margin-top: 30px;margin-left: 30px;display:block;" src="<?php echo base_url('assets/images/loading-data.gif'); ?>" />
-                                                            </div>
+                                                            </div> -->
                                                             <!-- <h5><strong>Payment History</strong></h5> -->
                                                             <div class="title-sec">
                                                                 <h5 class="unerline-title">Payment History</h5>

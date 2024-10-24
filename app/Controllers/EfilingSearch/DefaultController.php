@@ -12,7 +12,7 @@ use App\Models\MiscellaneousDocs\MiscellaneousDocsModel as MDMiscellaneousDocsMo
 use App\Models\MiscellaneousDocs\ViewModel as MDViewModel;
 
 use App\Models\Caveat\ViewModel as CaveatViewModel;
-
+use App\Models\Citation\CitationModel;
 use App\Models\NewCase\ActSectionsModel as NewCaseActSectionsModel;
 use App\Models\NewCase\DropdownListModel as NewCaseDropdownListModel;
 use App\Models\NewCase\ViewModel as NewCaseViewModel;
@@ -20,8 +20,7 @@ use App\Models\NewCase\ViewModel as NewCaseViewModel;
 use App\Models\IA\GetDetailsModel as IAGetDetailsModel;
 use App\Models\IA\ViewModel as IAViewModel;
 use App\Models\Common\CommonModel;
-
-
+use App\Models\GetCISStatus\GetCISStatusModel;
 
 class DefaultController extends BaseController
 {
@@ -43,6 +42,10 @@ class DefaultController extends BaseController
     protected $IAGetDetailsModel;
     protected $IAViewModel;
     protected $CommonModel;
+    protected $Get_CIS_Status_model;
+    protected $uri;
+    protected $efiling_webservices;
+    protected $Citation_model;
 
 
     public function __construct()
@@ -64,6 +67,10 @@ class DefaultController extends BaseController
         $this->IAGetDetailsModel = new IAGetDetailsModel();
         $this->IAViewModel = new IAViewModel();
         $this->CommonModel = new CommonModel();
+        $this->Get_CIS_Status_model = new GetCISStatusModel();
+        $this->efiling_webservices = new Efiling_webservices();
+        $this->Citation_model = new CitationModel();
+        $this->uri = service('uri');;
         // $this->load->library('slice');
         // $this->load->library('encryption');
         // $this->load->model('report/ReportModel');
@@ -127,7 +134,7 @@ class DefaultController extends BaseController
     public function efiling_search()
     {
         // pr('test');
-        $this->slice->view('responsive_variant.case.efiling_search.search');
+        return $this->render('responsive_variant.case.efiling_search.search');
     }
 
     function search()
@@ -222,7 +229,7 @@ class DefaultController extends BaseController
     function view($idss = null)
     {
        // echo $idss; exit();
-        $this->slice->view('responsive_variant.case.efiling_search.view', @compact('idss'));
+        return  $this->render('responsive_variant.case.efiling_search.view', @compact('idss'));
     }
 
     function get_view_data($id = null)
@@ -834,7 +841,7 @@ class DefaultController extends BaseController
         $efil_docs = $temp_efil_docs = $this->Get_CIS_Status_model->get_efiled_docs_list($registration_id, $ia_only);
         $i = 0;
         foreach ($temp_efil_docs as $e_doc) {
-            $temp_efil_docs[$i]['doc_id'] = $this->encrypt_doc_id($e_doc['doc_id']);
+            $temp_efil_docs[$i]['doc_id'] = encrypt_doc_id($e_doc['doc_id']);
             $i++;
         }
         $update_documents = array();

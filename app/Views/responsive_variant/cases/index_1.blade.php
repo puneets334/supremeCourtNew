@@ -253,7 +253,7 @@ a.quick-btn.pull-right:hover {
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <b class="scif" ng-if="case.registrationNumber==''" >Unr</b><b class="scif" ng-if="case.registrationNumber!=''" >Reg</b>
+                                                        <b class="scif" ng-if="case.registrationNumber==''" >Unr</b><b class="scif" ng-if="case.registrationNumber!=''" ></b>
                                                     </td>
                                                 </tr>
                                             <?php } else { ?>
@@ -265,7 +265,7 @@ a.quick-btn.pull-right:hover {
                                                             <br>
                                                             <span class="uk-text-emphasis" ng-bind="case.registrationnumber"></span>
                                                         </a>
-                                                        <b class="scif" ng-if="case.advocatetype=='P'" >AfP</b><b class="scif" ng-if="case.advocatetype=='R' || case.advocatetype=='I'" >AfR</b>
+                                                        <b class="scif" ng-if="case.advocatetype=='P'" >AfP</b><b class="scif" ng-if="case.advocatetype=='R' || case.advocatetype=='I'" ></b>
                                                     </td>
                                                     <td data-key="Cause Title">
                                                         <div>
@@ -310,7 +310,7 @@ a.quick-btn.pull-right:hover {
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                        <b class="scif" ng-if="case.registrationnumber==''" >Unr</b><b class="scif" ng-if="case.registrationnumber!=''" >Reg</b>
+                                                        <b class="scif" ng-if="case.registrationnumber==''" >Unr</b><b class="scif" ng-if="case.registrationnumber!=''" ></b>
                                                     </td>
                                                 </tr>
                                             <?php } ?>

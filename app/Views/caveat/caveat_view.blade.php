@@ -1,5 +1,3 @@
-@extends('layout.app')
-@section('content')
 <div class="mainPanel ">
     <!-- <div class="panelInner">
         <div class="middleContent"> -->
@@ -61,8 +59,6 @@
         <!-- </div>
     </div>
 </div> -->
-@endsection
-@push('script')
 <script>
     $('#pet_dob').datepicker({
         onSelect: function (value) {
@@ -246,4 +242,3 @@
 
 </script>
 
-@endpush
