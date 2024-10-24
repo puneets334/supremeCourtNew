@@ -1,17 +1,13 @@
 <div class="panel panel-default">
     <div class="panel-body">
-
         <?php
-
         use App\Models\Common\CommonModel;
-
         $segment = service('uri');
         ?>
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="table-sec">
                 <div class="table-responsive">
                     <table id="datatable-responsive" class="table table-striped custom-table datatableresponsive">
-                        <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                         <thead>
                             <tr class="success">
                                 <th style="width: 10% !important;">#</th>
@@ -42,13 +38,16 @@
                                         }
                                     }
                                 }
-                            ?>
+                                ?>
                                 <tr>
                                     <td data-key="#"><?= $sr++; ?></td>
-                                    <td data-key="Uploaded Documents(s)"><a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/' . url_encryption($doc['doc_id'])); ?>">
+                                    <td data-key="Uploaded Documents(s)">
+                                        <a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/' . url_encryption($doc['doc_id'])); ?>">
                                             <?php echo_data($doc['doc_title']); ?>
-                                            <img src="<?= base_url('assets/images/pdf.png') ?>"> <br />
-                                            <?php echo_data($doc['doc_hashed_value']); ?></a>
+                                            <img src="<?= base_url('assets/images/pdf.png') ?>">
+                                            <br />
+                                            <?php echo_data($doc['doc_hashed_value']); ?>
+                                        </a>
                                     </td>
                                     <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($doc['uploaded_on'])) ?></td>
                                     <td data-key="Pages"><?= htmlentities($doc['page_no'], ENT_QUOTES); ?></td>
@@ -56,20 +55,18 @@
                                         <td data-key="Delete">
                                             <?php
                                             if (isset($result) && strtotime($doc['uploaded_on']) > strtotime($result[0]->max_date) || in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage))) {
-                                            ?>
+                                                ?>
                                                 <a href="javascript:void(0)" class="btn btn-xs btn-danger" onclick="DocDeleteAction('<?php echo htmlentities(url_encryption(trim($doc['doc_id'] . '$$' . getSessionData('efiling_details')['registration_id']), ENT_QUOTES)); ?>')"><i class="fa fa-trash"></i> </a>
-                                                <?php } else { ?>-<?php } ?>
+                                            <?php } else { ?>-<?php } ?>
                                         </td>
                                     <?php } ?>
                                 </tr>
                             <?php } ?>
-
                         </tbody>
                     </table>
                 </div>
             </div>
             <input type="hidden" name="caveateDocNum" id="caveateDocNum" data-caveateDocNum="<?php echo $caveateDocNum; ?>" />
-
             <!-- start : To show previously submitted and deleted petition while re-filing -->
             <?php if ($segment->getSegment(2) != 'caseDetails' && !empty($uploaded_deleted_docs_while_refiling) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)) { ?>
                 <div class="table-sec">
@@ -100,13 +97,16 @@
                                             }
                                         }
                                     }
-                                ?>
+                                    ?>
                                     <tr>
                                         <td data-key="#"><?= $sr++; ?></td>
-                                        <td data-key="Uploaded Documents (Files deleted by AOR while re-filing)"><a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/showDeletedFiles/' . url_encryption($deleted_doc['doc_id'])); ?>">
+                                        <td data-key="Uploaded Documents (Files deleted by AOR while re-filing)">
+                                            <a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/showDeletedFiles/' . url_encryption($deleted_doc['doc_id'])); ?>">
                                                 <?php echo_data($deleted_doc['doc_title']); ?>
-                                                <img src="<?= base_url('assets/images/pdf.png') ?>"> <br />
-                                                <?php echo_data($deleted_doc['doc_hashed_value']); ?></a>
+                                                <img src="<?= base_url('assets/images/pdf.png') ?>">
+                                                <br />
+                                                <?php echo_data($deleted_doc['doc_hashed_value']); ?>
+                                            </a>
                                         </td>
                                         <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($deleted_doc['uploaded_on'])) ?></td>
                                         <td data-key="Deleted On"><?= date('d-m-Y H:i:s', strtotime($deleted_doc['deleted_on'])) ?></td>
@@ -125,8 +125,8 @@
 <script>
     $(document).ready(function() {
         $('#datatable-responsive').DataTable();
+        $('#datatable-responsive1').DataTable();
     });
-    $('#datatable-responsive1').DataTable();
     function DocDeleteAction(value) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
@@ -162,5 +162,4 @@
             });
         }
     }
-    
 </script>
