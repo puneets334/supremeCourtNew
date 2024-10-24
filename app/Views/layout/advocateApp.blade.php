@@ -18,11 +18,7 @@
     <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
     <!-- https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
-    <!-- <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> --> 
     <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
     @stack('style')
     <style>
