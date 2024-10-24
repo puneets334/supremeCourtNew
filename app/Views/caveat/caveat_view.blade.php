@@ -8,11 +8,8 @@
                     <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
                         <div class="center-content-inner comn-innercontent">
                             <?php
-                            $segment = service('uri');
-							//echo $segment->getSegment(1);
-                         //pr($segment);
-                         $lastSegment = $segment->getSegment($segment->getTotalSegments());
-                            //pr($lastSegment);
+                            $segment = service('uri'); 
+                         $lastSegment = $segment->getSegment($segment->getTotalSegments()); 
 						   ?>
                             @if (
                                 !empty(getSessionData('efiling_details')['ref_m_efiled_type_id']) &&
