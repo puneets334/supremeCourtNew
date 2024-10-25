@@ -1828,6 +1828,18 @@ of <?php echo isset($pages) ? $pages : ''; ?>
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
         var message = document.getElementById("caseinfosms").innerHTML;
         var mobile_no = $("#recipient_mobile_no").val();
+        // Regular expression to allow only numbers and limit to 10 digits
+        const regex = /^[0-9]{0,10}$/;
+        // Check if the input matches the regex
+        if (!regex.test(mobile_no)) {
+            // If the input doesn't match, prevent the change
+            alert('Mobile Number should be numeric and of maximum 10 digits only.');
+            event.preventDefault();
+            return false;
+        }
+        // Attach the validation function to the input field
+        const inputField = document.getElementById('recipient_mobile_no');
+        // inputField.addEventListener('input', validateInput);
         $.ajax({
             type: "POST",
             data: {

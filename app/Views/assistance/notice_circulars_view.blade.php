@@ -1,11 +1,11 @@
-<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 @if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @extends('layout.app')
 @else
     @extends('layout.advocateApp')
 @endif
 @section('content')
+    <link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
+    <link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -201,9 +201,10 @@
             $('.news_datepicker').datepicker({
                 changeMonth: true,
                 changeYear: true,
-                dateFormat: "dd-mm-yy",
-                minDate: new Date,
-                yearRange: '2000:2099'
+                dateFormat: "dd-mm-yyyy",
+                startDate: new Date(),
+                // startDate: today,
+                // yearRange: '2000:2099'
             });
             $.validator.addMethod('onecheck', function (value, ele) {
                 return $("input:checked").length >= 1;

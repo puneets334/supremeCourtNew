@@ -89,7 +89,7 @@
                                     $status_date = strtotime(ENABLE_GET_PAYMENT_STATUS, strtotime($resData['order_date']));
                                     if ($current_date > $status_date) {
                                         //echo '<a class="efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '" href="javascript:void(0)">Pending</a>';
-                                        echo '<a class="check_stock_holding_payment_status efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '" href="javascript:void(0)">Pending  (Update Status)</a>';
+                                        echo '<a class="check_stock_holding_payment_status efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '">Pending  (Update Status)</a>';
                                     } else {
 
                                         $diff = date_diff(date_create(date('Y-m-d H:i:s', $status_date)), date_create(date('Y-m-d H:i:s', $current_date)));

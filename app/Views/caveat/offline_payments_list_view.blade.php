@@ -46,7 +46,7 @@
                             $paymentPdf = '<a href="'.base_url('shcilPayment/ViewPaymentChallan/' . url_encryption(htmlentities($resData['shcilpmtref'].'$$'.$resData['received_amt'], ENT_QUOTES))).'" target="_blank">Success  <i class="fa fa-file-pdf-o text-danger"></i> </a>';
                         }
                         else{
-                            $paymentPdf  = ' Pending  ( <a class="pendingPaymentUpdate efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '" href="javascript:void(0)">Update Status </a> )   ';
+                            $paymentPdf  = ' Pending  ( <a class="pendingPaymentUpdate efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '">Update Status </a> )   ';
                         }
                         ?>
                         <tr>

@@ -7,6 +7,7 @@
     .no-paginations div#datatable-responsive_length {
         display: none;
     }
+    .dataTables_filter { margin: -45px 115px; }
 </style>
 <!-- /page content -->
 <div class="container-fluid">

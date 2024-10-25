@@ -1,32 +1,18 @@
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-<!-- <link rel="shortcut icon"
-        href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
-        rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
-        rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css"
-        rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css"
-        rel="stylesheet" />
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css"
-        rel="stylesheet">
-    <link rel="stylesheet"
-        type="text/css"
-        href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css"
-        rel="stylesheet">
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet"
-        href="<?= base_url() ?>assets/css/jquery-ui.css">
-    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
-        rel="stylesheet">
-<style>
-</style>
-@stack('style')
+<!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css"> 
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
+<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+    @stack('style')
 <style>
 .overlay{
     display: none;
@@ -47,12 +33,7 @@ body.loading .overlay{
     display: block;
 }
 </style>
-<style>
- .datepicker-dropdown {
-    margin-top: 365px !important;
-    background-color: #fff;
-}
-</style>
+ 
 
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -84,7 +65,7 @@ body.loading .overlay{
                                     //echo '<pre>'; print_r($caseData['court_type']); exit;
                                     ?>
                                 <div class="form-check form-check-inline m-0">
-                                    <input class="form-check-input cus-form-check" type="radio" id="radio_selected_court2" name="radio_selected_court" onchange="get_court_as(this.value)" value="1" maxlength="2" <?php echo $hcchecked; ?>>
+                                    <input checked class="form-check-input cus-form-check" type="radio" id="radio_selected_court2" name="radio_selected_court" onchange="get_court_as(this.value)" value="1" maxlength="2" <?php echo $hcchecked; ?>>
                                     <label class="form-check-label" for="inlineRadio1">High Court</span></label>
                                 </div>
                                 <div class="form-check form-check-inline m-0">
@@ -620,42 +601,37 @@ body.loading .overlay{
     </div>
                             <!-- form--end  -->
                        
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
     <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+    <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script src="<?= base_url() ?>assets/js/sha256.js"></script>
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-    <script type="text/javascript"
-        src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
+    <script src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+        @push('script') 
 <script>
 
  $(document).ready(function() {
         var today = new Date();
-        $('#order_date').datepicker({
+        $('#order_date').datepicker({ 
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
         changeMonth: true,
         changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y',
-         endDate: today  
-        });
+        endDate: today,
+        autoclose: true
+    });
+
     });  
-
-
-
-
-
-
-
-
+ 
     $(document).ready(function () {
         get_fir_state_list();
         toggle_entry_div();
@@ -1459,4 +1435,10 @@ body.loading .overlay{
             $("#firDiv").hide();
         }
     });
+
+
 </script>
+<script>
+<?php  pr("Step ffffff"); ?>   
+</script>
+@endpush
