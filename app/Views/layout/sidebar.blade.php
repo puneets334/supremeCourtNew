@@ -17,6 +17,7 @@ $segment = service('uri');
                 <a href="" class="main-menu-close"> <span class="mdi mdi-close-circle-outline"></span></a>
             </div>
             <?php
+            date_default_timezone_set('Asia/Kolkata');
             $profile_model = new \App\Models\Profile\ProfileModel();
             $profile = !empty(getSessionData('login')) ? $profile_model->getProfileDetail(getSessionData('login')['userid']) : '';
             $get_valu = help_id_url(uri_string());
