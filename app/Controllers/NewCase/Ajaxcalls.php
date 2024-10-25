@@ -109,7 +109,7 @@ class Ajaxcalls extends BaseController {
         $dept_list = $this->Dropdown_list_model->get_departments_list($party_is);
         $stateCentralDept = $this->Dropdown_list_model->getStateCentralDept();
         if ($party_is != 'D3') {
-            $dropDownOptionsState = '<option>Select Orgnisation State</option>';
+            $dropDownOptionsState = '<option  value="">Select Orgnisation State</option>';
             $dropDownOptionsState .= '<option value="' . url_encryption(0) . '">NOT IN LIST</option>';
             foreach ($stateCentralDept as $v) {
                 $selState = ($selected_org_st_id == url_encryption($v->deptcode)) ? "selected=selected" : '';
@@ -118,7 +118,7 @@ class Ajaxcalls extends BaseController {
         } else {
             $dropDownOptionsState = '';
         }
-        $dropDownOptionsDept = '<option>Select Department</option>';
+        $dropDownOptionsDept = '<option value="">Select Department</option>';
         $dropDownOptionsDept .= '<option value="'.url_encryption(0).'">NOT IN LIST</option>';
         foreach ($dept_list as $dept) {
             $sel = ($selected_dept_id == url_encryption($dept->deptcode)) ? "selected=selected" : '';
@@ -130,7 +130,7 @@ class Ajaxcalls extends BaseController {
     public function get_org_posts() {
         $post_list = $this->Dropdown_list_model->get_posts_list();
         $selected_post_id = $_POST['selected_post_id'];
-        $dropDownOptions = '<option>Select Post</option>';
+        $dropDownOptions = '<option value="">Select Post</option>';
         $dropDownOptions .= '<option value="' . url_encryption(0) . '">NOT IN LIST</option>';
         foreach ($post_list as $post) {
             $sel = ($selected_post_id == url_encryption($post->authcode)) ? "selected=selected" : '';
