@@ -225,6 +225,11 @@ td {
 .no-paginations div#datatable-responsive_length {
         display: none;
     }
+
+   
+.pagination-area-new { 
+    position: relative;
+}
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -937,7 +942,7 @@ td {
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec">
-                                                    <div class="table-responsive  no-paginations">
+                                                    <div class="table-responsive  no-paginations" style="height: 800px; overflow-x: overlay;">
                                                         <table id="datatable-responsive"
                                                             class="table table-striped custom-table">
                                                             <thead>
@@ -1555,6 +1560,11 @@ td {
                                                     <div class="pagination-area-new">
 <form method="post" action="<?= base_url('dashboard_alt'); ?>">
 <div class="pagination-new-inner">
+<div class="showing-details-limit">
+<div class="pull-left">
+<?php echo ' Total Records: '. $totalRecords; ?>
+</div>
+</div>
 <div class="showing-details-limit" >
 <label for="limit" class="pull-left page-label"> Limit:</label>
 <div class="pull-left">

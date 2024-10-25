@@ -479,7 +479,7 @@ class ResponsiveVariantRouteController extends BaseController
             }
             //echo "Draft Case End:".date('H:i:s').'<br/>';
             //echo "Efiled Case Start:".date('H:i:s').'<br/>';
-            $limit = $this->request->getVar('limit') ?? 10;  
+            $limit = $this->request->getVar('limit') ?? 25;  
             $page = $this->request->getVar('page') ?? 1;  
              $offset = ($page - 1) * $limit; 
             // pr($data);    
