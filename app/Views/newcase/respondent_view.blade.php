@@ -507,12 +507,13 @@
     function get_party_as(value) {
         var party_as = value;
         if (party_as == 'I') {
+
+            $('#org_dept').removeAttr('required');
+            $('#org_state').removeAttr('required');
+            $('#org_post').removeAttr('required');
             $('#indvidual_form').show();
             $('#org_form').hide();
-            $('#org_state_row').show();
-            // $('#org_state').val('');
-            // $('#org_dept').val('');
-            // $('#org_post').val('');
+            $('#org_state_row').show(); 
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
@@ -521,8 +522,7 @@
 
             $('.party_name').attr('required', 'required');
             $('.relation').attr('required', 'required');
-            $('.relative_name').attr('required', 'required');
-            // $('#party_dob').attr('required', 'required');
+            $('.relative_name').attr('required', 'required'); 
             $('.org_state_name').removeAttr('required', 'required');
             $('.org_post').removeAttr('required', 'required');
         } else {
@@ -532,34 +532,35 @@
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
+                                // Add 'required' attribute
+                                $('#org_dept').attr('required', true);
+                $('#org_post').attr('required', true);
+                // Remove 'required' attribute
+                $('#org_state').removeAttr('required');
+
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
                 $('.org_state_name').removeAttr('required', 'required');
-                $('.org_post').attr('required', 'required');
+                // $('.org_post').attr('required', 'required');
                 $('.party_name').removeAttr('required', 'required');
                 $('.relation').removeAttr('required', 'required');
-                $('.relative_name').removeAttr('required', 'required');
-                // $('#party_name').val('');
-                // $('#relation').val('');
-                // $('#relative_name').val('');
-                // $('#party_dob').val('');
-                // $('#party_age').val('');
+                $('.relative_name').removeAttr('required', 'required'); 
             } else {
+
+                                // Add 'required' attribute
+                                $('#org_dept').attr('required', true);
+                $('#org_state').attr('required', true);
+                $('#org_post').attr('required', true); 
+
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
-                $('.org_post').attr('required', 'required');
+                // $('.org_post').attr('required', 'required');
                 $('.party_name').removeAttr('required', 'required');
                 $('.relation').removeAttr('required', 'required');
-                $('.relative_name').removeAttr('required', 'required');
-                // $('.org_state_name').attr('required', 'required');
-                // $('#party_name').val('');
-                // $('#relation').val('');
-                // $('#relative_name').val('');
-                // $('#party_dob').val('');
-                // $('#party_age').val('');
+                $('.relative_name').removeAttr('required', 'required'); 
             }
         }
     }
