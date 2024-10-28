@@ -271,7 +271,7 @@ $parties_details = $data['parties_details'];
         }
         ?>
         <div class="text-center mt-4">
-            <a href="<?= base_url('case_details'); ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
+            <a href="<?= base_url('case_details'); ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
             <?php if (isset($appearing_for_details[0]['appearing_for']) && !empty($appearing_for_details[0]['appearing_for'])) { ?>
                 <input type="submit" class="btn btn-success" id="save_efiling_for" name="submit" value="UPDATE">
                 <a href="<?= base_url('on_behalf_of'); ?>" class="btn btn-primary btnNext" type="button">Next</a>

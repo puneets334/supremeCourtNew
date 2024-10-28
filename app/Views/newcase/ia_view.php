@@ -122,7 +122,7 @@
         </div>
     </div>
     <div class="text-center">        
-        <a href="<?= base_url('documentIndex'); ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
+        <a href="<?= base_url('documentIndex'); ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
         <a href="<?= base_url('newcase/courtFee'); ?>" class="btn btn-primary btnNext" type="button">Next</a>
     </div>
 </div>

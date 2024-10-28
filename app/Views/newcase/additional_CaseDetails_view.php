@@ -145,7 +145,7 @@
         </div>         
         <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">               
-                <a href="<?= base_url('newcase/additionalAdv') ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>                
+                <a href="<?= base_url('newcase/additionalAdv') ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>                
 
                 <a href="<?= base_url('newcase/uploadDocumenets') ?>" class="btn btn-primary btnNext" type="button">Next</a> 
             </div>

@@ -78,7 +78,7 @@
                 $next_url = '#';
             }
             ?>
-            <!--<a href="<?/*= $prev_url */?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>-->
+            <!--<a href="<?/*= $prev_url */?>" class="btn btn-primary btnPrevious" type="button">Previous</a>-->
             <input type="submit" class="btn btn-success" id="upload_doc" value="UPLOAD">
             <!--<a href="<?/*= $next_url */?>" class="btn btn-primary btnNext" type="button" id="nextButton" style="display: none;" >Next</a>-->
 

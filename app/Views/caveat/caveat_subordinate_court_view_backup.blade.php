@@ -570,7 +570,7 @@
                     <!-- FIR Details end  -->
                     <div class="form-group">
                         <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
-                            <a tabindex = '30' href="<?= base_url('caveat/caveatee') ?>" class="btn btn-primary" type="button">PREVIOUS</a>
+                            <a tabindex = '30' href="<?= base_url('caveat/caveatee') ?>" class="btn btn-primary" type="button">Previous</a>
                             <input tabindex = '28' type="submit" class="btn btn-success" id="subcourt_save" value="SAVE">
                             <?php
                             if(isset($subordinate_court_details) && !empty($subordinate_court_details)){

@@ -431,7 +431,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                <a href="<?= base_url('newcase/caseDetails') ?>" class="btn btn-primary" type="button" tabindex = '27'>PREVIOUS</a>
+                <a href="<?= base_url('newcase/caseDetails') ?>" class="btn btn-primary" type="button" tabindex = '27'>Previous</a>
                 <?php if (isset($_SESSION['case_table_ids']['m_petitioner_id']) && !empty($_SESSION['case_table_ids']['m_petitioner_id'])) { ?>
                     <input type="submit" class="btn btn-success" id="pet_save" tabindex = '25' value="UPDATE">
                     <a href="<?= base_url('newcase/respondent') ?>" class="btn btn-primary btnNext" type="button" tabindex = '26'>Next</a>

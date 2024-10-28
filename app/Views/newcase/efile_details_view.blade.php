@@ -657,7 +657,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                     ?>
                                                     <!--<a href="<?= $prev_url ?>"
                                                         class="btn btn-primary btnPrevious"
-                                                        type="button">PREVIOUS</a>-->
+                                                        type="button">Previous</a>-->
                                                     <input type="submit"
                                                         class="btn btn-success pay_fee"
                                                         id="pay_fee"

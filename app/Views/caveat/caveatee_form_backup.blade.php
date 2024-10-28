@@ -451,7 +451,7 @@ textarea {
                             <div class="save-btns text-center">
                                 
                             <a href="<?= base_url('caveat/') ?>" class="quick-btn" id="nextButton" type="button"
-                                tabindex='25'>PREVIOUS</a>
+                                tabindex='25'>Previous</a>
                             <?php if (isset($caveatee_details[0]['resorgid']) && !empty($caveatee_details[0]['resorgid'])) { ?>
                                 
                                 <input type="submit" class="quick-btn gray-btn" id="res_save" tabindex='21' value="UPDATE">
