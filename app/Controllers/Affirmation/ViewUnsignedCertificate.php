@@ -1,5 +1,6 @@
 <?php
-namespace App\Controllers;
+namespace App\Affirmation\Controllers;
+use App\Controllers\BaseController;
 
 class ViewUnsignedCertificate extends BaseController {
 

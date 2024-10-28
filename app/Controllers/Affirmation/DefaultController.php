@@ -1,28 +1,50 @@
 <?php
-namespace App\Controllers;
+namespace App\Affirmation\Controllers;
+use App\Controllers\BaseController;
+use App\Models\Affirmation\AffirmationModel;
+use App\Models\Affirmation\EsignSignatureModel;
+use App\Models\DocumentIndex\DocumentIndexModel;
+use App\Models\NewCase\GetDetailsModel;
+use App\Models\ShcilPayment\PaymentModel;
+use App\Models\UploadDocuments\UploadDocsModel;
+use TCPDF;
 
 class DefaultController extends BaseController {
+
+    protected $DocumentIndex_Select_model;
+    protected $Payment_model;
+    protected $Get_details_model;
+    protected $Affirmation_model;
+    protected $Esign_signature_model;
+    protected $UploadDocs_model;
 
     public function __construct() {
         parent::__construct();
 
-        $this->load->model('newcase/Get_details_model');
-        $this->load->model('affirmation/Affirmation_model');
-        $this->load->model('uploadDocuments/UploadDocs_model');
-        $this->load->model('affirmation/Esign_signature_model');
-        $this->load->model('documentIndex/DocumentIndex_model');
-        $this->load->library('TCPDF');
-        $this->load->helper('file');
-        $this->load->model('shcilPayment/Payment_model');
+        // $this->load->model('newcase/Get_details_model');
+        // $this->load->model('affirmation/Affirmation_model');
+        // $this->load->model('uploadDocuments/UploadDocs_model');
+        // $this->load->model('affirmation/Esign_signature_model');
+        // $this->load->model('documentIndex/DocumentIndex_model');
+        // $this->load->library('TCPDF');
+        // $this->load->helper('file');
+        // $this->load->model('shcilPayment/Payment_model');
 
-        //line aaded on 8 Jan 2021
-        $this->load->model('documentIndex/DocumentIndex_Select_model');
+        // //line aaded on 8 Jan 2021
+        // $this->load->model('documentIndex/DocumentIndex_Select_model');
+        $this->DocumentIndex_Select_model = new DocumentIndexModel();
+        $this->Payment_model = new PaymentModel();
+        $this->Get_details_model = new GetDetailsModel();
+        $this->Affirmation_model = new AffirmationModel();
+        $this->Esign_signature_model = new EsignSignatureModel();
+        $this->UploadDocs_model = new UploadDocsModel();
+        helper('file');
     }
 
     public function index()
     {
         if (check_party() !=true) {  //func added on 15 JUN 2021
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Please enter every party details before moving to further tabs.</div>');
+            $this->session->setFlashData('msg', '<div class="alert alert-danger text-center">Please enter every party details before moving to further tabs.</div>');
             redirect('newcase/extra_party');
         }
         //func added on 8 Jan 2021
@@ -146,7 +168,7 @@ class DefaultController extends BaseController {
                 $isdeaddata = $this->Get_details_model->getTotalIsDeadMinor($params);
                 if(isset($isdeaddata[0]->total) && !empty($isdeaddata[0]->total)){
                     $total = $isdeaddata[0]->total;
-                    $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Please fill '.$total.' remaining dead/minor party details</div>');
+                    $this->session->setFlashData('msg', '<div class="alert alert-danger text-center">Please fill '.$total.' remaining dead/minor party details</div>');
                     log_message('CUSTOM', "Please fill ".$total." remaining dead/minor party details");
                     redirect('newcase/lr_party');
                     exit(0);
@@ -227,6 +249,10 @@ window.location.href='" . base_url() . "documentIndex';</script>";
                 </tr></thead><tbody>';
         $sr = 1;
         $indx = 1;
+        $up_doc_hash3 = "";
+        $up_doc_hash4 = "";
+        $up_doc_hash5 = "";
+        $oath_note = "";
         if (isset($uploaded_docs) && !empty($uploaded_docs)) {
             foreach ($uploaded_docs as $doc) {
                 /*$st_indx = $indx;
@@ -263,6 +289,7 @@ window.location.href='" . base_url() . "documentIndex';</script>";
                     <th style="width:70%" align="left"> Index </th>
                 </tr></thead><tbody>';
         $sr = 1;
+        $created_index_3 = "";
         if (isset($uploaded_indexes) && !empty($uploaded_indexes)) {
             foreach ($uploaded_indexes as $indexes) {
                 $created_index_3 .= '<tr>

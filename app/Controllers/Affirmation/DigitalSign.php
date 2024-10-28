@@ -1,19 +1,25 @@
 <?php
-namespace App\Controllers;
+
+namespace App\Affirmation\Controllers;
+use App\Controllers\BaseController;
+use App\Models\Affirmation\AffirmationModel;
+use PdfToText;
 
 class DigitalSign extends BaseController {
 
+    protected $Affirmation_model;
+
     public function __construct() {
         parent::__construct();
-        $this->load->model('common/Common_model');
-        $this->load->model('newcase/New_case_model');
-
-        $this->load->model('newcase/Get_details_model');
-        $this->load->model('affirmation/Affirmation_model');
-
-        $this->load->library('TCPDF');
-        $this->load->library('PdfToText');
-        $this->load->helper('file');
+        // $this->load->model('common/Common_model');
+        // $this->load->model('newcase/New_case_model');
+        // $this->load->model('newcase/Get_details_model');
+        // $this->load->model('affirmation/Affirmation_model');
+        // $this->load->library('TCPDF');
+        // $this->load->library('PdfToText');
+        // $this->load->helper('file');
+        helper('file');
+        $this->Affirmation_model = new AffirmationModel();
     }
 
     public function index() {
@@ -47,7 +53,7 @@ class DigitalSign extends BaseController {
 
         if (isset($_FILES['adv_oath_esign_pdf']) && !empty($_FILES['adv_oath_esign_pdf']) && isset($registration_id)) {
             if ($msg = isValidPDF('adv_oath_esign_pdf', TRUE)) {
-                $this->session->set_flashdata('msg', $msg);
+                $this->session->setFlashData('msg', $msg);
                 redirect($redirect_url);
                 exit(0);
             }
@@ -56,14 +62,14 @@ class DigitalSign extends BaseController {
            //Commented for demo purpose only.
              if (strpos(str_replace( '-', '', $pdf -> Text), $_SESSION['efiling_details']['efiling_no']) == false) {
                 $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">Please upload attached Advocate certificate after digitally signing.</p></center>';
-                $this->session->set_flashdata('msg', $msg);
+                $this->session->setFlashData('msg', $msg);
                 redirect($redirect_url);
                 exit(0);
             }
             $result = isDocumentSigned($_FILES['adv_oath_esign_pdf']['tmp_name'], 'adbe.pkcs7.detached');
             if ($result != TRUE || $result != 1) {
                 $msg = '<center><p style="background: #f2dede;border: #f2dede;color: black;">Please upload digitally signed document only!</p></center>';
-                $this->session->set_flashdata('msg', $msg);
+                $this->session->setFlashData('msg', $msg);
                 redirect($redirect_url);
                 exit(0);
             }
