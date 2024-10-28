@@ -69,7 +69,7 @@
                 $help_page = explode('.', $get_valu);
 
                 $login_time = !empty(getSessionData('login')) ? $profile_model->userLastLogin(getSessionData('login')['id']) : '';
-                $last_login = (!empty($login_time) && $login_time->login_time != '') ? date('d-m-Y h:i:s A', strtotime($login_time->login_time)) : NULL;
+                $last_login = (!empty($login_time) && $login_time->login_time != '') ? date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($login_time->login_time))) : NULL;
 
                 if (getSessionData('photo_path') != '') {
                     $profile_photo = str_replace('/photo/', '/' . 'thumbnail' . '/', getSessionData('login')['photo_path']);
