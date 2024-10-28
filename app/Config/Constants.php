@@ -398,12 +398,12 @@ define('IA_BREAD_VIEW', 9);
 define('MEN_BREAD_CASE_DETAILS', 1);
 define('MEN_BREAD_ARGUING_COUNCIL', 2);
 define('MEN_BREAD_LISTING', 3);
-/*define('MEN_BREAD_UPLOAD_DOC', 4);
+define('MEN_BREAD_UPLOAD_DOC', 4);
 define('MEN_BREAD_DOC_INDEX', 5);
 define('MEN_BREAD_COURT_FEE', 6);
 define('MEN_BREAD_SHARE_DOC', 7);
 define('MEN_BREAD_AFFIRMATION', 8);
-define('MEN_BREAD_VIEW', 9);*/
+define('MEN_BREAD_VIEW', 9);
 
 
 define('CERTIFICATE_BREAD_CASE_DETAILS', 1);
