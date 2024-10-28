@@ -62,7 +62,7 @@
                         <!--<i class="fas fa-calendar-check"></i>-->
                         <a  class="loadDataSci" data-date="previous_dt">
                         <div class="container">
-                            <h4><b>Previous Date</b><span class="badge" style="margin-left: 247px"><?= $cnt_diary ;?></span></h4>
+                            <h4><b>PREVIOUS Date</b><span class="badge" style="margin-left: 247px"><?= $cnt_diary ;?></span></h4>
                             <!--<p style="color: #7d9726"><b><?/*= $cnt_diary ;*/?></b></p>-->
                         </div>
                         </a>

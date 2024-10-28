@@ -211,7 +211,7 @@ else if ($_SESSION['estab_details']['efiling_for_type_id'] == E_FILING_FOR_ESTAB
                     $prev_redirect_url = 'caveat/extra_party';
                     $next_redirect_url = 'uploadDocuments';
                     ?>
-                    <a href="<?= base_url($prev_redirect_url) ?>" class="btn btn-primary" type="button">Previous</a>
+                    <a href="<?= base_url($prev_redirect_url) ?>" class="btn btn-primary" type="button">PREVIOUS</a>
                     <?php if (empty($efiling_caveat_data[0]) || $efiling_caveat_data[0] == '') { ?>
                         <input type="hidden" name="add_subordinate_crt" value="<?php echo_data(url_encryption('add')); ?>">
                         <input type="submit" class="btn btn-success" id="lower_court_save" value="SAVE">

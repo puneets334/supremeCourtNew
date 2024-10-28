@@ -444,7 +444,7 @@ echo form_open('#', $attribute);
         $prev_redirect_url = 'caveat/extra_party';
         $next_redirect_url = 'uploadDocuments';
         ?>
-        <a href="<?= base_url($prev_redirect_url) ?>" class="btn btn-primary" type="button">Previous</a>
+        <a href="<?= base_url($prev_redirect_url) ?>" class="btn btn-primary" type="button">PREVIOUS</a>
         <input type="submit" class="btn btn-success" id="lower_court_save" value="SAVE" disabled>
         <?php
         if(isset($subordinate_court_details) && !empty($subordinate_court_details)){

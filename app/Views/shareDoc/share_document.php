@@ -136,7 +136,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
             <input type="submit" class="btn btn-success"  value="SAVE">
             <?php  if (!empty($email_details)) {?>
             <a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button">Next</a>

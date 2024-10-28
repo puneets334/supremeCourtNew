@@ -206,7 +206,7 @@
                 $next_url = '#';
             }
             ?>
-        <a href="<?= $previous_url ?>" <?= $previous_url; ?> class="btn btn-primary btnPrevious" type="button">Previous</a>
+        <a href="<?= $previous_url ?>" <?= $previous_url; ?> class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
        <!-- <a onclick="<?php /*echo $next_url; */?>" id="nextButton" style="display: none;" class="btn btn-primary btnNext" type="button">Next</a>-->
         <a href="<?= $next_url ?>" <?= $next_url; ?> class="btn btn-primary" tabindex = '27' type="button">Next</a>
 

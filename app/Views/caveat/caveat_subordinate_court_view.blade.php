@@ -575,7 +575,7 @@ body.loading .overlay{
                             
                                 <div class="save-btns">
                                     
-                                    <a tabindex = '30' href="<?= base_url('caveat/caveatee') ?>" class="quick-btn" type="button">Previous</a>
+                                    <a tabindex = '30' href="<?= base_url('caveat/caveatee') ?>" class="quick-btn" type="button">PREVIOUS</a>
                                     <input tabindex = '28' type="submit" class="quick-btn gray-btn" id="subcourt_save" value="SAVE">
                                     <?php
                                     if(isset($subordinate_court_details) && !empty($subordinate_court_details)){
