@@ -134,7 +134,7 @@ echo form_open('#', $attribute);
         $prev_redirect_url = 'caveat/extra_party';
         $next_redirect_url = 'uploadDocuments';
         ?>
-        <a href="<?= base_url($prev_redirect_url) ?>" class="btn btn-primary" type="button">PREVIOUS</a>
+        <a href="<?= base_url($prev_redirect_url) ?>" class="btn btn-primary" type="button">Previous</a>
 <!--        <a href="--><?//= base_url($next_redirect_url) ?><!--" class="btn btn-primary" type="button">Next</a>-->
 
         <?php

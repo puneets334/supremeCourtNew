@@ -270,7 +270,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                <a href="<?= base_url('jailPetition/BasicDetails') ?>" class="btn btn-primary" tabindex = '22' type="button">PREVIOUS</a>
+                <a href="<?= base_url('jailPetition/BasicDetails') ?>" class="btn btn-primary" tabindex = '22' type="button">Previous</a>
                 <?php if(isset($party_id) && !empty($party_id)){ ?>
                     <script>$('#prisoner_list_div').hide();</script>
                 <a href="<?= base_url('jailPetition/Extra_petitioner') ?>" class="btn btn-danger" tabindex = '21' type="button">CANCEL</a>

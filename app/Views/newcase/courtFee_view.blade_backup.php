@@ -632,7 +632,7 @@
                             $next_url = '#';
                         }
                         ?>
-                        <a href="<?= $prev_url ?>" class="btn quick-btn gray-btn" type="button">PREVIOUS</a>
+                        <a href="<?= $prev_url ?>" class="btn quick-btn gray-btn" type="button">Previous</a>
                         <input type="submit" class="btn btn-success pay_fee" id="pay_fee" name="submit" value="PAY" style="display: none;">
                         <?php
                         if ((isset($payment_details['0']['payment_status']) && !empty($payment_details['0']['payment_status']) && $payment_details['0']['payment_status'] == 'Y') || ($pending_court_fee == 0)) { ?>

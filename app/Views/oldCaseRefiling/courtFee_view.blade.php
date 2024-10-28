@@ -415,7 +415,7 @@
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
             <span id="payCourtFeeSection">
                 <?php if ($pending_court_fee > 0) { ?>
                     <input type="submit" class="btn btn-success" id="pay_fee" name="submit" value="PAY">

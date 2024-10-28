@@ -463,7 +463,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                <a href="<?= base_url('newcase/extra_party') ?>" class="btn btn-primary" tabindex = '30' type="button">PREVIOUS</a>
+                <a href="<?= base_url('newcase/extra_party') ?>" class="btn btn-primary" tabindex = '30' type="button">Previous</a>
                 <?php
                 $p_r_type_petitioners='P'; $p_r_type_respondents='R'; $registration_id = $_SESSION['efiling_details']['registration_id'];$step=11;
                 $breadcrumb_statusGet = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);

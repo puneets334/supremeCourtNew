@@ -749,7 +749,7 @@
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
             <input type="submit" class="btn btn-success pay_fee" id="pay_fee" name="submit" value="PAY" style="display: none;">
 
             <?php
