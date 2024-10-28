@@ -549,28 +549,27 @@
                                     foreach ($payment_details as $Efee) {  
                                         $user_declared_extra_fee = $user_declared_extra_fee + (int)$Efee['user_declared_extra_fee'];
                                   } 
-                                }
-                                        if ($Efee['payment_status'] == 'Y' && $Efee['user_declared_extra_fee'] != 0) { ?>
-                                            <tr style="color: #0055aa;size: 20px;">
-                                                <td data-key="#"><?= $sr_no; ?></td>
-                                                <td data-key="Court Fee Details"> Extra Court Fee </td>
-                                                <td data-key="Amount ( ₹ )" align="center"><?= $user_declared_extra_fee ?></td>
-                                            </tr>
-                                        <?php $sr_no++;
-                                        } ?>
-                               
-                                
+
+                                  if ($Efee['payment_status'] == 'Y' && $Efee['user_declared_extra_fee'] != 0) { ?>
+                                    <tr style="color: #0055aa;size: 20px;">
+                                        <td data-key="#"><?= $sr_no; ?></td>
+                                        <td data-key="Court Fee Details"> Extra Court Fee </td>
+                                        <td data-key="Amount ( ₹ )" align="center"><?= $user_declared_extra_fee ?></td>
+                                    </tr>
+                                <?php $sr_no++;
+                                } ?>
                                 <tr>
-                                    <td data-key="#"></td>
-                                    <td data-key="Court Fee Details"></td>
-                                    <td data-key="Amount ( ₹ )" colspan="3" style="text-align: center;padding-right: 71px;">
-                                    <?php if ((int)$Efee['user_declared_extra_fee'] > 0) { ?>
-                                        <label style="margin-top: 10px; font-weight: bold">Total : ₹ <?= $court_fee + $user_declared_extra_fee ?></label>
-                                    <?php } else { ?>
-                                        <label style="margin-top: 10px; font-weight: bold">Total : ₹ <?= $court_fee ?></label>
-                                    <?php } ?>
-                                    </td>
-                                </tr>
+                                <td data-key="#"></td>
+                                <td data-key="Court Fee Details"></td>
+                                <td data-key="Amount ( ₹ )" colspan="3" style="text-align: center;padding-right: 71px;">
+                                <?php if ((int)$Efee['user_declared_extra_fee'] > 0) { ?>
+                                    <label style="margin-top: 10px; font-weight: bold">Total : ₹ <?= $court_fee + $user_declared_extra_fee ?></label>
+                                <?php } else { ?>
+                                    <label style="margin-top: 10px; font-weight: bold">Total : ₹ <?= $court_fee ?></label>
+                                <?php } ?>
+                                </td>
+                            </tr>
+                            <?php   }  ?> 
                             </tbody>
                         </table>
                     </div>
