@@ -46,7 +46,7 @@
                                             <?php echo_data($doc['doc_title']); ?>
                                             <img src="<?= base_url('assets/images/pdf.png') ?>">
                                             <br />
-                                            <?php echo_data($doc['doc_hashed_value']); ?>
+                                            <?php // echo_data($doc['doc_hashed_value']); ?>
                                         </a>
                                     </td>
                                     <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($doc['uploaded_on'])) ?></td>
