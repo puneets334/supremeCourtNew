@@ -1,6 +1,7 @@
 <?php
-//$segment = App\Libraries\Slice();
+// $segment = App\Libraries\Slice();
 $segment = service('uri');
+date_default_timezone_set('Asia/Kolkata');
 ?>
 <style>
     .dashboardLeftNav li ul.submenu li a:hover {

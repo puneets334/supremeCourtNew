@@ -1259,6 +1259,9 @@
                     $('#state_agency_info').hide();
                     $('#high_court_info').show();
                     $('#search_button_div').show();
+                    $('#agency_state').removeAttr('required');
+                    $('#agency').removeAttr('required');
+                    $('#agency_case_type_id').removeAttr('required');
                     get_high_court_list(court_type, hc_value);
                     break;
                 case 3:
@@ -1269,6 +1272,9 @@
                     $('#state_agency_info').hide();
                     $('#supreme_court_info').hide();
                     $('#search_button_div').show();
+                    $('#agency_state').removeAttr('required');
+                    $('#agency').removeAttr('required');
+                    $('#agency_case_type_id').removeAttr('required');
                     get_state_list();
                     break;
                 case 4:
@@ -1279,6 +1285,9 @@
                     $('#district_court_info').hide();
                     $('#supreme_court_info').show();
                     $('#search_button_div').show();
+                    $('#agency_state').removeAttr('required');
+                    $('#agency').removeAttr('required');
+                    $('#agency_case_type_id').removeAttr('required');
                     get_sci_case_type()
                     break;
                 case 5:
@@ -1289,6 +1298,9 @@
                     $('#district_court_info').hide();
                     $('#supreme_court_info').hide();
                     $('#search_button_div').hide();
+                    $('#agency_state').attr('required', true);
+                    $('#agency').attr('required', true);
+                    $('#agency_case_type_id').attr('required', true);
                     get_agency_state_list();
                     break;
                 default:
@@ -1384,6 +1396,9 @@
             $('#district_court_info').hide();
             $('#supreme_court_info').show();
             $('#search_button_div').show();
+            $('#agency_state').removeAttr('required');
+                    $('#agency').removeAttr('required');
+                    $('#agency_case_type_id').removeAttr('required');
             get_sci_case_type()
         } else if (court_as == '1') {
             $('#supreme_court_info').hide();
@@ -1391,6 +1406,9 @@
             $('#state_agency_info').hide();
             $('#high_court_info').show();
             $('#search_button_div').show();
+            $('#agency_state').removeAttr('required');
+                    $('#agency').removeAttr('required');
+                    $('#agency_case_type_id').removeAttr('required');
             get_high_court_list(court_as);
         } else if (court_as == '3') {
             $('#district_court_info').show();
@@ -1398,13 +1416,19 @@
             $('#state_agency_info').hide();
             $('#supreme_court_info').hide();
             $('#search_button_div').show();
+            $('#agency_state').removeAttr('required');
+                    $('#agency').removeAttr('required');
+                    $('#agency_case_type_id').removeAttr('required');
             get_state_list();
         } else if (court_as == '5') {
-            $('#state_agency_info').show();
+            $('#state_agency_info').show(); 
             $('#high_court_info').hide();
             $('#district_court_info').hide();
             $('#supreme_court_info').hide();
             $('#search_button_div').hide();
+            $('#agency_state').attr('required', true);
+            $('#agency').attr('required', true);
+            $('#agency_case_type_id').attr('required', true);
             get_agency_state_list();
         }
     }

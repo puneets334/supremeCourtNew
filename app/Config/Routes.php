@@ -430,5 +430,6 @@ $routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit', 'Register\Adv
 
 //code started --14-10-2024
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/getCISData', 'Admin\EfilingAction::getCISData');
+$routes->match(['GET', 'POST'], 'newcase/AutoDiaryGeneration/updateRefiledCase', 'NewCase\AutoDiaryGeneration::updateRefiledCase');
 
 

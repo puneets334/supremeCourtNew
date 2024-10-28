@@ -239,22 +239,25 @@ textarea {
                                 <div class="mb-3">
                                     <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
                                 </div>
-                                <?php $gmchecked ='';
+                                <?php
+                                    $gmchecked ='';
+                                    $gfchecked ='';
+                                    $gochecked ='';
                                     $gmchecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender'] == 'M') ? 'checked="checked"' : '';
                                     $gfchecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender']== 'F' )? 'checked="checked"' : '';
                                     $gochecked = (isset($caveator_details[0]['pet_gender']) && $caveator_details[0]['pet_gender']== 'O')? 'checked="checked"' : '';
                                     ?>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input cus-form-check" tabindex='8' type="radio"  name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>>
-                                        <label class="form-check-label" for="inlineRadio1">Male</span></label>
+                                        <label class="form-check-label" for="inlineRadio1">
+                                        <input class="form-check-input cus-form-check" tabindex='8' type="radio"  name="pet_gender" id="pet_gender1" value="M" <?php echo $gmchecked; ?>> Male</span></label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input cus-form-check" tabindex='9' type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>>
-                                        <label class="form-check-label" for="inlineRadio2">Female</label>
+                                        <label class="form-check-label" for="inlineRadio2">
+                                        <input class="form-check-input cus-form-check" tabindex='9' type="radio"  name="pet_gender" id="pet_gender2" value="F" <?php echo $gfchecked; ?>> Female</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input cus-form-check" tabindex='10' type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>>
-                                        <label class="form-check-label" for="inlineRadio2">Other</label>
+                                        <label class="form-check-label" for="inlineRadio2">
+                                        <input class="form-check-input cus-form-check" tabindex='10' type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>> Other</label>
                                     </div>                        
                             </div>
                         </div>

@@ -107,7 +107,7 @@
                                                 {{$application->pendingstage}}</span></div>
                             @endif-->
                         </td>
-                        <td data-key="Started On">{{date('d-m-Y H:i:s', strtotime($application->activated_on))}}</td>
+                        <td data-key="Started On">{{date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($application->activated_on)))}}</td>
                     </tr>
                     @endforeach
                     </tbody>

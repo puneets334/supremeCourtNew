@@ -524,15 +524,19 @@ class Search extends BaseController
                 //redirect('miscellaneous_docs/defaultController/'); exit(0);
                 return redirect()->to(base_url('case/document/crud'));
             } elseif ($confirm_response == 'no' && $_SESSION['efiling_type'] == 'ia') {
-                return redirect()->to(base_url('case/interim_application/crud/'));
+                // return redirect()->to(base_url('case/interim_application/crud/'));
+                return redirect()->back();
             } elseif ($confirm_response == 'no' && $_SESSION['efiling_type'] == 'mentioning') {
                 //redirect('mentioning/defaultController/'); exit(0);
-                return redirect()->to(base_url('case/mentioning/crud/'));
+                // return redirect()->to(base_url('case/mentioning/crud/'));
+                return redirect()->back();
             } elseif ($confirm_response == 'no' && $_SESSION['efiling_type'] == 'certificate') {
                 //redirect('certificate/DefaultController/'); exit(0);
-                return redirect()->to(base_url('case/certificate/crud/'));
+                // return redirect()->to(base_url('case/certificate/crud/'));
+                return redirect()->back();
             } elseif ($confirm_response == 'no' && $_SESSION['efiling_type'] == 'citation') {
-                return redirect()->to(base_url('case/citation/crud/'));
+                // return redirect()->to(base_url('case/citation/crud/'));
+                return redirect()->back();
             }
             return redirect()->to(base_url('dashboard'));
         }
