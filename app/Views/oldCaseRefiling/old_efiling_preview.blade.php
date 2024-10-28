@@ -1,7 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-@extends('layout.app')
-@section('content')
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,12 +32,10 @@ $hidepencilbtn = 'true';
 
 ?>
 
-<div class="dash-card">
     <div class="panelInner">
         <div class="middleContent">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="tab-content">
+                <div class="row"> 
                         <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="tab-form-inner">
                                 <div class="row">
@@ -120,20 +115,7 @@ $hidepencilbtn = 'true';
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 <!-- <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="text-right">
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right"> -->
@@ -267,26 +249,24 @@ $hidepencilbtn = 'true';
             <?php } ?>
         </div>
     </div> -->
-@endsection
+
 {{------------ @include('modals')-----}}
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/sha256.js"></script>
 <script src="<?= base_url() . 'assets' ?>/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script>
     function toggleAllAccordions() {
         var button = document.getElementById("collapseAll");
@@ -313,6 +293,4 @@ $hidepencilbtn = 'true';
             });
         }
     }
-</script>
-</body>
-</html>
+</script> 
