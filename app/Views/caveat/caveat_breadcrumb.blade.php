@@ -18,9 +18,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ?
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <?php
 $disabled_status1='pointer-events: none; cursor: default;';
@@ -781,21 +781,20 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 
     </div>
 </div>
-@push('script')
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
-<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
+<!-- <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>     -->
 <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
 <link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
 <script>
@@ -1357,4 +1356,3 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         }
     }
 </script>
-@endpush
