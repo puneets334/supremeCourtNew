@@ -150,7 +150,7 @@
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">PREVIOUS</a>
             <?php if(!($pending_sign_flags>0)){?><a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button">Next</a><?php } ?>
 
         </div>

@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12"></div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-center">
-                        <a href="<?= base_url('newcase/subordinate_court') ?>" tabindex = '3' class="btn btn-primary" type="button">Previous</a>
+                        <a href="<?= base_url('newcase/subordinate_court') ?>" tabindex = '3' class="btn btn-primary" type="button">PREVIOUS</a>
                         <input  tabindex = '2' type="submit" class="btn btn-success" id="aor_save" value="ADD"> 
                         <a href="<?= base_url('newcase/additionalInfo') ?>" tabindex = '4' class="btn btn-primary btnNext" type="button">Next</a>
                     </div>

@@ -567,7 +567,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                     ?>
                                                     <!--<a href="<?= $prev_url ?>"
                                                         class="btn btn-primary btnPrevious"
-                                                        type="button">Previous</a>-->
+                                                        type="button">PREVIOUS</a>-->
                                                     <input type="submit"
                                                         class="btn btn-success pay_fee"
                                                         id="pay_fee"

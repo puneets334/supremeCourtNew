@@ -672,7 +672,7 @@
 <!---->
 <!--            </div><br>-->
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
-                <a href="<?= base_url('caveat/caveatee') ?>" class="btn btn-primary" type="button">Previous</a>
+                <a href="<?= base_url('caveat/caveatee') ?>" class="btn btn-primary" type="button">PREVIOUS</a>
                 <?php
                 if(isset($party_details[0]['id']) && !empty($party_details[0]['id'])){
                     echo '<input type="submit" class="btn btn-success" id="extra_party_save" value="UPDATE">';

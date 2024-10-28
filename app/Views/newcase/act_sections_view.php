@@ -121,7 +121,7 @@
                         </div>
         <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                <a href="<?= base_url('newcase/lr_party') ?>" class="btn btn-primary" tabindex = '7' type="button">Previous</a>
+                <a href="<?= base_url('newcase/lr_party') ?>" class="btn btn-primary" tabindex = '7' type="button">PREVIOUS</a>
                 <input  tabindex = '8' type="submit" class="btn btn-success" id="pet_save" value="SAVE">
                 <?php if(!empty($act_sections_list)){?>
                 <a href="<?= base_url('newcase/subordinate_court') ?>" class="btn btn-primary btnNext" id="actSectionButton" tabindex = '9' type="button" >Next</a>

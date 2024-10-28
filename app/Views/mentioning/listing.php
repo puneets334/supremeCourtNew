@@ -228,7 +228,7 @@ if ($this->uri->segment(2) != 'view') {
     </div>
 
         <div class="col-md-offset-5 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12">
-            <a href="<?= base_url('case_details'); ?>" tabindex = '8' class="btn btn-primary btnPrevious" type="button" <?=$action;?>>Previous</a>
+            <a href="<?= base_url('case_details'); ?>" tabindex = '8' class="btn btn-primary btnPrevious" type="button" <?=$action;?>>PREVIOUS</a>
             <input type="button" class="btn btn-success" id="send_otp" tabindex="9" name="send_otp" value="SEND OTP" <?=$action;?>>
         <br/>
             <label class="control-label" id="otp_label">Enter OTP<span style="color: red">*</span> <input type="text" name="otp" id="otp" tabindex="10"> &nbsp;&nbsp;&nbsp;</label>

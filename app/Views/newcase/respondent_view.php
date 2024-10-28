@@ -427,7 +427,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-4">
-                <a href="<?= base_url('newcase/petitioner') ?>" tabindex = '28' class="btn btn-primary" type="button">Previous</a>
+                <a href="<?= base_url('newcase/petitioner') ?>" tabindex = '28' class="btn btn-primary" type="button">PREVIOUS</a>
                 <?php if (isset($_SESSION['case_table_ids']['m_respondent_id']) && !empty($_SESSION['case_table_ids']['m_respondent_id'])) { ?>
                     <input type="submit" tabindex = '26' class="btn btn-success" id="res_save" value="UPDATE">
                     <?php if(isset($IsDeadMinor) && !empty($IsDeadMinor) && $IsDeadMinor=='Y'){?>
