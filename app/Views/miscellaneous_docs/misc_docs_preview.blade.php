@@ -1,7 +1,9 @@
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @extends('layout.app')
+    @section('content')
+@endif
 <!DOCTYPE HTML>
 <html>
-@extends('layout.app')
-@section('content')
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,12 +17,13 @@
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
     <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
     @stack('style')
 </head>
+<body>
 <?php
 if (!isset($efiling_search_header)) { ?>
     @include('miscellaneous_docs.misc_docs_breadcrumb')
@@ -33,7 +36,7 @@ if (isset(getSessionData('efiling_details')['stage_id']) && !in_array(getSession
 }
 $collapse_class = '';
 ?>
-<div class="mainPanel ">
+<div class="mainPanel">
     <div class="panelInner">
         <div class="middleContent">
             <div class="container-fluid">
@@ -225,26 +228,28 @@ $collapse_class = '';
             </div>
         </div>
     </div>
-</div>
+<!-- </div> -->
 <!-- </div>
 </div> -->
-@endsection
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @endsection
+@endif
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/sha256.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script>
     function toggleAllAccordions() {
@@ -274,4 +279,4 @@ $collapse_class = '';
     }
 </script>
 </body>
-</html>
+</html> 

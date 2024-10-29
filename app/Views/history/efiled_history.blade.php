@@ -1,4 +1,8 @@
 <?php date_default_timezone_set('Asia/Kolkata'); ?>
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @extends('layout.app')
+    @section('content')
+@endif
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -35,7 +39,7 @@
         </style>
     </head>
     <body>
-        <div class="mainPanel ">
+        <div class="mainPanel">
             <div class="panelInner">
                 <div class="middleContent">
                     <div class="container-fluid">
@@ -302,7 +306,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        <!-- </div> -->
+        @if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+            @endsection
+        @endif
         @push('script')
         <script>
             $(document).ready(function() {
