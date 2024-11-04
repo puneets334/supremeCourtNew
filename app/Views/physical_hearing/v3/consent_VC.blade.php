@@ -2,8 +2,8 @@
 use App\Models\PhysicalHearing\ConsentVCModel;
 use App\Models\PhysicalHearing\HearingModel;
 $segment = service('uri');
-$this->Consent_VC_model = new ConsentVCModel();
-$this->hearing_model = new HearingModel();
+$Consent_VC_model = new ConsentVCModel();
+$hearing_model = new HearingModel();
 ?>
 <style>
     .switch-field {
@@ -153,9 +153,9 @@ $this->hearing_model = new HearingModel();
                                                 ),
                                             );
                                             $aud_nomination_status=(intval(file_get_contents(base_url('consent/case_listed_in_daily_status/').$case['diary_no'], false, stream_context_create($arrContextOptions))));
-                                            $case_aor_details=$this->hearing_model->aorCount($case['diary_no']);
+                                            $case_aor_details = $hearing_model->aorCount($case['diary_no']);
                                             $aor_count=$case_aor_details[0]['advocate_count'];
-                                            $consent_result=$this->Consent_VC_model->get_advocate_last_updated_consent($case['diary_no'],$case['next_dt'],$case['roster_id'],getSessionData('login.adv_sci_bar_id'),$case['court_no']);
+                                            $consent_result = $Consent_VC_model->get_advocate_last_updated_consent($case['diary_no'],$case['next_dt'],$case['roster_id'],getSessionData('login.adv_sci_bar_id'),$case['court_no']);
                                             $pChecked='';
                                             $label='';
                                             $vChecked='';
@@ -267,7 +267,7 @@ $this->hearing_model = new HearingModel();
                                                         // $CI =&get_instance();
                                                         // $CI->load->model('Consent_VC_model');
                                                         foreach ($advocate_cases_summary as $court) {
-                                                            $consent_result=$this->Consent_VC_model->getAdvocateVCConsentSummary(getSessionData('login.adv_sci_bar_id'),$listing_date[0], $court['courtno']);
+                                                            $consent_result = $Consent_VC_model->getAdvocateVCConsentSummary(getSessionData('login.adv_sci_bar_id'),$listing_date[0], $court['courtno']);
                                                             ?>
                                                             <td><?=date('d-m-Y', strtotime($court['next_dt']))?></td>
                                                             <td><?=$court['court_no_display']?></td>

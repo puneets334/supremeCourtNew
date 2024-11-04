@@ -139,8 +139,8 @@ class PaymentResponse extends BaseController {
                     $payment_status = 'Y';
                     $save_payment_response_3 = array('payment_status' => $payment_status);                    
                     $save_payment_response = array_merge($save_payment_response_1, $save_payment_response_2, $save_payment_response_3);
-                    
-                    $_SESSION['MSG'] = message_show("success", 'Fee payment received successfully !');
+                    $this->session->setFlashdata('success', 'Fee payment received successfully !');
+                    //$_SESSION['MSG'] = message_show("success", 'Fee payment received successfully !');
                     $sentSMS = "Fee received successfully for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                 Receipt No. " . $transaction_num . ", of amount Rs. " . $received_amount . "/-. - Supreme Court of India";
                     // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
@@ -150,8 +150,9 @@ class PaymentResponse extends BaseController {
                 } elseif ($shciltxnstatus == 'pending') {
                     $payment_status = 'P';
                     $save_payment_response = array_merge($save_payment_response_1);
+                    $this->session->setFlashdata('fail', 'Fee payment status received still pending !');
                     
-                    $_SESSION['MSG'] = message_show("fail", 'Fee payment status received still pending !');
+                    // $_SESSION['MSG'] = message_show("fail", 'Fee payment status received still pending !');
                     $sentSMS = "Fee payment for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                 Receipt No. " . $grn_number . " still pending. - Supreme Court of India";
 
@@ -162,8 +163,9 @@ class PaymentResponse extends BaseController {
                     $payment_status = 'F';
                     $save_payment_response_3 = array('payment_status' => $payment_status);                    
                     $save_payment_response = array_merge($save_payment_response_1, $save_payment_response_3);                    
+                    $this->session->setFlashdata('fail', 'Fee payment failed !');
                     
-                    $_SESSION['MSG'] = message_show("fail", 'Fee payment failed !');
+                    // $_SESSION['MSG'] = message_show("fail", 'Fee payment failed !');
                     $sentSMS = "Fee payment for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                Receipt No. " . $grn_number . ",  of amount Rs. " . $received_amount . " failed due to some technical reason. If amount is deducted from your bank account, please check with your bank before retry. - Supreme Court of India";
                     // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-.  FAILED. Please check your bank account for any deduction before retrying to make payment");
@@ -174,8 +176,9 @@ class PaymentResponse extends BaseController {
                     $payment_status = 'C';
                     $save_payment_response_3 = array('payment_status' => $payment_status);                    
                     $save_payment_response = array_merge($save_payment_response_1, $save_payment_response_3);                    
+                    $this->session->setFlashdata('fail', 'Fee payment cancelled !');
                     
-                    $_SESSION['MSG'] = message_show("fail", 'Fee payment cancelled !');
+                    // $_SESSION['MSG'] = message_show("fail", 'Fee payment cancelled !');
                     $sentSMS = "Fee payment for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
                                 Receipt No. " . $grn_number . " cancelled. - Supreme Court of India";
 
