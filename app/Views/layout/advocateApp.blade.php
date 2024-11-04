@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,7 +29,6 @@
 		}
 	</style>
 </head>
-
 <body>
     <div id="loader-wrapper">
         <div id="loader"></div>
@@ -56,61 +54,62 @@
         </div>
         <footer class="footer-sec">Content Owned by Supreme Court of India</footer>
     </div>
-    <div class="add-new-area" tabindex="0" role="button">
-        <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
-        <div class="add-new-options">
-            <ul>
-                <li>
-                    <a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
-                </li>
-                <li>
-                    <a href="{{base_url('case/interim_application/crud')}}" class="add-lnk">IA</a>
-                </li>
-                <li>
-                    <a href="{{base_url('case/document/crud')}}" class="add-lnk">Misc. Docs</a>
-                </li>
-                <li>
-                    <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
-                </li>
-                <li>
-                    <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
-                </li>
-            </ul>
+    @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(USER_ADVOCATE)))
+        
+        <div class="add-new-area" tabindex="0" role="button">
+            <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
+            <div class="add-new-options">
+                <ul>
+                    <li>
+                        <a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/interim_application/crud')}}" class="add-lnk">IA</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/document/crud')}}" class="add-lnk">Misc. Docs</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-    {{-- <div class="add-new-area">
-		<a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
-		<div class="add-new-options">
-			<ul>
-				<li>
-					<a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
-    </li>
-    <li>
-        <a href="{{base_url('case/interim_application/crud')}}" class="add-lnk">IA</a>
-    </li>
-    <li>
-        <a href="{{base_url('case/document/crud')}}" class="add-lnk">Misc. Docs</a>
-    </li>
-    <li>
-        <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
-    </li>
-    <li>
-        <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
-    </li>
-    </ul>
-    </div>
-    </div> --}}
+        <!-- <div class="add-new-area">
+            <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
+            <div class="add-new-options">
+                <ul>
+                    <li>
+                        <a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/interim_application/crud')}}" class="add-lnk">IA</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/document/crud')}}" class="add-lnk">Misc. Docs</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
+                    </li>
+                    <li>
+                        <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+    @endif
     <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
-
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-
     <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
     <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
     <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>-->
-     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>  
+    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>  
     <script src="<?= base_url() ?>assets/js/sha256.js"></script>
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>
     <!-- scutum JS -->
@@ -127,7 +126,6 @@
     <script src="<?= base_url() ?>assets/newAdmin/js/fullcalendar.min.js"></script>
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.validate.min.js"></script>
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-
     <script>
         // $(document).ready(function() {
         //     var calendar = $('#calendar').fullCalendar({
@@ -221,12 +219,9 @@
         //         }
         //     });
         // });
-
         function isNumber(value) {
             return typeof value === 'number';
         }
-    </script>
-    <script>
         $(document).ready(function() {
             $('#loader-wrapper').show();
             var loaderTimeout = setTimeout(function() {
@@ -234,7 +229,6 @@
                     $('#content').fadeIn('slow');
                 });
             }, 1000);
-
             $(window).on('load', function() {
                 clearTimeout(loaderTimeout);
                 $('#loader-wrapper').fadeOut('slow', function() {
@@ -243,7 +237,5 @@
             });
         });
 	</script>
-    
 </body>
-
 </html>
