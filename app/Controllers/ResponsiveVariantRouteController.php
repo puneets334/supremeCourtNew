@@ -58,6 +58,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showDashboardAlt()
     {
+        
         $limit = '';
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
