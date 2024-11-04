@@ -1,4 +1,7 @@
- 
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @extends('layout.app')
+    @section('content')
+@endif 
 <?php
 $collapse_class = 'collapse';
 $area_extended = false;
@@ -340,6 +343,9 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
             </div>
         </div>
     <!-- </div>  -->
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @endsection
+@endif
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>

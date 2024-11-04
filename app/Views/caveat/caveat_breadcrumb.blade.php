@@ -1,10 +1,10 @@
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @extends('layout.app')
+    @section('content')
+@endif
 <?php
-
 use SebastianBergmann\Type\FalseType;
-
 $segment = service('uri');
-
-
 $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
 ?>
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
@@ -22,6 +22,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ?
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
 <?php
 $disabled_status1='pointer-events: none; cursor: default;';
 $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT);
@@ -146,7 +147,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 </div>
                 <div class="current-pg-actions">
                     <?php
-// print_r(CAVEAT_BREAD_VIEW); die;
+                    // print_r(CAVEAT_BREAD_VIEW); die;
 
                     if (in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
                         if ((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == Initial_Defected_Stage) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage)) {
@@ -603,13 +604,11 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                         <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
                         <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
                     </div>
-
                     <div class="btn-group">
                         <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-undo"></i></a>
                         <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-repeat"></i></a>
                     </div>
                 </div>
-
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
                 <textarea name="remark" id="descr"  style="display:none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
@@ -633,7 +632,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 </h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
             <?php
             $attribute = array('name' => 'mark_as_error', 'id' => 'mark_as_error', 'autocomplete' => 'off');
             echo form_open(base_url('admin/EfilingAction/markAsErrorCase'), $attribute);
@@ -712,15 +710,11 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="checkAllSections"></div>
-            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div">
-            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div"></div>
             <a data-efilingType="<?php echo strtolower($filing_type);?>" class="btn btn-primary" id="createDiaryNo" type="button" style="margin-left: 224px;margin-bottom: 23px;">Generate Diary No.</a>
         </div>
-
     </div>
 </div>
-
-
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding-right: 15px;margin-left:-257px;">
     <div class="modal-dialog" role="document">
@@ -734,13 +728,11 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             </div>
             <div class="modal-footer">
                 <button type="button"  data-close="1" class="btn btn-secondary closeButton" data-dismiss="modal">Close</button>
-<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+                <!-- <button type="button" class="btn btn-primary">Save changes</button>-->
             </div>
         </div>
     </div>
 </div>
-
-
 <div class="modal fade" id="holdModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -757,11 +749,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 <a href="<?php echo base_url('admin/efilingAction/hold'); ?>" class="btn btn-success">Yes</a>
             </div>
         </div>
-
     </div>
 </div>
-
-
 <div class="modal fade" id="disposedModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -778,9 +767,11 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 <a href="<?php echo base_url('admin/efilingAction/disposed'); ?>" class="btn btn-success">Yes</a>
             </div>
         </div>
-
     </div>
 </div>
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+    @endsection
+@endif
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
@@ -796,7 +787,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 <!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <!-- <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>     -->
 <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
-<link rel="stylesheet" href="<?=base_url();?>assets/css/sweetalert.css"> 
 <script>
     function ActionToTrash(trash_type) {       
         event.preventDefault();
@@ -841,22 +831,15 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             }
         });
     }
-</script>
-
-<script>
     document.getElementById("copyButton").addEventListener("click", function() {
         copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
     });
-
     document.getElementById("copyButton2").addEventListener("click", function() {
         copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
     });
-
     document.getElementById("pasteTarget").addEventListener("mousedown", function() {
         this.value = "";
     });
-
-
     function copyToClipboardMsg(elem, msgElem) {
         var EfilingNumber = document.getElementById('copyTarget_EfilingNumber').innerHTML;
         var succeed = copyToClipboard(elem);
@@ -872,10 +855,9 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         }
         msgElem.innerHTML = msg;
         /* setTimeout(function() {
-                msgElem.innerHTML = "";
-            }, 5000);*/
+            msgElem.innerHTML = "";
+        }, 5000);*/
     }
-
     function copyToClipboard(elem) {
         // create hidden text element, if it doesn't already exist
         var targetId = "_hiddenCopyText_";
@@ -903,7 +885,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         var currentFocus = document.activeElement;
         target.focus();
         target.setSelectionRange(0, target.value.length);
-
         // copy the selection
         var succeed;
         try {
@@ -915,7 +896,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         if (currentFocus && typeof currentFocus.focus === "function") {
             currentFocus.focus();
         }
-
         if (isInput) {
             // restore prior selection
             elem.setSelectionRange(origSelectionStart, origSelectionEnd);
@@ -925,10 +905,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         }
         return succeed;
     }
-</script>
-
-
-<script>
     function get_objection(obj_id, obj_checked) {
         if (obj_checked.is(':checked')) {
             var obj = $("#obj_" + obj_id).text();
@@ -981,7 +957,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             if(pending_court_fee>0){
                 var court_fee_payment_details = $('#is_verified').val();
                 var result = court_fee_payment_details.split('#');
-
                 if ((result[0] ==='f' && result[1]>0 && pending_court_fee > 0)){
                     alert('Please verify court fee before generating diary number.');
                     return false;
@@ -989,7 +964,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             }
             /*var court_fee_payment_details = $('#is_verified').val();
             var result = court_fee_payment_details.split('#');
-
             if ((result[0] ==='f' && result[1]>0 && pending_court_fee > 0)){
                 alert('Please verify court fee before generating diary number.');
                 return false;
@@ -1006,14 +980,12 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             //     if(typeof fieldValue == 'undefined'){
             //         noError = false;
             //         arr.push(name);
-            //     }
-            //     else{
+            //     } else{
             //         if(fieldValue =='0'){
             //             $("#error_"+name).text('Select this field');
             //             $("#error_"+name).css( { "margin-left" : "6px", "color": "red"} );
             //             noError = false;
-            //         }
-            //         else{
+            //         } else{
             //             $("#error_"+name).text('');
             //             var checkObject = {};
             //             checkObject.field_name = name;
@@ -1023,20 +995,19 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             //         }
             //     }
             // });
-           // var arr = arr.filter(uniqueArr);
-           // const  keys = ['field_name'];
-           //  const  filteredData = stepValue.filter((s => o =>(k => !s.has(k) && s.add(k))
-           //             (keys.map(k => o[k]).join('|')))
-           //          (new Set)
-           //      );
-           //  if(arr){
-           //      for(var i=0;i<arr.length;i++){
-           //          $("#error_"+arr[i]).text('Select this field');
-           //          $("#error_"+arr[i]).css( { "margin-left" : "6px", "color": "red"} );
-           //          noError = false;
-           //      }
-           //  }
-
+            // var arr = arr.filter(uniqueArr);
+            // const  keys = ['field_name'];
+            //  const  filteredData = stepValue.filter((s => o =>(k => !s.has(k) && s.add(k))
+            //             (keys.map(k => o[k]).join('|')))
+            //          (new Set)
+            //      );
+            //  if(arr){
+            //      for(var i=0;i<arr.length;i++){
+            //          $("#error_"+arr[i]).text('Select this field');
+            //          $("#error_"+arr[i]).css( { "margin-left" : "6px", "color": "red"} );
+            //          noError = false;
+            //      }
+            //  }
             if(file_type == 'new_case'){
                 filteredData.push({field_name: "case_detail", field_value: "1"});
                 filteredData.push({field_name: "petitioner", field_value: "1"});
@@ -1049,8 +1020,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 filteredData.push({field_name: "index", field_value: "1"});
                 filteredData.push({field_name: "pay_court_fee", field_value: "1"});
                 typeGeneration ='diary no.';
-            }
-            else if(file_type == 'caveat'){
+            } else if(file_type == 'caveat'){
                 filteredData.push({field_name: "caveator", field_value: "1"});
                 filteredData.push({field_name: "caveatee", field_value: "1"});
                 filteredData.push({field_name: "extra_party", field_value: "1"});
@@ -1062,62 +1032,61 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             }
             var conformRes =  confirm("Are you sure want to generate "+typeGeneration+" ?");
             if(noError && file_type && conformRes){
-            var CSRF_TOKEN = 'CSRF_TOKEN';
-            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-            var postData = {CSRF_TOKEN: CSRF_TOKEN_VALUE, file_type: file_type};
-            $.ajax({
-                type: "POST",
-                data: JSON.stringify(postData),
-                url: "<?php echo base_url('newcase/Ajaxcalls/getAllFilingDetailsByRegistrationId'); ?>",
-                dataType:'json',
-                ContentType: 'application/json',
-                cache:false,
-                async: false,
-                beforeSend: function() {
-                    $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php echo base_url('assets/images/loading-data.gif');?>">');
-                    $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
-                },
-                success: function (data){
-                    if(typeof data == 'string'){
-                        data = JSON.parse(data);
-                    }
-                    // console.log(data);
-                    // return false;
-                    if(data){
-                        $("#exampleModal").modal('show');
-                        $('#generateDiaryNoDiv').modal('hide');
-                        var diaryStatus ='';
-                        var diaryNo = '';
-                        var insertData = {};
-                        var status = '';
-                        var diaryData ='';
-                        var alloted_to ='';
-                        var insertedDocNums ='';
-                        if(data.status == 'SUCCESS') {
-                            diaryStatus = 'new_diary';
-                            if (data.diary_no) {
-                                diaryNo = data.diary_no;
-                            }
-                            if (data.alloted_to) {
-                                alloted_to = data.alloted_to;
-                            }
-                            if (data.insertedDocNums) {
-                                insertedDocNums = data.insertedDocNums;
-                            }
-                            if (data.status) {
-                                status = data.status;
-                            }
-                            if (data.records_inserted) {
-                                insertData.records_inserted = data.records_inserted;
-                            }
+                var CSRF_TOKEN = 'CSRF_TOKEN';
+                var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                var postData = {CSRF_TOKEN: CSRF_TOKEN_VALUE, file_type: file_type};
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(postData),
+                    url: "<?php echo base_url('newcase/Ajaxcalls/getAllFilingDetailsByRegistrationId'); ?>",
+                    dataType:'json',
+                    ContentType: 'application/json',
+                    cache:false,
+                    async: false,
+                    beforeSend: function() {
+                        $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php echo base_url('assets/images/loading-data.gif');?>">');
+                        $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+                    },
+                    success: function (data){
+                        if(typeof data == 'string'){
+                            data = JSON.parse(data);
+                        }
+                        // console.log(data);
+                        // return false;
+                        if(data){
+                            $("#exampleModal").modal('show');
+                            $('#generateDiaryNoDiv').modal('hide');
+                            var diaryStatus ='';
+                            var diaryNo = '';
+                            var insertData = {};
+                            var status = '';
+                            var diaryData ='';
+                            var alloted_to ='';
+                            var insertedDocNums ='';
+                            if(data.status == 'SUCCESS') {
+                                diaryStatus = 'new_diary';
+                                if (data.diary_no) {
+                                    diaryNo = data.diary_no;
+                                }
+                                if (data.alloted_to) {
+                                    alloted_to = data.alloted_to;
+                                }
+                                if (data.insertedDocNums) {
+                                    insertedDocNums = data.insertedDocNums;
+                                }
+                                if (data.status) {
+                                    status = data.status;
+                                }
+                                if (data.records_inserted) {
+                                    insertData.records_inserted = data.records_inserted;
+                                }
                                 insertData.diaryNo = diaryNo;
                                 insertData.alloted_to = alloted_to;
                                 insertData.insertedDocNums = insertedDocNums;
                                 insertData.status = status;
                                 insertData.selectedcheckBox = filteredData;
                                 insertData.diaryStatus = diaryStatus;
-                            }
-                            else  if(data.status == 'ERROR_ALREADY_IN_ICMIS') {
+                            } else  if(data.status == 'ERROR_ALREADY_IN_ICMIS') {
                                 var errorMessage = data.error.split(" ");
                                 diaryData = errorMessage.pop();
                                 diaryStatus = 'exist_diary';
@@ -1132,27 +1101,24 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                                 insertData.status = status;
                                 insertData.selectedcheckBox = filteredData;
                                 insertData.diaryStatus = diaryStatus;
-                            }
-                            else  if(data.status == 'ERROR_MAIN') {
+                            } else  if(data.status == 'ERROR_MAIN') {
+                                $("#customErrorMessage").html('');
+                                $("#customErrorMessage").html(data.error);
+                                $("#customErrorMessage").css('color','green');
+                                $("#customErrorMessage").css({ 'font-size': '30px' });
+                                return false;
+                            } else if(data.status == 'ERROR_CAVEAT'){
                                 $("#customErrorMessage").html('');
                                 $("#customErrorMessage").html(data.error);
                                 $("#customErrorMessage").css('color','green');
                                 $("#customErrorMessage").css({ 'font-size': '30px' });
                                 return false;
                             }
-                            else if(data.status == 'ERROR_CAVEAT'){
-                                $("#customErrorMessage").html('');
-                                $("#customErrorMessage").html(data.error);
-                                $("#customErrorMessage").css('color','green');
-                                $("#customErrorMessage").css({ 'font-size': '30px' });
-                                return false;
-                             }
                             if(insertData){
                                 if(file_type == 'new_case'){
                                     $('#createDiaryNo').html('Generate Diary No.');
                                     var errorMessage ='Diary no. generation has been successfully!';
-                                }
-                                else{
+                                } else{
                                     $('#createDiaryNo').html('Generate Caveat No.');
                                     var errorMessage ='Caveat no. generation has been successfully!';
                                 }
@@ -1160,66 +1126,60 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                                 $("#customErrorMessage").html(errorMessage);
                                 $("#customErrorMessage").css('color','green');
                                 $("#customErrorMessage").css({ 'font-size': '30px' });
-                                    $.ajax({
-                                        type: "POST",
-                                        data: JSON.stringify(insertData),
-                                        url: "<?php echo base_url('newcase/Ajaxcalls/updateDiaryDetails'); ?>",
-                                        dataType:'json',
-                                        ContentType: 'application/json',
-                                        cache:false,
-                                        beforeSend: function() {
-                                            $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
-                                        },
-                                        success: function(updateData){
-                                            // console.log(updateData);
-                                            // return false;
-                                            $("#loader_div").html('');
-                                            if(updateData.success == 'success'){
-                                                $("#customErrorMessage").html('');
-                                                $("#customErrorMessage").html(updateData.message);
-                                            }
-                                            else  if(updateData.success == 'error'){
-                                                $("#customErrorMessage").html('');
-                                                $("#customErrorMessage").html(updateData.message);
-                                            }
-                                            else{
-                                                $("#customErrorMessage").html('');
-                                                $("#customErrorMessage").html(updateData.message);
-                                            }
+                                $.ajax({
+                                    type: "POST",
+                                    data: JSON.stringify(insertData),
+                                    url: "<?php echo base_url('newcase/Ajaxcalls/updateDiaryDetails'); ?>",
+                                    dataType:'json',
+                                    ContentType: 'application/json',
+                                    cache:false,
+                                    beforeSend: function() {
+                                        $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+                                    },
+                                    success: function(updateData){
+                                        // console.log(updateData);
+                                        // return false;
+                                        $("#loader_div").html('');
+                                        if(updateData.success == 'success'){
+                                            $("#customErrorMessage").html('');
+                                            $("#customErrorMessage").html(updateData.message);
+                                        } else  if(updateData.success == 'error'){
+                                            $("#customErrorMessage").html('');
+                                            $("#customErrorMessage").html(updateData.message);
+                                        } else{
+                                            $("#customErrorMessage").html('');
+                                            $("#customErrorMessage").html(updateData.message);
                                         }
-                                    });
+                                    }
+                                });
                             }
-
-                        // else {
-                        //         var errorMessage = data.error;
-                        //         $("#customErrorMessage").html('');
-                        //         $("#customErrorMessage").html(errorMessage);
-                        //         $("#customErrorMessage").css('color','red');
-                        //         $("#customErrorMessage").css({'font-size': '15px'});
-                        //         $('#createDiaryNo').html('Generate Diary No.');
-                        // }
+                            // else {
+                            //     var errorMessage = data.error;
+                            //     $("#customErrorMessage").html('');
+                            //     $("#customErrorMessage").html(errorMessage);
+                            //     $("#customErrorMessage").css('color','red');
+                            //     $("#customErrorMessage").css({'font-size': '15px'});
+                            //     $('#createDiaryNo').html('Generate Diary No.');
+                            // }
+                        }
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                            $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                        });
+                    },
+                    error: function () {
+                        $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                            $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                        });
                     }
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                },
-                error: function () {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                }
-            });
-        }
-
+                });
+            }
         });
-
         $(document).on('click','.closeButton',function(){
             var closeButtonAttr = $(this).attr('data-close');
             if(closeButtonAttr == 1){
                 window.location.reload();
             }
         });
-
         $('#disapp_case input').on('change', function () {
             var checkedValue = $('input[name=crt_fee_status]:checked', '#disapp_case').val();
             $('#disapprove_alerts').hide();
@@ -1228,26 +1188,18 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 $('#def_crt_fee').focus();
                 $('#def_crt_fee').attr('required', true);
                 $('#def_crt_fee').attr('disabled', false);
-
             } else {
                 $('#def_crt_fee').attr('required', false);
                 $('#def_crt_fee').attr('disabled', true);
                 $('#def_crt_fee').val('');
             }
-
         });
-
-
         $('#disapprove_me').click(function () {
-
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
-            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';
-
-            
+            var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';            
             if (efiling_type_id  !="") {
                 $('#disapprove_alerts').show();
-
                 if (temp.length > 500) {
                     $('#disapprove_alerts').show();
                     $('#disapprove_alerts').html("<p class='message invalid' id='msgdiv'>Maximum length 500 allowed. <span class='close' onclick=hideMessageDiv()>X</span></p>");
@@ -1258,11 +1210,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                     $('#descr').val($('#editor-one').html());
                     $('#disapp_case').submit();
                 }
-
-
             }
         });
-
         $('#markaserror').click(function () {
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
@@ -1327,7 +1276,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 });
             }
         });
-
     });
     $('#disapproveModal').on('hidden.bs.modal', function (e) {
         $(this).find('form').trigger('reset');
@@ -1344,8 +1292,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     function uniqueArr(value, index, self) {
         return self.indexOf(value) === index;
     }
-    function getAmtValue(amt)
-    {
+    function getAmtValue(amt) {
         //var regex = /^[0-9]*\.?[0-9]*$/;
         var regex = /^[0-9]*$/;
         if (regex.test(amt)) {
