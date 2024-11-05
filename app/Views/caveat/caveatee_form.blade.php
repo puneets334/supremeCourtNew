@@ -199,7 +199,6 @@ span.select2.select2-container.select2-container--default {
                             
                         </div>
                     </div>
-
                     
                         <div id="org_form" style="<?php echo $showHideOtherIndividual;?>">
                         <div class="row">
@@ -217,7 +216,7 @@ span.select2.select2-container.select2-container--default {
                                                 $select_organization ='';
                                                 if(isset($state_list) && !empty($state_list)){
                                                     foreach ($state_list as $k=>$v){
-                                                        if(!empty($caveatee_details[0]['res_state_id']) && trim($caveatee_details[0]['res_state_id']) == $v->cmis_state_id){
+                                                        if(!empty($caveatee_details[0]['res_org_state']) && trim($caveatee_details[0]['res_org_state']) == $v->cmis_state_id){
                                                             $select_organization = 'selected="selected"';
                                                         }
                                                         else{
@@ -486,8 +485,33 @@ span.select2.select2-container.select2-container--default {
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script> 
 
 @push('script') 
-
 <script>
+        $(document).ready(function () {
+        var party_as_sel = '<?php echo isset($caveatee_details[0]['resorgid'])?$caveatee_details[0]['resorgid']:''; ?>';
+
+        var OrgState_ID= '<?php echo isset($caveatee_details[0]['res_org_state'])?$caveatee_details[0]['res_org_state']:''; ?>';
+        var OrgDept_ID='<?php echo isset($caveatee_details[0]['res_org_dept'])?$caveatee_details[0]['res_org_dept']:''; ?>';
+        var OrgPost_ID='<?php echo isset($caveatee_details[0]['res_org_post'])?$caveatee_details[0]['res_org_post']:''; ?>';
+        //alert(OrgDept_ID);
+        if(OrgState_ID==0 && OrgState_ID!=''){
+            $('#otherOrgState').show();
+            var OrgState_NAME='<?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?>';
+            $('#res_org_state_name').text(OrgState_NAME);
+        }
+        if(OrgDept_ID==0 || OrgDept_ID==''){
+            $('#otherOrgDept').show();
+            var OrgDept_NAME='<?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?>';
+            $('#res_org_dept_name').text(OrgDept_NAME);
+        }
+        if(OrgPost_ID==0 || OrgPost_ID==''){
+            $('#otherOrgPost').show();
+            var OrgPost_NAME='<?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?>';
+            $('#res_org_post_name').text(OrgPost_NAME);
+        }
+        if (party_as_sel != '') {
+            get_caveator_as(party_as_sel);//--call to selected
+        }
+    });
     function get_caveator_as(value) {        
         var party_as = value;
         if (party_as == 'I') {

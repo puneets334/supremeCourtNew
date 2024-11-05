@@ -25,8 +25,6 @@
                             {{-- Page Title End --}}
                             {{-- Main Start --}}
                             <div class="profile-details">
-                                
-
                                 <div class="row mt-4">
                                     <div class="col-md-12">
                                         <div class="col-md-7 col-xs-6">
@@ -49,8 +47,7 @@
                                                     echo htmlentities($user_type, ENT_QUOTES);
                                                 }
                                                 ?>
-                                                ) </h2>
-
+                                                )
                                             </h2>
                                         </div>
                                     </div>
@@ -64,7 +61,6 @@
                                                         </div>
                                                         <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                             <div class="prof-outp">
-                                                                
                                                                 <?= $profile->first_name ?>
                                                             </div>
                                                         </div>
@@ -77,7 +73,7 @@
                                                         </div>
                                                         <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                             <div class="prof-outp">
-                                                            <?= $profile->bar_reg_no ?> 
+                                                                <?= $profile->bar_reg_no ?> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -193,6 +189,7 @@
                                                                 }
                                                                 echo $moblie_number;
                                                                 ?>
+                                                                <a href="<?= base_url('profile/updateProfile/contact'); ?>"><i class="fa fa-edit"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -211,7 +208,8 @@
                                                                     $emailid = '<span style="color:red;">' . htmlentities('Update Your Email ID ', ENT_QUOTES) . '</span>';
                                                                 }
                                                                 echo $emailid;
-                                                                ?>
+                                                                ?> 
+                                                                <a href="<?= base_url('profile/updateProfile/email'); ?>"><i class="fa fa-edit"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -221,11 +219,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- -----  -->
-
-                            <!-- /page content -->
-
                             {{-- Main End --}}
                         </div>
                     </div>
@@ -246,16 +239,12 @@
             $('#select2-hc_name-container').text('Select');
             $('#select2-hc_name-container').attr('title', 'Select');
             $('#hc_name').prop('selectedIndex', 0);
-
             $('#estab_list').val('');
             $('#select2-estab_list-container').text('Select');
             $('#select2-estab_list-container').attr('title', 'Select');
-
-
             $('#select2-st_id-container').text('Select State');
             $('#select2-st_id-container').attr('title', 'Select State');
             $('#st_id').prop('selectedIndex', 0);
-
             $('#select2-dt_district-container').text('Select District');
             $('#select2-dt_district-container').attr('title', 'Select District');
             $('#dt_district').prop('selectedIndex', 0);
