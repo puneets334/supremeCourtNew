@@ -137,9 +137,9 @@ class DefaultController extends BaseController
             $data['user_type_id'] = $user_type_id;
             $data['aor_code'] = $aor_code;
             $header_view = ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK || $_SESSION['login']['ref_m_usertype_id'] == SR_ADVOCATE) ? 'templates/header' : 'templates/admin_header';
-            return $this->render('profile.profile_view', $data);
+            return render('profile.profile_view', $data);
         } else {
-            return redirect()->to('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
@@ -150,14 +150,14 @@ class DefaultController extends BaseController
         if ($session->get('login')) {
             $data['updatedata'] = $param;
             if (!in_array($param, array('email', 'contact', 'other', 'address', 'pass', 'estab'))) {
-                return redirect()->to('profile');
+                return redirect()->to(base_url('profile'));
             }
             $data['state_list'] = $this->Register_model->get_state_list();
             $data['profile'] = $this->Profile_model->getProfileDetail($session->get('login')['userid']);
             $session->set('login_salt', $this->generateRandomString());
-            return $this->render('profile.profile_update_view', $data);
+            return render('profile.profile_update_view', $data);
         } else {
-            return redirect()->to('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
@@ -265,30 +265,38 @@ class DefaultController extends BaseController
             } else {
                 $data['profile'] = $this->Profile_model->getProfileDetail($session->get('login')['userid']);
                 $data['updatedata'] = 'pass';
-                return $this->render('profile.profile_update_view', $data);
+                return render('profile.profile_update_view', $data);
             }
         } else {
-            return redirect()->to('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     public function updateEmail()
     {
-        if ($this->session->userdata['login']) {
+        $session = session();
+        if ($session->get('login')) {
             $emailid = escape_data($this->request->getPost("emailid"));
             $email_pattern = "/^[_a-zA-Z0-9-]+(\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$/";
             if (!preg_match($email_pattern, $emailid)) {
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Wrong email address !!</div>');
-                redirect('profile/DefaultController/updateProfile/email');
+                return redirect()->to(base_url('profile/updateProfile/email'));
             }
             $check_email = $this->Common_login_model->check_email_already_present(strtoupper($emailid));
             if ($check_email) {
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">This email id already registered !</div>');
-                redirect('profile/DefaultController/updateProfile/email');
+                return redirect()->to(base_url('profile/updateProfile/email'));
             }
             //set validations
-            $this->form_validation->set_rules("emailid", "Email Id", "trim|required|valid_email");
-            if ($this->form_validation->run() == TRUE) {
+            // $this->form_validation->set_rules("emailid", "Email Id", "trim|required|valid_email");
+            // if ($this->form_validation->run() == TRUE) {
+            $rules = [
+                "emailid" => [
+                    "label" => "Email Id",
+                    "rules" => "required|trim|valid_email"
+                ]
+            ];
+            if ($this->validate($rules) === TRUE) {
                 //validation succeeds
                 if (isset($_POST['update_email'])) {
                     $previous_emailid = $this->Profile_model->selectEmail($_SESSION['login']['userid']);
@@ -306,51 +314,59 @@ class DefaultController extends BaseController
                         $user_name = $_SESSION['login']['first_name'] . " " . $_SESSION['login']['last_name'];
                         send_mail_msg($emailid, $subject, $Mail_message, $user_name);
                         if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-                            $this->load->view('templates/header');
+                            // $this->load->view('templates/header');
                         } else {
-                            $this->load->view('templates/admin_header');
+                            // $this->load->view('templates/admin_header');
                         }
-                        $this->load->view('profile/profile_update_view', $data);
-                        $this->load->view('templates/footer');
+                        return render('profile.profile_update_view', $data);
+                        // $this->load->view('templates/footer');
                     } else {
                         $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Enter different email Id!</div>');
-                        redirect('profile');
+                        return redirect()->to(base_url('profile'));
                     }
                 }
             } else {
-                $data['profile'] = $this->Profile_model->getProfileDetail($this->session->userdata['login']['userid']);
+                $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
                 $data['updatedata'] = 'email';
                 if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-                    $this->load->view('templates/header');
+                    // $this->load->view('templates/header');
                 } else {
-                    $this->load->view('templates/admin_header');
+                    // $this->load->view('templates/admin_header');
                 }
-                $this->load->view('profile/profile_update_view', $data);
-                $this->load->view('templates/footer');
+                return render('profile.profile_update_view', $data);
+                // $this->load->view('templates/footer');
             }
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     public function updateContact()
     {
-        if ($this->session->userdata['login']) {
+        $session = session();
+        if ($session->get('login')) {
             $mobile_number = escape_data($this->request->getPost("moblie_number"));
             if (!isset($mobile_number)) {
-                redirect('login');
+                return redirect()->to(base_url('login'));
             }
             if (!preg_match("/^[0-9]{10}$/", $mobile_number)) {
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Wrong contact number !!</div>');
-                redirect('profile/DefaultController/updateProfile/contact');
+                return redirect()->to(base_url('profile/updateProfile/contact'));
             }
             $check_mobno = $this->Common_login_model->check_mobno_already_present(strtoupper($mobile_number));
             if ($check_mobno) {
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">This mobile number already registered !</div>');
-                redirect('profile/DefaultController/updateProfile/contact');
+                return redirect()->to(base_url('profile/updateProfile/contact'));
             }
-            $this->form_validation->set_rules("moblie_number", "Contact", "trim|required|numeric|min_length[10]|max_length[10]");
-            if ($this->form_validation->run() == TRUE) {
+            // $this->form_validation->set_rules("moblie_number", "Contact", "trim|required|numeric|min_length[10]|max_length[10]");
+            // if ($this->form_validation->run() == TRUE) {
+            $rules = [
+                "moblie_number" => [
+                    "label" => "Contact",
+                    "rules" => "trim|required|numeric|min_length[10]|max_length[10]"
+                ]
+            ];
+            if ($this->validate($rules) === TRUE) {
                 //validation succeeds
                 if (isset($_POST['moblie_number'])) {
                     $previous_mobile_number = $this->Profile_model->selectContact($_SESSION['login']['userid']);
@@ -365,72 +381,81 @@ class DefaultController extends BaseController
                         $data['moblie_number'] = $mobile_number;
                         $sentSMS = "OTP is " . $rand . " to validate your new mobile no. with eFiling application. - Supreme Court of India";
                         $responseObj = send_mobile_sms($mobile_number, $sentSMS, SCISMS_New_Mobile_No_Validation);
-                        $user_name = $this->session->userdata['login']['first_name'] . ' ' . $this->session->userdata['login']['last_name'];
-                        $this->load->view('templates/header');
-                        $this->load->view('profile/profile_update_view', $data);
-                        $this->load->view('templates/footer');
+                        $user_name = $session->get('login')['first_name'] . ' ' . $session->get('login')['last_name'];
+                        // $this->load->view('templates/header');
+                        return render('profile.profile_update_view', $data);
+                        // $this->load->view('templates/footer');
                     } else {
                         $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Enter different Contact!</div>');
-                        redirect('profile');
+                        return redirect()->to(base_url('profile'));
                     }
                 }
             } else {
-                $data['profile'] = $this->Profile_model->getProfileDetail($this->session->userdata['login']['userid']);
+                $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
                 $data['updatedata'] = 'contact';
                 if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-                    $this->load->view('templates/header');
+                    // $this->load->view('templates/header');
                 } else {
-                    $this->load->view('templates/admin_header');
+                    // $this->load->view('templates/admin_header');
                 }
-                $this->load->view('profile/profile_update_view', $data);
-                $this->load->view('templates/footer');
+                return render('profile.profile_update_view', $data);
+                // $this->load->view('templates/footer');
             }
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     public function updateOther()
     {
-        if ($this->session->userdata['login']) {
+        $session = session();
+        if ($session->get('login')) {
             $other_contact_number = escape_data($this->request->getPost("other_contact_number"));
             if (!preg_match("/^[0-9]{10}$/", $other_contact_number)) {
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Other contact number should be 10 digit !</div>');
-                redirect('profile/DefaultController/updateProfile/other');
+                return redirect()->to(base_url('profile/updateProfile/other'));
             }
-            $this->form_validation->set_rules("other_contact_number", "Other Contact No.", "trim|numeric|min_length[10]|max_length[10]");
-            if ($this->form_validation->run() == TRUE) {
+            // $this->form_validation->set_rules("other_contact_number", "Other Contact No.", "trim|numeric|min_length[10]|max_length[10]");
+            // if ($this->form_validation->run() == TRUE) {
+            $rules = [
+                "other_contact_number" => [
+                    "label" => "Other Contact No.",
+                    "rules" => "trim|numeric|min_length[10]|max_length[10]"
+                ]
+            ];
+            if ($this->validate($rules) === TRUE) {
                 //validation succeeds
                 if (isset($_POST['update_other'])) {
-                    $previous_other_contact_number = $this->Profile_model->selectOtherContact($this->session->userdata['login']['userid']);
+                    $previous_other_contact_number = $this->Profile_model->selectOtherContact(getSessionData('login')['userid']);
                     if ($previous_other_contact_number[0]->other_contact_number != $other_contact_number) {
-                        $this->Profile_model->updateOtherContact($this->session->userdata['login']['userid'], $other_contact_number);
+                        $this->Profile_model->updateOtherContact(getSessionData('login')['userid'], $other_contact_number);
                         $this->session->setFlashdata('msg', '<div class="alert alert-success alert-dismissible text-center flashmessage">Other Contact No. Updated successfully !</div>');
-                        redirect('profile');
+                        return redirect()->to(base_url('profile'));
                     } else {
                         $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Enter different Contact!</div>');
-                        redirect('profile/DefaultController/updateProfile/other');
+                        return redirect()->to(base_url('profile/updateProfile/other'));
                     }
                 }
             } else {
-                $data['profile'] = $this->Profile_model->getProfileDetail($this->session->userdata['login']['userid']);
+                $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
                 $data['updatedata'] = 'other';
                 if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-                    $this->load->view('templates/header');
+                    // $this->load->view('templates/header');
                 } else {
-                    $this->load->view('templates/admin_header');
+                    // $this->load->view('templates/admin_header');
                 }
-                $this->load->view('profile/profile_update_view', $data);
-                $this->load->view('templates/footer');
+                return render('profile.profile_update_view', $data);
+                // $this->load->view('templates/footer');
             }
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     public function updateAddress()
     {
-        if ($this->session->userdata['login']) {
+        $session = session();
+        if ($session->get('login')) {
             $data['address1'] = escape_data($this->request->getPost("address1"));
             $data['address2'] = escape_data($this->request->getPost("address2"));
             $data['city'] = escape_data($this->request->getPost("city"));
@@ -450,11 +475,11 @@ class DefaultController extends BaseController
             $this->form_validation->set_rules("city", "City", "trim|required|alpha_numeric_spaces|max_length[101]");
             $this->form_validation->set_rules("pincode", "Pincode", "trim|required|numeric|min_length[6]|max_length[6]");
             if ($this->form_validation->run() == TRUE) {
-                $this->Profile_model->updateAddress($this->session->userdata['login']['userid'], $data);
+                $this->Profile_model->updateAddress(getSessionData('login')['userid'], $data);
                 $this->session->setFlashdata('msg', '<div class="alert alert-success alert-dismissible text-center flashmessage">Address Updated successfully !</div>');
                 redirect('profile');
             } else {
-                $data['profile'] = $this->Profile_model->getProfileDetail($this->session->userdata['login']['userid']);
+                $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
                 $data['updatedata'] = 'address';
                 if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
                     $this->load->view('templates/header');
@@ -465,60 +490,62 @@ class DefaultController extends BaseController
                 $this->load->view('templates/footer');
             }
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     public function emailSave()
     {
-        if ($this->session->userdata['login']) {
+        $session = session();
+        if ($session->get('login')) {
             if (isset($_POST['email_save'])) {
                 $emailid = escape_data(getSessionData('email_id_for_updation'));
                 $otp = escape_data($this->request->getPost("email_otp"));
                 if (!preg_match("/^[0-9]*$/", $otp)) {
                     $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Wrong OTP !!</div>');
-                    redirect('profile');
+                    return redirect()->to(base_url('profile'));
                 }
-                if ($otp == $this->session->userdata['login']['email_otp']) {
-                    $this->Profile_model->updateEmail($this->session->userdata['login']['userid'], $emailid);
-                    $this->session->destroy('email_otp');
-                    $this->session->destroy('email_id_for_updation');
+                if ($otp == getSessionData('login')['email_otp']) {
+                    $this->Profile_model->updateEmail(getSessionData('login')['userid'], $emailid);
+                    unset($_SESSION['email_otp']);
+                    unset($_SESSION['email_id_for_updation']);
                     $this->session->setFlashdata('msg', '<div class="alert alert-success alert-dismissible text-center flashmessage">Email Updated successfully !</div>');
-                    redirect('profile');
+                    return redirect()->to(base_url('profile'));
                 } else {
                     $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Invalid OTP!</div>');
-                    redirect('profile');
+                    return redirect()->to(base_url('profile'));
                 }
             }
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     public function mobileSave()
     {
-        if ($this->session->userdata['login']) {
+        $session = session();
+        if ($session->get('login')) {
             if (isset($_POST['mobile_save'])) {
                 $mobile_number = escape_data(getSessionData('mobile_no_for_updation'));
                 $otp = $this->request->getPost("mobile_otp");
-                if ($otp == $this->session->userdata['login']['mobile_otp']) {
-                    $result = $this->Profile_model->updateContact($this->session->userdata['login']['userid'], $mobile_number);
+                if ($otp == $session->get('login')['mobile_otp']) {
+                    $result = $this->Profile_model->updateContact($session->get('login')['userid'], $mobile_number);
                     if ($result) {
-                        $this->session->destroy('mobile_otp');
-                        $this->session->destroy('mobile_no_for_updation');
+                        unset($_SESSION['mobile_otp']);
+                        unset($_SESSION['mobile_no_for_updation']);
                         $this->session->setFlashdata('msg', '<div class="alert alert-success alert-dismissible text-center flashmessage">Contact Updated successfully!</div>');
-                        redirect('profile');
+                        return redirect()->to(base_url('profile'));
                     } else {
                         $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Updation Failed! Contact may be exist!</div>');
-                        redirect('profile');
+                        return redirect()->to(base_url('profile'));
                     }
                 } else {
                     $this->session->setFlashdata('msg', '<div class="alert alert-danger alert-dismissible text-center flashmessage">Invalid OTP!</div>');
-                    redirect('profile');
+                    return redirect()->to(base_url('profile'));
                 }
             }
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
@@ -529,35 +556,33 @@ class DefaultController extends BaseController
         ///------START : Validation For IMAGE-------//
         if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload !</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload !</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
-
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image No double extension allowed in JPEG/JPG !</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
-
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
             exit(0);
         }
         if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
             $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
             exit(0);
         }
         $new_filename = time() . rand() . ".jpeg";
@@ -586,27 +611,25 @@ class DefaultController extends BaseController
             'id_proof_photo' => $pdf_file_path,
             'bar_reg_certificate' => $bar_reg_certificate_path
         );
-
         $id = $_SESSION['inserted_id'];
         $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
         $upload_pdf = $this->pdf_file_upload('advocate_id_prof', $pdf_file_path, $new_pdf_file_name);
         $upload_pdf_bar_reg = $this->bar_reg_certificate_upload('bar_reg_certificate', $bar_reg_certificate_path, $new_bar_reg_name);
-
         if (!$thumb) {
             $_SESSION['login']['photo_path'] = $photo_file_path;
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Please Upload Image Is Requerd!</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
         } else if ($thumb && $upload_pdf && $upload_pdf_bar_reg) {
             $_SESSION['login']['photo_path'] = $photo_file_path;
             $_SESSION['photo_path'] = $photo_file_path;
             $_SESSION['image_and_id_view'] = $data;
             $_SESSION['profile_photo'] = $update_profile;
-            $this->Profile_model->updatePhoto($this->session->userdata['login']['userid'], $photo_file_path);
+            $this->Profile_model->updatePhoto(getSessionData('login')['userid'], $photo_file_path);
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center flashmessage">Successful!</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
         } else {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Updation Failed !</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
         }
     }
 
@@ -715,51 +738,56 @@ class DefaultController extends BaseController
             unset($_SESSION['image_and_id_view']);
             $_SESSION['photo_path'] = $profile_photo;
             $this->session->setFlashdata('msg_objection', '<div class="alert alert-success text-center flashmessage">Profile photo Updated Successful!</div>');
-            redirect('profile');
+            return redirect()->to(base_url('profile'));
         }
     }
 
     function unset_upload()
     {
         unset($_SESSION['image_and_id_view']);
-        redirect('profile');
+        return redirect()->to(base_url('profile'));
     }
 
     function logged_profile()
     {
-        if ($this->session->userdata['login']) {
-            $this->session->destroy('email_id_for_updation');
-            $this->session->destroy('mobile_no_for_updation');
-            $data['profile'] = $this->Profile_model->getProfileDetail($this->session->userdata['login']['userid']);
-            $data['log_data'] = $this->Profile_model->getloggedDetail($this->session->userdata['login']['id']);
-            // if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
+        $session = session();
+        if ($session->get('login')) {
+            unset($_SESSION['email_id_for_updation']);
+            unset($_SESSION['mobile_no_for_updation']);
+            $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
+            $data['log_data'] = $this->Profile_model->getloggedDetail(getSessionData('login')['id']);
+            if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
             //     $this->load->view('templates/header');
-            // } else {
+            } else {
             //     $this->load->view('templates/admin_header');
-            // }
-            $this->render('profile.logged_profile', $data);
+            }
+            return render('profile.logged_profile', $data);
             // $this->load->view('templates/footer');
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
     }
 
     function block_user()
     {
-        $ip = url_decryption($this->uri->segment(3));
-        $userid = url_decryption($this->uri->segment(4));
-        $status = url_decryption($this->uri->segment(5));
+        $uri = service('uri');
+        $ip = url_decryption($uri->getSegment(3));
+        $userid = url_decryption($uri->getSegment(4));
+        $status = url_decryption($uri->getSegment(5));
+        // $ip = url_decryption($this->uri->segment(3));
+        // $userid = url_decryption($this->uri->segment(4));
+        // $status = url_decryption($this->uri->segment(5));
         if (empty($ip) || empty($userid) || empty($status)) {
             $this->session->setFlashdata('message', "<div class='alert alert-danger fade in'>Something Wrong! Please Try again letter.</div>");
-            redirect('profile/logged_profile');
+            return redirect()->to(base_url('profile/logged_profile'));
         }
         $result = $this->Profile_model->change_block_status($userid, $ip, $status);
         if ($result) {
             $this->session->setFlashdata('message', "<div class='alert alert-success fade in'>Status Updated Successfully .</div>");
-            redirect('profile/logged_profile');
+            return redirect()->to(base_url('profile/logged_profile'));
         } else {
             $this->session->setFlashdata('message', "<div class='alert alert-danger fade in'>Something Wrong! Please Try again letter.</div>");
-            redirect('profile/logged_profile');
+            return redirect()->to(base_url('profile/logged_profile'));
         }
     }
 

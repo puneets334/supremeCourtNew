@@ -249,21 +249,36 @@ class ProfileModel extends Model
 
     public function updateContact($userid, $moblie_number)
     {
+        // $builder = $this->db->table('efil.tbl_users');
+        // $builder->SELECT('*');
+        // // $builder->FROM();
+        // $builder->WHERE('moblie_number', $moblie_number);
+        // $builder->WHERE("userid !='$userid'");
+        // $query = $builder->get();
+        // if (!$query->getNumRows()) {
+        //     // $this->db->set();
+        //     $builder->WHERE('userid', $userid);
+        //     $result = $builder->UPDATE('moblie_number', $moblie_number);
+        //     if ($result) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // } else {
+        //     return false;
+        // }
         $builder = $this->db->table('efil.tbl_users');
-        $builder->SELECT('*');
-        // $builder->FROM();
-        $builder->WHERE('moblie_number', $moblie_number);
-        $builder->WHERE("userid !='$userid'");
+        // Select and filter
+        $builder->select('*')
+            ->where('moblie_number', $moblie_number)
+            ->where('userid !=', $userid);
         $query = $builder->get();
-        if (!$query->getNumRows()) {
-            // $this->db->set();
-            $builder->WHERE('userid', $userid);
-            $result = $builder->UPDATE('moblie_number', $moblie_number);
-            if ($result) {
-                return true;
-            } else {
-                return false;
-            }
+        if ($query->getNumRows() == 0) {
+            // Update if the mobile number doesn't exist
+            $data = ['moblie_number' => $moblie_number];
+            $builder->where('userid', $userid)
+                ->update($data);
+            return $this->db->affectedRows() > 0;
         } else {
             return false;
         }
