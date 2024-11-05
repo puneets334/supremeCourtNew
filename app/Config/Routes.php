@@ -123,7 +123,6 @@ $routes->match(['GET', 'POST'], 'caveat/', 'Caveat\DefaultController::index'); /
 $routes->match(['GET', 'POST'], 'caveat/caveator/add_caveators', 'Caveat\Caveator::add_caveators'); //sunny
 $routes->match(['GET', 'POST'], 'case/caveat/crud/(:any)', 'ResponsiveVariantRouteController::showCaseCaveatCrud/$1');
 $routes->match(['GET', 'POST'], 'case/caveat/crud', 'ResponsiveVariantRouteController::showCaseCaveatCrud');
-$routes->match(['GET', 'POST'], 'my/profile', 'ResponsiveVariantRouteController::showMyProfile');
 $routes->match(['GET', 'POST'], 'search', 'ResponsiveVariantRouteController::showSearch');
 // $routes->match(['GET', 'POST'],'support/(:any)','ResponsiveVariantRouteController::showSupport/$1');
 // $routes->match(['GET', 'POST'],'support','ResponsiveVariantRouteController::showSupport');
@@ -193,10 +192,6 @@ $routes->match(['GET', 'POST'], 'NewRegister/Advocate/activate/(:any)', 'NewRegi
 $routes->match(['GET', 'POST'], 'NewRegister/Advocate/deactivate/(:any)', 'NewRegister\AdvocateController::deactivate/$1');
 $routes->match(['GET', 'POST'], 'Admin/Supadmin/change_case_status', 'Admin\SupadminController::change_case_status');
 // $routes->match(['GET', 'POST'], 'assistance/Notice_circulars', 'assistance\Notice_circularsController::index');
-// Profile and change password
-$routes->match(['GET', 'POST'], 'profile', 'Profile\DefaultController::index');
-$routes->match(['GET', 'POST'], 'profile/updateProfile/(:any)', 'Profile\DefaultController::updateProfile/$1');
-$routes->match(['GET', 'POST'], 'profile/updatePass', 'Profile\DefaultController::updatePass');
 // $routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'App\Controllers\Mycases\CitationNotes::add_case_contact');
 $routes->post('mycases/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
 $routes->post('newcase/assignSrAdvocate', 'NewCase\Ajaxcalls::assignSrAdvocate');
@@ -225,6 +220,14 @@ $routes->match(['GET', 'POST'], 'Register/verify', 'Register\ForgetPasswordContr
 $routes->match(['GET', 'POST'], 'Register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
 $routes->match(['GET', 'POST'], 'register/AdvSignUp', 'Register\ForgetPasswordController::AdvSignUp');
 $routes->match(['GET', 'POST'], 'register/ForgetPassword/update_user_password', 'Register\ForgetPasswordController::update_user_password');
+// Profile and change password
+$routes->match(['GET', 'POST'], 'my/profile', 'ResponsiveVariantRouteController::showMyProfile');
+$routes->match(['GET', 'POST'], 'profile', 'Profile\DefaultController::index');
+$routes->match(['GET', 'POST'], 'profile/updateProfile/(:any)', 'Profile\DefaultController::updateProfile/$1');
+$routes->match(['GET', 'POST'], 'profile/updatePass', 'Profile\DefaultController::updatePass');
+$routes->match(['GET', 'POST'], 'profile/updateContact', 'Profile\DefaultController::updateContact');
+$routes->match(['GET', 'POST'], 'profile/updateEmail', 'Profile\DefaultController::updateEmail');
+$routes->match(['GET', 'POST'], 'profile/mobileSave', 'Profile\DefaultController::mobileSave');
 // $routes->get('support/(:any)', 'ResponsiveVariantRouteController::showSupport/$1');
 // $routes->get('support', 'ResponsiveVariantRouteController::showSupport');
 $routes->get('assistance/notice_circulars', 'Assistance\NoticeCirculars::index');
