@@ -53,36 +53,80 @@ class AddressModel extends Model
 
     public function verifyAadhar($mobile, $email)
     {
-        $db3 = \Config\Database::connect('e_services'); 
-        $session = \Config\Services::session();
-        $builder = $this->db3->table('uidai_offline_kyc');
-        $builder->select('adhar_name AS user_name, CONCAT(careof, " ", house, " ", landmark, " ", loc, " ", po, " ", street, " ", vtc) AS address, subdist AS city, district, state, pc AS pincode');
-        $builder->where('mobile', $mobile);
-        $builder->where('email', $email);
+        // $db3 = \Config\Database::connect('e_services'); 
+        // $session = \Config\Services::session();
+        // $builder = $this->db3->table('uidai_offline_kyc');
+        // $builder->select('adhar_name AS user_name, CONCAT(careof, " ", house, " ", landmark, " ", loc, " ", po, " ", street, " ", vtc) AS address, subdist AS city, district, state, pc AS pincode');
+        // $builder->where('mobile', $mobile);
+        // $builder->where('email', $email);
+        // $builder->limit(1);
+        // $query = $builder->get();
+        // if ($query === false) {           
+        //     return false;
+        // }else {
+        //     $result = $query->getResult();           
+        // }
+        // return $result;
+        $db3 = \Config\Database::connect('e_services');
+        $builder = $db3->table('uidai_offline_kyc');
+        // $builder->select('"adhar_name" AS "user_name", CONCAT(careof, ", "house", ", "landmark", ", "loc", ", "po", ", "street", ", vtc) AS address, "subdist" AS "city", "district", "state", "pc" AS "pincode"');
+        $builder->select([
+            'adhar_name AS user_name',
+            "CONCAT(careof, ', ', house, ', ', landmark, ', ', loc, ', ', po, ', ', street, ', ', vtc) AS address",
+            'subdist AS city',
+            'district',
+            'state',
+            'pc AS pincode'
+        ]);
+        $builder->where("mobile", $mobile);
+        $builder->where("email", $email);
         $builder->limit(1);
         $query = $builder->get();
-        if ($query === false) {           
+        // // Get the last query
+        // $lastQuery = $db3->getLastQuery();
+        // // Print the SQL query
+        // echo($lastQuery); die();
+        if ($query === false) {
             return false;
-        }else {
-            $result = $query->getResult();           
+        } else {
+            return $query->getResult();
         }
-        return $result;
     }
 
     public function getListedCases($mobile, $email)
     {
-        $builder = $this->db2->table('master.bar');           
-        $builder->select('name AS user_name, caddress AS address, ccity AS city, ccity AS district, "" AS state, "" AS pincode');
+        // $builder = $this->db2->table('master.bar');           
+        // $builder->select('name AS user_name, caddress AS address, ccity AS city, ccity AS district, "" AS state, "" AS pincode');
+        // $builder->where('mobile', $mobile);
+        // $builder->where('email', $email);
+        // $builder->limit(1);
+        // $query = $builder->get();
+        // if ($query === false) {           
+        //     return false;
+        // }else {
+        //     $result = $query->getResult();           
+        // }
+        // return $result;
+        $builder = $this->db2->table('master.bar');
+        // $builder->select('name AS user_name, caddress AS address, ccity AS city, ccity AS district, IFNULL(state, "") AS state, IFNULL(pincode, "") AS pincode');
+        $builder->select([
+            '"name" AS "user_name"',
+            '"caddress" AS "address"',
+            '"ccity" AS "city"',
+            '"ccity" AS "district"', // Duplicate city as district
+            "COALESCE('state', '') AS state",
+            "COALESCE('pincode', '') AS pincode",
+        ]);
         $builder->where('mobile', $mobile);
         $builder->where('email', $email);
         $builder->limit(1);
         $query = $builder->get();
-        if ($query === false) {           
+        // echo $this->db2->getLastQuery()->getOriginalQuery(); die();
+        if ($query === false) {
             return false;
-        }else {
-            $result = $query->getResult();           
+        } else {
+            return $query->getResult();
         }
-        return $result;
     } 
 
 
