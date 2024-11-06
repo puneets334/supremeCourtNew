@@ -3843,13 +3843,27 @@ function getUserAddress($mobile, $email)
 }
 
 function eCopyingOtpVerification($email){
+    // $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
+    // $builder = $db2->table('verify_email');
+    // $builder->where('email', $email);
+    // $builder->where('CURDATE() = DATE(ent_dt)', null, false); // `null` for no value, `false` to disable escaping
+    // $builder->orderBy('id','DESC');
+    // $query = $builder->get();
+    
+    // $query = $builder->get();
+    // if ($query === false) {
+    //     $error = $db2->error();
+    //     // echo "<pre>Error: " . $error['message'] . "</pre>";
+    //     $result = [];
+    // } else {
+    //     $result = $query->getRow();
+    // }
+    // return $result;
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     $builder = $db2->table('verify_email');
     $builder->where('email', $email);
-    $builder->where('CURDATE() = DATE(ent_dt)', null, false); // `null` for no value, `false` to disable escaping
-    $builder->orderBy('id','DESC');
-    $query = $builder->get();
-    
+    $builder->where('ent_dt', date('Y-m-d'), null, false); // Direct comparison to current date
+    $builder->orderBy('id', 'DESC');
     $query = $builder->get();
     if ($query === false) {
         $error = $db2->error();

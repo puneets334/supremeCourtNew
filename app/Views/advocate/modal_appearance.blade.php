@@ -198,7 +198,7 @@
         </div>
         <div class="row">
             <div class="col-12 text-right" style="text-align: right!important;">
-                {{ucwords(strtolower(session('user_title'))).' '.ucwords(strtolower(session('user_name')))}}
+                {{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}}
                 <br>
                 For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
             </div>
