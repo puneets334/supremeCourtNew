@@ -260,11 +260,9 @@ class Caveatee extends BaseController {
             'res_org_state_name' => $org_state_name,
             'res_org_dept' => $org_dept,
             'res_org_dept_name' => $org_dept_name,
-           // 'res_org_post' => $org_post,
+            'res_org_post' => $org_post,
             'res_org_post_name' => $org_post_name,
-
         );
-//pr($data);
 
         $cis_masters_values = array(
         );

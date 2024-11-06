@@ -42,7 +42,6 @@ span.select2.select2-container.select2-container--default {
     height: 40px;
 }
 </style>
- 
         <div class="tab-content">
             <div class="tab-pane Active" id="profile" role="tabpanel"
                 aria-labelledby="profile-tab">
@@ -217,7 +216,7 @@ span.select2.select2-container.select2-container--default {
                                                 if(isset($state_list) && !empty($state_list)){
                                                     foreach ($state_list as $k=>$v){
                                                         if(!empty($caveatee_details[0]['res_org_state']) && trim($caveatee_details[0]['res_org_state']) == $v->cmis_state_id){
-                                                            $select_organization = 'selected="selected"';
+                                                            $select_organization = 'selected=selected';
                                                         }
                                                         else{
                                                             $select_organization ='';
@@ -815,14 +814,13 @@ span.select2.select2-container.select2-container--default {
     });
 
 
-
     function get_departments(party_is) {
 
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-        var selected_org_st_id = '<?php echo url_encryption(isset($caveator_details[0]['org_state_id'])?$caveator_details[0]['org_state_id']:''); ?>';
-        var selected_dept_id = '<?php echo url_encryption(isset($caveator_details[0]['org_dept_id'])?$caveator_details[0]['org_dept_id']:''); ?>';
+        var selected_org_st_id = '<?php echo url_encryption(isset($caveatee_details[0]['res_org_state'])?$caveatee_details[0]['res_org_state']:''); ?>';
+        var selected_dept_id = '<?php echo url_encryption(isset($caveatee_details[0]['res_org_dept'])?$caveatee_details[0]['res_org_dept']:''); ?>';
 
         $.ajax({
             type: "POST",
@@ -851,7 +849,7 @@ span.select2.select2-container.select2-container--default {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-        var selected_post_id = '<?php echo url_encryption(isset($caveator_details[0]['org_post_id'])?$caveator_details[0]['org_post_id']:''); ?>';
+        var selected_post_id = '<?php echo url_encryption(isset($caveatee_details[0]['res_org_post'])?$caveatee_details[0]['res_org_post']:''); ?>';
 
         $.ajax({
             type: "POST",
