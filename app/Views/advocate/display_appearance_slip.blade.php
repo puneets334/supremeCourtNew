@@ -53,7 +53,7 @@
                             <tbody>
                             <tr>
                                 <td class="right">
-                                    <strong>{{ucwords(strtolower(session('user_title'))).' '.ucwords(strtolower(session('user_name')))}}
+                                    <strong>{{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}}
                                         <br>
                                         For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}</strong>
                                 </td>
