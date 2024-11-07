@@ -143,7 +143,7 @@ span.select2.select2-container.select2-container--default {
                             <div class="mb-3">
                                 <label for="" class="form-label">Date of Birth  </label>
                                 <input tabindex='5' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('m/d/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
+                                value="<?php echo isset($caveatee_details[0]['res_dob']) ? date('d/m/Y', strtotime($caveatee_details[0]['res_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text"  >
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Date of Birth.">
                                     <i class="fa fa-question-circle-o"></i>
@@ -485,7 +485,7 @@ span.select2.select2-container.select2-container--default {
 
 @push('script') 
 <script>
-        $(document).ready(function () {
+        $(document).ready(function () { 
         var party_as_sel = '<?php echo isset($caveatee_details[0]['resorgid'])?$caveatee_details[0]['resorgid']:''; ?>';
 
         var OrgState_ID= '<?php echo isset($caveatee_details[0]['res_org_state'])?$caveatee_details[0]['res_org_state']:''; ?>';
@@ -573,18 +573,45 @@ span.select2.select2-container.select2-container--default {
             
         });
 
-        $(document).on('change','#pet_dob', function(){
-            var value = $('#pet_dob').val();
-            var parts = value.split("/");
-            var day = parts[0] && parseInt(parts[0], 10);
-            var month = parts[1] && parseInt(parts[1], 10);
-            var year = parts[2] && parseInt(parts[2], 10);
-            var str = day + '/' + month + '/' + year;
-            var today = new Date(),
-            dob = new Date(str),
-            age = new Date(today - dob).getFullYear() - 1970;
-            $('#pet_age').val(age);
-        });
+        $(document).on('change', '#pet_dob', function () {
+                var value = $('#pet_dob').val(); 
+                var parts = value.split("/"); 
+                 
+                if (parts.length !== 3) {
+                    alert("Invalid date format. Please use DD/MM/YYYY.");
+                    return;
+                }
+
+                var day = parts[0] && parseInt(parts[0], 10);
+                var month = parts[1] && parseInt(parts[1], 10) - 1;  
+                var year = parts[2] && parseInt(parts[2], 10);
+ 
+                var dob = new Date(year, month, day);
+
+                if (isNaN(dob.getTime())) {
+                    alert("Invalid date. Please check your input.");
+                    return;
+                }
+ 
+                var today = new Date();
+                var age = today.getFullYear() - dob.getFullYear();
+                var monthDiff = today.getMonth() - dob.getMonth();
+ 
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+ 
+                $('#pet_age').val(age);
+            });
+
+       
+            $('#pet_age').on('keyup', function () {
+                $('#pet_dob').val(''); // Clear the DOB field.
+            });
+        
+       
+   
+        
     //----------Get District List----------------------//
 
     
@@ -812,7 +839,6 @@ span.select2.select2-container.select2-container--default {
             $('#otherOrgPost').hide();
         }
     });
-
 
     function get_departments(party_is) {
 

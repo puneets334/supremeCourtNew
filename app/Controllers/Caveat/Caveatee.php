@@ -214,7 +214,8 @@ class Caveatee extends BaseController {
         $pet_dob = !empty($_POST["pet_dob"]) ? escape_data($_POST["pet_dob"]) : NULL;
         if($pet_dob != ''){
             $date = explode('/', $pet_dob);
-            $pet_dob = $date[2] . '-' . $date[0] . '-' . $date[1];
+            // pr($date);
+            $pet_dob = $date[2] . '-' . $date[1] . '-' . $date[0];
         }
         else {
             $pet_dob = NULL;

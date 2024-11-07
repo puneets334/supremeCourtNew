@@ -190,7 +190,7 @@ textarea {
 
                                 <input tabindex="5" id="relative_name" name="relative_name"
                                     minlength="3" maxlength="99" placeholder="Relative Name"
-                                    value="<?php   echo isset($caveator_details[0]['relative_name'])?$caveator_details[0]['relative_name']:''; ?>"
+                                    value="<?php   echo isset($caveator_details[0]['pet_father_name']) ? $caveator_details[0]['pet_father_name']:''; ?>"
                                     class="form-control cus-form-ctrl sci_validation"
                                     type="text" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
@@ -204,7 +204,7 @@ textarea {
                             <div class="mb-3">
                                 <label for="" class="form-label">Date of Birth</label>
                                 <input tabindex='6' class="form-control cus-form-ctrl  has-feedback-left" id="pet_dob"  name="pet_dob"
-                                value="<?php echo isset($caveator_details[0]['pet_dob']) ? date('m/d/Y', strtotime($caveator_details[0]['pet_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
+                                value="<?php echo isset($caveator_details[0]['pet_dob']) ? date('d/m/Y', strtotime($caveator_details[0]['pet_dob'])) : ''; ?>" maxlength="10" readonly="" placeholder="DD/MM/YYYY" type="text">
                                 <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                         title="Please Enter Date of Birth.">
@@ -808,25 +808,50 @@ textarea {
         $('#pet_dob').datepicker({
             changeMonth: true,
             changeYear: true,
-            yearRange: "-100:-1",
-            dateFormat: "dd/mm/yy",
+            yearRange: "-100",
+            format: "dd/mm/yyyy",
             defaultDate: '-40y',
             endDate: today 
             
         });
 
-        $(document).on('change','#pet_dob', function(){
-            var value = $('#pet_dob').val();
-            var parts = value.split("/");
-            var day = parts[0] && parseInt(parts[0], 10);
-            var month = parts[1] && parseInt(parts[1], 10);
-            var year = parts[2] && parseInt(parts[2], 10);
-            var str = day + '/' + month + '/' + year;
-            var today = new Date(),
-            dob = new Date(str),
-            age = new Date(today - dob).getFullYear() - 1970;
-            $('#pet_age').val(age);
-        });
+        $(document).on('change', '#pet_dob', function () {
+                var value = $('#pet_dob').val(); 
+                var parts = value.split("/"); 
+                 
+                if (parts.length !== 3) {
+                    alert("Invalid date format. Please use DD/MM/YYYY.");
+                    return;
+                }
+
+                var day = parts[0] && parseInt(parts[0], 10);
+                var month = parts[1] && parseInt(parts[1], 10) - 1;  
+                var year = parts[2] && parseInt(parts[2], 10);
+                alert(year); //2000
+ 
+                var dob = new Date(year, month, day);
+                alert(dob); //Fri Feb 02 2001 00:00:00 GMT+0530 (India Standard Time)
+
+                if (isNaN(dob.getTime())) {
+                    alert("Invalid date. Please check your input.");
+                    return;
+                }
+ 
+                var today = new Date();
+                var age = today.getFullYear() - dob.getFullYear();
+                var monthDiff = today.getMonth() - dob.getMonth();
+ 
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+                    age--;
+                }
+ 
+                $('#pet_age').val(age);
+            });
+
+       
+            $('#pet_age').on('keyup', function () {
+                $('#pet_dob').val(''); // Clear the DOB field.
+            });
 
         $('#party_pincode').blur(function(){
             var CSRF_TOKEN = 'CSRF_TOKEN';
