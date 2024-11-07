@@ -43,15 +43,25 @@ if(isset($_SESSION['login'])){
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
                                 <?php 
+                                // $video_details = array(
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to access e-Filing Module/Portal","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/Registration-of-Advocate-on-Record.mp4","videoTitle"=>"Registration of AoR" ,"posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/Registration-of-PIP.mp4" ,"videoTitle"=>"Registration of Party-in-Person" ,"posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/New-Case-Filing.mp4","videoTitle"=>"How to e-File a New Case","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/IA.mp4","videoTitle"=>"How to e-File an I.A.","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/Filing-Misc-Docs.mp4","videoTitle"=>"How to e-file a Miscellaneous Document","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/Filing-Caveat.mp4","videoTitle"=>"How to e-File Caveat","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                //     array("videoURL"=>"uploaded_docs/video_tutorial/Check-defects-marked-and-refile.mp4","videoTitle"=>"How to Check Defects and Re-File","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg")
+                                // );
                                 $video_details = array(
                                     array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to access e-Filing Module/Portal","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/Registration-of-Advocate-on-Record.mp4","videoTitle"=>"Registration of AoR" ,"posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/Registration-of-PIP.mp4" ,"videoTitle"=>"Registration of Party-in-Person" ,"posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/New-Case-Filing.mp4","videoTitle"=>"How to e-File a New Case","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/IA.mp4","videoTitle"=>"How to e-File an I.A.","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/Filing-Misc-Docs.mp4","videoTitle"=>"How to e-file a Miscellaneous Document","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/Filing-Caveat.mp4","videoTitle"=>"How to e-File Caveat","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
-                                    array("videoURL"=>"uploaded_docs/video_tutorial/Check-defects-marked-and-refile.mp4","videoTitle"=>"How to Check Defects and Re-File","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg")
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"Registration of AoR" ,"posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4" ,"videoTitle"=>"Registration of Party-in-Person" ,"posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to e-File a New Case","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to e-File an I.A.","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to e-file a Miscellaneous Document","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to e-File Caveat","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg"),
+                                    array("videoURL"=>"uploaded_docs/video_tutorial/Accessing-e-Filing-Portal.mp4","videoTitle"=>"How to Check Defects and Re-File","posterURL"=>"uploaded_docs/video_tutorial/poster.jpg")
                                 );
                                 ?>
                                 <div class="main-inner-area">
