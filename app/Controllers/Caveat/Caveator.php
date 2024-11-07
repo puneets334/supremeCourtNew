@@ -188,7 +188,7 @@ public function add_caveators() {
     $pet_dob = $this->request->getPost("pet_dob");
     if (!empty($pet_dob)) {
         $date = explode('/', $pet_dob);
-        $pet_dob = $date[2] . '-' . $date[0] . '-' . $date[1];
+        $pet_dob = $date[2] . '-' . $date[1] . '-' . $date[0];
     } else {
         $pet_dob = NULL;
     }
