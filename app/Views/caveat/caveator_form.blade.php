@@ -826,11 +826,9 @@ textarea {
 
                 var day = parts[0] && parseInt(parts[0], 10);
                 var month = parts[1] && parseInt(parts[1], 10) - 1;  
-                var year = parts[2] && parseInt(parts[2], 10);
-                alert(year); //2000
+                var year = parts[2] && parseInt(parts[2], 10); 
  
-                var dob = new Date(year, month, day);
-                alert(dob); //Fri Feb 02 2001 00:00:00 GMT+0530 (India Standard Time)
+                var dob = new Date(year, month, day); 
 
                 if (isNaN(dob.getTime())) {
                     alert("Invalid date. Please check your input.");
