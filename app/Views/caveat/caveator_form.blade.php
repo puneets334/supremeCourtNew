@@ -664,7 +664,9 @@ textarea {
         
         var party_as = $('select#party_is option:selected').val();
         if (party_as == 'I') {          
- 
+            $('#org_dept').removeAttr('required');
+            $('#org_state').removeAttr('required');
+            $('#org_post').removeAttr('required');
         $('#pet_complainant').attr('required', 'required');
         $('#pet_rel_flag').attr('required', 'required'); 
         $('#relative_name').attr('required', 'required'); 
@@ -686,6 +688,11 @@ textarea {
         $('#pet_age').attr('required', 'required'); 
         $('input[name="pet_gender"]').attr('required', 'required');
             if (party_as == 'D3') { 
+                // Add 'required' attribute
+                $('#org_dept').attr('required', true);
+                $('#org_post').attr('required', true);
+                // Remove 'required' attribute
+                $('#org_state').removeAttr('required');
                 $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').hide();
@@ -699,6 +706,10 @@ textarea {
                  $('#party_gender2').val('');
                  $('#party_gender3').val('');*/
             } else {
+                                // Add 'required' attribute
+                                $('#org_dept').attr('required', true);
+                $('#org_state').attr('required', true);
+                $('#org_post').attr('required', true); 
                 
         $('#pet_complainant').attr('required', false);
         $('#indvidual_form').hide(); 
@@ -718,6 +729,9 @@ textarea {
     function get_caveator_as(value) {
         var party_as = value;
         if (party_as == 'I') {
+            $('#org_dept').removeAttr('required');
+            $('#org_state').removeAttr('required');
+            $('#org_post').removeAttr('required');
         $('#pet_complainant').attr('required', true);
             $('#indvidual_form').show(); 
             $('#org_form').hide();
@@ -733,6 +747,10 @@ textarea {
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
+                $('#org_dept').attr('required', true);
+                $('#org_post').attr('required', true);
+                // Remove 'required' attribute
+                $('#org_state').removeAttr('required');
         $('#pet_complainant').attr('required', false);
         $('#indvidual_form').hide(); 
                 $('#org_form').show();
@@ -747,6 +765,10 @@ textarea {
                  $('#party_gender2').val('');
                  $('#party_gender3').val('');*/
             } else {
+                // Add 'required' attribute
+                $('#org_dept').attr('required', true);
+                $('#org_state').attr('required', true);
+                $('#org_post').attr('required', true); 
                // alert(party_as);
         $('#pet_complainant').attr('required', false);
         $('#indvidual_form').hide(); 
