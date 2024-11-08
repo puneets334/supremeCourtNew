@@ -619,6 +619,7 @@ body.loading .overlay{
 <script>
 
  $(document).ready(function() {
+    $('.filter_select_dropdown').select2();
         var today = new Date();
         $('#order_date').datepicker({ 
         format: "dd/mm/yyyy",
@@ -859,7 +860,7 @@ body.loading .overlay{
         $("#search_case_hc").click(function () {
             $('#search_button_div').hide();
             $('#loader_div').show();
-            var court_type = $("input[name=radio_selected_court]:checked").val();
+            var court_type = $("input[name=radio_selected_court]:checked").val() ?? 1;
             // alert(court_type);
             if (court_type == 1) { //-High Court
 
@@ -936,7 +937,7 @@ body.loading .overlay{
             });
         });
         //earlier courts selection
-        court_type = "<?php echo isset($court_type)?$court_type:'';?>";
+        court_type = "<?php echo isset($court_type)?$court_type:1;?>";
         hc_bench_value = "<?php echo isset($hc_bench_value)?$hc_bench_value:'';?>";
         hc_value = "<?php echo isset($hc_value)?$hc_value:'';?>";
         state_value = "<?php echo isset($state_value)?$state_value:'';?>";
