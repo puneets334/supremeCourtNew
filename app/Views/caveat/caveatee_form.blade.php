@@ -514,6 +514,9 @@ span.select2.select2-container.select2-container--default {
     function get_caveator_as(value) {        
         var party_as = value;
         if (party_as == 'I') {
+            $('#org_dept').removeAttr('required');
+            $('#org_state').removeAttr('required');
+            $('#org_post').removeAttr('required');
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -528,6 +531,11 @@ span.select2.select2-container.select2-container--default {
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
+                                // Add 'required' attribute
+                                $('#org_dept').attr('required', true);
+                $('#org_post').attr('required', true);
+                // Remove 'required' attribute
+                $('#org_state').removeAttr('required');
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').hide();
@@ -541,6 +549,10 @@ span.select2.select2-container.select2-container--default {
                  $('#party_gender2').val('');
                  $('#party_gender3').val('');*/
             } else {
+                                // Add 'required' attribute
+                                $('#org_dept').attr('required', true);
+                $('#org_state').attr('required', true);
+                $('#org_post').attr('required', true); 
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
