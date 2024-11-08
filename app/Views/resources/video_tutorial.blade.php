@@ -1,7 +1,7 @@
 <?php 
-if(isset($_SESSION['login'])){
+if(isset($_SESSION['login'])) {
     $ex = 'layout.advocateApp';
-}else{
+} else{
     $ex = 'layout.frontApp';
 }
 ?>
@@ -65,65 +65,65 @@ if(isset($_SESSION['login'])){
                                 );
                                 ?>
                                 <div class="main-inner-area">
-                                        <div class="container">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
-                                                    <div class="main-inner-bg">
-                                <div class="right_col" role="main">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div id="msg">
-                                                <?php echo getSessionData('MSG'); ?>
-                                            </div> 
-                                        </div>
-                                    </div>    
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">            
-                                            <div class="inner-page-title">              
-                                                <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
-                                                    <div class="x_title">
-                                                        <h2><i class="fa  fa-newspaper-o"></i> Resources Video Tutorial</h2>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                <?php } else { ?>
-                                                    <!-- <h2><i class="fa  fa-newspaper-o"></i> Resources Video Tutorial</h2>
-                                                    <div class="clearfix"></div> -->
-                                                    <h5>Resources Video Tutorial</h5>
-                                                <?php } ?>
-                                            </div>
-                                        </div>
-                                    </div>        
-                                    <!------------Table--------------------->
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                            <div class="x_panel">
-                                                <div class="x_content">
-                                                    <div class="row">
-                                                        <?php foreach($video_details as $key=>$value) { ?>
-                                                            <div class="col-lg-3 col-md-4 col-sm-12 mb-3">
-                                                                <div class="card video-crd">
-                                                                    <!-- <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" > -->
-                                                                        <a href="#" onclick="playVideo('<?=base_url();?><?=$value['videoURL'];?>','<?=$value['videoTitle'];?>')">
-                                                                            <div class="img-sec">
-                                                                                 <img class="" src="<?=base_url();?><?=$value['posterURL'];?>" alt="Introduction to eFiling">
-                                                                            </div>                                                                            
-                                                                            <h5 class="card-title"><?=$value['videoTitle'];?></h5>
-                                                                        </a>
-                                                                    <!-- </div> -->
-                                                                </div>                                                                
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                                                <div class="main-inner-bg">
+                                                    <div class="right_col" role="main">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div id="msg">
+                                                                    <?php echo getSessionData('MSG'); ?>
+                                                                </div> 
                                                             </div>
-                                                        <?php } ?>
-                                                    </div>     
+                                                        </div>    
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">            
+                                                                <div class="inner-page-title">              
+                                                                    <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                                        <div class="x_title">
+                                                                            <h2><i class="fa  fa-newspaper-o"></i> Resources Video Tutorial</h2>
+                                                                            <div class="clearfix"></div>
+                                                                        </div>
+                                                                    <?php } else { ?>
+                                                                        <!-- <h2><i class="fa  fa-newspaper-o"></i> Resources Video Tutorial</h2>
+                                                                        <div class="clearfix"></div> -->
+                                                                        <h5>Resources Video Tutorial</h5>
+                                                                    <?php } ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>        
+                                                        <!------------Table--------------------->
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                                                <div class="x_panel">
+                                                                    <div class="x_content">
+                                                                        <div class="row">
+                                                                            <?php foreach($video_details as $key=>$value) { ?>
+                                                                                <div class="col-lg-3 col-md-4 col-sm-12 mb-3">
+                                                                                    <div class="card video-crd">
+                                                                                        <!-- <div class="bg-image hover-overlay ripple shadow-1-strong rounded" data-ripple-color="light" > -->
+                                                                                            <a href="#" onclick="playVideo('<?=base_url();?><?=$value['videoURL'];?>','<?=$value['videoTitle'];?>')">
+                                                                                                <div class="img-sec">
+                                                                                                    <img class="" src="<?=base_url();?><?=$value['posterURL'];?>" alt="Introduction to eFiling">
+                                                                                                </div>
+                                                                                                <h5 class="card-title"><?=$value['videoTitle'];?></h5>
+                                                                                            </a>
+                                                                                        <!-- </div> -->
+                                                                                    </div>                                                                
+                                                                                </div>
+                                                                            <?php } ?>
+                                                                        </div>     
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
-                                                    </div>
                                 <!-- start modal -->
                                 <div class="modal" id="vd_screen">
                                     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document" id="vd_dialog">
