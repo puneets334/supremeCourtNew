@@ -599,9 +599,13 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
         if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             echo '<div class="row mb-5"><div class="col-md-12 "><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
         }
-        echo !empty(getSessionData('efiling_details')['stage_id']) ? '<div class="row">
-        <div class="col-12">'.remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']).'</div></div>' : '';
-        ?>
+        if(!empty(getSessionData('efiling_details')['stage_id'])) { ?>
+            <div class="row">
+                <div class="col-12 ashutosh">
+                    <?php remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
+                </div>
+            </div>
+        <?php } ?>
         <div class="modal fade"
             id="FinalSubmitModal"
             role="dialog">
