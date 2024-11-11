@@ -227,9 +227,9 @@ td {
     } */
 
    
-.pagination-area-new { 
+/* .pagination-area-new { 
     position: relative;
-}
+} */
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -942,7 +942,7 @@ td {
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec">
-                                                    <div class="table-responsive  no-paginations" style="height: 800px; overflow-x: overlay;">
+                                                    <div class="table-responsive" style="height: 800px; overflow-x: overlay;">
                                                         <table id="datatable-responsive"
                                                             class="table table-striped custom-table">
                                                             <thead>
