@@ -55,9 +55,10 @@ class DefaultModel extends Model {
         
 
         if (isset($objections_insert) && !empty($objections_insert)) {
+            $builder2 = $this->db->table('efil.tbl_icmis_objections');
             foreach($objections_insert as $objection_insert){
                 // 
-                $builder->insert($objection_insert);
+                $builder2->insert($objection_insert);
               // echo $this->db->insertID().'<br>';
                //die;
             }
@@ -69,9 +70,9 @@ class DefaultModel extends Model {
         }
 
         if (isset($objections_update) && !empty($objections_update)) {
-            
-            $builder->where('registration_id', $registration_id);
-            $builder->update($objections_update);
+            $builder3 = $this->db->table('efil.tbl_icmis_objections');
+            $builder3->where('registration_id', $registration_id);
+            $builder3->update($objections_update);
  
             //$builder->updateBatch($objections_update, 'id');
         }
@@ -281,16 +282,20 @@ class DefaultModel extends Model {
                 'is_active' => 1,
                 'pp_a' => $row->pp
             );
+
             if (!empty($aor_code) && !empty($insert_data)) {
+          
                 $builder = $this->db->table('icmis.bar');
                 $builder->SELECT('*');
                 $builder->where('aor_code', $aor_code);
                 $query = $builder->get();
                 if ($query->getNumRows() >= 1) {
+                
                     $result = $query->getResultArray();
                     $db_bar_id = trim($result[0]['bar_id']);
                     $db_aor_code = trim($result[0]['aor_code']);
-                    if (!empty($update_data) && !empty($result) && $db_bar_id == $bar_id && $db_aor_code == $aor_code) {
+                    if (!empty($update_data) && !empty($result) && $db_bar_id == $bar_id && $db_aor_code == $aor_code) { 
+
                         $builder = $this->db->table('icmis.bar');
                         $builder->WHERE('bar_id', $bar_id);
                         $builder->WHERE('aor_code', $aor_code);
@@ -298,8 +303,10 @@ class DefaultModel extends Model {
                         $bar_u++;
                         $icmis_bar_updated .= $aor_code . ',';
                     }
-                } else {
-                    if (!empty($insert_data) && !empty($aor_code)) {
+                } else { 
+
+                    if (!empty($insert_data) && !empty($aor_code)) { 
+
                         $builder = $this->db->table('icmis.bar');
                         $builder->INSERT($insert_data);
                         $bar_i++;
@@ -311,16 +318,21 @@ class DefaultModel extends Model {
                 $builder->where('aor_code', $aor_code);
                 $query2 = $builder->get();
                 if ($query2->getNumRows() >= 1) {
+               
                     $builder = $this->db->table('efil.tbl_users');
                     $builder->WHERE('ref_m_usertype_id', 1);
                     $builder->WHERE('aor_code', $aor_code);
                     $builder->UPDATE($update_data_tbl_users);
                     $tbl_u++;
                     $efil_tbl_users_updated .= $aor_code . ',';
-                } else {
-                    if (!empty(($mobile) && $mobile != null) && (!empty($email) && $email != null) && (!empty($aor_code) && $aor_code != null)) {
+                } else { 
+
+                    if (!empty(($mobile) && $mobile != null) && (!empty($email) && $email != null) && (!empty($aor_code) && $aor_code != null)) { 
+
                         $is_efil_tbl_users = $this->efil_tbl_users($aor_code, $mobile, $email);
                         if (empty($is_efil_tbl_users)) {
+               
+
                             $builder = $this->db->table('efil.tbl_users');
                             $builder->INSERT($insert_data_efil_tbl_users);
                             $tbl_i++;
@@ -340,14 +352,18 @@ class DefaultModel extends Model {
     }
 
     public function efil_tbl_users($aor_code, $mobile, $email) {
+
+        // pr($aor_code.$mobile. $email);
         $builder = $this->db->table('efil.tbl_users');
         $builder->SELECT('aor_code,adv_sci_bar_id,bar_reg_no,moblie_number,emailid');
-        $builder->FROM('efil.tbl_users');
         $builder->where('userid', $aor_code);
         $builder->orwhere('userid', $mobile);
         $builder->orWhere('moblie_number', $mobile);
         $builder->orWhere('emailid', $email);
+        // $compiled_query = $builder->getCompiledSelect(); 
+        //     pr($compiled_query);
         $query3 = $builder->get();
+     
         if ($query3->getNumRows() >= 1) {
             $result = $query3->getResultArray();
             return $result;
