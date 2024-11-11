@@ -694,8 +694,8 @@
                                 </div>
                                 <?php if ($criminal_case == 1) { ?>
                                     <div class="row">
-                                        <label class="control-label col-xs-12"
-                                            style="font-size: large; text-align: center">FIR
+                                    <input class="form-check-input cus-form-check" type="checkbox" id="fircheckbox" name="fircheckbox"   maxlength="2" >
+                                        <label class="control-label col-xs-12" style="font-size: large; text-align: center">FIR
                                             Details</label>
                                     </div>
                                     <div class="row" id="fir_details">
