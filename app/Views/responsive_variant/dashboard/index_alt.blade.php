@@ -222,9 +222,9 @@ td {
     text-align: center;
 }
 
-.no-paginations div#datatable-responsive_length {
+/* .no-paginations div#datatable-responsive_length {
         display: none;
-    }
+    } */
 
    
 .pagination-area-new { 
@@ -1556,58 +1556,7 @@ td {
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <!-- pagination by saurabh -->
-                                                    <div class="pagination-area-new">
-<form method="post" action="<?= base_url('dashboard_alt'); ?>">
-<div class="pagination-new-inner">
-<div class="showing-details-limit">
-<div class="pull-left">
-<?php echo ' Total Records: '. $totalRecords; ?>
-</div>
-</div>
-<div class="showing-details-limit" >
-<label for="limit" class="pull-left page-label"> Limit:</label>
-<div class="pull-left">
-<select id="limit" name="limit" class="form-control" onchange="$('#page_input').val(1);this.form.submit(); updateNames(this)">
-<option value="10" <?php if ($limit == '10') { ?> selected="selected"<?php } ?> > 10</option>
-<option value="25" <?php if ($limit == '25') { ?> selected="selected"<?php } ?> > 25</option>
-<option value="50" <?php if ($limit == '50') { ?> selected="selected"<?php } ?>  > 50</option>
-<option value="100" <?php if ($limit == '100') { ?> selected="selected"<?php } ?>  > 100</option>
-</select>
-</div>
-</div>
-
-<div class="pagination-btns">
-<input type="hidden" name="page_no_use" id="page" value="<?php echo $page; ?>" class="form-control">
-<div class="paging paging-prev">
-<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(1); this.form.submit();">
-<!-- <i class="fa fa-angle-double-left" aria-hidden="true"></i> -->First
-</button>
-<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo ($page == 1) ? 1 : ($page - 1); ?>); this.form.submit();">
-<!-- <i class="fa fa-angle-left" aria-hidden="true"></i> -->Prev
-</button>
-</div>
-
-<div class="paging paging-input">
-&nbsp;Page
-<input type="text" name="page" id="page_input" value="<?php echo $page; ?>" class="form-control" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
-of <?php echo isset($pages) ? $pages : ''; ?>
-&nbsp;
-</div>
-
-<div class="paging paging-next">
-<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo (isset($pages) && $page == $pages) ? $pages : ($page + 1); ?> ); this.form.submit();">
-<!-- <i class="fa fa-angle-right" aria-hidden="true"></i> -->Next
-</button>
-<button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo isset($pages) ? $pages : ''; ?> ); this.form.submit();">
-<!-- <i class="fa fa-angle-double-right" aria-hidden="true"></i> -->Last
-</button>
-</div>
-</div> 
-</div>
-</form>
-</div>
-                                                     <!-- end pagination -->
+                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -1695,14 +1644,7 @@ of <?php echo isset($pages) ? $pages : ''; ?>
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
-    <script>
-    $(document).ready(function() {
-    window.onload = function() {
-        var limitValue = '<?php echo $limit; ?>'; // PHP variable from server-side
-        $('select[name="datatable-responsive_length"]').val(limitValue).change(); 
-    };
-});
-</script>
+ 
     <script>
     function loadPaperBookViewer(obj){
         // alert(obj);
@@ -1723,6 +1665,8 @@ of <?php echo isset($pages) ? $pages : ''; ?>
             "pageLength": 5,
             // "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
         });
+
+        
     });
     </script>
     <script>
@@ -1924,6 +1868,7 @@ of <?php echo isset($pages) ? $pages : ''; ?>
             }).on('hidden', function() {
             $('#content > *:not(#widgets-container)').removeClass('sci-blur-medium');
         });
+
         scutum.require(['datatables', 'datatables-buttons'], function() {
             //    $('#myTable').DataTable();
             /*$('#soon-to-be-listed-cases-table').DataTable({
@@ -1966,3 +1911,4 @@ of <?php echo isset($pages) ? $pages : ''; ?>
         });
     });
     </script>
+       

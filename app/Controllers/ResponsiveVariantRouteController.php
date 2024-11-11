@@ -58,8 +58,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showDashboardAlt()
     {
-        
-        $limit = '';
+         
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
@@ -481,14 +480,14 @@ class ResponsiveVariantRouteController extends BaseController
             }
             //echo "Draft Case End:".date('H:i:s').'<br/>';
             //echo "Efiled Case Start:".date('H:i:s').'<br/>';
-            $limit = $this->request->getVar('limit') ?? 25;  
-            $page = $this->request->getVar('page') ?? 1;  
-             $offset = ($page - 1) * $limit; 
+            // $limit = $this->request->getVar('limit') ?? 25;  
+            // $page = $this->request->getVar('page') ?? 1;  
+            //  $offset = ($page - 1) * $limit; 
             // pr($data);    
-            $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 , $limit,$offset));
-            $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
-            $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
-            $pages = ceil($totalRecords / $limit);
+            $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            // $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            // $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
+            // $pages = ceil($totalRecords / $limit);
             if ($final_submitted_applications == false) {
                 $final_submitted_applications = array();
             }
@@ -550,7 +549,7 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->groupBy('is_deleted');
         $request = $builder->get()->getRow(); // Fetch request data
                 
-        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','totalRecords','pages','limit','page','online','offline','request'));
+        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','online','offline','request'));
     }
 
     public function showCases()
