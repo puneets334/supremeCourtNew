@@ -91,30 +91,19 @@ if(!empty(getSessionData('login'))){
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Mobile <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_number;?>" placeholder="9876543XXX" maxlength="10"   tabindex="2" readonly>
-                                                        <div id="error_mobile"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('mobile')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('mobile'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                        <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $emailid;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="2" readonly/>
+                                                        <div id="error_email"></div>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-select">Relation <span style="color: red">*</span> :</label>
-                                                        <select class="form-control cus-form-ctrl" tabindex = '3' name="relation" id="relation"  >
-                                                            <option value="">Select Relation</option>
-                                                            <option value="S">Son Of</option>
-                                                            <option value="D">Daughter Of</option>
-                                                            <option value="W">Spouse Of</option>
-                                                            <option value="N">Not Available</option>
-                                                        </select>
-                                                        <div id="error_relation"></div> 
-                                                        <?php if (isset($validation) && $validation->hasError('relation')): ?>
+                                                        <label class="form-label" for="form-stacked-text">Mobile <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_number;?>" placeholder="9876543XXX" maxlength="10"   tabindex="3" readonly>
+                                                        <div id="error_mobile"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('mobile')): ?>
                                                             <div class="text-danger">
-                                                                <?= $validation->getError('relation'); ?>
+                                                                <?= $validation->getError('mobile'); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
@@ -142,8 +131,36 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <div class="row">
                                                     <div class="col">
+                                                        <label class="form-label" for="form-stacked-select">Relation <span style="color: red">*</span> :</label>
+                                                        <select class="form-control cus-form-ctrl" tabindex = '5' name="relation" id="relation"  >
+                                                            <option value="">Select Relation</option>
+                                                            <option value="S">Son Of</option>
+                                                            <option value="D">Daughter Of</option>
+                                                            <option value="W">Spouse Of</option>
+                                                            <option value="N">Not Available</option>
+                                                        </select>
+                                                        <div id="error_relation"></div> 
+                                                        <?php if (isset($validation) && $validation->hasError('relation')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('relation'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label class="form-label" for="form-stacked-text">Relative Name <span style="color: red">*</span>:</label>
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="6" />
+                                                        <div id="error_relation_name"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('relation_name')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('relation_name'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <label class="form-label" for="form-stacked-text">Chamber Address :</label>
-                                                        <textarea class="form-control cus-form-ctrl" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="5"><?php echo set_value('c_address');?></textarea>
+                                                        <textarea class="form-control cus-form-ctrl" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="7"><?php echo set_value('c_address');?></textarea>
                                                         <div id="error_c_address"></div>
                                                         <?php if (isset($validation) && $validation->hasError('c_address')): ?>
                                                             <div class="text-danger">
@@ -151,9 +168,41 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
+                                                </div>
+                                                <!-- left box end -->
+                                                <!-- right box start -->
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label class="form-label" for="form-stacked-text">Registration Bar Id Card <span style="color: red">*</span>Size: (<?php echo ((BAR_ID_CARD_SIZE/1024)/1024);?>MB) Type:(pdf/jpeg/jpg):</label>
+                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="8" />
+                                                        <div id="error_bar_id_card"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('bar_id_card')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('bar_id_card'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="col">
+                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span>  :</label>
+                                                        <?php
+                                                        $readony = "";
+                                                        if(isset($bar_reg_no) && !empty($bar_reg_no)){
+                                                            $readony = "readonly";
+                                                        }
+                                                        ?>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="9" <?php echo $readony;?>/>
+                                                        <div id="error_bar_reg_no"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('bar_reg_no')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('bar_reg_no'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Pincode :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="6" />
+                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="10" />
                                                         <div id="error_c_pincode"></div>
                                                         <?php if (isset($validation) && $validation->hasError('c_pincode')): ?>
                                                             <div class="text-danger">
@@ -161,21 +210,9 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">City :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="7" />
-                                                        <div id="error_c_city"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('c_city')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('c_city'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">State :</label>
-                                                        <select class="form-control cus-form-ctrl" name="c_state"  id="c_state"   tabindex="8">
+                                                        <select class="form-control cus-form-ctrl" name="c_state"  id="c_state"   tabindex="11">
                                                             <option value="">Select State</option>
                                                             <?php
                                                             $stateArr = array();
@@ -201,7 +238,7 @@ if(!empty(getSessionData('login'))){
                                                 <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">District :</label>
-                                                        <select class="form-control cus-form-ctrl" name="c_district" id="c_district"  tabindex="9">
+                                                        <select class="form-control cus-form-ctrl" name="c_district" id="c_district"  tabindex="12">
                                                             <option value="">Select District</option>
                                                         </select>
                                                         <div id="error_c_district"></div>
@@ -212,58 +249,23 @@ if(!empty(getSessionData('login'))){
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Registration Bar Id Card <span style="color: red">*</span>Size: (<?php echo ((BAR_ID_CARD_SIZE/1024)/1024);?>MB) Type:(pdf/jpeg/jpg):</label>
-                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="10" />
-                                                        <div id="error_bar_id_card"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('bar_id_card')): ?>
+                                                        <label class="form-label" for="form-stacked-text">City :</label>
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="13" />
+                                                        <div id="error_c_city"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('c_city')): ?>
                                                             <div class="text-danger">
-                                                                <?= $validation->getError('bar_id_card'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                                <!-- left box end -->
-                                                <!-- right box start -->
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $emailid;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="11" readonly/>
-                                                        <div id="error_email"></div>
-                                                    </div>
-                                                    <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span>  :</label>
-                                                        <?php
-                                                        $readony = "";
-                                                        if(isset($bar_reg_no) && !empty($bar_reg_no)){
-                                                            $readony = "readonly";
-                                                        }
-                                                        ?>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="12" <?php echo $readony;?>/>
-                                                        <div id="error_bar_reg_no"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('bar_reg_no')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('bar_reg_no'); ?>
+                                                                <?= $validation->getError('c_city'); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">Relative Name <span style="color: red">*</span>:</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="13" />
-                                                        <div id="error_relation_name"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('relation_name')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('relation_name'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <div class="col">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <label style="margin-top: 35px;margin-bottom: 9px;" class="form-label"><input class="uk-checkbox" type="checkbox"  name="same_as" id="same_as"  tabindex="14" /> Same As Chamber Address :</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <label class="form-label" for="form-stacked-text">Residential Address <span style="color: red">*</span> :</label>
                                                         <textarea class="form-control cus-form-ctrl" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="15"><?php echo set_value('r_address');?> </textarea>
                                                         <div id="error_r_address"></div>
@@ -273,6 +275,8 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-text">Pincode <span style="color: red">*</span> :</label>
                                                         <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="16" />
@@ -283,21 +287,9 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col">
-                                                        <label class="form-label" for="form-stacked-text">City <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="14" />
-                                                        <div id="error_r_city"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('r_city')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('r_city'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">State <span style="color: red">*</span> :</label>
-                                                        <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="18">
+                                                        <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="17">
                                                             <option value="">Select State</option>
                                                             <?php
                                                             if (isset($state_list) && !empty($state_list)){
@@ -316,6 +308,16 @@ if(!empty(getSessionData('login'))){
                                                     </div>
                                                 </div>
                                                 <div class="row">
+                                                    <div class="col">
+                                                        <label class="form-label" for="form-stacked-text">City <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="18" />
+                                                        <div id="error_r_city"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('r_city')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('r_city'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
                                                     <div class="col">
                                                         <label class="form-label" for="form-stacked-select">District <span style="color: red">*</span> :</label>
                                                         <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="19">
@@ -434,30 +436,24 @@ if(!empty(getSessionData('login'))){
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">Mobile <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_no;?>" placeholder="9876543XXX" maxlength="10"   tabindex="2" readonly>
-                                                        <div id="error_mobile"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('mobile')): ?>
+                                                        <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $email_id;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="2" readonly/>
+                                                        <div id="error_email"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('email')): ?>
                                                             <div class="text-danger">
-                                                                <?= $validation->getError('mobile'); ?>
+                                                                <?= $validation->getError('email'); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-select">Relation <span style="color: red">*</span> :</label>
-                                                        <select class="form-control cus-form-ctrl" tabindex = '3' name="relation" id="relation"  >
-                                                            <option value="">Select Relation</option>
-                                                            <option value="S">Son Of</option>
-                                                            <option value="D">Daughter Of</option>
-                                                            <option value="W">Spouse Of</option>
-                                                            <option value="N">Not Available</option>
-                                                        </select>
-                                                        <div id="error_relation"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('relation')): ?>
+                                                        <label class="form-label" for="form-stacked-text">Mobile <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="mobile" id="mobile" value="<?php echo $mobile_no;?>" placeholder="9876543XXX" maxlength="10"   tabindex="3" readonly>
+                                                        <div id="error_mobile"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('mobile')): ?>
                                                             <div class="text-danger">
-                                                                <?= $validation->getError('relation'); ?>
+                                                                <?= $validation->getError('mobile'); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
@@ -491,8 +487,38 @@ if(!empty(getSessionData('login'))){
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-select">Relation <span style="color: red">*</span> :</label>
+                                                        <select class="form-control cus-form-ctrl" tabindex = '5' name="relation" id="relation"  >
+                                                            <option value="">Select Relation</option>
+                                                            <option value="S">Son Of</option>
+                                                            <option value="D">Daughter Of</option>
+                                                            <option value="W">Spouse Of</option>
+                                                            <option value="N">Not Available</option>
+                                                        </select>
+                                                        <div id="error_relation"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('relation')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('relation'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-text">Relative Name <span style="color: red">*</span>:</label>
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="6" />
+                                                        <div id="error_relation_name"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('relation_name')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('relation_name'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <!-- left box end -->
+                                                <!-- right box start -->
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <label class="form-label" for="form-stacked-text">Chamber Address :</label>
-                                                        <textarea class="form-control cus-form-ctrl" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="5"><?php echo set_value('c_address');?></textarea>
+                                                        <textarea class="form-control cus-form-ctrl" rows="2" name="c_address" id="c_address"  placeholder="Address" maxlength="250"  tabindex="7"><?php echo set_value('c_address');?></textarea>
                                                         <div id="error_c_address"></div>
                                                         <?php if (isset($validation) && $validation->hasError('c_address')): ?>
                                                             <div class="text-danger">
@@ -500,9 +526,39 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-text">Registration Bar Id Card <span style="color: red">*</span>Size: (<?php echo ((BAR_ID_CARD_SIZE/1024)/1024);?>MB) Type:(pdf/jpeg/jpg):</label>
+                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="8" />
+                                                        <div id="error_bar_id_card"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('bar_id_card')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('bar_id_card'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span> :</label>
+                                                        <?php
+                                                        $readony = "";
+                                                        if(isset($bar_reg_no) && !empty($bar_reg_no)){
+                                                            $readony = "readonly";
+                                                        }
+                                                        ?>
+                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="9" <?php echo $readony;?>/>
+                                                        <div id="error_bar_reg_no"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('bar_reg_no')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('bar_reg_no'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-sm-12 col-md-6">
                                                         <label class="form-label" for="form-stacked-text">Pincode :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="6" />
+                                                        <input class="form-control cus-form-ctrl" type="text"  value="<?php echo set_value('c_pincode'); ?>" name="c_pincode" onkeyup="return isNumber(event)" id="c_pincode"  placeholder="Pincode" maxlength="6"   tabindex="10" />
                                                         <div id="error_c_pincode"></div>
                                                         <?php if (isset($validation) && $validation->hasError('c_pincode')): ?>
                                                             <div class="text-danger">
@@ -510,21 +566,9 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">City :</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="7" />
-                                                        <div id="error_c_city"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('c_city')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('c_city'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
                                                     <div class="col-sm-12 col-md-6">
                                                         <label class="form-label" for="form-stacked-select">State :</label>
-                                                        <select class="form-control cus-form-ctrl" name="c_state"  id="c_state"   tabindex="8">
+                                                        <select class="form-control cus-form-ctrl" name="c_state"  id="c_state"   tabindex="11">
                                                             <option value="">Select State</option>
                                                             <?php
                                                             $stateArr = array();
@@ -550,7 +594,7 @@ if(!empty(getSessionData('login'))){
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6">
                                                         <label class="form-label" for="form-stacked-select">District :</label>
-                                                        <select class="form-control cus-form-ctrl" name="c_district" id="c_district"  tabindex="9">
+                                                        <select class="form-control cus-form-ctrl" name="c_district" id="c_district"  tabindex="12">
                                                             <option value="">Select District</option>
                                                         </select>
                                                         <div id="error_c_district"></div>
@@ -561,63 +605,23 @@ if(!empty(getSessionData('login'))){
                                                         <?php endif; ?>
                                                     </div>
                                                     <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">Registration Bar Id Card <span style="color: red">*</span>Size: (<?php echo ((BAR_ID_CARD_SIZE/1024)/1024);?>MB) Type:(pdf/jpeg/jpg):</label>
-                                                        <input class="form-control cus-form-ctrl" type="file" accept=".pdf,.jpeg,.jpg" name="bar_id_card" id="bar_id_card"   tabindex="10" />
-                                                        <div id="error_bar_id_card"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('bar_id_card')): ?>
+                                                        <label class="form-label" for="form-stacked-text">City :</label>
+                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('c_city'); ?>" name="c_city" id="c_city"  placeholder="City" maxlength="25"  tabindex="13" />
+                                                        <div id="error_c_city"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('c_city')): ?>
                                                             <div class="text-danger">
-                                                                <?= $validation->getError('bar_id_card'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                </div>
-                                                <!-- left box end -->
-                                                <!-- right box start -->
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="email" name="email" id="email" value="<?php echo $email_id;?>" maxlength="100" placeholder="admin@gmail.com "  tabindex="11" readonly/>
-                                                        <div id="error_email"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('email')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('email'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">Bar Registration No. <span style="color: red">*</span> :</label>
-                                                        <?php
-                                                        $readony = "";
-                                                        if(isset($bar_reg_no) && !empty($bar_reg_no)){
-                                                            $readony = "readonly";
-                                                        }
-                                                        ?>
-                                                        <input class="form-control cus-form-ctrl" type="text" name="bar_reg_no"  value="<?php echo ($bar_reg_no) ?  $bar_reg_no : set_value('bar_reg_no');?>" id="bar_reg_no" maxlength="30" placeholder=""   tabindex="12" <?php echo $readony;?>/>
-                                                        <div id="error_bar_reg_no"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('bar_reg_no')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('bar_reg_no'); ?>
+                                                                <?= $validation->getError('c_city'); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">Relative Name <span style="color: red">*</span>:</label>
-                                                        <input class="form-control cus-form-ctrl" type="text" value="<?php echo set_value('relation_name');?>"  name="relation_name" id="relation_name"  placeholder="Relative Name" maxlength="35" tabindex="13" />
-                                                        <div id="error_relation_name"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('relation_name')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('relation_name'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
-                                                    <div class="col-sm-12 col-md-6">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <label style="margin-top: 35px;margin-bottom: 9px;" class="form-label"><input class="uk-checkbox" type="checkbox"  name="same_as" id="same_as"  tabindex="14" /> Same As Chamber Address :</label>
                                                     </div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
+                                                    <div class="col-sm-12 col-md-12">
                                                         <label class="form-label" for="form-stacked-text">Residential Address <span style="color: red">*</span> :</label>
                                                         <textarea class="form-control cus-form-ctrl" name="r_address" id="r_address"  placeholder="Address" maxlength="250" tabindex="15"><?php echo set_value('r_address');?> </textarea>
                                                         <div id="error_r_address"></div>
@@ -627,6 +631,8 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
+                                                </div>
+                                                <div class="row">
                                                     <div class="col-sm-12 col-md-6">
                                                         <label class="form-label" for="form-stacked-text">Pincode <span style="color: red">*</span> :</label>
                                                         <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_pincode');?>" name="r_pincode" id="r_pincode"  placeholder="Pincode" maxlength="6"  tabindex="16" />
@@ -637,21 +643,9 @@ if(!empty(getSessionData('login'))){
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">City <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="17" />
-                                                        <div id="error_r_city"></div>
-                                                        <?php if (isset($validation) && $validation->hasError('r_city')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('r_city'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
-                                                    </div>
                                                     <div class="col-sm-12 col-md-6">
                                                         <label class="form-label" for="form-stacked-seleAdd/Approve Advocatect">State <span style="color: red">*</span> :</label>
-                                                        <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="18">
+                                                        <select class="form-control cus-form-ctrl" name="r_state"  id="r_state" tabindex="17">
                                                             <option value="">Select State</option>
                                                             <?php
 
@@ -673,13 +667,23 @@ if(!empty(getSessionData('login'))){
                                                 <div class="row">
                                                     <div class="col-sm-12 col-md-6">
                                                         <label class="form-label" for="form-stacked-select">District <span style="color: red">*</span> :</label>
-                                                        <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="19">
+                                                        <select class="form-control cus-form-ctrl" name="r_district" id="r_district"  tabindex="18">
                                                             <option>Select District</option>
                                                         </select>
                                                         <div id="error_r_district"></div>
                                                         <?php if (isset($validation) && $validation->hasError('r_district')): ?>
                                                             <div class="text-danger">
                                                                 <?= $validation->getError('r_district'); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-text">City <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" value="<?php echo set_value('r_city');?>" name="r_city" id="r_city"  placeholder="City" maxlength="25" tabindex="19" />
+                                                        <div id="error_r_city"></div>
+                                                        <?php if (isset($validation) && $validation->hasError('r_city')): ?>
+                                                            <div class="text-danger">
+                                                                <?= $validation->getError('r_city'); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                     </div>

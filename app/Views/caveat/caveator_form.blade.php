@@ -165,7 +165,7 @@ textarea {
                         
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                             <div class="mb-3">
-                                <label for="" class="form-label">Relation</label>
+                                <label for="" class="form-label">Relation <span style="color: red" class="astriks">*</span></label>
                                 <?php
                                     $selectSon = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'S' ? 'selected=selected' : '';
                                     $selectDaughter = isset($caveator_details[0]) && $caveator_details[0]['pet_father_flag'] == 'D' ? 'selected=selected' : '';
