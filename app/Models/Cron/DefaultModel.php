@@ -40,51 +40,34 @@ class DefaultModel extends Model {
     }
 
     function update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_insert, $objections_update, $efiling_type = null) {
-        // $this->db->trans_start();
+         $builder = $this->db->table('efil.tbl_case_details'); 
         
-        $builder = $this->db->table('efil.tbl_case_details');
-        // $builder->WHERE('registration_id', $registration_id);
-        foreach($case_details as $case_detail){
-            // print_r($case_detail); die;
-            //$registration_id_arr = $case_detail['registration_id'];
+        foreach($case_details as $case_detail){ 
             $builder->where('registration_id', $registration_id);
-            $builder->update($case_detail);
-            //echo $builder->getCompiledUpdate();
-           // die;
-        }
-        
-
+            $builder->update($case_detail); 
+        } 
         if (isset($objections_insert) && !empty($objections_insert)) {
             $builder2 = $this->db->table('efil.tbl_icmis_objections');
-            foreach($objections_insert as $objection_insert){
-                // 
-                $builder2->insert($objection_insert);
-              // echo $this->db->insertID().'<br>';
-               //die;
-            }
-            // $db = Database::connect();
-            // $builder = $db->table('efil.tbl_case_details');
-            // $builder->insertBatch($objections_insert);
-            // $builder = $this->db->table('efil.tbl_case_details'); 
-            // $builder->insertBatch($objections_insert);
-        }
-
+            foreach($objections_insert as $objection_insert){ 
+                $builder2->insert($objection_insert); 
+            } 
+        } 
+      
         if (isset($objections_update) && !empty($objections_update)) {
+            // pr($objections_update);
             $builder3 = $this->db->table('efil.tbl_icmis_objections');
+            foreach($objections_update as $objections_updates){ 
+            // $builder3->where('id', $objections_updates['id']);
             $builder3->where('registration_id', $registration_id);
-            $builder3->update($objections_update);
- 
-            //$builder->updateBatch($objections_update, 'id');
-        }
+            $builder3->update($objections_updates); 
+        } 
+        } 
         $current_stage = $this->get_current_stage($registration_id);
         if ($current_stage) {
-            if ($current_stage[0]['stage_id'] == $next_stage) {
-
+            if ($current_stage[0]['stage_id'] == $next_stage) { 
                 return FALSE;
-            } else {
-
-                if($next_stage) {
-
+            } else { 
+                if($next_stage) { 
                     $res = $this->update_next_stage($registration_id, $next_stage, $curr_dt);
                 }
             }
@@ -149,11 +132,12 @@ class DefaultModel extends Model {
         return  $insertId;
     }
 
-    function updateCronDetails($id) {
-        $builder = $this->db->table('efil.tbl_cron_details');
-        $builder->where('id', $id);
-        $builder->update('completed_at', date('Y-m-d H:i:s'));
-    }
+function updateCronDetails($id) {
+    $builder = $this->db->table('efil.tbl_cron_details');
+    $builder->where('id', $id);
+    $builder->update(['completed_at' => date('Y-m-d H:i:s')]); // Correctly passing an associative array
+}
+
 
     public function pending_court_fee() {
         $sql = "select pay.*, cd.sc_diary_num, cd.sc_diary_year 
