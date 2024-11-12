@@ -11,7 +11,7 @@
                         <thead>
                             <tr class="success">
                                 <th style="width: 10% !important;">#</th>
-                                <th style="width: 40% !important;">Uploaded Documents(s) </th>
+                                <th style="width: 40% !important;">Uploaded Document(s) </th>
                                 <th style="width: 15% !important;">Uploaded On </th>
                                 <th style="width: 15% !important;">Pages</th>
                                 <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
@@ -41,7 +41,7 @@
                                 ?>
                                 <tr>
                                     <td data-key="#"><?= $sr++; ?></td>
-                                    <td data-key="Uploaded Documents(s)">
+                                    <td data-key="Uploaded Document(s)">
                                         <a target="_blank" href="<?php echo base_url('uploadDocuments/viewDocument/' . url_encryption($doc['doc_id'])); ?>">
                                             <?php echo_data($doc['doc_title']); ?>
                                             <img src="<?= base_url('assets/images/pdf.png') ?>">
@@ -49,7 +49,7 @@
                                             <?php // echo_data($doc['doc_hashed_value']); ?>
                                         </a>
                                     </td>
-                                    <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($doc['uploaded_on'])) ?></td>
+                                    <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($doc['uploaded_on']))); ?></td>
                                     <td data-key="Pages"><?= htmlentities($doc['page_no'], ENT_QUOTES); ?></td>
                                     <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
                                         <td data-key="Delete">
@@ -108,7 +108,7 @@
                                                 <?php echo_data($deleted_doc['doc_hashed_value']); ?>
                                             </a>
                                         </td>
-                                        <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime($deleted_doc['uploaded_on'])) ?></td>
+                                        <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($deleted_doc['uploaded_on']))); ?></td>
                                         <td data-key="Deleted On"><?= date('d-m-Y H:i:s', strtotime($deleted_doc['deleted_on'])) ?></td>
                                         <td data-key="Pages"><?= htmlentities($deleted_doc['page_no'], ENT_QUOTES); ?></td>
                                     </tr>
