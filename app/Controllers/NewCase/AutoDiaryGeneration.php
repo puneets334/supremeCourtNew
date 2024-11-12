@@ -148,7 +148,6 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         {
             $stages_array = array(Transfer_to_IB_Stage); //Transfer_to_IB_Stage=8
             $isCaseInApprovedStage=$this->Common_model->getApproveStagesCasesListDetails($registration_id,$stages_array); // Method to check and verify the case Approve status
-            // pr($isCaseInApprovedStage);
             if(!empty($isCaseInApprovedStage))
             {
                 $efiling_no=$isCaseInApprovedStage[0]['efiling_no'];
@@ -986,7 +985,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                 $diary_id = $diary_no . $diary_year;
                 #from AOR to fdr for scrutiny
                 $this->efiling_webservices->updateFilTrapAORtoFDR($efiling_no);
-                $efiling_no = $_SESSION['efiling_details']['efiling_no'];
+                // $efiling_no = $_SESSION['efiling_details']['efiling_no'];
                 $result =  $this->setReturnedByAdvocate($diary_id, $efiling_no,$registration_id);
                 if(isset($result['doc_details']) && !empty($result['doc_details'])){
                     foreach ($result['doc_details'] as $k=>$v){
@@ -1040,10 +1039,74 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         echo json_encode($output);
         exit(0);
     }
+    
+    
+    public function updateRefiledCaseRefile($registration_id,$diary_no,$diary_year,$efiling_no){
+        $output = array();
+        if(isset($registration_id) && !empty($registration_id) && !empty($diary_no) && !empty($diary_year) && !empty($efiling_no)){
+            //go to scrutiny
+            $diary_no = !empty($diary_no) ? (int)$diary_no : NULL;
+            if(isset($diary_no) && !empty($diary_no)){
+
+                $diary_id = $diary_no . $diary_year;
+                #from AOR to fdr for scrutiny
+                $this->efiling_webservices->updateFilTrapAORtoFDR($efiling_no);
+                // $efiling_no = $_SESSION['efiling_details']['efiling_no'];
+                $result =  $this->setReturnedByAdvocate($diary_id, $efiling_no,$registration_id);
+                if(isset($result['doc_details']) && !empty($result['doc_details'])){
+                    foreach ($result['doc_details'] as $k=>$v){
+                        $tmpArr = array();
+                        $tmpArr['icmis_diary_no'] = $diary_id;
+                        $tmpArr['icmis_doccode'] = 8;
+                        $tmpArr['icmis_docnum'] = (int)$v;
+                        $tmpArr['icmis_docyear'] = $diary_year;
+                        $tmpArr['icmis_iastat'] = 'P';
+                        $updateArr = array();
+                        $updateArr['table_name'] = "efil.tbl_efiled_docs";
+                        $updateArr['whereFieldName'] = 'doc_id';
+                        $updateArr['whereFieldValue'] = (int)$k;
+                        $updateArr['updateArr'] = $tmpArr;
+                        $this->Common_model->updateTableData($updateArr);
+                    }
+                }
+                $params =array();
+                $params['registration_id'] = $registration_id;
+                $totalFeeData =  $this->Common_model->getTotalFeeByRegistrationId($params);
+                $totalFee =0;
+                if(isset($totalFeeData[0]->total) && !empty($totalFeeData[0]->total)){
+                    $totalFee = (int)$totalFeeData[0]->total;
+                }
+                $params = array();
+                $params['totalFee'] = $totalFee;
+                $params['diaryNo'] = $diary_id;
+                if($totalFee != 0){
+                    $res =  $this->efiling_webservices->updateFeeByRegistrationId($params);
+                }
+                else{
+                    $res=array();
+                }
+                if((isset($res['status']) && !empty($res['status'])) || $totalFee == 0){
+                    $next_stage = I_B_Approval_Pending_Admin_Stage;
+                    $_SESSION['efiling_details']['stage_id'] = I_B_Approval_Pending_Admin_Stage;
+                    $this->Common_model->updateCaseStatus($registration_id, $next_stage);
+                    $output['status'] = "success";
+                    log_message('debug', "File has been transfer to scrutiny.");
+                    $output['message'] = "File has been transfer to scrutiny.";
+                }
+                else{
+                    $output['status'] = "error";
+                    log_message('debug', "Something went wrong while updation of refiled case,Please try again later.");
+                    $output['message'] = "Something went wrong,Please try again later.";
+                }
+
+            }
+        }
+        echo json_encode($output);
+        exit(0);
+    }
     private function setReturnedByAdvocate($diary_id, $efiling_no,$registration_id=null)
     {
         $registration_id = !empty($registration_id) ? $registration_id : NULL;
-        $this->load->model('newcase/View_model');
         $efiled_docs_list = $this->View_model->get_index_items_list($registration_id,1);
         $docTempArr = array();
         $output= false;
