@@ -60,7 +60,6 @@
                     </li> -->
                 </ul>
             </div>
-            <div id="SkipContent" tabindex="-1"></div>
             <?php
                 $profile_model = new \App\Models\Profile\ProfileModel();
                 $profile = !empty(getSessionData('login')) ? $profile_model->getProfileDetail(getSessionData('login')['userid']) : '';
@@ -120,3 +119,4 @@
         </div>
     </div>			
 </div>
+<div id="SkipContent" tabindex="-1"></div>
