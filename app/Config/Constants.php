@@ -931,6 +931,7 @@ define('LIVE_EMAIL_KEY', "cKLKqvPlW8");
 
 define('ADMIN_SERVER_URL',"http://10.25.78.48:82/public/");
 // define('ADMIN_SERVER_URL',"http://10.25.80.170:82/");
+
 define('ADMIN_AUTO_DIARY_USER_ID_FOR_EFM',7087);
 define('ADMIN_AUTO_DIARY_ICMIS_USER_CODE',10531);
 define('ADMIN_AUTO_DIARY_EMP_ID',9999);

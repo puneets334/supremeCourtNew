@@ -425,12 +425,24 @@ body.loading .overlay{
                         <div class="mb-3">
                             <label for="" class="form-label">Impugned Order Date <span style="color: red" class="astriks">*</span></label>
                                       <div class="row">
-                                        <div class="col-md-8">
-                            <input tabindex = '18'class="form-control has-feedback-left cus-form-ctrl mb-3" id="order_date" name="order_date" maxlength="10" placeholder="DD/MM/YYYY" type="text"></div>
-                            <div class="col-md-4">
-                            <select id="order_dates_list" class="form-control cus-form-ctrl"></select>
-                            </div>
-                            </div>
+                                        <div class="slect-date-two">
+                                                    <input tabindex='18'
+                                                        class="form-control cus-form-ctrl"
+                                                        id="order_date"
+                                                        name="order_date"
+                                                        maxlength="10"
+                                                        placeholder="DD/MM/YYYY"
+                                                        type="text">
+                                                    <select id="order_dates_list" style="width: 10% !important;" class="form-select cus-form-ctrl" aria-label="Default select example">
+                                                    </select>
+                                                </div>  
+
+                                            <!-- <div class="col-md-8">
+                                                <input tabindex = '18'class="form-control has-feedback-left cus-form-ctrl mb-3" id="order_date" name="order_date" maxlength="10" placeholder="DD/MM/YYYY" type="text"></div>
+                                            <div class="col-md-4">
+                                                <select id="order_dates_list" class="form-control cus-form-ctrl"></select>
+                                            </div> -->
+                                        </div>
 
 
 

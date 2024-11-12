@@ -1156,6 +1156,7 @@ function remark_preview($reg_id, $current_stage_id)
     $result_icmis = $Common_model->get_cis_defects_remarks($reg_id, FALSE);
 
     $defects['pdfdefects'] = $Common_model->get_pdf_defects_remarks($reg_id);
+    // echo 'saurabh'; pr($defects);
     //echo "<pre>";    print_r($result_icmis); echo "</pre>";
     if (isset($result_icmis) && !empty($result_icmis)) {
         $msg = '<div class="alert table-responsive-sm"><div class="table-sec">
@@ -1174,7 +1175,9 @@ function remark_preview($reg_id, $current_stage_id)
                     </thead>'
             . '<tbody style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $i = 1;
+       
         foreach ($result_icmis as $re) {
+            // pr($re);
             $prep_dt = (isset($re['obj_prepare_date']) && !empty($re['obj_prepare_date'])) ? date(
                 'd-M-Y H:i:s',
                 strtotime($re['obj_prepare_date'])
@@ -1226,7 +1229,6 @@ function remark_preview($reg_id, $current_stage_id)
         $msg .= '</tbody>
                 </table>';
         $msg .= '</div>';
-
         if (!empty($defects['pdfdefects'])) {
             $connecter = '';
             $msg .= '<div>';
@@ -1240,12 +1242,12 @@ function remark_preview($reg_id, $current_stage_id)
         }
         $msg .= '</div>';
         $msg .= '</div>';
-        
 
 
-        return $msg;
+        echo $msg;
         
     } elseif (isset($result_initial) && !empty($result_initial)) { 
+        
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date(
             'd-m-Y H:i:s',
@@ -1269,10 +1271,11 @@ function remark_preview($reg_id, $current_stage_id)
 
         $msg .= '
             </div>';
-        return $msg;
+        echo $msg;
     } else {
         return false;
     }
+
 }
 
 function encryptData($data)

@@ -140,6 +140,9 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                                             <b>NOTE:</b> Please upload only JPG or JPEG.File name maximun length can be 40 characters <br> including digits characters, spaces, hypens and underscore. maximum file size 1MB.
                                         </p>
                                         <div class="row">
+                                            <div class="text-danger">
+                                                <b><?php echo $session->getFlashData('advocate_image'); ?></b>
+                                            </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4 mb-3">
                                                 <input type="file" class="form-control cus-form-ctrl" value="<?php echo_data($user_addar_img) ?>" placeholder="" name="advocate_image"  accept=".jpg, .jpeg" id="advocate_image" required><span>Please Choose <b>Profile Picture</b> ( Upto 1MB )</span>
                                             </div>
