@@ -132,11 +132,12 @@ class DefaultModel extends Model {
         return  $insertId;
     }
 
-function updateCronDetails($id) {
-    $builder = $this->db->table('efil.tbl_cron_details');
-    $builder->where('id', $id);
-    $builder->update(['completed_at' => date('Y-m-d H:i:s')]); // Correctly passing an associative array
-}
+
+    function updateCronDetails($id) {
+        $builder = $this->db->table('efil.tbl_cron_details');
+        $builder->where('id', $id);
+        $builder->update(['completed_at' => date('Y-m-d H:i:s')]);
+    }
 
 
     public function pending_court_fee() {
