@@ -54,7 +54,7 @@ class AdvSignUp extends BaseController {
         }else if (!empty($_SESSION['kyc_configData']['UidData']['Pht'])) {
         }else {
             if (empty($_SESSION['profile_image']['profile_photo'])) {
-                $this->session->setFlashdata('msg', 'Please Choose profile Photo.');
+                $this->session->setFlashdata('advocate_image', 'Please Choose profile Photo.');
                 $this->session->setFlashdata('old_name', isset($_POST['name']) && !empty($_POST['name']) ? $_POST['name'] : '' );
                 $this->session->setFlashdata('old_date_of_birth', isset($_POST['date_of_birth']) && !empty($_POST['date_of_birth']) ? $_POST['date_of_birth'] : '' );
                 $this->session->setFlashdata('old_mobile', isset($_POST['mobile']) && !empty($_POST['mobile']) ? $_POST['mobile'] : '' );
