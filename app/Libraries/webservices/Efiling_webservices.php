@@ -1558,10 +1558,9 @@ class Efiling_webservices {
 
     public function get_case_diary_details_from_SCIS($diary_no, $diary_year) {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=D&diaryNo=$diary_no&diaryYear=$diary_year");
-        //  pr(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=D&diaryNo=$diary_no&diaryYear=$diary_year");
+
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt");
         if ($data != false) {
-            // pr($data);
             return json_decode($data);
         } else {
             return NULL;
@@ -1601,8 +1600,6 @@ class Efiling_webservices {
 
     public function get_last_listed_details($diary_no,$diary_year){
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
-        // pr($data);
-        // pr(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
         if ($data != false) {
             return json_decode($data);
@@ -1615,7 +1612,6 @@ class Efiling_webservices {
     {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getPoliceStation/?state_id=$state_id&district_id=$district_id");
 
-        // pr(ICMIS_SERVICE_URL."/ConsumedData/getPoliceStation/?state_id=$state_id&district_id=$district_id");
         if ($data != false) {
             return json_decode($data,true);
         } else {
@@ -1842,7 +1838,6 @@ class Efiling_webservices {
                 'diary_details' => $encrypted_string
             )
         );
-        // pr($postdata);
         // $opts = array('http' =>
         //     array(
         //         'method'  => 'POST',
@@ -1873,7 +1868,6 @@ class Efiling_webservices {
         $response = curl_exec($curl);
         
         curl_close($curl);
-        // pr($response);
         return $decodedResponse = json_decode(json_encode($response), true);
         // return $result = file_get_contents($response);
         /*print_r($result);
@@ -1910,18 +1904,41 @@ class Efiling_webservices {
             )
         );
 
-        $opts = array('http' =>
-            array(
-                'method'  => 'POST',
-                'header'  => 'Content-Type: application/x-www-form-urlencoded',
-                'content' => $postdata
-            )
-        );
+        // $opts = array('http' =>
+        //     array(
+        //         'method'  => 'POST',
+        //         'header'  => 'Content-Type: application/x-www-form-urlencoded',
+        //         'content' => $postdata
+        //     )
+        // );
 
-        $context  = stream_context_create($opts);
+        // $context  = stream_context_create($opts);
+        // $url = ICMIS_SERVICE_URL;
+
+        // return $result = file_get_contents($url.'/filing/changeScruitinyStage', false, $context);
+
+        $curl = curl_init();
         $url = ICMIS_SERVICE_URL;
-
-        return $result = file_get_contents($url.'/filing/changeScruitinyStage', false, $context);
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $url.'/filing/changeScruitinyStage',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => $postdata,
+          CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Content-Length: ' . strlen($postdata)
+            )
+        ));
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+        return $decodedResponse = json_decode(json_encode($response), true);
     }
     public function get_deficit_court_feeData($advocateId)
     {
@@ -1966,18 +1983,40 @@ class Efiling_webservices {
             array(
                 'details' => $encriptedData)
         );
-        $opts = array('http' =>
-            array(
-                'method'  => 'POST',
-                'header'  => 'Content-Type: application/x-www-form-urlencoded',
-                'content' => $postdata
-            )
-        );
-        $context  = stream_context_create($opts);
-        $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/PutInICMIS/saveRefiledIA', false, $context);
+        // $opts = array('http' =>
+        //     array(
+        //         'method'  => 'POST',
+        //         'header'  => 'Content-Type: application/x-www-form-urlencoded',
+        //         'content' => $postdata
+        //     )
+        // );
+        // $context  = stream_context_create($opts);
+        // $url = ICMIS_SERVICE_URL;
+        // $result = file_get_contents($url.'/PutInICMIS/saveRefiledIA', false, $context);
 
-        return json_decode($result,true);
+        // return json_decode($result,true);
+        $curl = curl_init();
+        $url = ICMIS_SERVICE_URL;
+        curl_setopt_array($curl, array(
+          CURLOPT_URL => $url.'/PutInICMIS/saveRefiledIA',
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => '',
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => 'POST',
+          CURLOPT_POSTFIELDS => $postdata,
+          CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+                'Content-Length: ' . strlen($postdata)
+            )
+        ));
+        
+        $response = curl_exec($curl);
+        
+        curl_close($curl);
+        return $decodedResponse = json_decode(json_encode($response), true);
     }
     public function getScrutinyUserByDiaryNo($diaryNo){
         $postdata = http_build_query(
@@ -2038,7 +2077,7 @@ class Efiling_webservices {
     public function getCaseDefectDetails($diary_no='',$diary_year='')
     {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getCaseDefectsList?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
-        // pr(ICMIS_SERVICE_URL."/ConsumedData/getCaseDefectsList?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
+
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -2108,7 +2147,7 @@ class Efiling_webservices {
     public function checkInTheOldEfilingCasesList($diary_no='',$diary_year='')
     {
         $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/checkCaseIsEligibleForRefiling?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
-        // pr(ICMIS_SERVICE_URL."/ConsumedData/checkCaseIsEligibleForRefiling?diary_no=".urlencode($diary_no)."&diary_year=".urlencode($diary_year));
+
         if ($data != false) {
             return json_decode($data);
         } else {
