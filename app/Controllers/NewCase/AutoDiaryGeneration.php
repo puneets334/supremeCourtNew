@@ -1025,19 +1025,19 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                     $_SESSION['efiling_details']['stage_id'] = I_B_Approval_Pending_Admin_Stage;
                     $this->Common_model->updateCaseStatus($registration_id, $next_stage);
                     $output['status'] = "success";
-                    log_message('CUSTOM', "File has been transfer to scrutiny.");
+                    log_message('debug', "File has been transfer to scrutiny.");
                     $output['message'] = "File has been transfer to scrutiny.";
                 }
                 else{
                     $output['status'] = "error";
-                    log_message('CUSTOM', "Something went wrong while updation of refiled case,Please try again later.");
+                    log_message('debug', "Something went wrong while updation of refiled case,Please try again later.");
                     $output['message'] = "Something went wrong,Please try again later.";
                 }
 
             }
         }
-        echo json_encode($output);
-        exit(0);
+        return json_encode($output);
+        // exit(0);
     }
     
     
@@ -1101,8 +1101,8 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
 
             }
         }
-        echo json_encode($output);
-        exit(0);
+        return json_encode($output);
+        // exit(0);
     }
     private function setReturnedByAdvocate($diary_id, $efiling_no,$registration_id=null)
     {
@@ -1188,12 +1188,12 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                 if((isset($refile_result['records_inserted']['refiled_old_efiling_case_efiled_docs']) && !empty($refile_result['records_inserted']['refiled_old_efiling_case_efiled_docs'])) ){
 
                     $output['status'] = "success";
-                    log_message('CUSTOM', " ReFiled old e-filing cases document has been transfer to scrutiny user.");
+                    log_message('debug', " ReFiled old e-filing cases document has been transfer to scrutiny user.");
                     $output['message'] = "File has been transfer to scrutiny.";
                 }
                 else{
                     $output['status'] = "error";
-                    log_message('CUSTOM', "Something went wrong while updation of refiled case,Please try again later.");
+                    log_message('debug', "Something went wrong while updation of refiled case,Please try again later.");
                     $output['message'] = "Something went wrong,Please try again later.";
                 }
                                
@@ -1227,8 +1227,8 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
 
             }
         }
-        echo json_encode($output);
-        exit(0);
+        return json_encode($output);
+        // exit(0);
     }
 
     public function transferOldEfilingRefiledCasesCRON_deactivated_on_05102023()
