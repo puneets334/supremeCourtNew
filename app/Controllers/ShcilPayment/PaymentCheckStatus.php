@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\ShcilPayment\PaymentModel;
 
 class PaymentCheckStatus extends BaseController {
+
     protected $Payment_model;
     protected $validation;
 
@@ -16,14 +17,12 @@ class PaymentCheckStatus extends BaseController {
     }
 
     public function index() {
-
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_ADMIN);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
-            redirect('login');
+            return redirect()->to(base_url('login'));
             exit(0);
         }
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
-
             $order_details = explode('$$', url_decryption($_POST['order_id']));
             // 0 => registration_id, 1 => order_no , 2 => received_amt
             if (count($order_details) != 3) {
@@ -31,34 +30,28 @@ class PaymentCheckStatus extends BaseController {
                 $_SESSION['MSG'] = message_show("fail", htmlentities('Data tempered .', ENT_QUOTES));
                 exit(0);
             }
-            
-  //          $order_details[2] = 113;
-  //          $order_details[1] = '8567200404090538';
-            
+            // $order_details[2] = 113;
+            // $order_details[1] = '8567200404090538';
             $pg_params = json_decode($_SESSION['estab_details']['payment_gateway_params'], true);
             $post_param = "login=" . $pg_params['login'] . "&txnid=" . $order_details[1] . "&amt=" . $order_details[2];
-
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, STOCK_HOLDING_PAYMENT_STATUS_URL);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_param);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $result = curl_exec($ch);
-//echo "<pre>";print_r($result); die;
             $InputArray = (array) simplexml_load_string($result);
-            
-            $InputArray = $InputArray['@attributes'];
+            $InputArray = $InputArray["@attributes"];
             curl_close($ch);
             if(isset($InputArray['txnStatus']) && $InputArray['txnStatus'] == 'DATA NOT FOUND'){
                 return 'DATA NOT FOUND.';
                 $_SESSION['MSG'] = message_show("fail", htmlentities('DATA NOT FOUND.', ENT_QUOTES));
-            }else{
+            } else {
                 $InputArray['settledate'] = ($InputArray['settledate'] == '-')? NULL : $InputArray['settledate'];
-
-                $this->validation->setRules([
+                $rules=[
                     "reconstatus" => [
                         "label" => "reconstatus",
-                        "rules" => "trim|in_list[RP,RS]"
+                        "rules" => "in_list[RP,RS]"
                     ],
                     "login" => [
                         "label" => "login",
@@ -72,23 +65,20 @@ class PaymentCheckStatus extends BaseController {
                         "label" => "txnStatus",
                         "rules" => "max_length[10]|in_list[SUCCESS,PENDING,FAILED,INITIATED]"
                     ],
-                ]);
-
-                if ($this->validation->withRequest($InputArray)->run() === FALSE) {
+                ];
+                if ($this->validate($rules) === FALSE) {
                     $error_array = $this->validation->getErrors();
-                    //var_dump($error_array);exit(0);
-                    $error_json = array('response_error_msg' => json_encode($error_array));                
+                    $error_json = array('response_error_msg' => json_encode($error_array));
                     $this->Payment_model->updatePayment($order_details[0], $order_details[1], $error_json);
                     $_SESSION['MSG'] = message_show("fail", "Invalid data in Payment response !");
-                    redirect('dashboard');exit(0);
+                    return redirect()->to(base_url('dashboard'));
+                    exit(0);
                 }
-                
                 $order_num = $InputArray['txnid'];
                 $transaction_num = $InputArray['shcltxnid'];
                 $transaction_date = $InputArray['settledate'];
                 $received_amount = $InputArray['amt'];
                 $shciltxnstatus = strtolower($InputArray['txnStatus']);
-
                 if (strtolower($shciltxnstatus) == 'success') {
                     $payment_status = 'Y';
                     $sentSMS = "Fee received successfully for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with Receipt No. " . $transaction_num . ", of amount Rs. " . $received_amount . "/-. - Supreme Court of India ";

@@ -27,7 +27,7 @@ class PaymentModel extends Model {
             session()->set('deficit_Fee_success', $deficit_Fee_success_arr);
         }
 
-        if ($payment_detail['payment_status'] == 'Y') {
+        if (isset($payment_detail['payment_status']) && $payment_detail['payment_status'] == 'Y') {
             $is_already_paid_court_fee = $this->is_already_paid_court_fee($registration_id, $order_ref_no);
             if ($is_already_paid_court_fee && $is_already_paid_court_fee != false) {
                 $builder = $this->db->table('efil.tbl_uploaded_pdfs');
