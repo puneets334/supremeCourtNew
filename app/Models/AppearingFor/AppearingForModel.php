@@ -56,10 +56,7 @@ class AppearingForModel extends Model
         //     // Log or handle the error
         //     log_message('error', 'Query failed: ' . $this->db->getLastQuery());
         //     return false;
-        // }
-
-        
-
+        // } 
         //echo  $this->db->last_query();die;
         if ($query->getNumRows() >= 1) {
             $result = $query->getResultArray();
