@@ -41,18 +41,16 @@ class DefaultController extends BaseController {
             // print_r($loop_for_stage_flag); die; 
 
             $scrutiny_result = $this->Default_model->get_efiled_nums_stage_wise_list_admin_cron($loop_for_stage_flag, ADMIN_FOR_TYPE_ID, ADMIN_FOR_ID);
-
             if ($scrutiny_result) {
                 $case_chunks=array_chunk($scrutiny_result, 100);
 
                 foreach($case_chunks as $index=>$chunk){
-
+                   // echo "<br/> Chunk No. ".($index+1)." and Chunk size: ".sizeof($chunk);
                     $data = $this->efiling_webservices->get_new_case_efiling_scrutiny_cron_SCIS($chunk);
                     
                     if ($data) {
                         $curr_dt = date('Y-m-d H:i:s');
-                        foreach ($data->consumed_data as $response) {
-                            
+                        foreach ($data->consumed_data as $response) { 
                             // var_dump($response);
                             if ($response->status == 'A') {
                               
@@ -63,6 +61,7 @@ class DefaultController extends BaseController {
                                 $diary_no = $d_no[0];
                                 $diary_year = $d_no[1];
                                 $diary_date = $response->diary_generated_on;
+                                 
                                 $case_details[0] = array(
                                     'registration_id' => $response->registration_id,
                                     'sc_diary_num' => $diary_no,
@@ -94,36 +93,34 @@ class DefaultController extends BaseController {
                                     );
 
                                     $case_details[0] = array_merge($case_details1[0], $case_details[0]);
-                                    $case_details[0] = array_merge($case_details1[0], $case_details[0]);
 
                                     if ($response->objection_flag == 'Y') {
 
                                         $cis_objections = $response->objections;
 
                                         $objections_status = $this->get_icmis_objections_status($response->registration_id, $cis_objections, $curr_dt);
-                                        //pr($objections_status);
+                                        //  pr($objections_status);
                                     }
 
                                     $next_stage = E_Filed_Stage;
                                 } else {
-                                    
+                                   
 
                                     $stage_update_timestamp = $this->Get_CIS_Status_model->get_stage_update_timestamp($response->registration_id, $loop_for_stage_flag);
-
                                     if ($response->objection_flag == 'Y') {
                                         $filTrapRemarks= isset($response->fil_trap_data[0]->remarks) ? $response->fil_trap_data[0]->remarks : '';
                                         $filTrapDispDt= isset($response->fil_trap_data[0]->disp_dt) ? $response->fil_trap_data[0]->disp_dt : '';
                                         if ($stage_update_timestamp[0]['activated_on'] >= $response->last_defect_notified_date && $filTrapRemarks!='FDR -> AOR') {
                                             echo "eFiling No. " . $response->efiling_no . " action is still pending for scrutiny.";
-                                            //continue;
+                                            continue;
                                         }
 
                                         $cis_objections = $response->objections;
                                         $objections_status = $this->get_icmis_objections_status($response->registration_id, $cis_objections, $curr_dt);
-                                       // echo 'rrrr';
-                                        //pr($objections_status);
-
-                                        if ((isset($objections_status[0]) ? $objections_status[0] : '') == TRUE && (isset($objections_status[1]) ? $objections_status[1] : '') || (isset($objections_status[2]) ? $objections_status[2] : '')) {
+                                        // if ((isset($objections_status[0]) ? $objections_status[0] : '') == TRUE && (isset($objections_status[1]) ? $objections_status[1] : '') || (isset($objections_status[2]) ? $objections_status[2] : '')) {
+                                        //     $next_stage = I_B_Defected_Stage;
+                                        // }
+                                        if((isset($objections_status[0]) && $objections_status[0] == TRUE && ($objections_status[1] || $objections_status[2]))){
                                             $next_stage = I_B_Defected_Stage;
                                         }
                                     } else {
@@ -151,8 +148,8 @@ class DefaultController extends BaseController {
                                 // var_dump(isset($objections_status[1]) ? $objections_status[1] : NULL);
                                 // echo "<br>Objection 2: <br>";
                                 // var_dump(isset($objections_status[2]) ? $objections_status[2] : NULL);
-                               
-                                $update_status = $this->Default_model->update_icmis_case_status($response->registration_id, $next_stage, $curr_dt, $case_details, isset($objections_status[1]) ? $objections_status[1] : NULL, isset($objections_status[2]) ? $objections_status[2] : NULL);
+                            //  pr($objections_status); 
+                                $update_status = $this->Default_model->update_icmis_case_status($response->registration_id, $next_stage, $curr_dt, $case_details, isset($objections_status[1]) ? $objections_status[1] : [], isset($objections_status[2]) ? $objections_status[2] : []);
 
                                 if ($update_status) {
                                     if ($next_stage) {
@@ -188,10 +185,11 @@ class DefaultController extends BaseController {
         $efil_docs = $temp_efil_docs = $this->Get_CIS_Status_model->get_efiled_docs_list($registration_id, $ia_only);
         $i = 0;
 
-        // foreach ($temp_efil_docs as $e_doc) {
-        //     $temp_efil_docs[$i]['doc_id'] = $this->encrypt_doc_id($e_doc['doc_id']);
-        //     $i++;
-        // }
+        foreach ($temp_efil_docs as $e_doc) {
+            // $temp_efil_docs[$i]['doc_id'] = $this->encrypt_doc_id($e_doc['doc_id']);
+            $temp_efil_docs[$i]['doc_id'] = encrypt_doc_id($e_doc['doc_id']);
+            $i++;
+        }
 
         $update_documents = array();
 
@@ -201,11 +199,11 @@ class DefaultController extends BaseController {
 
             $key = array_keys(array_column($temp_efil_docs, 'doc_id'), $doc->doc_id);
 
-            $verified_on_date = ($doc->verified_on == '0000-00-00 00:00:00') ? NULL : $doc->verified_on;
-            $disposal_date = ($doc->dispose_date == '0000-00-00') ? NULL : $doc->dispose_date;
+            $verified_on_date = ($doc->verified_on == '0000-00-00 00:00:00' || $doc->verified_on == NULL) ? NULL : $doc->verified_on;
+            $disposal_date = ($doc->dispose_date == '0000-00-00' || $doc->dispose_date ==  NULL) ? NULL : $doc->dispose_date;
 
             if ($check_verify) {
-                if ($doc->verified_on == '0000-00-00 00:00:00' && $documents_pending == FALSE) {
+                if (($doc->verified_on == '0000-00-00 00:00:00' || $doc->verified_on == NULL) && $documents_pending == FALSE) {
                     $documents_pending = TRUE;
                 }
             } else {
@@ -236,12 +234,10 @@ class DefaultController extends BaseController {
                 );
             }
         }
-
         return array($documents_pending, $update_documents);
     }
     function get_icmis_objections_status($registration_id, $cis_objections, $curr_dt) {
         $old_objections = $this->Get_CIS_Status_model->get_icmis_objections_list($registration_id);
-
         $insert_objections = array();
         $update_objections = array();
         $objections_pending = FALSE;

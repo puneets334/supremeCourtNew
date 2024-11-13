@@ -269,10 +269,12 @@ class Search extends BaseController
 
         // $parties_list = $_SESSION['parties_list'];
         // unset($_SESSION['parties_list']);
-     
         $confirm_response = escape_data($_POST['confirm_response']);
+    
+
         if ($confirm_response == 'yes') {
             $_SESSION['efiling_details'] = '';
+           
             if (isset($_POST['radio_appearing_for'])) {
                 $intervenorName = "";
                 $radio_appearing_for = $_POST['radio_appearing_for'];
@@ -303,9 +305,11 @@ class Search extends BaseController
                     $this->session->setFlashdata('radio_appearing_for', $radio_appearing_for);
                     if ($_SESSION['efiling_type'] == 'ia') {
                         $advocate_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
+
                         if (!$advocate_exists) {
                             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please select intervenor/other.</p></div>');
-                            redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
+                            // redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
+                            redirect('case/interim_application/crud');
                         } else {
                             $this->session->set('radio_appearing_for', $radio_appearing_for);
                         }

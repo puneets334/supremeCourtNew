@@ -1,12 +1,16 @@
 <?php
-namespace App\Controllers;
 
+namespace App\Controllers\AppearingFor;
+
+use App\Controllers\BaseController;
+// namespace App\Controllers;
+use App\Models\AppearingFor\AppearingForModel;
 class Ajaxcalls extends BaseController {
-
+    protected $AppearingForModel;
     public function __construct() {
         parent::__construct();
-
-        $this->load->model('appearing_for/Appearing_for_model');
+        $this->Appearing_for_model = new AppearingForModel();
+        // $this->load->model('appearing_for/Appearing_for_model');
     }
 
     function get_parties_list() {
@@ -49,7 +53,7 @@ class Ajaxcalls extends BaseController {
 
         $parties_list = array_combine($party_sr_no_array, $party_name_array);
 
-        if ($appearing_for_details[0]['partytype'] == $partytype) {
+        if ((isset($appearing_for_details) && !empty($appearing_for_details)) && $appearing_for_details[0]['partytype'] == $partytype) {
             $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
             $saved_appearing_for = explode('$$', $saved_appearing_for);
 
@@ -64,7 +68,7 @@ class Ajaxcalls extends BaseController {
             $saved_appearing_for_mobile = NULL;
         }
 
-        if (count($parties_list) > 0) {
+        if (!empty($parties_list)) {
             $i = 1; $parties_data = '';
             foreach ($parties_list as $key => $value) {
 
@@ -74,8 +78,8 @@ class Ajaxcalls extends BaseController {
                 $saved_sr_no =!empty($saved_appearing_for) ? array_search($key, $saved_appearing_for) : '';
                 $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
                 $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
-                $appearing_id = $appearing_for_details[0]['id'];
-                $appearing_contact_id = $appearing_for_details[0]['contact_tbl_id'];
+                $appearing_id = isset($appearing_for_details[0]['id']) ? $appearing_for_details[0]['id'] : '';
+                $appearing_contact_id = isset($appearing_for_details[0]['contact_tbl_id']) ? $appearing_for_details[0]['contact_tbl_id'] : '';
                
                $parties_data .='<tr><td><input class="form-control" name="party_name[]" type="text"  value="'.escape_data($value).'" readonly=""></td>
                     <td><input class="form-control" name="party_email[]" type="email" placeholder="Email"  value="'.escape_data($email).'" ></td>
