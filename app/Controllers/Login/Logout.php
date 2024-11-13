@@ -15,8 +15,18 @@ class Logout extends BaseController {
     public function index() {
         $this->logUser($action = 'logout');
         log_message('info', 'User Logged out at ' . date('d-m-Y') . ' at ' . date("h:i:s A") .getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
-        unset($_SESSION);
-        $this->session->destroy();
+        // Log the event
+    // log_message(
+    //     'info', 
+    //     'User logged out at ' . date('d-m-Y') . ' at ' . date('h:i:s A') . 
+    //     ' | IP Address: ' . $this->getClientIP() . 
+    //     ' | User Agent: ' . service('request')->getUserAgent()
+    // );
+
+            // Destroy session
+            session()->destroy();
+        // unset($_SESSION);
+        // $this->session->destroy();
         return response()->redirect(base_url('/'));
         exit(0);
     }
