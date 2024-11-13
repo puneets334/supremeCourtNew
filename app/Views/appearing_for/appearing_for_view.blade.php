@@ -292,19 +292,19 @@ $parties_details = $data['parties_details'];
 </div>
 </div>
 </div>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -328,6 +328,7 @@ $parties_details = $data['parties_details'];
             $(".user_type_PR").prop("disabled", false);
             var form_data = $(this).serialize();
             $('#modal_loader').show();
+
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('appearing_for/appearing_for/save_appearing_details'); ?>",
@@ -370,7 +371,6 @@ $parties_details = $data['parties_details'];
 
     $('[name="user_type"]').change(function() {
         var partytype = $(this).val();
-
         $('#modal_loader').show();
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

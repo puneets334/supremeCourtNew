@@ -335,6 +335,10 @@ $routes->match(['GET', 'POST'], 'IA/view', 'IA\View::index');
 $routes->match(['GET', 'POST'], 'IA/courtFee', 'IA\CourtFee::index');
 $routes->get('on_behalf_of', 'OnBehalfOf\DefaultController::index');
 $routes->get('appearing_for', 'AppearingFor\DefaultController::index');
+
+// code by saurabh 12112024
+$routes->match(['GET', 'POST'], 'appearing_for/ajaxcalls/get_parties_list', 'AppearingFor\Ajaxcalls::get_parties_list'); 
+//end code by saurabh 12112024
 $routes->get('case_details', 'CaseDetails\DefaultController::index');
 $routes->get('shareDoc', 'ShareDoc\DefaultController::index');
 $routes->match(['GET', 'POST'],'on_behalf_of/DefaultController/save_filing_for', 'OnBehalfOf\DefaultController::save_filing_for');
@@ -434,5 +438,7 @@ $routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit', 'Register\Adv
 //code started --14-10-2024
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/getCISData', 'Admin\EfilingAction::getCISData');
 $routes->match(['GET', 'POST'], 'newcase/AutoDiaryGeneration/updateRefiledCase', 'NewCase\AutoDiaryGeneration::updateRefiledCase');
+
+
 
 
