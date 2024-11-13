@@ -620,7 +620,7 @@
                                                     maxlength="10"
                                                     placeholder="DD/MM/YYYY"
                                                     type="text">
-                                                <select id="order_dates_list" style="width: 10% !important;" class="form-select cus-form-ctrl" aria-label="Default select example">
+                                                <select id="order_dates_list" style="width: 0% !important;" class="form-select cus-form-ctrl" aria-label="Default select example">
                                                 </select>
                                             </div>                                                                          
                                         </div>
