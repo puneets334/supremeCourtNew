@@ -2755,8 +2755,15 @@ function is_user_status($loginid = null)
     $login_model = new \App\Models\Login\LoginModel();
     $result = $login_model->is_user_status($loginid, getSessionData('login')['ref_m_usertype_id']);
     if (!empty($result) && $result != FALSE) {
-        if ($result->referrer == getSessionData('login')['ref_m_usertype_id'] && $result->processid != getSessionData('login')['processid']) {
-            return response()->redirect(base_url('logout'));
+        if ($result->referrer == getSessionData('login')['ref_m_usertype_id']) {
+
+            if($result->processid != getSessionData('login')['processid']){ 
+                 
+                return response()->redirect(base_url('logout'));
+                // return redirect()->to('logout'); 
+            }else {
+                return false;
+            }
         } else {
             return false;
         }
