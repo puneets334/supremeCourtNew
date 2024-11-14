@@ -430,7 +430,7 @@ class AdvSignUp extends BaseController {
                 $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
                 send_mail_msg($to_email, $subject, $message);
                 //END
-                $this->session->setFlashdata('msg', 'Registration Successful');
+                $this->session->setFlashdata('msg_success', 'Registration Successful');
                 return redirect()->to(base_url('/'));
             } else {
                 $this->session->setFlashdata('msg', 'Registration Failed');

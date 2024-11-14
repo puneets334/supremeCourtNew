@@ -621,7 +621,6 @@ td {
 
                                 <div class="dashboard-section">
                                     <div class="row">
-                                        @if(!empty($scheduled_cases))
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                             <div class="dash-card" >
                                                 <div class="title-sec">
@@ -639,6 +638,8 @@ td {
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                            @if(!empty($scheduled_cases))
+
                                                                 <?php $i=1; ?>
                                                                 @foreach($scheduled_cases as $scheduled_case)
                                                                 @if(is_array($scheduled_case) ||
@@ -742,6 +743,8 @@ td {
                                                                 @endforeach
                                                                 @endif
                                                                 @endforeach
+
+                                                                @endif
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -749,8 +752,7 @@ td {
                                             </div>
                                             <hr
                                                 class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">
-                                        </div>
-                                        @endif
+                                        </div> 
                                         <!-- start sr advocate soon -->
                                         @if(!empty($sr_advocate_soon_cases))
                                         <!-- <div class="uk-width uk-width-large@l uk-margin-medium-top uk-overflow-auto uktable-responsive">
