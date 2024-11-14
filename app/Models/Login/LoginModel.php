@@ -115,6 +115,7 @@ class LoginModel extends Model
             $this->session->set("login", $sessionData);
             return true;
         } elseif ($action == 'logout') {
+           
             $builder = $this->db->table('efil.tbl_users_login_log');
             $builder->where('log_id', $data['log_id']);
             $builder->update(array('logout_time' => $data['logout_time']));
@@ -178,24 +179,42 @@ class LoginModel extends Model
         }
     }
 
-    /*  function get_user_login_log_details_with_user_agent($id) {
+     function get_user_login_log_details_with_user_agent($id) {
 
-        $this->db->SELECT('*');
-        $this->db->FROM('efil.tbl_users_login_log');
-        $this->db->WHERE('login_id', $id);
-        $this->db->where('logout_time is null');
-        #$this->db->WHERE('ip_address', getClientIP());
-        $this->db->WHERE("TO_CHAR(now()::DATE ,'dd-mm-yyyy')=TO_CHAR(login_time :: DATE, 'dd-mm-yyyy')");
-        $this->db->order_by('login_time', 'desc');
-        $this->db->limit(1);
-        $query = $this->db->get();
-        //echo $this->db->last_query();exit();
-        if ($query->num_rows() >= 1) {
-            return $query->result();
+        //  $this->db->SELECT('*');
+        // $this->db->FROM('efil.tbl_users_login_log');
+        // $this->db->WHERE('login_id', $id);
+        // $this->db->where('logout_time is null');
+        // #$this->db->WHERE('ip_address', getClientIP());
+        // $this->db->WHERE("TO_CHAR(now()::DATE ,'dd-mm-yyyy')=TO_CHAR(login_time :: DATE, 'dd-mm-yyyy')");
+        // $this->db->order_by('login_time', 'desc');
+        // $this->db->limit(1);
+        // $query = $this->db->get();
+        // //echo $this->db->last_query();exit();
+        // if ($query->num_rows() >= 1) {
+        //     return $query->result();
+        // } else {
+        //     return FALSE;
+        // }
+        $builder = $this->db->table('efil.tbl_users_login_log');
+    
+        // Build the query
+        $builder->select('*')
+                ->where('login_id', $id)
+                ->where('logout_time IS NULL', null, false) // Ensure IS NULL is raw
+                ->where("TO_CHAR(NOW()::DATE, 'dd-mm-yyyy') = TO_CHAR(login_time::DATE, 'dd-mm-yyyy')", null, false)
+                ->orderBy('login_time', 'DESC')
+                ->limit(1);
+        
+        $query = $builder->get();
+
+        // Check if the query has results
+        if ($query->getNumRows() >= 1) {
+            return $query->getResult(); // Fetch results as objects
         } else {
-            return FALSE;
+            return false;
         }
-    }*/
+    } 
 
     /* 	 $builder = $this->db->table('efil.tbl_users as users');
         $builder->select('users.*, est.pg_request_function, est.pg_response_function, est.estab_code');

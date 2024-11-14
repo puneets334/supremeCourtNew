@@ -1,6 +1,16 @@
-
-<div class="col-md-12 col-sm-12 col-xs-12">
-    <center><font size="6px;"> Register E-Filed IA / Misc. Documents</font></center>
+@extends('layout.app')
+@section('content')
+<div class="mainPanel ">
+         <div class="panelInner">
+            <div class="middleContent">
+               <div class="container-fluid dash-card">
+               <div class="center-content-inner comn-innercontent">
+                           <div class="tab-content">
+                              <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <div class="row" >
+			<div class="col-lg-12">
+<div class="row">
+    <h6 class="text-center fw-bold">Register E-Filed IA / Misc. Documents</h6>
 </div>
 <div class="col-md-12 col-sm-12 col-xs-12">
     <!-- Modal -->
@@ -9,15 +19,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"> Register E-Filed IA / Misc. Documents</h5>
-                    <button type="button" class="close closeButton" data-dismiss="modal" data-close="1" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <span id="customErrorMessage"></span>
                 </div>
                 <div class="modal-footer">
-                    <button type="button"  data-close="1" class="btn btn-secondary closeButton" data-dismiss="modal">Close</button>
+                    <button type="button"  data-close="1" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Close</button>
                     <!--                <button type="button" class="btn btn-primary">Save changes</button>-->
                 </div>
             </div>
@@ -35,8 +43,10 @@
     elseif($details['details'][0]['board_type']=='R')
         $board='Ld. Registrar Court';
     ?>
-    <fieldset>
-        <legend> Case Details</legend>
+    <div class="title-sec">
+            <h5 class="unerline-title">Case Details</h5>
+    </div>
+        <!-- <legend> Case Details</legend> -->
        <div class="col-md-12 col-sm-12 col-xs-12" align="center"> <label><?php if($details['details'][0]['c_status']=='P') echo '<font color=green>Case is Pending!</font>';
         elseif($details['details'][0]['c_status']=='D') echo '<font color=red>Case is Disposed!</font>';?></label>
            </div>
@@ -49,11 +59,12 @@
                <?php }?>
             </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
             <div class="col-sm-1 col-md-1 col-xs-1">
                 <label> Case No. :</label>
             </div>
             <div class="col-sm-4 col-md-4 col-xs-4">
-        <?php if($details['details'][0]['reg_no_display']!=null){
+            <?php if($details['details'][0]['reg_no_display']!=null){
             ?>
                 <span style="color:black; font-size:14px; font-weight: bold;"> <?php echo $details['details'][0]['reg_no_display'].'@ '.$diaryno;?></span>
        <?php } else{
@@ -69,7 +80,9 @@
                 <div class="col-sm-4 col-md-4 col-xs-4"><span style="color:black; font-size:14px; font-weight: bold;"><?php echo $details['details'][0]['pet_name'].' Vs '.$details['details'][0]['res_name'];?> </span>
             </div>
         </div>
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
             <div class="col-sm-1 col-md-1 col-xs-1">
                 <label> Registered On :</label>
             </div>
@@ -88,7 +101,9 @@
                 <?php } ?>
             </div>
         </div>
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
             <div class="col-sm-1 col-md-1 col-xs-1">
                 <label> Subject Category :</label>
             </div>
@@ -102,7 +117,9 @@
                     <span style="color:black; font-size:14px; font-weight: bold;"><?php echo $details['details'][0]['agency_state'];?> </span>
             </div>
         </div>
+        </div>
         <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
                 <?php if(isset($case_listing_details->listed[0]) && !empty($case_listing_details->listed[0])) {
                     ?>
                     <?php
@@ -126,15 +143,14 @@
                     <?php } ?>
                 <?php  } ?>
         </div>
+        </div>
 
-    </fieldset>
-    <?php // pr($efiling_data); die;
-
-        //print_r($registeredDocs);
-        ?>
-    <fieldset>
-       <legend>Documents Details</legend>
+    <div class="title-sec">
+            <h5 class="unerline-title">Documents Details</h5>
+    </div>
+       <!-- <legend>Documents Details</legend> -->
         <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
             <div class="col-sm-1 col-md-1 col-xs-1">
                 <label> Filed By :</label>
             </div>
@@ -148,11 +164,12 @@
                 <span style="color:black; font-size:14px; font-weight: bold;"> <?php echo date('d-m-Y',strtotime($efiling_data[0]['uploaded_on']));?></span>
             </div>
         </div>
+        </div>
         <br/><br/>
         <?php //print_r($efiling_data);
         //print_r($registeredDocs);
         ?>
-        <table class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+        <table class="table table-striped table-bordered  custom-table dt-responsive nowrap" cellspacing="0" width="100%">
             <thead>
             <tr>
                 <th>#</th>
@@ -188,7 +205,7 @@
                 <td><?php echo $docnumber; ?>  </td>
                 <td><?php echo $doc['page_no']; ?>  </td>
                 <td><a href="<?php echo ('https://efiling.sci.gov.in/'.$doc_path); ?>" target="_blank"> View </a></td>
-                <td><textarea id="remarks_<?php echo $doc['doc_id'];?>"></textarea></td>
+                <td><textarea class="form-control cus-form-ctrl" id="remarks_<?php echo $doc['doc_id'];?>"></textarea></td>
 
                 <?php
                 if(isset($doc_num) && !empty($doc_num)){ ?>
@@ -250,16 +267,28 @@
             </tbody>
         </table>
     <input type="hidden" name="remaining_doc" id="remaining_doc" data-remainingDoc="<?php echo $total;?>" />
-    </fieldset>
 
 </div>
       <!--start IA and MISCDUC PaymentFee by akg-->
 <div class="col-sm-12">
-    <a class="list-group-item" style="background: #EDEDED;" data-toggle="collapse" data-parent="#MainMenu"><?php if(!isset($payment_details) || empty($payment_details)){?><font style="color:red;"> <b>Fees Paid</b></font><?php } else{?> <b>Fees Paid</b><?php } ?></a>
-     @include('shcilPayment.payment_list_view');
+    <a class="list-group-item" style="background: #EDEDED; padding: 20px;" data-toggle="collapse" data-parent="#MainMenu"><?php if(!isset($payment_details) || empty($payment_details)){?><font style="color:red;"> <b>Fees Paid</b></font><?php } else{?> <b>Fees Paid</b><?php } ?></a>
+     <?php
+     if (isset($payment_details) && !empty($payment_details)) {
+        render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]);
+    }
+     ?>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+            </div>
+         </div>
+</div>
       <!--end IA and MISCDUC PaymentFee-->
- 
+@endsection
 <style>
     fieldset {
         background-color: #eeeeee;
@@ -451,4 +480,5 @@
 
         });
     }
+
 </script>

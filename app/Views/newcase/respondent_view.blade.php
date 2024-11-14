@@ -58,7 +58,7 @@
                                 $selectCentralDept = @$party_details[0]['party_type'] == 'D2' ? 'selected' : '';
                                 $selectOtherDept = @$party_details[0]['party_type'] == 'D3' ? 'selected' : '';
                                 ?>
-                                <select tabindex='1' name="party_as" id="party_as" onchange="get_party_as(this.value)" class="form-control cus-form-ctrl filter_select_dropdown">
+                                <select tabindex='1' name="party_as" id="party_as" onchange="get_party_as(this.value)" class="cus-form-ctrl filter_select_dropdown">
                                     <option value="I" <?php echo $selectIndividual; ?>>Individual</option>
                                     <option value="D1" <?php echo $selectStateDept; ?>>State Department</option>
                                     <option value="D2" <?php echo $selectCentralDept; ?>>Central Department</option>
@@ -89,7 +89,7 @@
                             $selectWife = @$party_details[0]['relation'] == 'W' ? 'selected=selected' : '';
                             $selectNotAvailable = @$party_details[0]['relation'] == 'N' ? 'selected=selected' : '';
                             ?>
-                            <select tabindex='3' name="relation" id="relation" class="form-control cus-form-ctrl filter_select_dropdown relation" style="width: 100%">
+                            <select tabindex='3' name="relation" id="relation" class="cus-form-ctrl filter_select_dropdown relation" style="width: 100%">
                                 <option value="" title="Select">Select Relation</option>
                                 <option <?php echo $selectSon; ?> value="S">Son Of</option>
                                 <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
@@ -195,7 +195,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row">
                         <div class="mb-3">
                             <label for="" class="form-label">State Name <span style="color: red" class="astriks">*</span></label>
-                            <select tabindex='10' name="org_state" id="org_state" class="form-control cus-form-ctrl filter_select_dropdown org_state">
+                            <select tabindex='10' name="org_state" id="org_state" class="cus-form-ctrl filter_select_dropdown org_state">
                             </select>
                         </div>
                     </div>
@@ -211,7 +211,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Department Name <span style="color: red" class="astriks">*</span></label>
-                            <select name="org_dept" tabindex='12' id="org_dept" class="form-control cus-form-ctrl filter_select_dropdown org_dept org_dept">
+                            <select name="org_dept" tabindex='12' id="org_dept" class="cus-form-ctrl filter_select_dropdown org_dept org_dept">
                             </select>
                         </div>
                     </div>
@@ -227,7 +227,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Post Name <span style="color: red" class="astriks">*</span></label>
-                            <select name="org_post" id="org_post" tabindex='14' class="form-control cus-form-ctrl filter_select_dropdown org_post">
+                            <select name="org_post" id="org_post" tabindex='14' class="cus-form-ctrl filter_select_dropdown org_post">
                             </select>
                         </div>
                     </div>
@@ -272,7 +272,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Country <span id="country_span"></span></label>
-                            <select name="country_id" id="country_id" tabindex='19' class="form-control cus-form-ctrl filter_select_dropdown">
+                            <select name="country_id" id="country_id" tabindex='19' class="cus-form-ctrl filter_select_dropdown">
                                 <option value="">Select Country</option>
                                 <?php
                                 if (isset($countryList) && !empty($countryList)) {
@@ -311,7 +311,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">State <span id="state_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
-                            <select name="party_state" id="party_state" tabindex='22' class="form-control cus-form-ctrl filter_select_dropdown" required>
+                            <select name="party_state" id="party_state" tabindex='22' class="cus-form-ctrl filter_select_dropdown" required>
                                 <option value="" title="Select">Select State</option>
                                 <?php
                                 $sel = '';
@@ -338,7 +338,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">District <span id="district_span" class="astriks" <?php echo $style; ?>><?php echo $astrik; ?></span></label>
-                            <select name="party_district" id="party_district" tabindex='23' class="form-control cus-form-ctrl filter_select_dropdown party_district" required>
+                            <select name="party_district" id="party_district" tabindex='23' class="cus-form-ctrl filter_select_dropdown party_district" required>
                                 <option value="" title="Select">Select District</option>
                                 <?php
                                 if (!empty($district_list)) {
@@ -438,7 +438,7 @@
     });
 </script>
 <script type="text/javascript">
-        $(document).ready(function() {
+    $(document).ready(function() {
         $("input[name='party_age']").on('input', function(e) {
             $(this).val($(this).val().replace(/[^0-9]/g, ''));
         });
@@ -479,6 +479,9 @@
         }
     }
     $(document).ready(function() {
+        $ ( ".filter_select_dropdown" ). select2 (). on ( 'select2-focus' , function () {
+            $ ( this ). data ( 'select2-closed' , true )
+        });
         
 
         // $('.party_name').bind('keyup blur', function() {

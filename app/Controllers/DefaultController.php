@@ -74,11 +74,13 @@ class DefaultController extends BaseController {
     public function login() {
         $this->checkBrowserCompatibility();
         //check user already logged in or not
-
-
-        if (!empty($this->session->getFlashdata('login'))) {
+        if (isset($_SESSION['login']) && !empty($_SESSION['login'])) {
             $this->redirect_on_login();
         }
+
+        // if (!empty($this->session->getFlashdata('login'))) {
+        //     $this->redirect_on_login();
+        // }
         $validation =  \Config\Services::validation();
         //---Commented line are used for disable captcha----------------->
 
@@ -205,6 +207,17 @@ class DefaultController extends BaseController {
                             $row = $this->Login_model->get_user($username, $password); 
                             $impersonator_user = new stdClass();
                             if ($row) {
+                                // $alreadyLoggedInStatus=$this->Login_model->get_user_login_log_details_with_user_agent($row->id);
+                                // //   pr($alreadyLoggedInStatus);
+                                // if ($alreadyLoggedInStatus) {
+                                //     if($alreadyLoggedInStatus[0]->logout_time == '' || $alreadyLoggedInStatus[0]->logout_time == null ){
+                                //             // Set a flashdata message
+                                //             $this->session->setFlashdata('msg', 
+                                //             'You are already logged in'
+                                //             );
+                                //             return redirect()->to('/');
+                                //     } 
+                                // }
                                 $impersonator_user = $row;
                                 $usr_block = $this->Login_model->get_user_block_dtl($row->id);
                                 // print_r($usr_block);
@@ -286,7 +299,8 @@ class DefaultController extends BaseController {
                                     //'dep_adv_flag' => $row->dep_adv_flag,
                                     'impersonator_user' => $impersonator_user,//for efiling_assistant
                                     'processid' => getmypid(),
-                                    'department_id' => $row->ref_department_id
+                                    'department_id' => $row->ref_department_id,
+                                    'icmis_usercode' => $row->icmis_usercode
                                 );
                                 $sessiondata = array(
                                     'login' => $logindata
@@ -294,6 +308,9 @@ class DefaultController extends BaseController {
                                 // pr($sessiondata);
                                 $this->session->set($sessiondata);
                                 $this->logUser('login', $logindata);
+                                // pr($row->id);
+                                
+
                                 $this->redirect_on_login();
                             } else {
                                 $this->session->setFlashdata('msg', 'Invalid username or password !');
