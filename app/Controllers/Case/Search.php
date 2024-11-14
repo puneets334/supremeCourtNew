@@ -409,7 +409,7 @@ class Search extends BaseController
                     if (isset($_POST['radio_appearing_for']) && ($_POST['radio_appearing_for'] == 'E') && !empty($registration_id) && !empty(session()->get('login')['id'])) {
                         $data['appearing_for_details'] = $this->AppearingForModel->get_appearing_for_details($registration_id, session()->get('login')['id']);
 
-                        if (isset($data['appearing_for_details']) && (!empty($data['appearing_for_details'][0]['partytype']) && ($data['appearing_for_details'][0]['partytype'] == 'P') || ($data['appearing_for_details'][0]['partytype'] == 'R') || ($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N'))) {
+                        if (!empty($data['appearing_for_details'][0]['partytype']) && ($data['appearing_for_details'][0]['partytype'] == 'P') || ($data['appearing_for_details'][0]['partytype'] == 'R') || ($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N')) {
                             if (($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N')) {
                                 $redirectURL = 'uploadDocuments';
                             }
