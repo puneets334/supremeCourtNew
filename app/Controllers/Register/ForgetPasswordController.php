@@ -621,7 +621,7 @@ if ($registerType == 'Forgot Password') {
             $passUpdate = $this->Register_model->update_user_password($data,$forget_mobile,$forget_email);
             if($passUpdate){
                 $_SESSION['adv_details']['ForgetPasswordDone']='ForgetPasswordDone';
-                $this->session->setFlashdata('msg', 'Passwrod Update Successful.');
+                $this->session->setFlashdata('msg_success', 'Passwrod Update Successful.');
                 // return redirect()->to('/');
                 return redirect()->to(base_url('/'));
                 exit(0);
