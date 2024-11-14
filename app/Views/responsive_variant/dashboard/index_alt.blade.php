@@ -646,7 +646,7 @@ td {
                                                                 is_object($scheduled_case))
                                                                 @foreach($scheduled_case as $scheduled)
                                                                 <tr>
-                                                                    <td class="uk-width-small@m" data-key="Case" tabindex="0" width=50%>
+                                                                    <td class="uk-width-small@m" style="text-align: left;" data-key="Case" tabindex="0" width=50%>
                                                                         <div>
                                                                             <span
                                                                                 class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span>

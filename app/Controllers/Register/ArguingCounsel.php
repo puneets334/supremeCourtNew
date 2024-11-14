@@ -588,12 +588,12 @@ class ArguingCounsel extends BaseController {
                             setSessionData('aor_register',true);
                             send_mail_msg($email, $subject, $email_message, $to_user_name = "arguing_counsel");
                             send_mobile_sms($mobile, $sms_message, SMS_EMAIL_API_USER);
-                            setSessionData('success', 'Login credentials have been sent on email and mobile.<a href="'.base_url().'">Back</a>');
+                            setSessionData('success', 'Login credentials have been sent on email and mobile.');
                         } else {
-                            setSessionData('error', 'Something went wrong! Please try again later.<a href="'.base_url().'">Back</a>');
+                            setSessionData('error', 'Something went wrong! Please try again later.');
                         }
                     } else {
-                        setSessionData('error', 'Something went wrong! Please try again later.<a href="'.base_url().'">Back</a>');
+                        setSessionData('error', 'Something went wrong! Please try again later.');
                     }
                     setSessionData('bar_id_card_error', '');
                     setSessionData('error', '');

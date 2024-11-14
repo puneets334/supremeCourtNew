@@ -37,6 +37,11 @@ date_default_timezone_set('Asia/Kolkata');
                 </div>
                 <div class="profile-info">
                     <h6><?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?> </h6>
+                    @if(getSessionData('login')['ref_m_usertype_id']==USER_ADVOCATE)
+                        <p style="color: white;">Advocate on Record (Code - {{getSessionData('login')['aor_code']}})</p>
+                    @elseif(getSessionData('login')['ref_m_usertype_id']==USER_IN_PERSON)
+                        <p style="color: white;">Party in Person</p>
+                    @endif
                     <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a>
                     <a href="<?= base_url('profile') ?>" class="profile-lnk link-txt">User Profile</a>
                 </div>
@@ -56,7 +61,7 @@ date_default_timezone_set('Asia/Kolkata');
                         <?php } ?>
                     <?php } else if((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN  )) { ?>
                         <li class="premium"><a href="<?= base_url('filingAdmin') ?>" class="btn-link">Dashboard</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('filingAdmin/userListing'); ?>" class="btn-link">User Listing</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('filingAdmin/userListing'); ?>" class="btn-link">User List</a> </li>
                         <li class="premium"><a href="<?php echo base_url('filingAdmin/userFileTransferForm'); ?>" class="btn-link">User File Transfer</a> </li>
                         <li class="premium"><a href="<?php echo base_url('adminReport/DefaultController/reportForm'); ?>" class="btn-link">Work Done Reports</a> </li>
                         <li class="premium"><a href="<?= base_url('report/search') ?>" class="btn-link">Reports</a> </li>
@@ -68,14 +73,14 @@ date_default_timezone_set('Asia/Kolkata');
                         <?php } ?>
                     <?php } else if((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE  )) { ?>
                         <li class="premium"><a href="<?= base_url('dashboard_alt') ?>" class="btn-link">Dashboard</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('resources/hand_book') ?>" class="btn-link">Resources</a> </li>
                         <li class="premium"><a href="<?php echo base_url('admin/noc_vakalatnama/get_transferred_cases') ?>" class="btn-link">Transferred cases</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('register/arguingCounsel') ?>" class="btn-link">Add Advocate</a> </li>
                         <?php if(is_vacation_advance_list_duration()) { ?>
                             <li class="premium"><a href="<?php echo base_url('vacation/advance') ?>" class="btn-link">Advance Summer Vacation List</a> </li>
                         <?php } ?>
-                        <li class="premium"><a href="<?php echo base_url('register/arguingCounsel') ?>" class="btn-link">Add Advocate</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('resources/hand_book') ?>" class="btn-link">Resources</a> </li>
-                        <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
                         <li class="premium">                    
                             <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">Physical Hearing<span><i class="fas fa-chevron-down"></i></span></a>
                             <ul id="collapse5" class="submenu accordion-collapse collapse" aria-labelledby="heading5" data-bs-parent="#accordionExample">
