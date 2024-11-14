@@ -1179,7 +1179,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php } ?>
@@ -1197,7 +1197,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td width="12%" data-key="...">
                                                                         <a class="form-control btn btn-success"
@@ -1219,7 +1219,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td width="12%" data-key="...">
                                                                         <!--<a class="form-control btn btn-success" href="<?/*= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage)) */ ?>"> <?php /*echo htmlentities("Re-Submit", ENT_QUOTES) */ ?></a>-->
@@ -1243,7 +1243,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td width="14%" data-key="...">
                                                                         <a class="form-control btn btn-success"
@@ -1270,7 +1270,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <?php } ?>
                                                                     <!--------------------Pending Scrutiny------------------>
@@ -1286,7 +1286,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php } ?>
@@ -1311,7 +1311,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td width="14%" data-key="...">
                                                                         <a class="btn btn-primary"
@@ -1332,7 +1332,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php } ?>
@@ -1350,7 +1350,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php } ?>
@@ -1366,7 +1366,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php } ?>
@@ -1381,7 +1381,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <?php if ($re->stage_id == I_B_Rejected_Stage) { ?>
                                                                     <td width="12%" data-key="...">
@@ -1407,7 +1407,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td width="14%" data-key="...">
                                                                         <a class="form-control btn btn-success"
@@ -1440,7 +1440,7 @@ td {
                                                                         <?php echo htmlentities($stages_name, ENT_QUOTES); ?>
                                                                     </td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <?php
                                                                             }
@@ -1457,7 +1457,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php }
@@ -1473,7 +1473,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php }
@@ -1489,7 +1489,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php }
@@ -1515,7 +1515,7 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="5%" data-key="Submitted On">
-                                                                        <?php echo date("d/m/Y h:i:s A", strtotime(htmlentities($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php }
@@ -1531,19 +1531,19 @@ td {
                                                                     <td data-key="Case Detail">
                                                                         <?php echo $case_details; ?></td>
                                                                     <td width="10%" data-key="Submitted On">
-                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime($re->activated_on, ENT_QUOTES))); ?>
+                                                                        <?php echo htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?>
                                                                     </td>
                                                                     <td data-key="...">&nbsp;</td>
                                                                     <?php } ?>
                                                                     <?php if ($stages != Draft_Stage || $stages != TRASH_STAGE) {
                                                                             ?>
-                                                                    <td width="10%">
+                                                                    <td data-key="Allocated To DA" width="10%">
                                                                         <a>
                                                                             <?php
                                                                             echo (!empty($re->allocated_user_first_name)) ? htmlentities($re->allocated_user_first_name, ENT_QUOTES) : '';
                                                                             echo (!empty($re->allocated_user_last_name)) ? htmlentities($re->allocated_user_last_name, ENT_QUOTES) : '';
                                                                             echo (!empty($re->allocated_to_user_id)) ? htmlentities($re->allocated_to_user_id, ENT_QUOTES) : ''; echo '<br>';
-                                                                            echo (!empty($re->allocated_to_da_on)) ? htmlentities(date("d/m/Y h.i.s A", strtotime($re->allocated_to_da_on, ENT_QUOTES))) : '';
+                                                                            echo (!empty($re->allocated_to_da_on)) ? htmlentities(date("d/m/Y h.i.s A", strtotime('+5 hours 30 minutes', strtotime($re->allocated_to_da_on, ENT_QUOTES)))) : '';
                                                                             ?>
                                                                         </a>
                                                                     </td>
