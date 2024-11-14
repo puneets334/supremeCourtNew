@@ -489,30 +489,32 @@ class EfilingAction extends BaseController {
         $diary_no= !empty($this->request->getPost('diary_no')) ? $this->request->getPost('diary_no') : NULL;
         $remarks=!empty($this->request->getPost('Remarks_data')) ? $this->request->getPost('Remarks_data') : NULL;
         $efiling_data=$this->Common_model->getDocDetailsById($doc_id);
-        $registration_id = !empty($efiling_data[0]->registration_id) ? (int)$efiling_data[0]->registration_id : NULL;
+        $registration_id = !empty($efiling_data[0]['registration_id']) ? (int)$efiling_data[0]['registration_id'] : NULL;
         if(isset($registration_id) && !empty($registration_id)){
           $params = array();
           $params['registration_id'] = $registration_id;
           $docFeeDetails =   $this->Common_model->getDocumentFeeByRegistrationId($params);
             $icmisUserData = $this->Common_model->getIcmisUserCodeByRegistrationId($params);
             $userIcmisCode = !empty($icmisUserData[0]->icmis_usercode) ? (int)$icmisUserData[0]->icmis_usercode : 0;
-        }else{$userIcmisCode=$_SESSION['login']['icmis_usercode'];}
+        }else{
+            $userIcmisCode=$_SESSION['login']['icmis_usercode'];
+        }
         $doc_details_data=array(
-            'efiling_no'=>$efiling_data[0]->efiling_no,
+            'efiling_no'=>$efiling_data[0]['efiling_no'],
             'doc_id'=>$doc_id,
             'diary_no'=>$diary_no,
-            'doccode'=>$efiling_data[0]->doc_type_id,
-            'doccode1'=>$efiling_data[0]->sub_doc_type_id,
+            'doccode'=>$efiling_data[0]['doc_type_id'],
+            'doccode1'=>$efiling_data[0]['sub_doc_type_id'],
             'iastat'=>'P',
             'usercode'=>$userIcmisCode,
             'ent_dt'=>date('Y-m-d H:i:s'),
             'display'=>'Y',
-            'advocate_id'=>$efiling_data[0]->aor_code,
-            'no_of_copy'=>$efiling_data[0]->no_of_copies,
-            'filedby'=>$efiling_data[0]->first_name.' '.$efiling_data[0]->last_name,
+            'advocate_id'=>$efiling_data[0]['aor_code'],
+            'no_of_copy'=>$efiling_data[0]['no_of_copies'],
+            'filedby'=>$efiling_data[0]['first_name'].' '.$efiling_data[0]['last_name'],
             'remarks'=>$remarks,
-            'court_fee'=>!empty($docFeeDetails[0]->user_declared_court_fee) ? $docFeeDetails[0]->user_declared_court_fee : 0,
-            'printing_fee'=>!empty($docFeeDetails[0]->printing_total) ? $docFeeDetails[0]->printing_total : 0,
+            'court_fee'=>!empty($docFeeDetails[0]['user_declared_court_fee']) ? $docFeeDetails[0]['user_declared_court_fee'] : 0,
+            'printing_fee'=>!empty($docFeeDetails[0]['printing_total']) ? $docFeeDetails[0]['printing_total'] : 0,
         );
         $doc_details_data=json_encode($doc_details_data);
                 // $key=$this->config->item( 'encryption_key' );
@@ -521,7 +523,7 @@ class EfilingAction extends BaseController {
             $encrypted_string = $this->encrypt->encrypt($doc_details_data);
 
         $docnum=$this->efiling_webservices->registerDoc($encrypted_string);
-        echo json_encode($docnum);
+        return json_encode($docnum);
         exit(0);
 
 //        $docnum= array();
