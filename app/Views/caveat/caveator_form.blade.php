@@ -75,7 +75,7 @@ textarea {
                         <div class="mb-3">
                             <label for="" class="form-label">Case Type <span style="color: red" class="astriks">*</span></label>
                             <select class="form-select cus-form-ctrl filter_select_dropdown" name="case_type" id="case_type" required>
-                                <option selected>Select</option>
+                                <option value="" selected>Select</option>
                                 <?php
                                 if (isset($sc_case_type) && !empty($sc_case_type)) {
                                     foreach ($sc_case_type as $k => $v) {
