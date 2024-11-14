@@ -7247,7 +7247,8 @@ a.red-dot .mdi {
 .tabs-section .nav-tabs li.nav-item .nav-link {
     padding: 15px 17px;
     border-radius: 21px 21px 0 0;
-    background: #fff;
+    background: #d8d3d3;
+    /* background: #fff; */
     font-size: 14px;
     color: #000;
     font-family: 'noto_sansregular';

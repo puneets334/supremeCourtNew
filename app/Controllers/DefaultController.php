@@ -286,7 +286,8 @@ class DefaultController extends BaseController {
                                     //'dep_adv_flag' => $row->dep_adv_flag,
                                     'impersonator_user' => $impersonator_user,//for efiling_assistant
                                     'processid' => getmypid(),
-                                    'department_id' => $row->ref_department_id
+                                    'department_id' => $row->ref_department_id,
+                                    'icmis_usercode' => $row->icmis_usercode
                                 );
                                 $sessiondata = array(
                                     'login' => $logindata
