@@ -231,19 +231,19 @@
         $doc_type = "";
     }
     ?>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-    <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+    <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
     <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+    <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
     <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
     <script src="<?= base_url() ?>assets/js/sha256.js"></script>
     <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
     <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-    <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+    <!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
     <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
     {{-- @endsection --}}
     <script type="text/javascript">
