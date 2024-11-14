@@ -74,7 +74,7 @@ $session = service('session');
                         echo form_open(base_url("register/DefaultController/adv_get_otp"), $attributes);
                         ?>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="text" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo idEncryptionCustom($adv_type_select); ?>">
+                        <input type="text" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo url_encryption($adv_type_select); ?>">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
