@@ -1535,7 +1535,7 @@ td {
                                                                             <?php
                                                                             echo (!empty($re->allocated_user_first_name)) ? htmlentities($re->allocated_user_first_name, ENT_QUOTES) : '';
                                                                             echo (!empty($re->allocated_user_last_name)) ? htmlentities($re->allocated_user_last_name, ENT_QUOTES) : '';
-                                                                            echo (!empty($re->allocayted_to_user_id)) ? ' ('.htmlentities($re->allocayted_to_user_id, ENT_QUOTES).')' : ''; echo '<br>';
+                                                                            echo (!empty($re->allocated_to_user_id)) ? ' ('.htmlentities($re->allocated_to_user_id, ENT_QUOTES).')' : ''; echo '<br>';
                                                                             echo (!empty($re->allocated_to_da_on)) ? htmlentities(date("d/m/Y h.i.s A", strtotime('+5 hours 30 minutes', strtotime($re->allocated_to_da_on, ENT_QUOTES)))) : '';
                                                                             ?>
                                                                         </a>
