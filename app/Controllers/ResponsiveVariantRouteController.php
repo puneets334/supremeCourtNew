@@ -262,16 +262,16 @@ class ResponsiveVariantRouteController extends BaseController
                 if (is_array($recent_documents['data'])) {
                     foreach ($recent_documents['data'] as $index => $data) {
                         //echo $index." Record<br/>";
-                        if ($data['advocateId'] == $advocate_id) {
+                        if ($data['advocatecode'] == $advocate_id) {
                             //$recent_documents_by_me[] = $data; //old comments by anshu
-                            if ($data['isIA'] && $data['status'] == 'PENDING') {
+                            if ($data['isia'] && $data['status'] == 'PENDING') {
                                 //echo $index." its IA<br/>";
                                 $recent_documents_by_me[] = $data;
                                 $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
                             } else {
                                 if ($data['status'] == 'PENDING') {
                                     //echo $index." its non-IA<br/>";
-                                    switch ($data['typeName']) {
+                                    switch ($data['typename']) {
                                         case 'REPLY':
                                             $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
                                             $recent_documents_by_me[] = $data;
@@ -296,7 +296,7 @@ class ResponsiveVariantRouteController extends BaseController
                             } else {
                                 if ($data['status'] == 'PENDING') {
                                     //echo $index." its non-IA<br/>";
-                                    switch ($data['typeName']) {
+                                    switch ($data['typename']) {
                                         case 'REPLY':
                                             $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
                                             $recent_documents_by_others[] = $data;

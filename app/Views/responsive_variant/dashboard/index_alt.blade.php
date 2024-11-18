@@ -646,20 +646,13 @@ td {
                                                                 is_object($scheduled_case))
                                                                 @foreach($scheduled_case as $scheduled)
                                                                 <tr>
-                                                                    <td class="uk-width-small@m" style="text-align: left;" data-key="Case" tabindex="0" width=50%>
-                                                                        <div>
-                                                                            <span
-                                                                                class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span>
-                                                                        </div>
-                                                                        <div><b>P:
-                                                                            </b>{{ucwords(strtolower($scheduled['petitioner_name']))}}
-                                                                        </div>
-                                                                        <div><b>R:
-                                                                            </b>{{ucwords(strtolower($scheduled['respondent_name']))}}
-                                                                        </div>
+                                                                    <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align: left;">
+                                                                        <div><span class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span></div>
+                                                                        <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($scheduled['petitioner_name']))}}</div>
+                                                                        <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($scheduled['respondent_name']))}}</div>
                                                                     </td>
                                                                     <td class="uk-table-expand" uk-margin
-                                                                        data-key="Date & Bench" tabindex="0" width=50%>
+                                                                        data-key="Date & Bench" tabindex="0" width=60%>
                                                                         <div>
                                                                             <li class="mycases-li">
                                                                                 <button type="button"
@@ -782,22 +775,22 @@ td {
                                                                     @foreach($sr_advocate_soon_cases as
                                                                     $sr_advocate_soon_case)
                                                                     <tr>
-                                                                        <td class="uk-width-small@m" width=50%>
+                                                                        <td class="uk-width-small@m" style="width: 40%; text-align: left; align: left;">
                                                                             <div>
                                                                                 <span
                                                                                     class="uk-text-muted">{{$sr_advocate_soon_case->registration_number ?: ('D. No.' . $sr_advocate_soon_case->diary_number . '/' . $sr_advocate_soon_case->diary_year)}}</span>
                                                                             </div>
-                                                                            <div><b>P:
+                                                                            <div><b style="font-size: 17px;">P:
                                                                                 </b>{{ucwords(strtolower($sr_advocate_soon_case->petitioner_name))}}
                                                                             </div>
-                                                                            <div><b>R:
+                                                                            <div><b style="font-size: 17px;">R:
                                                                                 </b>{{ucwords(strtolower($sr_advocate_soon_case->respondent_name))}}
                                                                             </div>
                                                                             {{--<div>
                                                                                 <span class="uk-label uk-background-muted uk-text-primary" style="text-transform: none;font-size:11px;">{{ucwords(strtolower(str_replace(']','',str_replace('[','',$scheduled_case->meta->listing->court->listing_sub_type))))}}</span>
                                                         </div>--}}
                                                         </td>
-                                                        <td class="uk-table-expand" uk-margin width=50%>
+                                                        <td class="uk-table-expand" uk-margin width=60%>
                                                             <div>
                                                                 <li>
                                                                     <button type="button"
@@ -1542,7 +1535,7 @@ td {
                                                                             <?php
                                                                             echo (!empty($re->allocated_user_first_name)) ? htmlentities($re->allocated_user_first_name, ENT_QUOTES) : '';
                                                                             echo (!empty($re->allocated_user_last_name)) ? htmlentities($re->allocated_user_last_name, ENT_QUOTES) : '';
-                                                                            echo (!empty($re->allocated_to_user_id)) ? htmlentities($re->allocated_to_user_id, ENT_QUOTES) : ''; echo '<br>';
+                                                                            echo (!empty($re->allocayted_to_user_id)) ? ' ('.htmlentities($re->allocayted_to_user_id, ENT_QUOTES).')' : ''; echo '<br>';
                                                                             echo (!empty($re->allocated_to_da_on)) ? htmlentities(date("d/m/Y h.i.s A", strtotime('+5 hours 30 minutes', strtotime($re->allocated_to_da_on, ENT_QUOTES)))) : '';
                                                                             ?>
                                                                         </a>
