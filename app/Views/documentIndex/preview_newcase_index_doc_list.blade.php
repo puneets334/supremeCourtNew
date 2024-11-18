@@ -29,6 +29,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                     $st_indx = 1;
                     $end_indx = 0;
                     $segment = service('uri');
+                    
                     if(!empty($efiled_docs_list)){
                         foreach ($efiled_docs_list as $doc_list) {
                             $end_indx = $end_indx + $doc_list->page_no;
@@ -82,9 +83,9 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                 </tbody>
             </table>
             <?php
-            if (isset($uploaded_docs) && !empty($uploaded_docs )) { ?>
-                @include('uploadDocuments.uploaded_doc_list')
-            <?php } ?>
+            if (isset($uploaded_docs) && !empty($uploaded_docs )) { 
+                render('uploadDocuments.uploaded_doc_list', ['uploaded_docs' => @$uploaded_docs]);
+             } ?>
         </div>
     </div>
 </div>

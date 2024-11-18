@@ -41,13 +41,15 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             $filing_type = 'Case Filing Form';
                             $lbl_history = 'eFiling History';
                         }
-                        
+                        $style = '';
                         if (!empty(getSessionData('efiling_details')['stage_id']) && (getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE || getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE || getSessionData('efiling_details')['stage_id'] == TRASH_STAGE)) {
                             $efiling_num_label_for_display = 'DRAFT-';
                             $efiling_num_button_background_class = 'btn-danger';
+                            $style = 'color: red';
                         } else {
                             $efiling_num_label_for_display = '';
                             $efiling_num_button_background_class = 'btn-success';
+                            $style = 'color: green';
                         }
                         ?></h5>
                     </div>
@@ -199,7 +201,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                                                 <a href="javascript:void(0)"
                                             class="quick-btn transparent-btn ' .
                             $efiling_num_button_background_class .
-                            '" id="copyTarget_EfilingNumber">' .
+                            '" id="copyTarget_EfilingNumber" style="'.$style.'">' .
                             $filing_num_label .
                             $efiling_num_label_for_display .
                             htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) .

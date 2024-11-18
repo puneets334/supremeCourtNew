@@ -75,9 +75,9 @@
                  </div>-->
                     <hr>
                     <div id="supreme_court_info" style="display: block;">
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div class="col-sm-4 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-sm-4 col-xs-4">
                                     <div class="form-group">
                                         <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"> Case Type <span style="color: red">*</span>:</label>
                                         <div class="col-md-7 col-sm-12 col-xs-12">
@@ -87,7 +87,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 col-xs-12" >
+                                <div class="col-sm-4 col-xs-8" >
                                     <div class="form-group">
                                         <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm"> Case No.And Year <span style="color: red">*</span>:</label>
                                         <div class="col-md-7 col-sm-12 col-xs-12">
@@ -121,7 +121,7 @@
                                 </div>
                                 <!---->
                             </div>
-                        </div>
+                            </div>
                     </div>
 
                     <div id="high_court_info" style="display: none;">
