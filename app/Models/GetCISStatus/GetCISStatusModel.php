@@ -150,6 +150,18 @@ class GetCISStatusModel extends Model
         );
         $builder->INSERT($insert_data);
         if ($this->db->insertID()) {
+        // $iby = !empty(getSessionData('login')) ? getSessionData('login')['id'] : '';
+        // $builder2 = $this->db->table('efil.tbl_efiling_num_status');
+        // $builder2->SELECT('activated_on');
+        // // $builder->FROM();
+        // $builder2->WHERE('registration_id', $registration_id);
+        // $builder2->WHERE("stage_id", $next_stage);
+        // $builder2->WHERE("activated_on", $curr_dt);
+        // $builder2->WHERE('is_active', TRUE);
+        // $builder2->WHERE('activated_by_ip', $_SERVER['REMOTE_ADDR']);
+        // $builder2->WHERE('activated_by', $iby);
+        // $query2 = $builder2->get();
+        // if ($query2->getNumRows() >= 1) {
             return TRUE;
         } else {
             return FALSE;

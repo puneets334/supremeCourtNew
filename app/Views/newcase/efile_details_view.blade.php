@@ -574,7 +574,7 @@
                                                    aria-labelledby="headingEight"
                                                    data-bs-parent="#accordionExample">
                                                    <div class="accordion-body">
-                                                      <?php render('documentIndex.preview_newcase_index_doc_list', ['efiled_docs_list' => $efiled_docs_list]); ?>
+                                                      <?php render('documentIndex.preview_newcase_index_doc_list', ['efiled_docs_list' => $efiled_docs_list, 'uploaded_docs' => $uploaded_docs]); ?>
                                                    </div>
                                                 </div>
                                              </div>
@@ -625,7 +625,7 @@
                                           </div>
                                        </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3 text-center">
                                        <div class="row">
                                           <div class="progress"
                                              style="display: none">
@@ -666,6 +666,7 @@
                                              type="button">Next</a>-->
                                           <?php } ?>
                                        </div>
+
                                        <?php
                                           $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT);
                                           $allowed_users_trash = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);

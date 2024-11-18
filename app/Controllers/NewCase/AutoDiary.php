@@ -148,18 +148,18 @@ class AutoDiary extends BaseController
                 if (file_exists($file_partial_path)) {
                     $doc_title = getSessionData('efiling_details')['efiling_no'] . '_' . str_replace(' ', '_', $row['doc_title']) . '.pdf';
                 } else {
-                    $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Pdf File does not exist.</div>');
+                    $this->session->setFlashdata('msg', 'Pdf File does not exist.');
                     return redirect()->to(base_url('documentIndex'));
                 }
             }
         } else {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Pdf File does not exist.</div>');
+            $this->session->setFlashdata('msg', 'Pdf File does not exist.');
             return redirect()->to(base_url('documentIndex'));
         }
 
         $index_pdf_details = $this->DocumentIndex_Select_model->is_index_created($registration_id);
         if (empty($index_pdf_details)) {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Pdf file index is not complete.</div>');
+            $this->session->setFlashdata('msg', 'Pdf file index is not complete.');
             return redirect()->to(base_url('documentIndex'));
         }
         /*The following portion written by Mr.Anshu as on dated 09052024 to check the case must have atlest one pdf uploaded and must have at least one index item : end*/
@@ -173,7 +173,7 @@ class AutoDiary extends BaseController
                 foreach ($result_icmis as $re) {
                     $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
                     if ($aor_cured == 'f') {
-                        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit.</div>');
+                        $this->session->setFlashdata('msg', 'Please Mark All Defects Cured Before Final Submit.');
                         return redirect()->to(base_url('documentIndex'));
                     }
                 }
@@ -195,7 +195,7 @@ class AutoDiary extends BaseController
         } elseif (getSessionData('efiling_details')['stage_id'] == I_B_Rejected_Stage || getSessionData('efiling_details')['stage_id'] == E_REJECTED_STAGE) {
             $next_stage = Initial_Defects_Cured_Stage;
         } else {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
+            $this->session->setFlashdata('msg', 'Invalid Action.');
             return redirect()->to(base_url('dashboard'));
         }
         $result = $this->Common_model->updateCaseStatus($registration_id, $next_stage);
@@ -299,6 +299,8 @@ class AutoDiary extends BaseController
     }
     public function generateAutoDiary($registration_id = null)
     {
+        // echo $registration_id.'<br>';
+        // pr(getSessionData('efiling_details')['efiling_type']);
         if (empty($registration_id)) {
             return NULL;
         } else {
