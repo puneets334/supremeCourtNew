@@ -74,7 +74,7 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Main Petitioner Name
                                 <span style="color: red" class="astriks">*</span></label>
-                            <textarea oninput="validateInput(event)"  tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" style="text-transform: uppercase" placeholder="First Name Middle Name Last Name"><?= @$party_details[0]['party_name']; ?></textarea>
+                            <textarea rows="1" oninput="validateInput(event)"  tabindex='2' id="party_name" name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" style="text-transform: uppercase" placeholder="First Name Middle Name Last Name"><?= @$party_details[0]['party_name']; ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Petitioner name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -199,7 +199,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
-                            <textarea tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
+                            <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -217,7 +217,7 @@
                         <div class="mb-3">
                             <label for=""
                                 class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
-                            <textarea id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Department Name" type="text"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
+                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Department Name" type="text"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -233,7 +233,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
                         <div class="mb-3">
                             <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
-                            <textarea id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
+                            <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -262,7 +262,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label class="form-label">Address <span id="address_span" <?php echo $style; ?> class="astriks"><?php echo $astrik; ?></span></label>
-                            <textarea tabindex='18'  style="text-transform: uppercase" name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3"><?php echo (@$party_details[0]['address']); ?></textarea>
+                            <textarea rows="1" tabindex='18'  style="text-transform: uppercase" name="party_address" id="party_address" placeholder="H.No.,  Street no, Colony,  Land Mark" class="form-control cus-form-ctrl sci_validation" minlength="3"><?php echo (@$party_details[0]['address']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -999,7 +999,9 @@
     function isNumber(value) {
         return typeof value === 'number';
     }
-
+    $('#party_age').on('keyup', function () {
+                $('#party_dob').val(''); // Clear the DOB field.
+            });
     $('#party_pincode').blur(function() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

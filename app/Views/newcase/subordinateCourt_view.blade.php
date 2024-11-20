@@ -213,7 +213,7 @@
                                         data-content="Please enter CNR ">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
-                                    <div class="col-sm-12 col-xs-12">
+                                    <div class="col-sm-12 col-xs-12 input-note-pos">
                                         <strong style="color: red;font-size:14px;"><b>Kindly
                                                 search lower case details using CNR
                                                 preferably for swift data
@@ -349,7 +349,7 @@
                                         data-content="Please enter CNR ">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
-                                    <div class="col-sm-12 col-xs-12">
+                                    <div class="col-sm-12 col-xs-12 input-note-pos">
                                         <strong style="color: red;font-size:14px;"><b>Kindly
                                                 search lower case details using CNR
                                                 preferably for swift data
