@@ -351,7 +351,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
 
                 <?php 
                 $segment = service('uri');
-                $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : array();
+                $StageArray = !empty(getSessionData('efiling_details')) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : array();
                 $disabled_status1='pointer-events: none; cursor: default;';?>
                 <ul class="nav nav-tabs"
                     id="myTab"
@@ -362,7 +362,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <?php
                         if ($segment->getSegment(2) == 'upload_docs' || $segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex') {
                             $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'first active';
+                            $status_color = 'active';
                             //$disabled_status='';
                         } elseif (in_array(NEW_CASE_UPLOAD_DOCUMENT, $StageArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
@@ -384,18 +384,16 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <?php
                         if ($segment->getSegment(2) == 'courtFee') {
                             $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'first active';
+                            $status_color = 'active';
                         //  $disabled_status='';
                         } elseif (in_array(NEW_CASE_COURT_FEE, $StageArray)) {
                             //$ColorCode = $bgcolor . ";color:#ffffff";
-                            $bgcolor='background-color: #169F85;';
-                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $ColorCode='background-color: #169F85;';
                             $status_color = '';
                         // $disabled_status='';
                         } else {
 
-                            $bgcolor='background-color: #C11900;';
-                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $ColorCode='background-color: #C11900;';
                             $status_color = '';
                         // $disabled_status='pointer-events: none; cursor: default;';
                         }
@@ -411,7 +409,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <?php
                         if ($segment->getSegment(2) == 'view') {
                             $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'first active';
+                            $status_color = 'active';
                             //$disabled_status='';
                         } elseif (in_array(NEW_CASE_PETITIONER, $StageArray) && in_array(NEW_CASE_RESPONDENT, $StageArray) && in_array(NEW_CASE_UPLOAD_DOCUMENT, $StageArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff';

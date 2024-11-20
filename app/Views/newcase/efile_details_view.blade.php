@@ -155,13 +155,13 @@
                                                    <div class="accordion-body">
                                                       <div class="x_panel">
                                                          <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-2 text-right"
+                                                                     class="control-label col-4 text-right"
                                                                      for="filing_no"><b>Cause Title :</b>
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <p> 
                                                                      <?= isset($new_case_details[0]->cause_title) ? echo_data($new_case_details[0]->cause_title) : '';?>
                                                                         <?php
@@ -169,28 +169,26 @@
                                                                   </div>
                                                                </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-2 text-right"
+                                                                     class="control-label col-4 text-right"
                                                                      for="filing_no"><b>Case Type :</b> 
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <p> 
                                                                      <?= isset($sc_case_type[0]->casename) ?  echo_data(strtoupper($sc_case_type[0]->casename)) : '';?>   
                                                                      <?php // echo_data(strtoupper($sc_case_type[0]->casename)); ?> </p>
                                                                   </div>
                                                                </div>
                                                             </div>
-                                                         </div>
-                                                         <div class="row">
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-2 text-right"
+                                                                     class="control-label col-4 text-right"
                                                                      for="filing_no"><b>Subject Category :</b> 
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <p> 
                                                                      <?php
                                                                      isset($main_subject_cat[0]->sub_name1) ? echo_data(strtoupper($main_subject_cat[0]->sub_name1)) :'';
@@ -203,12 +201,15 @@
                                                                   </div>
                                                                </div>
                                                             </div>
+                                                            </div>
+                                                         <div class="row">
+
                                                             <?php
                                                                if (isset($diary) && !empty($diary)) {
-                                                                   echo '<div class="col-md-6">
+                                                                   echo '<div class="col-md-4 col-sm-12">
                                                                        <div class="form-group row">
-                                                                           <label class="control-label col-2 text-right" for="diary_no"><b> Diary No. : </b></label>
-                                                                           <div class="col-10">
+                                                                           <label class="control-label col-4 text-right" for="diary_no"><b> Diary No. : </b></label>
+                                                                           <div class="col-8">
                                                                                <p>' . $diary . '</p>
                                                                            </div>
                                                                        </div>
@@ -219,10 +220,10 @@
                                                                    if (isset($vakalat_filedByData) && !is_null($vakalat_filedByData)) {
                                                                        $vakalat_advocate = '<p><b>Transfered to : </b>' . $vakalat_filedByData . '</p><p>' . $vakalat_filedByData_contact_emailid . '</p>';
                                                                    }
-                                                                   $filed = '<div class="col-md-6">
+                                                                   $filed = '<div class="col-md-4 col-sm-12">
                                                                        <div class="form-group row">
-                                                                           <label class="control-label col-2 text-right" for="filed_by"><b> Filed By:</b> </label>
-                                                                           <div class="col-10">
+                                                                           <label class="control-label col-4 text-right" for="filed_by"><b> Filed By:</b> </label>
+                                                                           <div class="col-8">
                                                                               <p> ' . $filedByData . ' '.$filedByData_contact_emailid.' '.$vakalat_advocate.' </p>
                                                                            </div>
                                                                        </div>
@@ -230,12 +231,12 @@
                                                                    echo $filed;
                                                                }
                                                                ?>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
-                                                                  <label class="control-label col-2 pe-0 text-right" for="filing_no">
+                                                                  <label class="control-label col-4 pe-0 text-right" for="filing_no">
                                                                      <b>No. of Petitioner :</b>
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <p>
                                                                         <?= isset($new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?>
                                                                         <?php //isset(new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?>
@@ -243,14 +244,14 @@
                                                                   </div>
                                                                </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-2 pe-0 text-right"
+                                                                     class="control-label col-4 pe-0 text-right"
                                                                      for="filing_no"><b> No. of
                                                                   Respondent :</b> 
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <p>
                                                                      <?= isset($new_case_details[0]->no_of_respondents) ? echo_data($new_case_details[0]->no_of_respondents): '' ;?>
                                                                         <?php // echo_data($new_case_details[0]->no_of_respondents); ?>
@@ -258,13 +259,13 @@
                                                                   </div>
                                                                </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-2 text-right"
+                                                                     class="control-label col-4 text-right"
                                                                      for="filing_no"><b>IF SCLSC :</b> 
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <p>
                                                                         <?= !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?>
                                                                         <?php // echo !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?>
@@ -272,14 +273,14 @@
                                                                   </div>
                                                                </div>
                                                             </div>
-                                                            <div class="col-md-6">
+                                                            <div class="col-md-4 col-sm-12">
                                                                <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-2 text-right"
+                                                                     class="control-label col-4 text-right"
                                                                      for="filing_no"><b>Special
                                                                   Category :</b> 
                                                                   </label>
-                                                                  <div class="col-10">
+                                                                  <div class="col-8">
                                                                      <?= !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?>
                                                                      <p><?php // echo !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?></p>
                                                                   </div>
@@ -313,9 +314,13 @@
                                                       <font style="color:red;"> <b>Petitioner</b>
                                                       </font>
                                                       <?php } else { ?><b>Petitioner</b><?php } ?>
+                                                      <?php
+                                                      if(isset($hidepencilbtn)){
+                                                          if ($hidepencilbtn != 'true') { ?>
                                                          <a href="<?php echo base_url('newcase/petitioner'); ?>">
                                                             <i class="fa fa-pencil efiling_search"></i>
                                                          </a>
+                                                         <?php }  }?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -358,8 +363,12 @@
                                                       <b>Respondent</b>
                                                       </font><?php } else { ?>
                                                       <b>Respondent</b><?php } ?>
+                                                      <?php
+                                                      if(isset($hidepencilbtn)){
+                                                      if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('newcase/respondent'); ?>"><i
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -402,8 +411,12 @@
                                                       <b>Extra Party</b>
                                                       </font><?php } else { ?>
                                                       <b>Extra Party</b><?php } ?>
+                                                      <?php
+                                                      if(isset($hidepencilbtn)){
+                                                      if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('newcase/extra_party'); ?>"><i
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -447,9 +460,15 @@
                                                       </font>
                                                       <?php } else { ?> <b>Legal
                                                       Representative</b><?php } ?>
+                                                      <?php
+                                                      if(isset($hidepencilbtn)){
+                                                      
+                                                          if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('newcase/lr_party'); ?>"><i
                                                          style="color:black; padding-top:20px;"
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php }
+                                                      } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -493,9 +512,12 @@
                                                       <b>Act-Section</b>
                                                       </font><?php } else { ?>
                                                       <b>Act-Section</b><?php } ?>
+                                                      <?php
+                                                      if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('newcase/actSections'); ?>"><i
                                                        
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -536,9 +558,11 @@
                                                       <b>Earlier Courts</b>
                                                       </font><?php } else { ?>
                                                       <b>Earlier Courts</b><?php } ?>
+                                                      <?php
+                                                      if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('newcase/subordinate_court'); ?>"><i
-                                                       
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -557,6 +581,7 @@
                                                          render('newcase.subordinate_court_list', ['subordinate_court_details' => $subordinate_court_details]); ?>
                                                    </div>
                                                 </div>
+                                             </div>
                                              </div>
                                              <div class="accordion-item">
                                                 <div class="row">
@@ -579,8 +604,11 @@
                                                       <b>Index</b>
                                                       </font><?php } else { ?>
                                                       <b>Index</b><?php } ?>
+                                                      <?php
+                                                      if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('documentIndex'); ?>"><i
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -623,9 +651,11 @@
                                                       <b>Court Fee</b>
                                                       </font><?php } else { ?>
                                                       <b>Court Fee</b><?php } ?>
+                                                      <?php
+                                                      if ($hidepencilbtn != 'true') { ?>
                                                       <a href="<?php echo base_url('newcase/courtFee'); ?>"><i
-                                                        
                                                          class="fa fa-pencil efiling_search"></i></a>
+                                                         <?php } ?>
                                                       </button>
                                                    </h2>
                                                    <?php
@@ -644,7 +674,6 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                          </div>
                                        </div>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3 text-center">
@@ -715,7 +744,16 @@
                                           }
                                           }
                                           }
-                                          
+                                          $segment = service('uri');
+                                          $stages_array = array(Initial_Defected_Stage, I_B_Defected_Stage);
+                                          if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+                                             // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                                             if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                                if ($segment->getSegment(2) == 'view') {
+                                                      echo '<a href="' . base_url('newcase/finalSubmit') . '" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
+                                                }
+                                             }
+                                          }
                                           ?>
                                     </div>
                                     <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
