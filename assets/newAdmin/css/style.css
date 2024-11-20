@@ -8626,3 +8626,11 @@ form .col-lg-4 .mb-3 .input-note-pos {position: absolute;}
 .acrdion-with-edit .accordion-button a {position: absolute;right: 4%;}
 .acrdion-with-edit .accordion-button:not(.collapsed) a, .acrdion-with-edit .accordion-button:hover a {color: #fff;}
 /* 19-11-24 End  */ 
+/* 20-11-24 start  */
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse li + li {
+    margin-top: 5px;
+}
+.btn-primary {
+    background: #0d48be;
+}
+/* 20-11-24 End  */
