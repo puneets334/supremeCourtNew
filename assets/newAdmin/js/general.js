@@ -221,3 +221,34 @@ document.querySelectorAll('.custom-table td').forEach(td => {
   const minHeight = 40; 
   td.style.minHeight = `${Math.max(contentHeight, minHeight)}px`; 
 });
+
+// ------JS For Iframe StarT ------------
+
+function adjustIframeHeight(iframe) {
+  const newHeight = iframe.contentWindow.document.body.scrollHeight + 'px';
+  iframe.style.setProperty('height', newHeight, 'important');
+}
+
+document.querySelectorAll('.iframe-scroll-bar').forEach(iframe => {
+  iframe.addEventListener('load', () => {
+    adjustIframeHeight(iframe);
+
+    const observer = new MutationObserver(() => {
+      adjustIframeHeight(iframe);
+    });
+
+    observer.observe(iframe.contentWindow.document.body, { childList: true, subtree: true });
+  });
+});
+
+// function adjustIframeHeight(iframe) {
+//   try {
+//     const newHeight = iframe.contentWindow.document.body.scrollHeight + 'px';
+//     iframe.style.setProperty('height', newHeight, 'important');
+//   } catch (error) {
+//     console.error('Error adjusting iframe height:', error);
+//   }
+// }
+
+// ------JS For Iframe End ------------
+
