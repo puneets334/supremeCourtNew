@@ -81,9 +81,9 @@ class Ajaxcalls extends BaseController {
                 $appearing_id = isset($appearing_for_details[0]['id']) ? $appearing_for_details[0]['id'] : '';
                 $appearing_contact_id = isset($appearing_for_details[0]['contact_tbl_id']) ? $appearing_for_details[0]['contact_tbl_id'] : '';
                
-               $parties_data .='<tr><td><input class="form-control" name="party_name[]" type="text"  value="'.escape_data($value).'" readonly=""></td>
-                    <td><input class="form-control" name="party_email[]" type="email" placeholder="Email"  value="'.escape_data($email).'" ></td>
-                    <td><input class="form-control" name="party_mob[]" placeholder="Mobile"  value="'. escape_data($mobile).'" type="text" maxlength="10" minlength="10" value="" ></td>
+               $parties_data .='<tr><td><input class="form-control  cus-form-ctrl" name="party_name[]" type="text"  value="'.escape_data($value).'" readonly=""></td>
+                    <td><input class="form-control  cus-form-ctrl" name="party_email[]" type="email" placeholder="Email"  value="'.escape_data($email).'" ></td>
+                    <td><input class="form-control  cus-form-ctrl" name="party_mob[]" placeholder="Mobile"  value="'. escape_data($mobile).'" type="text" maxlength="10" minlength="10" value="" ></td>
                     <td class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="'. url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id).'"'.$selected.'></td>
                 </tr>';
                 

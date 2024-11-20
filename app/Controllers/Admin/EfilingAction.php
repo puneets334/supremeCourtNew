@@ -49,9 +49,7 @@ class EfilingAction extends BaseController {
 
         $regid = getSessionData('efiling_details')['registration_id'];
         $filing_type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
-
         $data = $this->Efiling_action_model->approve_case($regid, $filing_type);
-        //echo '<pre>'; print_r($data); exit;
 
         if ($data) {
             $userdata = $this->Efiling_action_model->get_efiled_by_user($_SESSION['efiling_details']['created_by']);
@@ -216,13 +214,15 @@ class EfilingAction extends BaseController {
             exit(0);
         }
         $filing_type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
+
+
         if ($filing_type == E_FILING_TYPE_NEW_CASE) {
             $redirectURL = 'New_case/view';
         } else if ($filing_type == E_FILING_TYPE_JAIL_PETITION) {
             $redirectURL = 'jailPetition/view';
         } elseif ($filing_type == E_FILING_TYPE_MISC_DOCS) {
-            $redirectURL = 'MiscellaneousFiling/view';
-        } elseif ($filing_type == E_FILING_TYPE_CAVEAT && $_SESSION['efiling_details']['efiling_type'] =='caveat') {
+            $redirectURL = 'miscellaneous_docs/view';
+        } elseif ($filing_type == E_FILING_TYPE_CAVEAT && $_SESSION['efiling_details']['efiling_type'] =='CAVEAT') {
             $redirectURL = 'caveat/view';
         } elseif ($filing_type == E_FILING_TYPE_DEFICIT_COURT_FEE && $_SESSION['efiling_details']['efiling_type'] !='caveat') {
             $redirectURL = 'Deficit_court_fee/view';
@@ -234,7 +234,7 @@ class EfilingAction extends BaseController {
             $redirectURL = 'admin';
         }
         $_POST['remark'] = trim($_POST['remark']);
-
+ 
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE ||$_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_JAIL_PETITION ) {
 
             if (empty($_POST['remark'])) {
@@ -266,20 +266,30 @@ class EfilingAction extends BaseController {
 
         $remark = script_remove($this->request->getPost('remark'));
         $remark_length = strip_tags($remark);
+        if(empty($remark)){
+            $this->session->setFlashdata('msg','<div class="alert alert-danger text-center">Reason for disapproval required.</div>');
+            // return redirect()->to(base_url($redirectURL));caveat/view
+            return redirect()->to(base_url($redirectURL));
+            // return redirect()->back();
+              
+        }
+       // pr($remark); 
 
         if (strlen($remark_length) > DISAPPROVE_REMARK_LENGTH) {
             // log_message('CUSTOM', "Remark should be max ".DISAPPROVE_REMARK_LENGTH."characters!");
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Remark should be max ' . DISAPPROVE_REMARK_LENGTH . ' characters!</div>');
-            redirect($redirectURL);
-            exit(0);
+            // redirect($redirectURL);
+            // return redirect()->back();
+            return redirect()->to(base_url($redirectURL));
+            // exit(0);
         }
 
-
         $data = $this->Efiling_action_model->disapprove_case($regid, $remark);
-
+        
         if ($data) {
 
             $userdata = $this->Efiling_action_model->get_efiled_by_user($_SESSION['efiling_details']['created_by']);
+       
 
             // log_message('CUSTOM', "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been disapproved. Please cure the notified defects through eFiling portal. - Supreme Court of India");
             $sentSMS = "eFiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been disapproved. Please cure the notified defects through eFiling portal. - Supreme Court of India";
@@ -290,8 +300,9 @@ class EfilingAction extends BaseController {
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
             // log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ." disapproved successfully !");
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
-            return redirect()->to(base_url('adminDashboard'));
-            exit(0);
+            // return redirect()->to(base_url('adminDashboard'));
+            return redirect()->to(base_url($redirectURL));
+            // exit(0);
         }
     }
 

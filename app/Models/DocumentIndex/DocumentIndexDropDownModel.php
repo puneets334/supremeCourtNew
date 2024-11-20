@@ -76,7 +76,8 @@ class DocumentIndexDropDownModel extends Model {
             $builder->WHERE('doccode1', 501);
         }
         if(getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA){
-            $builder->WHERE('doccode1 not in (0,19)'); // condition given by Vandana on 02 August 2023
+            // $builder->WHERE('doccode1 not in (0,19)'); // condition given by Vandana on 02 August 2023
+            $builder->whereNotIn('doccode1', [0, 19]);
         }
 
         $builder->orderBy('docdesc');
