@@ -69,11 +69,12 @@ class FinalSubmit extends BaseController {
                 send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS,SCISMS_Initial_Approval);
                 send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
 
-                getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                //getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 // log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no'])." submitted successfully for approval of E-filing Admin.!");
                 $_SESSION['efiling_details']['stage_id']=Initial_Approaval_Pending_Stage;
-                
-                return redirect('IA/view');
+                getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                $this->session->setFlashdata('msg','<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                 return redirect('IA/view');
                 //redirect('dashboard');
                 // exit(0);
 

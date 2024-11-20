@@ -2,7 +2,12 @@
     @extends('layout.app')
     @section('content')
 @endif
-<?php
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+@include('layout.header')
+@endif
+
+<?php 
+//pr(getSessionData('login')['ref_m_usertype_id']) USER_ADMIN;
 use SebastianBergmann\Type\FalseType;
 $segment = service('uri');
 $StageArray = !empty(getSessionData('breadcrumb_enable')['breadcrumb_status']) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : array();
@@ -77,8 +82,10 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             }
                             ?>
                         </h5>
-                    </div>
+                    </div> 
+
                     <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                     
                         <?php
                         if (!empty(getSessionData('MSG'))) {
                             echo getSessionData('MSG');
@@ -113,12 +120,14 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             if (((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) || (getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN)) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (isset($efiling_civil_data[0]['orgid']) && $efiling_civil_data[0]['orgid'] == '0' && $efiling_civil_data[0]['not_in_list_org'] == 't' || isset($efiling_civil_data[0]['resorgid']) && $efiling_civil_data[0]['resorgid'] == '0' && $efiling_civil_data[0]['res_not_in_list_org'] == 't') {
                                     ?>
+                                    <a class="btn btn-success" data-toggle="popover"  data-placement="bottom" data-content="Caveator organisation not added. OR Caveatee organisation not added. OR Extra Party organisation not added.">Approve  
+                                    <i class="fa fa-question-circle-o"></i></a>
+                                <?php } else {  ?>
                                     <a data-bs-toggle="modal" href="#approveModal" class="btn quick-btn success-btn btn-success btn-sm" style="background-color:#169F85;">Approve</a>
-                                <?php } else { ?>
-                                    <a data-bs-toggle="modal" href="#disapproveModal" class="btn quick-btn success-btn btn-danger btn-sm" style="background-color:#169F85;">Disapprove</a>
+                                    <?php } ?>
+                                    <a data-bs-toggle="modal" href="#disapproveModal" class="btn quick-btn success-btn btn-danger btn-sm" style="background-color:#C11900;">Disapprove</a>
                                     <?php
-                                }
-                            }
+                                } 
                             $idle_Array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
                             if(!empty((getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $idle_Array) && $segment->getSegment(3) == url_encryption('idle')) {
                                 ?>
@@ -156,9 +165,11 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {
                             if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
                                 // Comment By Amit Mishra as 
+                            //    pr(CAVEAT_BREAD_VIEW);
                                 if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                     echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                 }
+                               // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submits</a>';
                                 // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';                                        
                                 if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { }
                             } elseif (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
@@ -615,8 +626,8 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 <div class="clearfix"><br></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <a class="btn btn-success" id="disapprove_me" >Submit</a>
+                <button type="button" class="btn btn-default " data-bs-dismiss="modal">Close</button>
+                <button  type="button" class="btn btn-success" id="disapprove_me" >Submit</button>
             </div>
             <?php echo form_close(); ?>  
         </div>
@@ -769,9 +780,13 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         </div>
     </div>
 </div>
+<!-- getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN -->
 @if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
     @endsection
 @endif
+
+
+ 
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
@@ -785,7 +800,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
-<!-- <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>     -->
+ <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>    
 <script src="<?=base_url();?>assets/js/sweetalert.min.js"></script>
 <script>
     function ActionToTrash(trash_type) {       
@@ -1195,6 +1210,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             }
         });
         $('#disapprove_me').click(function () {
+            
             var temp = $('.disapprovedText').text();
             temp = $.trim(temp);
             var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';            

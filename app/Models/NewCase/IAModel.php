@@ -160,19 +160,37 @@ class IAModel extends Model {
     }
 
     function get_sub_document_type($doc_code) {
-        $builder = $this->db->table('icmis.docmaster')
-            ->SELECT('*')
-            ->WHERE('doccode', $doc_code)
-            ->whereNotIn('doccode1', 0)
-            ->WHERE("display != 'N'" )
-            ->orderBy('docdesc');
-        $query = $builder->get();
-        if ($query->getNumRows() >= 1) {
-            $result = $query->getResultArray();
-            return $result;
-        } else {
-            return FALSE;
-        }
+        // $builder = $this->db->table('icmis.docmaster')
+        //     ->SELECT('*')
+        //     ->WHERE('doccode', $doc_code)
+        //     ->whereNotIn('doccode1', 0)
+        //     ->WHERE("display != 'N'" )
+        //     ->orderBy('docdesc');
+        // $query = $builder->get();
+        // if ($query->getNumRows() >= 1) {
+        //     $result = $query->getResultArray();
+        //     return $result;
+        // } else {
+        //     return FALSE;
+        // }
+         // Build the query using the query builder
+         $builder = $this->db->table('icmis.docmaster'); // Get the table object
+
+         $builder->select('*'); // Select all columns
+         $builder->where('doccode', $doc_code); // Add WHERE condition for doccode
+         $builder->whereNotIn('doccode1', [0]); // Add WHERE_NOT_IN condition for doccode1
+         $builder->where("display != 'N'"); // Add WHERE condition for display column
+         $builder->orderBy('docdesc'); // Add ORDER BY condition for docdesc
+ 
+         // Execute the query
+         $query = $builder->get();
+ 
+         // Check if the query returned results
+         if ($query->getNumRows() >= 1) {
+             return $query->getResultArray(); // Return results as an array
+         } else {
+             return false; // Return false if no rows found
+         }
     }
     
     public function get_original_pdf_details($doc_id) {

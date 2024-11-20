@@ -55,8 +55,10 @@ $parties_details = $data['parties_details'];
                         $pet_default_checked = ($appearing_for_details[0]['partytype'] == 'P') ? 'checked' : NULL;
                         $res_checked = ($appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
                         ?>
-                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
-                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
+                        <label class="radio-inline">
+                            <input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
+                        <label class="radio-inline">
+                            <input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
 
                         <?php
                         if ($pet_default_checked) {
@@ -126,9 +128,9 @@ $parties_details = $data['parties_details'];
                                 $appearing_contact_id = $appearing_for_details[0]['contact_tbl_id'];
                         ?>
                                 <tr>
-                                    <td data-key="Party Name"><input class="form-control" name="party_name[]" type="text" value="<?php echo_data($value); ?>"></td>
-                                    <td data-key="Email"><input class="form-control" name="party_email[]" type="email" placeholder="Email" value="<?php echo ($email); ?>"></td>
-                                    <td data-key="Mobile"><input class="form-control" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
+                                    <td data-key="Party Name"><input class="form-control cus-form-ctrl" name="party_name[]" type="text" value="<?php echo_data($value); ?>"></td>
+                                    <td data-key="Email"><input class="form-control cus-form-ctrl" name="party_email[]" type="email" placeholder="Email" value="<?php echo ($email); ?>"></td>
+                                    <td data-key="Mobile"><input class="form-control cus-form-ctrl" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
                                     <td data-key="Select" class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>" <?php echo $selected; ?>></td>
                                 </tr>
                         <?php
