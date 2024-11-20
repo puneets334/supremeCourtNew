@@ -938,7 +938,7 @@ td {
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive" style="height: 800px; overflow-x: overlay;">
-                                                        <table id="datatable-responsive"
+                                                        <table id="datatable-responsive-calendarData"
                                                             class="table table-striped custom-table">
                                                             <thead>
                                                                 <tr>
@@ -1569,12 +1569,13 @@ td {
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="dash-card">
                                                 <div class="title-sec">
-                                                    <h5 class="unerline-title">My Cases</h5>
+                                                    <h5 class="unerline-title">My e-Filed Cases</h5>
+                                                    <button class="btn btn-secondary pull-right" onclick="showAllCases();" id="showAllCases">Show All Cases</button>
                                                 </div>
                                                 <div class="calender-sec">
                                                     <div id="calendar"></div>
                                                 </div>
-                                                <div id='efiling-details'>
+                                                <!-- <div id='efiling-details'>
                                                     <div class="title-sec">
                                                         <h5 class="unerline-title">Allocated Cases</h5>
                                                     </div>
@@ -1589,7 +1590,7 @@ td {
                                                             <tbody id="efiling"></tbody>
                                                         </table>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                     </div>
@@ -1721,43 +1722,63 @@ td {
                     data: {
                         start: start
                     },
-                    dataType: 'json',
+                    // dataType: 'json',
                     beforeSend: function() {
-                        // $('#loader-wrapper').show();
-                        // var loaderTimeout = setTimeout(function() {
-                        //     $('#loader-wrapper').fadeOut('slow', function() {
-                        //         $('#content').fadeIn('slow');
-                        //     });
-                        // }, 1000);
+                        $('#loader-wrapper').show();
+                        var loaderTimeout = setTimeout(function() {
+                            $('#loader-wrapper').fadeOut('slow', function() {
+                                $('#content').fadeIn('slow');
+                            });
+                        }, 1000);
                     },
-                    success: function(response) {
-                        var Table = document.getElementById("efiling");
+                    success: function(res) {
+                        var Table = document.getElementById("datatable-responsive-calendarData");
                         Table.innerHTML = "";
-                        if(response.length > 0) {
-                            for (var i = 0; i < response.length; i++) {
-                                $('#efiling').append(
-                                    '<tr><td data-key="eFiling No."><a href="<?php echo base_url('case/paper_book_viewer/'); ?>' +
-                                    response[i]['diary_id'] +
-                                    '" target="_blank" rel="noopener">' + response[i][
-                                        'efiling_no'
-                                    ] + '</a></td><td data-key="Date & Time">' +
-                                    response[i]['activated_on'] + " " + '</td></tr>'
-                                );
-                            }
-                        } else{
-                            $('#efiling').append('<tr><td colspan="2">' + response.error + '</td></tr>');
-                        }
+                        $('#datatable-responsive-calendarData').html('');
+                        $('#datatable-responsive-calendarData').html(res);
+
                     },
                     error: function(xhr, status, error) {
-                        var Table = document.getElementById("efiling");
+                        var Table = document.getElementById("datatable-responsive-calendarData");
                         Table.innerHTML = "";
-                        $('#efiling').append('<tr><td colspan="2">' + response.error + '</td></tr>');
+                        $('#datatable-responsive-calendarData').append('<tr><td colspan="8">No Records Found!</td></tr>');
                     }
                 });
             }
         });
         calendar.render();
     });
+
+    function showAllCases(){
+        $.ajax({
+            url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
+            method: "POST",
+            data: {
+                start: ''
+            },
+            // dataType: 'json',
+            beforeSend: function() {
+                $('#loader-wrapper').show();
+                var loaderTimeout = setTimeout(function() {
+                    $('#loader-wrapper').fadeOut('slow', function() {
+                        $('#content').fadeIn('slow');
+                    });
+                }, 1000);
+            },
+            success: function(res) {
+                var Table = document.getElementById("datatable-responsive-calendarData");
+                Table.innerHTML = "";
+                $('#datatable-responsive-calendarData').html('');
+                $('#datatable-responsive-calendarData').html(res);
+
+            },
+            error: function(xhr, status, error) {
+                var Table = document.getElementById("datatable-responsive-calendarData");
+                Table.innerHTML = "";
+                $('#datatable-responsive-calendarData').append('<tr><td colspan="8">No Records Found!</td></tr>');
+            }
+        });
+    }
 
     function get_message_data(id) {
         UIkit.modal('#mail').toggle();
