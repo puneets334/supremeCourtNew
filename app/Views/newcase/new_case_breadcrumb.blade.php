@@ -63,15 +63,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         }
                         ?>
                     </div> -->
-                    <div class="form-response"
-                        role="alert"
-                        data-auto-dismiss="5000">
-                        <?php
-                        if (!empty(getSessionData('msg'))) {
-                            echo getSessionData('msg');
-                        }
-                        ?>
-                    </div>
+                    
                     <?php //echo getSessionData('msg'); ?>                    
                     <div class="page-breifs">
                         <ul>
@@ -138,10 +130,34 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             // render('templates.user_efil_num_action_bar');
                         ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                        <?php
+                            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
+                                if (isset(getSessionData('efiling_details')['stage_id']) && in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
+                            ?>
+                            <a class="quick-btn btn btn-success btn-sm"
+                            target="_blank"
+                            href="<?php echo base_url('acknowledgement/view'); ?>">
+                            <i class="fa fa-download blink"></i> eFiling Acknowledgement
+                            </a> 
+                            <?php
+                            }
+                            }
+                            ?>
                         <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
+                
             </div>
+            <div class="form-response mt-2"
+                    role="alert"
+                    data-auto-dismiss="5000">
+                    <?php
+                    if (!empty(getSessionData('msg'))) {
+                        echo getSessionData('msg');
+                    }
+                    ?>
+                </div>
         </div>
     </div>
 

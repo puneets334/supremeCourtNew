@@ -85,7 +85,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                             $ref_m_efiled_type_id=$isCaseInApprovedStage[0]['ref_m_efiled_type_id'];
                             $diaryGenerationStatus=$this->getAllFilingDetailsByRegistrationId($efiling_no,$registration_id,$ref_m_efiled_type_id,$efiling_type); //function written for Auto diarization on 29072023
                             //echo $diaryGenerationStatus;
-                            $diaryGenerationStatus=json_decode($diaryGenerationStatus,true);
+                            $diaryGenerationStatus=$diaryGenerationStatus;
                         }
                     }
                     else
@@ -155,12 +155,13 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                 $efiling_no=$isCaseInApprovedStage[0]['efiling_no'];
                 $ref_m_efiled_type_id=$isCaseInApprovedStage[0]['ref_m_efiled_type_id'];
                 $diaryGenerationStatus=$this->getAllFilingDetailsByRegistrationId($efiling_no,$registration_id,$ref_m_efiled_type_id,$efiling_type); //function written for Auto diarization on 29072023
-                echo $diaryGenerationStatus;
+                // echo $diaryGenerationStatus;
             }
         }
-        else
-            echo  "Registration_id and Efiling_type are Empty !!!";
-        return json_encode($diaryGenerationStatus);
+        else{
+            $diaryGenerationStatus = "Registration_id and Efiling_type are Empty !!!";
+        }
+        return $diaryGenerationStatus;
     }
     private function getAllFilingDetailsByRegistrationId($efiling_no=NULL,$registration_id=NULL,$ref_m_efiled_type_id=NULL,$file_type=NULL)
     {
@@ -698,7 +699,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                     $output;
             }
         }
-        return json_encode($output);
+        return $output;
     }
     private function getCisStatusForNewCase($registration_id, $efiling_num, $curr_stage,$diaryStatus = NULL,$alloted_to_name = NULL,$ref_m_efiled_type_id=NULL,$efiling_type=NULL)
     {
