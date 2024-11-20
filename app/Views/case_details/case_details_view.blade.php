@@ -18,29 +18,29 @@ if ($uris->getSegment(2) != 'view') {
 }
 ?>
 <div class="panel panel-default panel-body m-3">
-    <div class="col-md-12 text-center">
-        <h4><b>Case Details</b> </h4>
+    <div class="col-md-12 text-center mb-3">
+        <h4>Case Details </h4>
     </div>
 
     <div class="col-12">
         <div class="row">
             <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-2">
                         <label><strong>Diary No :</strong></label>
                     </div>
-                    <div class="col-md-8">
-                        <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?>
+                    <div class="col-10">
+                       <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6 col-lg-6">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-2">
                         <label><strong>Registration No. :</strong></label>
                     </div>
-                    <div class="col-md-8">
-                        <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?>
+                    <div class="col-10">
+                      <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p> 
                     </div>
                 </div>
             </div>
@@ -52,21 +52,21 @@ if ($uris->getSegment(2) != 'view') {
             <div class="row">
                 <div class="col-md-6 col-lg-6">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-2">
                             <label><strong>Cause Title :</strong></label>
                         </div>
-                        <div class="col-md-8">
-                            <?php echo_data($case_details[0]['cause_title']); ?>
+                        <div class="col-10">
+                           <p> <?php echo_data($case_details[0]['cause_title']); ?></p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-2">
                             <label><strong>Status :</strong></label>
                         </div>
-                        <div class="col-md-8">
-                            <?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?>
+                        <div class="col-10">
+                            <p><?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?></p>
                         </div>
                     </div>
                 </div>
@@ -87,9 +87,9 @@ if ($uris->getSegment(2) != 'view') {
                     $filedBy = $name . ' (AOR- ' . $aor_code . ')';
                 }
                 echo '<div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label col-md-4 text-right" for="filed_by">Filed By: </label>
-                            <div class="col-md-8">
+                        <div class="form-group row">
+                            <label class="control-label col-2 text-right" for="filed_by">Filed By: </label>
+                            <div class="col10">
                                 <p>' . $filedBy . '</p>
                             </div>
                         </div>
@@ -102,16 +102,18 @@ if ($uris->getSegment(2) != 'view') {
                         <?php
                         if (strtotime($case_listing_details->listed[0]->next_dt) >= strtotime(date("Y-m-d"))) {
                         ?>
-                            <span style="color:red; font-size:14px; font-weight: bold;">
-                                <label class="control-label col-md-4 text-right" for="case_status">Listed For :</label>
-                                <div class="col-md-8">
+                            <span class="row style="color:red; font-size:14px; font-weight: bold;">
+                                <label class="control-label col-2 text-right" for="case_status">Listed For :</label>
+                                <div class="col-10">
                                     <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
                                 </div>
                             </span>
                         <?php  } else { ?>
-                            <label class="control-label col-md-4 text-right" for="case_status">Last Listed On :</label>
-                            <div class="col-md-8">
-                                <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
+                            <div class="row">
+                                <label class="control-label col-2 text-right" for="case_status">Last Listed On :</label>
+                                <div class="col-10">
+                                    <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
+                                </div>
                             </div>
                         <?php } ?>
                     </div>

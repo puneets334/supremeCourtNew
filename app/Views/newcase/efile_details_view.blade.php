@@ -134,7 +134,7 @@
                                              </a> -->
                                        </div>
                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                          <div class="accordion"
+                                          <div class="accordion view-accordion acrdion-with-edit"
                                              id="accordionExample">
                                              <div class="accordion-item">
                                                 <h2 class="accordion-header"
@@ -156,41 +156,47 @@
                                                       <div class="x_panel">
                                                          <div class="row">
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
+                                                               <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-6 text-right"
-                                                                     for="filing_no"><b>Cause Title :</b> <?= isset($new_case_details[0]->cause_title) ? echo_data($new_case_details[0]->cause_title) : '';?>
+                                                                     class="control-label col-2 text-right"
+                                                                     for="filing_no"><b>Cause Title :</b>
                                                                   </label>
-                                                                  <div class="col-md-8">
-                                                                     <p> <?php
+                                                                  <div class="col-10">
+                                                                     <p> 
+                                                                     <?= isset($new_case_details[0]->cause_title) ? echo_data($new_case_details[0]->cause_title) : '';?>
+                                                                        <?php
                                                                         //echo_data($filedByData); echo_data($new_case_details[0]->cause_title); ?> </p>
                                                                   </div>
                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
+                                                               <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-6 text-right"
-                                                                     for="filing_no"><b>Case Type :</b> <?= isset($sc_case_type[0]->casename) ?  echo_data(strtoupper($sc_case_type[0]->casename)) : '';?>
+                                                                     class="control-label col-2 text-right"
+                                                                     for="filing_no"><b>Case Type :</b> 
                                                                   </label>
-                                                                  <div class="col-md-8">
-                                                                     <p> <?php // echo_data(strtoupper($sc_case_type[0]->casename)); ?> </p>
+                                                                  <div class="col-10">
+                                                                     <p> 
+                                                                     <?= isset($sc_case_type[0]->casename) ?  echo_data(strtoupper($sc_case_type[0]->casename)) : '';?>   
+                                                                     <?php // echo_data(strtoupper($sc_case_type[0]->casename)); ?> </p>
                                                                   </div>
                                                                </div>
                                                             </div>
                                                          </div>
                                                          <div class="row">
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
+                                                               <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-6 text-right"
-                                                                     for="filing_no"><b>Subject Category :</b>  <?php
+                                                                     class="control-label col-md-2 text-right"
+                                                                     for="filing_no"><b>Subject Category :</b> 
+                                                                  </label>
+                                                                  <div class="col-10">
+                                                                     <p> 
+                                                                     <?php
                                                                      isset($main_subject_cat[0]->sub_name1) ? echo_data(strtoupper($main_subject_cat[0]->sub_name1)) :'';
                                                                      isset($sub_subject_cat[0]->sub_name4) ? echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '') : '';
                                                                      ?>
-                                                                  </label>
-                                                                  <div class="col-md-8">
-                                                                     <p> <?php
+                                                                        <?php
                                                                         // echo_data(strtoupper($main_subject_cat[0]->sub_name1));
                                                                         // echo_data(!empty($sub_subject_cat[0]->sub_name4) ? '(' . $sub_subject_cat[0]->sub_name4 . ')' : '');
                                                                         ?> </p>
@@ -200,9 +206,9 @@
                                                             <?php
                                                                if (isset($diary) && !empty($diary)) {
                                                                    echo '<div class="col-md-6">
-                                                                       <div class="form-group">
-                                                                           <label class="control-label col-md-4 text-right" for="diary_no">Diary No. : </label>
-                                                                           <div class="col-md-8">
+                                                                       <div class="form-group row">
+                                                                           <label class="control-label col-2 text-right" for="diary_no"><b> Diary No. : </b></label>
+                                                                           <div class="col-10">
                                                                                <p>' . $diary . '</p>
                                                                            </div>
                                                                        </div>
@@ -214,9 +220,10 @@
                                                                        $vakalat_advocate = '<p><b>Transfered to : </b>' . $vakalat_filedByData . '</p><p>' . $vakalat_filedByData_contact_emailid . '</p>';
                                                                    }
                                                                    $filed = '<div class="col-md-6">
-                                                                       <div class="form-group">
-                                                                           <label class="control-label col-md-4 text-right" for="filed_by"><b> Filed By:</b> ' . $filedByData . ' '.$filedByData_contact_emailid.' '.$vakalat_advocate.' </label>
-                                                                           <div class="col-md-8">
+                                                                       <div class="form-group row">
+                                                                           <label class="control-label col-2 text-right" for="filed_by"><b> Filed By:</b> </label>
+                                                                           <div class="col-10">
+                                                                              <p> ' . $filedByData . ' '.$filedByData_contact_emailid.' '.$vakalat_advocate.' </p>
                                                                            </div>
                                                                        </div>
                                                                    </div>';
@@ -224,46 +231,56 @@
                                                                }
                                                                ?>
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
-                                                                  <labe class="control-label col-md-4 text-right" for="filing_no">
-                                                                  <b>No. of Petitioner : </b><?= isset($new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?>
+                                                               <div class="form-group row">
+                                                                  <label class="control-label col-2 pe-0 text-right" for="filing_no">
+                                                                     <b>No. of Petitioner :</b>
                                                                   </label>
-                                                                  <div class="col-md-8">
-                                                                     <p><?php //isset(new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?></p>
+                                                                  <div class="col-10">
+                                                                     <p>
+                                                                        <?= isset($new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?>
+                                                                        <?php //isset(new_case_details[0]->no_of_petitioners) ? echo_data($new_case_details[0]->no_of_petitioners): '' ; ?>
+                                                                     </p>
                                                                   </div>
                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
+                                                               <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-4 text-right"
+                                                                     class="control-label col-2 pe-0 text-right"
                                                                      for="filing_no"><b> No. of
-                                                                  Respondent :</b> <?= isset($new_case_details[0]->no_of_respondents) ? echo_data($new_case_details[0]->no_of_respondents): '' ;?>
+                                                                  Respondent :</b> 
                                                                   </label>
-                                                                  <div class="col-md-8">
-                                                                     <p><?php // echo_data($new_case_details[0]->no_of_respondents); ?></p>
+                                                                  <div class="col-10">
+                                                                     <p>
+                                                                     <?= isset($new_case_details[0]->no_of_respondents) ? echo_data($new_case_details[0]->no_of_respondents): '' ;?>
+                                                                        <?php // echo_data($new_case_details[0]->no_of_respondents); ?>
+                                                                     </p>
                                                                   </div>
                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
+                                                               <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-4 text-right"
-                                                                     for="filing_no"><b>IF SCLSC :</b> <?= !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?>
+                                                                     class="control-label col-2 text-right"
+                                                                     for="filing_no"><b>IF SCLSC :</b> 
                                                                   </label>
-                                                                  <div class="col-md-8">
-                                                                     <p><?php // echo !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?></p>
+                                                                  <div class="col-10">
+                                                                     <p>
+                                                                        <?= !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?>
+                                                                        <?php // echo !empty($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1 ? 'Yes' : 'No'; ?>
+                                                                     </p>
                                                                   </div>
                                                                </div>
                                                             </div>
                                                             <div class="col-md-6">
-                                                               <div class="form-group">
+                                                               <div class="form-group row">
                                                                   <label
-                                                                     class="control-label col-md-4 text-right"
+                                                                     class="control-label col-2 text-right"
                                                                      for="filing_no"><b>Special
-                                                                  Category :</b> <?= !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?>
+                                                                  Category :</b> 
                                                                   </label>
-                                                                  <div class="col-md-8">
+                                                                  <div class="col-10">
+                                                                     <?= !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?>
                                                                      <p><?php // echo !empty($new_case_details[0]->category_name) ? $new_case_details[0]->category_name : 'None'; ?></p>
                                                                   </div>
                                                                </div>
@@ -279,7 +296,7 @@
                                                       <?php
                                                          if(isset($hidepencilbtn)){
                                                              if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>
@@ -296,16 +313,17 @@
                                                       <font style="color:red;"> <b>Petitioner</b>
                                                       </font>
                                                       <?php } else { ?><b>Petitioner</b><?php } ?>
+                                                         <a href="<?php echo base_url('newcase/petitioner'); ?>">
+                                                            <i class="fa fa-pencil efiling_search"></i>
+                                                         </a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/petitioner'); ?>"><i
-                                                         style="color:black; padding-top: 20px !important;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                      
+                                                   </div> -->
                                                    <?php }  }?>
                                                 </div>
                                                 <div id="collapseTwo"
@@ -323,7 +341,7 @@
                                                       <?php
                                                          if(isset($hidepencilbtn)){
                                                              if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>
@@ -340,16 +358,16 @@
                                                       <b>Respondent</b>
                                                       </font><?php } else { ?>
                                                       <b>Respondent</b><?php } ?>
+                                                      <a href="<?php echo base_url('newcase/respondent'); ?>"><i
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if(isset($hidepencilbtn)){
                                                       if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/respondent'); ?>"><i
-                                                         style="color:black; padding-top:20px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                      
+                                                   </div> -->
                                                    <?php } } ?>
                                                 </div>
                                                 <div id="collapseThree"
@@ -367,7 +385,7 @@
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>"
@@ -384,16 +402,16 @@
                                                       <b>Extra Party</b>
                                                       </font><?php } else { ?>
                                                       <b>Extra Party</b><?php } ?>
+                                                      <a href="<?php echo base_url('newcase/extra_party'); ?>"><i
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if(isset($hidepencilbtn)){
                                                       if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/extra_party'); ?>"><i
-                                                         style="color:black; padding-top:20px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                      
+                                                   </div> -->
                                                    <?php } } ?>
                                                 </div>
                                                 <div id="collapseFour"
@@ -411,7 +429,7 @@
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>"
@@ -429,17 +447,18 @@
                                                       </font>
                                                       <?php } else { ?> <b>Legal
                                                       Representative</b><?php } ?>
+                                                      <a href="<?php echo base_url('newcase/lr_party'); ?>"><i
+                                                         style="color:black; padding-top:20px;"
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if(isset($hidepencilbtn)){
                                                       
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/lr_party'); ?>"><i
-                                                         style="color:black; padding-top:20px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                      
+                                                   </div> -->
                                                    <?php }
                                                       } ?>
                                                 </div>
@@ -458,7 +477,7 @@
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>"
@@ -474,15 +493,16 @@
                                                       <b>Act-Section</b>
                                                       </font><?php } else { ?>
                                                       <b>Act-Section</b><?php } ?>
+                                                      <a href="<?php echo base_url('newcase/actSections'); ?>"><i
+                                                       
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/actSections'); ?>"><i
-                                                         style="color:black; padding-top:20px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                     
+                                                   </div> -->
                                                    <?php } ?>
                                                 </div>
                                                 <div id="collapseSix"
@@ -499,7 +519,7 @@
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>"
@@ -516,15 +536,16 @@
                                                       <b>Earlier Courts</b>
                                                       </font><?php } else { ?>
                                                       <b>Earlier Courts</b><?php } ?>
+                                                      <a href="<?php echo base_url('newcase/subordinate_court'); ?>"><i
+                                                       
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/subordinate_court'); ?>"><i
-                                                         style="color:black; padding-top:20px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                     
+                                                   </div> -->
                                                    <?php } ?>
                                                 </div>
                                                 <div id="collapseSeven"
@@ -542,7 +563,7 @@
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>"
@@ -558,15 +579,15 @@
                                                       <b>Index</b>
                                                       </font><?php } else { ?>
                                                       <b>Index</b><?php } ?>
+                                                      <a href="<?php echo base_url('documentIndex'); ?>"><i
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('documentIndex'); ?>"><i
-                                                         style="color:black; padding-top:20px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                      
+                                                   </div> -->
                                                    <?php } ?>
                                                 </div>
                                                 <div id="collapseEight"
@@ -583,7 +604,7 @@
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
                                                           if ($hidepencilbtn != 'true') { ?>
-                                                      col-sm-11
+                                                      col-sm-12
                                                       <?php } else { ?>
                                                       col-sm-12
                                                       <?php } } ?>"
@@ -602,15 +623,16 @@
                                                       <b>Court Fee</b>
                                                       </font><?php } else { ?>
                                                       <b>Court Fee</b><?php } ?>
+                                                      <a href="<?php echo base_url('newcase/courtFee'); ?>"><i
+                                                        
+                                                         class="fa fa-pencil efiling_search"></i></a>
                                                       </button>
                                                    </h2>
                                                    <?php
                                                       if ($hidepencilbtn != 'true') { ?>
-                                                   <div class="col-sm-1">
-                                                      <a href="<?php echo base_url('newcase/courtFee'); ?>"><i
-                                                         style="color:black; padding-top:10px;"
-                                                         class="fa fa-pencil efiling_search"></i></a>
-                                                   </div>
+                                                   <!-- <div class="col-sm-1">
+                                                     
+                                                   </div> -->
                                                    <?php } ?>
                                                 </div>
                                                 <div id="collapseNine"

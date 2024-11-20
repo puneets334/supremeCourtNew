@@ -8,7 +8,7 @@ $segment = service('uri');
 <div class="panel panel-default">
     <div class="panel-body">        
         <div class="col-md-12 col-sm-12 col-xs-12">             
-            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+            <table id="datatable-responsive" class="table table-striped custom-table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr class="success">
                         <th>#</th>

@@ -200,3 +200,10 @@
 .black-theme .datepicker table tr td span.focused, .black-theme .datepicker table tr td span:hover{color:#ff0!important;background:#555;}
 .black-theme .alert-danger{background:#000;border-color:#ffff0080;}
 .black-theme .scif{color: #fff;}
+
+/* 19-11-24 start  */
+.black-theme form .col-lg-4 .mb-3 span.input-group-addon {background: #000 !important;border-left-color: #ffffff4d !important;}
+.black-theme form .col-lg-4 .mb-3 span.input-group-addon a.pin-code-loc {color: #ff0;}
+.black-theme .accordion-button:not(.collapsed) , .black-theme .accordion-button:hover{background: #555555 !important;
+    color: #ff0;}
+/* 19-11-24 End  */

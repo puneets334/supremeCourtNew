@@ -630,7 +630,7 @@ td {
                                                 <div class="table-sec ">
                                                     <div class="table-responsive ">
                                                         <table id="datatable-responsive-sc_cases"
-                                                            class="table table-striped custom-table">
+                                                            class="table table-striped custom-table  soon-listing-table">
                                                             <thead>
                                                                 <tr class="uk-text-bold">
                                                                     <th class="uk-text-bold" tabindex="0">Case</th>
