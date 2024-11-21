@@ -209,10 +209,10 @@
                                             <?php
                                        // }
                                          if ($re->account_status == 1 || $re->account_status == 0) { ?>
-                                           <td width="10%" data-key="<?php echo htmlentities($data_key[4]); ?>">  <a class="form-control btn-primary link_button" href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . New_Filing_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities('Action', ENT_QUOTES) ?></a></td>
+                                           <td width="10%" data-key="<?php echo htmlentities($data_key[4]); ?>">  <a class="quick-btn" href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . New_Filing_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities('Action', ENT_QUOTES) ?></a></td>
                                         <?php } else {
                                             ?>
-                                            <td width="10%" data-key="<?php echo htmlentities($data_key[4]);?>"> <input type="submit"  class="form-control btn-primary link_button" Value="Action" onclick="advocateRegister()"/> </td>
+                                            <td width="10%" data-key="<?php echo htmlentities($data_key[4]);?>"> <input type="submit"  class="quick-btn" Value="Action" onclick="advocateRegister()"/> </td>
                                             <?php
                                        }
                                         }else{

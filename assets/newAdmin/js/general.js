@@ -232,12 +232,16 @@ function adjustIframeHeight(iframe) {
 document.querySelectorAll('.iframe-scroll-bar').forEach(iframe => {
   iframe.addEventListener('load', () => {
     adjustIframeHeight(iframe);
+    iframe.contentWindow.addEventListener('resize', () => {
+      adjustIframeHeight(iframe);
+    });
 
     const observer = new MutationObserver(() => {
       adjustIframeHeight(iframe);
     });
 
-    observer.observe(iframe.contentWindow.document.body, { childList: true, subtree: true });
+    observer.observe(iframe.contentWindow.document.body, { childList: true, subtree: true,attributes: true,
+      characterData: true });
   });
 });
 

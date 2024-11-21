@@ -6744,7 +6744,7 @@ p.comnt-name {
 .custom-table tbody td {
     font-size: 14px;
     padding: 13px 7px !important;
-    line-height: 14px;
+    line-height: 20px;
     border: 0 !important;
     font-weight: 400 !important;
 }
@@ -8634,5 +8634,16 @@ form .col-lg-4 .mb-3 .input-note-pos {position: absolute;}
     background: #0d48be;
 }
 /* 20-11-24 End  */
+
+/* 21-11-24 Start  */
+form span.fa.fa-calendar-o.form-control-feedback.left {position: absolute;right: 50px;bottom: 15px;}
+.form-with-tooltip .col-lg-4 .mb-3 {position: relative;}
+.form-with-tooltip .col-lg-4 .mb-3 span.input-group-addon {border-left: 1px solid #e1e1e1!important;padding: 10px 10px;border-radius: 0 15px 15px 0;position: absolute;height: 38px;right: -1px;bottom: 0;display: flex;align-items: center;background: #f1f1f1;margin: 1px 2px 1px 0;}
+.form-with-tooltip .icon-input span.fa {right: 8%;}
+.form-with-tooltip .cus-form-ctrl {padding-right: 40px !important;}
+.form-with-tooltip .col-lg-4 .mb-3 span.input-group-addon a.pin-code-loc {margin-left: 5px;}
+.form-with-tooltip  .col-lg-4 .mb-3 .input-note-pos {position: absolute;}
+/* 21-11-24 End  */
+
 .title-comnt-bref.doc-byme-tble {width: 530px !important;}
 .title-comnt-bref.doc-byme-tble .table-height-div {height: auto !important;max-height: 350px;}

@@ -131,7 +131,7 @@
                                     $cause_title = str_replace('VS.', '<b>Vs.</b>', $cause_title);
 
                                     if ($re->sc_diary_num != '') {
-                                            $dairy_no = '<b>Diary No.</b> : ' . escape_data($re->sc_diary_num).'/'.escape_data($re->sc_diary_year).  '<br/> ';
+                                            $dairy_no = '<b>Diary NoEE.</b> : ' . escape_data($re->sc_diary_num).'/'.escape_data($re->sc_diary_year).  '<br/> ';
                                         } else {
                                             $dairy_no = '';
                                         }

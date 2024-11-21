@@ -195,7 +195,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                         </a> -->
                     </div>
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="accordion"
+                        <div class="accordion view-accordion acrdion-with-edit"
                             id="accordionExample">
                             <div class="accordion-item custom-table">
                                 <h2 class="accordion-header"
@@ -216,46 +216,46 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                     <div class="accordion-body">
                                         <div class="x_panel">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="form-group row">
                                                         <label
-                                                            class="control-label col-md-4 text-right"
-                                                            for="filing_no">eFiling For :
+                                                            class="control-label col-4 text-right"
+                                                            for="filing_no"><b> eFiling For :</b>
                                                         </label>
-                                                        <div class="col-md-8">
+                                                        <div class="col-8">
                                                             <p> <?php echo 'Caveat'; ?> </p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="form-group row">
                                                         <label
-                                                            class="control-label col-md-4 text-right"
-                                                            for="filing_no">eFiling No :
+                                                            class="control-label col-4 text-right"
+                                                            for="filing_no"><b>eFiling No :</b>
                                                         </label>
-                                                        <div class="col-md-8">
+                                                        <div class="col-8">
                                                             <p> <?php echo htmlentities(efile_preview($_SESSION['efiling_details']['efiling_no']), ENT_QUOTES); ?> </p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="form-group row">
                                                         <label
-                                                            class="control-label col-md-4 text-right"
-                                                            for="filing_no">Caveator :
+                                                            class="control-label col-4 text-right"
+                                                            for="filing_no"><b>Caveator :</b>
                                                         </label>
-                                                        <div class="col-md-8">
+                                                        <div class="col-8">
                                                             <p>  <?php echo htmlentities($caveator_name, ENT_QUOTES); ?> </p>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
+                                                <div class="col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="form-group row">
                                                         <label
-                                                            class="control-label col-md-4 text-right"
-                                                            for="filing_no">Caveatee :
+                                                            class="control-label col-4 text-right"
+                                                            for="filing_no"><b>Caveatee :</b>
                                                         </label>
-                                                        <div class="col-md-8">
+                                                        <div class="col-8">
                                                             <p>  <?php echo htmlentities($caveatee_name, ENT_QUOTES); ?> </p>
                                                         </div>
                                                     </div>
@@ -271,13 +271,13 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                         $aor_code = !empty($filedByData['aor_code']) ? $filedByData['aor_code'] : '';
                                                         $filedBy = $name . ' (AOR- ' . $aor_code . ')';
                                                     }
-                                                    echo '<div class="col-md-6">
-                                                    <div class="form-group">
+                                                    echo '<div class="col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="form-group row">
                                                         <label
-                                                            class="control-label col-md-4 text-right"
-                                                            for="filing_no">Filied By.:
+                                                            class="control-label col-4 text-right"
+                                                            for="filing_no"><b>Filied By.:</b>
                                                         </label>
-                                                        <div class="col-md-8">
+                                                        <div class="col-8">
                                                             <p>'.$filedBy.'</p>
                                                         </div>
                                                     </div>
@@ -286,13 +286,13 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 
                                                 if(isset($caveat_no) && !empty($caveat_no))
                                                 {
-                                                    echo '<div class="col-md-6">
-                                                    <div class="form-group">
+                                                    echo '<div class="col-sm-12 col-md-4 col-lg-4">
+                                                    <div class="form-group row">
                                                         <label
-                                                            class="control-label col-md-4 text-right"
-                                                            for="filing_no">Caveat No.:
+                                                            class="control-label col-4 text-right"
+                                                            for="filing_no"><b>Caveat No.:</b>
                                                         </label>
-                                                        <div class="col-md-8">
+                                                        <div class="col-8">
                                                             <p>'.$caveat_no.'</p>
                                                         </div>
                                                     </div>
@@ -312,7 +312,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             </div>
                             <div class="accordion-item custom-table">
                                 <div class="row">
-                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
+                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" 
                                         id="headingTwo">
                                         <button class="accordion-button collapsed"
                                             type="button"
@@ -325,16 +325,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 <b>Caveator</b>
                                             </font><?php } else{?>
                                             <b>Caveator</b><?php }?>
+                                            <?php
+                                if($hidepencilbtn!='true'){ ?>
+                                    <!-- <div class="col-sm-1"> -->
+                                        <a href="<?php echo base_url('caveat/subordinate_court'); ?>"><i
+                                                class="fa fa-pencil efiling_search"></i></a>
+                                    <!-- </div> -->
+                                    <?php } ?>
                                         </button>
                                     </h2>
-                                    <?php
-                                if($hidepencilbtn!='true'){ ?>
-                                    <div class="col-sm-1">
-                                        <a href="<?php echo base_url('caveat/subordinate_court'); ?>"><i
-                                                style="color:black; padding-top:20px;"
-                                                class="fa fa-pencil efiling_search"></i></a>
-                                    </div>
-                                    <?php } ?>
+                                    
                                 </div>
                                 <div id="collapseTwo"
                                     class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -347,7 +347,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             </div>
                             <div class="accordion-item custom-table">
                                 <div class="row">
-                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
+                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" 
                                         id="headingThree">
                                         <button class="accordion-button collapsed"
                                             type="button"
@@ -360,16 +360,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                             <font style="color:red;"> <b>Caveatee</b>
                                             </font>
                                             <?php } else{?><b>Caveatee</b><?php }?>
+                                            <?php
+                                if($hidepencilbtn!='true'){ ?>
+                                    <!-- <div class="col-sm-1"> -->
+                                        <a href="<?php echo base_url('caveat/caveatee'); ?>"><i 
+                                                class="fa fa-pencil efiling_search"></i></a>
+                                    <!-- </div> -->
+                                    <?php } ?>
                                         </button>
                                     </h2>
-                                    <?php
-                                if($hidepencilbtn!='true'){ ?>
-                                    <div class="col-sm-1">
-                                        <a href="<?php echo base_url('caveat/caveatee'); ?>"><i
-                                                style="color:black; padding-top: 20px !important;"
-                                                class="fa fa-pencil efiling_search"></i></a>
-                                    </div>
-                                    <?php } ?>
+                                    
                                 </div>
                                 <div id="collapseThree"
                                     class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -382,7 +382,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             </div>
                             <div class="accordion-item custom-table">
                                 <div class="row">
-                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
+                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" 
                                         id="headingFour">
                                         <button class="accordion-button collapsed"
                                             type="button"
@@ -395,16 +395,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 <b>Extra Parties</b>
                                             </font><?php } else{?>
                                             <b>Extra Parties</b><?php }?>
+                                            <?php
+                                if($hidepencilbtn!='true'){ ?>
+                                    <!-- <div class="col-sm-1"> -->
+                                        <a href="<?php echo base_url('caveat/subordinate_court'); ?>"><i 
+                                                class="fa fa-pencil efiling_search"></i></a>
+                                    <!-- </div> -->
+                                    <?php } ?>
                                         </button>
                                     </h2>
-                                    <?php
-                                if($hidepencilbtn!='true'){ ?>
-                                    <div class="col-sm-1">
-                                        <a href="<?php echo base_url('caveat/subordinate_court'); ?>"><i
-                                                style="color:black; padding-top:20px;"
-                                                class="fa fa-pencil efiling_search"></i></a>
-                                    </div>
-                                    <?php } ?>
+                                    
                                 </div>
                                 <div id="collapseFour"
                                     class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -417,7 +417,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             </div>
                             <div class="accordion-item custom-table">
                                 <div class="row">
-                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
+                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" 
                                         id="headingFive">
                                         <button class="accordion-button collapsed"
                                             type="button"
@@ -431,16 +431,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 <b>Subordinate Court Details</b>
                                             </font><?php } else{?>
                                             <b>Subordinate Court Details</b><?php }?>
+                                            <?php
+                                if($hidepencilbtn!='true'){ ?>
+                                    <!-- <div class="col-sm-1"> -->
+                                        <a href="<?php echo base_url('caveat/subordinate_court'); ?>"><i 
+                                                class="fa fa-pencil efiling_search"></i></a>
+                                    <!-- </div> -->
+                                    <?php } ?>
                                         </button>
                                     </h2>
-                                    <?php
-                                if($hidepencilbtn!='true'){ ?>
-                                    <div class="col-sm-1">
-                                        <a href="<?php echo base_url('caveat/subordinate_court'); ?>"><i
-                                                style="color:black; padding-top:20px;"
-                                                class="fa fa-pencil efiling_search"></i></a>
-                                    </div>
-                                    <?php } ?>
+                                   
                                 </div>
                                 <div id="collapseFive"
                                     class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -454,7 +454,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
 
                             <div class="accordion-item custom-table">
                                 <div class="row">
-                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
+                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" 
                                         id="headingSix">
                                         <button class="accordion-button collapsed"
                                             type="button"
@@ -467,16 +467,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 <b>Documents</b>
                                             </font><?php } else{?>
                                             <b>Documents</b><?php }?>
+                                            <?php
+                                if($hidepencilbtn!='true'){ ?>
+                                    <!-- <div class="col-sm-1"> -->
+                                        <a href="<?php echo base_url('uploadDocuments'); ?>"><i 
+                                                class="fa fa-pencil efiling_search"></i></a>
+                                    <!-- </div> -->
+                                    <?php } ?>
                                         </button>
                                     </h2>
-                                    <?php
-                                if($hidepencilbtn!='true'){ ?>
-                                    <div class="col-sm-1">
-                                        <a href="<?php echo base_url('uploadDocuments'); ?>"><i
-                                                style="color:black; padding-top:20px;"
-                                                class="fa fa-pencil efiling_search"></i></a>
-                                    </div>
-                                    <?php } ?>
+                                    
                                 </div>
                                 <div id="collapseSix"
                                     class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -490,7 +490,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             
                             <div class="accordion-item custom-table">
                                 <div class="row">
-                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" 
+                                    <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" 
                                         id="headingNine">
                                         <button class="accordion-button collapsed"
                                             type="button"
@@ -506,16 +506,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                 <b>Court Fee</b>
                                             </font><?php } else{?>
                                             <b>Court Fee</b><?php }?>
+                                            <?php
+                                if($hidepencilbtn!='true'){ ?>
+                                    <!-- <div class="col-sm-1"> -->
+                                        <a href="<?php echo base_url('newcase/courtFee'); ?>"><i 
+                                                class="fa fa-pencil efiling_search"></i></a>
+                                    <!-- </div> -->
+                                    <?php } ?>
                                         </button>
                                     </h2>
-                                    <?php
-                                if($hidepencilbtn!='true'){ ?>
-                                    <div class="col-sm-1">
-                                        <a href="<?php echo base_url('newcase/courtFee'); ?>"><i
-                                                style="color:black; padding-top:10px;"
-                                                class="fa fa-pencil efiling_search"></i></a>
-                                    </div>
-                                    <?php } ?>
+                                    
                                 </div>
                                 <div id="collapseNine"
                                     class="accordion-collapse collapse <?php echo $collapse_class; ?>"
