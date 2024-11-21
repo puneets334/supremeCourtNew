@@ -441,6 +441,7 @@ $routes->match(['GET', 'POST'], 'newcase/AutoDiaryGeneration/updateRefiledCase',
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/registerDoc', 'Admin\EfilingAction::registerDoc');
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/noaction', 'Admin\EfilingAction::noaction');
 $routes->match(['GET', 'POST'], 'admin/efilingAction/disposed', 'Admin\EfilingAction::disposed');
+$routes->match(['GET', 'POST'], 'admin/EfilingAction/updateDocumentNumber', 'Admin\EfilingAction::updateDocumentNumber');
 
 
 

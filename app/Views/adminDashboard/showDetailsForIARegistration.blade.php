@@ -36,11 +36,11 @@
 
 
     <?php
-    if($details['details'][0]['board_type']=='C')
+    if(isset($details['details'][0]['board_type']) && $details['details'][0]['board_type']=='C')
         $board='Honble Chamber Court';
-    elseif($details['details'][0]['board_type']=='J')
+    elseif(isset($details['details'][0]['board_type']) && $details['details'][0]['board_type']=='J')
         $board='Honble Court';
-    elseif($details['details'][0]['board_type']=='R')
+    elseif(isset($details['details'][0]['board_type']) && $details['details'][0]['board_type']=='R')
         $board='Ld. Registrar Court';
     ?>
     <div class="title-sec">
