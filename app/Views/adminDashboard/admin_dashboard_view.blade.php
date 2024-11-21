@@ -149,6 +149,15 @@
 							</div>
 						</div>
 					</div>
+						<?php
+						if (!empty(getSessionData('MSG'))) {
+							echo getSessionData('MSG');
+						}
+						if (!empty(getSessionData('msg'))) {
+							echo getSessionData('msg');
+						}
+						$session = session();
+						?>
 					<?php $users_array = array(USER_ADMIN);
 					  if (in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) { ?>
 						<div class="row" style="display: none;">

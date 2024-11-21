@@ -49,6 +49,23 @@ class EfilingAction extends BaseController {
 
         $regid = getSessionData('efiling_details')['registration_id'];
         $filing_type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
+        
+        if ($filing_type == E_FILING_TYPE_NEW_CASE) {
+            $redirectURL = 'newcase/view';
+        }elseif ($filing_type == E_FILING_TYPE_JAIL_PETITION) {
+            $redirectURL = 'jailPetition/view';
+        }  elseif ($filing_type == E_FILING_TYPE_MISC_DOCS) {
+            $redirectURL = 'miscellaneous_docs/view';
+        } elseif ($filing_type == E_FILING_TYPE_DEFICIT_COURT_FEE) {
+            $redirectURL = 'Deficit_court_fee/view';
+        } elseif ($filing_type == E_FILING_TYPE_IA) {
+            $redirectURL = 'IA/view';
+        } elseif ($filing_type == E_FILING_TYPE_CAVEAT) {
+            $redirectURL = 'caveat/view';
+        } else {
+            $redirectURL = 'adminDashboard';
+        }
+       
         $data = $this->Efiling_action_model->approve_case($regid, $filing_type);
 
         if ($data) {
@@ -75,21 +92,7 @@ class EfilingAction extends BaseController {
         } else {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Approval Failded. Please try again!</div>');
             log_message('alert', "Approval Failded. Please try again!");
-            if ($filing_type == E_FILING_TYPE_NEW_CASE) {
-                $redirectURL = 'newcase/view';
-            }elseif ($filing_type == E_FILING_TYPE_JAIL_PETITION) {
-                $redirectURL = 'jailPetition/view';
-            }  elseif ($filing_type == E_FILING_TYPE_MISC_DOCS) {
-                $redirectURL = 'miscellaneous_docs/view';
-            } elseif ($filing_type == E_FILING_TYPE_DEFICIT_COURT_FEE) {
-                $redirectURL = 'Deficit_court_fee/view';
-            } elseif ($filing_type == E_FILING_TYPE_IA) {
-                $redirectURL = 'IA/view';
-            } elseif ($filing_type == E_FILING_TYPE_CAVEAT) {
-                $redirectURL = 'caveat/view';
-            } else {
-                $redirectURL = 'adminDashboard';
-            }
+            
             // exit(0);
             return redirect($redirectURL);
         }
@@ -600,11 +603,11 @@ class EfilingAction extends BaseController {
                    $this->Common_model->changeIaMiscDocStage($registration_id,$stage_id);
                 }
                 // log_message('CUSTOM', "Doc No.".$doc_number." has been updated successfully!");
-                echo json_encode(array('status'=>'SUCCESS','message'=>'Doc No.'.$doc_number.' has been updated successfully!'));
+                return json_encode(array('status'=>'SUCCESS','message'=>'Doc No.'.$doc_number.' has been updated successfully!'));
                 exit(0);
             }
             else{
-                echo json_encode(array('status'=>'ERROR','message'=>'Something went wrong,Pleaes try again later'));
+                return json_encode(array('status'=>'ERROR','message'=>'Something went wrong,Pleaes try again later'));
                 exit(0);
             }
         }

@@ -145,8 +145,8 @@
                                                                             <tr>
                                                                                 <td width="10%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
                                                                                 <td width="30%"><?php echo htmlentities($stage_name, ENT_QUOTES); ?></td>
-                                                                                <td width="30%"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime($activate_from_result)), ENT_QUOTES); ?></td>
-                                                                                <td width="30%"><?php if ($stg['deactivated_on'] != '') echo htmlentities(date('d-m-Y h:i:s A', strtotime($stg['deactivated_on'])), ENT_QUOTES); ?></td>
+                                                                                <td width="30%"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($activate_from_result))), ENT_QUOTES); ?></td>
+                                                                                <td width="30%"><?php if ($stg['deactivated_on'] != '') echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($stg['deactivated_on']))), ENT_QUOTES); ?></td>
                                                                             </tr>
                                                                         <?php } ?>
                                                                     </tbody>
@@ -238,11 +238,11 @@
                                                                             $i = 1;
                                                                             foreach ($remark as $re) {
                                                                                 $msg = $re->defect_remark;
-                                                                                $cure_date = ($re->defect_cured_date != NULL) ? date("d-m-Y h:i:s A", strtotime($re->defect_cured_date)) : NULL;
+                                                                                $cure_date = ($re->defect_cured_date != NULL) ? date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->defect_cured_date))) : NULL;
                                                                                 ?>
                                                                                 <tr>
                                                                                     <td width="5%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                                    <td width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime($re->defect_date)), ENT_QUOTES); ?> </td>
+                                                                                    <td width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->defect_date))), ENT_QUOTES); ?> </td>
                                                                                     <td><?php echo script_remove($msg); ?></td>
                                                                                     <td width="15%"><?php echo htmlentities($cure_date); ?> </td>
                                                                                 </tr>
@@ -281,7 +281,7 @@
                                                                                 <tr>
                                                                                     <td width="5%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
                                                                                     <td width="25%"><?php echo htmlentities(strtoupper($result->admin_name), ENT_QUOTES); ?> </td>
-                                                                                    <td width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime($result->allocated_on)), ENT_QUOTES); ?> </td>
+                                                                                    <td width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($result->allocated_on))), ENT_QUOTES); ?> </td>
                                                                                     <td><?php echo htmlentities($result->reason_to_allocate, ENT_QUOTES); ?> </td>
                                                                                     <td width="15%"><?php echo htmlentities($result->update_ip, ENT_QUOTES); ?> </td>
 
