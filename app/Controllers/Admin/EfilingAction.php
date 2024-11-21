@@ -527,8 +527,8 @@ class EfilingAction extends BaseController {
             'no_of_copy'=>$efiling_data[0]['no_of_copies'],
             'filedby'=>$efiling_data[0]['first_name'].' '.$efiling_data[0]['last_name'],
             'remarks'=>$remarks,
-            'court_fee'=>!empty($docFeeDetails[0]['user_declared_court_fee']) ? $docFeeDetails[0]['user_declared_court_fee'] : 0,
-            'printing_fee'=>!empty($docFeeDetails[0]['printing_total']) ? $docFeeDetails[0]['printing_total'] : 0,
+            'court_fee'=>(isset($docFeeDetails[0]['user_declared_court_fee']) && !empty($docFeeDetails[0]['user_declared_court_fee'])) ? $docFeeDetails[0]['user_declared_court_fee'] : 0,
+            'printing_fee'=>(isset($docFeeDetails[0]['printing_total']) && !empty($docFeeDetails[0]['printing_total'])) ? $docFeeDetails[0]['printing_total'] : 0,
         );
         $doc_details_data=json_encode($doc_details_data);
                 // $key=$this->config->item( 'encryption_key' );
