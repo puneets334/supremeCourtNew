@@ -31,6 +31,9 @@
     .datepicker-days {
         background-color: #ffffff;
     }
+    .datepicker-dropdown {
+        background-color: #ffffff;
+    }
 </style>
 <div id="loader-wrapper" style="display: none;">
     <div id="loader"></div>
@@ -144,7 +147,9 @@
                             </div>
                         </div>
                         <div class="row" id="supreme_court_info" style="display: block;">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12">
+                            <div class="row">
+                            <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for=""
                                         class="form-label">Case Type <span style="color: red"
@@ -159,14 +164,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-8 col-md-8 col-lg-8">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Case No. And Year<span style="color: red" class="astriks">*</span></label>
                                     <div class="row">
-                                        <div class="col-9">
+                                        <div class="col-6">
                                             <input id="sci_case_number" name="sci_case_number" tabindex='5' maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl age_calculate caseno" type="text">
                                         </div>
-                                        <div class="col-3">
+                                        <div class="col-6">
                                             <select tabindex='6' class="form-control cus-form-ctrl filter_select_dropdown col-4" id="sci_case_year" name="sci_case_year">
                                                 <option value="">Year</option>
                                                 <?php
@@ -189,6 +194,8 @@
                                     </div>
                                 </div>
 
+                            </div>
+                            </div>
                             </div>
                         </div>
                         <div class="row"
@@ -213,7 +220,7 @@
                                         data-content="Please enter CNR ">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
-                                    <div class="col-sm-12 col-xs-12">
+                                    <div class="col-sm-12 col-xs-12 input-note-pos">
                                         <strong style="color: red;font-size:14px;"><b>Kindly
                                                 search lower case details using CNR
                                                 preferably for swift data
@@ -349,7 +356,7 @@
                                         data-content="Please enter CNR ">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
-                                    <div class="col-sm-12 col-xs-12">
+                                    <div class="col-sm-12 col-xs-12 input-note-pos">
                                         <strong style="color: red;font-size:14px;"><b>Kindly
                                                 search lower case details using CNR
                                                 preferably for swift data
@@ -839,7 +846,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                
 
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <div class="save-btns text-center">
@@ -858,6 +865,7 @@
                         }
                         ?>
                     </div>
+                </div>
                 </div>
                 <?php echo form_close(); ?>
             </div>
@@ -1204,12 +1212,13 @@
                     $('#search_button_div').show();
                     var resArr = data.split('@@@');
                     if (resArr[0] == 1) {
-                        $('#msg').show();
+                        alert(resArr[1]);
+                        /*$('#msg').show();
                         $(".form-response").html(
                             "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
                             resArr[1] +
                             "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
-                        );
+                        );*/
                         setTimeout(function() {
                             $(".form-response").hide();
                         }, 2000);
@@ -1220,12 +1229,13 @@
                         $("#order_dates_list").html(resArr[3]);
                         $('#show_button').hide();
                     } else if (resArr[0] == 3) {
-                        $('#msg').show();
+                        alert(resArr[1]);
+                        /*$('#msg').show();
                         $(".form-response").html(
                             "<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " +
                             resArr[1] +
                             "  <span class='close' onclick=hideMessageDiv()>X</span></p>"
-                        );
+                        );*/
                     }
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

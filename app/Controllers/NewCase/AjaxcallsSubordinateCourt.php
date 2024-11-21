@@ -336,7 +336,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                     if (!empty($establishment_id) && !empty($case_type_id) && !empty($case_number) && !empty($case_year) && !empty(E_FILING_FOR_ESTABLISHMENT)) {
                         $case_result = $this->efiling_webservices->getOpenAPIcaseHistoryWebService($establishment_id, $case_type_id, $case_number, $case_year);
                         if (isset($case_result[0]) && !empty($case_result[0])) {
-                            $cino = $case_result[0]->casenos->case1->cino;
+                            $cino = isset($case_result[0]->casenos) ? $case_result[0]->casenos->case1->cino : '';
                         }
                         else {
                             echo '1@@@' . htmlentities('Case data not found !', ENT_QUOTES);
@@ -542,7 +542,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
         echo '2@@@<div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_content">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                        <table id="datatable-responsive" class="table table-striped custom-table table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
                                     <th>#</th>

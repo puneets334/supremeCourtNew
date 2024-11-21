@@ -129,10 +129,6 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-question-circle-o" data-placement="bottom" data-toggle="popover" data-content="Title should be in numeric (Only Number are allowed)."></i>
                                                     </span>
-                                                    {{-- <input type="text"
-                                                        class="form-control cus-form-ctrl"
-                                                        id=""
-                                                        placeholder=""> --}}
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="subItemData">
@@ -166,11 +162,6 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
-                                                <!-- <div class="row">
-                                                    <div class="progress" style="display: none">
-                                                        <div class="progress-bar progress-bar-success myprogress" role="progressbar" value="0" max="100" style="width:0%">0%</div>
-                                                    </div>
-                                                </div> -->
                                                 <div class="save-btns text-center">
                                                     <?php if (!empty($document_id)) { ?>
                                                         <input type="hidden" name="pdfs_list" value="<?php echo (!empty($index_details) ? url_encryption($index_details[0]['pdf_id']) : ''); ?>">
@@ -317,6 +308,7 @@
         });
 
         $('#create_index_form').on('submit', function() {
+            event.preventDefault();
             var indexItem = $('#doc_type option:selected').text();
             if (indexItem === "INTERLOCUTARY APPLICATION") {
                 var subIndexItem = $('#sub_doc_type').val();
@@ -347,9 +339,6 @@
                         data: $(this).serialize() + '&caveatDocNum=' + caveatDocNum,
                         async: false,
                         success: function(data) {
-                            /*alert(data);
-                            console.log(data);
-                            return;*/
                             index_title(); //change added on 11 September 2020
                             $('.save_spinner').hide();
                             $('#save_doc').prop('disabled', false);
@@ -607,6 +596,7 @@
         }
 
         function reload_document_index() {
+            event.preventDefault();
             $('#nextButton').hide();
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

@@ -1,3 +1,4 @@
+
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
 <!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
@@ -581,6 +582,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
             </div>
         </div>
     </div>
+
+    @if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+    </div>
+    </div>
+    </div>
+    </div>
+ 
+    <footer class="footer-sec">Content Owned by Supreme Court of India</footer>
+
+    @endif
                              
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
@@ -782,6 +793,25 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
             }
         });
         return false;
+    });
+
+    $('#disapprove_me').click(function () { 
+        var temp = $('.disapprovedText').text(); 
+        temp = $.trim(temp); 
+        var efiling_type_id = '<?php echo isset($_SESSION['efiling_details']) ? $_SESSION['efiling_details']['ref_m_efiled_type_id'] : ''; ?>';            
+        if (efiling_type_id  !="") {
+            $('#disapprove_alerts').show();
+            if (temp.length > 500) {
+                $('#disapprove_alerts').show();
+                $('#disapprove_alerts').html("<p class='message invalid' id='msgdiv'>Maximum length 500 allowed. <span class='close' onclick=hideMessageDiv()>X</span></p>");
+            } else {
+                if ($('#objection_value').html() != '') {
+                    $('#obj_remarks').val($('#objection_value').html());
+                }
+                $('#descr').val($('#editor-one').html());
+                $('#disapp_case').submit();
+            }
+        }
     });
 </script>
 

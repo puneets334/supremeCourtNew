@@ -37,6 +37,7 @@ class AutoDiaryGeneration extends BaseController
     protected $Get_CIS_Status_model;
     protected $Act_sections_model;
     protected $Citation_model;
+    protected $request;
     public function __construct()
     {
         parent::__construct();
@@ -57,6 +58,7 @@ class AutoDiaryGeneration extends BaseController
         $this->Act_sections_model = new ActSectionsModel();
         $this->Citation_model = new CitationModel();
         $this->encrypter = \Config\Services::encrypter();
+        $this->request = \Config\Services::request();
     }
     public function byAOR($registration_id=NULL,$efiling_type=NULL,$bearerToken=NULL)
     {
@@ -83,7 +85,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                             $ref_m_efiled_type_id=$isCaseInApprovedStage[0]['ref_m_efiled_type_id'];
                             $diaryGenerationStatus=$this->getAllFilingDetailsByRegistrationId($efiling_no,$registration_id,$ref_m_efiled_type_id,$efiling_type); //function written for Auto diarization on 29072023
                             //echo $diaryGenerationStatus;
-                            $diaryGenerationStatus=json_decode($diaryGenerationStatus,true);
+                            $diaryGenerationStatus=$diaryGenerationStatus;
                         }
                     }
                     else
@@ -110,10 +112,10 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
     public function index($registration_id=NULL,$efiling_type=NULL,$bearerToken=NULL)
     {
         //$postData = json_decode(file_get_contents('php://input'), true);
-        if(!empty($_POST)){
-            $registration_id = !empty($_POST['registration_id'])?$_POST['registration_id']:NULL;
-            $efiling_type = !empty($_POST['efiling_type'])?$_POST['efiling_type']:NULL;
-            $bearerToken = !empty($_POST['token'])?$_POST['token']:NULL;
+        if(!empty($this->request->getGet())){
+            $registration_id = !empty($this->request->getGet('registration_id'))?$this->request->getGet('registration_id'):NULL;
+            $efiling_type = !empty($this->request->getGet('efiling_type'))?$this->request->getGet('efiling_type'):NULL;
+            $bearerToken = !empty($this->request->getGet('token'))?$this->request->getGet('token'):NULL;
         }
         $diaryGenerationStatus=null;
         if(!empty($bearerToken))
@@ -153,12 +155,13 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                 $efiling_no=$isCaseInApprovedStage[0]['efiling_no'];
                 $ref_m_efiled_type_id=$isCaseInApprovedStage[0]['ref_m_efiled_type_id'];
                 $diaryGenerationStatus=$this->getAllFilingDetailsByRegistrationId($efiling_no,$registration_id,$ref_m_efiled_type_id,$efiling_type); //function written for Auto diarization on 29072023
-                echo $diaryGenerationStatus;
+                // echo $diaryGenerationStatus;
             }
         }
-        else
-            echo  "Registration_id and Efiling_type are Empty !!!";
-        return json_encode($diaryGenerationStatus);
+        else{
+            $diaryGenerationStatus = "Registration_id and Efiling_type are Empty !!!";
+        }
+        return $diaryGenerationStatus;
     }
     private function getAllFilingDetailsByRegistrationId($efiling_no=NULL,$registration_id=NULL,$ref_m_efiled_type_id=NULL,$file_type=NULL)
     {
@@ -696,7 +699,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                     $output;
             }
         }
-        return json_encode($output);
+        return $output;
     }
     private function getCisStatusForNewCase($registration_id, $efiling_num, $curr_stage,$diaryStatus = NULL,$alloted_to_name = NULL,$ref_m_efiled_type_id=NULL,$efiling_type=NULL)
     {

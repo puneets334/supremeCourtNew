@@ -114,6 +114,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         if (!empty(getSessionData('MSG'))) {
                             echo getSessionData('MSG');
                         }
+                        if (!empty(getSessionData('msg'))) {
+                            echo getSessionData('msg');
+                        }
                         ?> 
                     </div>
                 </div>
@@ -658,7 +661,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
             </div>
             <div class="modal-footer">
                 <button type="button" class="quick-btn gray-btn" data-bs-dismiss="modal" >Close</button>
-                <a class="quick-btn" id="disapprove_me" >Submit</a>
+                <button type="button"  class="quick-btn" id="disapprove_me" >Submit</button>
             </div>
             <?php echo form_close(); ?>  
         </div>

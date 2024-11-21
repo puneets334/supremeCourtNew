@@ -7199,7 +7199,7 @@ a.red-dot .mdi {
     background-color: #ccc;
     color: #fff;
 }
-
+input.quick-btn.gray-btn:hover{background-color: #022651;}
 .crnt-page-head {
     display: flex;
     justify-content: space-between;
@@ -8403,7 +8403,7 @@ a.add-btn {
     padding: 0 !important;
 }
 .custom-table tr th {
-    width: 35px;
+   min-width: 35px;
 }
 .top-right-nav ul li.theme-color a {
     font-size: 0;
@@ -8499,7 +8499,7 @@ table.dataTable thead .sorting_asc:after {
 .faq-sec  .accordion-button.collapsed {background: #fff !important;color: #013fbb !important;}
 .faq-sec .accordion .accordion-item h2 .accordion-button:hover:after, .faq-sec .accordion .accordion-item h2 .accordion-button:focus:after{filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);}
 .accordion .accordion-button[aria-expanded="false"]:after {filter: invert(21%) sepia(86%) saturate(7489%) hue-rotate(208deg) brightness(101%) contrast(107%);}
-.accordion .accordion-button[aria-expanded="true"]:after{filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);}
+.accordion .accordion-button[aria-expanded="true"]:after , .accordion .accordion-button:hover:after{filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%);}
 .faq-img-sec img {
     width: 500px;
 }
@@ -8546,7 +8546,7 @@ table.dataTable, .table-striped {border-bottom: 1px solid #dbdbdb !important;bor
 .mngmntHeader .font-action-sec ul li:hover {background: #0d48be;}
 .mngmntHeader ul li.text-size {position: relative;}
 /* ---------- */
-.dash-card .table-sec table#datatable-responsive-sc_cases .btn {background: #0d48be;color: #fff;padding: 0px 7px;text-align: center;width: 100%;justify-content: space-between;font-size: 14px;}
+.dash-card .table-sec table#datatable-responsive-sc_cases .btn {background: #0d48be;color: #fff;padding: 0px 7px;text-align: center;width: 100%;justify-content: space-between;font-size: 14px;white-space: nowrap;}
 .dash-card .table-sec table#datatable-responsive-sc_cases .btn.collapsed:after{content:"\f078";font: normal normal normal 14px / 1 FontAwesome;font-size: 8px;}
 .dash-card .table-sec table#datatable-responsive-sc_cases .btn:after{content:"\f077";font: normal normal normal 14px / 1 FontAwesome;margin-left: 6px;font-size: 8px;}
 .dash-card .table-sec table#datatable-responsive-sc_cases td .accordion-collapse {background: #e3e3e3;padding: 9px;border-radius: 0 0 21px 21px;margin-bottom: 5px;}
@@ -8590,7 +8590,7 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 /* New Pagination Area End  */
 
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li {position: relative;}
-.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse {position: absolute;box-shadow: 0px 0px 7px 0px rgb(6 6 6 / 52%);}
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse {position: absolute;box-shadow: 0px 0px 7px 0px rgb(6 6 6 / 52%);right:0;width:220px;}
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li button.accordion-button {z-index: 1;}
 .custom-table label span {color: #fff;}
 .mobile-view-selectall {display: none;}
@@ -8610,3 +8610,27 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 .slect-date-two {display: flex;}
 .slect-date-two .cus-form-ctrl:first-child {border-top-right-radius: 0 !important;border-bottom-right-radius: 0 !important;}
 .slect-date-two .cus-form-ctrl:last-child {border-top-left-radius: 0 !important;border-bottom-left-radius: 0 !important;}
+
+/* 19-11-24 start  */
+.dash-card .table-sec .soon-listing-table tbody tr td:first-child b {font-family: 'noto_sansmedium';}
+form .col-lg-4 .mb-3 {position: relative;}
+form .col-lg-4 .mb-3 span.input-group-addon {border-left: 1px solid #e1e1e1!important;padding: 10px 10px;border-radius: 0 15px 15px 0;position: absolute;height: 38px;right: -1px;bottom: 0;display: flex;align-items: center;background: #f1f1f1;margin: 1px 2px 1px 0;}
+form .icon-input span.fa {right: 8%;}
+form .cus-form-ctrl {padding-right: 40px !important;}
+form .col-lg-4 .mb-3 span.input-group-addon a.pin-code-loc {margin-left: 5px;}
+form .col-lg-4 .mb-3 .input-note-pos {position: absolute;}
+.view-accordion p , .accordion p{margin-bottom: 8px;}
+.accordion-button:not(.collapsed) , .accordion-button:hover {background: #0d48be;color: #fff;}
+.accordion-button:hover, .accordion-button:focus{box-shadow:none;}
+
+.acrdion-with-edit .accordion-button a {position: absolute;right: 4%;}
+.acrdion-with-edit .accordion-button:not(.collapsed) a, .acrdion-with-edit .accordion-button:hover a {color: #fff;}
+/* 19-11-24 End  */ 
+/* 20-11-24 start  */
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse li + li {
+    margin-top: 5px;
+}
+.btn-primary {
+    background: #0d48be;
+}
+/* 20-11-24 End  */

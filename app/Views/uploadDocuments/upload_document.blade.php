@@ -30,7 +30,7 @@
 			<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 				<div class="mb-3">
 					<label for="" class="form-label">Browse PDF <span style="color: red">*</span></label>
-					<input name="pdfDocFile" id="browser" tabindex="3" class="cus-form-ctrl" required="required" type="file">
+					<input name="pdfDocFile" id="browser" tabindex="3" class="cus-form-ctrl" required="required" accept="application/pdf" type="file">
 				</div>
 			</div>
 		</div>

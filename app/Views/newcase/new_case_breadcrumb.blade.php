@@ -41,13 +41,15 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             $filing_type = 'Case Filing Form';
                             $lbl_history = 'eFiling History';
                         }
-                        
+                        $style = '';
                         if (!empty(getSessionData('efiling_details')['stage_id']) && (getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE || getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE || getSessionData('efiling_details')['stage_id'] == TRASH_STAGE)) {
                             $efiling_num_label_for_display = 'DRAFT-';
                             $efiling_num_button_background_class = 'btn-danger';
+                            $style = 'color: red';
                         } else {
                             $efiling_num_label_for_display = '';
                             $efiling_num_button_background_class = 'btn-success';
+                            $style = 'color: green';
                         }
                         ?></h5>
                     </div>
@@ -61,15 +63,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         }
                         ?>
                     </div> -->
-                    <div class="form-response"
-                        role="alert"
-                        data-auto-dismiss="5000">
-                        <?php
-                        if (!empty(getSessionData('msg'))) {
-                            echo getSessionData('msg');
-                        }
-                        ?>
-                    </div>
+                    
                     <?php //echo getSessionData('msg'); ?>                    
                     <div class="page-breifs">
                         <ul>
@@ -136,10 +130,34 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                             // render('templates.user_efil_num_action_bar');
                         ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                        <?php
+                            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
+                                if (isset(getSessionData('efiling_details')['stage_id']) && in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
+                            ?>
+                            <a class="quick-btn btn btn-success btn-sm"
+                            target="_blank"
+                            href="<?php echo base_url('acknowledgement/view'); ?>">
+                            <i class="fa fa-download blink"></i> eFiling Acknowledgement
+                            </a> 
+                            <?php
+                            }
+                            }
+                            ?>
                         <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
+                
             </div>
+            <div class="form-response mt-2"
+                    role="alert"
+                    data-auto-dismiss="5000">
+                    <?php
+                    if (!empty(getSessionData('msg'))) {
+                        echo getSessionData('msg');
+                    }
+                    ?>
+                </div>
         </div>
     </div>
 
@@ -199,7 +217,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                                                 <a href="javascript:void(0)"
                                             class="quick-btn transparent-btn ' .
                             $efiling_num_button_background_class .
-                            '" id="copyTarget_EfilingNumber">' .
+                            '" id="copyTarget_EfilingNumber" style="'.$style.'">' .
                             $filing_num_label .
                             $efiling_num_label_for_display .
                             htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) .
@@ -333,7 +351,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
 
                 <?php 
                 $segment = service('uri');
-                $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : array();
+                $StageArray = !empty(getSessionData('efiling_details')) ? explode(',', $_SESSION['efiling_details']['breadcrumb_status']) : array();
                 $disabled_status1='pointer-events: none; cursor: default;';?>
                 <ul class="nav nav-tabs"
                     id="myTab"
@@ -344,7 +362,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <?php
                         if ($segment->getSegment(2) == 'upload_docs' || $segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex') {
                             $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'first active';
+                            $status_color = 'active';
                             //$disabled_status='';
                         } elseif (in_array(NEW_CASE_UPLOAD_DOCUMENT, $StageArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff;';
@@ -366,18 +384,16 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <?php
                         if ($segment->getSegment(2) == 'courtFee') {
                             $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'first active';
+                            $status_color = 'active';
                         //  $disabled_status='';
                         } elseif (in_array(NEW_CASE_COURT_FEE, $StageArray)) {
                             //$ColorCode = $bgcolor . ";color:#ffffff";
-                            $bgcolor='background-color: #169F85;';
-                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $ColorCode='background-color: #169F85;';
                             $status_color = '';
                         // $disabled_status='';
                         } else {
 
-                            $bgcolor='background-color: #C11900;';
-                            $ColorCode = $bgcolor . ";color:#ffffff";
+                            $ColorCode='background-color: #C11900;';
                             $status_color = '';
                         // $disabled_status='pointer-events: none; cursor: default;';
                         }
@@ -393,7 +409,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                         <?php
                         if ($segment->getSegment(2) == 'view') {
                             $ColorCode = 'background-color: #01ADEF';
-                            $status_color = 'first active';
+                            $status_color = 'active';
                             //$disabled_status='';
                         } elseif (in_array(NEW_CASE_PETITIONER, $StageArray) && in_array(NEW_CASE_RESPONDENT, $StageArray) && in_array(NEW_CASE_UPLOAD_DOCUMENT, $StageArray)) {
                             $ColorCode = 'background-color: #169F85;color:#ffffff';

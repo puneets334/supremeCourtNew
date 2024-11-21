@@ -97,8 +97,8 @@ class Efiling_webservices {
         //$json = json_encode($web_response);
         //$configData = json_decode($json, true);
         $response = json_decode($web_response);
-        $response_str = $response->response_str;
-        $result_data = base64_decode($response_str);
+        $response_str = !empty($response->response_str) ? $response->response_str : $response->status;
+        $result_data = !empty($response_str) ? base64_decode($response_str) : '';
         $decrypt = openssl_decrypt($result_data, 'AES-128-CBC', $authentication_key, OPENSSL_RAW_DATA, $iv);
         return json_decode($decrypt);
     }
@@ -1305,13 +1305,18 @@ class Efiling_webservices {
         $case_number = trim($case_number);
         $case_year = trim($case_year);
         $input_str = "est_code=" . $establishment_id . "|case_type=" . $case_type_id . "|reg_no=" . $case_number . "|reg_year=" . $case_year;
-        $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, 0, OPENAPI_IV);
+        $cipher = 'aes-128-cbc'; // Replace with your cipher
+        $iv_length = openssl_cipher_iv_length($cipher);
+        $predefined_iv = OPENAPI_IV; // Replace with your IV
+
+        $iv = $this->pad_iv($predefined_iv, $iv_length);
+        $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, 0, $iv);
+        // $encrypt = openssl_encrypt($input_str, 'AES-128-CBC', OPENAPI_KEY, 0, OPENAPI_IV);
         $request_str = base64_encode($encrypt);
         $request_token = hash_hmac('sha256', $input_str, OPENAPI_HASHHMAC_KEY);
         $est_code = 'casesearch/caseNumber?dept_id=' . OPENAPI_DEPT_NO . '&request_str=' . urlencode($request_str) . '&request_token=' . $request_token;
         $data = $this->OpenAPIwebservice_CINO($est_code);
         $result = array($data);
-
         $case_list = array();
         if (!empty($result)) {
             foreach ($result as $d) {
@@ -1588,7 +1593,7 @@ class Efiling_webservices {
     }
 
     public function get_case_details_from_SCIS($case_type_id, $case_no, $case_year) {
-        $data = @file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year");
 
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
         if ($data != false) {

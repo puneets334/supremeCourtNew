@@ -17,7 +17,7 @@ $saved_filing_for = explode('$$', $saved_filing_for);
 ?>
 <div class="panel panel-default"> 
     <div class="panel-body">
-        <table id="courtFeeTable" class="table table-striped table-bordered dt-responsive nowrap second_tbl" cellspacing="0" width="100%">
+        <table id="courtFeeTable" class="table custom-table table-striped table-bordered dt-responsive nowrap second_tbl" cellspacing="0" width="100%">
             <thead>
                 <tr class="success">
                     <th>#</th>
