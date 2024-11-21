@@ -98,6 +98,34 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             <h6>E-File Miscellaneous Documents</h6>
                         </div>
                         <div class="current-pg-actions">
+                <?php
+                 $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                    if($segment->getSegment(2) == 'view'){
+                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
+                            if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+
+                                if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
+                                    (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
+                                        (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't')
+                                    )
+                                ) {
+
+                                    echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                    // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                } else {
+                                    
+                                }
+                            }
+                            if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { ?>
+                                <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
+                                <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
+                    <?php }
+                        }
+                    }
+                }  
+                ?>
                             <?php
                             if ((getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE) || (getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE) ||  (getSessionData('efiling_details')['stage_id'] == TRASH_STAGE)) {
                                 $efiling_num_label_for_display = 'DRAFT-';;
@@ -167,7 +195,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                         $ColorCode = 'background-color: #169F85;color:#ffffff;';
                         $status_color = '';
                     } else {
-                        $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                        // $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                        $ColorCode = 'background-color: #169F85;color:#ffffff;';
                         $status_color = '';
                     }
                     ?>

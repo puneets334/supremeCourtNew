@@ -34,24 +34,25 @@ class CourtFee extends BaseController
 
     public function index()
     {
-           
+        
         //func added on 11 nov 2020
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
             $registration_id = $_SESSION['efiling_details']['registration_id'];
             //$index_pdf_details = $this->DocumentIndex_Select_model->unfilled_pdf_pages_for_index($registration_id);
             $index_pdf_details = $this->DocumentIndex_Select_model->is_index_created($registration_id);
+           
             if (!empty($index_pdf_details)) {
                 $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+                
                 if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
                     redirect('login');
                     exit(0);
                 }
                 $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
                 if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
-                    redirect('miscellaneous_docs/view');
+                    return redirect()->back();
                     exit(0);
                 }
-                
                 if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
                     $registration_id = $_SESSION['efiling_details']['registration_id'];
                     //todo change code when user change doctype which has more than 0 court fee
