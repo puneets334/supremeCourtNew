@@ -600,11 +600,11 @@ class EfilingAction extends BaseController {
                    $this->Common_model->changeIaMiscDocStage($registration_id,$stage_id);
                 }
                 // log_message('CUSTOM', "Doc No.".$doc_number." has been updated successfully!");
-                echo json_encode(array('status'=>'SUCCESS','message'=>'Doc No.'.$doc_number.' has been updated successfully!'));
+                return json_encode(array('status'=>'SUCCESS','message'=>'Doc No.'.$doc_number.' has been updated successfully!'));
                 exit(0);
             }
             else{
-                echo json_encode(array('status'=>'ERROR','message'=>'Something went wrong,Pleaes try again later'));
+                return json_encode(array('status'=>'ERROR','message'=>'Something went wrong,Pleaes try again later'));
                 exit(0);
             }
         }
