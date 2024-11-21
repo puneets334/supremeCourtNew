@@ -8591,7 +8591,7 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li {position: relative;}
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li .accordion-collapse {position: absolute;box-shadow: 0px 0px 7px 0px rgb(6 6 6 / 52%);right:0;width:220px;}
-.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li button.accordion-button {z-index: 1;}
+.dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li button.accordion-button {z-index: 0;}
 .custom-table label span {color: #fff;}
 .mobile-view-selectall {display: none;}
 /* 16-10-24 start  */
@@ -8634,6 +8634,7 @@ form .col-lg-4 .mb-3 .input-note-pos {position: absolute;}
     background: #0d48be;
 }
 /* 20-11-24 End  */
+
 /* 21-11-24 Start  */
 form span.fa.fa-calendar-o.form-control-feedback.left {position: absolute;right: 50px;bottom: 15px;}
 .form-with-tooltip .col-lg-4 .mb-3 {position: relative;}
@@ -8643,3 +8644,6 @@ form span.fa.fa-calendar-o.form-control-feedback.left {position: absolute;right:
 .form-with-tooltip .col-lg-4 .mb-3 span.input-group-addon a.pin-code-loc {margin-left: 5px;}
 .form-with-tooltip  .col-lg-4 .mb-3 .input-note-pos {position: absolute;}
 /* 21-11-24 End  */
+
+.title-comnt-bref.doc-byme-tble {width: 530px !important;}
+.title-comnt-bref.doc-byme-tble .table-height-div {height: auto !important;max-height: 350px;}

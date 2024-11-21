@@ -1,4 +1,4 @@
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @extends('layout.app')
     @section('content')
 @endif 
@@ -343,7 +343,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
             </div>
         </div>
     <!-- </div>  -->
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
+@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @endsection
 @endif
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>

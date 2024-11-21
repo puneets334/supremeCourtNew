@@ -122,6 +122,8 @@
     .acrdion-with-edit .accordion-button a {
         right: 18%;
     }
+    .tiles-comnts .title-comnt-bref.doc-byme-tble {right: 0;width: 300px !important;}
+.tiles-comnts .tile-comnt:hover .title-comnt-bref.doc-byme-tble:after {left: auto;right: 26px;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){

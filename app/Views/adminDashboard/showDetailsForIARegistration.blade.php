@@ -36,25 +36,25 @@
 
 
     <?php
-    if($details['details'][0]['board_type']=='C')
+    if(isset($details['details'][0]['board_type']) && $details['details'][0]['board_type']=='C')
         $board='Honble Chamber Court';
-    elseif($details['details'][0]['board_type']=='J')
+    elseif(isset($details['details'][0]['board_type']) && $details['details'][0]['board_type']=='J')
         $board='Honble Court';
-    elseif($details['details'][0]['board_type']=='R')
+    elseif(isset($details['details'][0]['board_type']) && $details['details'][0]['board_type']=='R')
         $board='Ld. Registrar Court';
     ?>
     <div class="title-sec">
             <h5 class="unerline-title">Case Details</h5>
     </div>
         <!-- <legend> Case Details</legend> -->
-       <div class="col-md-12 col-sm-12 col-xs-12" align="center"> <label><?php if($details['details'][0]['c_status']=='P') echo '<font color=green>Case is Pending!</font>';
-        elseif($details['details'][0]['c_status']=='D') echo '<font color=red>Case is Disposed!</font>';?></label>
+       <div class="col-md-12 col-sm-12 col-xs-12" align="center"> <label><?php if(isset($details['details'][0]['c_status']) && $details['details'][0]['c_status']=='P') echo '<font color=green>Case is Pending!</font>';
+        elseif(isset($details['details'][0]['c_status']) && $details['details'][0]['c_status']=='D') echo '<font color=red>Case is Disposed!</font>';?></label>
            </div>
         <div class="col-md-12 col-sm-12 col-xs-12" align="center">
-                          <label><?php if($details['details'][0]['judgment_reserved_date']!=null){
+                          <label><?php if(isset($details['details'][0]['judgment_reserved_date']) && $details['details'][0]['judgment_reserved_date']!=null){
                       echo '<font color=red>Judgment is reserved for '.date('d-m-Y',strtotime($details['details'][0]['judgment_reserved_date'])) .'!</font>';?></label>
                 <?php }
-                elseif($details['details'][0]['next_dt']!=null && empty($case_listing_details->listed[0]->next_dt)){
+                elseif(isset($details['details'][0]['next_dt']) && $details['details'][0]['next_dt']!=null && empty($case_listing_details->listed[0]->next_dt)){
                 echo '<font style="color:red; font-size:14px; font-weight: bold;">Case is proposed to be listed on '.date('d-m-Y',strtotime($details['details'][0]['next_dt'])) .' in '.$board.'!</font>';?></label>
                <?php }?>
             </div>
@@ -64,7 +64,7 @@
                 <label> Case No. :</label>
             </div>
             <div class="col-sm-4 col-md-4 col-xs-4">
-            <?php if($details['details'][0]['reg_no_display']!=null){
+            <?php if(isset($details['details'][0]['reg_no_display']) && $details['details'][0]['reg_no_display']!=null){
             ?>
                 <span style="color:black; font-size:14px; font-weight: bold;"> <?php echo $details['details'][0]['reg_no_display'].'@ '.$diaryno;?></span>
        <?php } else{
@@ -77,7 +77,7 @@
                 <div class="col-sm-1 col-md-1 col-xs-1">
                     <label> Cause Title:</label>
                 </div>
-                <div class="col-sm-4 col-md-4 col-xs-4"><span style="color:black; font-size:14px; font-weight: bold;"><?php echo $details['details'][0]['pet_name'].' Vs '.$details['details'][0]['res_name'];?> </span>
+                <div class="col-sm-4 col-md-4 col-xs-4"><span style="color:black; font-size:14px; font-weight: bold;"><?php echo (isset($details['details'][0]['pet_name']) ? $details['details'][0]['pet_name'] : '').' Vs '.(isset($details['details'][0]['res_name']) ? $details['details'][0]['res_name'] : '');?> </span>
             </div>
         </div>
         </div>
@@ -87,7 +87,7 @@
                 <label> Registered On :</label>
             </div>
             <div class="col-sm-4 col-md-4 col-xs-4">
-                <?php if($details['details'][0]['active_fil_dt']!=null){
+                <?php if(isset($details['details'][0]['active_fil_dt']) && $details['details'][0]['active_fil_dt']!=null){
                     ?>
                     <span style="color:black; font-size:14px; font-weight: bold;"> <?php echo date('d-m-Y',strtotime($details['details'][0]['active_fil_dt']));?></span>
                 <?php } ?>
@@ -96,7 +96,7 @@
                 <label> Alloted to:</label>
             </div>
             <div class="col-sm-4 col-md-4 col-xs-4">
-            <?php if($details['details'][0]['name']!==null){?>
+            <?php if(isset($details['details'][0]['name']) && $details['details'][0]['name']!==null){?>
                 <span style="color:black; font-size:14px; font-weight: bold;"><?php echo $details['details'][0]['name'].' [ '.$details['details'][0]['empid'].' ] -'.$details['details'][0]['section_name'];?> </span>
                 <?php } ?>
             </div>
@@ -108,13 +108,13 @@
                 <label> Subject Category :</label>
             </div>
             <div class="col-sm-4 col-md-4 col-xs-4">
-                    <span style="color:black; font-size:14px; font-weight: bold;"> <?php echo $details['details'][0]['sub_name1'].' ('.$details['details'][0]['category_sc_old'].')';?></span>
+                    <span style="color:black; font-size:14px; font-weight: bold;"> <?php echo (isset($details['details'][0]['sub_name1']) ? $details['details'][0]['sub_name1'] : '').' ('.(isset($details['details'][0]['category_sc_old']) ? $details['details'][0]['category_sc_old'] : '').')';?></span>
             </div>
             <div class="col-sm-1 col-md-1 col-xs-1">
                 <label> State Agency:</label>
             </div>
             <div class="col-sm-4 col-md-4 col-xs-4">
-                    <span style="color:black; font-size:14px; font-weight: bold;"><?php echo $details['details'][0]['agency_state'];?> </span>
+                    <span style="color:black; font-size:14px; font-weight: bold;"><?php echo (isset($details['details'][0]['agency_state']) ? $details['details'][0]['agency_state'] : '');?> </span>
             </div>
         </div>
         </div>
@@ -441,8 +441,9 @@
                         ContentType: 'application/json',
                         cache:false,
                         success: function(updateData){
-                            if(typeof updateData == 'string'){
+                            // if(typeof updateData == 'string'){
                                 updateData = JSON.parse(updateData);
+                                console.log(updateData);
                                 var message = updateData.message;
                                 if(updateData.status=='SUCCESS'){
                                     $("#customErrorMessage").html('');
@@ -451,7 +452,7 @@
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(message);
                                 }
-                            }
+                            // }
 
                             // console.log(updateData);
                             // return false;

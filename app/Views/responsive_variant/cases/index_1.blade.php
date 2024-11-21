@@ -10,6 +10,7 @@
         color: black !important;
     }
     .scif {
+        visibility: hidden;
         color: black;
     }
     tr.hide-table-padding td {
@@ -67,11 +68,14 @@
         display: none !important;
     }
     .mdi:before {
-    font-size: 16px !important;
-}
-a.quick-btn.pull-right:hover {
-    text-decoration: none;
-}
+        font-size: 16px !important;
+    }
+    a.quick-btn.pull-right:hover {
+        text-decoration: none;
+    }
+    #example_filter:nth-child(1) {
+        display: none;
+    }
 </style>
 <link rel="stylesheet" href="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/css/main.min.css')}}" />
 <link type="text/css" rel="stylesheet" href="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css')}}" />

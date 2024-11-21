@@ -42,7 +42,8 @@ class DocumentIndexDropDownModel extends Model {
                 $builder->whereIn('doccode', array(118,8)); //for PIP doccode(118,8) Caveat and Interlocutary application for caveat i.e for caveat only caveat will display  //// code Change by K.B.Pujari on 02072023
         }
         if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) {
-            $builder->whereNotIn('doccode', array(118,8)); //118 doccode for caveat i.e Caveat will not display for IA & Misc. docs
+            // $builder->whereNotIn('doccode', array(118,8)); //118 doccode for caveat i.e Caveat will not display for IA & Misc. docs
+             $builder->whereNotIn('doccode', array(118)); //8 remove for Interlocutery Application in IA
         }
         if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
             $builder->WHERE("display != 'N'" );
