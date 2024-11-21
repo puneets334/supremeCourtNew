@@ -478,29 +478,29 @@
     } 
 
     //$('.party_gender1').attr('required', 'required');
-    $('.party_name').attr('required', 'required');
-    $('.relative_name').attr('required', 'required');
-    $('#relation').attr('required', 'required');
-    $('#org_state').removeAttr('required', 'required'); 
-    $('input[name="party_gender"]').attr('required', 'required');
+    $('.party_name').attr('required', true);
+    $('.relative_name').attr('required', true);
+    $('#relation').attr('required', true);
+    $('#org_state').attr('required', false);
+    $('input[name="party_gender"]').attr('required', true);
 
 
     function get_party_as(value) {
         var party_as = value;
         if (party_as == 'I') {
 
-            $('#org_dept').removeAttr('required');
-            $('#org_state').removeAttr('required');
-            $('#org_post').removeAttr('required');
+            $('#org_dept').attr('required', false);
+            $('#org_state').attr('required', false);
+            $('#org_post').attr('required', false);
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
             //$('.party_gender1').attr('required', 'required');
-            $('.party_name').attr('required', 'required');
-            $('.relative_name').attr('required', 'required');
-            $('#relation').attr('required', 'required'); 
-            $('#party_age').attr('required', 'required');
-            $('input[name="party_gender"]').attr('required', 'required');
+            $('.party_name').attr('required', true);
+            $('.relative_name').attr('required', true);
+            $('#relation').attr('required', true); 
+            $('#party_age').attr('required', true);
+            $('input[name="party_gender"]').attr('required', true);
  
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
@@ -517,18 +517,18 @@
                 $('#org_dept').attr('required', true);
                 $('#org_post').attr('required', true);
                 // Remove 'required' attribute
-                $('#org_state').removeAttr('required');
+                $('#org_state').attr('required', false);
 
 
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
-                $('.org_dept').attr('required', 'required');
-                $('.org_post').attr('required', 'required'); 
-                $('.relative_name').removeAttr('required', 'required');
-                $('#relation').removeAttr('required', 'required');
-                $('#org_state').removeAttr('required', 'required'); 
+                $('.org_dept').attr('required', true);
+                $('.org_post').attr('required', true); 
+                $('.relative_name').attr('required', false);
+                $('#relation').attr('required', false);
+                $('#org_state').attr('required', false);
             } else {
                 // Add 'required' attribute
                 $('#org_dept').attr('required', true);
@@ -542,9 +542,9 @@
                 $('#org_state_row').show();
                 //$('.party_gender1').removeAttr('required', 'required');
                 // $('.party_name').removeAttr('required', 'required');
-                $('.relative_name').removeAttr('required', 'required');
-                $('#relation').removeAttr('required', 'required');
-                $('#org_state').attr('required', 'required');
+                $('.relative_name').attr('required', false);
+                $('#relation').attr('required', false);
+                $('#org_state').attr('required', true);
 
                 // $('#party_name').val('');
                 // $('#relation').val('');
@@ -567,14 +567,22 @@
         var org_state = $(this).val();
         if (org_state == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgState').show();
+            $('#org_state_name').attr('required', true);
             $('#otherOrgDept').show();
+            $('#org_dept').attr('required', true);
+            $('#org_dept_name').attr('required', true);
             $('#otherOrgPost').show();
+            $('#org_post_name').attr('required', true);
             $('#org_dept').val('<?php echo url_encryption(0); ?>');
             // $('#org_post').val('<?php echo url_encryption(0); ?>');
         } else {
             $('#otherOrgState').hide();
+            $('#org_state_name').attr('required', false);
             $('#otherOrgDept').hide();
+            $('#org_dept').attr('required', false);
+            $('#org_dept_name').attr('required', false);
             $('#otherOrgPost').hide();
+            $('#org_post_name').attr('required', false);
             $('#org_dept').val('');
             // $('#org_post').val('');
         }
@@ -587,11 +595,16 @@
         var org_dept = $(this).val();
         if (org_dept == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgDept').show();
+            $('#org_dept_name').attr('required', true);
             $('#otherOrgPost').show();
+            $('#org_post_name').attr('required', true);
+            
             // $('#org_post').val('<?php echo url_encryption(0); ?>');
         } else {
             $('#otherOrgDept').hide();
+            $('#org_dept_name').attr('required', false);
             $('#otherOrgPost').hide();
+            $('#org_post_name').attr('required', false);
             //$('#org_post').val('');
         }
     });
@@ -603,8 +616,10 @@
         var org_post = $(this).val();
         if (org_post == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgPost').show();
+            $('#org_post_name').attr('required', true);
         } else {
             $('#otherOrgPost').hide();
+            $('#org_post_name').attr('required', false);
         }
     });
 
@@ -1000,8 +1015,8 @@
         return typeof value === 'number';
     }
     $('#party_age').on('keyup', function () {
-                $('#party_dob').val(''); // Clear the DOB field.
-            });
+        $('#party_dob').val(''); // Clear the DOB field.
+    });
     $('#party_pincode').blur(function() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
