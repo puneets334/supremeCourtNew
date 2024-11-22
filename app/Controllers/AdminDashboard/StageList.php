@@ -281,7 +281,7 @@ class StageList extends BaseController {
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
             }
-            return $this->render('`adminDashboard.admin_stage_list_view`', $data);
+            return $this->render('adminDashboard.admin_stage_list_view', $data);
             /* $this->load->view('templates/admin_header');
             $this->load->view('adminDashboard/admin_stage_list_view', $data);
             $this->load->view('templates/footer'); */
