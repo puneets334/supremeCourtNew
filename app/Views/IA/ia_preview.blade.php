@@ -232,7 +232,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+                                            <!-- <button type="button" class="close" data-bs-dismiss="modal">&times;</button> -->
                                             <h4 class="modal-title">Note :- </h4>
                                         </div>
                                         <div class="modal-body">

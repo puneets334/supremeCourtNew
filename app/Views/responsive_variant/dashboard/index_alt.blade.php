@@ -938,7 +938,7 @@ td {
                                                 </div>
                                                 <div class="table-sec">
                                                     <div class="table-responsive" style="height: 800px; overflow-x: overlay;">
-                                                        <table id="datatable-responsive-calendarData"
+                                                        <table id="datatable-responsive"
                                                             class="table table-striped custom-table">
                                                             <thead>
                                                                 <tr>
@@ -1732,16 +1732,16 @@ td {
                         }, 1000);
                     },
                     success: function(res) {
-                        var Table = document.getElementById("datatable-responsive-calendarData");
+                        var Table = document.getElementById("datatable-responsive");
                         Table.innerHTML = "";
-                        $('#datatable-responsive-calendarData').html('');
-                        $('#datatable-responsive-calendarData').html(res);
+                        $('#datatable-responsive').html('');
+                        $('#datatable-responsive').html(res);
 
                     },
                     error: function(xhr, status, error) {
-                        var Table = document.getElementById("datatable-responsive-calendarData");
+                        var Table = document.getElementById("datatable-responsive");
                         Table.innerHTML = "";
-                        $('#datatable-responsive-calendarData').append('<tr><td colspan="8">No Records Found!</td></tr>');
+                        $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
                     }
                 });
             }
@@ -1766,16 +1766,17 @@ td {
                 }, 1000);
             },
             success: function(res) {
-                var Table = document.getElementById("datatable-responsive-calendarData");
+                // $('#datatable-responsive').DataTable();
+                var Table = document.getElementById("datatable-responsive");
                 Table.innerHTML = "";
-                $('#datatable-responsive-calendarData').html('');
-                $('#datatable-responsive-calendarData').html(res);
+                $('#datatable-responsive').html('');
+                $('#datatable-responsive').html(res);
 
             },
             error: function(xhr, status, error) {
-                var Table = document.getElementById("datatable-responsive-calendarData");
+                var Table = document.getElementById("datatable-responsive");
                 Table.innerHTML = "";
-                $('#datatable-responsive-calendarData').append('<tr><td colspan="8">No Records Found!</td></tr>');
+                $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
             }
         });
     }
