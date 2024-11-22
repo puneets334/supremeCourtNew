@@ -150,6 +150,7 @@ by Advocate $user_name  and is pending for initial approval with efiling admin. 
                 send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
 
                 getSessionData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                $this->session->setFlashdata('msg','<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 $_SESSION['efiling_details']['stage_id']=Initial_Approaval_Pending_Stage;
                 return redirect('miscellaneous_docs/view');
                 //redirect('dashboard');

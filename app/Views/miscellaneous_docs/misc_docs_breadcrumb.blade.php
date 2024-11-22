@@ -41,19 +41,19 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         ?>
                         <h5><i class="fa fa-file"></i> {{$commonHeading}}</h5>
                     </div>
-                    <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                    <!-- <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
                         <div class="row">
                             <div class="col-12">
                                 <div class="form-response" id="msg">
-                                    <?php
-                                    if (!empty(getSessionData('msg'))) {
-                                        echo getSessionData('msg');
-                                    }
-                                    ?>
+                                    
+                                    // if (!empty(getSessionData('msg'))) {
+                                    //     echo getSessionData('msg');
+                                    // }
+                                     
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="page-breifs">
                         <ul>
                             <li><a class="blue-dot"><span class="mdi mdi-record"></span> Active </a></li>
@@ -91,6 +91,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     </div>
                 </div>
             </div>
+           
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="crnt-page-head">
