@@ -108,7 +108,7 @@
                                     @endif
                                 </td>
                                 <td data-key="Started On">
-                                    {{date('d-m-Y H:i:s', strtotime($application->activated_on))}}
+                                    {{date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($application->activated_on)))}}
                                     @if(!empty($application->dept_file))
                                         <b><br>{{$application->dept_file}}</b>
                                     @endif

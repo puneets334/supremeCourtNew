@@ -296,7 +296,7 @@ textarea {
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span
                                             style="color: red">*</span> </label>
-                                            <textarea tabindex='12' id="org_state_name" name="org_state_name" 
+                                            <textarea  rows="1" tabindex='12' id="org_state_name" name="org_state_name" 
                                             minlength="3" maxlength="250" class="form-control cus-form-ctrl"
                                             placeholder="Other State Name"
                                             type="text"><?php echo isset($caveator_details[0]['org_state_name'])?$caveator_details[0]['org_state_name']:''; ?></textarea>
@@ -336,7 +336,7 @@ textarea {
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span
                                                 style="color: red">*</span> </label>
-                                                <textarea id="org_dept_name" tabindex='14' name="org_dept_name" 
+                                                <textarea  rows="1" id="org_dept_name" tabindex='14' name="org_dept_name" 
                                                 minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Dept Name"><?php echo isset($caveator_details[0]['org_dept_name'])?$caveator_details[0]['org_dept_name']:''; ?></textarea>
                                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                                 title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
@@ -371,7 +371,7 @@ textarea {
                                             <label for="" class="form-label">Other Post
                                                 <span style="color: red">*</span> 
                                             </label>
-                                            <textarea id="org_post_name" name="org_post_name" tabindex='16' minlength="3"
+                                            <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='16' minlength="3"
                                                 maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name"><?php echo isset($caveator_details[0]['org_post_name'])?$caveator_details[0]['org_post_name']:''; ?></textarea>
                                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                     <i class="fa fa-question-circle-o"></i>
@@ -420,7 +420,7 @@ textarea {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
-                                <textarea tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
+                                <textarea  rows="1" tabindex='19' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
                                     class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="99" required><?php echo isset($caveator_details[0]['petadd']) ? $caveator_details[0]['petadd'] : ''; ?></textarea>
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                     title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">

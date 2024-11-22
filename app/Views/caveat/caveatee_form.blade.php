@@ -235,7 +235,7 @@ span.select2.select2-container.select2-container--default {
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
-                                        <textarea tabindex = '9' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
+                                        <textarea  rows="1" tabindex = '9' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
                                         <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                             <i class="fa fa-question-circle-o" ></i>
                                         </span>
@@ -272,7 +272,7 @@ span.select2.select2-container.select2-container--default {
 
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
-                                            <textarea id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
+                                            <textarea  rows="1" id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
                                             <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
@@ -310,7 +310,7 @@ span.select2.select2-container.select2-container--default {
 
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
-                                            <textarea id="org_post_name" name="org_post_name" tabindex = '13' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
+                                            <textarea  rows="1" id="org_post_name" name="org_post_name" tabindex = '13' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
                                             <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
@@ -322,7 +322,7 @@ span.select2.select2-container.select2-container--default {
                             </div>
                         </div>
                         </div>
-
+<div class="form-with-tooltip">
                         <div class="row">
 
 
@@ -358,7 +358,7 @@ span.select2.select2-container.select2-container--default {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
-                                <textarea tabindex='16' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
+                                <textarea  rows="1" tabindex='16' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
                                     class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['resadd']) ? $caveatee_details[0]['resadd'] : ''; ?></textarea>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o" ></i>
@@ -441,6 +441,7 @@ span.select2.select2-container.select2-container--default {
                                         ?>
                                     </select>
                                 </div>
+                        </div>
                         </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">

@@ -131,15 +131,17 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             if ((getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE) || (getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE) ||  (getSessionData('efiling_details')['stage_id'] == TRASH_STAGE)) {
                                 $efiling_num_label_for_display = 'DRAFT-';;
                                 $efiling_num_button_background_class = 'btn-danger';
+                                $style = 'color: red';
                             } else {
                                 $efiling_num_label_for_display = '';
                                 $efiling_num_button_background_class = 'btn-success';
+                                $style = 'color: green';
                             }
                             $filing_num_label = '';
                             $final_submit_action = '';
 
                             if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
-                                echo '<a href="javascript::void(0); " class="quick-btn transparent-btn btn-danger ' . $efiling_num_button_background_class . ' btn-sm"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
+                                echo '<a href="javascript::void(0); " class="quick-btn transparent-btn btn-danger ' . $efiling_num_button_background_class . ' btn-sm" style="'.$style.'" id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                             }
                             ?>
                             <a class="quick-btn gray-btn" href="<?php echo base_url('history/efiled_case/view'); ?>"> E-filling History</a>

@@ -442,6 +442,8 @@ $routes->match(['GET', 'POST'], 'admin/EfilingAction/registerDoc', 'Admin\Efilin
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/noaction', 'Admin\EfilingAction::noaction');
 $routes->match(['GET', 'POST'], 'admin/efilingAction/disposed', 'Admin\EfilingAction::disposed');
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/markAsErrorCase', 'Admin\EfilingAction::markAsErrorCase');
+$routes->match(['GET', 'POST'], 'admin/EfilingAction/updateDocumentNumber', 'Admin\EfilingAction::updateDocumentNumber');
+
 
 
 

@@ -76,7 +76,7 @@ if ($segment->getSegment(2) != 'view') {
                         $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
                         $saved_appearing_for = explode('$$', $saved_appearing_for);
 
-                        $saved_filing_for = $appearing_for_details[0]['filing_for_parties'];
+                        $saved_filing_for = $appearing_for_details[0]['filing_for_parties'] ?? "";
                         $saved_filing_for = explode('$$', $saved_filing_for);
                     } else {
                         $saved_appearing_for = NULL;
