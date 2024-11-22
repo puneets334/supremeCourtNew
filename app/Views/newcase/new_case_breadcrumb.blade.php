@@ -982,7 +982,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 <div class="clearfix"><br></div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                 <a class="btn btn-success" id="markaserror" >Submit</a>
             </div>
             <?php echo form_close(); ?>
