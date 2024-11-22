@@ -179,7 +179,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                 </div>
                             </div>
                             <div class="row m-3">
-                                <div class="col-md-12 text-end">
+                                <div class="col-md-12 text-center">
                                     <?php
                                     $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                                     if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
@@ -192,7 +192,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                     )
                                                 ) {
                                                     $final_submit_action = TRUE;
-                                                    echo '<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
+                                                    echo '<button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
                                                 }
                                             }
                                             if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {

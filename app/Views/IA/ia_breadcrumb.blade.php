@@ -66,6 +66,52 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
 
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
+                    <?php
+                                    $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                                    if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                        if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
+                                            if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                                $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                                                if ((isset(getSessionData('efiling_details')['gras_payment_status']) &&    getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
+                                                    (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
+                                                        (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
+                                                    )
+                                                ) {
+                                                    $final_submit_action = TRUE;
+                                                    echo '<button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
+                                                }
+                                            }
+                                            if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
+                                                $final_submit_continue_action = TRUE;
+                                                ?>
+                                                <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
+                                        if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
+                                            if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                                if ((getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
+                                                    (getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
+                                                        (getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
+                                                    )
+                                                ) {
+                                                    $final_submit_action = TRUE;
+                                                    if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
+                                                        echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submitww</button>';
+                                                    }
+                                                }
+                                            }
+                                            if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
+                                                $final_submit_continue_action = TRUE;
+                                            ?>
+                                                <a class="btn btn-danger btn-sm" onclick="ActionToTrash('SLT')">Trash</a>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    ?>
                         <?php
                         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
                         $ArrayHOLD = array(HOLD);
@@ -135,15 +181,17 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             ) {
                                 $efiling_num_label_for_display = 'DRAFT-';;
                                 $efiling_num_button_background_class = 'btn-danger';
+                                $style = 'color: red';
                             } else {
                                 $efiling_num_label_for_display = '';
                                 $efiling_num_button_background_class = 'btn-success';
+                                $style = 'color: green';
                             }
                             $filing_num_label = '';
                             $final_submit_action = '';
 
                             if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
-                                echo '<a href="javascript::void(0); " class="quick-btn transparent-btn btn-danger btn-danger btn-sm ' . $efiling_num_button_background_class . ' btn-sm"  style="color: #000" id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a> &nbsp <strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
+                                echo '<a href="javascript::void(0); " class="quick-btn transparent-btn btn-danger btn-danger btn-sm ' . $efiling_num_button_background_class . ' btn-sm"  style="'.$style.'" id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a> &nbsp <strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                             }
 
                             ?>
