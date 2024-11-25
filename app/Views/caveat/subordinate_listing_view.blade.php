@@ -2,7 +2,7 @@
 $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
 if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
     $hidepencilbtn='true';
-} else {
+} else{
     $hidepencilbtn='false';
 }
 ?>
@@ -63,18 +63,18 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                             }
                             ?>
                             <tr>
-                                <td><?php echo_data($i++); ?></td>
-                                <td>
+                                <td data-key="#"><?php echo_data($i++); ?></td>
+                                <td data-key="Case Details">
                                     <?php
                                     echo '<b>'.$court_type_details.'</b>'; echo $case_details;
                                     $getData_earlierCourtArr=$exp['id'].'@@@'.$exp['registration_id'].'@@@'.$exp['court_type'].'@@@'.$exp['case_type_id'].'@@@'.$exp['casetype_name'];
                                     $earlierCourtArr=url_encryption($getData_earlierCourtArr);
                                     if($_SESSION['login']['userid']=='SC-ADMIN' && $exp['case_type_id']==0 || $exp['case_type_id'] ==null) {
                                         ?>
-                                        <button class="efiling_search btn btn-success btn-sm" data-toggle="modal" href="#earlier_court_updateModal" onclick="getDataEarlierCourtUpdateModal(<?="'$earlierCourtArr'";?>)">Update</button>
+                                        <button class="efiling_search btn btn-success btn-sm" data-toggle="modal" href="#earlier_court_updateModal" onclick="getDataEarlierCourtUpdateModal(<?php echo $earlierCourtArr; ?>)">Update</button>
                                     <?php } ?>
                                 </td>
-                                <td>
+                                <td data-key="Cause Title">
                                     <?php
                                     echo $causeTitle;
                                     if(!is_null($exp['fir_no']))
@@ -84,10 +84,10 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                     ?>
                                 </td>
                                 <!--<td><?php /*echo echo_data($exp['impugned_order_date']); */?></td>-->
-                                <td><?php echo echo_data(!empty($exp['impugned_order_date'])?date('d-m-Y',strtotime($exp['impugned_order_date'])):''); ?></td>
-                                <td><?php if($exp['is_judgment_challenged']=='t'){ echo 'Yes';}else{ echo 'No';} ?></td>
-                                <td><?php if($exp['judgment_type']=='F'){ echo 'Final';}else{ echo 'Interim';} ?></td>
-                                <td>
+                                <td data-key="Decision Date"><?php echo echo_data(!empty($exp['impugned_order_date'])?date('d-m-Y',strtotime($exp['impugned_order_date'])):''); ?></td>
+                                <td data-key="Order Challenged"><?php if($exp['is_judgment_challenged']=='t'){ echo 'Yes';}else{ echo 'No';} ?></td>
+                                <td data-key="Order Type"><?php if($exp['judgment_type']=='F'){ echo 'Final';}else{ echo 'Interim';} ?></td>
+                                <td data-key="Caveat Details">
                                     <?php
                                     $ct_code=$exp['court_type'];
                                     $l_state=$exp['cmis_state_id'];
@@ -109,16 +109,18 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                                                 echo $cc->aor_details . "<br>";
                                                 $sr_no++;
                                             }
-                                        } else {
+                                        } else{
                                             echo "Caveat not found";
                                         }
-                                    } else {
+                                    } else{
                                         echo "Caveat not found.";
                                     }
                                     ?>
                                 </td>
                                 <?php if($hidepencilbtn!='true') { ?>
-                                    <td class="efiling_search"><a href="<?php echo base_url('newcase/Subordinate_court/DeleteSubordinateCourt/' . url_encryption($exp['id'])); ?>">Delete</a></td>
+                                    <td data-key="Action" class="efiling_search">
+                                        <a href="<?php echo base_url('newcase/Subordinate_court/DeleteSubordinateCourt/' . url_encryption($exp['id'])); ?>">Delete</a>
+                                    </td>
                                 <?php } ?>
                             </tr>
                             <?php

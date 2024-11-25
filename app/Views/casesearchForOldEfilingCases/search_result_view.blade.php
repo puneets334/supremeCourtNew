@@ -152,7 +152,7 @@ if(empty($searched_case_details)) {
                                             if (isset($case_uncured_defects_details) && !empty($case_uncured_defects_details)) {
                                                 $msg = '<div class="alert table-responsive-sm""><div style="text-align:center;font-weight: bolder;text-decoration: underline">All DEFECTS </div>';
                                                 $msg .= '<table id="datatable-defects" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" >'
-                                                    . '<thead class="success"></th><th>#</th><th>Defect Description</th><th>Prepare Dt.</th><th>Remove Dt.</th></thead>'
+                                                    . '<thead class="success"><th>#</th><th>Defect Description</th><th>Prepare Dt.</th><th>Remove Dt.</th></thead>'
                                                     . '<tbody style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
                                                     // pr($case_uncured_defects_details->defects[0]->save_dt);
                                                 foreach ($case_uncured_defects_details as $res) {
@@ -162,10 +162,10 @@ if(empty($searched_case_details)) {
                                                         $remove_dt = (isset($re->rm_dt) && !empty($re->rm_dt) && ($re->rm_dt != '0000-00-00 00:00:00')) ? date('d-M-Y H:i:s', strtotime($re->rm_dt)) : $re->rm_dt;
                                                         $defect_description = (isset($re->Description)) ? $re->Description : NULL;
                                                         $msg .= '<tr>';
-                                                        $msg .= '<td>' . $i++ . '</td>';
-                                                        $msg .= '<td>' . $defect_description . '</td>';
-                                                        $msg .= '<td>' . $prep_dt . '</td>';
-                                                        $msg .= '<td>' . $remove_dt . '</td>';
+                                                        $msg .= '<td data-key="#">' . $i++ . '</td>';
+                                                        $msg .= '<td data-key="Defect Description">' . $defect_description . '</td>';
+                                                        $msg .= '<td data-key="Prepare Dt.">' . $prep_dt . '</td>';
+                                                        $msg .= '<td data-key="Remove Dt.">' . $remove_dt . '</td>';
                                                         $msg .= '</tr>';
                                                     }
                                                     $i+1;

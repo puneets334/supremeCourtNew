@@ -158,11 +158,12 @@
                                     @if($data['added_data'])
                                         @foreach($data['added_data'] as $added_data)
                                             <tr>
-                                                <td><span class="drag_to_sort fas fa-arrows-alt"></span>
+                                                <td data-key="#">
+                                                    <span class="drag_to_sort fas fa-arrows-alt"></span>
                                                     <input type="hidden" name="sortable_id[]" value="{{$added_data->id}}" />
                                                 </td>
-                                                <td>{{$added_data->advocate_title.' '.$added_data->advocate_name.', '.$added_data->advocate_type}}</td>
-                                                <td class="text-right py-0 align-middle">
+                                                <td data-key="Advocate Name">{{$added_data->advocate_title.' '.$added_data->advocate_name.', '.$added_data->advocate_type}}</td>
+                                                <td data-key="" class="text-right py-0 align-middle">
                                                     <span class="badge badge-light">{{date('d-m-Y h:i:s A', strtotime($added_data->entry_date))}}</span>
                                                     <div class="btn-group btn-group-sm advocate_remove_{{$added_data->id}}">
                                                         <a href="#" data-next_dt="{{$posted_data['next_dt']}}" data-id="{{$added_data->id}}" data-is_active="{{$added_data->is_active}}" class="@if($added_data->is_active == 't') btn-danger @else btn-warning @endif btn advocate_remove" title="@if($added_data->is_active == 't') Click to Remove @else Click to Restore @endif">
