@@ -436,11 +436,11 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-response" id="msg"><?php
-                                                            if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
-                                                                echo $_SESSION['MSG'];
-                                                            }
-                                                            unset($_SESSION['MSG']);
-                                                            ?>
+                            if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
+                                echo $_SESSION['MSG'];
+                            }
+                            unset($_SESSION['MSG']);
+                            ?>
                         </div>
                         <?php echo getSessionData('msg'); ?>
                         <div class="view_data">

@@ -164,28 +164,20 @@
                                 <input type="hidden" name="salt" id="salt" value="<?= base64_encode(random_bytes(32)) ?>">
                                 <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                                 <?php if (session()->getFlashdata('msg')) : ?>
-                                    <div class="alert alert-danger text-center flashmessage" role="alert">
+                                   <div class="alert alert-danger text-center flashmessage" role="alert">
                                         <div class="flas-msg-inner">
                                             <?= session()->getFlashdata('msg') ?>
                                         </div>
-                                    </div>
-                                <?php endif; ?>
-                                <!-- @if(isset($validation) && !empty($validation->getError('adv_email')))
-                                <div class="alert alert-danger text-center flashmessage" role="alert">
-                                    <b>{{ $validation->getError('adv_email')}}</b>
-                                </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('adv_mobile')))
-                                <div class="alert alert-danger text-center flashmessage" role="alert">
-                                    <b>{{ $validation->getError('adv_mobile')}}</b>
-                                </div>
-                                @endif -->
+                                    </div>  
+                                <?php endif; ?>  
                                 <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Password</label>
                                             <input type="password" class="form-control cus-form-ctrl" id="password" name="password" maxlength="20" autocomplete="off" placeholder="Password" onchange="changeData(this)">
+                                            <!-- <span class="alert-danger">Password must contain at least 8 characters, with uppercase, lowercase, numeric, and special characters.</span> -->
+                                            <span style="font-size: 12px; color: red;">Password: Min 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special.</span> 
                                         </div>
                                         <input id="txt_password" name="txt_password" type="hidden">
                                     </div>

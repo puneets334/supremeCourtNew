@@ -470,12 +470,14 @@ class Ajaxcalls extends BaseController {
                     $arr['registration_id'] = $registration_id;
                     $arr['step'] = 3;
                     $caveator = $this->Common_model->getCaveatDataByRegistrationId($arr);
+
                     $createdBy = !empty($caveator[0]->createdby) ? (int)$caveator[0]->createdby : NULL;
                     $case_type_id = !empty($caveator[0]->case_type_id) ? (int)$caveator[0]->case_type_id : NULL;
                     $tmpArr = array();
                     if (isset($caveator) && !empty($caveator)) {
                         if (isset($createdBy) && !empty($createdBy)) {
                             $userData = $this->Common_model->getUserDetailsById($createdBy);
+
                             if (isset($userData) && !empty($userData)) {
                                 $adv_sci_bar_id = !empty($userData[0]['adv_sci_bar_id']) ? (int)$userData[0]['adv_sci_bar_id'] : NULL;
                                 $usertype = !empty($userData[0]['ref_m_usertype_id']) ? (int)$userData[0]['ref_m_usertype_id'] : NULL;
@@ -499,12 +501,14 @@ class Ajaxcalls extends BaseController {
                         $params['whereFieldName'] = 'registration_id';
                         $params['whereFieldValue'] = $registration_id;
                         $efilingData = $this->Common_model->getData($params);
+
                         if (isset($efilingData) && !empty($efilingData)) {
                             $tmpArr['efiling_no'] = !empty($efilingData[0]->efiling_no) ? $efilingData[0]->efiling_no : NULL;
                         }
                         $finalArr['caveat_details'] = !empty($tmpArr) ? array((object)$tmpArr) : array(new stdClass());
                         $finalArr['caveator'] = !empty($caveator[0]) ? array($caveator[0]) : array(new stdClass());
                     }
+
                     //caveatee
                     $arr = array();
                     $arr['registration_id'] = $registration_id;
@@ -553,7 +557,10 @@ class Ajaxcalls extends BaseController {
 //                    }
 //                    $finalArr['earlier_courts'] = !empty($subordinate_data[0]) ? $tempArr : array(new stdClass());
                     // similar to new case 07/04/21
+
+
                     $subordinate_court_details = $this->Get_details_model->getSubordinateCourtData($registration_id);
+
                     $court_type = ''; //for high court first
                     $subTempArr = array();
                     if (isset($subordinate_court_details) && !empty($subordinate_court_details)) {
@@ -580,6 +587,7 @@ class Ajaxcalls extends BaseController {
                         }
                     }
                     $finalArr['earlier_courts'] = !empty($subordinate_court_details[0]) ? $subTempArr : array(new stdClass());
+
                     //upload doc
                     $efiled_docs_list = $this->View_model->get_index_items_list($registration_id);
                     if (isset($efiled_docs_list) && !empty($efiled_docs_list)) {
@@ -604,6 +612,7 @@ class Ajaxcalls extends BaseController {
                     break;
             }
         }
+
         $finalArr= json_encode($finalArr);
         $response = array();
         $config = config('Encryption');
@@ -615,10 +624,12 @@ class Ajaxcalls extends BaseController {
         }
         else if($file_type == 'caveat'){
             $key=$config->key;
+        // pr($key);
+
             $encrypted_string = $encrypter->encrypt($finalArr, $key);
             $response = $this->efiling_webservices->generateCaseDiary($encrypted_string);
         }
-
+        // pr($response);
 //        $response = array();
 //        $records_inserted = array();
 //        $records_inserted['main'] = 1;

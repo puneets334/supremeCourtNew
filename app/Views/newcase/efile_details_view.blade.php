@@ -1265,7 +1265,7 @@
                                  var alloted_to = '';
                                  var insertedDocNums = '';
                                  if (data.status == 'SUCCESS') {
-                                     alert('here');
+                                     //alert('here');
                                      diaryStatus = 'new_diary';
                                      if (data.diary_no) {
                                          diaryNo = data.diary_no;
