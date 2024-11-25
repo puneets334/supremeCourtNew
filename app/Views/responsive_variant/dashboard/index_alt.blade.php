@@ -1771,8 +1771,10 @@ td {
                 // $('#datatable-responsive').DataTable();
                 var Table = document.getElementById("datatable-responsive");
                 Table.innerHTML = "";
+                // var table = $('#datatable-responsive').DataTable().destroy();
                 $('#datatable-responsive').html('');
                 $('#datatable-responsive').html(res);
+                // $('#datatable-responsive').DataTable().reload();
 
             },
             error: function(xhr, status, error) {

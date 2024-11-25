@@ -4,6 +4,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable') && !empty($_SESSION['ef
 $disabled_status1 = 'pointer-events: none; cursor: default;';
 $allowed_users_array = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT];
 $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT];
+$sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
 ?>
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
@@ -14,6 +15,22 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
     }
 </style>
 <div class="dash-card dashboard-section">
+<div class="row">
+        <?php
+        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $sas)) {
+            echo '<div class="row"><div class="col-md-12 "><h5 class="defects-h5-msg">Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
+        }
+        if(!empty(getSessionData('efiling_details')['stage_id'])) { ?>
+            <div class="row">
+                <div class="col-12 defects-h5-table">
+                    <?php remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+<div class="dash-card dashboard-section">
+    
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
             <div class=" dashboard-bradcrumb">
@@ -611,17 +628,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                 </ul>
             @endif
         </form>
-        <?php
-        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-            echo '<div class="row mb-5"><div class="col-md-12 "><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
-        }
-        if(!empty(getSessionData('efiling_details')['stage_id'])) { ?>
-            <div class="row">
-                <div class="col-12 ashutosh">
-                    <?php remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
-                </div>
-            </div>
-        <?php } ?>
+        
         <div class="modal fade"
             id="FinalSubmitModal"
             role="dialog">
