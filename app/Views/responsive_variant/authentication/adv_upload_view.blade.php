@@ -15,10 +15,10 @@
 //echo $_SESSION['register_data']['password'];
 $star_requered = '<span style="color: red">*</span>'; ?>
 <?php $session = session(); ?>
-<div class="login-area">
+<div class="login-area full-loginarea-pg">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-12 col-md-6 col-lg-6 login-banner">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-6 login-banner d-none">
                 <div class="login-banner-inner">
                     <div class="banimg-sec">
                         <!-- <img src="<?= base_url() . 'assets/newDesign/' ?>images/SCI-banner.png" alt="Banner Image" title="Supreme Court of India" class="img-fluid"> -->
@@ -34,7 +34,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
             </div>
 
 
-            <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 login-section">
                 <div class="login-s-inner">
                     <?php $session = session(); ?>
                     <?php if($session->getFlashData('msg') == 'Successful.'){ ?>
@@ -58,34 +58,42 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                             <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
 
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">
-                                        <label class="radio-inline"><input type="radio" name="optradio" checked>Upload ID Proof </label>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
-                                        <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
-                                            <img src="<?php echo $_SESSION['image_and_id_view']['profile_photo']; ?>" width="250" height="250" alt="profile photo" style="border: 1px solid;">
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <div class="mb-3">
+                                        <label class="radio-inline mb-2"><input type="radio" name="optradio" checked>Upload ID Proof </label>
                                         <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-12 col-lg-8 mb-3">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-3">
                                                 <input accept=".jpg, .jpeg" class="form-control cus-form-ctrl"  type="file" required id="advocate_image" name="advocate_image" onchange="validateImage()">
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                                                 <input type="submit" value="UPLOAD" id="info_save" class="btnSubmit btn btn-sm quick-btn btn-primary" >
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
-                                        <a href="<?php echo base_url('register/AdvSignUp/final_submit'); ?>" class="btn btn-sm quick-btn btn-primary"> FINAL SUBMIT </a>
-                                    <?php } ?>
+                                <div class="col-12 col-sm-12 col-md-8 col-lg-8 ">
+                                    <div class="mb-3">
+                                        <div class="veryfy-img-sec">
+                                            <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
+                                                <img src="<?php echo $_SESSION['image_and_id_view']['profile_photo']; ?>" width="250" height="250" alt="profile photo" style="border: 1px solid;">
+                                            <?php } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="mb-3">
+                                        
+                                    </div>
+                                </div> -->
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                    <!-- <div class="center-buttons mb-0"> -->
+                                        <?php if (!empty($_SESSION['image_and_id_view']['profile_photo'])) { ?>
+                                            <a href="<?php echo base_url('register/AdvSignUp/final_submit'); ?>" class="quick-btn"> FINAL SUBMIT </a>
+                                        <?php } ?>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                         </form>

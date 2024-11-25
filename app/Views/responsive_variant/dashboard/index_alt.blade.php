@@ -936,10 +936,10 @@ td {
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
-                                                <div class="table-sec">
+                                                <div class="table-sec efiled-cases-table">
                                                     <div class="table-responsive" style="height: 800px; overflow-x: overlay;">
                                                         <table id="datatable-responsive"
-                                                            class="table table-striped custom-table">
+                                                            class="table table-striped custom-table ">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Sr. No.</th>
