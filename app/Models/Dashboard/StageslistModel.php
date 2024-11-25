@@ -115,13 +115,13 @@ class StageslistModel extends Model
             'allocated_users.first_name as allocated_user_first_name', 'allocated_users.last_name as allocated_user_last_name',
             'allocated_users.id as allocated_to_user_id', 'tea.allocated_on as allocated_to_da_on',
             '(CASE WHEN en.ref_m_efiled_type_id IN (1,3,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'2\',\'3\']) THEN \'Basic Detail\' 
-            WHEN en.ref_m_efiled_type_id IN (1,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'6\']) THEN \'Act Section\' 
+            WHEN en.ref_m_efiled_type_id IN (1,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'6\']) THEN \'Earlier Court\' 
             WHEN en.ref_m_efiled_type_id IN (1,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'7\']) THEN \'Earlier Court\' 
             WHEN en.ref_m_efiled_type_id IN (1,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'9\']) THEN \'Index\' 
             WHEN en.ref_m_efiled_type_id IN (1,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'10\']) THEN \'Payment\'
             WHEN en.ref_m_efiled_type_id IN (2,4) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'2\']) THEN \'Appearing For\' 
             WHEN en.ref_m_efiled_type_id IN (2,4) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'5\']) THEN \'Index\' 
-            WHEN en.ref_m_efiled_type_id IN (2,4) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'6\']) THEN \'Court Fee\' 
+            WHEN en.ref_m_efiled_type_id IN (2,4) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\''.NEW_CASE_COURT_FEE.'\']) THEN \'Court Fee\' 
             WHEN en.ref_m_efiled_type_id IN (2) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'7\']) THEN \'Share Document\' 
             WHEN ( (en.ref_m_efiled_type_id IN (1,5) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'13\'])) 
                     OR (en.ref_m_efiled_type_id IN (2,4) AND NOT (string_to_array(breadcrumb_status, \',\') && array[\'9\'])) 
@@ -179,7 +179,6 @@ class StageslistModel extends Model
             $builder->limit($limit,$offset);
         }
         $builder->orderBy('cs.activated_on', 'DESC');
-
         $query = $builder->get();
 
         if ($query->getNumRows() >= 1) {
