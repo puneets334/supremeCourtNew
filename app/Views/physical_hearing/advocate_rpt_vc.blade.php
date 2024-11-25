@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <?php $crnt_dt = date("d-m-Y"); ?>
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
     <style>
         .table_heading {
