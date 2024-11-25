@@ -200,17 +200,17 @@
                 }
                 ?>
             <tr>
-                <td><?php echo $i++;?></td>
-                <td><?php echo $doc['docdesc']; ?>  </td>
-                <td><?php echo $docnumber; ?>  </td>
-                <td><?php echo $doc['page_no']; ?>  </td>
-                <td><a href="<?php echo ('https://efiling.sci.gov.in/'.$doc_path); ?>" target="_blank"> View </a></td>
-                <td><textarea class="form-control cus-form-ctrl" id="remarks_<?php echo $doc['doc_id'];?>"></textarea></td>
+                <td data-key="#"><?php echo $i++;?></td>
+                <td data-key="Document Title"><?php echo $doc['docdesc']; ?>  </td>
+                <td data-key="Document No."><?php echo $docnumber; ?>  </td>
+                <td data-key="No. of Pages"><?php echo $doc['page_no']; ?>  </td>
+                <td data-key="View"><a href="<?php echo ('https://efiling.sci.gov.in/'.$doc_path); ?>" target="_blank"> View </a></td>
+                <td data-key="Remarks"><textarea class="form-control cus-form-ctrl" id="remarks_<?php echo $doc['doc_id'];?>"></textarea></td>
 
                 <?php
                 if(isset($doc_num) && !empty($doc_num)){ ?>
-                    <td></td>
-                    <td></td>
+                    <td data-key=""></td>
+                    <td data-key=""></td>
                <?php }
                 else {
 
@@ -232,7 +232,7 @@
                     <br><br>
                         <label class="text-danger"><?/*=$attache_with_doc_title*/?></label>
                     </td>-->
-                    <td>
+                    <td data-key="">
                         <?php
                         if(empty($doc['attached_with_doc_id'])){
                             $registerDisplay="display: block";

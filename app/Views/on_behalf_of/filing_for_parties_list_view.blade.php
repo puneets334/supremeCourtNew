@@ -1,17 +1,13 @@
 <?php
-
 $lbl_filing_for = $filing_for_details[0]['p_r_type'] == 'P' ? 'Petitioner / Complainant' : 'Respondent / Accused';
-
 if ($filing_for_details[0]['p_r_type'] == 'P') {
     $party_name_array = explode('##', $filing_for_details[0]['p_partyname']);
     $party_sr_no_array = explode('##', $filing_for_details[0]['p_sr_no']);
-} else {
+} else{
     $party_name_array = explode('##', $filing_for_details[0]['r_partyname']);
     $party_sr_no_array = explode('##', $filing_for_details[0]['r_sr_no']);
 }
-
 $parties_list = array_combine($party_sr_no_array, $party_name_array);
-
 $saved_filing_for = $filing_for_details[0]['filing_for_parties'];
 $saved_filing_for = explode('$$', $saved_filing_for);
 ?>
@@ -27,15 +23,13 @@ $saved_filing_for = explode('$$', $saved_filing_for);
             <tbody>
                 <?php
                 if (count($parties_list) > 0) {
-                        $i = 1;
-                        foreach ($parties_list as $key => $value) {
-
-                            if((in_array($key, $saved_filing_for))){
-                            
+                    $i = 1;
+                    foreach ($parties_list as $key => $value) {
+                        if((in_array($key, $saved_filing_for))) {                            
                             ?>
                             <tr>
-                                <td style="width: 5%"><?php echo $i;?></td>
-                                <td><?php echo_data($value); ?></td>                                                                
+                                <td data-key="#" style="width: 5%"><?php echo $i;?></td>
+                                <td data-key="<?php echo $lbl_filing_for; ?>"><?php echo_data($value); ?></td>                                                                
                             </tr>
                             <?php
                             $i++;

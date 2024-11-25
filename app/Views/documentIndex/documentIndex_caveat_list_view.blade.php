@@ -1,7 +1,6 @@
 <?php
 $allowed_users = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
 $user_stages = array(I_B_Approval_Pending_Stage, I_B_Defected_Stage, Document_E_Filed, IA_E_Filed);
-
 $allowed_admins = array(USER_ADMIN);
 $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pending_Admin_Stage, I_B_Defected_Stage, I_B_Defects_Cured_Stage, Document_E_Filed, IA_E_Filed);
 $uris = service('uri');
@@ -32,14 +31,12 @@ $uris = service('uri');
                     $sr = 1;
                     if(isset($efiled_docs_list) && !empty($efiled_docs_list)) {
                         foreach ($efiled_docs_list as $doc_list) {
-                            // pr($doc_list);
                             ?>
                             <tr>
-                                <td><?= $sr++; ?></td>                    
-                                <td>
+                                <td data-key="#"><?= $sr++; ?></td>                    
+                                <td data-key="Index - Title">
                                     <?php
                                     if($uris->getSegment(1)== 'efiling_search') {
-                                    //  die('1');
                                         $encrypted_string = url_encryption($doc_list['doc_id']);
                                         ?>
                                         <?php //echo_data($doc_list['docdesc']); ?>
@@ -47,59 +44,41 @@ $uris = service('uri');
                                             <?php /*echo_data($doc_list['doc_title']); */?>
                                             <img src="<?/*= base_url('assets/images/pdf.png') */?>">
                                         </a>-->
-
-                                    <?php } else { 
-                                        
-                                    //  die('2');
-                                     ?>
-
-                                    <?php
-
-                                    if (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) {  
-                                    //  die('3');
-
-                                        ?>
-                                        <?php //echo_data($doc_list['docdesc']); ?>
-
-                                        <!--<a target="_blank" href="<?php /*echo base_url($doc_list['file_path']); */?>">
-                                            <?php /*echo_data($doc_list['doc_title']); */?>
-                                            <img src="<?/*= base_url('assets/images/pdf.png') */?>">
-                                        </a>-->
-
-                                    <?php } elseif (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages)) {
-                                        
-                                        // die('4'); 
-                                        ?>
-                                        <?php echo_data($doc_list['docdesc']); ?>
-                                        <!--<a target="_blank" href="<?php /*echo base_url($doc_list['file_path']); */?>">
-                                            <?php /*echo_data($doc_list['doc_title']); */?>
-                                            <img src="<?/*= base_url('assets/images/pdf.png') */?>">
-                                        </a>-->
-                                    <?php } else { 
-                                        // die('5');
-                                        // print_r($doc_list['file_path']); die;
-                                         ?>
-                                        
-                                      <a target="_blank" href="<?php  echo base_url($doc_list['file_path'].'/'.$doc_list['file_name']);  ?>">
-                                            <?php  echo_data($doc_list['doc_title']);  ?>
+                                        <?php
+                                    } else{
+                                        if (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) { 
+                                            ?>
+                                            <?php //echo_data($doc_list['docdesc']); ?>
+                                            <!--<a target="_blank" href="<?php /*echo base_url($doc_list['file_path']); */?>">
+                                                <?php /*echo_data($doc_list['doc_title']); */?>
+                                                <img src="<?/*= base_url('assets/images/pdf.png') */?>">
+                                            </a>-->
+                                        <?php } elseif (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages)) {
+                                            ?>
                                             <?php echo_data($doc_list['docdesc']); ?>
-                                        </a> 
+                                            <!--<a target="_blank" href="<?php /*echo base_url($doc_list['file_path']); */?>">
+                                                <?php /*echo_data($doc_list['doc_title']); */?>
+                                                <img src="<?/*= base_url('assets/images/pdf.png') */?>">
+                                            </a>-->
+                                        <?php } else{
+                                            ?>                                        
+                                            <a target="_blank" href="<?php  echo base_url($doc_list['file_path'].'/'.$doc_list['file_name']);  ?>">
+                                                <?php
+                                                echo_data($doc_list['doc_title']);
+                                                echo_data($doc_list['docdesc']);
+                                                ?>
+                                            </a> 
+                                        <?php } ?>
                                     <?php } ?>
-                                    <?php }//end of else condition efiling_search .. ?>
                                 </td>
-
-                                <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
-                                    // die('6');
-                                    ?>
-                                    <td><?= echo_data($doc_list['icmis_docnum'] . ' / ' . $doc_list['icmis_docyear']); ?></td>
+                                <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) { ?>
+                                    <td data-key="Doc No."><?= echo_data($doc_list['icmis_docnum'] . ' / ' . $doc_list['icmis_docyear']); ?></td>
                                 <?php } ?>
-                                <?php if ($uris->getSegment(2) != 'view') { 
-                                    // die('7');
-                                     ?>
-                                    <td width="10%"> 
+                                <?php if ($uris->getSegment(2) != 'view') { ?>
+                                    <td data-key="Action" width="10%"> 
                                         <?php if (isset($doc_list['is_admin_checked'])) { ?> 
                                             <a onclick = "delete_index('<?php echo_data(url_encryption(trim($doc_list['doc_id'] . '$$' . $doc_list['registration_id']))); ?>')" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>
-                                            <?php } ?>
+                                        <?php } ?>
                                     </td>
                                 <?php } ?>
                                 <?php
