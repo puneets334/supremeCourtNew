@@ -176,8 +176,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="update_email" class="btn btn-success">Update</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="update_email" class="quick-btn">Update</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -205,8 +205,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="update_contact" class="btn btn-success">Update</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="update_contact" class="quick-btn">Update</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -321,8 +321,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="update_address" class="btn btn-success">Update</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="update_address" class="quick-btn">Update</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -528,8 +528,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="email_save" class="btn btn-success">Verify OTP</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="email_save" class="quick-btn">Verify OTP</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -557,8 +557,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="mobile_save" class="btn btn-success">Verify OTP</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="mobile_save" class="quick-btn">Verify OTP</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -630,9 +630,6 @@
     }
 </script>
 <script>
-    function goback() {
-        history.back();
-    }
     function formReset(id) {
         document.getElementById(id).form.reset();
     }
