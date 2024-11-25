@@ -1568,10 +1568,12 @@ td {
                                     <div class="row">
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="dash-card">
-                                                <div class="title-sec">
-                                                    <h5 class="unerline-title">My e-Filed Cases</h5>
-                                                    <button class="btn btn-secondary pull-right" onclick="showAllCases();" id="showAllCases">Show All Cases</button>
-                                                </div>
+                                                <!-- <div class="title-sec"> -->
+                                                    <!-- <h5 class="unerline-title">My e-Filed Cases</h5> -->
+                                                    <div class="end-buttons mt-0">
+                                                       <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button>
+                                                    </div>
+                                                <!-- </div> -->
                                                 <div class="calender-sec">
                                                     <div id="calendar"></div>
                                                 </div>
