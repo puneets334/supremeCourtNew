@@ -215,7 +215,7 @@ $allowed_users_trash = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTME
                     if (!empty(getSessionData('efiling_details')) && !empty(getSessionData('efiling_details')['efiling_no'])) {
                         echo '
                                                 <a href="javascript:void(0)"
-                                            class="quick-btn transparent-btn ' .
+                                            class="quick-btn gray-btn ' .
                             $efiling_num_button_background_class .
                             '" id="copyTarget_EfilingNumber" style="'.$style.'">' .
                             $filing_num_label .

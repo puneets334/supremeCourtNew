@@ -883,7 +883,7 @@ td {
 }
 
 table tr:nth-child(even) td {
-    background: #f5f5f5 !important
+    background: #f5f5f5 !important;
 }
 
 .tableDataLine th {
@@ -6725,8 +6725,8 @@ p.comnt-name {
 
 /* Table-css start  */
 .custom-table thead th {
-    background: #444;
-    color: #fff;
+    background: #d9d7d7df;
+    color: #000000;
     font-family: 'noto_sansmedium';
 }
 
@@ -6764,7 +6764,7 @@ p.comnt-name {
 }
 
 .table-striped tr:hover td {
-    background: #4443 !important;
+    background: #e5e5e533 !important;
 }
 
 .calender-table {
@@ -7247,12 +7247,12 @@ input.quick-btn.gray-btn:hover{background-color: #022651;}
 .tabs-section .nav-tabs li.nav-item .nav-link {
     padding: 15px 17px;
     border-radius: 21px 21px 0 0;
-    background: #d8d3d3;
-    /* background: #fff; */
+    /* background: #d8d3d3; */
     font-size: 14px;
     color: #000;
     font-family: 'noto_sansregular';
     border: none;
+    background: #d3d3d3;
 }
 
 .tabs-section .nav-tabs .nav-link .tab-num {
@@ -8647,3 +8647,10 @@ form span.fa.fa-calendar-o.form-control-feedback.left {position: absolute;right:
 
 .title-comnt-bref.doc-byme-tble {width: 530px !important;}
 .title-comnt-bref.doc-byme-tble .table-height-div {height: auto !important;max-height: 350px;}
+/* 25-11-24 start */
+.view-accordion .accordion-item {border: 1px solid #123d8c36;border-radius: 15px !important;overflow: hidden;border-top: 1px solid #123d8c36 !important;}
+.view-accordion .accordion-item + .accordion-item {margin-top: 5px;}
+.view-accordion .accordion-button {transition: background 0.4s;background: #f0f0f0;}
+.view-accordion .accordion-button:not(.collapsed) , .view-accordion .accordion-button:hover {background: #0d48be;color: #fff;}
+.efiled-cases-table .table td .btn {font-size: 14px;text-wrap: nowrap;}
+/* 25-11-24 End */

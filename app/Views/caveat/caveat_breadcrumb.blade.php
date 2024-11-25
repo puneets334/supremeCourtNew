@@ -181,7 +181,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         }
                     }						
                     if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
-                        echo '<a href="javascript::void(0); " class="quick-btn transparent-btn '.$efiling_num_button_background_class.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
+                        echo '<a href="javascript::void(0); " class="quick-btn gray-btn '.$efiling_num_button_background_class.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                         echo '&nbsp; <a class="quick-btn gray-btn" href="' . base_url('history/efiled_case/view ') . '">eFiling History</a>';						
                     }
                   

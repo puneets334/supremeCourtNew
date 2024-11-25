@@ -362,7 +362,11 @@ ul.innpg-ul {
     padding: 12px 20px;
 }
 /* Inner - Pages CSS End  */
-
+/* 25-11-24 start  */
+.login-area.full-loginarea-pg .login-section {border-radius: 20px;min-height: 500px;}
+.login-area.full-loginarea-pg .login-section  .login-s-inner {border-radius: 15px;}
+.login-area.full-loginarea-pg .veryfy-img-sec {margin-left: 50px;width: fit-content;padding: 7px;border: 1px dashed #dddddd;}
+/* 25-11-24 End  */
 
 /* @media (max-width: 767px){
 
@@ -440,6 +444,7 @@ ul.innpg-ul {
     .regester-txts .regester-links {flex-direction: column;text-align: center;gap: 10px;margin: 0;}
     .top-header .font-action-sec {left:-11px;}
     .center-buttons , .end-buttons , .start-buttons{flex-wrap: wrap;}
+    .login-area.full-loginarea-pg .veryfy-img-sec {margin: 0 auto;}
 
 }
 
