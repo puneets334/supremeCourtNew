@@ -276,7 +276,7 @@ class ForgetPasswordController extends BaseController
             $message="OTP for changing SC-EFM password is: ".$email_otp_is." ,Please do not share it with any one.";
             send_mail_msg($to_email, $subject, $message);
         }
-        $this->session->setFlashdata('msg', 'OTP sent successfully!');
+        $this->session->setFlashdata('msg_success', 'OTP sent successfully!');
         // pr($_SESSION);
         return $this->AdvOtp();    
         // return redirect()->to(base_url('register/AdvOtp'));
@@ -370,45 +370,45 @@ class ForgetPasswordController extends BaseController
             //     ];
             // }
                // Initialize default validation rules for both OTPs, even before conditional logic
-$rules = [
-    'adv_mobile_otp' => [
-        "label" => "Mobile OTP",
-        "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
-    ],
-    'adv_email_otp' => [
-        "label" => "Email OTP",
-        "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
-    ],
-];
+            $rules = [
+                'adv_mobile_otp' => [
+                    "label" => "Mobile OTP",
+                    "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+                ],
+                'adv_email_otp' => [
+                    "label" => "Email OTP",
+                    "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+                ],
+            ];
 
 // Specific handling for "Forgot Password"
-if ($registerType == 'Forgot Password') {
-   
-    // If only Mobile OTP is provided and Email OTP is empty
-    if (!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
-        $rules = [
-            'adv_mobile_otp' => [
-                "label" => "Mobile OTP",
-                "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
-            ]
-        ];
-        $this->session->setFlashdata('msg', 'Mobile OTP Required');
-    }
-    // If only Email OTP is provided and Mobile OTP is empty
-    elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
-        $rules = [
-            'adv_email_otp' => [
-                "label" => "Email OTP",
-                "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
-            ]
-        ];
-        $this->session->setFlashdata('msg', 'Email OTP Required');
-    }
-    // If neither OTP is provided, ensure a message is shown but rules remain intact
-    elseif (empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
-        $this->session->setFlashdata('msg', 'Either Mobile OTP or Email OTP is required.');
-    }
-}
+        if ($registerType == 'Forgot Password') {
+        
+            // If only Mobile OTP is provided and Email OTP is empty
+            if (!empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+                $rules = [
+                    'adv_mobile_otp' => [
+                        "label" => "Mobile OTP",
+                        "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+                    ]
+                ];
+                $this->session->setFlashdata('msg', 'Mobile OTP Required');
+            }
+            // If only Email OTP is provided and Mobile OTP is empty
+            elseif (!empty($this->request->getPost('adv_email_otp')) && empty($this->request->getPost('adv_mobile_otp'))) {
+                $rules = [
+                    'adv_email_otp' => [
+                        "label" => "Email OTP",
+                        "rules" => 'required|numeric|trim|min_length[6]|max_length[6]',
+                    ]
+                ];
+                $this->session->setFlashdata('msg', 'Email OTP Required');
+            }
+            // If neither OTP is provided, ensure a message is shown but rules remain intact
+            elseif (empty($this->request->getPost('adv_mobile_otp')) && empty($this->request->getPost('adv_email_otp'))) {
+                $this->session->setFlashdata('msg', 'Either Mobile OTP or Email OTP is required.');
+            }
+        }
                 if ($this->validate($rules) === FALSE) {
                     $data['validation'] = $this->validator; 
            // pr($validationRules);
@@ -596,8 +596,10 @@ if ($registerType == 'Forgot Password') {
 			$this->load->view('login/login_footer');*/
             $this->render('responsive_variant.authentication.update_password_view', $data);
         } else if(!$this->valid_password($decoded_password)) {
-            $this->session->setFlashdata('msg', 'Password policy has to be followed.');
-            return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
+            //$this->session->setFlashdata('msg', 'Password policy has to be followed.');
+            //return redirect()->to(base_url('register/ForgetPassword/update_user_password'));
+            $this->session->setFlashdata('msg', 'Failed. Password policy has to be followed.');
+            return redirect()->to(base_url('Register/ForgetPassword'));
         } else {
             /* $data['captcha']['image'] = $captcha_value['image'];
             $data['captcha']['word'] = $captcha_value['word'];

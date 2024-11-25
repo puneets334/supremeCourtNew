@@ -2,9 +2,6 @@
     @extends('layout.app')
     @section('content')
 @endif
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
-@include('layout.header')
-@endif
 
 <?php 
 //pr(getSessionData('login')['ref_m_usertype_id']) USER_ADMIN;
@@ -781,9 +778,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     </div>
 </div>
 <!-- getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN -->
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN)
-    @endsection
-@endif
 
 
  
