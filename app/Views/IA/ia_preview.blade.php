@@ -78,7 +78,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                     </a> -->
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="accordion" id="accordionExample">
+                                                    <div class="accordion view-accordion acrdion-with-edit" id="accordionExample">
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header" id="headingOne">
                                                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -95,20 +95,21 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" id="headingTwo">
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-12 <?php } else { ?> col-sm-12 <?php } ?>" id="headingTwo">
                                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" <?php echo $area_extended; ?>>
                                                                         <?php
                                                                         if (!isset($filing_for_details) || empty($filing_for_details)) { ?>
                                                                             <font style="color:red;"> <b>Filing For</b></font>
                                                                         <?php } else { ?> <b> Filing For</b><?php } ?>
+                                                                        <?php
+                                                                if ($hidepencilbtn != 'true') { ?>
+                                                                    <!-- <div class="col-sm-1"> -->
+                                                                        <a href="<?php echo base_url('on_behalf_of'); ?>"><i class="fa fa-pencil efiling_search"></i></a>
+                                                                    <!-- </div> -->
+                                                                <?php } ?>
                                                                     </button>
                                                                 </h2>
-                                                                <?php
-                                                                if ($hidepencilbtn != 'true') { ?>
-                                                                    <div class="col-sm-1">
-                                                                        <a href="<?php echo base_url('on_behalf_of'); ?>"><i style=" color:black; padding-top: 20px !important;" class="fa fa-pencil efiling_search"></i></a>
-                                                                    </div>
-                                                                <?php } ?>
+                                                                
                                                             </div>
                                                             <div id="collapseTwo" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
@@ -118,7 +119,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" id="headingThree">
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" id="headingThree">
                                                                     <button class="accordion-button collapsed"
                                                                         type="button" data-bs-toggle="collapse"
                                                                         data-bs-target="#collapseThree"
@@ -128,16 +129,16 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                                         if (!isset($efiled_docs_list) || empty($efiled_docs_list)) { ?>
                                                                             <font style="color:red;"> <b>Documents</b></font>
                                                                         <?php } else { ?> <b>Documents</b><?php } ?>
+                                                                        <?php
+                                                                if ($hidepencilbtn != 'true') { ?>
+                                                                    <!-- <div class="col-sm-1"> -->
+                                                                        <a href="<?php echo base_url('documentIndex'); ?>"><i 
+                                                                                class="fa fa-pencil efiling_search"></i></a>
+                                                                    <!-- </div> -->
+                                                                <?php } ?>
                                                                     </button>
                                                                 </h2>
-                                                                <?php
-                                                                if ($hidepencilbtn != 'true') { ?>
-                                                                    <div class="col-sm-1">
-                                                                        <a href="<?php echo base_url('documentIndex'); ?>"><i
-                                                                                style="color:black; padding-top:20px;"
-                                                                                class="fa fa-pencil efiling_search"></i></a>
-                                                                    </div>
-                                                                <?php } ?>
+                                                                
                                                             </div>
                                                             <div id="collapseThree"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
@@ -150,17 +151,18 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                         </div>
                                                         <div class="accordion-item">
                                                             <div class="row">
-                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-11 <?php } else { ?> col-sm-12 <?php } ?>" id="headingFour">
+                                                                <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" id="headingFour">
                                                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" <?php echo $area_extended; ?>>
                                                                         <?php if (!isset($payment_details) || empty($payment_details)) { ?><span style="color:red;"> <b>Fees Paid</b></span><?php } else { ?> <b>Fees Paid</b><?php } ?>
+                                                                        <?php
+                                                                if ($hidepencilbtn != 'true') { ?>
+                                                                    <!-- <div class="col-sm-1"> -->
+                                                                        <a href="<?php echo base_url('IA/courtFee'); ?>"><i class="fa fa-pencil efiling_search"></i></a>
+                                                                    <!-- </div> -->
+                                                                <?php } ?>
                                                                     </button>
                                                                 </h2>
-                                                                <?php
-                                                                if ($hidepencilbtn != 'true') { ?>
-                                                                    <div class="col-sm-1">
-                                                                        <a href="<?php echo base_url('IA/courtFee'); ?>"><i style="color:black; padding-top:10px;" class="fa fa-pencil efiling_search"></i></a>
-                                                                    </div>
-                                                                <?php } ?>
+                                                                
                                                             </div>
                                                             <div id="collapseFour"
                                                                 class="accordion-collapse collapse <?php echo $collapse_class; ?>"
