@@ -1,6 +1,6 @@
 <?php
 if(!empty(getSessionData('login'))){
-    $extends = 'layout.app';
+    $extends = 'layout.advocateApp';
 } else {
     $extends = 'layout.frontApp';
 }

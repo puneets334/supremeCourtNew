@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
