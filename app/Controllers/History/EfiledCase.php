@@ -4,16 +4,19 @@ use App\Controllers\BaseController;
 use App\Models\Common\CommonModel;
 use App\Models\History\HistoryModel;
 use App\Models\MiscellaneousDocs\GetDetailsModel;
+use App\Models\UploadDocuments\UploadDocsModel;
 
 class EfiledCase extends BaseController {
     protected $History_model;
     protected $Common_model;
     protected $Get_details_model;
+    protected $UploadDocsModel;
     public function __construct() {
         parent::__construct();
         $this->History_model = new HistoryModel();
         $this->Common_model = new CommonModel();
         $this->Get_details_model = new GetDetailsModel();
+        $this->UploadDocsModel = new UploadDocsModel();
     }
 
     public function index() {
@@ -45,6 +48,7 @@ class EfiledCase extends BaseController {
 
                     $result = $this->History_model->get_new_case_details($regid);
                    
+                    // $uploaded_docs = $this->UploadDocsModel->get_uploaded_pdfs($regid);
                     $uploaded_docs = $this->Common_model->get_uploaded_documents($regid);
                     $created_by = $result[0]['created_by'];
                 }
