@@ -342,6 +342,32 @@ class LoginModel extends Model
     } //End of function get_user_block_dtl ..
 
     //XXXXXXXXXXXXXXXXXXXXX work End XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    function isNewUser($usr)
+    {
+       //$userid = strtoupper($usr);
+        $builder = $this->db->table('efil.tbl_users as users');
+        $builder->select('users.*');
+     
+        $builder->where('users.is_first_pwd_reset', true);
+        $builder->groupStart()
+        ->orWhere('users.userid', $usr)
+        ->orWhere('users.moblie_number', $usr)
+        ->orWhere('users.emailid', $usr) 
+        ->orWhere('users.emailid', strtoupper($usr));
+        $builder->groupEnd();
+        // $sql = $builder->getCompiledSelect();
+        // pr($sql);
+        $query = $builder->get();
+        $result = $query->getRow();
 
+        if ($query->getNumRows() == 1) {
+          
+            return true;
+
+        } else {
+           
+            return false;
+        }
+    }
 
 }

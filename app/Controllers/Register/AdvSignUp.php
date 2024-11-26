@@ -178,7 +178,9 @@ class AdvSignUp extends BaseController {
                 'm_state_id' => $st_id,
                 'm_district_id' => $dist_id,
                 'm_pincode' => $_POST['pincode'],
-                'create_ip' => get_client_ip()
+                'create_ip' => get_client_ip(),
+                'is_first_pwd_reset' => true,
+
             );
 
             if ($_SESSION['adv_details']['register_type'] == 'Advocate On Record') {
