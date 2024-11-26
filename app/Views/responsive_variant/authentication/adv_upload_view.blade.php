@@ -39,7 +39,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                     <?php $session = session(); ?>
                     <?php if($session->getFlashData('msg') == 'Successful.'){ ?>
                         <div class="text-success">
-                        <?php echo "<div style='color:green; border: 2px solid green; background-color: #d4edda; padding: 10px; margin: 10px 0;'>" . $session->getFlashData('msg') . "</div>";
+                        <?php echo "<div style='color:green; border: 2px solid green; background-color: #d4edda; padding: 10px; margin: 10px 0; font-weight: bold;'>" . $session->getFlashData('msg') . "</div>";
  ?> 
                     </div>
                     <?php }else{ ?>
