@@ -17,9 +17,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
 <div class="dash-card dashboard-section">
 <div class="row">
         <?php
-        if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $sas)) {
-            echo '<div class="row"><div class="col-md-12 "><h5 class="defects-h5-msg">Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
-        }
+        
         if(!empty(getSessionData('efiling_details')['stage_id'])) { ?>
             <div class="row">
                 <div class="col-12 defects-h5-table">
@@ -90,6 +88,9 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             <li><a class="red-dot"> <span class="mdi mdi-record"></span> Required </a></li>
                         </ul>
                     </div>
+                    <?php if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $sas)) {
+                            echo '<div class="row"><div class="col-md-12 "><h5 class="defects-h5-msg">Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
+                        }?>
                 </div>
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
@@ -123,13 +124,14 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                 }
                             }
                         }
+                        
                         $stages_array = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                             // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                             if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                if ($segment->getSegment(2) == 'view') {
+                                // if ($segment->getSegment(2) == 'view') {
                                     echo '<a href="' . base_url('newcase/finalSubmit') . '" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
-                                }
+                                // }
                             }
                         }
                         ?>
@@ -147,6 +149,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             // render('templates.user_efil_num_action_bar');
                         ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                         
                         <?php
                             if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
                                 $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);

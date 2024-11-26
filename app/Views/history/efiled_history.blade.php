@@ -130,6 +130,7 @@
                                                                     <tbody>
                                                                         <?php
                                                                         $i = 0;
+                                                                        // pr($stage);
                                                                         foreach ($stage as $stg) {
                                                                             $activate_from_array = array();
                                                                             $stage_name = (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN) ? $stg['admin_stage_name'] : $stg['user_stage_name'];

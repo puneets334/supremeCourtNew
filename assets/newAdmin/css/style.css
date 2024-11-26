@@ -8655,8 +8655,8 @@ form span.fa.fa-calendar-o.form-control-feedback.left {position: absolute;right:
 .efiled-cases-table .table td .btn {font-size: 14px;text-wrap: nowrap;}
 /* 25-11-24 End */
 h5.defects-h5-msg {
-    margin-bottom: 10px;
-    font-size: 18px;
-    color: #b30000;
+    margin-bottom: 0px;
+    font-size: 14px;
+    color: #000;
 }
 .defects-h5-table .table td {color: #b30000;}
