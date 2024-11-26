@@ -26,6 +26,9 @@ class LoginModel extends Model
         $builder->where('users.userid', $userid);
         $builder->orWhere('users.moblie_number', $usr);
         $builder->orWhere('users.emailid', $usr);
+        $builder->orWhere('users.emailid', strtoupper($usr));
+        //     $sql = $builder->getCompiledSelect();
+        // pr($sql);
         $query = $builder->get();
         $result = $query->getRow();
 
