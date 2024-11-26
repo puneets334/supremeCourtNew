@@ -113,6 +113,7 @@ class RegisterModel extends Model
             $builder->WHERE('moblie_number', $mobile);
         } else if (!empty($email)) {
             $builder->WHERE('emailid', $email);
+            $builder->orWhere('emailid', strtoupper($email));
         }
         if (!empty($mobile) || !empty($email)) {
             $builder->UPDATE($password);
