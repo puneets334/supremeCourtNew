@@ -141,10 +141,10 @@
                                                         @endphp
                                                         <tr>
                                                             <?php $href = ($total_count > 0) ? base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))) : ''; ?>
-                                                            <td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>
+                                                            <td data-key="Stages"><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>
                                                                 {{ isset($row->admin_stage_name) ? $row->admin_stage_name : '' }}</a>
                                                             </td>
-                                                            <td> <a href="<?php echo $href; ?>"></i>{{ $total_count }}</a> </td>
+                                                            <td data-key="Count"> <a href="<?php echo $href; ?>"></i>{{ $total_count }}</a> </td>
                                                         </tr>
                                                     @endif
                                                 @endforeach
@@ -215,10 +215,10 @@
                                                         @endphp	                                                                       
                                                         <tr>
                                                             <?php $href = ($total_count > 0) ? base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))) : ''; ?>	
-                                                            <td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>
+                                                            <td data-key="Stages"><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>
                                                                 {{ isset($row->admin_stage_name) ? $row->admin_stage_name : '' }}</a>
                                                             </td>
-                                                            <td> <a href="<?php echo $href; ?>"></i>{{ $total_count }}</a> </td>
+                                                            <td data-key="Count"> <a href="<?php echo $href; ?>"></i>{{ $total_count }}</a> </td>
                                                         </tr>
                                                     @endif
                                                 @endforeach

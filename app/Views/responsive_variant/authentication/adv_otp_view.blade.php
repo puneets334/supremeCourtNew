@@ -57,6 +57,12 @@
                         ?>
                         <!-- <h4> <strong><?php // echo $title; ?></strong></h4> -->
                         <input type="hidden" name="register_type" value="<?php echo $title; ?>">
+                        <?php if (session()->getFlashdata('msg_success')) : ?>
+                                   
+                                   <div class="text-success" style="border: 2px solid green; background-color: #e6ffe6; padding: 10px; border-radius: 5px;">
+                                       <b><?= session()->getFlashdata('msg_success') ?></b>
+                                   </div>
+                               <?php endif; ?>
                         <?php if (session()->getFlashdata('msg')) : ?>
                             <div class="alert alert-danger text-center flashmessage" role="alert">
                                 <div class="flas-msg-inner">

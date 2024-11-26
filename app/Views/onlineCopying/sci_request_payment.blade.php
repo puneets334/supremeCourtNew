@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
 <?php
 extract($_POST);

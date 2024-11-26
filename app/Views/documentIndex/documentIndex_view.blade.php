@@ -308,7 +308,6 @@
         });
 
         $('#create_index_form').on('submit', function() {
-            event.preventDefault();
             var indexItem = $('#doc_type option:selected').text();
             if (indexItem === "INTERLOCUTARY APPLICATION") {
                 var subIndexItem = $('#sub_doc_type').val();
@@ -596,7 +595,6 @@
         }
 
         function reload_document_index() {
-            event.preventDefault();
             $('#nextButton').hide();
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

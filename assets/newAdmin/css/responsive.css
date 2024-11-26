@@ -124,6 +124,16 @@
     }
     .tiles-comnts .title-comnt-bref.doc-byme-tble {right: 0;width: 300px !important;}
 .tiles-comnts .tile-comnt:hover .title-comnt-bref.doc-byme-tble:after {left: auto;right: 26px;}
+/* 25-11-24 start  */
+.tabs-section .nav-tabs {top: 0!important;padding: 15px 0 40px !important;row-gap: 4px;left: -17px;overflow: hidden;}
+.tabs-section .nav-tabs li.nav-item .nav-link {padding: 12px 20px!important;border-radius:0 !important;position: relative;margin-right: 20px;}
+.tabs-section .nav-tabs li.nav-item+li.nav-item {margin-left: 0px!important;}
+.tabs-section .nav-tabs li.nav-item .nav-link:before {content: '';position: absolute;top: 0;right: -19px;height: 100%;width: 20px;background: #d3d3d3;clip-path: polygon(100% 50%, 0 0, 0 100%);}
+.tabs-section .nav-tabs li.nav-item .nav-link.active:before , .tabs-section .nav-tabs li.nav-item .nav-link:hover:before, .tabs-section .nav-tabs li.nav-item .nav-link:focus:before{background: #0d48be;}
+.tabs-section .nav-tabs li.nav-item .nav-link.active:after, .tabs-section .nav-tabs li.nav-item .nav-link:hover:after, .tabs-section .nav-tabs li.nav-item .nav-link:focus:after{background: #0d48be;}
+.tabs-section .nav-tabs li.nav-item .nav-link:after {content: '';position: absolute;top: 0;left: -19px;height: 100%;width: 20px;background: #d3d3d3;clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 100% 50%);}
+/* 25-11-24 End  */
+
 }
 
 @media screen and (max-width:380px) and (min-width:300px){

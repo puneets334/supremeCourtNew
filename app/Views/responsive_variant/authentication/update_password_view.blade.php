@@ -122,40 +122,17 @@
                 <div class="col-12 col-sm-12 col-md-5 col-lg-5 login-section">
                     <div class="login-s-inner">
                         <?php $session = session(); ?>
-                        <!-- @if($session->getFlashdata('msg'))
-                            <div class="alert alert-danger text-center flashmessage" role="alert">
-                                {{ esc($session->getFlashdata('msg')) }}
-                            </div>
-                        @endif
-                        @if($session->has('information'))
-                        <div class="uk-text-primary">
-                            <b>{{esc($session->get('information'))}}</b>
-                        </div>
-                        @endif
-                        @if(isset($validation) && !empty($validation->getError('txt_username')))
-                        <div class="alert alert-danger text-center flashmessage" role="alert">
-                            <b>{{ $validation->getError('txt_username')}}</b>
-                        </div>
-                        @endif
-                        @if(isset($validation) && !empty($validation->getError('txt_password')))
-                        <div class="alert alert-danger text-center flashmessage" role="alert">
-                            <b>{{ $validation->getError('txt_password')}}</b>
-                        </div>
-                        @endif -->
+                        <?php if (session()->getFlashdata('not_match')) : ?>
+                                   
+                                   <div class="text-danger" style="border: 2px solid red; background-color: #ffcccb; padding: 10px; border-radius: 5px;">
+                                       <b><?= session()->getFlashdata('not_match') ?></b>
+                                   </div>
+                               <?php endif; ?> 
                         <div class="loin-form">
                             <?php
                             $attributes = array("class" => "form-horizontal", "id" => "loginform", "name" => "loginform", 'autocomplete' => 'off');
                             echo form_open("register/ForgetPassword/update_user_password", $attributes);
-                                $segment = service('uri');
-                                // pr($segment->getSegment(2));
-                                // if ($segment->getSegment(2) == 'AdvocateOnRecord') {
-                                //     $title = 'Advocate On Record';
-                                // } elseif ($segment->getSegment(3) == 'update_user_password') {
-                                //     $title = 'Update Password';
-                                // } else {
-                                //     $title = 'Party In Person';
-                                // }
-                                //
+                                $segment = service('uri'); 
                                 $title = 'Enter New Password';
                                  ?>
                                 <div class="httxt">
@@ -163,29 +140,19 @@
                                 </div>
                                 <input type="hidden" name="salt" id="salt" value="<?= base64_encode(random_bytes(32)) ?>">
                                 <input type="hidden" name="register_type" value="<?php echo $title; ?>">
-                                <?php if (session()->getFlashdata('msg')) : ?>
-                                    <div class="alert alert-danger text-center flashmessage" role="alert">
-                                        <div class="flas-msg-inner">
-                                            <?= session()->getFlashdata('msg') ?>
-                                        </div>
-                                    </div>
-                                <?php endif; ?>
-                                <!-- @if(isset($validation) && !empty($validation->getError('adv_email')))
-                                <div class="alert alert-danger text-center flashmessage" role="alert">
-                                    <b>{{ $validation->getError('adv_email')}}</b>
-                                </div>
-                                @endif
-                                @if(isset($validation) && !empty($validation->getError('adv_mobile')))
-                                <div class="alert alert-danger text-center flashmessage" role="alert">
-                                    <b>{{ $validation->getError('adv_mobile')}}</b>
-                                </div>
-                                @endif -->
+                               
                                 <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Password</label>
-                                            <input type="password" class="form-control cus-form-ctrl" id="password" name="password" maxlength="20" autocomplete="off" placeholder="Password" onchange="changeData(this)">
+                                            <input type="password" class="form-control cus-form-ctrl" id="password" name="password" maxlength="20" autocomplete="off" placeholder="Password" onchange="changeData(this)"> 
+                                            <?php if (isset($validation) && $validation->hasError('password')): ?>
+                                                <div class="text-danger">
+                                                    <?= $validation->getError('password'); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                            <span style="font-size: 12px; color: #746c6c;">Password: Min 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special.</span> 
                                         </div>
                                         <input id="txt_password" name="txt_password" type="hidden">
                                     </div>
@@ -193,6 +160,11 @@
                                         <div class="mb-3">
                                             <label for="" class="form-label">Confirm Password</label>
                                             <input class="form-control cus-form-ctrl" type="password" name="confirm_password" id="confirm_password" autocomplete="off" maxlength="20"  placeholder="Confirm Password" onchange="changeData(this)">
+                                            <?php if (isset($validation) && $validation->hasError('confirm_password')): ?>
+                                                <div class="text-danger">
+                                                    <?= $validation->getError('confirm_password'); ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
@@ -201,7 +173,6 @@
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                             <div class="mb-3">
                                                 <button type="submit" name="submit" value="submit" class="btn quick-btn">UPDATE PASSWORD</button>
-                                                <!-- <button class="btn quick-btn ">SEND OTP</button> -->
                                             </div>
                                         </div>
                                     </div>

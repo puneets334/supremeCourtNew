@@ -86,15 +86,15 @@
                             foreach ($result as $value) {
                                 ?>
                                 <tr>
-                                    <td width="1%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td> 
-                                    <td width="19%"> <?php if ($value['file_name'] != '') { ?>
+                                    <td data-key="#" width="1%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td> 
+                                    <td data-key="Notice & Form &nbsp;&nbsp;(Dated) " width="19%"> <?php if ($value['file_name'] != '') { ?>
                                             <a href="<?php echo base_url('assistance/news_event/news_pdf/' . url_encryption($value['id'])); ?>" target="blank">    <i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>&nbsp; <?php echo htmlentities($value['news_title'], ENT_QUOTES); ?></a><br>
                                         <?php } else { ?><p style="color:#000"><?php echo htmlentities($value['news_title'], ENT_QUOTES); ?></p>
                                         <?php } ?>
                                         (<?php echo htmlentities(date('d-m-Y', strtotime($value['create_date'])), ENT_QUOTES); ?>)
                                     </td> 
 
-                                    <td width="5%">
+                                    <td data-key="Action" width="5%">
                                         <a href="<?php echo base_url('assistance/notice/view/' . url_encryption($value['id'])); ?>" class="btn btn-warning btn-xs" ><i class="fa fa-edit"></i> Edit</a>
                                         <?php if ($value['is_active'] == 't') { ?>
                                             <a href="<?php echo base_url('assistance/notice/deactive_notice/' . url_encryption($value['id'])); ?>" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure, want to Deactivate this Notice?')">Deactivate</a><?php } ?>

@@ -36,9 +36,8 @@
                         <tbody>
                         @foreach($data['slip_data'] as $added_data)
                             <tr>
-                                <td class="center">{{$sno++}}
-                                </td>
-                                <td class="left strong">{{$added_data->advocate_title.' '.$added_data->advocate_name.', '.$added_data->advocate_type}}</td>
+                                <td data-key="#" class="center">{{$sno++}}</td>
+                                <td data-key="Name of Advocates" class="left strong">{{$added_data->advocate_title.' '.$added_data->advocate_name.', '.$added_data->advocate_type}}</td>
                             </tr>
                         @endforeach
                         </tbody>

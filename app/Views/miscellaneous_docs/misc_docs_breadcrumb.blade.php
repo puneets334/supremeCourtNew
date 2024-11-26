@@ -141,7 +141,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             $final_submit_action = '';
 
                             if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
-                                echo '<a href="javascript::void(0); " class="quick-btn transparent-btn btn-danger ' . $efiling_num_button_background_class . ' btn-sm" style="'.$style.'" id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
+                                echo '<a href="javascript::void(0); " class="quick-btn gray-btn btn-danger ' . $efiling_num_button_background_class . ' btn-sm" style="'.$style.'" id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                             }
                             ?>
                             <a class="quick-btn gray-btn" href="<?php echo base_url('history/efiled_case/view'); ?>"> E-filling History</a>
@@ -436,11 +436,11 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="form-response" id="msg"><?php
-                                                            if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
-                                                                echo $_SESSION['MSG'];
-                                                            }
-                                                            unset($_SESSION['MSG']);
-                                                            ?>
+                            if (isset($_SESSION['MSG']) && !empty($_SESSION['MSG'])) {
+                                echo $_SESSION['MSG'];
+                            }
+                            unset($_SESSION['MSG']);
+                            ?>
                         </div>
                         <?php echo getSessionData('msg'); ?>
                         <div class="view_data">

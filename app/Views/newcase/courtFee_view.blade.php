@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-12 col-xs-12 col-md-8 col-lg-8">
                         <!-- <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                         <table id="datatable-responsive1" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
                         
@@ -573,8 +573,62 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
+                        <div class="row justify-content-end align-items-end h-100">
+                            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                            <div class="form-group">
+                            <label class="">Want to pay more Court Fee ( ₹ ) <span style="color: red" class="astriks">*</span> :</label>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6">
+                                <input type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress(this)" id="user_declared_extra_fee" name="user_declared_extra_fee" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="0">
+                            </div>
+                        </div>
+                        <?php
+                        $court_fee_already_paid = 0;
+                        $user_declared_extra_fee = 0;
+                        $user_declared_court_fee = 0;
+                        $uploaded_pages = 0;
+                        $printing_cost_already_paid = 0;
+                        if (is_array($payment_details) && count($payment_details) > 0) {
+                            foreach ($payment_details as $payment) {
+                                if ($payment['payment_status'] == 'Y') {
+                                    $court_fee_already_paid = $court_fee_already_paid + (int)$payment['received_amt'];
+                                    $user_declared_court_fee = $user_declared_court_fee + (int)$payment['user_declared_court_fee'];
+                                    $user_declared_extra_fee = $user_declared_extra_fee + (int)$payment['user_declared_extra_fee'];
+                                    $uploaded_pages = $uploaded_pages + (int)$payment['uploaded_pages'];
+                                    $printing_cost_already_paid = $printing_cost_already_paid + (int)$payment['printing_total'];
+                                }
+                            }
+                        }
+                        $court_fee_already_paid_without_extra_fee = $court_fee_already_paid - $user_declared_extra_fee;
+                        $uploaded_pages_count_pending = $uploaded_pages_count - $uploaded_pages;
+                        $printing_cost_to_be_paid = (int)$uploaded_pages_count_pending * (float)$printing_cost;
+                        $printing_cost_total = (int)$printing_cost_to_be_paid + (int)$printing_cost_already_paid;
+                        $total_court_fee = (int)$court_fee + (int)$printing_cost_to_be_paid + (int)$printing_cost_already_paid;
+                        $user_declared_court_fee = $court_fee - $user_declared_court_fee;
+                        $pending_court_fee = $total_court_fee - $court_fee_already_paid_without_extra_fee;
+                        ?>
+                        <div class="mb-3">
+                            <label for=""
+                                class="form-label">Court Fee (To Pay) ( ₹ ) <span style="color: red" class="astriks">*</span></label>
+                          <div class="col-md-12 col-12 col-lg-12 col-xl-12">
+                          <input type="hidden" id="print_fee_details" name="print_fee_details" value="<?php echo_data(url_encryption($uploaded_pages_count_pending . '$$' . $printing_cost_total . '$$' . $printing_cost_already_paid . '$$' . $printing_cost_to_be_paid . '$$' . $user_declared_court_fee)); ?>" />
+                            <input type="hidden" id="usr_court_fee_fixed" name="usr_court_fee_fixed" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
+                            <input type="text" id="usr_court_fee" name="usr_court_fee" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="<?= $pending_court_fee; ?>" readonly />
+                          </div>
+                            <label style="margin-top: 10px;font-weight: bold">Total Court Fee : <?= $court_fee ?> + <?= $printing_cost_total; ?> = ₹ <?= $total_court_fee ?></label>
+                            <br>
+                            <label style="margin-top: 2px;font-weight: bold;color: #2c4762">Court Fee Already paid: ₹ <?= $court_fee_already_paid ?> </label>
+                            {{-- <input type="text"
+                                                            class="form-control cus-form-ctrl"
+                                                            id="exampleInputEmail1"
+                                                            placeholder=""> --}}
+                        </div>
+                            </div>
+                        </div>                        
+                    </div>                
                 </div>
-                <div class="row">
+                <!-- --- Below is Previous Code  -->
+                <!-- <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <label class="">Want to pay more Court Fee ( ₹ ) <span style="color: red" class="astriks">*</span> :</label>
@@ -626,7 +680,7 @@
                                                             placeholder=""> --}}
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <label style="margin-top: 2px; font-weight: bold; color: red;"><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AS PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <div class="row">

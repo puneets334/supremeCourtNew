@@ -17,14 +17,14 @@
                             <tbody>
                                 @foreach($previous_list_advocates as $row)
                                     <tr>
-                                        <td>
+                                        <td data-key="">
                                             <input type="checkbox" id="chk_master_list_id" name="chk_master_list_id" value="{{$row->id}}" />
                                         </td>
-                                        <td>{{$row->advocate_title.' '.$row->advocate_name.', '.$row->advocate_type}}</td>
+                                        <td data-key="All">{{$row->advocate_title.' '.$row->advocate_name.', '.$row->advocate_type}}</td>
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <td colspan="2"></td>
+                                    <td data-key="" colspan="2"></td>
                                 </tr>
                             </tbody>
                         </table>

@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
 
 
@@ -98,7 +98,7 @@
                                                                     data-courtno="{{$advocate['courtno']}}"
                                                                     data-brd_slno="{{$advocate['brd_slno']}}"
                                                                     data-reg_no_display="{{$advocate['reg_no_display']}}"
-                                                                    name="btn_click" class="btn_click btn btn-success">Click</button> 
+                                                                    name="btn_click" class="btn_click quick-btn">Click</button> 
 
                                                         @endif
                                                     </td> 

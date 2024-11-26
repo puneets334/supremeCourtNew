@@ -1,30 +1,29 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
-<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
-<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet"> -->
-
-<style>
-    .dateSymbol {
-        position: relative;float: right;top: -25px;right: 8px;
-    }
-</style>
+    <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+    <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+    <style>
+        .dateSymbol {
+            position: relative;float: right;top: -25px;right: 8px;
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -51,10 +50,8 @@
                                 </div>
                                 <div class="row">
                                     <div class="panel panel-default">
-                                    <form class="form-horizontal" method="POST" action="<?php echo base_url('advocate/report'); ?>">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                       
-                                       
+                                        <form class="form-horizontal" method="POST" action="<?php echo base_url('advocate/report'); ?>">
+                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <div class="row">
                                                 <div class="col-md-3 col-sm-12 col-xs-12">
                                                     <div class="row">
@@ -63,8 +60,8 @@
                                                                 <label for="inputPassword6" class="col-form-label" style="position:relative; top:-8px !important;">List Date</label>
                                                             </div>
                                                             <div class="col-12 pe-0">
-                                                            <input class="form-control cus-form-ctrl  has-feedback-left" id="cause_list_date"  name="cause_list_date" placeholder="List Date" type="text" required />
-                                                             <span class="fa fa-calendar-o form-control-feedback left dateSymbol" aria-hidden="true" ></span>
+                                                                <input class="form-control cus-form-ctrl datepick" id="cause_list_date"  name="cause_list_date" placeholder="DD-MM-YYYY" type="text" required />
+                                                                <!-- <span class="fa fa-calendar-o form-control-feedback left dateSymbol" aria-hidden="true" ></span> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -72,7 +69,7 @@
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
-                                                            <button type="submit" class="quick-btn gray-btn" id="search_sc_case" value="SEARCH">Search</button>
+                                                            <button type="submit" class="quick-btn" id="search_sc_case" value="SEARCH">Search</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -149,7 +146,6 @@
                                                                     @endforeach
                                                                 </tbody>
                                                             </table>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -160,44 +156,37 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        
-                    </div>
+                    <div class="row"></div>
                 </div>
             </div>
         </div>
     </div>
-    @push('script')  
-    <script>
-
-$(document).ready(function() {
-    // alert("SC");
-    $('#cause_list_date').datepicker({
-    changeMonth: true,
-    changeYear: true,
-    yearRange: "-100:-1",
-    dateFormat: "dd/mm/yy",
-    defaultDate: '-40y'
-    });
-
-    $(document).on('change','#cause_list_date', function(){
-        var value = $('#cause_list_date').val();
-        var parts = value.split("/");
-        var day = parts[0] && parseInt(parts[0], 10);
-        var month = parts[1] && parseInt(parts[1], 10);
-        var year = parts[2] && parseInt(parts[2], 10);
-        var str = day + '/' + month + '/' + year;
-        var today = new Date(),
-        dob = new Date(str),
-        age = new Date(today - dob).getFullYear() - 1970;
-        $('#pet_age').val(age);
-    });     
-
-})
-</script>   
-<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script> 
-
+    @push('script')   
+        <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+        <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>  
+        <script>
+            $(document).ready(function() {
+                // alert("SC");
+                $('#cause_list_date').datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:-1",
+                dateFormat: "dd/mm/yy",
+                defaultDate: '-40y'
+                });
+                $(document).on('change','#cause_list_date', function(){
+                    var value = $('#cause_list_date').val();
+                    var parts = value.split("/");
+                    var day = parts[0] && parseInt(parts[0], 10);
+                    var month = parts[1] && parseInt(parts[1], 10);
+                    var year = parts[2] && parseInt(parts[2], 10);
+                    var str = day + '/' + month + '/' + year;
+                    var today = new Date(),
+                    dob = new Date(str),
+                    age = new Date(today - dob).getFullYear() - 1970;
+                    $('#pet_age').val(age);
+                });
+            })
+        </script>
     @endpush
 @endsection

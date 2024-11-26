@@ -68,7 +68,7 @@ $collapse_class = '';
                                         <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; "> <span class="fa fa-eye-slash"></span> Collapse All</a> -->
                                     </div>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="accordion" id="accordionExample">
+                                        <div class="accordion view-accordion acrdion-with-edit" id="accordionExample">
                                             <div class="accordion-item">
                                                 <h2 class="accordion-header" id="headingOne">
                                                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" data-bs-toggle="collapse" aria-controls="collapseOne"> Case Details </button>
@@ -77,45 +77,46 @@ $collapse_class = '';
                                                     <div class="accordion-body">
                                                         <div class="x_panel">
                                                             <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-12 col-md-4 col-lg-4">
                                                                     <div class="form-group row">
-                                                                        <label class="control-label col-2 text-right" for="filing_no"><b>Diary No. :</b> </label>
-                                                                        <div class="col-10">
+                                                                        <label class="control-label col-3 text-right" for="filing_no"><b>Diary No. :</b> </label>
+                                                                        <div class="col-9">
                                                                             <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?> </p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-12 col-md-4 col-lg-4">
                                                                     <div class="form-group row">
-                                                                        <label class="control-label col-2 text-right" for="filing_no"><b>Registration No.:</b>
+                                                                        <label class="control-label col-3 text-right" for="filing_no"><b>Registration No.:</b>
                                                                         </label>
-                                                                        <div class="col-10">
+                                                                        <div class="col-9">
                                                                             <p> <?php echo_data($case_details[0]['reg_no_display']); ?> </p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
+                                                                <div class="col-12 col-md-4 col-lg-4">
                                                                     <div class="form-group row">
-                                                                        <label class="control-label col-2 text-right" for="filing_no"><b>Cause Title :</b>
+                                                                        <label class="control-label col-3 text-right" for="filing_no"><b>Cause Title :</b>
                                                                         </label>
-                                                                        <div class="col-10">
+                                                                        <div class="col-9">
                                                                             <p> <?php
                                                                                 echo_data($case_details[0]['cause_title']);
                                                                                 ?> </p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-6">
+                                                                <div class="col-12 col-md-4 col-lg-4">
                                                                     <div class="form-group row">
-                                                                        <label class="control-label col-2 text-right" for="case_status"><b>Case Status:</b></label>
-                                                                        <div class="col-10">
+                                                                        <label class="control-label col-3 text-right" for="case_status"><b>Case Status:</b></label>
+                                                                        <div class="col-9">
                                                                             <!--<p> <?php /*echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; */ ?></p>-->
                                                                             <p> <?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?></p>
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>

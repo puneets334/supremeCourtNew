@@ -1,9 +1,7 @@
-<?php //echo '<pre>'; print_r($payment_details) ?>
 <div class="panel panel-default"> 
     <div class="panel-body">
         <!-- <table id="courtFeeTable" class="table table-striped table-bordered dt-responsive nowrap second_tbl" cellspacing="0" width="100%"> -->
-        <table id="courtFeeTable" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
-        
+        <table id="courtFeeTable" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">        
             <thead>
                 <tr class="success">
                     <th>#</th>                                        
@@ -30,11 +28,11 @@
                         $is_locked = !empty($resData['is_locked']) ? $resData['is_locked'] : NULL;
                         $diaryNo = !empty($resData['sc_diary_num']) ? $resData['sc_diary_num'] : NULL;
                         $diaryYear = !empty($resData['sc_diary_year']) ? $resData['sc_diary_year'] : NULL;
-    //                    $is_verified = 't';
-    //                    $is_locked='t';
+                        // $is_verified = 't';
+                        // $is_locked='t';
                         if ($resData['bank_name'] != '-' || $resData['bank_name'] != 'NA') {
                             $bank_name = '<b>' . strtoupper($resData['bank_name']) . '</b>';
-                        } else {
+                        } else{
                             $bank_name = 'NA';
                         }
                         $order_no_with_date = '<b>' . htmlentities($resData['order_no'], ENT_QUOTES) . '</b><br>' . htmlentities(date('d-m-Y H:i:s A', strtotime($resData['order_date'])), ENT_QUOTES);
@@ -42,37 +40,33 @@
                         $bank_name_with_cin = $bank_name;
                         ?>
                         <tr>
-                            <td><?= $sno++; ?></td>
-                            <td><?= $order_no_with_date; ?></td>
-                            <td><?= $grn_no_with_date ?></td>
-                            <td><?= $bank_name_with_cin; ?></td>
-                            <td><?= htmlentities($resData['user_declared_extra_fee'], ENT_QUOTES); ?></td>
-                            <td><?= htmlentities($resData['user_declared_court_fee'], ENT_QUOTES); ?></td>
-                            <td><?= htmlentities($resData['printing_total'], ENT_QUOTES); ?></td>
-                            <td><?= htmlentities($resData['received_amt'], ENT_QUOTES); ?></td>
-                            <td > <?php
+                            <td data-key="#"><?= $sno++; ?></td>
+                            <td data-key="Order Number / Date"><?= $order_no_with_date; ?></td>
+                            <td data-key="SHCIL Ref. No./ Date"><?= $grn_no_with_date ?></td>
+                            <td data-key="Bank Name "><?= $bank_name_with_cin; ?></td>
+                            <td data-key='Extra Fee Amount ( <i class="fa fa-rupee"></i> )'><?= htmlentities($resData['user_declared_extra_fee'], ENT_QUOTES); ?></td>
+                            <td data-key='Fee Amount ( <i class="fa fa-rupee"></i> )'><?= htmlentities($resData['user_declared_court_fee'], ENT_QUOTES); ?></td>
+                            <td data-key='Printing Cost ( <i class="fa fa-rupee"></i> )'><?= htmlentities($resData['printing_total'], ENT_QUOTES); ?></td>
+                            <td data-key='Total Amount  ( <i class="fa fa-rupee"></i> )'><?= htmlentities($resData['received_amt'], ENT_QUOTES); ?></td>
+                            <td data-key="Status">
+                                <?php
                                 if ($resData['payment_status'] == 'Y') {
                                     echo 'Success';
                                     if (!empty($resData['shcilpmtref'])) {
                                         echo '<a target="_blank" href="' . base_url('shcilPayment/ViewPaymentChallan/' . url_encryption(htmlentities($resData['shcilpmtref'].'$$'.$resData['received_amt'], ENT_QUOTES))) . '"><img src="' . base_url('assets/images/pdf.png') . '" class="shimg">';
                                     }
                                     $efiling_stages_array = array(Transfer_to_IB_Stage,DEFICIT_COURT_FEE_E_FILED,I_B_Approval_Pending_Admin_Stage,I_B_Defects_Cured_Stage);
-                                    if(!empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && !empty($stage_id) && in_array($stage_id, $efiling_stages_array))
-                                    {
-
-                                        if(isset($transaction_num) && !empty($transaction_num) && !empty($is_verified) && isset($is_verified) && $is_verified == 'f' && (trim($resData['user_declared_court_fee'])>0 || trim($resData['user_declared_total_amt'])>0)){
+                                    if(!empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && !empty($stage_id) && in_array($stage_id, $efiling_stages_array)) {
+                                        if(isset($transaction_num) && !empty($transaction_num) && !empty($is_verified) && isset($is_verified) && $is_verified == 'f' && (trim($resData['user_declared_court_fee'])>0 || trim($resData['user_declared_total_amt'])>0)) {
                                             echo '<a id="Verify'.$transaction_num.'" href="javaScript:void(0);" class="verifyFeeData efiling_search" data-actionType="verify" data-transaction_num="'.$transaction_num.'"><b>Verify</b></a>';
-                                        }
-                                        else  if(isset($transaction_num) && !empty($transaction_num) && !empty($is_verified) && isset($is_verified) && $is_verified == 't'){
+                                        } elseif(isset($transaction_num) && !empty($transaction_num) && !empty($is_verified) && isset($is_verified) && $is_verified == 't') {
                                             echo '<a class="verifiedFeeData"><b>Verified</b></a>';
                                         }
-                                        if(isset($transaction_num) && !empty($transaction_num) && !empty($is_locked) && isset($is_locked) && $is_locked == 'f'  && !empty($is_verified) && isset($is_verified) && $is_verified == 't'){
+                                        if(isset($transaction_num) && !empty($transaction_num) && !empty($is_locked) && isset($is_locked) && $is_locked == 'f'  && !empty($is_verified) && isset($is_verified) && $is_verified == 't') {
                                             echo '<a href="javaScript:void(0);"  data-actionType="lock" class="verifyFeeData efiling_search" data-diaryNo="'.$diaryNo.'" data-diaryYear="'.$diaryYear.'" data-transaction_num="'.$transaction_num.'"><b>Lock</b></a>';
-                                        }
-                                        else  if(isset($transaction_num) && !empty($transaction_num) && !empty($is_locked) && isset($is_locked) && $is_locked == 't'){
+                                        } elseif(isset($transaction_num) && !empty($transaction_num) && !empty($is_locked) && isset($is_locked) && $is_locked == 't'){
                                             echo '<a class="verifiedFeeData"><b>Locked</b></a>';
                                         }
-
                                         echo '<a style="display:none;" id="Verified'.$transaction_num.'" class="verifiedFeeData"><b>Verified</b></a>';
                                         echo '<a style="display:none;" id="Verifiedlock'.$transaction_num.'" href="javaScript:void(0);"  data-actionType="lock" class="verifyFeeData" data-diaryNo="'.$diaryNo.'" data-diaryYear="'.$diaryYear.'" data-transaction_num="'.$transaction_num.'"><b>Lock</b></a>';
                                         echo '<a style="display:none;" id="VerifiedLocked'.$transaction_num.'" class="verifiedFeeData"><b>Locked</b></a>';
@@ -83,20 +77,17 @@
                                     echo 'Not Found';
                                 } elseif ($resData['payment_status'] == 'C') {
                                     echo 'Cancelled';
-                                } else {
-
+                                } else{
                                     $current_date = strtotime(date('d-m-Y H:i:s'));
                                     $status_date = strtotime(ENABLE_GET_PAYMENT_STATUS, strtotime($resData['order_date']));
                                     if ($current_date > $status_date) {
                                         //echo '<a class="efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '" href="javascript:void(0)">Pending</a>';
                                         echo '<a class="check_stock_holding_payment_status efiling_search" data-order-id="' . htmlentities(url_encryption($resData['registration_id'].'$$'.$resData['order_no'].'$$'.$resData['received_amt'])) . '">Pending  (Update Status)</a>';
-                                    } else {
-
+                                    } else{
                                         $diff = date_diff(date_create(date('Y-m-d H:i:s', $status_date)), date_create(date('Y-m-d H:i:s', $current_date)));
                                         $hours = ($diff->h > 0) ? $diff->h . ' hours, ' : NULL;
                                         $minutes = ($diff->i > 0) ? $diff->i . ' minutes, ' : NULL;
                                         $seconds = ($diff->s > 0) ? $diff->s . ' seconds ' : NULL;
-
                                         echo '<a href="javascript:void(0)">Status can be updated  </br><span class="after_word_' . $status_date . '"> after </span><span class="text-danger  countdown" data-countdown="' . $status_date . '">' . $hours . $minutes . $seconds . '</span></a>';
                                     }
                                 }
@@ -110,9 +101,11 @@
                 }
                 ?>
             </tbody>
-            <tfoot><tr>
+            <tfoot>
+                <tr>
                     <td colspan="8" style="color: red;">
-                        <b>NOTE :</b><ul>
+                        <b>NOTE :</b>
+                        <ul>
                             <li style="margin-left: 15px;">   If for the initiated transaction your amount is deducted from your bank account but due to some technical reason the same is not updated to efiling application then you can update your payment status using ‘Update Status’ link.</li>
                             <li style="margin-left: 15px;">   Do not make payment again, if your payment request is under process.</li>
                         </ul>
@@ -129,15 +122,10 @@
     .verifiedFeeData{
         margin: 5px;
     }
-</style>
-
-<style>
     img { cursor: pointer; }
 </style>
-
 <div class="modal fade" id="VerifyModal" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" style="width: 40%;">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -181,7 +169,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFLNAME" style="display:none;">
                         <div class="form-group">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">CFL Name:</label>
@@ -190,9 +177,7 @@
                             </div>
                         </div>
                     </div>
-
                     <!--end for lock-->
-
                     <!--start for verify-->
                     <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 DTISSUE" style="display:none;">
                         <div class="form-group">
@@ -219,17 +204,12 @@
                         </div>
                     </div>
                     <!--end for verify-->
-
                 </div>
-
-                <div class="modal-footer">
-                </div>
+                <div class="modal-footer"></div>
             </div>
-
         </div>
     </div>
-    </div>
-
+</div>
 <!-- end of code -->
 @section('script')
 <script>
@@ -247,7 +227,6 @@
                 return false;
             }
         }
-
         if(type && receiptNumber){
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
@@ -276,13 +255,13 @@
                         $('#Verifiedlock'+receiptNumber).show();
                         $('#VerifiedLocked'+receiptNumber).hide();
                         //alert(data.res.CERTRPDTL.RPSTATUS);
-                        if (RPSTATUS=='FAIL'){
+                        if (RPSTATUS=='FAIL') {
                             $('#RPSTATUS').css('color', 'red');
                             $('#STATUS').css('color', 'red');
                             $('.STATUS').css('color', 'red');
                             $('#fee_type').css('color', 'red');
                             $('#STATUS_text').html('Reason');
-                        }else{
+                        } else{
                             $('#RPSTATUS').css('color', 'green');
                             $('#fee_type').css('color', 'green');
                             $('.STATUS').css('color', 'green');
@@ -294,36 +273,28 @@
                         $('#fee_type').html('Verify');
                         $('#RPSTATUS').html(RPSTATUS);
                         $('#receiptNumber').html(RCPTNO);
-
                         $('#DTISSUE').html(DTISSUE);
                         $('#CFAMT').html(CFAMT);
                         $('#STATUS').html(STATUS);
-
-
                         $('#diaryNumberYear').html('');
                         $('#CFLNAME').html('');
                         $('.diaryNumberYear').hide();
                         $('.CFLNAME').hide();
-
-
-                        if (RPSTATUS=='SUCCESS' && status==true  && RCPTNO==receiptNumber){
+                        if (RPSTATUS=='SUCCESS' && status==true  && RCPTNO==receiptNumber) {
                             var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
                             console.log(result);
-                        }else {
+                        } else{
                             var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
                             console.log(result);
                         }
-
-                    }else{
+                    } else{
                         var RPSTATUS = (data.res.LOCKTXN.LOCKRPDTL.RPSTATUS);
                         var RCPTNO = (data.res.LOCKTXN.LOCKRPDTL.RCPTNO);
                         var CFLNAME = (data.res.LOCKTXN.LOCKRPDTL.CFLNAME);
                         var diary_Year = (data.res.LOCKTXN.LOCKRPDTL.DIRYEAR);
-
                         var diary_No = (data.res.TXNHDR.DIRNO);
                         var slash='/';
                         var diaryNumberYear=diary_No+slash+diary_Year;
-
                         //var RPSTATUS = (data.res.RPSTATUS);
                         // var RCPTNO = (data.res.RCPTNO);
                         $('#Verify'+receiptNumber).hide();
@@ -331,47 +302,37 @@
                         $('#Verifiedlock'+receiptNumber).hide();
                         $('#VerifiedLocked'+receiptNumber).show();
                         // alert(data.res.RPSTATUS);
-                        if (RPSTATUS !='SUCCESS'){
+                        if (RPSTATUS !='SUCCESS') {
                             $('#RPSTATUS').css('color', 'red');
                             $('#fee_type').css('color', 'red');
-                        }else{
+                        } else{
                             $('#RPSTATUS').css('color', 'green');
                             $('#fee_type').css('color', 'green');
                         }
                         $('.diaryNumberYear').show();
                         $('.CFLNAME').show();
-
                         $('#fee_type').html('Locking');
                         $('#RPSTATUS').html(RPSTATUS);
                         $('#receiptNumber').html(RCPTNO);
                         $('#diaryNumberYear').html(diaryNumberYear);
                         $('#CFLNAME').html(CFLNAME);
-
                         $('#DTISSUE').html('');
                         $('#CFAMT').html('');
                         $('#STATUS').html('');
                         $('.DTISSUE').hide();
                         $('.CFAMT').hide();
                         $('.STATUS').hide();
-
-
-
-
-
-                        if (status==true  && RCPTNO==receiptNumber){
+                        if (status==true  && RCPTNO==receiptNumber) {
                             var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber+ '  Diary Number='+ diary_No+'/'+diary_Year+ '  CFLNAME='+ CFLNAME);
                             console.log(result);
-                        }else {
+                        } else{
                             var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
                             console.log(result);
                         }
                     }
-
-                   // alert(result);
-
-                    //$("#VerifyModalResult").html(result);
+                    // alert(result);
+                    // $("#VerifyModalResult").html(result);
                     $("#VerifyModal").modal('show');
-
                     $('.status_refresh').remove();
                     $.getJSON(base_url + "csrftoken", function (result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
@@ -381,9 +342,6 @@
         }
         //location.reload();
     });
-
-
-
     $(".check_stock_holding_payment_status").click(function () {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

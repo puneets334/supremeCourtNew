@@ -24,52 +24,53 @@ if ($uris->getSegment(2) != 'view') {
 
     <div class="col-12">
         <div class="row">
-            <div class="col-md-6 col-lg-6">
+            <div class="col-12 col-md-4 col-lg-4">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                         <label><strong>Diary No :</strong></label>
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                        <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6">
+            <div class="col-12 col-md-4 col-lg-4">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-3">
                         <label><strong>Registration No. :</strong></label>
                     </div>
-                    <div class="col-10">
+                    <div class="col-9">
                       <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p> 
                     </div>
                 </div>
             </div>
+            <div class="col-12 col-md-4 col-lg-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <label><strong>Cause Title :</strong></label>
+                        </div>
+                        <div class="col-9">
+                           <p> <?php echo_data($case_details[0]['cause_title']); ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <label><strong>Status :</strong></label>
+                        </div>
+                        <div class="col-9">
+                            <p><?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?></p>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 
     <div class="row mt-2 mb-4">
         <div class="col-12">
             <div class="row">
-                <div class="col-md-6 col-lg-6">
-                    <div class="row">
-                        <div class="col-2">
-                            <label><strong>Cause Title :</strong></label>
-                        </div>
-                        <div class="col-10">
-                           <p> <?php echo_data($case_details[0]['cause_title']); ?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6">
-                    <div class="row">
-                        <div class="col-2">
-                            <label><strong>Status :</strong></label>
-                        </div>
-                        <div class="col-10">
-                            <p><?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?></p>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -86,10 +87,10 @@ if ($uris->getSegment(2) != 'view') {
                     $aor_code = !empty($filedByData['aor_code']) ? $filedByData['aor_code'] : '';
                     $filedBy = $name . ' (AOR- ' . $aor_code . ')';
                 }
-                echo '<div class="col-md-6">
+                echo '<div class="col-12 col-md-4 col-lg-4">
                         <div class="form-group row">
-                            <label class="control-label col-2 text-right" for="filed_by">Filed By: </label>
-                            <div class="col10">
+                            <label class="control-label col-3 text-right" for="filed_by">Filed By: </label>
+                            <div class="col-9">
                                 <p>' . $filedBy . '</p>
                             </div>
                         </div>
@@ -97,21 +98,21 @@ if ($uris->getSegment(2) != 'view') {
             }
             if (isset($case_listing_details->listed[0]) && !empty($case_listing_details->listed[0])) {
             ?>
-                <div class="col-md-6">
+                <div class="col-12 col-md-4 col-lg-4">
                     <div class="form-group">
                         <?php
                         if (strtotime($case_listing_details->listed[0]->next_dt) >= strtotime(date("Y-m-d"))) {
                         ?>
                             <span class="row style="color:red; font-size:14px; font-weight: bold;">
-                                <label class="control-label col-2 text-right" for="case_status">Listed For :</label>
-                                <div class="col-10">
+                                <label class="control-label col-3 text-right" for="case_status">Listed For :</label>
+                                <div class="col-9">
                                     <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
                                 </div>
                             </span>
                         <?php  } else { ?>
                             <div class="row">
-                                <label class="control-label col-2 text-right" for="case_status">Last Listed On :</label>
-                                <div class="col-10">
+                                <label class="control-label col-3 text-right" for="case_status">Last Listed On :</label>
+                                <div class="col-9">
                                     <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
                                 </div>
                             </div>
@@ -121,7 +122,7 @@ if ($uris->getSegment(2) != 'view') {
             <?php  }
             if (isset($details) && !empty($details)) {
             ?>
-                <div class="col-md-6">
+                <div class="col-12 col-md-4 col-lg-4">
                     <label class="control-label col-md-6 text-right"><?php if ($details['details'][0]['judgment_reserved_date'] != null) {
                                                                             echo '<font color=red>Judgment is reserved for :' . date('d-m-Y', strtotime($details['details'][0]['judgment_reserved_date'])) . '</font>'; ?></label>
                 <?php } ?>
@@ -129,10 +130,10 @@ if ($uris->getSegment(2) != 'view') {
             <?php  }
 
             if ($case_details[0]['p_r_type'] == 'I') { ?>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label col-md-4 text-right" for="case_status">Intervenor Name:</label>
-                        <div class="col-md-8">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="form-group row">
+                        <label class="control-label col-3 text-right" for="case_status">Intervenor Name:</label>
+                        <div class="col-9">
                             <p>
                                 <?php
                                 //                            echo $case_details[0]['intervenor_name'];

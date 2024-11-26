@@ -30,8 +30,8 @@ $segment = service('uri');
                         foreach ($efiled_docs_list as $doc_list) {
                             ?>
                             <tr>
-                                <td><?= $sr++; ?></td>
-                                <td>
+                                <td data-key="#"><?= $sr++; ?></td>
+                                <td data-key="Index - Title">
                                     <?php
                                     if($segment->getSegment(1) == 'efiling_search') {
                                         // $encrypted_string = $this->encryption->encrypt($doc_list['doc_id']);
@@ -46,7 +46,7 @@ $segment = service('uri');
                                 <!--<td><?/*= htmlentities($doc_list['page_no'], ENT_QUOTES); */?></td>-->
                                 <?php if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
                                     ?>
-                                    <td><?= echo_data($doc_list['icmis_docnum'] . ' / ' . $doc_list['icmis_docyear']); ?></td>
+                                    <td data-key="Doc No."><?= echo_data($doc_list['icmis_docnum'] . ' / ' . $doc_list['icmis_docyear']); ?></td>
                                 <?php } ?>
                                 <?php
                                 if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) {

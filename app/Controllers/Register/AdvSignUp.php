@@ -178,9 +178,10 @@ class AdvSignUp extends BaseController {
                 'm_state_id' => $st_id,
                 'm_district_id' => $dist_id,
                 'm_pincode' => $_POST['pincode'],
-                'create_ip' => get_client_ip()
-            );
+                'create_ip' => get_client_ip(),
+                'is_first_pwd_reset' => true,
 
+            );
             if ($_SESSION['adv_details']['register_type'] == 'Advocate On Record') {
 
                 if (!empty($_SESSION['profile_image']['profile_photo'])) {
@@ -197,10 +198,12 @@ class AdvSignUp extends BaseController {
                 } else {
                     $add_adv = $this->Register_model->add_new_advocate_details($final_data);
                     if (!empty($add_adv)) {
+                        
                         //TODO:: Send Username and Password on email
                         $to_email=trim($_SESSION['adv_details']['email_id']);
                         $subject="SC-EFM Registration Details";
                         $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." ,Please do not share it with any one.";
+
                         send_mail_msg($to_email, $subject, $message);
                         //END
                         $this->session->setFlashdata('msg_success', 'Registration Successful');
@@ -414,8 +417,6 @@ class AdvSignUp extends BaseController {
 
         $adv_data1 = array_merge($adv_data, $profie_photo);
         $final_data = array_merge($adv_data1, $id_proof);
-
-
         $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
 
         if (!empty($already_exist)) {
@@ -423,14 +424,21 @@ class AdvSignUp extends BaseController {
             redirect('register/AdvSignUp');
         } else {
             $one_time_password= $_SESSION['user_created_password']; //$this->generateRandomString();
+
+            // $message="Registered Successfully with user id: ".$final_data['moblie_number']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
+            // sendSMS('38',$final_data['moblie_number'],$message,SCISMS_Change_Password_OTP);
+            // pr('he');
             $add_adv = $this->Register_model->add_new_advocate_details($final_data);
+             
             if (!empty($add_adv)) {
                 $to_email=trim($_SESSION['adv_details']['email_id']);
                 $subject="SC-EFM Registration Details";
-                $message="Registered Successfully with user id: ".$_SESSION['adv_details']['mobile_no']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
+                $message="Registered Successfully with user id: ".$final_data['moblie_number']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
+                sendSMS('38',$final_data['moblie_number'],$message,SCISMS_Change_Password_OTP);
+
                 send_mail_msg($to_email, $subject, $message);
                 //END
-                $this->session->setFlashdata('msg_success', 'Registration Successful');
+                $this->session->setFlashdata('msg_success', 'Registration Successful.');
                 return redirect()->to(base_url('/'));
             } else {
                 $this->session->setFlashdata('msg', 'Registration Failed');

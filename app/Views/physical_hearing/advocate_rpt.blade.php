@@ -162,15 +162,15 @@ $crnt_dt=date("d-m-Y");
             {
                 ?>
                 <tr>
-                    <th style="width:5%;">#</th>
-                    <td class="lead text-center"><?= $value['next_dt']; ?> </td>
-                    <td class="lead text-center"><?= $value['court_number']; ?> </td>
-                    <td class="lead text-center"><?= $value['item_number'] ;?></td>
-                    <td class="lead text-center"><?= $value['case_number'] ;?></td>
-                    <td class="lead text-center"><?= $value['name'] ;?></td>
-                    <td class="lead text-center"><?= $value['description'] ;?></td>
-                    <td class="lead text-center"><?= $value['mobile'] ;?></td>
-                    <td class="lead text-center"><?= $value['email_id'] ;?></td>
+                    <th data-key="#" style="width:5%;">#</th>
+                    <td data-key="List Date" class="lead text-center"><?= $value['next_dt']; ?> </td>
+                    <td data-key="Court No" class="lead text-center"><?= $value['court_number']; ?> </td>
+                    <td data-key="Item No" class="lead text-center"><?= $value['item_number'] ;?></td>
+                    <td data-key="Case No" class="lead text-center"><?= $value['case_number'] ;?></td>
+                    <td data-key="Attendee Name" class="lead text-center"><?= $value['name'] ;?></td>
+                    <td data-key="Attendee Type" class="lead text-center"><?= $value['description'] ;?></td>
+                    <td data-key="Mobile" class="lead text-center"><?= $value['mobile'] ;?></td>
+                    <td data-key="Email" class="lead text-center"><?= $value['email_id'] ;?></td>
                 </tr>
             <?php } ?>
             </tbody>

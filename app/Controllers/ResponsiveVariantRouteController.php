@@ -1535,7 +1535,7 @@ class ResponsiveVariantRouteController extends BaseController
                                 }
                         $html .= '<tr>
                             <td width="8%" class="sorting_1" tabindex="0"
-                                data-key="Sr. No.">'.$i++.'-' . $stages.'
+                                data-key="Sr. No.">'.$i++.'
                             </td>
                             <td width="5%" data-key="Stage">';
                                         if (!empty($api_certificate_efiling_no) && $re->ref_m_efiled_type_id == E_FILING_TYPE_CERTIFICATE_REQUEST) {

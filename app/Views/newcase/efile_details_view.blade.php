@@ -582,7 +582,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             </div>
+                                             
                                              <div class="accordion-item">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
@@ -673,6 +673,7 @@
                                                       <?php render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]); ?>
                                                    </div>
                                                 </div>
+                                             </div>
                                              </div>
                                        </div>
                                     </div>
@@ -1265,7 +1266,7 @@
                                  var alloted_to = '';
                                  var insertedDocNums = '';
                                  if (data.status == 'SUCCESS') {
-                                     alert('here');
+                                     //alert('here');
                                      diaryStatus = 'new_diary';
                                      if (data.diary_no) {
                                          diaryNo = data.diary_no;

@@ -1927,11 +1927,11 @@ class Admin extends BaseController {
 
             $i = 1;
             foreach ($efiling_no as $efile) {
-                $html1 .= '<tr><td width="1%">' . htmlentities($i++, ENT_QUOTES) . '</td><td>'
-                        . htmlentities($efile->efiling_no, ENT_QUOTES) . '</td><td><input type="checkbox" name=efil[] value="' . htmlentities(url_encryption($efile->registration_id), ENT_QUOTES) . '"></td>   </tr>';
+                $html1 .= '<tr><td data-key="#" width="1%">' . htmlentities($i++, ENT_QUOTES) . '</td><td data-key="Efiling No.">'
+                        . htmlentities($efile->efiling_no, ENT_QUOTES) . '</td><td data-key="Select to allocate"><input type="checkbox" name=efil[] value="' . htmlentities(url_encryption($efile->registration_id), ENT_QUOTES) . '"></td>   </tr>';
             }
         } else {
-            $html1 .= '<tr><td colspan="2">No Records Found</td><td>.
+            $html1 .= '<tr><td data-key="" colspan="2">No Records Found</td><td>.
                       </tr>';
         }
         $html1 .= '</tbody></table>';

@@ -339,6 +339,7 @@ class DefaultController extends BaseController {
                     send_mail_msg($to_email, $subject, $message);
                     // relay_mail_api($to_email, $subject, $message);
                 }
+                $this->session->setFlashdata('msg_success', 'OTP Sent Successfully.');  
                 return redirect()->to(base_url('register/AdvOtp'));
             } else {
                 $this->session->setFlashdata('login_salt', $this->generateRandomString());

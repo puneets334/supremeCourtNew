@@ -14,10 +14,20 @@
     @endforeach
 </form>
 @endif-->
-<div class="uk-margin-small-top uk-border-rounded">
-    <iframe style="width: 100%; height:100%" name="case-document-crud-iframe" class="uk-width internal-content-iframe"  src="{{(empty(@$registration_id) ? base_url((@$tab == 'affirmation' ? @$tab : (@$tab == 'courtFee' ? 'miscellaneous_docs/'.@$tab:'newcase/'.@$tab) )) : base_url('miscellaneous_docs/defaultController/'.($registration_id)))}}"></iframe>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 sm-12 col-md-12 col-lg-12">
+            <div class="center-content-inner comn-innercontent">
+                <div class="uk-margin-small-top uk-border-rounded">
+                    <iframe style="width: 100%;" name="case-document-crud-iframe" class="uk-width internal-content-iframe iframe-scroll-bar"  src="{{(empty(@$registration_id) ? base_url((@$tab == 'affirmation' ? @$tab : (@$tab == 'courtFee' ? 'miscellaneous_docs/'.@$tab:'newcase/'.@$tab) )) : base_url('miscellaneous_docs/defaultController/'.($registration_id)))}}"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
+<!-- <div class="uk-margin-small-top uk-border-rounded">
+    <iframe style="width: 100%; height:100%" name="case-document-crud-iframe" class="uk-width internal-content-iframe"  src="{{(empty(@$registration_id) ? base_url((@$tab == 'affirmation' ? @$tab : (@$tab == 'courtFee' ? 'miscellaneous_docs/'.@$tab:'newcase/'.@$tab) )) : base_url('miscellaneous_docs/defaultController/'.($registration_id)))}}"></iframe>
+</div> -->
 <script type="text/javascript">
     $(function(){
         $('#case-document-crud-form').submit();

@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -57,4 +57,9 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $('#datatable-responsive').DataTable();
+        });
+    </script>
 @endsection

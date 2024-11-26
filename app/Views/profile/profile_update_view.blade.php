@@ -176,8 +176,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="update_email" class="btn btn-success">Update</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="update_email" class="quick-btn">Update</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -205,8 +205,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="update_contact" class="btn btn-success">Update</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="update_contact" class="quick-btn">Update</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -321,8 +321,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="update_address" class="btn btn-success">Update</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="update_address" class="quick-btn">Update</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -452,8 +452,7 @@
                                                                                 </thead>
                                                                                 <tbody>
                                                                                     <?php
-                                                                                    function array_sort_by_column(&$arr, $col, $dir = SORT_ASC)
-                                                                                    {
+                                                                                    function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
                                                                                         $sort_col = array();
                                                                                         foreach ($arr as $key => $row) {
                                                                                             $sort_col[$key] = $row[$col];
@@ -464,14 +463,14 @@
                                                                                     array_sort_by_column($print_data, 'st_name');
                                                                                     $increment_id = 1;
                                                                                     foreach ($print_data as $pd) {
-                                                                                    ?>
+                                                                                        ?>
                                                                                         <tr>
-                                                                                            <td><?php echo htmlentities($increment_id++, ENT_QUOTES); ?> </td>
-                                                                                            <td><?php echo htmlentities(strtoupper($pd['st_name']), ENT_QUOTES); ?></td>
-                                                                                            <td><?php echo htmlentities(strtoupper($pd['dist_name']), ENT_QUOTES); ?></td>
-                                                                                            <td><?php echo htmlentities(strtoupper($pd['estab_name']), ENT_QUOTES); ?> ( <?php echo htmlentities(strtoupper($pd['estab_code']), ENT_QUOTES); ?> )</td>
-                                                                                            <td></td>
-                                                                                            <td><button type="button" name="del_array_data" class="btn btn-danger btn-xs del_array_data" id="<?php echo $i++; ?>" value="<?php echo htmlentities($pd['st_code'], ENT_QUOTES) . htmlentities($pd['dist_code'], ENT_QUOTES) . htmlentities($pd['estab_code'], ENT_QUOTES); ?>"><i class="fa fa-trash"></i> Delete</button></td>
+                                                                                            <td data-key="#"><?php echo htmlentities($increment_id++, ENT_QUOTES); ?> </td>
+                                                                                            <td data-key="State"><?php echo htmlentities(strtoupper($pd['st_name']), ENT_QUOTES); ?></td>
+                                                                                            <td data-key="District"><?php echo htmlentities(strtoupper($pd['dist_name']), ENT_QUOTES); ?></td>
+                                                                                            <td data-key="Establishment"><?php echo htmlentities(strtoupper($pd['estab_name']), ENT_QUOTES); ?> ( <?php echo htmlentities(strtoupper($pd['estab_code']), ENT_QUOTES); ?> )</td>
+                                                                                            <td data-key="Status"></td>
+                                                                                            <td data-key="Action"><button type="button" name="del_array_data" class="btn btn-danger btn-xs del_array_data" id="<?php echo $i++; ?>" value="<?php echo htmlentities($pd['st_code'], ENT_QUOTES) . htmlentities($pd['dist_code'], ENT_QUOTES) . htmlentities($pd['estab_code'], ENT_QUOTES); ?>"><i class="fa fa-trash"></i> Delete</button></td>
                                                                                         </tr>
                                                                                     <?php } ?>
                                                                                 </tbody>
@@ -528,8 +527,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="email_save" class="btn btn-success">Verify OTP</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="email_save" class="quick-btn">Verify OTP</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -557,8 +556,8 @@
                                                             <div class="ln_solid"></div>
                                                             <div class="form-group mt-3">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                                                    <button class="btn btn-primary" type="button" onclick="goback();">Cancel</button>
-                                                                    <button type="submit" name="mobile_save" class="btn btn-success">Verify OTP</button>
+                                                                    <button class="quick-btn gray-btn" type="button" onclick="window.history.back();">Cancel</button>
+                                                                    <button type="submit" name="mobile_save" class="quick-btn">Verify OTP</button>
                                                                 </div>
                                                             </div>
                                                         <?php echo form_close(); ?>
@@ -630,9 +629,6 @@
     }
 </script>
 <script>
-    function goback() {
-        history.back();
-    }
     function formReset(id) {
         document.getElementById(id).form.reset();
     }

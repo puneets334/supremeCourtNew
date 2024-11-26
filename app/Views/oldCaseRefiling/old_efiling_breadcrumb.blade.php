@@ -95,7 +95,7 @@ if (($_SESSION['efiling_details']['stage_id'] == DRAFT_STAGE) || ($_SESSION['efi
                             $final_submit_action = '';
 
                             if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
-                                echo '<a href="javascript::void(0); " class="quick-btn transparent-btn btn-danger ' . $efiling_num_button_background_class . ' btn-sm"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
+                                echo '<a href="javascript::void(0); " class="quick-btn gray-btn btn-danger ' . $efiling_num_button_background_class . ' btn-sm"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display . htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm" style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                             }
                             ?>
                             <a class="quick-btn gray-btn" href="<?php echo base_url('history/efiled_case/view'); ?>"> E-filling History</a>

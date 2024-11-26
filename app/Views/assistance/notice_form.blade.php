@@ -27,9 +27,9 @@
                             foreach ($notice_list as $value) {
                                 ?>
                                 <tr>
-                                    <td width="2%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td> 
-                                    <td> <?php echo htmlentities($value['state_name'], ENT_QUOTES); ?></td> 
-                                    <td> <?php                                      
+                                    <td data-key="#" width="2%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td> 
+                                    <td data-key="State"> <?php echo htmlentities($value['state_name'], ENT_QUOTES); ?></td> 
+                                    <td data-key="Notice & Forms "> <?php                                      
                                         if ($value['file_name'] != '') {
                                             ?>
                                         <i class="fa fa-file-pdf-o" aria-hidden="true" style="color:red"></i>&nbsp;<a href="<?php echo base_url('news_event/news_pdf/' . url_encryption($value['id'])); ?>" target="blank"><?php echo htmlentities($value['news_title'], ENT_QUOTES); ?></a>

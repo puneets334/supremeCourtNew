@@ -55,19 +55,18 @@ if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                         if (!empty($efiling_civil_data[0]['res_age'])){$res_age=$efiling_civil_data[0]['res_age'].'Yrs /' ;}
                         $res_dob=!empty($efiling_civil_data[0]['res_dob']) ? $res_age.date('d-m-Y',strtotime($efiling_civil_data[0]['res_dob'])):$res_age;
                         echo '<tr>
-                                <td>1</td>
-                                <td>'.strtoupper('Caveatee').'</td>
-                                <td>'.strtoupper('Caveatee Party :'.$caveatee_name).'</td>
-                                <td>'.$res_dob.'</td>
-                                <td>'.strtoupper($res_gender).'</td>
-                                <td>'.$efiling_civil_data[0]['res_mobile'].'</td>
-                                <td>'.$res_address.'</td>';
-                                if($hidepencilbtn!='true'){
-                                            echo '<td class="efiling_search"><a href="'.base_url('caveat/caveatee').'">Edit</a></td>';
-                                        }
-
-                                echo '</tr>';
-                            ?>
+                            <td data-key="#">1</td>
+                            <td data-key="Type">'.strtoupper('Caveatee').'</td>
+                            <td data-key="Caveatee Name">'.strtoupper('Caveatee Party :'.$caveatee_name).'</td>
+                            <td data-key="Age/D.O.B">'.$res_dob.'</td>
+                            <td data-key="Gender">'.strtoupper($res_gender).'</td>
+                            <td data-key="Contact ">'.$efiling_civil_data[0]['res_mobile'].'</td>
+                            <td data-key="Address">'.$res_address.'</td>';
+                            if($hidepencilbtn!='true'){
+                                echo '<td data-key="Action" class="efiling_search"><a href="'.base_url('caveat/caveatee').'">Edit</a></td>';
+                            }
+                        echo '</tr>';
+                        ?>
                     </tbody>
             </table>
         </div>
