@@ -725,13 +725,12 @@ if(!empty(getSessionData('login'))){
                                                         $tbl_users_id = !empty($value['tbl_users_id']) ? $value['tbl_users_id'] : '';
                                                         $bar_reg_no = !empty($value['bar_reg_no']) ? $value['bar_reg_no'] : '';
                                                         echo '<tr>
-                                                            <td width="4%">'.$i.'</td>
-                                                            <td width="10%">'.$first_name.'</td>
-                                                            <td width="20%">'.$mobile.' </td>
-                                                            <td width="10%">'.$email.'</td>
-                                                            <td width="10%">'.$bar_reg_no.'</td>
-                                                            <td width="10%">
-                                                            <input type="checkbox" id="checkbox_'.$i.'" class="selectAllcheckBox" data-userId="'.$tbl_users_id.'"/></td>
+                                                            <td data-key="S.No." width="4%">'.$i.'</td>
+                                                            <td data-key="Name" width="10%">'.$first_name.'</td>
+                                                            <td data-key="Mobile No." width="20%">'.$mobile.' </td>
+                                                            <td data-key="Email" width="10%">'.$email.'</td>
+                                                            <td data-key="Bar Reg.No." width="10%">'.$bar_reg_no.'</td>
+                                                            <td data-key="<label class="control-label" for="selectAll"><input type="checkbox" name="selectAll" id="selectAll"><span style="margin-left: 7px; font-size: 12px;color:#fff" id="selectSpan">Select All</span></label>" width="10%"><input type="checkbox" id="checkbox_'.$i.'" class="selectAllcheckBox" data-userId="'.$tbl_users_id.'"/></td>
                                                         </tr>';
                                                         $i++;
                                                     }

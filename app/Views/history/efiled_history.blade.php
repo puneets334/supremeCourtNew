@@ -99,11 +99,11 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr>
-                                                                        <td width="14%"><?php echo htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES); ?></td>
-                                                                        <td><?php echo $cause_title ?></td>
-                                                                        <td width="14%"><?php echo htmlentities($filing_type, ENT_QUOTES); ?></td>
+                                                                        <td data-key="<?php echo $lbl_efiling_no; ?> " width="14%"><?php echo htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES); ?></td>
+                                                                        <td data-key="Case No.& Cause Title"><?php echo $cause_title ?></td>
+                                                                        <td data-key="Type" width="14%"><?php echo htmlentities($filing_type, ENT_QUOTES); ?></td>
                                                                         <!--<td width="14%"><a href="<?/*= base_url() */ ?>history/efiled_case/user_info/<?php /*echo htmlentities(url_encryption(trim($efiled_by_user[0]->id)), ENT_QUOTES) . '/' . htmlentities(url_encryption(trim($efiled_by_user[0]->ref_m_usertype_id)), ENT_QUOTES); */ ?>"><?php /*echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); */ ?></a></td>-->
-                                                                        <td width="14%"><?php echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); ?></td>
+                                                                        <td data-key="Submitted By" width="14%"><?php echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); ?></td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -143,10 +143,10 @@
                                                                             $activate_from_array = array();
                                                                             ?>
                                                                             <tr>
-                                                                                <td width="10%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                                <td width="30%"><?php echo htmlentities($stage_name, ENT_QUOTES); ?></td>
-                                                                                <td width="30%"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($activate_from_result))), ENT_QUOTES); ?></td>
-                                                                                <td width="30%"><?php if ($stg['deactivated_on'] != '') echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($stg['deactivated_on']))), ENT_QUOTES); ?></td>
+                                                                                <td data-key="#" width="10%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                                                <td data-key="Stage" width="30%"><?php echo htmlentities($stage_name, ENT_QUOTES); ?></td>
+                                                                                <td data-key="Active from" width="30%"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($activate_from_result))), ENT_QUOTES); ?></td>
+                                                                                <td data-key="Active Upto" width="30%"><?php if ($stg['deactivated_on'] != '') echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($stg['deactivated_on']))), ENT_QUOTES); ?></td>
                                                                             </tr>
                                                                         <?php } ?>
                                                                     </tbody>
@@ -181,10 +181,10 @@
                                                                                 foreach ($uploaded_docs as $updoc) {
                                                                                     ?>
                                                                                     <tr>
-                                                                                        <td width="1%" class="sorting_1" tabindex="0"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                                        <td width="4%" class="sorting_1" tabindex="0"> <a href="<?= base_url('documentIndex/viewIndexItem/' . url_encryption($updoc['doc_id'])); ?>" target="_blank"><?php echo htmlentities($updoc['doc_title'], ENT_QUOTES); ?><br>(<?php echo htmlentities($updoc['file_type'], ENT_QUOTES); ?>)</a></td>
-                                                                                        <td width="2%" class="sorting_1" tabindex="0"><?php echo htmlentities($updoc['page_no'], ENT_QUOTES); ?></td>
-                                                                                        <td width="4%" class="sorting_1" tabindex="0"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($updoc['uploaded_on']))), ENT_QUOTES); ?></td>
+                                                                                        <td data-key="#" width="1%" class="sorting_1" tabindex="0"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                                                        <td data-key="Document" width="4%" class="sorting_1" tabindex="0"> <a href="<?= base_url('documentIndex/viewIndexItem/' . url_encryption($updoc['doc_id'])); ?>" target="_blank"><?php echo htmlentities($updoc['doc_title'], ENT_QUOTES); ?><br>(<?php echo htmlentities($updoc['file_type'], ENT_QUOTES); ?>)</a></td>
+                                                                                        <td data-key="Pages" width="2%" class="sorting_1" tabindex="0"><?php echo htmlentities($updoc['page_no'], ENT_QUOTES); ?></td>
+                                                                                        <td data-key="upload date" width="4%" class="sorting_1" tabindex="0"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($updoc['uploaded_on']))), ENT_QUOTES); ?></td>
                                                                                     </tr>
                                                                                     <?php
                                                                                 }
@@ -241,10 +241,10 @@
                                                                                 $cure_date = ($re->defect_cured_date != NULL) ? date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->defect_cured_date))) : NULL;
                                                                                 ?>
                                                                                 <tr>
-                                                                                    <td width="5%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                                    <td width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->defect_date))), ENT_QUOTES); ?> </td>
-                                                                                    <td><?php echo script_remove($msg); ?></td>
-                                                                                    <td width="15%"><?php echo htmlentities($cure_date); ?> </td>
+                                                                                    <td data-key="#" width="5%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                                                    <td data-key="Defects Date" width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->defect_date))), ENT_QUOTES); ?> </td>
+                                                                                    <td data-key="Defects"><?php echo script_remove($msg); ?></td>
+                                                                                    <td data-key="Defects Cure Date" width="15%"><?php echo htmlentities($cure_date); ?> </td>
                                                                                 </tr>
                                                                             <?php } ?>
                                                                         </tbody>
@@ -279,11 +279,11 @@
                                                                             foreach ($allocation_details as $result) {
                                                                                 ?>
                                                                                 <tr>
-                                                                                    <td width="5%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                                    <td width="25%"><?php echo htmlentities(strtoupper($result->admin_name), ENT_QUOTES); ?> </td>
-                                                                                    <td width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($result->allocated_on))), ENT_QUOTES); ?> </td>
-                                                                                    <td><?php echo htmlentities($result->reason_to_allocate, ENT_QUOTES); ?> </td>
-                                                                                    <td width="15%"><?php echo htmlentities($result->update_ip, ENT_QUOTES); ?> </td>
+                                                                                    <td data-key="#" width="5%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                                                    <td data-key="Allocated to" width="25%"><?php echo htmlentities(strtoupper($result->admin_name), ENT_QUOTES); ?> </td>
+                                                                                    <td data-key="Allocated On " width="15%"><?php echo htmlentities(date("d-m-Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($result->allocated_on))), ENT_QUOTES); ?> </td>
+                                                                                    <td data-key="Reason"><?php echo htmlentities($result->reason_to_allocate, ENT_QUOTES); ?> </td>
+                                                                                    <td data-key="IP" width="15%"><?php echo htmlentities($result->update_ip, ENT_QUOTES); ?> </td>
 
                                                                                 </tr>
                                                                             <?php } ?>
