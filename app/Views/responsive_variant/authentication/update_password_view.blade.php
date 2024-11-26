@@ -148,10 +148,10 @@
                                             <label for="" class="form-label">Password</label>
                                             <input type="password" class="form-control cus-form-ctrl" id="password" name="password" maxlength="20" autocomplete="off" placeholder="Password" onchange="changeData(this)"> 
                                             <?php if (isset($validation) && $validation->hasError('password')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('password'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                <div class="text-danger">
+                                                    <?= $validation->getError('password'); ?>
+                                                </div>
+                                            <?php endif; ?>
                                             <span style="font-size: 12px; color: #746c6c;">Password: Min 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special.</span> 
                                         </div>
                                         <input id="txt_password" name="txt_password" type="hidden">
@@ -161,10 +161,10 @@
                                             <label for="" class="form-label">Confirm Password</label>
                                             <input class="form-control cus-form-ctrl" type="password" name="confirm_password" id="confirm_password" autocomplete="off" maxlength="20"  placeholder="Confirm Password" onchange="changeData(this)">
                                             <?php if (isset($validation) && $validation->hasError('confirm_password')): ?>
-                                                            <div class="text-danger">
-                                                                <?= $validation->getError('confirm_password'); ?>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                <div class="text-danger">
+                                                    <?= $validation->getError('confirm_password'); ?>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>

@@ -121,14 +121,14 @@ class DefaultController extends BaseController {
                     $this->session->setFlashdata('old_username', $_POST['txt_username']);
                     return response()->redirect(base_url('/'));
                 }
-                // return redirect()->to(base_url('Register/ForgetPassword')); 
-                return $this->render('responsive_variant.authentication.update_password_view');
+                return redirect()->to(base_url('Register/ForgetPassword')); 
+                //return $this->render('responsive_variant.authentication.update_password_view');
             } 
             if (isset($_POST['txt_username']) && !empty($_POST['txt_username']) && isset($_POST['txt_password']) && !empty($_POST['txt_password']) && isset($_POST['userCaptcha']) && !empty($_POST['userCaptcha'])) {
                 $username = $_POST['txt_username'];
                 $password = $_POST['txt_password'];
                 $userCaptcha = $_POST['userCaptcha'];
-                if ($username == NULL  || $password == NULL || preg_match('/[^A-Za-z0-9!@#$]/i', $password) || $userCaptcha == NULL || preg_match('/[^A-Za-z0-9]/i', $userCaptcha)) {
+                if ($username == NULL  || $password == NULL || preg_match('/[^A-Za-z0-9!@#$]/i', $password) || $userCaptcha == NULL || preg_match('/[^A-Za-z0-9]/i', $userCaptcha)) { 
                     $this->session->setFlashdata('msg', 'Invalid username or password or Captcha!');
                     return response()->redirect(base_url('/'));
                 }
@@ -139,6 +139,7 @@ class DefaultController extends BaseController {
                     return response()->redirect(base_url('/'));
                 }
                 else {
+            
                     /*****start-for efiling_assistant*****/
                     $impersonator_user = new stdClass();
                     $impersonated_user = new stdClass();
@@ -210,6 +211,7 @@ class DefaultController extends BaseController {
                     }
                     else{
                         $row = $this->Login_model->get_user($username, $password);
+                     
                     }
                     if ($row) {
                             // $otp = '123456';
