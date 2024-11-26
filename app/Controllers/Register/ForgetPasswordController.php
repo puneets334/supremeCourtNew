@@ -540,7 +540,7 @@ class ForgetPasswordController extends BaseController
         {
             return FALSE;
         }
-        if (strlen($password) <= 8)
+        if (strlen($password) < 8)
         {
             return FALSE;
         }
