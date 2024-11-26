@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layout.advocateApp')
 @section('content')
 <?php use App\Models\Register\RegisterModel; ?>
 <style>
@@ -75,14 +75,14 @@
                                             <div class="x_panel">
                                                 <div class="x_title">
                                                     <div class="col-md-12">
-                                                        <div class="innerpg-sub-title">
-                                                            <h5>
-                                                                Change Password 
-                                                                <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                                <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
-                                                            </h5>
-                                                        </div>
                                                         <?php if (isset($updatedata) && $updatedata == 'estab') { ?>
+                                                            <div class="innerpg-sub-title">
+                                                                <h5>
+                                                                    Update Establishment Details 
+                                                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                                </h5>
+                                                            </div>
                                                             <div class="col-md-9">
                                                                 <h4>Add establishments where advocate wants to get update and add his information in Court software (CIS)</h4>
                                                             </div>
@@ -96,6 +96,13 @@
                                                     <div class="clearfix"></div>
                                                 </div>
                                                 <?php if (isset($updatedata) && $updatedata == 'pass') { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Password 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <div id="msgforce" style="display:none;">
                                                             <div class="alert alert-danger text-center flashmessage" data-auto-dismiss="9000">
@@ -154,6 +161,13 @@
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 <?php } elseif (isset($updatedata) && $updatedata == 'email') { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Email 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <br />
                                                         <?php
@@ -183,6 +197,13 @@
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 <?php } elseif (isset($updatedata) && $updatedata == 'contact') { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Mobile Number 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <br />
                                                         <?php
@@ -212,6 +233,13 @@
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 <?php } elseif (isset($updatedata) && $updatedata == 'address') { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Address 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <br />
                                                         <?php
@@ -328,6 +356,13 @@
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 <?php } elseif (isset($updatedata) && $updatedata == 'estab') { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Establishment Details 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <br />
                                                         <?php
@@ -502,6 +537,13 @@
                                                     </div>
                                                 <?php } ?>
                                                 <?php if (isset($email_otp)) { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Email 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <br />
                                                         <?php
@@ -534,6 +576,13 @@
                                                         <?php echo form_close(); ?>
                                                     </div>
                                                 <?php } elseif (isset($mobile_otp)) { ?>
+                                                    <div class="innerpg-sub-title">
+                                                        <h5>
+                                                            Update Mobile Number 
+                                                            <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                        </h5>
+                                                    </div>
                                                     <div class="x_content">
                                                         <br />
                                                         <?php
