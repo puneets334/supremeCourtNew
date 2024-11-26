@@ -71,13 +71,19 @@ class DefaultController extends BaseController {
         $this->session->set('login_salt', $this->generateRandomString());
         return $this->render('responsive_variant.authentication.frontLogin', $data);
     }
+    function isNewUser($userId){
+        $result =  $this->Login_model->isNewUser($userId);
+        return $result;
+        // pr($result);
+    }
     public function login() {
         $this->checkBrowserCompatibility();
         //check user already logged in or not
         if (isset($_SESSION['login']) && !empty($_SESSION['login'])) {
             $this->redirect_on_login();
-        }
+        } 
 
+        
         // if (!empty($this->session->getFlashdata('login'))) {
         //     $this->redirect_on_login();
         // }
@@ -98,8 +104,7 @@ class DefaultController extends BaseController {
                 "rules" => "required|trim"
             ],
         ];
-
-
+        
         if ($this->validate($rules) === FALSE) {
             $data = [
                 'validation' => $this->validator,
@@ -108,6 +113,17 @@ class DefaultController extends BaseController {
             $this->session->set('login_salt', $this->generateRandomString());
             return $this->render('responsive_variant.authentication.frontLogin', $data);
         }else{
+            if($this->isNewUser($_POST['txt_username']) == 1){ 
+                $userCaptcha = $_POST['userCaptcha'];
+                if ($this->session->get('captcha') != $userCaptcha) {
+                    // pr($this->session->getFlashdata('captcha'));
+                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                    $this->session->setFlashdata('old_username', $_POST['txt_username']);
+                    return response()->redirect(base_url('/'));
+                }
+                // return redirect()->to(base_url('Register/ForgetPassword')); 
+                return $this->render('responsive_variant.authentication.update_password_view');
+            } 
             if (isset($_POST['txt_username']) && !empty($_POST['txt_username']) && isset($_POST['txt_password']) && !empty($_POST['txt_password']) && isset($_POST['userCaptcha']) && !empty($_POST['userCaptcha'])) {
                 $username = $_POST['txt_username'];
                 $password = $_POST['txt_password'];
