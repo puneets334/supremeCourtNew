@@ -214,13 +214,13 @@ $hearing_model = new HearingModel();
                                             $sno++;
                                             if($hearing_mode_court_direction!='P' && $hearing_mode_court_direction!='V') {
                                                 echo '<tr>
-                                                    <td style="width: 20px">'.$sno.'</td>
-                                                    <td>'.date('d-m-Y', strtotime($case['next_dt'])).'</td>
-                                                    <td>'.str_replace(' (M)','<span style="color:darkgreen"> (M)</span>',str_replace(' (C)','<span style="color:red"> (C)</span>',str_replace(",","<br/>",$case['case_no']))).'</td>
-                                                    <td>'.$case['court_no_display'].'#'.$case['item_no'].'</td>
-                                                    <td>'.$case['main_case_reg_no'].' @ '.$case['diary_no'].'<br>'.$case['cause_title'].'</td>
-                                                    <td>'.$case['case_count'].'</td>
-                                                    <td>
+                                                    <td data-key="#" style="width: 20px">'.$sno.'</td>
+                                                    <td data-key="List Date">'.date('d-m-Y', strtotime($case['next_dt'])).'</td>
+                                                    <td data-key="Registration Number">'.str_replace(' (M)','<span style="color:darkgreen"> (M)</span>',str_replace(' (C)','<span style="color:red"> (C)</span>',str_replace(",","<br/>",$case['case_no']))).'</td>
+                                                    <td data-key="Court # Item no">'.$case['court_no_display'].'#'.$case['item_no'].'</td>
+                                                    <td data-key="Main case Details">'.$case['main_case_reg_no'].' @ '.$case['diary_no'].'<br>'.$case['cause_title'].'</td>
+                                                    <td data-key="No. of Cases">'.$case['case_count'].'</td>
+                                                    <td data-key="Mode of Hearing ">
                                                         <input type="hidden" name="consent_for_diary_nos['.$case['diary_no'].']" id="consent_for_diary_nos" value="'.$case['consent_diaries'].'">
                                                         <input type="hidden" name="case_count['.$case['diary_no'].']" id="case_count" value="'.$case['case_count'].'">
                                                         <input type="hidden" name="court_no" id="court_no" value="'.$case['court_no'].'">
@@ -269,10 +269,10 @@ $hearing_model = new HearingModel();
                                                         foreach ($advocate_cases_summary as $court) {
                                                             $consent_result = $Consent_VC_model->getAdvocateVCConsentSummary(getSessionData('login.adv_sci_bar_id'),$listing_date[0], $court['courtno']);
                                                             ?>
-                                                            <td><?=date('d-m-Y', strtotime($court['next_dt']))?></td>
-                                                            <td><?=$court['court_no_display']?></td>
-                                                            <td><?=$court['total_cases']?></td>
-                                                            <td><?=empty($consent_result[0]['vc_count'])?0:$consent_result[0]['vc_count'] ?> </td>
+                                                            <td data-key="List Date"><?=date('d-m-Y', strtotime($court['next_dt']))?></td>
+                                                            <td data-key="Court No#"><?=$court['court_no_display']?></td>
+                                                            <td data-key="Total Cases"><?=$court['total_cases']?></td>
+                                                            <td data-key="VC Mode of Hearing"><?=empty($consent_result[0]['vc_count'])?0:$consent_result[0]['vc_count'] ?> </td>
                                                         <?php } ?>
                                                     </tr>
                                                 </tbody>

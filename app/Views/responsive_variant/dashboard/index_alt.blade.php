@@ -775,89 +775,84 @@ td {
                                                                     @foreach($sr_advocate_soon_cases as
                                                                     $sr_advocate_soon_case)
                                                                     <tr>
-                                                                        <td class="uk-width-small@m" style="width: 40%; text-align: left; align: left;">
+                                                                        <td data-key="Case" class="uk-width-small@m" style="width: 40%; text-align: left; align: left;">
                                                                             <div>
-                                                                                <span
-                                                                                    class="uk-text-muted">{{$sr_advocate_soon_case->registration_number ?: ('D. No.' . $sr_advocate_soon_case->diary_number . '/' . $sr_advocate_soon_case->diary_year)}}</span>
+                                                                                <span class="uk-text-muted">{{$sr_advocate_soon_case->registration_number ?: ('D. No.' . $sr_advocate_soon_case->diary_number . '/' . $sr_advocate_soon_case->diary_year)}}</span>
                                                                             </div>
-                                                                            <div><b style="font-size: 17px;">P:
-                                                                                </b>{{ucwords(strtolower($sr_advocate_soon_case->petitioner_name))}}
-                                                                            </div>
-                                                                            <div><b style="font-size: 17px;">R:
-                                                                                </b>{{ucwords(strtolower($sr_advocate_soon_case->respondent_name))}}
-                                                                            </div>
+                                                                            <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($sr_advocate_soon_case->petitioner_name))}}</div>
+                                                                            <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($sr_advocate_soon_case->respondent_name))}}</div>
                                                                             {{--<div>
                                                                                 <span class="uk-label uk-background-muted uk-text-primary" style="text-transform: none;font-size:11px;">{{ucwords(strtolower(str_replace(']','',str_replace('[','',$scheduled_case->meta->listing->court->listing_sub_type))))}}</span>
-                                                        </div>--}}
-                                                        </td>
-                                                        <td class="uk-table-expand" uk-margin width=60%>
-                                                            <div>
-                                                                <li>
-                                                                    <button type="button"
-                                                                        class="btn btn-primary accordion-button collapsed"
-                                                                        data-bs-toggle="collapse"
-                                                                        data-bs-target="#collapse<?php echo $i; ?>"
-                                                                        aria-expanded="false"
-                                                                        aria-controls="collapse<?php echo $i; ?>">{{date_format(date_create($sr_advocate_soon_case->meta->listing->listed_on), 'D, jS M')}}</button>
-                                                                    <ul id="collapse<?php echo $i; ?>"
-                                                                        class="submenu accordion-collapse collapse"
-                                                                        aria-labelledby="heading<?php echo $i; ?>"
-                                                                        data-bs-parent="#accordionExample">
-                                                                        @if(!empty($sr_advocate_soon_case->office_reports->current->uri))
-                                                                        <li><a class="btn-link"
-                                                                                href="{{$sr_advocate_soon_case->office_reports->current->uri}}"
-                                                                                target="_blank"><span
-                                                                                    uk-icon="icon: file-pdf"></span>
-                                                                                Office Report</a></li>
-                                                                        @endif
-                                                                        @if(!empty($sr_advocate_soon_case->rop_judgments->current->uri))
-                                                                        <li><a class="btn-link"
-                                                                                href="{{$sr_advocate_soon_case->rop_judgments->current->uri}}"
-                                                                                target="_blank"><span
-                                                                                    uk-icon="icon: file-pdf"></span>
-                                                                                Previous Order
-                                                                                ({{$sr_advocate_soon_case->rop_judgments->current->dated}})</a>
-                                                                        </li>
-                                                                        @endif
-                                                                        <li><a style="cursor: pointer;" title="Send SMS"
-                                                                                onClick="get_message_data(this.id)"
-                                                                                id="<?php echo $sr_advocate_soon_case->diary_number .'#'.$sr_advocate_soon_case->diary_year.'#'.$sr_advocate_soon_case->registration_number.'#'.$sr_advocate_soon_case->petitioner_name.'#'.$sr_advocate_soon_case->respondent_name.'#'.$sr_advocate_soon_case->item_number.'#'.$sr_advocate_soon_case->meta->listing->court->name,'#'.date_format(date_create($sr_advocate_soon_case->meta->listing->listed_on), 'D, jS M Y'); ?>"><span
-                                                                                    uk-icon="icon: comment"></span> Send
-                                                                                SMS</a></li>
-                                                                        <?php if($sr_advocate_soon_case->vc_url != NULL) { ?>
-                                                                        <li><a class="btn-link"
-                                                                                href="{{$sr_advocate_soon_case->vc_url}}"
-                                                                                target="_blank"><span
-                                                                                    uk-icon="icon: file-text"></span>
-                                                                                Join Virtual Court</a></li>
-                                                                        <?php } ?>
-                                                                        <li>
-                                                                            <a href="#"
-                                                                                onclick="javascript:loadPaperBookViewer(this);"
-                                                                                data-paper-book-viewer-url="<?php echo base_url("case/paper_book_viewer/".(string)$sr_advocate_soon_case->diary_id.""); ?>"
-                                                                                targe="_blank"
-                                                                                data-diary_no="@{{$sr_advocate_soon_case->diary_id}}"
-                                                                                data-diary_year="">
-                                                                                <span uk-icon="icon: bookmark"></span>
-                                                                                Paper Book (with Indexing)
-                                                                            </a>
-                                                                        </li>
-                                                                    </ul>
-                                                                </li>
-                                                            </div>
-                                                            <div>
-                                                                <span class="uk-label md-bg-grey-900"
-                                                                    uk-tooltip="{{$sr_advocate_soon_case->meta->listing->court->listing_cum_board_type . str_replace(':','.',$sr_advocate_soon_case->meta->listing->court->scheduled_time)}}">{{'Item '.($sr_advocate_soon_case->item_number_alt ?: $sr_advocate_soon_case->item_number)}}
-                                                                    @
-                                                                    {{$sr_advocate_soon_case->meta->listing->court->name}}</span>
-                                                            </div>
-                                                            <div>
-                                                                <small>
-                                                                    <b>Bench:</b><br>
-                                                                    {{ucwords(strtolower(implode(',<br> ', $sr_advocate_soon_case->meta->listing->court->judges)))}}
-                                                                </small>
-                                                            </div>
-                                                        </td>
+                                                                            </div>--}}
+                                                                        </td>
+                                                                        <td data-key="Date & Bench" class="uk-table-expand" uk-margin width=60%>
+                                                                            <div>
+                                                                                <li>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-primary accordion-button collapsed"
+                                                                                        data-bs-toggle="collapse"
+                                                                                        data-bs-target="#collapse<?php echo $i; ?>"
+                                                                                        aria-expanded="false"
+                                                                                        aria-controls="collapse<?php echo $i; ?>">{{date_format(date_create($sr_advocate_soon_case->meta->listing->listed_on), 'D, jS M')}}</button>
+                                                                                    <ul id="collapse<?php echo $i; ?>"
+                                                                                        class="submenu accordion-collapse collapse"
+                                                                                        aria-labelledby="heading<?php echo $i; ?>"
+                                                                                        data-bs-parent="#accordionExample">
+                                                                                        @if(!empty($sr_advocate_soon_case->office_reports->current->uri))
+                                                                                        <li><a class="btn-link"
+                                                                                                href="{{$sr_advocate_soon_case->office_reports->current->uri}}"
+                                                                                                target="_blank"><span
+                                                                                                    uk-icon="icon: file-pdf"></span>
+                                                                                                Office Report</a></li>
+                                                                                        @endif
+                                                                                        @if(!empty($sr_advocate_soon_case->rop_judgments->current->uri))
+                                                                                        <li><a class="btn-link"
+                                                                                                href="{{$sr_advocate_soon_case->rop_judgments->current->uri}}"
+                                                                                                target="_blank"><span
+                                                                                                    uk-icon="icon: file-pdf"></span>
+                                                                                                Previous Order
+                                                                                                ({{$sr_advocate_soon_case->rop_judgments->current->dated}})</a>
+                                                                                        </li>
+                                                                                        @endif
+                                                                                        <li><a style="cursor: pointer;" title="Send SMS"
+                                                                                                onClick="get_message_data(this.id)"
+                                                                                                id="<?php echo $sr_advocate_soon_case->diary_number .'#'.$sr_advocate_soon_case->diary_year.'#'.$sr_advocate_soon_case->registration_number.'#'.$sr_advocate_soon_case->petitioner_name.'#'.$sr_advocate_soon_case->respondent_name.'#'.$sr_advocate_soon_case->item_number.'#'.$sr_advocate_soon_case->meta->listing->court->name,'#'.date_format(date_create($sr_advocate_soon_case->meta->listing->listed_on), 'D, jS M Y'); ?>"><span
+                                                                                                    uk-icon="icon: comment"></span> Send
+                                                                                                SMS</a></li>
+                                                                                        <?php if($sr_advocate_soon_case->vc_url != NULL) { ?>
+                                                                                        <li><a class="btn-link"
+                                                                                                href="{{$sr_advocate_soon_case->vc_url}}"
+                                                                                                target="_blank"><span
+                                                                                                    uk-icon="icon: file-text"></span>
+                                                                                                Join Virtual Court</a></li>
+                                                                                        <?php } ?>
+                                                                                        <li>
+                                                                                            <a href="#"
+                                                                                                onclick="javascript:loadPaperBookViewer(this);"
+                                                                                                data-paper-book-viewer-url="<?php echo base_url("case/paper_book_viewer/".(string)$sr_advocate_soon_case->diary_id.""); ?>"
+                                                                                                targe="_blank"
+                                                                                                data-diary_no="@{{$sr_advocate_soon_case->diary_id}}"
+                                                                                                data-diary_year="">
+                                                                                                <span uk-icon="icon: bookmark"></span>
+                                                                                                Paper Book (with Indexing)
+                                                                                            </a>
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </li>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="uk-label md-bg-grey-900"
+                                                                                    uk-tooltip="{{$sr_advocate_soon_case->meta->listing->court->listing_cum_board_type . str_replace(':','.',$sr_advocate_soon_case->meta->listing->court->scheduled_time)}}">{{'Item '.($sr_advocate_soon_case->item_number_alt ?: $sr_advocate_soon_case->item_number)}}
+                                                                                    @
+                                                                                    {{$sr_advocate_soon_case->meta->listing->court->name}}</span>
+                                                                            </div>
+                                                                            <div>
+                                                                                <small>
+                                                                                    <b>Bench:</b><br>
+                                                                                    {{ucwords(strtolower(implode(',<br> ', $sr_advocate_soon_case->meta->listing->court->judges)))}}
+                                                                                </small>
+                                                                            </div>
+                                                                        </td>
                                                         </tr>
                                                         <?php $i++; ?>
                                                         @endforeach

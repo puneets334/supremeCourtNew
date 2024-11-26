@@ -196,29 +196,28 @@
                                                                                         <th style="text-align: center">Total</th>
                                                                                         @if(isset($day_wise_pending))
                                                                                         <tr>
-                                                                                            <td>Total </td>
-                                                                                            <td> <?= $day_wise_pending[0]->total ?></td>
+                                                                                            <td data-key="Pending Since">Total </td>
+                                                                                            <td data-key="Total"> <?= $day_wise_pending[0]->total ?></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td>
-                                                                                                <1 Day </td>
-                                                                                            <td> <?= $day_wise_pending[0]->zero_day ?></td>
+                                                                                            <td data-key="Pending Since">1 Day </td>
+                                                                                            <td data-key="Total"> <?= $day_wise_pending[0]->zero_day ?></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td>>1 Day </td>
-                                                                                            <td> <?= $day_wise_pending[0]->one_day ?></td>
+                                                                                            <td data-key="Pending Since">>1 Day </td>
+                                                                                            <td data-key="Total"> <?= $day_wise_pending[0]->one_day ?></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td>2 Days </td>
-                                                                                            <td> <?= $day_wise_pending[0]->two_day ?></td>
+                                                                                            <td data-key="Pending Since">2 Days </td>
+                                                                                            <td data-key="Total"> <?= $day_wise_pending[0]->two_day ?></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td>3 Days </td>
-                                                                                            <td> <?= $day_wise_pending[0]->three_day ?></td>
+                                                                                            <td data-key="Pending Since">3 Days </td>
+                                                                                            <td data-key="Total"> <?= $day_wise_pending[0]->three_day ?></td>
                                                                                         </tr>
                                                                                         <tr>
-                                                                                            <td>>3 Days </td>
-                                                                                            <td> <?= $day_wise_pending[0]->more_than_three_day ?></td>
+                                                                                            <td data-key="Pending Since">>3 Days </td>
+                                                                                            <td data-key="Total"> <?= $day_wise_pending[0]->more_than_three_day ?></td>
                                                                                         </tr>
                                                                                         @endif
                                                                                     </table>
@@ -232,7 +231,7 @@
                                                                                         @if(isset($pendency_bifurcation))
                                                                                         <?php
                                                                                         foreach ($pendency_bifurcation as $data) {
-                                                                                            echo "<tr><td>" . $data->admin_stage_name . "</td><td>  " . $data->total . "</td></tr>";
+                                                                                            echo "<tr><td data-key='Stage'>" . $data->admin_stage_name . "</td><td data-key='Total'>  " . $data->total . "</td></tr>";
                                                                                         }
                                                                                         ?>
                                                                                         @endif

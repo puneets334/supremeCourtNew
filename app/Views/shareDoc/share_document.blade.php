@@ -179,10 +179,10 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                                 foreach ($email_details as $value) {
                                 ?>
                                     <tr>
-                                        <td width="1%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                        <td width="25%"> <?php echo htmlentities($value->name, ENT_QUOTES); ?>
-                                        <td> <?php echo htmlentities($value->email, ENT_QUOTES); ?></td>
-                                        <td>
+                                        <td data-key="#" width="1%"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                        <td data-key="Name" width="25%"> <?php echo htmlentities($value->name, ENT_QUOTES); ?>
+                                        <td data-key="Email"> <?php echo htmlentities($value->email, ENT_QUOTES); ?></td>
+                                        <td data-key="Delete">
                                             <a href="javascript:void(0)" onclick="DocDeleteAction('<?php echo htmlentities(url_encryption(trim($value->id . '$$' . $_SESSION['efiling_details']['registration_id']), ENT_QUOTES)); ?>')"><i class="fa fa-trash"> Delete</i> </a>
                                         </td>
                                     </tr>

@@ -39,13 +39,13 @@
                                                 $pno = !empty($diaryDetails->pno) ? $diaryDetails->pno : '';
                                                 $rno = !empty($diaryDetails->rno) ? $diaryDetails->rno : '';
                                                 echo '<tr>
-                                                    <td>1</td>
-                                                    <td>'.$diaryNo.'</td>
-                                                    <td>'.$cause_title.'</td>
-                                                    <td>'.$reg_no_display.'</td>
-                                                    <td>'.$c_status.'</td>
-                                                    <td>'.$pno.'</td>
-                                                    <td>'.$rno.'</td>
+                                                    <td data-key="#">1</td>
+                                                    <td data-key="Diary No.">'.$diaryNo.'</td>
+                                                    <td data-key="Cause Title">'.$cause_title.'</td>
+                                                    <td data-key="Registration No.">'.$reg_no_display.'</td>
+                                                    <td data-key="Status">'.$c_status.'</td>
+                                                    <td data-key="No.Of Petitioner">'.$pno.'</td>
+                                                    <td data-key="No.Of Respondent">'.$rno.'</td>
                                                 </tr>';
                                             } else {
                                                 echo '<tr>
@@ -162,12 +162,12 @@
                                                                             $action = (!empty($v['is_active']) && $v['is_active'] == 't') ? 'Disengage' : 'Re-engage';
                                                                             $engageType = (!empty($v['is_active']) && $v['is_active'] == 't') ? '2' : '1';
                                                                             echo '<tr>
-                                                                                <td>' . $i . '</td>
-                                                                                <td>' . $advocatename . '</td>
-                                                                                <td>' . $createdAt . '</td>
-                                                                                <td>' . $updatedAt . '</td>
-                                                                                <td>' . $is_active . '</td>
-                                                                                <td><a class="deleteSrAdvocateData" data-user_type="' . $user_type . '" data-engagetype="' . $engageType . '" data-sradvocateid="' . $id . '" href="javaScript:void(0);" title="' . $action . '">' . $action . '</a></td>
+                                                                                <td data-key="#">' . $i . '</td>
+                                                                                <td data-key="Name">' . $advocatename . '</td>
+                                                                                <td data-key="Engaged Date">' . $createdAt . '</td>
+                                                                                <td data-key="Disengaged Date">' . $updatedAt . '</td>
+                                                                                <td data-key="Status">' . $is_active . '</td>
+                                                                                <td data-key="Action"><a class="deleteSrAdvocateData" data-user_type="' . $user_type . '" data-engagetype="' . $engageType . '" data-sradvocateid="' . $id . '" href="javaScript:void(0);" title="' . $action . '">' . $action . '</a></td>
                                                                             </tr>';
                                                                             $i++;
                                                                         }
@@ -228,12 +228,12 @@
                                                                             $action = (!empty($v['is_active']) && $v['is_active'] == 't') ? 'Disengage' : 'Re-engage';
                                                                             $engageType = (!empty($v['is_active']) && $v['is_active'] == 't') ? '2' : '1';
                                                                             echo '<tr>
-                                                                                <td>'.$i.'</td>
-                                                                                <td>'.ucfirst($firstname).'</td>
-                                                                                <td>'.$createdAt.'</td>
-                                                                                <td>'.$updatedAt.'</td>
-                                                                                <td>'.$is_active.'</td>
-                                                                                <td><a class="deleteSrAdvocateData" data-user_type="' . $user_type . '" data-engagetype="' . $engageType . '" data-sradvocateid="' . $id . '" href="javaScript:void(0);" title="' . $action . '">' . $action . '</a></td>
+                                                                                <td data-key="#">'.$i.'</td>
+                                                                                <td data-key="Name">'.ucfirst($firstname).'</td>
+                                                                                <td data-key="Engaged Date">'.$createdAt.'</td>
+                                                                                <td data-key="Disengaged Date">'.$updatedAt.'</td>
+                                                                                <td data-key="Status">'.$is_active.'</td>
+                                                                                <td data-key="Action"><a class="deleteSrAdvocateData" data-user_type="' . $user_type . '" data-engagetype="' . $engageType . '" data-sradvocateid="' . $id . '" href="javaScript:void(0);" title="' . $action . '">' . $action . '</a></td>
                                                                             </tr>';
                                                                             $i++;
                                                                         }
