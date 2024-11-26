@@ -582,7 +582,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             </div>
+                                             
                                              <div class="accordion-item">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
@@ -673,6 +673,7 @@
                                                       <?php render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]); ?>
                                                    </div>
                                                 </div>
+                                             </div>
                                              </div>
                                        </div>
                                     </div>

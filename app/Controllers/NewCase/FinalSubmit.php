@@ -428,7 +428,7 @@ class FinalSubmit extends BaseController
 
             //$this->session->set_flashdata("hekki");
 
-            $this->session->setFlashdata('msg', 'E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!');
+            $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
             //echo "querFy";
             $_SESSION['efiling_details']['stage_id'] = Initial_Approaval_Pending_Stage;
             return redirect()->to(base_url('newcase/view'));
@@ -437,7 +437,7 @@ class FinalSubmit extends BaseController
         } else {
             echo "error";
 
-            $this->session->setFlashdata('msg', 'Submition failed. Please try again!');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
             return redirect()->to(base_url('dashboard'));
             exit(0);
         }
