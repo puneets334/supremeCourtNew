@@ -77,8 +77,8 @@
 .black-theme .quick-btn {background: #333333 !important;color: #ff0 !important;}
 .black-theme .quick-btn.gray-btn {background: #000;}
 .black-theme .quick-btn:before, .black-theme .quick-btn:after {background: #222222;}
-.black-theme .tabs-section .nav-tabs li.nav-item .nav-link {background: #333333;color: #ff0;}
-.black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover {background: #000;color: #ff0;}
+.black-theme .tabs-section .nav-tabs li.nav-item .nav-link , .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:before, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:after{background: #333;color: #ff0;}
+.black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover , .black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active:before, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover:before, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:focus:before , .black-theme .tabs-section .nav-tabs li.nav-item .nav-link.active:after, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:hover:after, .black-theme .tabs-section .nav-tabs li.nav-item .nav-link:focus:after{background: #555555;color: #ff0;}
 .black-theme form label {color: #ffffff;}
 .black-theme .cus-form-ctrl {background: #222222;border-color: #ffffff4d !important;color: #ffffff !important;appearance: auto;}
 .black-theme .cus-form-ctrl:focus {border-color: #ffff008c !important;background: #222222;}

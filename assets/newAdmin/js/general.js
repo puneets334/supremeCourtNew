@@ -211,17 +211,44 @@ $(document).ready(function() {
 
 
 // Table TD height JS 
-// document.querySelectorAll('.custom-table td').forEach(function(td) {
+
+// document.querySelectorAll('.custom-table td').forEach(td => {
 //   const contentHeight = td.scrollHeight; 
 //   const minHeight = 40; 
-//   td.style.minHeight = Math.max(contentHeight, minHeight) + 'px'; 
+//   td.style.minHeight = `${Math.max(contentHeight, minHeight)}px`; 
 // });
-document.querySelectorAll('.custom-table td').forEach(td => {
-  const contentHeight = td.scrollHeight; 
-  const minHeight = 40; 
-  td.style.minHeight = `${Math.max(contentHeight, minHeight)}px`; 
-});
+function adjustDataKey(tableElement) {
+  if (!tableElement) {
+    return;
+  }
 
+  const tds = tableElement.querySelectorAll("td");
+  if (window.innerWidth <= 768) {
+    tds.forEach(td => {
+      const dataKey = td.getAttribute("data-key");
+      if (!dataKey) {
+        return;
+      }
+
+      const baseHeight = 34;
+      const lengthFactor = 2;
+      const calculatedMinHeight = baseHeight + dataKey.length * lengthFactor;
+      td.style.minHeight = `${calculatedMinHeight}px`;
+    });
+  }
+}
+
+function handleResponsiveTables() {
+  const tableElements = document.querySelectorAll(".custom-table");
+  tableElements.forEach(adjustDataKey);
+
+  window.addEventListener("resize", () => {
+    tableElements.forEach(adjustDataKey);
+  });
+}
+
+// Call the function to initialize responsive behavior on page load
+window.onload = handleResponsiveTables;
 // ------JS For Iframe StarT ------------
 
 // function adjustIframeHeight(iframe) {
