@@ -1,3 +1,18 @@
+<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
+<!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css" rel="stylesheet" />
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
+<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <?php
 
 $attribute = array('class' => 'form-horizontal', 'id' => 'save_searched_case', 'name' => 'save_searched_case', 'autocomplete' => 'off');
@@ -287,6 +302,21 @@ if (isset($diary_no) && !empty($diary_no)) {
     echo '<p style="font-size:14px;" class="text-danger text-center"><strong>No Records Found !</strong></p>';
 }
 ?>
+@push('script')
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
+<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
+<script src="<?= base_url() ?>assets/js/sha256.js"></script>
+<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
+<script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <?php if ($lbl_confirm == 'Mentioning') { ?>
     <script type="text/javascript">
         document.getElementById("confirm_yes").checked = true;
@@ -329,3 +359,4 @@ if (isset($diary_no) && !empty($diary_no)) {
 
     });
 </script>
+@endpush
