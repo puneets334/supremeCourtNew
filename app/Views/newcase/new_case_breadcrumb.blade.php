@@ -14,19 +14,21 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
         font-weight: bold; text-decoration: line-through;
     }
 </style>
-<div class="dash-card dashboard-section">
-<div class="row">
-        <?php
+<?php
         
         if(!empty(getSessionData('efiling_details')['stage_id'])) { ?>
+<div class="dash-card dashboard-section">
+<div class="row">
+        
             <div class="row">
                 <div class="col-12 defects-h5-table">
                     <?php remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
                 </div>
             </div>
-        <?php } ?>
+        
     </div>
 </div>
+<?php } ?>
 <div class="dash-card dashboard-section">
     
     <div class="row">
