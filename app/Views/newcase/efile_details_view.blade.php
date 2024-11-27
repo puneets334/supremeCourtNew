@@ -1740,7 +1740,8 @@
                      var dataarr = dataas[1].slice(1).split(',');
                      if ((dataarr[0] != 2) && (dataarr[0] != 3) && (dataarr[0] != 7) && (dataarr[0]) != 8 && (dataarr[0]) != 10) {
                          alert("all completed");
-                         window.location.href = "<?php echo base_url('newcase/finalSubmit') ?>";
+                        //  window.location.href = "<?php echo base_url('newcase/finalSubmit') ?>";
+                        showLoaderAndRedirect("<?php echo base_url('newcase/AutoDiary') ?>");
                      }
                      if ((dataarr[0]) == 2) {
                          alert("Petitioner details are mandatory to fill. Redirecting to page !!");
