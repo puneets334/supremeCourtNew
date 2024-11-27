@@ -182,7 +182,7 @@ $routes->match(['GET', 'POST'], 'superAdmin/DefaultController/registrationForm',
 $routes->match(['GET', 'POST'], 'superAdmin/DefaultController', 'SuperAdmin\DefaultController::index');
 $routes->match(['GET', 'POST'], 'superAdmin/DefaultController/getEmpDetails', 'SuperAdmin\DefaultController::getEmpDetails');
 $routes->match(['GET', 'POST'], 'csrftoken', 'Csrftoken\DefaultController::index');
-$routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
+// $routes->match(['GET', 'POST'], 'report/search', 'Report\Search::index');
 
 
 /* Start Vinit Garg Routes*/

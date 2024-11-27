@@ -1,9 +1,12 @@
 <?php declare(strict_types=1); ?>
-@if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
-@extends('layout.advocateApp')
-@else
-@extends('layout.app')
-@endif
+<?php
+if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE))){
+    $x = 'layout.advocateApp';
+}else{
+    $x  ='layout.app';
+}
+?>
+@extends($x)
 @section('content')
 <style>
 .btn-info {
