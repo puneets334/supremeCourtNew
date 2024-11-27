@@ -263,7 +263,7 @@
                         var i = 0;
                         for (i = 0; i < len; i++) {
                             if (parseInt(data) === parseInt(doc_type[i]['doccode'])) {
-                                $('#doc_title').val((doc_type[i]['docdesc']).replace(/\//g, ' '));
+                                // $('#doc_title').val((doc_type[i]['docdesc']).replace(/\//g, ' '));
                                 $('#doc_title_fixed_onetime').val((doc_type[i]['docdesc']).replace(/\//g, ' '));
                             }
                         }
