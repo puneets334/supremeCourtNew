@@ -71,7 +71,7 @@ date_default_timezone_set('Asia/Kolkata');
                             <li class="health "><a href="<?= base_url('profile') ?>">Profile</a></li>
                             <div class="clearfix"></div><br>
                         <?php } ?>
-                    <?php } else if((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE  )) { ?>
+                    <?php } else if((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE)) { ?>
                         <li class="premium"><a href="<?= base_url('dashboard_alt') ?>" class="btn-link">Dashboard</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
                         <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
@@ -118,6 +118,11 @@ date_default_timezone_set('Asia/Kolkata');
                         <li class="premium"><a href="<?= base_url('dashboard') ?>" class="btn-link">Dashboard</a> </li>
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">My Cases</a> </li>
                         <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
+                    <?php } else if((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON)) { ?>
+                        <li class="premium"><a href="<?= base_url('dashboard_alt') ?>" class="btn-link">Dashboard</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('resources/hand_book') ?>" class="btn-link">Resources</a> </li>
                     <?php } else { ?>
                         <?php if ($segment->getSegment(1) == 'registrarActionDashboard') { ?>
                             <li class="health "><a href="<?= base_url('adminDashboard') ?>">Home</a></li>

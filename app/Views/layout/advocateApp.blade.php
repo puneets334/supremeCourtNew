@@ -54,7 +54,7 @@
         </div>
         <footer class="footer-sec">Content Owned by Supreme Court of India</footer>
     </div>
-    @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(USER_ADVOCATE)))
+    @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(USER_ADVOCATE,USER_IN_PERSON)))
         
         <div class="add-new-area" tabindex="0" role="button">
             <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
