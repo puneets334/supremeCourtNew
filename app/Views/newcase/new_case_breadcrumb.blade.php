@@ -16,7 +16,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
 </style>
 <?php
         
-        if(!empty(getSessionData('efiling_details')['stage_id'])) { ?>
+        if(!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $sas)) { ?>
 <div class="dash-card dashboard-section">
 <div class="row">
         
