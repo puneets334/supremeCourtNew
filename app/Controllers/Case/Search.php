@@ -113,7 +113,7 @@ class Search extends BaseController
             redirect('login');
             exit(0);
         }
-        $diary_type = $this->request->getGet('search_filing_type');
+        $diary_type = $_POST['search_filing_type'] ?? $this->request->getGet('search_filing_type');
         if ($diary_type == 'diary') {
             $this->validation->setRules([
                 "search_filing_type" => [
@@ -156,7 +156,7 @@ class Search extends BaseController
         } else {
             if ($diary_type == 'diary') {
                 $this->Common_model->get_establishment_details();
-                $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
+                $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($_POST['diaryno'] ?? $this->request->getGet('diaryno')), escape_data($_POST['diary_year'] ?? $this->request->getGet('diary_year')));
             } else if ($diary_type == 'register') {
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($this->request->getGet('sc_case_type'))), escape_data($this->request->getGet('case_number')), escape_data($this->request->getGet('case_year')));
             }
@@ -206,13 +206,13 @@ class Search extends BaseController
                     }
                     $data['searched_case_details'] = $web_service_result->case_details[0];
                     if ($diary_type == 'diary') {
-                        // if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
-                        //     echo $result;
-                        // } else{
-                        //     echo '1@@@' . $result;
-                        // }
-                        echo '1@@@';
-                        echo $this->render('casesearch.search_result_view', $data);
+                        if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
+                            // echo '1@@@';
+                            return $this->render('casesearch.search_result_view', $data);
+                        } else{
+                            echo '1@@@';
+                            echo $this->render('casesearch.search_result_view', $data);
+                        }
                     } else if ($diary_type == 'register') {
                         echo '2@@@';
                         echo $this->render('casesearch.search_result_view', $data, TRUE);

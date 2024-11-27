@@ -26,7 +26,7 @@ echo form_open(base_url('case/search/search_case_details'), $attribute);
                                     <?php
                                     $var = base_url('case/search/' . url_encryption('ia'));
                                     ?>
-                                    <iframe name="case-ia-crud-iframe" class="col-12 iframe-scroll-bar" src="{{$var}}"></iframe>
+                                    <iframe name="case-ia-crud-iframe" class="col-12 iframe-scroll-bar" src="{{empty(@$direct_access_params) ? base_url('case/search/'.url_encryption('ia')) : ''}}"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -37,10 +37,10 @@ echo form_open(base_url('case/search/search_case_details'), $attribute);
     </div>
 </div>
 @endsection
-@section('script')
+@push('script')
 <script type="text/javascript">
     $(function() {
         $('#case-ia-crud-form').submit();
     });
 </script>
-@endsection
+@endpush
