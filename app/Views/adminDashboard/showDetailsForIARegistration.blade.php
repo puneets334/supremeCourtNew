@@ -247,13 +247,17 @@
                         <?php
                          if(empty($doc['attached_with_doc_id'])){
                         ?>
+                        <div class="center-buttons">
                         <div id="divRegister_"<?=$doc['doc_id']?> sstyle="<?=$registerDisplay?>">
-                        <input type="button"  id="<?php echo $doc['doc_id'];?>" value="Transfer to ICMIS" onClick="register_doc(this.id)">
+                        <button type="button"  id="<?php echo $doc['doc_id'];?>"  onClick="register_doc(this.id)" class="quick-btn">Transfer to ICMIS</button>
+                        <!-- <input type="button"  id="<?php echo $doc['doc_id'];?>" value="Transfer to ICMIS" onClick="register_doc(this.id)"> -->
                         </div>
-                        <hr>
                         <div id="divAttach_"<?=$doc['doc_id']?> sstyle="<?=$attachDisplay?>">
-                            <input type="button"  id="btnAttach_<?php echo $doc['doc_id'];?>" value="No Action" onClick="no_action(<?=$doc['doc_id']?>)">
+                            <button type="button"  id="btnAttach_<?php echo $doc['doc_id'];?>" value="" onClick="no_action(<?=$doc['doc_id']?>)" class="quick-btn">No Action</button>
+                            <!-- <input type="button"  id="btnAttach_<?php echo $doc['doc_id'];?>" value="No Action" onClick="no_action(<?=$doc['doc_id']?>)"> -->
                         </div>
+                        </div>
+                        
                         <?php } else {echo "No Action";}?>
                         <!--<div id="divAttach_"<?/*=$doc->doc_id*/?> sstyle="<?/*=$attachDisplay*/?>">
                             <input type="button"  id="btnAttach_<?php /*echo $doc->doc_id;*/?>" value="Attach" onClick="attach_doc(<?/*=$doc->doc_id*/?>)">
@@ -274,9 +278,9 @@
 <div class="col-sm-12">
     <a class="list-group-item" style="background: #EDEDED; padding: 20px;" data-toggle="collapse" data-parent="#MainMenu"><?php if(!isset($payment_details) || empty($payment_details)){?><font style="color:red;"> <b>Fees Paid</b></font><?php } else{?> <b>Fees Paid</b><?php } ?></a>
      <?php
-    //  if (isset($payment_details) && !empty($payment_details)) {
-        render('shcilPayment.payment_list_view', ['payment_details' => @$payment_details]);
-    // }
+     if (isset($payment_details) && !empty($payment_details)) {
+        render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]);
+    }
      ?>
     </div>
     </div>
@@ -303,7 +307,7 @@
 
 
 </style>
-@push('script')
+
 <script type="text/javascript">
     function flipActionButton(doc_id){
         var selected_item=$("#ddlAttach_"+doc_id).val();
@@ -449,11 +453,9 @@
                                 if(updateData.status=='SUCCESS'){
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(message);
-                                    location.reload();
                                 }else if(updateData.status=='ERROR'){
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(message);
-                                    location.reload();
                                 }
                             // }
 
@@ -466,7 +468,6 @@
                                 3000);
                         }
                     });
-                    location.reload();
                     }
                     else{
                         var message = result.error;
@@ -486,9 +487,4 @@
         });
     }
 
-    $(document).on('click', '.closeButton', function(){
-        window.location.reload();
-    })
-
 </script>
-@endpush
