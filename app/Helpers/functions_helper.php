@@ -1250,8 +1250,7 @@ function remark_preview($reg_id, $current_stage_id)
         
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date(
-            'd-m-Y H:i:s',
-            strtotime($result_initial['defect_date'] ?? $result_initial['defect_date'] )
+            'd-m-Y H:i:s', strtotime('+5 Hours 30 Minutes', strtotime($result_initial['defect_date'] ?? $result_initial['defect_date']) )
         ) . '
                 <p>';
         $msg .= '
@@ -1263,8 +1262,7 @@ function remark_preview($reg_id, $current_stage_id)
         if ($result_initial['defect_cured_date'] ?? $result_initial['defect_cured_date'] != NULL) {
             $msg .= '[
                 <p] align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
-                'd-m-Y H:i:s',
-                strtotime($result_initial['defect_cured_date'])
+                'd-m-Y H:i:s', strtotime('+5 Hours 30 Minutes', strtotime($result_initial['defect_cured_date']))
             ), ENT_QUOTES) . '
                 <p>';
         }
