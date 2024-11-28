@@ -145,10 +145,11 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                                 aria-labelledby="headingThree"
                                                                 data-bs-parent="#accordionExample">
                                                                 <div class="accordion-body">
-                                                                    <?php render('documentIndex.documentIndex_misc_ia_list_view', ['efiled_docs_list' => $efiled_docs_list]); ?>
+                                                                    <?php render('documentIndex.documentIndex_misc_ia_list_view', ['efiled_docs_list' => $efiled_docs_list, 'uploaded_docs' => $uploaded_docs]); ?>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        
                                                         <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-sm-12 <?php } else { ?> col-sm-12 <?php } ?>" id="headingFour">
