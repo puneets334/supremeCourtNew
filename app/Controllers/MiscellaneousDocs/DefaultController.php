@@ -83,7 +83,8 @@ class DefaultController extends BaseController {
                     case MISC_BREAD_DOC_INDEX:
                         return redirect()->to(base_url('miscellaneous_docs/courtFee'));
                     case MISC_BREAD_COURT_FEE:
-                        return redirect()->to(base_url('shareDoc'));
+                        return redirect()->to(base_url('IA/courtFee'));
+                        // return redirect()->to(base_url('shareDoc'));
                     case MISC_BREAD_DOC_INDEX:
                         return redirect()->to(base_url('affirmation'));
                     case MISC_BREAD_AFFIRMATION:

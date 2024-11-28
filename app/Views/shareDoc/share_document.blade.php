@@ -214,7 +214,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
             $('#add').click(function() {
                 i++;
                 if (i <= 10) {
-                    $('#dynamic_field').append('<tr id="row' + i + '"><td><input type="text" id="name_' + i + '" name="name[]" placeholder="Enter  Name" class="form-control name_list" required/> <ul id="searchResult_' + i + '"></ul></td><td><input type="text" name="email[]" placeholder="Enter Email" class="form-control email_list"  id="email_' + i + '"  required/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+                    $('#dynamic_field').append('<tr id="row' + i + '"><td><input type="text" id="name_' + i + '" name="name[]" placeholder="Enter  Name" class="form-control name_list cus-form-ctrl" required/> <ul id="searchResult_' + i + '"></ul></td><td><input type="text" name="email[]" placeholder="Enter Email" class="form-control email_list cus-form-ctrl"  id="email_' + i + '"  required/></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
                 }
             });
 
