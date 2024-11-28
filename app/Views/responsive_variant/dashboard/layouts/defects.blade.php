@@ -6,9 +6,9 @@
                 <table class="table table-striped custom-table ia">
                     <thead class="md-bg-red-600">
                     <tr>
-                        <th class="uk-text-bold text-white">#</th>
-                        <th class="uk-text-bold text-white">Case/App</th>
-                        <th class="uk-text-bold text-white">Started On</th>
+                        <th class="uk-text-bold">#</th>
+                        <th class="uk-text-bold ">Case/App</th>
+                        <th class="uk-text-bold ">Started On</th>
                     </tr>
                     </thead>
                     <tbody>

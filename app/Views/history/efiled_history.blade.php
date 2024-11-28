@@ -179,11 +179,11 @@
                                                                             <?php
                                                                             $i = 1;
                                                                             if (!empty($uploaded_docs)) {
-                                                                                foreach ($uploaded_docs as $updoc) {
+                                                                                foreach ($uploaded_docs as $key => $updoc) {
                                                                                     ?>
                                                                                     <tr>
                                                                                         <td data-key="#" width="1%" class="sorting_1" tabindex="0"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
-                                                                                        <td data-key="Document" width="4%" class="sorting_1" tabindex="0"> <a href="<?= base_url('documentIndex/viewIndexItem/' . url_encryption($updoc['doc_id'])); ?>" target="_blank"><?php echo htmlentities($updoc['doc_title'], ENT_QUOTES); ?><br>(<?php echo htmlentities($updoc['file_type'], ENT_QUOTES); ?>)</a></td>
+                                                                                        <td data-key="Document" width="4%" class="sorting_1" tabindex="0"> <a href="<?= base_url('documentIndex/viewIndexItem/' . url_encryption($updoc['doc_id'])); ?>" target="_blank"><?php echo htmlentities($uploaded_docs_name[$key]['doc_title'], ENT_QUOTES); ?><br>(<?php echo htmlentities($updoc['file_type'], ENT_QUOTES); ?>)</a></td>
                                                                                         <td data-key="Pages" width="2%" class="sorting_1" tabindex="0"><?php echo htmlentities($updoc['page_no'], ENT_QUOTES); ?></td>
                                                                                         <td data-key="upload date" width="4%" class="sorting_1" tabindex="0"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($updoc['uploaded_on']))), ENT_QUOTES); ?></td>
                                                                                     </tr>

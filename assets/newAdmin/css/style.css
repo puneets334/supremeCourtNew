@@ -7316,7 +7316,8 @@ span.select2 {
 }
 
 iframe.iframe-scroll-bar {
-    height: 1000px !important;
+    /* height: 1000px !important; */
+    min-height: 800px !important;
     width: 100% !important;
     object-fit: cover;
     overflow: hidden !important;
@@ -8347,7 +8348,7 @@ table.dataTable thead .sorting {
     background-size: auto calc(100% - 37px);
 }
 .table-sec table tr th {
-    font-size: 13px;
+    font-size: 14px;
 }
 .custom-table thead th {
     padding: 12px 12px !important;
@@ -8661,3 +8662,8 @@ h5.defects-h5-msg {
     font-style: bold;
 }
 .defects-h5-table .table td {color: #b30000;}
+/* 28-11-24 start  */
+.custom-table.soon-listing-table thead th:first-child, .custom-table.soon-listing-table tbody td:first-child {
+    text-align: left;
+}
+/* 28-11-24 End  */
