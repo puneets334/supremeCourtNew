@@ -145,7 +145,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         <?php } ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a> -->
                         <?php
-
                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
                             $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
                             if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
