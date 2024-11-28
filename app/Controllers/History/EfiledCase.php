@@ -5,18 +5,22 @@ use App\Models\Common\CommonModel;
 use App\Models\History\HistoryModel;
 use App\Models\MiscellaneousDocs\GetDetailsModel;
 use App\Models\UploadDocuments\UploadDocsModel;
+use App\Models\NewCase\ViewModel;
+
 
 class EfiledCase extends BaseController {
     protected $History_model;
     protected $Common_model;
     protected $Get_details_model;
     protected $UploadDocsModel;
+    protected $ViewModel;
     public function __construct() {
         parent::__construct();
         $this->History_model = new HistoryModel();
         $this->Common_model = new CommonModel();
         $this->Get_details_model = new GetDetailsModel();
         $this->UploadDocsModel = new UploadDocsModel();
+        $this->ViewModel = new ViewModel(); 
     }
 
     public function index() {
@@ -49,10 +53,11 @@ class EfiledCase extends BaseController {
                     $result = $this->History_model->get_new_case_details($regid);
                    
                     // $uploaded_docs = $this->UploadDocsModel->get_uploaded_pdfs($regid);
-                    $uploaded_docs = $this->Common_model->get_uploaded_documents($regid);
+                    $uploaded_docs = $this->Common_model->get_uploaded_documents($regid); 
+                    $uploaded_docs_name = $this->UploadDocsModel->get_uploaded_pdfs($regid);
                     $created_by = $result[0]['created_by'];
                 }
-                // pr($created_by);
+                // pr($uploaded_docs_name);
                 
                 $efiled_by_user = $this->History_model->get_efiled_by_user($created_by);
                 $stage = $this->History_model->get_stages($regid);
@@ -62,7 +67,7 @@ class EfiledCase extends BaseController {
                 // $this->load->view('templates/header');
                 // $this->load->view('history/efiled_history', $data);
                 // $this->load->view('templates/footer');
-                return render('history.efiled_history', @compact('remark','case_details','uploaded_docs','result','efiled_by_user','stage','payment_details','allocation_details'));
+                return render('history.efiled_history', @compact('remark','case_details','uploaded_docs','uploaded_docs_name','result','efiled_by_user','stage','payment_details','allocation_details'));
             } else {
                 redirect('login');
             }
