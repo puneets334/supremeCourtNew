@@ -96,9 +96,9 @@ $uris = service('uri');
                     ?>
                 </tbody>
             </table>
-            <?php if (!empty($uploaded_docs )) {
-                render('uploadDocuments.uploaded_doc_list');
-            } ?>
+            <?php if (!empty($uploaded_docs )) {  ?> 
+                @include('uploadDocuments.uploaded_doc_list')
+            <?php } ?>
         </div>
     </div>
 </div>

@@ -483,7 +483,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                     aria-labelledby="headingSix"
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <?php render('documentIndex.documentIndex_caveat_list_view',  ['efiled_docs_list' => $efiled_docs_list]); ?>
+                                        <?php render('documentIndex.documentIndex_caveat_list_view',  ['efiled_docs_list' => $efiled_docs_list, 'uploaded_docs' => $uploaded_docs]); ?>
                                     </div>
                                 </div>
                             </div>
@@ -523,6 +523,13 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                     data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
                                         <?php //render('courtFee.document_listing_view', ['efiling_civil_data' => $efiling_civil_data]); ?>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
+                                            <?php
+                                            if (isset($payment_details) && !empty($payment_details)) {
+                                                render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]);
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -572,13 +579,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                         <?php } ?>
                     </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
-                    <?php
-                    if (isset($payment_details) && !empty($payment_details)) {
-                        render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]);
-                    }
-                    ?>
-                </div>
+                
             </div>
         </div>
     </div>
