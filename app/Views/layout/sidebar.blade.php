@@ -15,7 +15,7 @@ date_default_timezone_set('Asia/Kolkata');
     <div class="leftPanel">
         <div class="dashLeftNavSection">
             <div class="menu-close-sec">
-                <a href="" class="main-menu-close"> <span class="mdi mdi-close-circle-outline"></span></a>
+                <a href="javascript:void(0)" class="main-menu-close"> <span class="mdi mdi-close-circle-outline"></span></a>
             </div>
             <?php
             $profile_model = new \App\Models\Profile\ProfileModel();
