@@ -274,9 +274,9 @@
 <div class="col-sm-12">
     <a class="list-group-item" style="background: #EDEDED; padding: 20px;" data-toggle="collapse" data-parent="#MainMenu"><?php if(!isset($payment_details) || empty($payment_details)){?><font style="color:red;"> <b>Fees Paid</b></font><?php } else{?> <b>Fees Paid</b><?php } ?></a>
      <?php
-     if (isset($payment_details) && !empty($payment_details)) {
-        render('shcilPayment.payment_list_view', ['payment_details' => $payment_details]);
-    }
+    //  if (isset($payment_details) && !empty($payment_details)) {
+        render('shcilPayment.payment_list_view', ['payment_details' => @$payment_details]);
+    // }
      ?>
     </div>
     </div>
@@ -303,7 +303,7 @@
 
 
 </style>
-
+@push('script')
 <script type="text/javascript">
     function flipActionButton(doc_id){
         var selected_item=$("#ddlAttach_"+doc_id).val();
@@ -449,9 +449,11 @@
                                 if(updateData.status=='SUCCESS'){
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(message);
+                                    location.reload();
                                 }else if(updateData.status=='ERROR'){
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(message);
+                                    location.reload();
                                 }
                             // }
 
@@ -464,6 +466,7 @@
                                 3000);
                         }
                     });
+                    location.reload();
                     }
                     else{
                         var message = result.error;
@@ -483,4 +486,9 @@
         });
     }
 
+    $(document).on('click', '.closeButton', function(){
+        window.location.reload();
+    })
+
 </script>
+@endpush
