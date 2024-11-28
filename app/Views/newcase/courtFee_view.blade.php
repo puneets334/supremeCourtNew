@@ -575,9 +575,9 @@
                     </div>
                     <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
                         <div class="row justify-content-end align-items-end h-100">
-                            <div class="col-12 col-sm-12 col-md-8 col-lg-8">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-8">
                             <div class="form-group">
-                            <label class="">Want to pay more Court Fee ( ₹ ) <span style="color: red" class="astriks">*</span> :</label>
+                            <label class="form-label">Want to pay more Court Fee ( ₹ ) <span style="color: red" class="astriks">*</span> :</label>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6">
                                 <input type="text" onKeyPress="edValueKeyPress()" onKeyUp="edValueKeyPress(this)" id="user_declared_extra_fee" name="user_declared_extra_fee" minlength="1" maxlength="5" class="form-control cus-form-ctrl " placeholder="Court Fee Amount" value="0">
                             </div>
