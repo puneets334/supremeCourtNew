@@ -175,7 +175,7 @@ class Ajaxcalls extends BaseController
         $sub_doc_type = 0;// url_decryption($_POST['sub_doc_type']);
         if (!empty($doc_type_code) && $sub_doc_type == 0) {
             if ($doc_type_code == 2 or $doc_type_code == 5 or $doc_type_code == 19) {
-                $dataResult = '<label class="control-label col-sm-4 input-sm"> If with affidavit? <span style="color: red">*</span></label>
+                $dataResult = '<label class="control-label col-sm-12 input-sm mt-4"> If with affidavit? <span style="color: red">*</span></label>
                 <div class="col-sm-8">
                     <input type="hidden" name="affidavitCheck" value="affidavitCheck">
                     <input type="radio" id="Yes" name="if_with_affidavit" value="Y">
