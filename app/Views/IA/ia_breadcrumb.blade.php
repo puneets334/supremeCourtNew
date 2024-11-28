@@ -68,6 +68,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
                         <?php
+                        $final_submit_continue_action = '';
                         $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
                             if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
