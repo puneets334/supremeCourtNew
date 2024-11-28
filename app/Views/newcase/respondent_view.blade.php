@@ -111,7 +111,7 @@
                                                         placeholder=""> --}}
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-2 show_hide_base_on_org">
                         <div class="mb-3">
                             <label for="" class="form-label">Is Dead/Minor?</label>
                             <div class="">
@@ -129,6 +129,19 @@
                                 }
                                 ?>
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-2 show_hide_base_on_org">
+                        <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
+                        <div class="mb-3">
+                            <?php
+                            $gmchecked = @$party_details[0]['gender'] == 'M' ? 'checked="checked"' : '';
+                            $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
+                            $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
+                            ?>
+                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?>  >Male</label>
+                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?>  >Female</label>
+                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>  >Other</label>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
@@ -177,19 +190,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
-                        <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
-                        <div class="mb-3">
-                            <?php
-                            $gmchecked = @$party_details[0]['gender'] == 'M' ? 'checked="checked"' : '';
-                            $gfchecked = @$party_details[0]['gender'] == 'F' ? 'checked="checked"' : '';
-                            $gochecked = @$party_details[0]['gender'] == 'O' ? 'checked="checked"' : '';
-                            ?>
-                            <label class="radio-inline"><input tabindex='7' type="radio" name="party_gender" id="party_gender1" value="M" <?php echo $gmchecked; ?>  >Male</label>
-                            <label class="radio-inline"><input tabindex='8' type="radio" name="party_gender" id="party_gender2" value="F" <?php echo $gfchecked; ?>  >Female</label>
-                            <label class="radio-inline"><input tabindex='9' type="radio" name="party_gender" id="party_gender3" value="O" <?php echo $gochecked; ?>  >Other</label>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="row" id="org_form" style="display: none">
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row">

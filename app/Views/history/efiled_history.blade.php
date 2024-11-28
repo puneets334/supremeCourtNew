@@ -130,6 +130,7 @@
                                                                     <tbody>
                                                                         <?php
                                                                         $i = 0;
+                                                                        $j = 1;
                                                                         // pr($stage);
                                                                         foreach ($stage as $stg) {
                                                                             $activate_from_array = array();
@@ -144,7 +145,7 @@
                                                                             $activate_from_array = array();
                                                                             ?>
                                                                             <tr>
-                                                                                <td data-key="#" width="10%"><?php echo htmlentities($i++, ENT_QUOTES); ?></td>
+                                                                                <td data-key="#" width="10%"><?php echo htmlentities($j++, ENT_QUOTES); ?></td>
                                                                                 <td data-key="Stage" width="30%"><?php echo htmlentities($stage_name, ENT_QUOTES); ?></td>
                                                                                 <td data-key="Active from" width="30%"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($activate_from_result))), ENT_QUOTES); ?></td>
                                                                                 <td data-key="Active Upto" width="30%"><?php if ($stg['deactivated_on'] != '') echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 hours 30 minutes', strtotime($stg['deactivated_on']))), ENT_QUOTES); ?></td>

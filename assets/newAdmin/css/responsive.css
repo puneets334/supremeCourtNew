@@ -174,7 +174,7 @@
     .dashbord-tile #byMe{margin:-30px 70px;}
     .application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;}
     .dashboard-section.dashboard-tiles-area { margin-top: 0;}
-    .dash-card {height: 100%;}
+    .dash-card {/* height: 100%;*/}
 }
 /* Tablet CSS End  */
 

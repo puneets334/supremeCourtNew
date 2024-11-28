@@ -84,6 +84,37 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         //     echo $details['details'][0]['c_status'] ?? $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
                         // }
                     }
+                    $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                    if($segment->getSegment(2) == 'view'){
+                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                            if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
+                                if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {    
+                                    if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') || (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL && (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't'))) {
+                                        echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="quick-btn">Final Submit</a>';
+                                        // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                    } else {
+                                        
+                                    }
+                                }
+                                if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { ?>
+                                    <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
+                                    <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
+                                    <?php
+                                }
+                            }
+                        }
+                    }
+                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
+                        if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
+                            ?>
+                            <a class="quick-btn" target="_blank" href="<?php echo base_url('acknowledgement/view'); ?>">
+                                <i class="fa fa-download blink"></i> eFiling Acknowledgement
+                            </a>
+                            <?php
+                        }
+                    }
                     ?>
                     <div class="btns-sec">
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
@@ -99,34 +130,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             <h6>E-File Miscellaneous Documents</h6>
                         </div>
                         <div class="current-pg-actions">
-                <?php
-                 $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
-                    if($segment->getSegment(2) == 'view'){
-                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
-                        if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-                            if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
-
-                                if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
-                                    (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
-                                        (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't')
-                                    )
-                                ) {
-
-                                    echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-                                    // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
-                                } else {
-                                    
-                                }
-                            }
-                            if ($_SESSION['efiling_details']['stage_id'] == Draft_Stage) { ?>
-                                <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
-                                <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
-                    <?php }
-                        }
-                    }
-                }  
-                ?>
                             <?php
                             if ((getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE) || (getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE) ||  (getSessionData('efiling_details')['stage_id'] == TRASH_STAGE)) {
                                 $efiling_num_label_for_display = 'DRAFT-';;
@@ -305,8 +308,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> View </a>
                 </li>
             </ul>
-            <div class="row m-3 ">
-                <div class="col-md-12 text-end">
+            <!-- <div class="row m-3 ">
+                <div class="col-md-12 text-end"> -->
 
                     <?php
                     /*  $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
@@ -336,8 +339,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     }
                 } */
                     ?>
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
         </form>
         <div class="modal fade" id="FinalSubmitModal" role="dialog">
             <div class="modal-dialog">
@@ -451,7 +454,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                             <?php
                             //echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);
                             ?>
-                            <div class="x_panel x-panel_height">
+                            <!-- <div class="x_panel x-panel_height"> -->
                                 <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left">
                             <ul class="text-left1">
                                 <li style="float: left;list-style-type: none;"><i class="badge" style="background-color: #01ADEF; color:#01ADEF; ">A</i> Active &nbsp;</li>
@@ -461,7 +464,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                             </ul>
                         </div> -->
 
-                                <div class=" col-lg-8 col-md-8 col-sm-6 col-xs-12 text-right">
+                                <!-- <div class=" col-lg-8 col-md-8 col-sm-6 col-xs-12 text-right"> -->
                                     <?php
 
                                     // $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
@@ -524,10 +527,10 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     //     }
                                     // }
                                     ?>
-                                </div>
-                            </div>
+                                <!-- </div> -->
+                            <!-- </div> -->
                             <div class="x_panel">
-                                <div class="x_title">
+                                <!-- <div class="x_title"> -->
                                     <!-- <div class="registration-process" style="float: left; border: none;">
                                 <h2><i class="glyphicon glyphicon-book"></i> E-File Miscellaneous Documents </h2>
                                 <div class="clearfix"></div>
@@ -542,8 +545,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                 &nbsp; <a class="btn btn-default btn-sm" href="<?php echo base_url('history/efiled_case/view'); ?>"> eFiling History</a>
                                 &nbsp; <a class="btn btn-info btn-sm" type="button" onclick="window.history.back()"> Back</a>
                             </div> -->
-                                    <div class="clearfix"></div>
-                                </div>
+                                    <!-- <div class="clearfix"></div> -->
+                                <!-- </div> -->
                                 <div class="x_content">
 
                                     <?php
@@ -761,8 +764,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                                                                                     ?>">7</span> View </a> -->
                                     <!-- </li> -->
                                     </ul>
-                                    <div class="clearfix"></div>
-                                    <br />
+                                    <!-- <div class="clearfix"></div> -->
                                     <div class="modal fade" id="FinalSubmitModal" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
