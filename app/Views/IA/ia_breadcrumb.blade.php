@@ -144,6 +144,18 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             <a data-toggle="modal" href="#delete_lodges_cases" class="btn quick-btn btn-danger btn-sm">Make Idle & Delete</a>
                         <?php } ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a> -->
+                        <?php
+                            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                                $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
+                                if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
+                            ?>
+                                    <a class="quick-btn btn btn-success btn-sm" target="_blank" href="<?php echo base_url('acknowledgement/view'); ?>">
+                                        <i class="fa fa-download blink"></i> eFiling Acknowledgement
+                                    </a>
+                            <?php
+                                }
+                            }
+                        ?>
                         <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
