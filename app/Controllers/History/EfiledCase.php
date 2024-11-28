@@ -46,6 +46,8 @@ class EfiledCase extends BaseController {
                     $case_details = $this->Get_details_model->get_case_details($regid);
                     if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA) {
                         $uploaded_docs = $this->Common_model->get_uploaded_documents($regid);
+                        $uploaded_docs_name = $this->UploadDocsModel->get_uploaded_pdfs($regid);
+
                     }
                     $created_by = getSessionData('efiling_details')['created_by'];
                 } elseif ($type == E_FILING_TYPE_NEW_CASE) {
