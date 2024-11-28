@@ -303,8 +303,8 @@ class EfilingAction extends BaseController {
             send_mail_msg($userdata[0]->emailid, $subject, $sentSMS, $user_name);
             // log_message('CUSTOM', "E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) ." disapproved successfully !");
             $this->session->setFlashdata('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' disapproved successfully !</div>');
-            // return redirect()->to(base_url('adminDashboard'));
-            return redirect()->to(base_url($redirectURL));
+            return redirect()->to(base_url('adminDashboard'));
+            // return redirect()->to(base_url($redirectURL));
             // exit(0);
         }
     }
