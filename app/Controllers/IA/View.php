@@ -82,7 +82,7 @@ class View extends BaseController
                     }
                 }
             }
-            return $this->render('IA.ia_preview', $data, TRUE);
+            return $this->render('IA.ia_preview', $data);
             /*return render('IA/ia_preview');
             $this->load->view('templates/header');
             $this->load->view('IA/ia_preview', $data); 

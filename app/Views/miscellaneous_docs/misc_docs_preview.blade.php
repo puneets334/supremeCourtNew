@@ -167,8 +167,7 @@ $collapse_class = '';
                                                 </div>
                                                 <div id="collapseThree" class="accordion-collapse collapse <?php echo $collapse_class; ?>" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                                     <div class="accordion-body">
-                                                        <?php render('documentIndex.preview_misc_doc_ia_index_doc_list', @compact('efiled_docs_list','uploaded_docs')); 
-                                                        ?>
+                                                        <?php render('documentIndex.preview_misc_doc_ia_index_doc_list', ['efiled_docs_list' => $efiled_docs_list, 'uploaded_docs' => $uploaded_docs]); ?>
                                                     </div>
                                                 </div>
                                             </div>
