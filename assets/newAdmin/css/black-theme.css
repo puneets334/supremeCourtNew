@@ -23,7 +23,6 @@
 .black-theme .mngmntHeader .top-right-nav select.select-lang {background: transparent;color: #ff0;}
 .black-theme .mngmntHeader .top-right-nav select.select-lang option { background: #000;}
 .black-theme .mngmntHeader {background: #000;}
-.black-theme .mngmntLogoSection .logo img {filter: invert(1);}
 .black-theme .mngmntLogoSection .logoSubtitle {color: #ff0;}
 .black-theme .mngmntLogoSection .brand-text h4, .black-theme .mngmntLogoSection .brand-text h4 span {color: #ff0 !important;}
 .black-theme .mngmntUserSection .userName, .black-theme .mngmntHeader .userDetail i {color: #ff0;}
