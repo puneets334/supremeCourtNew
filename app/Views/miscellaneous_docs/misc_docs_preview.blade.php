@@ -47,18 +47,6 @@ $collapse_class = '';
                             <div class="tab-form-inner">
                                 <div class="row">
                                     <div style="float: right">
-                                        <?php
-                                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
-                                            $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
-                                            if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
-                                                ?>
-                                                <a class="btn btn-success btn-sm" target="_blank" href="<?php echo base_url('acknowledgement/view'); ?>">
-                                                    <i class="fa fa-download blink"></i> eFiling Acknowledgement
-                                                </a>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
                                         <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
                                         <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 visible-lg visible-md">
                                             <button class="btn btn-primary btn-sm openall" style="float: right">Expand All <i class="fa fa-eye"></i></button>
@@ -194,7 +182,7 @@ $collapse_class = '';
                     </div>
                 </div>
                 <div class="row m-3">
-                    <div class="col-md-12 text-end">
+                    <div class="col-md-12 text-center">
                         <?php $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                         // echo '<pre>'; print_r($Array);
                         $segment = service('uri');
@@ -209,7 +197,7 @@ $collapse_class = '';
                                                 (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't')
                                             )
                                         ) {
-                                            echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                            echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="quick-btn">Final Submit</a>';
                                             // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                         } else {
                                             echo 'f';
