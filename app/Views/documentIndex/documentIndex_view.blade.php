@@ -58,12 +58,12 @@
                             </div>
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="card custom-card">
-                                <div class="row">
-                                    <h6 class="text-center fw-bold">Index</h6>
-                                </div>
                                     <?php
                                     $segment = service('uri');
                                     if (isset($uploaded_docs) && !empty($uploaded_pdf)) { ?>
+                                        <div class="row">
+                                            <h6 class="text-center fw-bold">Index</h6>
+                                        </div>
                                         <?= ASTERISK_RED_MANDATORY ?>
                                         <h5 style="text-align: left;" class="mb-4">For computation of court fees, please use the options below carefully for all documents, interim application(s), if any, uploaded. </h5>
                                         <?php
@@ -99,8 +99,7 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show">
                                                 <div class="mb-3">
-                                                    <label for=""
-                                                        class="form-label">Index Item <span style="color: red" class="astriks">*</span></label>
+                                                    <label for="" class="form-label">Index Item <span style="color: red" class="astriks">*</span></label>
                                                     <select id="doc_type" name="doc_type" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%" onchange="getindxmodelcopies()" required>
                                                         <option value="" title="Select">Select Index Item</option>
                                                         <?php
@@ -131,10 +130,9 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="subItemData">
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show" id="subItemData">
                                                 <div class="mb-3">
-                                                    <label for=""
-                                                        class="form-label">Index Sub Item <span style="color: red" class="astriks">*</span></label>
+                                                    <label for="" class="form-label">Index Sub Item <span style="color: red" class="astriks">*</span></label>
                                                     <select id="sub_doc_type" name="sub_doc_type" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%" onchange="getpetitionersappellantmodals()">
                                                         <option value="" title="Select">Select Index Sub Item</option>
                                                         <?php
@@ -159,6 +157,11 @@
                                                     <span class="input-group-addon">
                                                         <i class="fa fa-question-circle-o" data-placement="bottom" data-toggle="popover" data-content="Title should be in numeric (Only Number are allowed)."></i>
                                                     </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show">
+                                                <div class="mb-3">
+                                                    <span id="sub_doc_type_load"></span>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
@@ -281,6 +284,7 @@
         }
         /*End of changes*/
         $(document).ready(function() {
+            $("#subItemData").hide();
             reload_document_index();
             var editmode_docType = '<?php echo @$editDocType_id; ?>';
             if (editmode_docType == 11) {

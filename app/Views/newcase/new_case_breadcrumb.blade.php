@@ -240,7 +240,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                             class="quick-btn gray-btn ' .
                             $efiling_num_button_background_class .
                             '" id="copyTarget_EfilingNumber" style="'.$style.'">' .
-                            $filing_num_label .
+                            //$filing_num_label .
                             $efiling_num_label_for_display .
                             htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) .
                             '</a>

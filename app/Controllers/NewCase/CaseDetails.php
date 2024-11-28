@@ -402,7 +402,6 @@ class CaseDetails extends BaseController
                 $jailsignDt = DateTime::createFromFormat('d/m/Y', $jailsignDt);
                 $jailsignDt = $jailsignDt->format('Y-m-d'); // Convert to Y-m-d format
             }
-
             $case_details = array(
                 'cause_title' => $cause_title,
                 'sc_case_type_id' => !empty($sc_case_type[0]) ? $sc_case_type[0] : null,
@@ -431,7 +430,7 @@ class CaseDetails extends BaseController
                 'supreme_court_state' => $supreme_court_state ? $supreme_court_state : null,
                 'supreme_court_bench' => $superem_court_bench ? $superem_court_bench : null,
                 'court_type' => $court_type ? $court_type : null,
-                'jail_signature_date' => $jailsignDt ? $jailsignDt : null,
+                'jail_signature_date' => $jailsignDt ? (escape_data($_POST["sc_sp_case_type_id"]) == 6 ? $jailsignDt : null) : null,
                 'special_category' => $special_category ? $special_category : null,
             );
             // pr($case_details);
@@ -477,7 +476,7 @@ class CaseDetails extends BaseController
                         exit();
                     }
                 }
-            //    pr($case_details);
+                // pr($case_details);
                 $status = $this->New_case_model->add_update_case_details($registration_id, $case_details, NEW_CASE_CASE_DETAIL, getSessionData('case_table_ids')->case_details_id);
 
                 if ($status) {
@@ -487,6 +486,7 @@ class CaseDetails extends BaseController
                     //$registration_id = getSessionData('efiling_details')['registration_id'];
                     //todo change code when user change case type from criminal to civil
                     $pending_court_fee = getPendingCourtFee();
+                    // pr($pending_court_fee);
                     if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
                         $breadcrumb_to_update = CAVEAT_BREAD_COURT_FEE;
                     } else {
@@ -495,7 +495,8 @@ class CaseDetails extends BaseController
                     if ($pending_court_fee > 0) {
                         $update_courtfee_breadcrumb_status = $this->Payment_model->remove_breadcrumb($registration_id, $breadcrumb_to_update);
                     } else {
-                        $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, $breadcrumb_to_update);
+                        // $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, $breadcrumb_to_update);
+                        $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, 1);
                     }
                     echo '2@@@' . htmlentities('Case details updated successfully!', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . $_SESSION['efiling_details']['stage_id'])));
                 } else {
