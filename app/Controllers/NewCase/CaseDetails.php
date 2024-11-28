@@ -430,7 +430,7 @@ class CaseDetails extends BaseController
                 'supreme_court_state' => $supreme_court_state ? $supreme_court_state : null,
                 'supreme_court_bench' => $superem_court_bench ? $superem_court_bench : null,
                 'court_type' => $court_type ? $court_type : null,
-                'jail_signature_date' => $jailsignDt ? $jailsignDt : null,
+                'jail_signature_date' => $jailsignDt ? (escape_data($_POST["sc_sp_case_type_id"]) == 6 ? $jailsignDt : null) : null,
                 'special_category' => $special_category ? $special_category : null,
             );
             // pr($case_details);
