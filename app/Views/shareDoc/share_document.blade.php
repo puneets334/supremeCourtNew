@@ -49,11 +49,11 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dynamic_field">
                             <tr>
-                                <td><input type="text" name="name" id="name" placeholder="Enter  Name" class="form-control name_list " minlength="3" />
+                                <td><input type="text" name="name" id="name" placeholder="Enter  Name" class="form-control name_list cus-form-ctrl" minlength="3" />
                                     <ul id="searchResult_1"></ul>
                                 </td>
-                                <td><input type="email" name="email" id="email" placeholder="Enter  Email" class="form-control email_list " /></td>
-                                <!--                                    <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>  -->
+                                <td><input type="email" name="email" id="email" placeholder="Enter  Email" class="form-control email_list cus-form-ctrl" /></td>
+                                <!-- <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>  -->
                             </tr>
                         </table>
                     </div>
@@ -70,10 +70,11 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                                 foreach ($case_aor_contacts['advocates_list'] as $contacts) {
                             ?>
                                     <tr>
-                                        <td><input readonly type="text" name="name" id="name" placeholder="Enter  Name" class="form-control name_list " value="<?= $contacts['name'] ?>" />
+                                        <td>
+                                            <input readonly type="text" name="name" id="name" placeholder="Enter  Name" class="form-control name_list cus-form-ctrl" value="<?= $contacts['name'] ?>" />
                                             <ul id="searchResult_1"></ul>
                                         </td>
-                                        <td><input readonly type="email" name="email" id="email" placeholder="Enter  Email" class="form-control email_list " value="<?= $contacts['email'] ?>" /></td>
+                                        <td><input readonly type="email" name="email" id="email" placeholder="Enter  Email" class="form-control email_list cus-form-ctrl" value="<?= $contacts['email'] ?>" /></td>
                                         <td><input type="checkbox" name="case_aor_contacts[]" value="<?= $contacts['name'] . '$$' . $contacts['email'] ?>"></td>
                                     </tr>
                             <?php    }
@@ -90,7 +91,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                         <div class="form-group">
 
                             <div class="col-md-5 col-sm-12 col-xs-12">
-                                <select name="contact_name" id="contact_name" class="form-control input-sm filter_select_dropdown" style="width: 100%">
+                                <select name="contact_name" id="contact_name" class="form-control input-sm filter_select_dropdown cus-form-ctrl" style="width: 100%">
                                     <option value="">Select Contact</option>
                                     <?php
                                     foreach ($contact as $cont) {
@@ -116,7 +117,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                     <div class="col-sm-12 col-xs-12">
                         <div class="form-group">
                             <div class="col-md-5 col-sm-12 col-xs-12">
-                                <select name="aor_name" id="aor_name" class="form-control input-sm filter_select_dropdown" style="width: 100%">
+                                <select name="aor_name" id="aor_name" class="form-control input-sm filter_select_dropdown cus-form-ctrl" style="width: 100%">
                                     <option value="">Select Contact</option>
                                     <?php foreach ($aor_contact as $aor) { ?>
                                         <option value="<?php echo $aor['name'] . "#$" . $aor['enroll_no'] . "#$" . $aor['email']; ?>"><?php echo $aor['name']; ?></option>

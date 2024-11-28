@@ -29,6 +29,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
     div#disapproveModal form#disapp_case .btn-toolbar.editor {border: 1px solid #ccc;border-bottom: none;}
 </style>
 
+<?php echo remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
 <div class="dash-card dashboard-section">
     <div class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
@@ -66,53 +67,51 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
 
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
-                    <?php
-                                    $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                                    if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
-                                        if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
-                                            if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                                $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
-                                                if ((isset(getSessionData('efiling_details')['gras_payment_status']) &&    getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
-                                                    (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
-                                                        (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
-                                                    )
-                                                ) {
-                                                    $final_submit_action = TRUE;
-                                                    echo '<button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
-                                                }
-                                            }
-                                            if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
-                                                $final_submit_continue_action = TRUE;
-                                                ?>
-                                                <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
-                                                <?php
-                                            }
-                                        }
-                                    }
-                                    if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
-                                        if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
-                                            if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                                if ((getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
-                                                    (getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
-                                                        (getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
-                                                    )
-                                                ) {
-                                                    $final_submit_action = TRUE;
-                                                    if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
-                                                        echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submitww</button>';
-                                                    }
-                                                }
-                                            }
-                                            if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
-                                                $final_submit_continue_action = TRUE;
-                                            ?>
-                                                <a class="btn btn-danger btn-sm" onclick="ActionToTrash('SLT')">Trash</a>
-                                                <?php
-                                            }
-                                        }
-                                    }
-                                    ?>
                         <?php
+                        $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                            if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
+                                if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                                    if ((isset(getSessionData('efiling_details')['gras_payment_status']) &&    getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
+                                        (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
+                                            (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
+                                        )
+                                    ) {
+                                        $final_submit_action = TRUE;
+                                        echo '<button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
+                                    }
+                                }
+                                if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
+                                    $final_submit_continue_action = TRUE;
+                                    ?>
+                                    <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
+                                    <?php
+                                }
+                            }
+                        }
+                        if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
+                            if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
+                                if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                    if ((getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
+                                        (getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
+                                            (getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
+                                        )
+                                    ) {
+                                        $final_submit_action = TRUE;
+                                        if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
+                                            echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submitww</button>';
+                                        }
+                                    }
+                                }
+                                if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
+                                    $final_submit_continue_action = TRUE;
+                                ?>
+                                    <a class="btn btn-danger btn-sm" onclick="ActionToTrash('SLT')">Trash</a>
+                                    <?php
+                                }
+                            }
+                        }
                         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
                         $ArrayHOLD = array(HOLD);
                         $ArrayDISPOSED = array(DISPOSED);
@@ -120,7 +119,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             // if ($details['details'][0]['c_status'] != 'D') {
                             if ($details[0]['c_status'] != 'D') {
                                 if ((!in_array(getSessionData('efiling_details')['stage_id'], $ArrayDISPOSED))) {
-                        ?>
+                                    ?>
                                     <a data-bs-toggle="modal" href="#approveModal" class="btn quick-btn success-btn btn-success btn-sm" style="background-color:#169F85;">Approve</a>
                                     <a data-bs-toggle="modal" href="#disapproveModal" class="btn quick-btn danger-btn btn-danger btn-sm" style="background-color:#C11900;">Disapprove</a>
                                     <?php
@@ -129,7 +128,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     }
                                     ?>
                                     <a data-bs-toggle="modal" href="#disposedModal" class="btn quick-btn success-btn btn-success btn-sm" style="background-color:#169F85;">Disposed</a>
-                            <?php
+                                    <?php
                                 }
                             }
                             if ((!in_array(getSessionData('efiling_details')['stage_id'], $ArrayDISPOSED))) {
@@ -142,9 +141,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             ?>
                             <a data-toggle="modal" href="#lodges_cases" class="btn quick-btn btn-success btn-sm">Make Idle</a>
                             <a data-toggle="modal" href="#delete_lodges_cases" class="btn quick-btn btn-danger btn-sm">Make Idle & Delete</a>
-                        <?php
-                        }
-                        ?>
+                        <?php } ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a> -->
                         <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
@@ -199,10 +196,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             <?php
                             if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                                 $final_submit_continue_action = TRUE;
-                            ?>
+                                ?>
                                 <a class="quick-btn gradient-btn" style="cursor: pointer;" onclick="ActionToTrash('UAT')">Trash</a>
-                            <?php
-                            } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -210,9 +206,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
         </div>
     </div>
 </div>
-<?php
-echo remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']);
-?>
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
         <!-- form--start  -->
