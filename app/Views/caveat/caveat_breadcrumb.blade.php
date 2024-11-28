@@ -80,19 +80,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             ?>
                         </h5>
                     </div> 
-
-                    <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
-                     
-                        <?php
-                        if (!empty(getSessionData('MSG'))) {
-                            echo getSessionData('MSG');
-                        }
-                        if (!empty(getSessionData('msg'))) {
-                            echo getSessionData('msg');
-                        }
-                        ?>
-                    </div>
-                    
+ 
                     <div class="page-breifs">
                         <ul>
                             <li><a class="blue-dot"><span class="mdi mdi-record"></span> Active </a></li>
@@ -151,7 +139,19 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 <div class="current-pg-title">
                     <h6>Caveat Filing Form</h6>
                 </div>
+                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                     
+                     <?php
+                     if (!empty(getSessionData('MSG'))) {
+                         echo getSessionData('MSG');
+                     }
+                     if (!empty(getSessionData('msg'))) {
+                         echo getSessionData('msg');
+                     }
+                     ?>
+                 </div>
                 <div class="current-pg-actions">
+                
                     <?php
                     // print_r(CAVEAT_BREAD_VIEW); die;
 
@@ -164,7 +164,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                 // Comment By Amit Mishra as 
                             //    pr(CAVEAT_BREAD_VIEW);
                                 if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                    echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';
+                                    echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn quick-btn btn-sm">Final Submit</a>';
                                 }
                                // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submits</a>';
                                 // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';                                        
