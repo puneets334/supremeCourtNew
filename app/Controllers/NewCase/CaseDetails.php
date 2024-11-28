@@ -402,6 +402,10 @@ class CaseDetails extends BaseController
                 $jailsignDt = DateTime::createFromFormat('d/m/Y', $jailsignDt);
                 $jailsignDt = $jailsignDt->format('Y-m-d'); // Convert to Y-m-d format
             }
+            if($_POST["sc_sp_case_type_id"] != 6 || $_POST["sc_sp_case_type_id"] != '6'){
+            $jailsignDt = null;
+            }
+            
             $case_details = array(
                 'cause_title' => $cause_title,
                 'sc_case_type_id' => !empty($sc_case_type[0]) ? $sc_case_type[0] : null,
