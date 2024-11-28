@@ -305,8 +305,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> View </a>
                 </li>
             </ul>
-            <div class="row m-3 ">
-                <div class="col-md-12 text-end">
+            <!-- <div class="row m-3 ">
+                <div class="col-md-12 text-end"> -->
 
                     <?php
                     /*  $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
@@ -336,8 +336,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     }
                 } */
                     ?>
-                </div>
-            </div>
+                <!-- </div>
+            </div> -->
         </form>
         <div class="modal fade" id="FinalSubmitModal" role="dialog">
             <div class="modal-dialog">
@@ -451,7 +451,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                             <?php
                             //echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);
                             ?>
-                            <div class="x_panel x-panel_height">
+                            <!-- <div class="x_panel x-panel_height"> -->
                                 <!-- <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 text-left">
                             <ul class="text-left1">
                                 <li style="float: left;list-style-type: none;"><i class="badge" style="background-color: #01ADEF; color:#01ADEF; ">A</i> Active &nbsp;</li>
@@ -461,7 +461,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                             </ul>
                         </div> -->
 
-                                <div class=" col-lg-8 col-md-8 col-sm-6 col-xs-12 text-right">
+                                <!-- <div class=" col-lg-8 col-md-8 col-sm-6 col-xs-12 text-right"> -->
                                     <?php
 
                                     // $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID, HOLD, DISPOSED);
@@ -524,10 +524,10 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                     //     }
                                     // }
                                     ?>
-                                </div>
-                            </div>
+                                <!-- </div> -->
+                            <!-- </div> -->
                             <div class="x_panel">
-                                <div class="x_title">
+                                <!-- <div class="x_title"> -->
                                     <!-- <div class="registration-process" style="float: left; border: none;">
                                 <h2><i class="glyphicon glyphicon-book"></i> E-File Miscellaneous Documents </h2>
                                 <div class="clearfix"></div>
@@ -542,8 +542,8 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                 &nbsp; <a class="btn btn-default btn-sm" href="<?php echo base_url('history/efiled_case/view'); ?>"> eFiling History</a>
                                 &nbsp; <a class="btn btn-info btn-sm" type="button" onclick="window.history.back()"> Back</a>
                             </div> -->
-                                    <div class="clearfix"></div>
-                                </div>
+                                    <!-- <div class="clearfix"></div> -->
+                                <!-- </div> -->
                                 <div class="x_content">
 
                                     <?php
@@ -761,8 +761,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                                                                                                     ?>">7</span> View </a> -->
                                     <!-- </li> -->
                                     </ul>
-                                    <div class="clearfix"></div>
-                                    <br />
+                                    <!-- <div class="clearfix"></div> -->
                                     <div class="modal fade" id="FinalSubmitModal" role="dialog">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
