@@ -44,38 +44,8 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                             <div class="row">
                                                 <div style="float: right">
                                                     <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 text-right">
-                                                        <?php
-                                                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
-                                                            $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
-                                                            if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
-                                                        ?>
-                                                                <a class="btn btn-success btn-sm" target="_blank" href="<?php echo base_url('acknowledgement/view'); ?>">
-                                                                    <i class="fa fa-download blink"></i> eFiling Acknowledgement
-                                                                </a>
-                                                        <?php
-                                                            }
-                                                        }
-                                                        ?>
                                                     </div>
-                                                    <!-- <a title="Click Here To View All Information"
-                                                        href="javascript:void(0);"
-                                                        class="btn btn-outline btn-primary btn-sm openall"
-                                                        style="float: right">
-                                                        <span class="fa fa-eye"></span>&nbsp;&nbsp; View All
-                                                    </a>
-                                                    <a title="Click Here To Close All Information"
-                                                        href="javascript:void(0);"
-                                                        class="btn btn-outline btn-info btn-sm closeall"
-                                                        style="float: right; display:none;">
-                                                        <span class="fa fa-eye-slash"></span> Close All 
-                                                    </a> -->
                                                     <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
-                                                    <!-- <a title="Click Here To View All Information" href="javascript:void(0);" class="btn btn-outline btn-primary btn-sm openall" style="float: right">
-                                                        <span class="fa fa-eye"></span>&nbsp;&nbsp; Expand All
-                                                    </a>
-                                                    <a title="Click Here To Close All Information" href="javascript:void(0);" class="btn btn-outline btn-info btn-sm closeall" style="float: right; ">
-                                                        <span class="fa fa-eye-slash"></span> Collapse All
-                                                    </a> -->
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="accordion view-accordion acrdion-with-edit" id="accordionExample">
