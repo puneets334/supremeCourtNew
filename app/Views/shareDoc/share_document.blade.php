@@ -411,7 +411,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
             list-style: none;
             max-height: 100px;
             margin: 0;
-            overflow: auto;
+            /* overflow: auto; */
             padding: 0;
             text-indent: 10px;
         }
