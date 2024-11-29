@@ -499,7 +499,8 @@
                                 } else if (resArr[0] == 2) {
                                     $('#show_search_result').html(resArr[1]);
                                 } else if (resArr[0] == 3) {
-                                    alert(resArr[1]); 
+                                    // alert(resArr[1]); 
+                                    
                                 }
                                 $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
@@ -526,3 +527,15 @@
                 });
             });
         </script>
+        <?php if (!empty(getSessionData('error'))): ?>
+            <script>
+                alert('hkfdghkghkhgfkdhghkdsf');
+                swal({
+                    title: "Error",
+                    text: "Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.",
+                    icon: "<?php echo site_url('Your Icon Destination'); ?>",
+                    button: false,
+                    timer: 5000,
+                });
+            </script>
+        <?php endif; ?>
