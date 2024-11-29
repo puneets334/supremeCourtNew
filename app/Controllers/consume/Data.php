@@ -10,7 +10,7 @@ class Data extends BaseController {
         require_once APPPATH . 'third_party/SBI/Crypt/AES.php';
         require_once APPPATH . 'third_party/cg/AesCipher.php';
 
-        $ref = $_SERVER['HTTP_REFERER'];
+        $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
         $refData = parse_url($ref);
         if ($refData['host'] != $_SERVER['SERVER_NAME'] && $refData['host'] != NULL) {
 
@@ -175,7 +175,7 @@ class Data extends BaseController {
             $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
         else if (isset($_SERVER['HTTP_FORWARDED']))
             $ipaddress = $_SERVER['HTTP_FORWARDED'];
-        else if (isset(getClientIP()))
+        else if (!empty(getClientIP()))
             $ipaddress = getClientIP();
         else
             $ipaddress = 'UNKNOWN';

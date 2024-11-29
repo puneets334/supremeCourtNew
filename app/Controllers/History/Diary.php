@@ -31,7 +31,7 @@ class Diary extends BaseController {
 
         if (empty($diary_no) && empty($diary_year)) {
             $_SESSION['MSG'] = message_show("fail", 'Invalid request !');
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect(isset($_SERVER['HTTP_REFERER']));
             exit(0);
         }
 
@@ -40,11 +40,12 @@ class Diary extends BaseController {
           $result = json_decode($json, true);
           $data = $result['data']; */
 
-        //<?= CASE_STATUS_API ?>?d_no=1342&d_yr=2012
+        // <?= CASE_STATUS_API
+        // <!-- ?d_no=1342&d_yr=2012 -->
 
-        echo '<script type="text/javascript"> window.open("www.google.com", "_blank");</script>';
-        redirect($_SERVER['HTTP_REFERER']);
-        exit(0);
+        // <!-- echo '<script type="text/javascript"> window.open("www.google.com", "_blank");</script>';
+        // redirect($_SERVER['HTTP_REFERER']);
+        // exit(0); -->
         /* $this->load->view('templates/header');
           $this->load->view('history/diary_history', $data);
           $this->load->view('templates/footer'); */
