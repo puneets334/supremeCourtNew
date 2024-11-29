@@ -107,7 +107,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                     if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                          //  pr(explode(',', getSessionData('efiling_details')['breadcrumb_status']));
 
-                                        if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) > 6){
+                                        if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) == 7){
                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                         ?>
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
@@ -624,7 +624,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             class="nav-link <?php echo $status_color; ?>"
                             id="home-tab"
                             type="button"
-                            style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray)) {
+                            style="<?php if (!in_array(NEW_CASE_RESPONDENT, $StageArray) && getPendingCourtFee() == 0) {
                                 echo $disabled_status1;
                             } ?>"
                             aria-selected="false"><span class="tab-num"
