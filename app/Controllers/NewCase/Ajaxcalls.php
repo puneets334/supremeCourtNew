@@ -629,7 +629,7 @@ class Ajaxcalls extends BaseController {
             $encrypted_string = $encrypter->encrypt($finalArr, $key);
             $response = $this->efiling_webservices->generateCaseDiary($encrypted_string);
         }
-        // pr($response);
+    //    pr($response);
 //        $response = array();
 //        $records_inserted = array();
 //        $records_inserted['main'] = 1;
@@ -649,9 +649,7 @@ class Ajaxcalls extends BaseController {
     }
 
     public function updateDiaryDetails()
-    {
-
-
+    { 
         if(empty($_SESSION['login']['ref_m_usertype_id'])) {
             redirect('login');
             exit(0);
@@ -797,9 +795,13 @@ class Ajaxcalls extends BaseController {
                         $docUpArr['updated_on'] = date('Y-m-d H:i:s');
                         $doc['updateArr'] = $docUpArr;
                         $result = $this->Common_model->updateTableData($doc);
+
                         if (isset($result) && !empty($result)) {
+
                             if ($ref_m_efiled_type_id == E_FILING_TYPE_CAVEAT) {
                                 $output = $this->getCisStatusForNewCase($registration_id, $efiling_no, Transfer_to_IB_Stage,$diaryStatus,'');
+                    // pr($output);
+
                             }
                             else {
                                 $output['success'] = 'error4';
@@ -856,7 +858,6 @@ class Ajaxcalls extends BaseController {
                         $case_details['updated_by'] = !empty($_SESSION['login']['id']) ? (int)$_SESSION['login']['id'] : NULL;
                         $case_details['updated_on'] = $curr_dt;
                         $case_details['updated_by_ip'] = getClientIP();
-                        
                         $stage_update_timestamp = $this->Get_CIS_Status_model->getStageUpdateTmestampCaseCaveat($registration_id, $curr_stage,$diaryStatus);
                         if(isset($stage_update_timestamp) && !empty($stage_update_timestamp)){
                             $next_stage = I_B_Approval_Pending_Admin_Stage;
@@ -919,6 +920,7 @@ class Ajaxcalls extends BaseController {
                                         send_mail_msg($to_email, $subject, $message, $to_user_name="");
                                     }
                                     $output['success'] = 'success';
+                                    // pr($output);
                                     if(isset($alloted_to_name) && !empty($alloted_to_name)){
                                         $output['message'] = 'Diary No.' .$diary_no.'/'.$diary_year.' has been created successfully! and allocated to  '.$alloted_to_name;
                                     }
@@ -951,6 +953,7 @@ class Ajaxcalls extends BaseController {
                     $params['whereFieldName'] = 'ref_m_efiling_nums_registration_id';
                     $params['whereFieldValue'] = $registration_id;
                     $caveatDetailsData = $this->Common_model->getData($params);
+
                     if (isset($caveatDetailsData[0]->caveat_num) && !empty($caveatDetailsData[0]->caveat_num)
                         && isset($caveatDetailsData[0]->caveat_year) && !empty($caveatDetailsData[0]->caveat_year))
                     {
@@ -964,14 +967,22 @@ class Ajaxcalls extends BaseController {
                         $caveat_details['updated_by'] = !empty($_SESSION['login']['id']) ? (int)$_SESSION['login']['id'] : NULL;
                         $caveat_details['updated_at'] = $curr_dt;
                         $caveat_details['updated_by_ip'] = getClientIP();
-                        $this->load->model('getCIS_status/Get_CIS_Status_model');
+                        // $this->load->model('getCIS_status/Get_CIS_Status_model');
+                        // pr($diaryStatus);
+
                         $stage_update_timestamp = $this->Get_CIS_Status_model->getStageUpdateTmestampCaseCaveat($registration_id, $curr_stage,$diaryStatus);
+                        // pr($stage_update_timestamp);
+
                         if(isset($stage_update_timestamp) && !empty($stage_update_timestamp)){
                             //$next_stage = I_B_Approval_Pending_Admin_Stage;
                             //Changed on 02-06-2021 for marking caveat as e-filed once caveat number is generated as per current practice.
                             $next_stage = E_Filed_Stage;
                             $update_status = $this->Get_CIS_Status_model->update_icmis_case_status($registration_id, $next_stage, $curr_dt, $caveat_details, '', '', '',$efiling_type);
+
                             if(isset($update_status) && !empty($update_status)) {
+                                // echo $next_stage; '<br>';
+                                // echo E_Filed_Stage; '<br>';
+
                                 if($next_stage == E_Filed_Stage) {
                                     $cuase_title = '';
                                     if(!empty($caveatDetailsData[0]->pet_name) &&  !empty($caveatDetailsData[0]->res_name)){
@@ -980,6 +991,8 @@ class Ajaxcalls extends BaseController {
                                     else  if(!empty($caveatDetailsData[0]->pet_name)){
                                         $cuase_title = $caveatDetailsData[0]->pet_name;
                                     }
+                                // echo 'cause'; '<br>';
+                                //     pr($cuase_title);
                                     $createdby = !empty($caveatDetailsData[0]->createdby) ? (int)$caveatDetailsData[0]->createdby : NULL;
                                     if(isset($createdby) && !empty($createdby)){
                                         $params = array();
@@ -994,19 +1007,20 @@ class Ajaxcalls extends BaseController {
                                         $first_name = '';
                                         $last_name ='';
                                         $userName = '';
-                                        if(isset($userData) && !empty($userData)){
+                                         
                                             if(isset($userData) && !empty($userData)){
                                                 $mobile = (!empty($userData[0]->moblie_number) && isset($userData[0]->moblie_number)) ? $userData[0]->moblie_number : NULL;
                                                 $email= (!empty($userData[0]->emailid) && isset($userData[0]->emailid)) ? $userData[0]->emailid : NULL;
                                                 $first_name= (!empty($userData[0]->first_name) && isset($userData[0]->first_name)) ? $userData[0]->first_name : NULL;
                                                 $last_name= (!empty($userData[0]->last_name) && isset($userData[0]->last_name)) ? $userData[0]->last_name : NULL;
                                             }
-                                        }
+                                        
                                     }
                                     if(isset($first_name) && !empty($first_name) && isset($last_name) && !empty($last_name)){
                                         $userName = $first_name.' '.$last_name;
                                     }
-                                    else if(isset($first_name) && !empty($first_name)){
+                                    // else if(isset($first_name) && !empty($first_name)){
+                                    else{
                                         $userName = $first_name;
                                     }
                                     $caveatNo= $diary_no.' / '.$diary_year;
@@ -1024,14 +1038,14 @@ class Ajaxcalls extends BaseController {
                                     if(isset($mobile) && !empty($mobile)){
                                         $message = 'Your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.'';
                                         $smsRes = send_mobile_sms($mobile,$message,SCISMS_EFILING_CAVEAT);
-                                        send_whatsapp_message($registration_id,$efiling_no," - files with Caveat Number $caveatNo ");
+                                        //send_whatsapp_message($registration_id,$efiling_no," - files with Caveat Number $caveatNo ");
 
                                     }
                                     if(isset($email) && !empty($email)){
                                         $message = 'Dear '.$userName.' ,your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.'';
                                         $to_email = $email;
                                         $subject = 'Caveat No. Generation.';
-                                        send_mail_msg($to_email, $subject, $message, $to_user_name="");
+                                        //send_mail_msg($to_email, $subject, $message, $to_user_name="");
                                     }
                                     $output['success'] = 'success';
                                     $output['message']='Caveat No. '.$diary_no.'/'.$diary_year.' has been created successfully!.';

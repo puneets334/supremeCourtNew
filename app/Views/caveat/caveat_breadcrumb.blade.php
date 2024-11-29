@@ -70,12 +70,15 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             echo "Caveat Request In A Case";
                             $filing_type = 'Caveat Request In A Case';
                             $filing_num_label=$lbl_history='';
+                            $style = '';
                             if (!empty(getSessionData('efiling_details')['stage_id']) && ((getSessionData('efiling_details')['stage_id'] == DRAFT_STAGE) || (getSessionData('efiling_details')['stage_id'] == INITIAL_DEFECTED_STAGE) || (getSessionData('efiling_details')['stage_id'] == TRASH_STAGE))) {
                                 $efiling_num_label_for_display = 'DRAFT-';
                                 $efiling_num_button_background_class = 'btn-danger';
+                                $style = 'color: red';
                             } else {
                                 $efiling_num_label_for_display = '';
                                 $efiling_num_button_background_class = 'btn-success';
+                                $style = 'color: green';
                             }
                             ?>
                         </h5>
@@ -184,7 +187,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
 
                     						
                     if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
-                        echo '<a href="javascript::void(0); " class="quick-btn gray-btn '.$efiling_num_button_background_class.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
+                        echo '<a href="javascript::void(0); " class="quick-btn gray-btn '.$efiling_num_button_background_class.'" style="'.$style.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                         echo '&nbsp; <a class="quick-btn gray-btn" href="' . base_url('history/efiled_case/view ') . '">eFiling History</a>';						
                     }
                   
@@ -406,7 +409,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $disabled_status='pointer-events: none; cursor: default;';
                         }
                         ?>
-                        <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>"  style="<?php if(!in_array(CAVEAT_BREAD_COURT_FEE, $StageArray)) { echo $disabled_status1; } ?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Pay Court Fee </a>
+                        <a href="<?= $url_case_courtfee ?>" class="nav-link <?php echo $status_color; ?>"  style="<?php if(!in_array(CAVEAT_BREAD_COURT_FEE, $StageArray)) { echo $disabled_status; } ?>" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="false"><span class="tab-num" style="<?php echo $ColorCode; ?>">5</span>Pay Court Fee </a>
                     </li>
                     <li class="nav-item" role="presentation">
                         <?php
@@ -726,24 +729,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
         </div>
     </div>
 </div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding-right: 15px;margin-left:-257px;">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 927px;height: 300px;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Diary Details</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <span id="customErrorMessage"></span>
-            </div>
-            <div class="modal-footer">
-                <button type="button"  data-close="1" class="btn btn-secondary closeButton" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button>-->
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="modal fade" id="holdModal" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -846,9 +832,9 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
     document.getElementById("copyButton").addEventListener("click", function() {
         copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
     });
-    document.getElementById("copyButton2").addEventListener("click", function() {
-        copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
-    });
+    // document.getElementById("copyButton2").addEventListener("click", function() {
+    //     copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
+    // });
     document.getElementById("pasteTarget").addEventListener("mousedown", function() {
         this.value = "";
     });
@@ -1130,7 +1116,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                                 if(file_type == 'new_case'){
                                     $('#createDiaryNo').html('Generate Diary No.');
                                     var errorMessage ='Diary no. generation has been successfully!';
-                                } else{
+                                } else{ 
                                     $('#createDiaryNo').html('Generate Caveat No.');
                                     var errorMessage ='Caveat no. generation has been successfully!';
                                 }
@@ -1149,7 +1135,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                                         $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                     },
                                     success: function(updateData){
-                                        // console.log(updateData);
+                                       console.log(updateData);
                                         // return false;
                                         $("#loader_div").html('');
                                         if(updateData.success == 'success'){

@@ -2980,6 +2980,8 @@ function send_whatsapp_message($registration_id = null, $efiling_number = null, 
 {
     // $ci = &get_instance();
     // $ci->load->model('common/Common_model');
+    $cause_title='';
+    $date='';
     $Common_model = new CommonModel();
     $efiling_num_details = null;
     if (!empty($registration_id)) {
