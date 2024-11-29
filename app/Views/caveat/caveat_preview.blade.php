@@ -31,7 +31,7 @@ if(isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id
     $collapse_class = 'collapse in';
     $area_extended = true;
 //        $diary_generate_button = '<div class="row"><a  data-toggle="modal" href="#generateDiaryNo" data-target="#generateDiaryNoDiv" class="btn btn-primary" id="generateDiaryNoPop" type="button" style="float: right;margin-right: 12px;">Generate Caveat No.</a></div>';
-    $diary_generate_button = '<div class="row"><a  href="javascript:void(0)"class="btn btn-primary"  data-efilingtype="caveat" id="generateDiaryNoPop" type="button" style="float: right;margin-right: 12px;">Generate Caveat No.</a></div>';
+    $diary_generate_button = '<div class="center-buttons"><a href="javascript:void(0)"class="quick-btn"  data-efilingtype="caveat" id="generateDiaryNoPop" type="button" >Generate Caveat No.</a></div>';
 }
     //echo '<pre>'; print_r($_SESSION); exit;
 
@@ -532,6 +532,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -578,6 +579,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             type="button">Next</a>-->
                         <?php } ?>
                     </div>
+                    
                 </div>
                 
             </div>
@@ -814,6 +816,252 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
             }
         }
     });
+
+
+
+    $(document).on('click','#generateDiaryNoPop',function(){
+            var pending_court_fee='<?=$pending_court_fee?>';
+            if(pending_court_fee>0){
+                var court_fee_payment_details = $('#is_verified').val();
+                var result = court_fee_payment_details.split('#');
+
+                if ((result[0] ==='f' && result[1]>0 && pending_court_fee > 0)){
+                    alert('Please verify court fee before generating diary number.');
+                    return false;
+                }
+            }
+            /*var court_fee_payment_details = $('#is_verified').val();
+            var result = court_fee_payment_details.split('#');
+
+            if ((result[0] ==='f' && result[1]>0 && pending_court_fee > 0)){
+                alert('Please verify court fee before generating diary number.');
+                return false;
+            }*/
+            var noError = true;
+            var arr = [];
+            var stepValue =[];
+            var filteredData = [];
+            var typeGeneration ='';
+            var file_type = $(this).attr('data-efilingtype');
+            // $('.checkSection').each(function(){
+            //     var name = $(this).attr('name');
+            //     var fieldValue =  $('input[name="'+name+'"]:checked').val();
+            //     if(typeof fieldValue == 'undefined'){
+            //         noError = false;
+            //         arr.push(name);
+            //     }
+            //     else{
+            //         if(fieldValue =='0'){
+            //             $("#error_"+name).text('Select this field');
+            //             $("#error_"+name).css( { "margin-left" : "6px", "color": "red"} );
+            //             noError = false;
+            //         }
+            //         else{
+            //             $("#error_"+name).text('');
+            //             var checkObject = {};
+            //             checkObject.field_name = name;
+            //             checkObject.field_value=fieldValue;
+            //             stepValue.push(checkObject);
+            //             checkObject = {};
+            //         }
+            //     }
+            // });
+           // var arr = arr.filter(uniqueArr);
+           // const  keys = ['field_name'];
+           //  const  filteredData = stepValue.filter((s => o =>(k => !s.has(k) && s.add(k))
+           //             (keys.map(k => o[k]).join('|')))
+           //          (new Set)
+           //      );
+           //  if(arr){
+           //      for(var i=0;i<arr.length;i++){
+           //          $("#error_"+arr[i]).text('Select this field');
+           //          $("#error_"+arr[i]).css( { "margin-left" : "6px", "color": "red"} );
+           //          noError = false;
+           //      }
+           //  }
+
+            if(file_type == 'new_case'){
+                filteredData.push({field_name: "case_detail", field_value: "1"});
+                filteredData.push({field_name: "petitioner", field_value: "1"});
+                filteredData.push({field_name: "respondent", field_value: "1"});
+                filteredData.push({field_name: "extra_party", field_value: "1"});
+                filteredData.push({field_name: "legal_representative", field_value: "1"});
+                filteredData.push({field_name: "act_section", field_value: "1"});
+                filteredData.push({field_name: "earlier_courts", field_value: "1"});
+                filteredData.push({field_name: "upload_document", field_value: "1"});
+                filteredData.push({field_name: "index", field_value: "1"});
+                filteredData.push({field_name: "pay_court_fee", field_value: "1"});
+                typeGeneration ='diary no.';
+            }
+            else if(file_type == 'caveat'){
+                filteredData.push({field_name: "caveator", field_value: "1"});
+                filteredData.push({field_name: "caveatee", field_value: "1"});
+                filteredData.push({field_name: "extra_party", field_value: "1"});
+                filteredData.push({field_name: "subordinate_court", field_value: "1"});
+                filteredData.push({field_name: "upload_document", field_value: "1"});
+                filteredData.push({field_name: "index", field_value: "1"});
+                filteredData.push({field_name: "pay_court_fee", field_value: "1"});
+                typeGeneration ='caveat no.';
+            }
+            var conformRes =  confirm("Are you sure want to generate "+typeGeneration+" ?");
+            if(noError && file_type && conformRes){
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            var postData = {CSRF_TOKEN: CSRF_TOKEN_VALUE, file_type: file_type};
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(postData),
+                url: "<?php echo base_url('newcase/Ajaxcalls/getAllFilingDetailsByRegistrationId'); ?>",
+                dataType:'json',
+                ContentType: 'application/json',
+                cache:false,
+                async: false,
+                beforeSend: function() {
+                    $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php echo base_url('assets/images/loading-data.gif');?>">');
+                    $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+                },
+                success: function (data){
+                    if(typeof data == 'string'){
+                        data = JSON.parse(data);
+                    }
+                    // console.log(data);
+                    // return false;
+                    if(data){
+                        $("#exampleModal").modal('show');
+                        $('#generateDiaryNoDiv').modal('hide');
+                        var diaryStatus ='';
+                        var diaryNo = '';
+                        var insertData = {};
+                        var status = '';
+                        var diaryData ='';
+                        var alloted_to ='';
+                        var insertedDocNums ='';
+                        if(data.status == 'SUCCESS') {
+                            diaryStatus = 'new_diary';
+                            if (data.diary_no) {
+                                diaryNo = data.diary_no;
+                            }
+                            if (data.alloted_to) {
+                                alloted_to = data.alloted_to;
+                            }
+                            if (data.insertedDocNums) {
+                                insertedDocNums = data.insertedDocNums;
+                            }
+                            if (data.status) {
+                                status = data.status;
+                            }
+                            if (data.records_inserted) {
+                                insertData.records_inserted = data.records_inserted;
+                            }
+                                insertData.diaryNo = diaryNo;
+                                insertData.alloted_to = alloted_to;
+                                insertData.insertedDocNums = insertedDocNums;
+                                insertData.status = status;
+                                insertData.selectedcheckBox = filteredData;
+                                insertData.diaryStatus = diaryStatus;
+                            }
+                            else  if(data.status == 'ERROR_ALREADY_IN_ICMIS') {
+                                var errorMessage = data.error.split(" ");
+                                diaryData = errorMessage.pop();
+                                diaryStatus = 'exist_diary';
+                                insertData.records_inserted = {};
+                                if(data.status) {
+                                    status = data.status;
+                                }
+                                if(data.records_inserted) {
+                                    insertData.records_inserted = data.records_inserted;
+                                }
+                                insertData.diaryNo = diaryData;
+                                insertData.status = status;
+                                insertData.selectedcheckBox = filteredData;
+                                insertData.diaryStatus = diaryStatus;
+                            }
+                            else  if(data.status == 'ERROR_MAIN') {
+                                $("#customErrorMessage").html('');
+                                $("#customErrorMessage").html(data.error);
+                                $("#customErrorMessage").css('color','green');
+                                $("#customErrorMessage").css({ 'font-size': '30px' });
+                                return false;
+                            }
+                            else if(data.status == 'ERROR_CAVEAT'){
+                                $("#customErrorMessage").html('');
+                                $("#customErrorMessage").html(data.error);
+                                $("#customErrorMessage").css('color','green');
+                                $("#customErrorMessage").css({ 'font-size': '30px' });
+                                return false;
+                             }
+                            if(insertData){
+                                if(file_type == 'new_case'){
+                                    $('#createDiaryNo').html('Generate Diary No.');
+                                    var errorMessage ='Diary no. generation has been successfully!';
+                                }
+                                else{
+                                    $('#createDiaryNo').html('Generate Caveat No.');
+                                    var errorMessage ='Caveat no. generation has been successfully!';
+                                }
+                                $("#customErrorMessage").html('');
+                                $("#customErrorMessage").html(errorMessage);
+                                $("#customErrorMessage").css('color','green');
+                                $("#customErrorMessage").css({ 'font-size': '30px' });
+                                    $.ajax({
+                                        type: "POST",
+                                        data: JSON.stringify(insertData),
+                                        url: "<?php echo base_url('newcase/Ajaxcalls/updateDiaryDetails'); ?>",
+                                        dataType:'json',
+                                        ContentType: 'application/json',
+                                        cache:false,
+                                        beforeSend: function() {
+                                            $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+                                        },
+                                        success: function(updateData){
+                                            // console.log(updateData);
+                                            // return false;
+                                            $("#loader_div").html('');
+                                            if(updateData.success == 'success'){
+                                                $("#customErrorMessage").html('');
+                                                $("#customErrorMessage").html(updateData.message);
+                                            }
+                                            else  if(updateData.success == 'error'){
+                                                $("#customErrorMessage").html('');
+                                                $("#customErrorMessage").html(updateData.message);
+                                            }
+                                            else{
+                                                $("#customErrorMessage").html('');
+                                                $("#customErrorMessage").html(updateData.message);
+                                            }
+                                        }
+                                    });
+                            }
+
+                        // else {
+                        //         var errorMessage = data.error;
+                        //         $("#customErrorMessage").html('');
+                        //         $("#customErrorMessage").html(errorMessage);
+                        //         $("#customErrorMessage").css('color','red');
+                        //         $("#customErrorMessage").css({'font-size': '15px'});
+                        //         $('#createDiaryNo').html('Generate Diary No.');
+                        // }
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function () {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+
+        });
+
+        $(document).on('click','.closeButton',function(){
+            var closeButtonAttr = $(this).attr('data-close');
+            if(closeButtonAttr == 1){
+                window.location.reload();
+            }
+        });
 </script>
 
  
