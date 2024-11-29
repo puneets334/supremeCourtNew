@@ -107,7 +107,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                     if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                          //  pr(explode(',', getSessionData('efiling_details')['breadcrumb_status']));
 
-                                        if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) == 7){
+                                        if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) > 6 && getPendingCourtFee() == 0){
                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                         ?>
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
