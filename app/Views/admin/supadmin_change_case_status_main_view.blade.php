@@ -18,7 +18,7 @@
                 <div class="col-lg-12 col-xs-12">
                     <h4 class="title1"> Change Case Status </h4>
                     <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                    <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                 </div>
                 <div class="table-responsiv">
                     <table id="datatable-responsive" class="table table-striped table-border custom-table" cellspacing="0" width="100%">

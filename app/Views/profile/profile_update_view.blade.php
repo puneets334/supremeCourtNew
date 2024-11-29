@@ -80,7 +80,7 @@
                                                                 <h5>
                                                                     Update Establishment Details 
                                                                     <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                                    <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                                    <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                                 </h5>
                                                             </div>
                                                             <div class="col-md-9">
@@ -100,7 +100,7 @@
                                                         <h5>
                                                             Update Password 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
@@ -165,7 +165,7 @@
                                                         <h5>
                                                             Update Email 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
@@ -201,7 +201,7 @@
                                                         <h5>
                                                             Update Mobile Number 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
@@ -237,7 +237,7 @@
                                                         <h5>
                                                             Update Address 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
@@ -360,7 +360,7 @@
                                                         <h5>
                                                             Update Establishment Details 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
@@ -541,7 +541,7 @@
                                                         <h5>
                                                             Update Email 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
@@ -580,7 +580,7 @@
                                                         <h5>
                                                             Update Mobile Number 
                                                             <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                                            <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                                            <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
