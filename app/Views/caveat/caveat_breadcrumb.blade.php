@@ -123,6 +123,33 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
                             $Array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                         ?>
+                        <?php
+                        if (in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
+                            if ((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == Initial_Defected_Stage) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage)) {
+                                echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                            }
+                            if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {
+                                if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
+                                    // Comment By Amit Mishra as 
+                                //    pr(CAVEAT_BREAD_VIEW);
+                                    if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                        echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn quick-btn btn-sm">Final Submit</a>';
+                                    }
+                                   // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submits</a>';
+                                    // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';                                        
+                                    if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { }
+                                } elseif (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
+                                    if (in_array(CAVEAT_BREAD_DOC_INDEX, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                        $action = base_url('efilingAction/Caveat_final_submit');
+                                        $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
+                                        echo form_open($action, $attribute);
+                                        $clerk_adv='';                                    
+                                        echo form_close();
+                                    }
+                                }
+                            }
+                        }
+                        ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
                         <a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
@@ -155,31 +182,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                     <?php
                     // print_r(CAVEAT_BREAD_VIEW); die;
 
-                    if (in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
-                        if ((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == Initial_Defected_Stage) || (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage)) {
-                            echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
-                        }
-                        if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {
-                            if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
-                                // Comment By Amit Mishra as 
-                            //    pr(CAVEAT_BREAD_VIEW);
-                                if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                    echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn quick-btn btn-sm">Final Submit</a>';
-                                }
-                               // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submits</a>';
-                                // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';                                        
-                                if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { }
-                            } elseif (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
-                                if (in_array(CAVEAT_BREAD_DOC_INDEX, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                    $action = base_url('efilingAction/Caveat_final_submit');
-                                    $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
-                                    echo form_open($action, $attribute);
-                                    $clerk_adv='';                                    
-                                    echo form_close();
-                                }
-                            }
-                        }
-                    }						
+                    						
                     if (isset(getSessionData('efiling_details')['efiling_no']) && !empty(getSessionData('efiling_details')['efiling_no'])) {
                         echo '<a href="javascript::void(0); " class="quick-btn gray-btn '.$efiling_num_button_background_class.'"  id="copyTarget_EfilingNumber">' . $filing_num_label . $efiling_num_label_for_display.htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</a><strong id="copyButton" class="quick-btn btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="fa fa-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                         echo '&nbsp; <a class="quick-btn gray-btn" href="' . base_url('history/efiled_case/view ') . '">eFiling History</a>';						
@@ -285,8 +288,8 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         <?php
                         //   echo $segment->getTotalSegments() ;    
                         //  echo $segment->getSegment(1). "<br>";                    
-                        //  echo $segment->getSegment(2);                    
-                        if ($segment->getTotalSegments()== '1') {
+                        // pr($segment->getSegment(1));
+                        if ($segment->getSegment(1) == 'caveat' && $segment->getSegment(2) == '') {
                             $ColorCode = 'background-color: #01ADEF';
                             $status_color = 'active';
                         }

@@ -359,7 +359,7 @@ span.select2.select2-container.select2-container--default {
                             <div class="mb-3">
                                 <label for="" class="form-label">Address <span style="color: red" class="astriks">*</span></label>
                                 <textarea  rows="1" tabindex='16' name="pet_address" id="pet_address" placeholder="H.No.,  Street no, Colony,  Land Mark"
-                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required> <?php echo isset($caveatee_details[0]['resadd']) ? $caveatee_details[0]['resadd'] : ''; ?></textarea>
+                                    class="form-control cus-form-ctrl sci_validation" minlength="3" maxlength="250" required><?php echo htmlspecialchars($caveatee_details[0]['resadd'] ?? ''); ?></textarea>
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please enter House No, Street No, Sector, Colony and Landmarks. Please Select District and Taluka from the below mentioned field. Do not repeat District and Taluka in Address fields and District and Taluka Fields. Address can be alphanumeric (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o" ></i>
                                     </span>
@@ -426,7 +426,7 @@ span.select2.select2-container.select2-container--default {
                                 <div class="mb-3">
                                     <label for="" class="form-label">District <span style="color: red" class="astriks">*</span></label>
                                     <select class="form-select cus-form-ctrl"
-                                        aria-label="Default select example" name="party_district" id="party_district"  tabindex='20' >
+                                        aria-label="Default select example" name="party_district" id="party_district"  tabindex='20' required>
                                         <option value="" title="Select">Select District</option>
                                         <?php
                                         if (!empty($district_list)) {
@@ -487,6 +487,9 @@ span.select2.select2-container.select2-container--default {
 @push('script') 
 <script>
         $(document).ready(function () { 
+
+            // get_caveator_as(party_as_sel)
+
         var party_as_sel = '<?php echo isset($caveatee_details[0]['resorgid'])?$caveatee_details[0]['resorgid']:''; ?>';
 
         var OrgState_ID= '<?php echo isset($caveatee_details[0]['res_org_state'])?$caveatee_details[0]['res_org_state']:''; ?>';
@@ -518,6 +521,12 @@ span.select2.select2-container.select2-container--default {
             $('#org_dept').removeAttr('required');
             $('#org_state').removeAttr('required');
             $('#org_post').removeAttr('required');
+            $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
+
             $('#indvidual_form').show();
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -800,20 +809,32 @@ span.select2.select2-container.select2-container--default {
 
         var org_state = $(this).val();
         if (org_state == '<?php echo url_encryption(0); ?>') {
+
             $('#otherOrgState').show();
+            $('#org_state_name').attr('required', true); 
             $('#otherOrgDept').show();
             $('#otherOrgPost').show();
             $('#org_dept').val('<?php echo url_encryption(0); ?>');
+            $('#org_dept_name').attr('required', true);  
+
             $('#org_dept').select2();
             $('#org_post').val('<?php echo url_encryption(0); ?>');
+            $('#org_post_name').attr('required', true);  
+
             $('#org_post').select2();
         } else {
             $('#otherOrgState').hide();
+            $('#org_state_name').removeAttr('required');
+
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
             $('#org_dept').val('');
+            $('#org_dept_name').removeAttr('required'); 
+
             $('#org_dept').select2();
             $('#org_post').val('');
+            $('#org_post_name').removeAttr('required'); 
+
             $('#org_post').select2();
         }
     });
@@ -827,11 +848,13 @@ span.select2.select2-container.select2-container--default {
         var org_dept = $(this).val();
         if (org_dept == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgDept').show();
+            $('#org_dept_name').attr('required', true);  
             $('#otherOrgPost').show();
             $('#org_post').val('<?php echo url_encryption(0); ?>');
             $('#org_post').select2();
         } else {
             $('#otherOrgDept').hide();
+            $('#org_dept_name').removeAttr('required'); 
             $('#otherOrgPost').hide();
             $('#org_post').val('');
             $('#org_post').select2();
@@ -847,9 +870,12 @@ span.select2.select2-container.select2-container--default {
         var org_post = $(this).val();
         if (org_post == '<?php echo url_encryption(0); ?>') {
             $('#otherOrgPost').show();
+            $('#org_post_name').attr('required', true);  
 
         } else {
             $('#otherOrgPost').hide();
+            $('#org_post_name').removeAttr('required'); 
+
         }
     });
 
