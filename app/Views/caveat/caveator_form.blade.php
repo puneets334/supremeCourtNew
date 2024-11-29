@@ -462,7 +462,7 @@ textarea {
                                 <label for="" class="form-label">State 
                                     <span style="color: red" class="astriks">*</span>
                                 </label>
-                                <select class="form-select cus-form-ctrl filter_select_dropdown" name="party_state" id="party_state">
+                                <select class="form-select cus-form-ctrl filter_select_dropdown" name="party_state" id="party_state" required>
                                     <option value="" title="Select">Select State</option>
                                     <?php
                                         $stateArr = array();
@@ -494,7 +494,7 @@ textarea {
                                     <span style="color: red" class="astriks">*</span>
                                 </label>
                                 <select class="form-select cus-form-ctrl filter_select_dropdown party_district" 
-                                    aria-label="Default select example" name="party_district" id="party_district">
+                                    aria-label="Default select example" name="party_district" id="party_district" required>
                                     <option value="" title="Select">Select District</option>
                                     <?php
                                     if (!empty($district_list)) {
@@ -565,28 +565,83 @@ textarea {
 <script>
    $(document).ready(function() { 
 
-        $('#org_state').change(function () {     
+        //---------- Organisation State Name----------------------//
+        $('#org_state').change(function () {
+
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-            var org_state = $(this).val();                  
+
+            var org_state = $(this).val();
             if (org_state == '<?php echo url_encryption(0); ?>') {
+
                 $('#otherOrgState').show();
+                $('#org_state_name').attr('required', true); 
                 $('#otherOrgDept').show();
                 $('#otherOrgPost').show();
                 $('#org_dept').val('<?php echo url_encryption(0); ?>');
+                $('#org_dept_name').attr('required', true);  
+
                 $('#org_dept').select2();
                 $('#org_post').val('<?php echo url_encryption(0); ?>');
+                $('#org_post_name').attr('required', true);  
+
                 $('#org_post').select2();
-            } else {        
+            } else {
                 $('#otherOrgState').hide();
+                $('#org_state_name').removeAttr('required');
+
                 $('#otherOrgDept').hide();
                 $('#otherOrgPost').hide();
                 $('#org_dept').val('');
+                $('#org_dept_name').removeAttr('required'); 
+
                 $('#org_dept').select2();
+                $('#org_post').val('');
+                $('#org_post_name').removeAttr('required'); 
+
+                $('#org_post').select2();
+            }
+            });
+
+            //---------- Organisation Department Name----------------------//
+            $('#org_dept').change(function () {
+
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+
+            var org_dept = $(this).val();
+            if (org_dept == '<?php echo url_encryption(0); ?>') {
+                $('#otherOrgDept').show();
+                $('#org_dept_name').attr('required', true);  
+                $('#otherOrgPost').show();
+                $('#org_post').val('<?php echo url_encryption(0); ?>');
+                $('#org_post').select2();
+            } else {
+                $('#otherOrgDept').hide();
+                $('#org_dept_name').removeAttr('required'); 
+                $('#otherOrgPost').hide();
                 $('#org_post').val('');
                 $('#org_post').select2();
             }
-        });
+            });
+
+
+            //---------- Organisation Post Name----------------------//
+            $('#org_post').change(function () {
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+
+            var org_post = $(this).val();
+            if (org_post == '<?php echo url_encryption(0); ?>') {
+                $('#otherOrgPost').show();
+                $('#org_post_name').attr('required', true);  
+
+            } else {
+                $('#otherOrgPost').hide();
+                $('#org_post_name').removeAttr('required'); 
+
+            }
+            });
     })
 
     function get_departments(party_is) {
@@ -1108,39 +1163,7 @@ textarea {
     });
     
   
-    //---------- Organisation State Name----------------------//
-    
-
-    //---------- Organisation Department Name----------------------//
-    $('#org_dept').change(function () {
-        var CSRF_TOKEN = 'CSRF_TOKEN';
-        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        var org_dept = $(this).val();
-        if (org_dept == '<?php echo url_encryption(0); ?>') {
-            $('#otherOrgDept').show();
-            $('#otherOrgPost').show();
-            $('#org_post').val('<?php echo url_encryption(0); ?>');
-            $('#org_post').select2();
-        } else {
-            $('#otherOrgDept').hide();
-            $('#otherOrgPost').hide();
-            $('#org_post').val('');
-            $('#org_post').select2();
-        }
-    });
-
-    //---------- Organisation Post Name----------------------//
-    $('#org_post').change(function () {
-        var CSRF_TOKEN = 'CSRF_TOKEN';
-        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        var org_post = $(this).val();
-        if (org_post == '<?php echo url_encryption(0); ?>') {
-            $('#otherOrgPost').show();
-
-        } else {
-            $('#otherOrgPost').hide();
-        }
-    });   
+       
 
     <?php  pr("Step ffffff"); ?>   
     
