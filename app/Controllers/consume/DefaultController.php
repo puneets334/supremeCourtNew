@@ -10,7 +10,7 @@ class DefaultController extends BaseController {
         require_once APPPATH . 'third_party/SBI/Crypt/AES.php';
         require_once APPPATH . 'third_party/cg/AesCipher.php';
 
-        $ref = $_SERVER['HTTP_REFERER'];
+        $ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
         $refData = parse_url($ref);
         if ($refData['host'] != $_SERVER['SERVER_NAME'] && $refData['host'] != NULL) {
 

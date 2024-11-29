@@ -1390,11 +1390,11 @@ class Admin extends BaseController {
             $remark_length == strip_tags($remark);
             if (strlen($remark_length) > DISAPPROVE_REMARK_LENGTH) {
                 $this->session->set_flashdata('MSG', '<div class="alert alert-danger text-center">Reason should be max 500 characters!</div>');
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header('Location: ' . isset($_SERVER['HTTP_REFERER']));
             }
             if (empty($remark)) {
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Reason for rejection required.</div>');
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header('Location: ' . isset($_SERVER['HTTP_REFERER']));
             }
         }
 
@@ -1577,14 +1577,14 @@ class Admin extends BaseController {
                 $subject = 'Your request for efiling account is placed under objection.';
                 $mail_message = 'Your account request for eFiling application is placed under objections. </br><b>Due to  following Reason(s) : </b><br> ' . $reason;
                 $this->session->set_userdata('MSG', '<div class="alert alert-success text-center flashmessage">User ' . $mes_objection_rejction . ' Successfully.</div>');
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header('Location: ' . isset($_SERVER['HTTP_REFERER']));
             } elseif ($user_id_objection[1] == 'rejection') {
 
                 $mes_objection_rejction = 'Account Request Rejected';
                 $subject = 'Your account request for eFiling is rejected.';
                 $mail_message = 'Your account request for eFiling application is rejected. </br><b>Due to following Reason(s) :</b><br> ' . $reason;
                 $this->session->set_userdata('MSG', '<div class="alert alert-success text-center flashmessage">User ' . $mes_objection_rejction . ' Successfully.</div>');
-                header('Location: ' . $_SERVER['HTTP_REFERER']);
+                header('Location: ' . isset($_SERVER['HTTP_REFERER']));
             } elseif ($user_id_objection[1] == 'cis_check_status') {
                 $mes_objection_rejction = 'Advocate information validated from your local CIS and his account activated successfully.';
                 $subject = 'Your efiling account is activated.';
@@ -1609,7 +1609,7 @@ class Admin extends BaseController {
             send_mail_msg($user_detail[0]->emailid, $subject, $mail_message, $user_name);
         } else {
             $this->session->set_userdata('MSG', '<div class="alert alert-danger text-center">Something Wrong.</div>');
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header('Location: ' . isset($_SERVER['HTTP_REFERER']));
         }
     }
 
