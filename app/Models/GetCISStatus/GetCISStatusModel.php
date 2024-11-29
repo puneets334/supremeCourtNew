@@ -200,7 +200,9 @@ class GetCISStatusModel extends Model
                     $builder->WHERE('stage_id', $stage_id);
                     $builder->WHERE("registration_id", $registration_id);
                     $builder->WHERE('is_active', TRUE);
+
                     $query = $builder->get();
+                    // pr($query);
                     if ($query->getNumRows() >= 1) {
                         $output = $query->getResultArray();
                     } else {
