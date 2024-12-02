@@ -1409,7 +1409,7 @@ class CommonModel extends Model
                 $builder->WHERE('is_deleted', false);
             }
             $query = $builder->get();
-            $output = $query->getResultArray();
+            $output = $query->getResult();
         }
         return $output;
     }

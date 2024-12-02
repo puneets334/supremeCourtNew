@@ -861,7 +861,7 @@
                             value="SAVE">
                         <?php
                         if (isset($subordinate_court_details) && !empty($subordinate_court_details)) {
-                            echo ' <a  tabindex = "29" href="' . base_url('uploadDocuments') . '" class="btn quick-btn btnNext" type="button">NEXT</a>';
+                            echo ' <a  tabindex = "29" href="' . base_url('uploadDocuments') . '" class="quick-btn gray-btn btnNext" type="button">NEXT</a>';
                         }
                         ?>
                     </div>

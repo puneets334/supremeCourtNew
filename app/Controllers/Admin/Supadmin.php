@@ -1300,11 +1300,11 @@ class Supadmin extends BaseController {
         $result = $this->Supadmin_model->deactivate_account($account_status, $user_id);
         if ($result) {
             $_SESSION['MSG'] = message_show("success", "Account Deactivated Successfully !");
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header('Location: ' . isset($_SERVER['HTTP_REFERER']));
             exit(0);
         } else {
             $_SESSION['MSG'] = message_show("fail", "Account Deactivated Fail !");
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header('Location: ' . isset($_SERVER['HTTP_REFERER']));
             exit(0);
         }
     }

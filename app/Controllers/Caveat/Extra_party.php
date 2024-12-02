@@ -402,7 +402,7 @@ class Extra_party extends BaseController {
         $extra_party_party_no = $explode_type[2];
         if ($redirect_to != 1 && $redirect_to != 2) {
             $_SESSION['MSG'] = message_show("fail", 'Invalid Data!');
-            redirect($_SERVER['HTTP_REFERER']);
+            redirect(isset($_SERVER['HTTP_REFERER']));
         }
         if ($redirect_to == 1) {
             $redirect_url = 'caveat/extra_party';
