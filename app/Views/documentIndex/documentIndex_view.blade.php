@@ -32,10 +32,15 @@
     }
 
     .card.custom-card h5 {
-        font-size: 18px;
-        line-height: 26px;
-        color: #0D48BE;
+        font-size: 16px;
+        line-height: 24px;
+        color: #0D48BE;min-height: 68px;
     }
+    .table-responsive .dataTables_length select, .table-responsive .dataTables_filter input, div#index_data .dataTables_length select, div#index_data .dataTables_filter input{
+    min-height: auto;
+    padding: 4px 8px !important;
+    line-height: 22px !important;min-width:70px;
+}
 </style>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -617,7 +622,7 @@
                             $(this).show();
                         }
                     });
-                    $('#datatableresponsive').removeClass("table table-striped table-bordered dt-responsive nowrap dataTable no-footer").addClass("table table-striped custom-table");
+                    $('#datatableresponsive').removeClass("table table-striped table-bordered dt-responsive nowrap dataTable no-footer").addClass("table table-striped custom-table upload-doc-table");
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();

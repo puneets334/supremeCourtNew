@@ -584,22 +584,16 @@ span.select2.select2-container.select2-container--default {
 
 <script>
     $(document).ready(function() {
-        var today = new Date();
-        // $('#pet_dob').datepicker({
-        //     changeMonth: true,
-        //     changeYear: true,
-        //     yearRange: "-100",
-        //     format: "dd/mm/yyyy",
-        //     defaultDate: "-40y",
-        //     endDate: today 
-        // });
+        var today = new Date(); 
         $('#pet_dob').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "-100", // Allow selection from 100 years ago to today
-        dateFormat: "dd/mm/yy", // Correct date format for jQuery UI
-        defaultDate: "-40y", // Set the default date to 40 years ago
-        maxDate: today // Restrict to dates before or equal to today
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100",
+            format: "dd/mm/yyyy",
+            defaultDate: "-40y",
+
+            endDate: today 
+            
         });
 
         $(document).on('change', '#pet_dob', function () {
@@ -631,7 +625,6 @@ span.select2.select2-container.select2-container--default {
                 }
  
                 $('#pet_age').val(age);
-                
             });
 
        

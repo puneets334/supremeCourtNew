@@ -883,6 +883,8 @@ textarea {
 
       $(document).ready(function () {   
         var today = new Date();
+        
+        // alert(today);
         $('#pet_dob').datepicker({
             changeMonth: true,
             changeYear: true,

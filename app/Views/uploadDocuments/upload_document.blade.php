@@ -61,7 +61,8 @@
 			?>
 			<div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
 				<div class="text-center">
-					<input type="submit" class="btn btn-success" id="upload_doc" value="UPLOAD">
+					<!-- <input type="submit" class="btn btn-success" id="upload_doc" value="UPLOAD"> -->
+					<button type="submit" class="quick-btn" id="upload_doc" value="UPLOAD">UPLOAD</button>
 				</div>
 			</div>
 			<!-- <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
