@@ -666,7 +666,7 @@ if (party_as == 'I') {
     $('#org_form').show();
     if (party_as == 'D3') {
         //Other Organisation : D3
-
+        $('.relative_name').attr('required', false);
         $('#org_state_row').hide();
         $('#otherOrgState').hide();
 
