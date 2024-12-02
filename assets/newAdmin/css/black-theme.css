@@ -59,7 +59,7 @@
 .black-theme .table-striped tr td {border-bottom: 1px solid #ffffff59;}
 .black-theme .table tr td, .black-theme .table tr th {color: #ffffff;}
 .black-theme .table tr th {background: #222222 !important;}
-.black-theme .table-striped tr:hover td {background: #111111 !important;color: #ff0;}
+.black-theme .table-striped tr:hover td {background: #444444 !important;color: #ff0;}
 .black-theme .title-sec .unerline-title {color: #fff;}
 .black-theme .title-sec .unerline-title:before {background: #fff !important;}
 .black-theme .calender-table .dt-td .mdi {color: #ff0;}

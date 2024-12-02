@@ -237,9 +237,8 @@ textarea {
                         </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
-                                </div>
-                                <?php
+                                    <label for="" class="form-label d-block">Gender <span style="color: red" class="astriks">*</span></label>
+                                    <?php
                                     $gmchecked ='';
                                     $gfchecked ='';
                                     $gochecked ='';
@@ -258,7 +257,9 @@ textarea {
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label" for="inlineRadio2">
                                         <input class="form-check-input cus-form-check" tabindex='10' type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>> Other</label>
-                                    </div>                        
+                                    </div>           
+                                </div>
+                                             
                             </div>
                         </div>
                     </div>
