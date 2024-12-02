@@ -8683,4 +8683,7 @@ label.error {
     font-size: 13px;
 }
 .accordion button.accordion-button.collapsed:after {filter: invert(21%) sepia(86%) saturate(7489%) hue-rotate(208deg) brightness(101%) contrast(107%);}
+.upload-doc-table tr th , .upload-doc-table tr td {
+    padding: 9px 8px !important;
+}
 /* 2-12-24 End  */

@@ -7,7 +7,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="table-sec">
                 <div class="table-responsive">
-                    <table id="datatable-responsive" class="table table-striped custom-table datatableresponsive">
+                    <table id="datatable-responsive" class="table table-striped custom-table datatableresponsive upload-doc-table">
                         <thead>
                             <tr class="success">
                                 <th style="width: 10% !important;">#</th>
