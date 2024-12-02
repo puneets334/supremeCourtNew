@@ -472,9 +472,9 @@
     });
     function validateInput(event) {
         const input = event.target.value;
-        const regex = /^[a-zA-Z@_ ]*$/;
-        if (!regex.test(input)) {
-            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
         }
     } 
 
@@ -1106,7 +1106,7 @@
         var startYear = 1984;
         var startDate = new Date(startYear, 1, 1);
  
-    $('.party_dob').datepicker({
+    /*  $('.party_dob').datepicker({
         format: "dd/mm/yyyy",
         showOtherMonths: true,
         selectOtherMonths: true,
@@ -1114,7 +1114,18 @@
         changeYear: true,
         endDate: today,
         autoclose: true
-    });
+    });*/
+
+    $('.party_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: today,
+        defaultDate: startDate,
+        autoclose: true
+    }).datepicker();
         // $(".party_dob").datepicker({
         //     changeMonth: true,
         //     changeYear: true,
