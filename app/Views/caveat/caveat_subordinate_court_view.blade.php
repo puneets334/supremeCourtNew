@@ -50,10 +50,9 @@ body.loading .overlay{
 
                 <?= ASTERISK_RED_MANDATORY ?>
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
                             <div class="mb-3">
-                                <label for="" class="form-label">Select Court <span style="color: red">*</span></label>
-                            </div>
+                                <label for="" class="form-label me-2">Select Court <span style="color: red">*</span> : </label>
                                 <?php
                                     $dcchecked=$hcchecked=$sachecked='';
                                     $court_type = !empty($caseData['court_type']) ? $caseData['court_type'] : NULL;
@@ -76,6 +75,8 @@ body.loading .overlay{
                                     <input class="form-check-input cus-form-check" type="radio" id="radio_selected_court5" name="radio_selected_court" onchange="get_court_as(this.value)" value="5" maxlength="2" <?php echo $sachecked; ?>>
                                     <label class="form-check-label" for="inlineRadio2">State Agency/Tribunal</label>
                                 </div>
+                            </div>
+                               
                             
                         </div>
                     </div>
@@ -112,20 +113,35 @@ body.loading .overlay{
 
                     <div id="high_court_info" style="display: block;">
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">CNR <span style="color: red">*</span></label>
-                                    <?php
-                                    // pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
-                                    ?>
-                                    <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
-                                    type="text"  maxlength="16" > <strong style="color: red;font-size:14px;"><b>Kindly search lower case details using CNR preferably for swift data retrieval</b></strong>
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                            <label for="" class="form-label">CNR <span style="color: red">*</span></label>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                            <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
+                                        type="text"  maxlength="16" > 
+                                        </div>    
+                                            <?php
+                                            // pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
+                                            ?>
+                                    
+                                        
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="d-flex h-100 align-items-center">
+                                            <strong style="color: red;font-size:14px;"><b>Kindly search lower case details using CNR preferably for swift data retrieval</b></strong>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
 
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <center><p><h2>OR</h2></p></center>
                             </div>
                         </div>

@@ -15,7 +15,7 @@
 	<link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
 	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-	<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
+	<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 	<link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
 	@stack('style')
@@ -54,8 +54,8 @@
 	</div>
 	<footer class="footer-sec">Content Owned by Supreme Court of India</footer>
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
-	<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-	<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+	<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+	<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
 	<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 	<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>

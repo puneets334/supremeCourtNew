@@ -171,7 +171,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             ?>
                         </div>
                         <?php //$diary = false;
-                        if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($diary)) {
+                        if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($caveat_no)) {
                             echo $diary_generate_button;
                         }
                         if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && isset($stage_id) && !empty($stage_id) && $stage_id == I_B_Defects_Cured_Stage) {
@@ -532,7 +532,6 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                         </div>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
                     </div>
@@ -579,12 +578,29 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             type="button">Next</a>-->
                         <?php } ?>
                     </div>
-                    
                 </div>
                 
             </div>
         </div>
     </div>
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="padding-right: 15px;margin-left:-257px;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="width: 927px;height: 300px;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Diary Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <span id="customErrorMessage"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button"  data-close="1" class="btn btn-secondary closeButton" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
 
     @if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     </div>
@@ -996,13 +1012,16 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                     var errorMessage ='Diary no. generation has been successfully!';
                                 }
                                 else{
+
                                     $('#createDiaryNo').html('Generate Caveat No.');
                                     var errorMessage ='Caveat no. generation has been successfully!';
                                 }
+                                
                                 $("#customErrorMessage").html('');
                                 $("#customErrorMessage").html(errorMessage);
                                 $("#customErrorMessage").css('color','green');
                                 $("#customErrorMessage").css({ 'font-size': '30px' });
+                                
                                     $.ajax({
                                         type: "POST",
                                         data: JSON.stringify(insertData),
@@ -1014,8 +1033,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                             $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                         },
                                         success: function(updateData){
-                                            // console.log(updateData);
-                                            // return false;
+                                            
                                             $("#loader_div").html('');
                                             if(updateData.success == 'success'){
                                                 $("#customErrorMessage").html('');

@@ -59,7 +59,7 @@
 .black-theme .table-striped tr td {border-bottom: 1px solid #ffffff59;}
 .black-theme .table tr td, .black-theme .table tr th {color: #ffffff;}
 .black-theme .table tr th {background: #222222 !important;}
-.black-theme .table-striped tr:hover td {background: #111111 !important;color: #ff0;}
+.black-theme .table-striped tr:hover td {background: #444444 !important;color: #ff0;}
 .black-theme .title-sec .unerline-title {color: #fff;}
 .black-theme .title-sec .unerline-title:before {background: #fff !important;}
 .black-theme .calender-table .dt-td .mdi {color: #ff0;}
@@ -152,7 +152,7 @@
 /* FaQ Page CSS End  */
 .black-theme .select2-container--open .select2-dropdown--below{background:#000;}
 .black-theme  .select2-container--default .select2-results__option[aria-selected=true], .black-theme .select2-container--default .select2-results__option--highlighted[aria-selected] , .black-theme .datepicker table tr td.day.focused, .black-theme .datepicker table tr td.day:hover{background:#333 !important;}
-.black-theme .datepicker-dropdown{background:#555;}
+.black-theme .datepicker-dropdown{background:#555 !important;}
 .black-theme a.blue-dot .mdi {color: #0D48BE !important;}
 .black-theme a.green-dot .mdi {color: #337700!important;}
 .black-theme a.yellow-dot .mdi {color: #F1B800!important;}

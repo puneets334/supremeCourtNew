@@ -17,6 +17,17 @@ $segment = service('uri');
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
+<!-- 2-12-24 added start  -->
+<!-- <div class="mainPanel ">
+    <div class="panelInner">
+        <div class="middleContent">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+                        <div class="center-content-inner comn-innercontent"> -->
+<!-- 2-12-24 added start  -->
+
+
 @include('IA.ia_breadcrumb')
 
 @if($segment->getSegment(2) == 'caseDetails')

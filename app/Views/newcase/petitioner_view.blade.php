@@ -197,7 +197,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="<?php echo @$party_details[0]['org_state_id'] == 0 ? 'display: block' : 'diplay: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
@@ -214,7 +214,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="<?php echo @$party_details[0]['org_dept_id'] == 0 ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label for=""
                                 class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
@@ -231,7 +231,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="<?php echo @$party_details[0]['org_post_id'] == 0 ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
@@ -363,9 +363,9 @@
                             <a href="<?= base_url('newcase/caseDetails') ?>" class="quick-btn gray-btn" type="button" tabindex='27'>PREVIOUS</a>
                             <?php if (!empty(getSessionData('case_table_ids')) && !empty(getSessionData('case_table_ids')->m_petitioner_id)) { ?>
                                 <input type="submit" class="btn btn-success" id="pet_save" tabindex='25' value="UPDATE">
-                                <a href="<?= base_url('newcase/respondent') ?>" class="quick-btn" type="button" tabindex='26'>NEXT</a>
+                                <a href="<?= base_url('newcase/respondent') ?>" class="quick-btn gray-btn" type="button" tabindex='26'>NEXT</a>
                             <?php } else { ?>
-                                <input type="submit" class="quick-btn gray-btn" id="pet_save" value="SAVE" tabindex='24'>
+                                <input type="submit" class="btn btn-success" id="pet_save" value="SAVE" tabindex='24'>
                             <?php } ?>
                         </div>
                     </div>
@@ -472,9 +472,9 @@
     });
     function validateInput(event) {
         const input = event.target.value;
-        const regex = /^[a-zA-Z@_ ]*$/;
-        if (!regex.test(input)) {
-            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
         }
     } 
 
@@ -559,6 +559,7 @@
         }
     }
 
+    
 
 
     //---------- Organisation State Name----------------------//
@@ -638,10 +639,12 @@
     function get_departments(party_is) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        <?php $st_id = (isset($party_details) && !empty($party_details[0]['org_state_id'])) ? url_encryption($party_details[0]['org_state_id']) : ''; ?>
-        var selected_org_st_id = '<?php echo $st_id; ?>';
-        <?php $dpt_id = (isset($party_details) && !empty($party_details[0]['org_dept_id'])) ? url_encryption(@$party_details[0]['org_dept_id']) : ''; ?>
-        var selected_dept_id = '<?php echo $dpt_id; ?>';
+        <?php //$st_id = (isset($party_details) && (@$party_details[0]['org_state_id'] == 0 || !empty($party_details[0]['org_state_id']))) ? url_encryption($party_details[0]['org_state_id']) : ''; ?>
+        //var selected_org_st_id = '<?php //echo $st_id; ?>';
+        <?php //$dpt_id = (isset($party_details) && (@$party_details[0]['org_dept_id'] == 0 || !empty($party_details[0]['org_dept_id']))) ? url_encryption(@$party_details[0]['org_dept_id']) : ''; ?>
+        //var selected_dept_id = '<?php //echo $dpt_id; ?>';
+        var selected_org_st_id = '<?php echo isset($party_details[0]['org_state_id']) ?  url_encryption($party_details[0]['org_state_id']) : '' ?>';
+        var selected_dept_id = '<?php echo isset($party_details[0]['org_dept_id']) ?  url_encryption($party_details[0]['org_dept_id']) : '' ?>';
         $.ajax({
             type: "POST",
             data: {
@@ -1103,7 +1106,7 @@
         var startYear = 1984;
         var startDate = new Date(startYear, 1, 1);
  
-    $('.party_dob').datepicker({
+    /*  $('.party_dob').datepicker({
         format: "dd/mm/yyyy",
         showOtherMonths: true,
         selectOtherMonths: true,
@@ -1111,7 +1114,18 @@
         changeYear: true,
         endDate: today,
         autoclose: true
-    });
+    });*/
+
+    $('.party_dob').datepicker({
+        format: "dd/mm/yyyy",
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        changeMonth: true,
+        changeYear: true,
+        endDate: today,
+        defaultDate: startDate,
+        autoclose: true
+    }).datepicker();
         // $(".party_dob").datepicker({
         //     changeMonth: true,
         //     changeYear: true,

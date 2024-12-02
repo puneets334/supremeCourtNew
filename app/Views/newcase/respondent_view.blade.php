@@ -200,7 +200,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="<?php echo @$party_details[0]['org_state_id'] == 0 ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_state_name" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
@@ -216,10 +216,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="<?php echo @$party_details[0]['org_dept_id'] == 0 ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label for="" class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
-                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_dept_name" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
+                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_dept_name" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -232,10 +232,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="<?php echo @$party_details[0]['org_post_id'] == 0 ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
-                            <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
+                            <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -367,12 +367,12 @@
                             <?php if (!empty(getSessionData('case_table_ids')) && !empty(getSessionData('case_table_ids')->m_respondent_id)) { ?>
                                 <input type="submit" class="btn btn-success" id="pet_save" tabindex='25' value="UPDATE">
                                 <?php if (isset($IsDeadMinor) && !empty($IsDeadMinor) && $IsDeadMinor == 'Y') { ?>
-                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="btn btn-primary" type="button">NEXT</a>
+                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="quick-btn gray-btn" type="button">NEXT</a>
                                 <?php } else { ?>
-                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="btn quick-btn" type="button">NEXT</a>
+                                    <a tabindex='27' href="<?= base_url('newcase/subordinate_court') ?>" class="quick-btn gray-btn" type="button">NEXT</a>
                                 <?php } ?>
                             <?php } else { ?>
-                                <input type="submit" class="quick-btn gray-btn" id="pet_save" value="SAVE" tabindex='24'>
+                                <input type="submit" class="btn btn-success" id="pet_save" value="SAVE" tabindex='24'>
                             <?php } ?>
                         </div>
                     </div>
@@ -474,11 +474,11 @@
 
     function validateInput(event) {
         const input = event.target.value;
-        const regex = /^[a-zA-Z@_ ]*$/;
-        if (!regex.test(input)) {
-            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
         }
-    }
+    } 
     $(document).ready(function() {
         $ ( ".filter_select_dropdown" ). select2 (). on ( 'select2-focus' , function () {
             $ ( this ). data ( 'select2-closed' , true )

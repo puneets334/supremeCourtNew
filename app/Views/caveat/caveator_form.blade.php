@@ -8,7 +8,7 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
 <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css"> 
-<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
@@ -237,9 +237,8 @@ textarea {
                         </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4 show_hide_base_on_org">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
-                                </div>
-                                <?php
+                                    <label for="" class="form-label d-block">Gender <span style="color: red" class="astriks">*</span></label>
+                                    <?php
                                     $gmchecked ='';
                                     $gfchecked ='';
                                     $gochecked ='';
@@ -258,7 +257,9 @@ textarea {
                                     <div class="form-check form-check-inline">
                                         <label class="form-check-label" for="inlineRadio2">
                                         <input class="form-check-input cus-form-check" tabindex='10' type="radio"  name="pet_gender" id="pet_gender3" value="O" <?php echo $gochecked; ?>> Other</label>
-                                    </div>                        
+                                    </div>           
+                                </div>
+                                             
                             </div>
                         </div>
                     </div>
@@ -550,8 +551,8 @@ textarea {
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>-->
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> 
 <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
@@ -887,7 +888,7 @@ textarea {
             changeYear: true,
             yearRange: "-100",
             format: "dd/mm/yyyy",
-            defaultDate: '-40y',
+            defaultDate: "-40y",
             endDate: today 
             
         });
