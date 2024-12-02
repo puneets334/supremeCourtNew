@@ -646,20 +646,20 @@
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
 
-                var org_dept = '<?php echo $party_details[0]['org_dept_id']; ?>';
+                var org_dept = '<?php echo @$party_details[0]['org_dept_id']; ?>';
                 if (org_dept == 0) {
                     $('#otherOrgDept').show();
                     $('#org_post').val('<?php echo url_encryption(0); ?>');
-                    $('#org_dept_name').val('<?php echo_data($party_details[0]['org_dept_name']); ?>');
+                    $('#org_dept_name').val('<?php echo_data(@$party_details[0]['org_dept_name']); ?>');
                 } else {
                     $('#otherOrgDept').hide();
                     $('#org_dept_name').val('');
                 }
-                var org_post = '<?php echo $party_details[0]['org_post_id']; ?>';
+                var org_post = '<?php echo @$party_details[0]['org_post_id']; ?>';
                 if (org_post == 0) {
                     $('#otherOrgPost').show();
                     $('#org_post').val('<?php echo url_encryption(0); ?>');
-                    $('#org_post_name').val('<?php echo_data($party_details[0]['org_post_name']); ?>');
+                    $('#org_post_name').val('<?php echo_data(@$party_details[0]['org_post_name']); ?>');
                 } else {
                     $('#otherOrgPost').hide();
                     $('#org_post_name').val('');
@@ -670,25 +670,25 @@
                 //State Department : D1 and //Central Department : D2
                 $('#org_state_row').show();
 
-                var org_state = '<?php echo $party_details[0]['org_state_id']; ?>';
+                var org_state = '<?php echo @$party_details[0]['org_state_id']; ?>';
                 //alert('party_as direct '+party_as_sel+org_state);
                 if (org_state == 0) {
                     $('#otherOrgState').show();
                 } else {
                     $('#otherOrgState').hide();
                 }
-                var org_dept = '<?php echo $party_details[0]['org_dept_id']; ?>';
+                var org_dept = '<?php echo @$party_details[0]['org_dept_id']; ?>';
                 if (org_dept == 0) {
                     $('#otherOrgDept').show();
-                    $('#org_dept_name').val('<?php echo_data($party_details[0]['org_dept_name']); ?>');
+                    $('#org_dept_name').val('<?php echo_data(@$party_details[0]['org_dept_name']); ?>');
                 } else {
                     $('#otherOrgDept').hide();
                     $('#org_dept_name').val('');
                 }
-                var org_post = '<?php echo $party_details[0]['org_post_id']; ?>';
+                var org_post = '<?php echo @$party_details[0]['org_post_id']; ?>';
                 if (org_post == 0) {
                     $('#otherOrgPost').show();
-                    $('#org_post_name').val('<?php echo_data($party_details[0]['org_post_name']); ?>');
+                    $('#org_post_name').val('<?php echo_data(@$party_details[0]['org_post_name']); ?>');
                 } else {
                     $('#otherOrgPost').hide();
                     $('#org_post_name').val('');
