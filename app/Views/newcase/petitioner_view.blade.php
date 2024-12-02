@@ -197,7 +197,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="<?php echo @$party_details[0]['org_state_id'] == 0 ? 'display: block' : 'diplay: none'; ?>">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_state_id'] == 0) ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
@@ -214,7 +214,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="<?php echo @$party_details[0]['org_dept_id'] == 0 ? 'display: block' : 'display: none'; ?>">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_dept_id'] == 0) ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label for=""
                                 class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
@@ -231,7 +231,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="<?php echo @$party_details[0]['org_post_id'] == 0 ? 'display: block' : 'display: none'; ?>">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_post_id'] == 0) ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
