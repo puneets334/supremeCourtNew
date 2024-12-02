@@ -577,16 +577,16 @@
             $('#org_post_name').attr('required', true);
             // $('#org_dept').val('<?php echo url_encryption(0); ?>');
             $('#org_dept option[value="<?php echo url_encryption(0); ?>"]').prop('selected', true);
-            $('#org_dept option')
-            .filter(function() {
-                return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
-            })
-        .remove();
-        $('#org_post option')
-            .filter(function() {
-                return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
-            })
-        .remove();
+        //     $('#org_dept option')
+        //     .filter(function() {
+        //         return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
+        //     })
+        // .remove();
+        // $('#org_post option')
+        //     .filter(function() {
+        //         return !this.value || $.trim(this.value).length == 0 || $.trim(this.text).length == 0;
+        //     })
+        // .remove();
             // $('#org_post').val('<?php echo url_encryption(0); ?>');
         } else {
             $('#otherOrgState').hide();
