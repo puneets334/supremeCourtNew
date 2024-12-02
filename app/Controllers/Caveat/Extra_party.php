@@ -33,16 +33,17 @@ class Extra_party extends BaseController {
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
 		$this->session = \Config\Services::session();
-		 if (empty($this->session->get('login'))) {
+		 
+		$this->Extra_party_model = new ExtraPartyModel();
+        $this->Dropdown_list_model = new DropdownListModel();
+        $this->Subordinate_court_model = new SubordinateCourtModel();
+        $this->caveat_common_model = new CaveatCommonModel();
+        if (empty($this->session->get('login'))) {
             return response()->redirect(base_url('/'));
             exit(0);
         } else {
             is_user_status();
         }
-		$this->Extra_party_model = new ExtraPartyModel();
-        $this->Dropdown_list_model = new DropdownListModel();
-        $this->Subordinate_court_model = new SubordinateCourtModel();
-        $this->caveat_common_model = new CaveatCommonModel();
     }
 
     public function _remap($param = NULL) {
