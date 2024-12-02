@@ -103,18 +103,18 @@ class View extends BaseController {
             // $params['is_active'] ='1';
             $userData = $this->CommonModel->getData($params);
             if (isset($userData) && !empty($userData)) {
-                if ($userData[0]['ref_m_usertype_id'] == USER_ADVOCATE) {
-                    $data['filedByData'] = $userData[0]['first_name'] . ' (AOR Code: ' . $userData[0]['aor_code'] . ')';
-                    $data['filedByData_contact_emailid'] = 'Contact no: ' . $userData[0]['moblie_number'] . '<br> Email-Id: ' . $userData[0]['emailid'];
+                if ($userData[0]->ref_m_usertype_id == USER_ADVOCATE) {
+                    $data['filedByData'] = $userData[0]->first_name . ' (AOR Code: ' . $userData[0]->aor_code . ')';
+                    $data['filedByData_contact_emailid'] = 'Contact no: ' . $userData[0]->moblie_number . '<br> Email-Id: ' . $userData[0]->emailid;
                     $nocVakalatnamaData = $this->CommonModel->getData(['table_name' => 'efil.tbl_efiling_nums', 'whereFieldName' => 'registration_id', 'whereFieldValue' => $registration_id]);
-                    if (trim($nocVakalatnamaData[0]['created_by']) != trim($userData[0]['id'])) {
-                        $nocVakalatnamaUserData = $this->CommonModel->getData(['table_name' => 'efil.tbl_users', 'whereFieldName' => 'id', 'whereFieldValue' => (int)$nocVakalatnamaData[0]['created_by']]);
+                    if (trim($nocVakalatnamaData[0]->created_by) != trim($userData[0]->id)) {
+                        $nocVakalatnamaUserData = $this->CommonModel->getData(['table_name' => 'efil.tbl_users', 'whereFieldName' => 'id', 'whereFieldValue' => (int)$nocVakalatnamaData[0]->created_by]);
                         $data['vakalat_filedByData'] = $nocVakalatnamaUserData[0]['first_name'] . ' (AOR Code: ' . $nocVakalatnamaUserData[0]['aor_code'] . ')';
                         $data['vakalat_filedByData_contact_emailid'] = 'Contact no: ' . $nocVakalatnamaUserData[0]['moblie_number'] . '<br> Email-Id: ' . $nocVakalatnamaUserData[0]['emailid'];
                     }
-                } else if ($userData[0]['ref_m_usertype_id'] == USER_IN_PERSON) {
-                    $data['filedByData'] = $userData[0]['first_name'] . ' (Party in person)';
-                    $data['filedByData_contact_emailid'] = 'Contact no: ' . $userData[0]['moblie_number'] . '<br> Email-Id: ' . $userData[0]['emailid'];
+                } else if ($userData[0]->ref_m_usertype_id == USER_IN_PERSON) {
+                    $data['filedByData'] = $userData[0]->first_name . ' (Party in person)';
+                    $data['filedByData_contact_emailid'] = 'Contact no: ' . $userData[0]->moblie_number . '<br> Email-Id: ' . $userData[0]->emailid;
                 }
                 /*$adv_sci_bar_id = !empty($userData[0]->adv_sci_bar_id) ? (int)$userData[0]->adv_sci_bar_id : NULL;
                 if(isset($adv_sci_bar_id) && !empty($adv_sci_bar_id)){
