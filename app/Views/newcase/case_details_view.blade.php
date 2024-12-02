@@ -53,6 +53,9 @@
                     <h6 class="text-center fw-bold">Case Details</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
+                <div class="row" id="errDiv" style="display: none;">
+                    <div class="alert alert-danger" role="alert" id="alertMsg"></div>
+                </div>
                 <div class="row">
                     <?php if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_DEPARTMENT,])) {
                     ?>
@@ -1245,7 +1248,14 @@
                                 location.reload();
 
                             } else if (resArr[0] == 3) {
-                                alert(resArr[1]);
+                                // alert(resArr[1]);
+                                $('#errDiv').show();
+                                $('#alertMsg').html(resArr[1]);
+                                var te = resArr[1];
+                                if(te.lastIndexOf("{field}")){
+                                    $('#cause_pet').val('');
+                                    $('#cause_res').val('');
+                                }
                             }
                             $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {
                                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
