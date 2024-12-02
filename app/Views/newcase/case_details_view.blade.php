@@ -822,6 +822,7 @@
         if (spcasetype_id == 6) {
             $('#dtsign').show();
         } else {
+            $('#datesignjail').val('');
             $('#dtsign').hide();
         }
     }
@@ -1252,9 +1253,14 @@
                                 $('#errDiv').show();
                                 $('#alertMsg').html(resArr[1]);
                                 var te = resArr[1];
-                                if(te.lastIndexOf("{field}")){
+                                // console.log(te);
+                                if(te.search("cause_pet")){                                 
                                     $('#cause_pet').val('');
+                                    return false;
+                                }
+                                if(te.search("cause_res")){                                  
                                     $('#cause_res').val('');
+                                    return false;
                                 }
                             }
                             $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {

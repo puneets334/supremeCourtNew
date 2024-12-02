@@ -305,27 +305,34 @@ class CaseDetails extends BaseController
         // $this->validation->setErrorDelimiter('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             echo '3@@@';
-            echo $this->validation->getError('no_of_petitioner') . $this->validation->getError('no_of_respondent') . $this->validation->getError('cause_pet') . $this->validation->getError('cause_res') . $this->validation->getError('sc_case_type') . $this->validation->getError('sc_sp_case_type_id') .
-                $this->validation->getError('subj_cat_main') . $this->validation->getError('subj_sub_cat_1') . $this->validation->getError('subj_sub_cat_2') . $this->validation->getError('subj_sub_cat_3') .
-                $this->validation->getError('question_of_law') . $this->validation->getError('grounds') . $this->validation->getError('interim_grounds') . $this->validation->getError('main_prayer') . $this->validation->getError('interim_relief') . $this->validation->getError('matrimonial');
-            if (isset($court_type) && !empty($court_type)) {
-                switch ($court_type) {
-                    case 1:
-                        echo $this->validation->getError('high_courtname') . $this->validation->getError('high_court_bench_name');
-                        break;
-                    case 3:
-                        echo $this->validation->getError('district_court_state_name') . $this->validation->getError('district_court_district_name');
-                        break;
-                    case 4:
-                        echo $this->validation->getError('supreme_state_name') . $this->validation->getError('supreme_bench_name');
-                        break;
-                    case 5:
-                        echo $this->validation->getError('state_agency') . $this->validation->getError('state_agency_name');
-                        break;
-                    default:
+            $errors = $this->validation->getErrors();
+
+            foreach ($errors as $field => $error) {
+                if(strpos($error, '{field}')){
+                    echo str_replace('{field}', $field, $error) . "<br>";
                 }
             }
-            exit(0);
+            // echo $this->validation->getError('no_of_petitioner') . $this->validation->getError('no_of_respondent') . $this->validation->getError('cause_pet') . $this->validation->getError('cause_res') . $this->validation->getError('sc_case_type') . $this->validation->getError('sc_sp_case_type_id') .
+            //     $this->validation->getError('subj_cat_main') . $this->validation->getError('subj_sub_cat_1') . $this->validation->getError('subj_sub_cat_2') . $this->validation->getError('subj_sub_cat_3') .
+            //     $this->validation->getError('question_of_law') . $this->validation->getError('grounds') . $this->validation->getError('interim_grounds') . $this->validation->getError('main_prayer') . $this->validation->getError('interim_relief') . $this->validation->getError('matrimonial');
+            // if (isset($court_type) && !empty($court_type)) {
+            //     switch ($court_type) {
+            //         case 1:
+            //             echo $this->validation->getError('high_courtname') . $this->validation->getError('high_court_bench_name');
+            //             break;
+            //         case 3:
+            //             echo $this->validation->getError('district_court_state_name') . $this->validation->getError('district_court_district_name');
+            //             break;
+            //         case 4:
+            //             echo $this->validation->getError('supreme_state_name') . $this->validation->getError('supreme_bench_name');
+            //             break;
+            //         case 5:
+            //             echo $this->validation->getError('state_agency') . $this->validation->getError('state_agency_name');
+            //             break;
+            //         default:
+            //     }
+            // }
+            // exit(0);
         } else {
             $cause_title = (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper($_POST['cause_pet']) . ' Vs. ' : '';
             $cause_title .= (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper(escape_data($_POST["cause_res"])) : '';
