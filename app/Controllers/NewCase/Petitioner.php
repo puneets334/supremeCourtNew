@@ -285,7 +285,7 @@ class Petitioner extends BaseController {
                     $org_state_not_in_list = FALSE;
                 }
             } else {
-                $org_state = 0;
+                $org_state = 00;
                 $org_state_name = NULL;
                 $org_state_not_in_list = FALSE;
             }
@@ -308,7 +308,7 @@ class Petitioner extends BaseController {
                 $org_post_not_in_list = FALSE;
             }
         } else {
-            $org_state = 0;
+            $org_state = 00;
             $org_state_name = NULL;
             $org_state_not_in_list = FALSE;
             $org_dept = 0;

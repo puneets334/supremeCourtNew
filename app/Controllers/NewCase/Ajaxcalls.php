@@ -110,7 +110,8 @@ class Ajaxcalls extends BaseController {
         $stateCentralDept = $this->Dropdown_list_model->getStateCentralDept();
         if ($party_is != 'D3') {
             $dropDownOptionsState = '<option  value="">Select Orgnisation State</option>';
-            $dropDownOptionsState .= '<option value="' . url_encryption(0) . '">NOT IN LIST</option>';
+            $selx = ($selected_org_st_id == url_encryption(0)) ? "selected=selected" : '';
+            $dropDownOptionsState .= '<option value="' . url_encryption(0) . '" '.$selx.'>NOT IN LIST</option>';
             foreach ($stateCentralDept as $v) {
                 $selState = ($selected_org_st_id == url_encryption($v->deptcode)) ? "selected=selected" : '';
                 $dropDownOptionsState .= '<option ' . $selState . ' value="' . escape_data(url_encryption($v->deptcode)) . '">' . escape_data(strtoupper($v->deptname)) . '</option>';
@@ -119,7 +120,8 @@ class Ajaxcalls extends BaseController {
             $dropDownOptionsState = '';
         }
         $dropDownOptionsDept = '<option value="">Select Department</option>';
-        $dropDownOptionsDept .= '<option value="'.url_encryption(0).'">NOT IN LIST</option>';
+        $sely = ($selected_org_st_id == url_encryption(0)) ? "selected=selected" : '';
+        $dropDownOptionsDept .= '<option value="'.url_encryption(0).'" '.$sely.'>NOT IN LIST</option>';
         foreach ($dept_list as $dept) {
             $sel = ($selected_dept_id == url_encryption($dept->deptcode)) ? "selected=selected" : '';
             $dropDownOptionsDept .= '<option ' . $sel . ' value="' . escape_data(url_encryption($dept->deptcode)) . '">' . escape_data(strtoupper($dept->deptname)) . '</option>';
@@ -131,7 +133,8 @@ class Ajaxcalls extends BaseController {
         $post_list = $this->Dropdown_list_model->get_posts_list();
         $selected_post_id = $_POST['selected_post_id'];
         $dropDownOptions = '<option value="">Select Post</option>';
-        $dropDownOptions .= '<option value="' . url_encryption(0) . '">NOT IN LIST</option>';
+        $sels = ($selected_post_id == url_encryption(0)) ? "selected=selected" : '';
+        $dropDownOptions .= '<option value="' . url_encryption(0) . '" '.$sels.'>NOT IN LIST</option>';
         foreach ($post_list as $post) {
             $sel = ($selected_post_id == url_encryption($post->authcode)) ? "selected=selected" : '';
             

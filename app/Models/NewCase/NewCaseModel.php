@@ -198,10 +198,6 @@ class NewCaseModel extends Model {
         $new_breadcrumbs_array = array_unique($old_breadcrumbs_array);
         sort($new_breadcrumbs_array);
         $new_breadcrumbs = implode(',', $new_breadcrumbs_array);
-        $sData = getSessionData('efiling_details');
-        // $mergeData=array_merge($this->session->get('efiling_details'),array('breadcrumb_status' =>$new_breadcrumbs));
-        // setSessionData('efiling_details', $mergeData);
-        $mdata = getSessionData('efiling_details')['breadcrumb_status'] = $new_breadcrumbs;
         $builder = $this->db->table('efil.tbl_efiling_nums');
         $builder->where('registration_id', $registration_id);
         $builder->update(array('breadcrumb_status' => $new_breadcrumbs));

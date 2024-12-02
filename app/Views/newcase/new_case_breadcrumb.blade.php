@@ -99,7 +99,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                         <?php
                     $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, JAIL_SUPERINTENDENT);
                     $allowed_users_trash = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT); 
-                        if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+                        if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array) && getPendingCourtFee() == 0 || getPendingCourtFee() < 0) {
                             $stages_array = array(Draft_Stage);
 
                             if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
@@ -107,7 +107,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                     if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                          //  pr(explode(',', getSessionData('efiling_details')['breadcrumb_status']));
 
-                                        if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) > 6){
+                                        // if(count(explode(',', getSessionData('efiling_details')['breadcrumb_status'])) > 6){
                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                         ?>
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
@@ -116,7 +116,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
                                         <?php
                                         }
-                                    }
+                                    // }
                                     }
                                 } else {
                                     if (!empty(getSessionData('efiling_details')) && in_array(JAIL_PETITION_SUBORDINATE_COURT, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
@@ -378,7 +378,6 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 <ul class="nav nav-tabs"
                     id="myTab"
                     role="tablist">
-
                     <li class="nav-item"
                         role="presentation"> 
                         <?php
