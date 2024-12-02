@@ -1,11 +1,15 @@
 @extends('layout.app')
 @section('content')
 <div class="mainPanel ">
-    <div class="panelInner">
+    <div class="panelInner"> 
+    @if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+        @include('layout.header') 
+    @endif 
         <div class="middleContent">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
+
                         <div class="center-content-inner comn-innercontent">
                             <?php
                             $segment = service('uri'); 
@@ -59,9 +63,10 @@
         },
         changeMonth: true,
         changeYear: true,
-        yearRange: "-100:-1",
-        dateFormat: "dd/mm/yy",
-        defaultDate: '-40y'
+        yearRange: "-100:+0",  
+        dateFormat: "dd/mm/yy",  
+        defaultDate: "-40y", 
+        maxDate: today  
     });
 
     $('#res_dob').datepicker({
