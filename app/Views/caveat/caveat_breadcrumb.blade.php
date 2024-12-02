@@ -153,8 +153,8 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                 }
                             }
                         }
-                        ?>
-                        <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                        ?> 
+                        <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> onclick="window.history.back()"-->
                         <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                     
@@ -202,6 +202,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
         </div>
     </div>
 </div>
+<?php if (!empty(getSessionData('MSG')) || !empty(getSessionData('msg'))) { ?>
 <div class="col-12">
                 <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
                      
@@ -214,7 +215,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                      }
                      ?>
                  </div>
-                </div>
+                      </div>  <?php  } ?>
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
