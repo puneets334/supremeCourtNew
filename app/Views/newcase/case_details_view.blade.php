@@ -1597,11 +1597,11 @@
 <script>
     function validateInput(event) {
         const input = event.target.value;
-        const regex = /^[a-zA-Z@_ ]*$/;
-        if (!regex.test(input)) {
-            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
         }
-    }
+    } 
 
     function ActionToTrash(trash_type) {
         event.preventDefault();
