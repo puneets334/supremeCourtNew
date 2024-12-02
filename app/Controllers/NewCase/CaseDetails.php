@@ -211,16 +211,10 @@ class CaseDetails extends BaseController
             "cause_pet" => [
                 "label" => "Cause Title Petitioner",
                 "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters",
-                "errors" => [ 
-                    "validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters" => "The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,), semicolon(;), brackets (()), single quotes (\'), double quotes (\")" 
-                ]
             ],
             "cause_res" => [
                 "label" => "Cause Title Respondent",
                 "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters",
-                "errors" => [ 
-                    "validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters" => "The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,), semicolon(;), brackets (()), single quotes (\'), double quotes (\")" 
-                ]
             ],
             "sc_case_type" => [
                 "label" => "Case Type",
@@ -251,66 +245,66 @@ class CaseDetails extends BaseController
 
         
         $court_type = !empty($_POST['court_name']) ? (int)$_POST['court_name'] : NULL;
-        if (isset($court_type) && !empty($court_type)) {
-            switch ($court_type) {
-                case 1:
-                    $this->validation->setRules([
-                        "high_courtname" => [
-                            "label" => "High court name",
-                            "rules" => "required"
-                        ],
-                        "high_court_bench_name" => [
-                            "label" => "High court bench name",
-                            "rules" => "required"
-                        ],
-                    ]);
-                    break;
-                case 3:
-                    $this->validation->setRules([
-                        "district_court_state_name" => [
-                            "label" => "State name",
-                            "rules" => "required|trim"
-                        ],
-                        "district_court_district_name" => [
-                            "label" => "District name",
-                            "rules" => "required"
-                        ],
-                    ]);
-                    break;
-                case 4:
-                    $this->validation->setRules([
-                        "supreme_state_name" => [
-                            "label" => "State name",
-                            "rules" => "required"
-                        ],
-                        "supreme_bench_name" => [
-                            "label" => "Bench name",
-                            "rules" => "required"
-                        ],
-                    ]);
-                    break;
-                case 5:
-                    $this->validation->setRules([
-                        "state_agency" => [
-                            "label" => "State name",
-                            "rules" => "required"
-                        ],
-                        "state_agency_name" => [
-                            "label" => "Agency name",
-                            "rules" => "required"
-                        ],
-                    ]);
-                    break;
-                default:
-            }
-        }
+        // if (isset($court_type) && !empty($court_type)) {
+        //     switch ($court_type) {
+        //         case 1:
+        //             $this->validation->setRules([
+        //                 "high_courtname" => [
+        //                     "label" => "High court name",
+        //                     "rules" => "required"
+        //                 ],
+        //                 "high_court_bench_name" => [
+        //                     "label" => "High court bench name",
+        //                     "rules" => "required"
+        //                 ],
+        //             ]);
+        //             break;
+        //         case 3:
+        //             $this->validation->setRules([
+        //                 "district_court_state_name" => [
+        //                     "label" => "State name",
+        //                     "rules" => "required|trim"
+        //                 ],
+        //                 "district_court_district_name" => [
+        //                     "label" => "District name",
+        //                     "rules" => "required"
+        //                 ],
+        //             ]);
+        //             break;
+        //         case 4:
+        //             $this->validation->setRules([
+        //                 "supreme_state_name" => [
+        //                     "label" => "State name",
+        //                     "rules" => "required"
+        //                 ],
+        //                 "supreme_bench_name" => [
+        //                     "label" => "Bench name",
+        //                     "rules" => "required"
+        //                 ],
+        //             ]);
+        //             break;
+        //         case 5:
+        //             $this->validation->setRules([
+        //                 "state_agency" => [
+        //                     "label" => "State name",
+        //                     "rules" => "required"
+        //                 ],
+        //                 "state_agency_name" => [
+        //                     "label" => "Agency name",
+        //                     "rules" => "required"
+        //                 ],
+        //             ]);
+        //             break;
+        //         default:
+        //     }
+        // }
 
 
         // pr($this->validation->withRequest($this->request)->run());
       
         // $this->validation->setErrorDelimiter('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
-            // echo '3@@@';
+            echo '3@@@';
             echo $this->validation->getError('no_of_petitioner') . $this->validation->getError('no_of_respondent') . $this->validation->getError('cause_pet') . $this->validation->getError('cause_res') . $this->validation->getError('sc_case_type') . $this->validation->getError('sc_sp_case_type_id') .
                 $this->validation->getError('subj_cat_main') . $this->validation->getError('subj_sub_cat_1') . $this->validation->getError('subj_sub_cat_2') . $this->validation->getError('subj_sub_cat_3') .
                 $this->validation->getError('question_of_law') . $this->validation->getError('grounds') . $this->validation->getError('interim_grounds') . $this->validation->getError('main_prayer') . $this->validation->getError('interim_relief') . $this->validation->getError('matrimonial');
@@ -333,8 +327,6 @@ class CaseDetails extends BaseController
             }
             exit(0);
         } else {
-            echo 'rrrr';
-            die;
             $cause_title = (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper($_POST['cause_pet']) . ' Vs. ' : '';
             $cause_title .= (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper(escape_data($_POST["cause_res"])) : '';
 

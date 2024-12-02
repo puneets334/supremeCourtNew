@@ -8,7 +8,7 @@ class MYFormvalidation {
     //     $this->CI = & get_instance();
     // }
 
-    function encryptCheck(string $str, string &$error = null): bool{
+    function encryptCheck(string $str = NULL, string &$error = null): bool{
         $str = url_decryption($str);
         if ($str == '') {
             $error = lang('form_validation_invalid');
@@ -26,7 +26,7 @@ class MYFormvalidation {
     //     }
     // }
     
-    function validateAlphaNumericHyphen(string $str, string &$error = null): bool{
+    function validateAlphaNumericHyphen(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9-]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), underscore(_), space( ).';
@@ -36,7 +36,7 @@ class MYFormvalidation {
         }
     }
     
-    function validate_alpha_numeric_space_dot_hyphen_underscore_slash(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot_hyphen_underscore_slash(string $str = NULL, string &$error = null): bool{
 // THIS FUNCTION IS NOT WORKING -- VALIDATE FORWARD SLASH
         if (!preg_match('/^[a-zA-Z0-9.- _\\/-]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), underscore(_), space( ).';
@@ -47,7 +47,7 @@ class MYFormvalidation {
     }
 
 
-    function validate_alpha_numeric_space_dot_hyphen_underscore(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot_hyphen_underscore(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9.- _]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), underscore(_), space( ).';
@@ -57,7 +57,7 @@ class MYFormvalidation {
         }
     }
 
-    function validate_alpha_numeric_space_dot_hyphen(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot_hyphen(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9. -]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ).';
@@ -66,7 +66,7 @@ class MYFormvalidation {
             return TRUE;
         }
     }
-    function validate_alpha_numeric_space_dot_hyphen_apostrophe(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot_hyphen_apostrophe(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9. \'-]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ) and apostrophe(\').';
@@ -103,7 +103,7 @@ class MYFormvalidation {
             return TRUE;
         }
     }
-    function validate_alpha_numeric_space_dot_hyphen_comma(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot_hyphen_comma(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9., -]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,).';
@@ -112,7 +112,7 @@ class MYFormvalidation {
             return TRUE;
         }
     }
-    function validate_alpha_numeric_space_dot_hyphen_comma_slash(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot_hyphen_comma_slash(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9., \\/-]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,),slash(/).';
@@ -122,7 +122,7 @@ class MYFormvalidation {
         }
     }
 
-    function validate_alpha_numeric_with_special_characters(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_with_special_characters(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9.,;( )? ! \'-]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,), semicolon(;), brackets ( () ), question mark (?).';
@@ -132,7 +132,7 @@ class MYFormvalidation {
         }
     }
 
-//    function validate_alpha_numeric_single_double_quotes_bracket_with_special_characters(string $str, string &$error = null): bool{
+//    function validate_alpha_numeric_single_double_quotes_bracket_with_special_characters(string $str = NULL, string &$error = null): bool{
 //        $pattern = '/^[a-zA-Z0-9.,-\\/\()\'\"  ]+$/';
 //        if (!preg_match($pattern, $str)) {
 //            $this->CI->form_validation->set_message('validate_alpha_numeric_single_double_quotes_bracket_with_special_characters', 'The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ),slash(/),comma(,),  brackets ( () ), single quotes (\'),double quotes (") .<br>');
@@ -142,7 +142,7 @@ class MYFormvalidation {
 //        }
 //    }
 
-    function validate_alpha_numeric_space_dot(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space_dot(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9 .]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, dot(.), space( ).';
@@ -152,7 +152,7 @@ class MYFormvalidation {
         }
     }
 
-    function validate_alpha_numeric_space(string $str, string &$error = null): bool{
+    function validate_alpha_numeric_space(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z 0-9]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9, space( ).';
@@ -162,7 +162,7 @@ class MYFormvalidation {
         }
     }
 
-    function validate_alpha_numeric(string $str, string &$error = null): bool{
+    function validate_alpha_numeric(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z0-9]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, 0-9.';
@@ -172,7 +172,7 @@ class MYFormvalidation {
         }
     }
     
-    function validate_alphabatic(string $str, string &$error = null): bool{
+    function validate_alphabatic(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z]+$/', $str)) {
             'The {field} can have only A-Z, a-z. ';
@@ -182,7 +182,7 @@ class MYFormvalidation {
         }
     }
     
-    function validate_alphabatic_with_space(string $str, string &$error = null): bool{
+    function validate_alphabatic_with_space(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z ]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, space( ).';
@@ -192,7 +192,7 @@ class MYFormvalidation {
         }
     }
     
-    function validate_alphabatic_with_dot(string $str, string &$error = null): bool{
+    function validate_alphabatic_with_dot(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match('/^[a-zA-Z.]+$/', $str)) {
             $error = 'The {field} can have only A-Z, a-z, dot(.).';
@@ -202,7 +202,7 @@ class MYFormvalidation {
         }
     }
 
-    function validate_date_dd_mm_yyyy(string $str, string &$error = null): bool{
+    function validate_date_dd_mm_yyyy(string $str = NULL, string &$error = null): bool{
 
         if (!preg_match("/^(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/[0-9]{4}$/", $str)) {
             $error = 'The {field} valid format dd-mm-yyyy.';
@@ -212,7 +212,7 @@ class MYFormvalidation {
         }
     }
 
-    function validate_encrypted_value(string $str, string &$error = null): bool
+    function validate_encrypted_value(string $str = NULL, string &$error = null): bool
     {
 
         if (isset($str) && !empty($str)) {
@@ -271,7 +271,7 @@ class MYFormvalidation {
             return TRUE;
         }
     }
-    function validate_alphacharacters(string $str, string &$error = null): bool{
+    function validate_alphacharacters(string $str = NULL, string &$error = null): bool{
         if (!preg_match('/^[a-zA-Z` ]+$/', $str)) {
             $error = 'The {field} can have only A-Z a-z';
             return FALSE;
