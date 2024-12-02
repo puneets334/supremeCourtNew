@@ -79,7 +79,7 @@
                                         //$dis=(!empty($index_details[0]['pdf_id']))? "disabled":"required";
                                         ?>
                                         <div class="row">
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 main_div_show">
                                                 <div class="mb-3">
                                                     <label for=""
                                                         class="form-label">PDF File <span style="color: red" class="astriks">*</span></label>
@@ -97,7 +97,7 @@
                                                     <span id="doc_upload_error_message" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 main_div_show">
                                                 <div class="mb-3">
                                                     <label for="" class="form-label">Index Item <span style="color: red" class="astriks">*</span></label>
                                                     <select id="doc_type" name="doc_type" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%" onchange="getindxmodelcopies()" required>
@@ -119,7 +119,7 @@
                                                     <span id="section_error_message" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="indx_copies">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4" id="indx_copies">
                                                 <div class="mb-3">
                                                     <label for=""
                                                         class="form-label">No of Copies <span style="color: red" class="astriks">*</span></label>
@@ -130,7 +130,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show" id="subItemData">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 main_div_show" id="subItemData">
                                                 <div class="mb-3">
                                                     <label for="" class="form-label">Index Sub Item <span style="color: red" class="astriks">*</span></label>
                                                     <select id="sub_doc_type" name="sub_doc_type" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%" onchange="getpetitionersappellantmodals()">
@@ -148,7 +148,7 @@
                                                     <span id="section_error_message" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="petitioners_appellant">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4" id="petitioners_appellant">
                                                 <div class="mb-3">
                                                     <label for=""
                                                         class="form-label">No of Petitioners / appellant (Non-party) <span style="color: red" class="astriks">*</span></label>
@@ -159,7 +159,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 main_div_show">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4 main_div_show">
                                                 <div class="mb-3">
                                                     <span id="sub_doc_type_load"></span>
                                                 </div>

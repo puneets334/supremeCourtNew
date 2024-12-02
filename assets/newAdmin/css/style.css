@@ -8046,9 +8046,9 @@ div#calendar {
     display: block;
     border-radius: 15px !important;
     border: 1px solid #E1E1E1 !important;
-    padding: 6px 15px !important;
+    padding: 5px 15px !important;
     font-size: 14px !important;
-    line-height: 26px !important;
+    line-height: 24px !important;
     margin-left: 10px !important;
 }
 
@@ -8067,10 +8067,12 @@ div#calendar {
     display: block;
     border-radius: 15px !important;
     border: 1px solid #E1E1E1 !important;
-    padding: 6px 15px !important;
+    padding: 5px 15px !important;
     font-size: 14px !important;
-    line-height: 26px !important;
+    line-height: 24px !important;
     margin: 0 10px !important;
+    min-width: 50px;
+    min-height: 36px;
 }
 
 .dataTables_length label,
@@ -8401,10 +8403,11 @@ a.add-btn {
 }
 
 .dataTables_length select {
-    padding: 0 !important;
+    /* padding: 0 !important; */
 }
 .custom-table tr th {
    min-width: 35px;
+   white-space: nowrap;
 }
 .top-right-nav ul li.theme-color a {
     font-size: 0;
@@ -8679,4 +8682,5 @@ label.error {
     padding: 0 0 0 10px;
     font-size: 13px;
 }
+.accordion button.accordion-button.collapsed:after {filter: invert(21%) sepia(86%) saturate(7489%) hue-rotate(208deg) brightness(101%) contrast(107%);}
 /* 2-12-24 End  */
