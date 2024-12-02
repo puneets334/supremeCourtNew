@@ -584,16 +584,14 @@ span.select2.select2-container.select2-container--default {
 
 <script>
     $(document).ready(function() {
-        var today = new Date();
-        var fortyYearsAgo = new Date(today);
-fortyYearsAgo.setFullYear(today.getFullYear() - 40); 
-        $('#pet_dob').datepicker("setDate", fortyYearsAgo);
+        var today = new Date(); 
         $('#pet_dob').datepicker({
             changeMonth: true,
             changeYear: true,
             yearRange: "-100",
             format: "dd/mm/yyyy",
-            // startDate: '-40y',
+            defaultDate: "-40y",
+
             endDate: today 
             
         });

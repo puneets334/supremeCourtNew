@@ -883,16 +883,14 @@ textarea {
 
       $(document).ready(function () {   
         var today = new Date();
-        var fortyYearsAgo = new Date(today);
-fortyYearsAgo.setFullYear(today.getFullYear() - 40); 
-        $('#pet_dob').datepicker("setDate", fortyYearsAgo);
-
+        
+        // alert(today);
         $('#pet_dob').datepicker({
             changeMonth: true,
             changeYear: true,
             yearRange: "-100",
             format: "dd/mm/yyyy",
-            // defaultDate: fortyYearsAgo,
+            defaultDate: "-40y",
             endDate: today 
             
         });
