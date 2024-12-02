@@ -474,11 +474,11 @@
 
     function validateInput(event) {
         const input = event.target.value;
-        const regex = /^[a-zA-Z@_ ]*$/;
-        if (!regex.test(input)) {
-            event.target.value = input.replace(/[^a-zA-Z@_ ]+/g, '');
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
         }
-    }
+    } 
     $(document).ready(function() {
         $ ( ".filter_select_dropdown" ). select2 (). on ( 'select2-focus' , function () {
             $ ( this ). data ( 'select2-closed' , true )
