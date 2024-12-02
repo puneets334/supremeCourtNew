@@ -8684,6 +8684,10 @@ label.error {
 }
 .accordion button.accordion-button.collapsed:after {filter: invert(21%) sepia(86%) saturate(7489%) hue-rotate(208deg) brightness(101%) contrast(107%);}
 .upload-doc-table tr th , .upload-doc-table tr td {
-    padding: 9px 8px !important;
+    padding: 6px 8px !important;
 }
+.datepicker td.active.day{color: #ffffff;outline: 1px solid #0d47bc;background-color: #04c!important;}
+.datepicker td.active.day:hover{color: #ffffff!important;}
+.datepicker td.day:hover {color: #0d48bd !important;outline: 1px solid #0d47bc;}
+.datepicker td.disabled.day:hover {color:#9f9ca3!important;outline:none}
 /* 2-12-24 End  */
