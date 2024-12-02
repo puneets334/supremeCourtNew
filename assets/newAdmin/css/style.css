@@ -8617,8 +8617,8 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 
 /* 19-11-24 start  */
 .dash-card .table-sec .soon-listing-table tbody tr td:first-child b {font-family: 'noto_sansmedium';}
-form .col-lg-4 .mb-3 {position: relative;}
-form .col-lg-4 .mb-3 span.input-group-addon {border-left: 1px solid #e1e1e1!important;padding: 10px 10px;border-radius: 0 15px 15px 0;position: absolute;height: 38px;right: -1px;bottom: 0;display: flex;align-items: center;background: #f1f1f1;margin: 1px 2px 1px 0;}
+form .col-lg-4 .mb-3, form .col-lg-6 .mb-3 {position: relative;}
+form .col-lg-4 .mb-3 span.input-group-addon , form .col-lg-6 .mb-3 span.input-group-addon {border-left: 1px solid #e1e1e1!important;padding: 10px 10px;border-radius: 0 15px 15px 0;position: absolute;height: 38px;right: -1px;bottom: 0;display: flex;align-items: center;background: #f1f1f1;margin: 1px 2px 1px 0;}
 form .icon-input span.fa {right: 8%;}
 form .cus-form-ctrl {padding-right: 40px !important;}
 form .col-lg-4 .mb-3 span.input-group-addon a.pin-code-loc {margin-left: 5px;}
@@ -8684,6 +8684,10 @@ label.error {
 }
 .accordion button.accordion-button.collapsed:after {filter: invert(21%) sepia(86%) saturate(7489%) hue-rotate(208deg) brightness(101%) contrast(107%);}
 .upload-doc-table tr th , .upload-doc-table tr td {
-    padding: 9px 8px !important;
+    padding: 6px 8px !important;
 }
+.datepicker td.active.day{color: #ffffff;outline: 1px solid #0d47bc;background-color: #04c!important;}
+.datepicker td.active.day:hover{color: #ffffff!important;}
+.datepicker td.day:hover {color: #0d48bd !important;outline: 1px solid #0d47bc;}
+.datepicker td.disabled.day:hover {color:#9f9ca3!important;outline:none}
 /* 2-12-24 End  */

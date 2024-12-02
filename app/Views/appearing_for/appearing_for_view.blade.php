@@ -149,7 +149,7 @@ $parties_details = $data['parties_details'];
                 It is recommended to provide email and mobile of parties, which you representing, for your own convenience. ]
             </span>
             <div class="row  mt-4 mb-4">
-                <label class="control-label col-md-1 col-sm-6 col-xs-1">Appearing For <span style="color: red">*</span> :</label>
+                <label class="form-label mt-0 col-lg-1 col-md-2 col-sm-12 col-xs-12 pe-0">Appearing For<span style="color: red">*</span> :</label>
                 <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
                     <div class="form-group">
                         <?php

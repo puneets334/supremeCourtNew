@@ -206,3 +206,11 @@
 .black-theme .accordion-button:not(.collapsed) , .black-theme .accordion-button:hover{background: #555555 !important;
     color: #ff0;}
 /* 19-11-24 End  */
+/* 2-12-24 start  */
+.black-theme .datepicker-days {
+    background: #111111;
+}
+.black-theme .datepicker td.active.day{color: #ffffff !important;outline: 1px solid #ffffff}
+.black-theme .datepicker td.day:hover {color: #ffffff !important;outline: 1px solid #ffffff}
+.black-theme .datepicker td.disabled.day:hover {color:#9f9ca3!important;outline:none}
+/* 2-12-24 End  */

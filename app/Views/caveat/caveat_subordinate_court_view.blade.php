@@ -432,6 +432,7 @@ body.loading .overlay{
                         </div>
                     </div>
                     <div id="case_result"></div>
+
                     <!----END : Show search Ressult---->
                     <div class="clearfix"></div><br><br>
                     <div class="row">
@@ -907,14 +908,13 @@ body.loading .overlay{
                     $('#loader_div').hide();
                     $('#search_button_div').show();
                     var resArr = data.split('@@@');
-
+//   alert(resArr[1]);
                     if (resArr[0] == 1) {
                         $('#msg').show();
-                        $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                        setTimeout(function () {
-                            $(".form-response").hide();
-                        }, 2000);
-                        $("#case_result").html('');
+                        $("#case_result").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()></span></p>")
+                        // setTimeout(function () {
+                        //     $("#case_result_not_found").hide();
+                        // }, 5000);
                     } else if (resArr[0] == 2) {
                         $("#case_result").html(resArr[1]);
                         $("#order_date").val(resArr[2]);
@@ -1438,7 +1438,9 @@ body.loading .overlay{
             $("#firDiv").hide();
         }
     });
-
+    function hideMessageDiv() {
+      document.getElementById('msg').style.display = "none";
+  }
 
 </script>
 <script>

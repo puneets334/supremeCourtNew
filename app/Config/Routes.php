@@ -48,7 +48,7 @@ $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_hc_case
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_sci_case_type', 'NewCase\AjaxcallsSubordinateCourt::get_sci_case_type');
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/search_case_details', 'NewCase\AjaxcallsSubordinateCourt::search_case_details');
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_sci_case_type', 'NewCase\AjaxcallsSubordinateCourt::get_sci_case_type');
-$routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/search_case_details', 'NewCase\AjaxcallsSubordinateCourt::search_case_details');
+// $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/search_case_details', 'NewCase\AjaxcallsSubordinateCourt::search_case_details');
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls_subordinate_court/get_establishment_list', 'NewCase\AjaxcallsSubordinateCourt::get_establishment_list');
 $routes->match(['GET', 'POST'], 'newcase/subordinate_court/add_subordinate_court_details', 'NewCase\SubordinateCourt::add_subordinate_court_details');
 $routes->match(['GET', 'POST'], 'uploadDocuments', 'UploadDocuments\DefaultController::index');
