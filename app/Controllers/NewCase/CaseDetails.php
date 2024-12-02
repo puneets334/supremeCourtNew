@@ -202,23 +202,29 @@ class CaseDetails extends BaseController
         $this->validation->setRules([
             "no_of_petitioners" => [
                 "label" => "No of Petitioner",
-                "rules" => "trim|min_length[1]|numeric|is_required"
+                "rules" => "trim|min_length[1]|numeric"
             ],
             "no_of_respondents" => [
                 "label" => "No of Respondents",
-                "rules" => "trim|min_length[1]|numeric|is_required"
+                "rules" => "trim|min_length[1]|numeric"
             ],
             "cause_pet" => [
                 "label" => "Cause Title Petitioner",
-                "rules" => "required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters",
+                "errors" => [ 
+                    "validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters" => "The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,), semicolon(;), brackets (()), single quotes (\'), double quotes (\")" 
+                ]
             ],
             "cause_res" => [
                 "label" => "Cause Title Respondent",
-                "rules" => "required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters",
+                "errors" => [ 
+                    "validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters" => "The {field} can have only A-Z, a-z, 0-9, dot(.), hyphen(-), space( ), comma(,), semicolon(;), brackets (()), single quotes (\'), double quotes (\")" 
+                ]
             ],
             "sc_case_type" => [
                 "label" => "Case Type",
-                "rules" => "required|trim|is_required|validate_encrypted_value"
+                "rules" => "required|trim|validate_encrypted_value"
             ],
             "sc_sp_case_type_id" => [
                 "label" => "Special Case Type",
@@ -226,21 +232,24 @@ class CaseDetails extends BaseController
             ],
             "subj_cat_main" => [
                 "label" => "Main Category",
-                "rules" => "required|trim|is_required|validate_encrypted_value"
+                "rules" => "required|trim|validate_encrypted_value"
             ],
             "subj_sub_cat_1" => [
                 "label" => "Sub Category 1",
-                "rules" => "trim|is_required|validate_encrypted_value"
+                "rules" => "trim|validate_encrypted_value"
             ],
         ]);
+      
         if (in_array($this->session->get('login')['ref_m_usertype_id'], [USER_DEPARTMENT, USER_CLERK])) {
             $this->validation->setRules([
                 "impersonated_aor" => [
                     "label" => "AOR",
-                    "rules" => "trim|is_required"
+                    "rules" => "trim"
                 ],
             ]);
         }
+
+        
         $court_type = !empty($_POST['court_name']) ? (int)$_POST['court_name'] : NULL;
         if (isset($court_type) && !empty($court_type)) {
             switch ($court_type) {
@@ -248,11 +257,11 @@ class CaseDetails extends BaseController
                     $this->validation->setRules([
                         "high_courtname" => [
                             "label" => "High court name",
-                            "rules" => "required|trim"
+                            "rules" => "required"
                         ],
                         "high_court_bench_name" => [
                             "label" => "High court bench name",
-                            "rules" => "trim|required"
+                            "rules" => "required"
                         ],
                     ]);
                     break;
@@ -264,7 +273,7 @@ class CaseDetails extends BaseController
                         ],
                         "district_court_district_name" => [
                             "label" => "District name",
-                            "rules" => "trim|required"
+                            "rules" => "required"
                         ],
                     ]);
                     break;
@@ -272,11 +281,11 @@ class CaseDetails extends BaseController
                     $this->validation->setRules([
                         "supreme_state_name" => [
                             "label" => "State name",
-                            "rules" => "required|trim"
+                            "rules" => "required"
                         ],
                         "supreme_bench_name" => [
                             "label" => "Bench name",
-                            "rules" => "trim|required"
+                            "rules" => "required"
                         ],
                     ]);
                     break;
@@ -284,17 +293,21 @@ class CaseDetails extends BaseController
                     $this->validation->setRules([
                         "state_agency" => [
                             "label" => "State name",
-                            "rules" => "required|trim"
+                            "rules" => "required"
                         ],
                         "state_agency_name" => [
                             "label" => "Agency name",
-                            "rules" => "trim|required"
+                            "rules" => "required"
                         ],
                     ]);
                     break;
                 default:
             }
         }
+
+
+        // pr($this->validation->withRequest($this->request)->run());
+      
         // $this->validation->setErrorDelimiter('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             // echo '3@@@';
@@ -320,6 +333,8 @@ class CaseDetails extends BaseController
             }
             exit(0);
         } else {
+            echo 'rrrr';
+            die;
             $cause_title = (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper($_POST['cause_pet']) . ' Vs. ' : '';
             $cause_title .= (isset($_POST['cause_pet']) && !empty($_POST['cause_pet'])) ? strtoupper(escape_data($_POST["cause_res"])) : '';
 
