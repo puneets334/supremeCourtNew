@@ -717,16 +717,16 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                     $params['whereFieldName'] = 'registration_id';
                     $params['whereFieldValue'] = $registration_id;
                     $caseDetailsData = $this->Common_model->getData($params);
-                    //var_dump($caseDetailsData);
+                    // pr($caseDetailsData);
 
-                    if (isset($caseDetailsData[0]['sc_diary_num']) && !empty($caseDetailsData[0]['sc_diary_num'])
-                        && isset($caseDetailsData[0]['sc_diary_year']) && !empty($caseDetailsData[0]['sc_diary_year'])){
+                    if (isset($caseDetailsData[0]->sc_diary_num) && !empty($caseDetailsData[0]->sc_diary_num)
+                        && isset($caseDetailsData[0]->sc_diary_year) && !empty($caseDetailsData[0]->sc_diary_year)){
                         $objections_status = NULL;
                         $documents_status = NULL;
-                        $diary_no = (int)$caseDetailsData[0]['sc_diary_num'];
-                        $diary_year = (int)$caseDetailsData[0]['sc_diary_year'];
-                        $sc_diary_date = !empty($caseDetailsData[0]['sc_diary_date']) ? $caseDetailsData[0]['sc_diary_date'] : NULL;
-                        $verification_date = !empty($caseDetailsData[0]['verification_date']) ? $caseDetailsData[0]['verification_date'] : NULL;
+                        $diary_no = (int)$caseDetailsData[0]->sc_diary_num;
+                        $diary_year = (int)$caseDetailsData[0]->sc_diary_year;
+                        $sc_diary_date = !empty($caseDetailsData[0]->sc_diary_date) ? $caseDetailsData[0]->sc_diary_date : NULL;
+                        $verification_date = !empty($caseDetailsData[0]->verification_date) ? $caseDetailsData[0]->verification_date : NULL;
                         $case_details = array();
                         $case_details['sc_diary_num'] = $diary_no;
                         $case_details['sc_diary_year'] = $diary_year;
@@ -741,10 +741,10 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                             if(isset($update_status) && !empty($update_status)){
                                 if($next_stage == I_B_Approval_Pending_Admin_Stage) {
                                     $cuase_title = '';
-                                    if(!empty($caseDetailsData[0]['cause_title']) &&  !empty($caseDetailsData[0]['cause_title'])){
-                                        $cuase_title = $caseDetailsData[0]['cause_title'];
+                                    if(!empty($caseDetailsData[0]->cause_title) &&  !empty($caseDetailsData[0]->cause_title)){
+                                        $cuase_title = $caseDetailsData[0]->cause_title;
                                     }
-                                    $createdby = !empty($caseDetailsData[0]['created_by']) ? (int)$caseDetailsData[0]['created_by'] : NULL;
+                                    $createdby = !empty($caseDetailsData[0]->created_by) ? (int)$caseDetailsData[0]->created_by : NULL;
                                     if(isset($createdby) && !empty($createdby)){
                                         $params = array();
                                         $params['table_name'] ='efil.tbl_users';
