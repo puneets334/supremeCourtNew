@@ -171,7 +171,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             ?>
                         </div>
                         <?php //$diary = false;
-                        if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($diary)) {
+                        if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($caveat_no)) {
                             echo $diary_generate_button;
                         }
                         if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && isset($stage_id) && !empty($stage_id) && $stage_id == I_B_Defects_Cured_Stage) {

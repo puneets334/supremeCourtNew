@@ -68,6 +68,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             <i class="fa fa-file"></i>
                             <?php
                             echo "Caveat Request In A Case";
+                            //print_r(getSessionData('efiling_details')['breadcrumb_status']) ;
                             $filing_type = 'Caveat Request In A Case';
                             $filing_num_label=$lbl_history='';
                             $style = '';
@@ -134,13 +135,13 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             if (in_array(!empty(getSessionData('efiling_details')['stage_id']), $Array)) {
                                 if (getSessionData('login')['ref_m_usertype_id'] != USER_CLERK) {
                                     // Comment By Amit Mishra as 
-                                //    pr(CAVEAT_BREAD_VIEW);
+                                  // pr(CAVEAT_BREAD_COURT_FEE);
                                     if (in_array(CAVEAT_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status'])) && !in_array(CAVEAT_BREAD_VIEW, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                         echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn quick-btn btn-sm">Final Submit</a>';
                                     }
                                    // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submits</a>';
                                     // echo '<a href="' . base_url('efilingAction/Caveat_final_submit') . '" class="btn btn-success btn-sm">Final Submit</a>';                                        
-                                    if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { }
+                                    //if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) { }
                                 } elseif (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
                                     if (in_array(CAVEAT_BREAD_DOC_INDEX, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                         $action = base_url('efilingAction/Caveat_final_submit');

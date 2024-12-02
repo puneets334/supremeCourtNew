@@ -8,7 +8,7 @@
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css" rel="stylesheet">
 <!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css"> 
-<!-- <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
+<link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
     <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
@@ -272,7 +272,7 @@ span.select2.select2-container.select2-container--default {
 
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
-                                            <textarea  rows="1" id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
+                                            <textarea  rows="1" id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Department Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
                                             <span class="input-group-addon" data-placement="bottom"  data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                                 <i class="fa fa-question-circle-o" ></i>
                                             </span>
@@ -474,8 +474,8 @@ span.select2.select2-container.select2-container--default {
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
 <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
+<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
+<script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
 <!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
@@ -585,14 +585,21 @@ span.select2.select2-container.select2-container--default {
 <script>
     $(document).ready(function() {
         var today = new Date();
+        // $('#pet_dob').datepicker({
+        //     changeMonth: true,
+        //     changeYear: true,
+        //     yearRange: "-100",
+        //     format: "dd/mm/yyyy",
+        //     defaultDate: "-40y",
+        //     endDate: today 
+        // });
         $('#pet_dob').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            yearRange: "-100",
-            format: "dd/mm/yyyy",
-            defaultDate: '-40y',
-            endDate: today 
-            
+        changeMonth: true,
+        changeYear: true,
+        yearRange: "-100", // Allow selection from 100 years ago to today
+        dateFormat: "dd/mm/yy", // Correct date format for jQuery UI
+        defaultDate: "-40y", // Set the default date to 40 years ago
+        maxDate: today // Restrict to dates before or equal to today
         });
 
         $(document).on('change', '#pet_dob', function () {
@@ -624,6 +631,7 @@ span.select2.select2-container.select2-container--default {
                 }
  
                 $('#pet_age').val(age);
+                
             });
 
        
