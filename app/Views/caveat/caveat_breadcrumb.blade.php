@@ -170,17 +170,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 <div class="current-pg-title">
                     <h6>Caveat Filing Form</h6>
                 </div>
-                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
-                     
-                     <?php
-                     if (!empty(getSessionData('MSG'))) {
-                         echo getSessionData('MSG');
-                     }
-                     if (!empty(getSessionData('msg'))) {
-                         echo getSessionData('msg');
-                     }
-                     ?>
-                 </div>
+                
                 <div class="current-pg-actions">
                 
                     <?php
@@ -205,12 +195,26 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 </div>
                 
             </div>
-            <div class="col-12">
+            
+                 <div class="col-12">
                         <?php echo !empty(getSessionData('efiling_details')['stage_id']) ? remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']) : ''; ?>
-                    </div>
+                </div>
         </div>
     </div>
 </div>
+<div class="col-12">
+                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                     
+                     <?php
+                     if (!empty(getSessionData('MSG'))) {
+                         echo getSessionData('MSG');
+                     }
+                     if (!empty(getSessionData('msg'))) {
+                         echo getSessionData('msg');
+                     }
+                     ?>
+                 </div>
+                </div>
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
@@ -235,16 +239,20 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
             } else {
                 $total_respondents=0;
             }
-            if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], array(USER_ADVOCATE, USER_IN_PERSON, USER_PDE))) {
-                $final_submit_action = TRUE;
-                $final_submit_continue_action = TRUE;                
-                $url_caveator = base_url('caveat/');
-                $url_caveatee = base_url('caveat/caveatee');
-                $url_extra_party = base_url('caveat/extra_party');
-                $url_subordinate_court = base_url('caveat/subordinate_court');
-                $upload_doc_url = base_url('uploadDocuments');
-                $doc_index_url = base_url('documentIndex');
-                $url_case_courtfee = base_url('newcase/courtFee');
+                if(isset(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == Draft_Stage){
+
+            if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], array(USER_ADVOCATE, USER_IN_PERSON, USER_PDE)) ) {
+                    $final_submit_action = TRUE;
+                    $final_submit_continue_action = TRUE;                
+                    $url_caveator = base_url('caveat/');
+                    $url_caveatee = base_url('caveat/caveatee');
+                    $url_extra_party = base_url('caveat/extra_party');
+                    $url_subordinate_court = base_url('caveat/subordinate_court');
+                    $upload_doc_url = base_url('uploadDocuments');
+                    $doc_index_url = base_url('documentIndex');
+                    $url_case_courtfee = base_url('newcase/courtFee');
+                }
+                
             } elseif (!empty(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] ==  USER_CLERK && in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage)))) {			
                 $final_submit_action = False;
                 $url_caveator = base_url('caveat/');
