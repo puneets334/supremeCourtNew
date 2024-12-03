@@ -171,15 +171,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 </div>
                 
             </div>
-            <div class="form-response mt-2"
-                    role="alert"
-                    data-auto-dismiss="5000">
-                    <?php
-                    if (!empty(getSessionData('msg'))) {
-                        echo getSessionData('msg');
-                    }
-                    ?>
-                </div>
+            
         </div>
     </div>
 
@@ -316,6 +308,17 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
         /* .dashboard-section.tabs-section{margin-top: 30px!important;} */
         .tabs-section .tab-content{padding:0!important}
 </style>
+
+<div class="form-response mt-2"
+    role="alert"
+    data-auto-dismiss="5000">
+    <?php
+    if (!empty(getSessionData('msg'))) {
+        echo getSessionData('msg');
+    }
+    ?>
+</div>
+
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
