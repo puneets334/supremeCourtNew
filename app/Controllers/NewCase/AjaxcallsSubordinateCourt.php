@@ -300,20 +300,8 @@ class AjaxcallsSubordinateCourt extends BaseController {
                         $this->case_details_table($highcourt_name, $case_data[0], 'CASE');
                     } else {
 
-                        echo '1@@@<div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_content">
-                            <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%"> 
-                                <thead>
-                                    <tr class="success">
-                                        <th> </th> 
-                                    </tr>
-                                </thead>
-                                <tbody>';
-                echo '<tr>';
-                echo '<td style="color: red; font-weight: bold; text-align: center;  ">Case data not found !</td>'; 
-                echo '</tr>';
-                echo '</tbody>';
-                echo '</table>@@@'  ;
+                        echo '1@@@' . htmlentities('Case data not found !', ENT_QUOTES);
+
                         exit(0);
                     }
                 } else {

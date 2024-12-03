@@ -54,9 +54,9 @@
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button"><b>Previous</b></a>
             <input type="submit" class="btn btn-success" id="pay_fee" name="submit" value="PAY">
-            <a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button">Next</a>
+            <a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button"><b>Next</b></a>
 
         </div>
         <?php echo form_close(); ?>
