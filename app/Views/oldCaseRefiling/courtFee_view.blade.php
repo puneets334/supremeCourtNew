@@ -415,14 +415,14 @@
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button">Previous</a>
+            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button"><b>Previous</b></a>
             <span id="payCourtFeeSection">
                 <?php if ($pending_court_fee > 0) { ?>
                     <input type="submit" class="btn btn-success" id="pay_fee" name="submit" value="PAY">
                 <?php } ?>
             </span>
             <?php if ($pending_court_fee <= 0) { ?>
-                <a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button">Next</a>
+                <a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button"><b>Next</b></a>
             <?php } ?>
 
         </div>
