@@ -834,12 +834,12 @@
     function get_departments(party_is) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        <?php $st_id = (isset($party_details) && (@$party_details[0]['org_state_id'] == 0 || !empty($party_details[0]['org_state_id']))) ? url_encryption($party_details[0]['org_state_id']) : ''; ?>
-        var selected_org_st_id = '<?php echo $st_id; ?>';
-        <?php $dpt_id = (isset($party_details) && (@$party_details[0]['org_dept_id'] == 0 || !empty($party_details[0]['org_dept_id']))) ? url_encryption(@$party_details[0]['org_dept_id']) : ''; ?>
-        var selected_dept_id = '<?php echo $dpt_id; ?>';
-        // var selected_org_st_id = '<?php echo isset($party_details[0]['org_state_id']) ?  url_encryption($party_details[0]['org_state_id']) : '' ?>';
-        // var selected_dept_id = '<?php echo isset($party_details[0]['org_dept_id']) ?  url_encryption($party_details[0]['org_dept_id']) : '' ?>';
+        <?php //$st_id = (isset($party_details) && (@$party_details[0]['org_state_id'] == 0 || !empty($party_details[0]['org_state_id']))) ? url_encryption($party_details[0]['org_state_id']) : ''; ?>
+        // var selected_org_st_id = '<?php //echo $st_id; ?>';
+        <?php //$dpt_id = (isset($party_details) && (@$party_details[0]['org_dept_id'] == 0 || !empty($party_details[0]['org_dept_id']))) ? url_encryption(@$party_details[0]['org_dept_id']) : ''; ?>
+        // var selected_dept_id = '<?php //echo $dpt_id; ?>';
+        var selected_org_st_id = '<?php echo isset($party_details[0]['org_state_id']) ?  url_encryption($party_details[0]['org_state_id']) : '' ?>';
+        var selected_dept_id = '<?php echo isset($party_details[0]['org_dept_id']) ?  url_encryption($party_details[0]['org_dept_id']) : '' ?>';
         $.ajax({
             type: "POST",
             data: {
