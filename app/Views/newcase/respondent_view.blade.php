@@ -219,7 +219,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_dept_id'] == 0) ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label for="" class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
-                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_dept_name" placeholder="Other State Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
+                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl org_dept_name" placeholder="Other Department Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -789,10 +789,23 @@ if (org_state == '<?php echo url_encryption(0); ?>') {
     $('#otherOrgState').show();
     /*$('#otherOrgDept').show();
     $('#otherOrgPost').show();
-    $('#org_dept').val('<//?php echo url_encryption(0); ?>');
-    $('#org_post').val('<//?php echo url_encryption(0); ?>');*/
+    $('#org_dept').val('</?php echo url_encryption(0); ?>');
+    $('#org_post').val('</?php echo url_encryption(0); ?>');*/
+    $('#org_state_name').attr('required', true);
+    $('#otherOrgDept').show();
+    $('#org_dept').attr('required', true);
+    $('#org_dept_name').attr('required', true);
+    $('#otherOrgPost').show();
+    $('#org_post_name').attr('required', true);
 } else {
     $('#otherOrgState').hide();
+    $('#org_state_name').attr('required', false);
+    $('#otherOrgDept').hide();
+    $('#org_dept').attr('required', false);
+    $('#org_dept_name').attr('required', false);
+    $('#otherOrgPost').hide();
+    $('#org_post_name').attr('required', false);
+    $('#org_dept').val('');
     /*$('#otherOrgDept').hide();
     $('#otherOrgPost').hide();
     $('#org_dept').val('');
@@ -805,16 +818,21 @@ $('#org_dept').change(function () {
 
 var CSRF_TOKEN = 'CSRF_TOKEN';
 var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-
 var org_dept = $(this).val();
 if (org_dept == '<?php echo url_encryption(0); ?>') {
     $('#otherOrgDept').show();
-    /*$('#otherOrgPost').show();
-    $('#org_post').val('<//?php echo url_encryption(0); ?>');*/
+    $('#org_dept_name').attr('required', true);
+    $('#otherOrgPost').show();
+    $('#org_post_name').attr('required', true);
+    //$('#otherOrgPost').show();
+    //$('#org_post').val('<//?php echo url_encryption(0); ?>');
 } else {
     $('#otherOrgDept').hide();
-    /*$('#otherOrgPost').hide();
-    $('#org_post').val('');*/
+    $('#org_dept_name').attr('required', false);
+    $('#otherOrgPost').hide();
+    $('#org_post_name').attr('required', false);
+    //$('#otherOrgPost').hide();
+    //$('#org_post').val('');
 }
 });
     //---------- Organisation Post Name----------------------//

@@ -113,7 +113,7 @@ class Ajaxcalls extends BaseController {
         if ($party_is != 'D3') {
             $dropDownOptionsState = '<option  value="">Select Orgnisation State</option>';
             $selx = ($selected_org_st_id == url_encryption(0)) ? "selected=selected" : '';
-            $dropDownOptionsState .= '<option '.$selState_not_in_list.' value="' . url_encryption(0) . '">NOT IN LIST</option>';
+            $dropDownOptionsState .= '<option '.$selx.' value="' . url_encryption(0) . '">NOT IN LIST</option>';
             foreach ($stateCentralDept as $v) {
                 $selState = ($selected_org_st_id == url_encryption($v->deptcode)) ? "selected=selected" : '';
                 $dropDownOptionsState .= '<option ' . $selState . ' value="' . escape_data(url_encryption($v->deptcode)) . '">' . escape_data(strtoupper($v->deptname)) . '</option>';
