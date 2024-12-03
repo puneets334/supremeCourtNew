@@ -1978,7 +1978,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                             //|| ($court_fee_calculation_param1[0]['sc_case_type_id']=='19' && $lower_court_type!=4)
                             $base_case_subject_category_details = get_challanged_sc_base_case_details($registration_id);
                             // pr($base_case_subject_category_details);
-                            $subject_category = $base_case_subject_category_details['submaster_id'];
+                            $subject_category = $base_case_subject_category_details['subject_category'];
                             $subcode1 = $base_case_subject_category_details['subcode1'];
                             $sc_case_type_id = $base_case_subject_category_details['case_type_id'];
                         } else {
