@@ -265,7 +265,7 @@
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
-                                                            <button type="submit" class="quick-btn gray-btn">Search</button>
+                                                            <button type="submit" class="quick-btn">Search</button>
                                                         </div>
                                                     </div>
                                                 </div>
