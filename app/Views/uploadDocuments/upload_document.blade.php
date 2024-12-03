@@ -21,6 +21,7 @@
 			<div class="col-12 col-sm-12 col-md-4 col-lg-4">
 				<div class="mb-3">
 					<label for="" class="form-label">Title<span style="color: red" class="astriks">*</span></label>
+
 					<textarea tabindex="2" rows="1" id="doc_title" name="doc_title" minlength="3" maxlength="75" class="form-control cus-form-ctrl" placeholder="PDF Title" type="text" style="text-transform: uppercase" required ></textarea>
 					<!-- <input type="text" class="form-control cus-form-ctrl" tabindex="2" name="doc_title" id="doc_title" required="" placeholder="PDF Title" minlength="3" maxlength="75" style="text-transform: uppercase"> -->
 					<span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed." data-original-title="" title="PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed.">

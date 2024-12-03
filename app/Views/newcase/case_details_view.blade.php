@@ -152,7 +152,7 @@
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of signature of jail incharge</label>
                             <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value=" <?php  echo isset($new_case_details[0]) && !empty($new_case_details[0]->jail_signature_date) ? date("d/m/Y", strtotime($new_case_details[0]->jail_signature_date)) : ''; ?>" type="text" > 
-                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth.">
+                            <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth." title="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
                         </div>
