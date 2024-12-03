@@ -948,6 +948,7 @@ class CommonModel extends Model
         $builder->SELECT('*');
         // $this->db->FROM();
         $builder->WHERE('registration_id', $registration_id);
+        $builder->WHERE('is_deleted', false);
         $builder->ORDERBY('doc_id');
         $query = $builder->get();
         if ($query->getNumRows() >= 1) {
