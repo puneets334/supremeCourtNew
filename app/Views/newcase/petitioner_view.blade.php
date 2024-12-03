@@ -647,20 +647,20 @@
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
 
-                var org_dept = '<?php echo @$party_details[0]['org_dept_id']; ?>';
+                var org_dept = '<?php echo isset($party_details[0]) ? $party_details[0]['org_dept_id'] : ''; ?>';
                 if (org_dept == 0) {
                     $('#otherOrgDept').show();
                     $('#org_post').val('<?php echo url_encryption(0); ?>');
-                    $('#org_dept_name').val('<?php echo_data(@$party_details[0]['org_dept_name']); ?>');
+                    $('#org_dept_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_dept_name']) : ''; ?>');
                 } else {
                     $('#otherOrgDept').hide();
                     $('#org_dept_name').val('');
                 }
-                var org_post = '<?php echo @$party_details[0]['org_post_id']; ?>';
+                var org_post = '<?php echo isset($party_details[0]) ? $party_details[0]['org_post_id'] : ''; ?>';
                 if (org_post == 0) {
                     $('#otherOrgPost').show();
                     $('#org_post').val('<?php echo url_encryption(0); ?>');
-                    $('#org_post_name').val('<?php echo_data(@$party_details[0]['org_post_name']); ?>');
+                    $('#org_post_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_post_name']) : ''; ?>');
                 } else {
                     $('#otherOrgPost').hide();
                     $('#org_post_name').val('');
@@ -678,18 +678,18 @@
                 } else {
                     $('#otherOrgState').hide();
                 }
-                var org_dept = '<?php echo @$party_details[0]['org_dept_id']; ?>';
+                var org_dept = '<?php echo isset($party_details[0]) ? $party_details[0]['org_dept_id'] : ''; ?>';
                 if (org_dept == 0) {
                     $('#otherOrgDept').show();
-                    $('#org_dept_name').val('<?php echo_data(@$party_details[0]['org_dept_name']); ?>');
+                    $('#org_dept_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_dept_name']) : ''; ?>');
                 } else {
                     $('#otherOrgDept').hide();
                     $('#org_dept_name').val('');
                 }
-                var org_post = '<?php echo @$party_details[0]['org_post_id']; ?>';
+                var org_post = '<?php echo isset($party_details[0]) ? $party_details[0]['org_post_id'] : ''; ?>';
                 if (org_post == 0) {
                     $('#otherOrgPost').show();
-                    $('#org_post_name').val('<?php echo_data(@$party_details[0]['org_post_name']); ?>');
+                    $('#org_post_name').val('<?php isset($party_details[0]) ? echo_data($party_details[0]['org_post_name']) : ''; ?>');
                 } else {
                     $('#otherOrgPost').hide();
                     $('#org_post_name').val('');
@@ -757,41 +757,60 @@
     //---------- Organisation State Name----------------------//
     $('#org_state').change(function () {
 
-var CSRF_TOKEN = 'CSRF_TOKEN';
-var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-var org_state = $(this).val();
-if (org_state == '<?php echo url_encryption(0); ?>') {
-    $('#otherOrgState').show();
-    /*$('#otherOrgDept').show();
-    $('#otherOrgPost').show();
-    $('#org_dept').val('</?php echo url_encryption(0); ?>');
-    $('#org_post').val('</?php echo url_encryption(0); ?>');*/
-} else {
-    $('#otherOrgState').hide();
-    /*$('#otherOrgDept').hide();
-    $('#otherOrgPost').hide();
-    $('#org_dept').val('');
-    $('#org_post').val('');*/
-}
-});
+        var org_state = $(this).val();
+        if (org_state == '<?php echo url_encryption(0); ?>') {
+            $('#otherOrgState').show();
+            /*$('#otherOrgDept').show();
+            $('#otherOrgPost').show();
+            $('#org_dept').val('</?php echo url_encryption(0); ?>');
+            $('#org_post').val('</?php echo url_encryption(0); ?>');*/
+            $('#org_state_name').attr('required', true);
+            $('#otherOrgDept').show();
+            $('#org_dept').attr('required', true);
+            $('#org_dept_name').attr('required', true);
+            $('#otherOrgPost').show();
+            $('#org_post_name').attr('required', true);
+        } else {
+            $('#otherOrgState').hide();
+            $('#org_state_name').attr('required', false);
+            $('#otherOrgDept').hide();
+            $('#org_dept').attr('required', false);
+            $('#org_dept_name').attr('required', false);
+            $('#otherOrgPost').hide();
+            $('#org_post_name').attr('required', false);
+            $('#org_dept').val('');
+            /*$('#otherOrgDept').hide();
+            $('#otherOrgPost').hide();
+            $('#org_dept').val('');
+            $('#org_post').val('');*/
+        }
+    });
 
-//---------- Organisation Department Name----------------------//
-$('#org_dept').change(function () {
+    //---------- Organisation Department Name----------------------//
+    $('#org_dept').change(function () {
 
-var CSRF_TOKEN = 'CSRF_TOKEN';
-var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-var org_dept = $(this).val();
-if (org_dept == '<?php echo url_encryption(0); ?>') {
-    $('#otherOrgDept').show();
-    //$('#otherOrgPost').show();
-    //$('#org_post').val('<//?php echo url_encryption(0); ?>');
-} else {
-       $('#otherOrgDept').hide();
-       //$('#otherOrgPost').hide();
-    //$('#org_post').val('');
-}
-});
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var org_dept = $(this).val();
+        if (org_dept == '<?php echo url_encryption(0); ?>') {
+            $('#otherOrgDept').show();
+            $('#org_dept_name').attr('required', true);
+            $('#otherOrgPost').show();
+            $('#org_post_name').attr('required', true);
+            //$('#otherOrgPost').show();
+            //$('#org_post').val('<//?php echo url_encryption(0); ?>');
+        } else {
+            $('#otherOrgDept').hide();
+            $('#org_dept_name').attr('required', false);
+            $('#otherOrgPost').hide();
+            $('#org_post_name').attr('required', false);
+            //$('#otherOrgPost').hide();
+            //$('#org_post').val('');
+        }
+    });
 
     //---------- Organisation Post Name----------------------//
     $('#org_post').change(function() {
@@ -810,12 +829,12 @@ if (org_dept == '<?php echo url_encryption(0); ?>') {
     function get_departments(party_is) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-        <?php //$st_id = (isset($party_details) && (@$party_details[0]['org_state_id'] == 0 || !empty($party_details[0]['org_state_id']))) ? url_encryption($party_details[0]['org_state_id']) : ''; ?>
-        //var selected_org_st_id = '<?php //echo $st_id; ?>';
-        <?php //$dpt_id = (isset($party_details) && (@$party_details[0]['org_dept_id'] == 0 || !empty($party_details[0]['org_dept_id']))) ? url_encryption(@$party_details[0]['org_dept_id']) : ''; ?>
-        //var selected_dept_id = '<?php //echo $dpt_id; ?>';
-        var selected_org_st_id = '<?php echo isset($party_details[0]['org_state_id']) ?  url_encryption($party_details[0]['org_state_id']) : '' ?>';
-        var selected_dept_id = '<?php echo isset($party_details[0]['org_dept_id']) ?  url_encryption($party_details[0]['org_dept_id']) : '' ?>';
+        <?php $st_id = (isset($party_details) && (@$party_details[0]['org_state_id'] == 0 || !empty($party_details[0]['org_state_id']))) ? url_encryption($party_details[0]['org_state_id']) : ''; ?>
+        var selected_org_st_id = '<?php echo $st_id; ?>';
+        <?php $dpt_id = (isset($party_details) && (@$party_details[0]['org_dept_id'] == 0 || !empty($party_details[0]['org_dept_id']))) ? url_encryption(@$party_details[0]['org_dept_id']) : ''; ?>
+        var selected_dept_id = '<?php echo $dpt_id; ?>';
+        // var selected_org_st_id = '<?php echo isset($party_details[0]['org_state_id']) ?  url_encryption($party_details[0]['org_state_id']) : '' ?>';
+        // var selected_dept_id = '<?php echo isset($party_details[0]['org_dept_id']) ?  url_encryption($party_details[0]['org_dept_id']) : '' ?>';
         $.ajax({
             type: "POST",
             data: {
