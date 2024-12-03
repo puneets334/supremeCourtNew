@@ -149,8 +149,7 @@ textarea {
 
                                 <div class="mb-3">
                                     <label for="" class="form-label">Caveator Name <span style="color: red" class="astriks">*</span></label>
-                                    <input id="pet_complainant" name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'
-                                        class="form-control cus-form-ctrl sci_validation" 
+                                    <input id="pet_complainant"  oninput="validateInput(event)"  name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'  class="form-control cus-form-ctrl sci_validation" 
                                         minlength="3" maxlength="250" value="<?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?>" >
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o"></i>
@@ -564,8 +563,23 @@ textarea {
 
 
 <script>
+    $(".sci_validation").keyup(function () {
+        var initVal = $(this).val();
+        outputVal = initVal.replace(/[^a-z_,^A-Z^0-9\.@,/'()\s"\-]/g, "").replace(/^\./, "");
+        //validate_alpha_numeric_single_double_quotes_bracket_with_special_characters
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
+        }
+    });
+    function validateInput(event) { 
+        const input = event.target.value;
+        outputVal = input.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (input != outputVal) {
+            $(this).val(outputVal);
+        }
+    } 
    $(document).ready(function() { 
-
+    
         //---------- Organisation State Name----------------------//
         $('#org_state').change(function () {
 
@@ -712,6 +726,13 @@ textarea {
 
 
     $(document).ready(function() {
+        function validateInput(event) {
+        const input = event.target.value;
+        outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
+        }
+    } 
         $('#pet_complainant').attr('required', true);
         $(".filter_select_dropdown").select2().on('select2-focus', function() {
             // debugger;
@@ -1126,17 +1147,7 @@ textarea {
 
 </script>
 <script type="text/javascript">
-    $(".sci_validation").keyup(function () {
-        var initVal = $(this).val();
-        outputVal = initVal.replace(/[^a-z_,^A-Z^0-9\.@,/'()\s"\-]/g, "").replace(/^\./, "");
-        //validate_alpha_numeric_single_double_quotes_bracket_with_special_characters
-        if (initVal != outputVal) {
-            $(this).val(outputVal);
-        }
-    });
-
-   
-   
+    
     //---------- Hide and show Individual and Org form----------------------//
     $(document).ready(function () {
         var party_as_sel = '<?php echo isset($caveator_details[0]['caveator_type'])?$caveator_details[0]['caveator_type']:''; ?>';

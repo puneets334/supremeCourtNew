@@ -1254,11 +1254,11 @@
                                 $('#alertMsg').html(resArr[1]);
                                 var te = resArr[1];
                                 // console.log(te);
-                                if(te.search("cause_pet")){                                 
+                                if(te.includes("cause_pet")){                                 
                                     $('#cause_pet').val('');
                                     return false;
                                 }
-                                if(te.search("cause_res")){                                  
+                                if(te.includes("cause_res")){                                  
                                     $('#cause_res').val('');
                                     return false;
                                 }

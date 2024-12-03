@@ -22,7 +22,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <style>
     #msg {
-        padding: 15px;
+        padding: 0px 15px;
         color: #000;
     }
     div#disapproveModal form#disapp_case .editor-wrapper {text-align: left;border: 1px solid #ccc;}
@@ -42,7 +42,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         if (getSessionData('customEfil') == 'ia') {
                             // unset($_SESSION['efiling_type']);
                             $filing_type = 'ia';
-                            $commonHeading = 'File An IA';
+                            $commonHeading = 'File an IA';
                         } elseif (getSessionData('customEfil') == 'misc') {
                             $filing_type = 'misc';
                             $commonHeading = 'File A Document';
@@ -163,20 +163,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
 
             <div style="clear:both"></div>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
-                        <?php
-                        if (!empty(getSessionData('MSG'))) {
-                            echo getSessionData('MSG');
-                        }
-                        if (!empty(getSessionData('msg'))) {
-                            echo getSessionData('msg');
-                        }
-                        ?> 
-                    </div>
-                </div>
-            </div>
+            
 
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
@@ -219,6 +206,22 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
         </div>
     </div>
 </div>
+<?php if (!empty(getSessionData('MSG')) || (!empty(getSessionData('msg'))) ) { ?>
+    <div class="row">
+        <div class="col-12">
+            <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
+                <?php
+                if (!empty(getSessionData('MSG'))) {
+                    echo getSessionData('MSG');
+                }
+                if (!empty(getSessionData('msg'))) {
+                    echo getSessionData('msg');
+                }
+                ?> 
+            </div>
+        </div>
+    </div>
+<?php } ?>
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
         <!-- form--start  -->
@@ -404,7 +407,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                 $ColorCode = 'background-color: #169F85;color:#ffffff;';
                                 $status_color = '';
                             } else {
-                                $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                                $ColorCode = 'background-color: #169F85;color:#ffffff;';
                                 $status_color = '';
                             }
                             ?>

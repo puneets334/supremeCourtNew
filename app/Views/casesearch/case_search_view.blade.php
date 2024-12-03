@@ -31,7 +31,7 @@
                                                     if (getSessionData('customEfil') == 'ia') {
                                                         unset($_SESSION['efiling_type']);
                                                         setSessionData('efiling_type', 'ia');
-                                                        $commonHeading = 'File An IA';
+                                                        $commonHeading = 'File an IA';
                                                     } elseif (getSessionData('customEfil') == 'misc') {
                                                         unset($_SESSION['efiling_type']);
                                                         setSessionData('efiling_type', 'misc'); 
@@ -429,7 +429,7 @@
                                 $('#search_sc_case').prop('disabled', false);
                                 var resArr = data.split('@@@');
                                 console.log(resArr[1]);
-
+                                
                                 if (resArr[0] == 1) {
                                     $('#show_search_result_diary').html(resArr[1]);
                                 } else if (resArr[0] == 2) {
