@@ -486,6 +486,21 @@ span.select2.select2-container.select2-container--default {
 
 @push('script') 
 <script>
+    $(".sci_validation").keyup(function () {
+        var initVal = $(this).val();
+        outputVal = initVal.replace(/[^a-z_,^A-Z^0-9\.@,/'()\s"\-]/g, "").replace(/^\./, "");
+        //validate_alpha_numeric_single_double_quotes_bracket_with_special_characters
+        if (initVal != outputVal) {
+            $(this).val(outputVal);
+        }
+    });
+    function validateInput(event) { 
+        const input = event.target.value;
+        outputVal = input.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
+        if (input != outputVal) {
+            $(this).val(outputVal);
+        }
+    } 
         $(document).ready(function () { 
 
             // get_caveator_as(party_as_sel)
