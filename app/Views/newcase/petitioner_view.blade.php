@@ -200,7 +200,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_state_id'] == 0) ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
-                            <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
+                            <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other State Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -218,7 +218,7 @@
                         <div class="mb-3">
                             <label for=""
                                 class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
-                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Department Name" type="text"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
+                            <textarea rows="1" id="org_dept_name" tabindex='13' name="org_dept_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Department Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_dept_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Department Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -234,7 +234,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="<?php echo (isset($party_details[0]) && @$party_details[0]['org_post_id'] == 0) ? 'display: block' : 'display: none'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
-                            <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
+                            <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Other Post Name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
