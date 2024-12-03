@@ -194,12 +194,12 @@ class Search extends BaseController
                             //var_dump($web_service_result->case_details[0]);exit();
                             if ($current_stage &&  !(in_array($web_service_result->case_details[0]->active_casetype_id, $allowed_case_types) || in_array($web_service_result->case_details[0]->casetype_id, $allowed_case_types))) {
                                 if ($current_stage[0]['stage_id'] != E_Filed_Stage) {
-                                    ?>
-                                    <script>
+                                   
+                             /*   <!--    <script>
                                         alert('Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.');
                                         window.history.back();
-                                    </script>
-                                    <?php
+                                    </script> --> */
+                                    
                                     // echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                                     // exit(0);
                                 }
