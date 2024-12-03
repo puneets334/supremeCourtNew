@@ -698,12 +698,16 @@ if (party_as == 'I') {
         //alert('party_as direct '+party_as_sel+org_state);
         if (org_state == 0) {
             $('#otherOrgState').show();
+            $('#org_state_name').val('');
+            $('#org_state_name').val('<?php echo_data(@$party_details[0]['org_state_name']); ?>');
         } else {
             $('#otherOrgState').hide();
+            $('#org_state_name').val('');
         }
         var org_dept = '<?php echo @$party_details[0]['org_dept_id']; ?>';
         if (org_dept == 0) {
             $('#otherOrgDept').show();
+            $('#org_dept_name').val('');
             $('#org_dept_name').val('<?php echo_data(@$party_details[0]['org_dept_name']); ?>');
         } else {
             $('#otherOrgDept').hide();
@@ -712,6 +716,7 @@ if (party_as == 'I') {
         var org_post = '<?php echo @$party_details[0]['org_post_id']; ?>';
         if (org_post == 0) {
             $('#otherOrgPost').show();
+            $('#org_post_name').val('');
             $('#org_post_name').val('<?php echo_data(@$party_details[0]['org_post_name']); ?>');
         } else {
             $('#otherOrgPost').hide();
