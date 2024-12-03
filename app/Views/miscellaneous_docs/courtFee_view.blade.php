@@ -333,8 +333,8 @@
 
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <div class="row justify-content-end align-items-end h-100">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                        <div class="row justify-content-end align-items-end h-100 court-fee-sec">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-10 court-fee-box">
                             <div class="form-group mb-2">
                                 <label class="control-label input-sm form-label">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
                                     <span style="color: red">*</span></label>

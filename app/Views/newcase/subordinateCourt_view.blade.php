@@ -240,6 +240,7 @@
                             </div>
                          
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                                <br>
                                 <h2 class="text-center or-divider"><span>OR</span></h2>
                             </div>
                    
@@ -388,6 +389,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                                <br>
                                 <h2 class="text-center or-divider"><span>OR</span></h2>
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
