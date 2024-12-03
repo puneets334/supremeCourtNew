@@ -22,7 +22,7 @@
 				<div class="mb-3">
 					<label for="" class="form-label">Title<span style="color: red" class="astriks">*</span></label>
 					<input type="text" class="form-control cus-form-ctrl" tabindex="2" name="doc_title" id="doc_title" required="" placeholder="PDF Title" minlength="3" maxlength="75" style="text-transform: uppercase">
-					<span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content=" PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed." data-original-title="" title="">
+					<span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content=" PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed." data-original-title="PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed." title="PDF title max. length can be 75 characters only.  Only numbers, letters, spaces, hyphens,dots and underscores are allowed.">
 						<i class="fa fa-question-circle-o"></i>
 					</span>
 				</div>
