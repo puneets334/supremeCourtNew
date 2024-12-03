@@ -36,10 +36,10 @@ date_default_timezone_set('Asia/Kolkata');
                     <img src="<?= base_url() . 'assets/newAdmin/' ?>images/profile-img.png" alt="">
                 </div>
                 <div class="profile-info">
-                    <h6><?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?> <p style="color: white;">(<?=getSessionData('login')['aor_code']?>)</p></h6>
-                    @if(getSessionData('login')['ref_m_usertype_id']==USER_ADVOCATE)
+                    <h6><?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?> <p style="color: white;">(<?= !empty(getSessionData('login')) ? getSessionData('login')['aor_code'] : ''?>)</p></h6>
+                    @if(!empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE)
                         <p style="color: white;">Advocate on Record (Code - {{getSessionData('login')['aor_code']}})</p>
-                    @elseif(getSessionData('login')['ref_m_usertype_id']==USER_IN_PERSON)
+                    @elseif(!empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id']==USER_IN_PERSON)
                         <p style="color: white;">Party in Person</p>
                     @endif
                     <a href="<?= base_url('profile') ?>" class="profile-link link-txt"><span class="mdi mdi-circle-edit-outline"></span></a>
