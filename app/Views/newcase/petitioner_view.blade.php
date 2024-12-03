@@ -781,12 +781,13 @@
         } else {
             $('#otherOrgState').hide();
             $('#org_state_name').attr('required', false);
+            $('#org_state_name').val('');
             $('#otherOrgDept').hide();
             $('#org_dept').attr('required', false);
             $('#org_dept_name').attr('required', false);
             $('#otherOrgPost').hide();
             $('#org_post_name').attr('required', false);
-            $('#org_dept').val('');
+            $('#org_post_name').val('');
             /*$('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
             $('#org_dept').val('');
@@ -810,6 +811,7 @@
         } else {
             $('#otherOrgDept').hide();
             $('#org_dept_name').attr('required', false);
+            $('#org_dept_name').val('');
             $('#otherOrgPost').hide();
             $('#org_post_name').attr('required', false);
             //$('#otherOrgPost').hide();
@@ -828,6 +830,7 @@
         } else {
             $('#otherOrgPost').hide();
             $('#org_post_name').attr('required', false);
+            $('#org_post_name').val('');
         }
     });
 

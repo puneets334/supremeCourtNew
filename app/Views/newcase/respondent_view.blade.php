@@ -805,6 +805,7 @@ if (org_state == '<?php echo url_encryption(0); ?>') {
 } else {
     $('#otherOrgState').hide();
     $('#org_state_name').attr('required', false);
+    $('#org_state_name').val('');
     $('#otherOrgDept').hide();
     $('#org_dept').attr('required', false);
     $('#org_dept_name').attr('required', false);
@@ -834,6 +835,7 @@ if (org_dept == '<?php echo url_encryption(0); ?>') {
 } else {
     $('#otherOrgDept').hide();
     $('#org_dept_name').attr('required', false);
+    $('#org_dept_name').val('');
     $('#otherOrgPost').hide();
     $('#org_post_name').attr('required', false);
     //$('#otherOrgPost').hide();
@@ -851,6 +853,7 @@ if (org_dept == '<?php echo url_encryption(0); ?>') {
         } else {
             $('#otherOrgPost').hide();
             $('#org_post_name').attr('required', false);
+            $('#org_post_name').val('');
         }
     });
 

@@ -143,7 +143,7 @@
                                         // for Review Petition , Curative Petition,Contempt petition(came from lower court) and MA : Court Fee is to be paid same as having paid in the Main/base Matter
                                         {
                                             $base_case_subject_category_details = get_challanged_sc_base_case_details($registration_id);
-                                            $subject_category = $base_case_subject_category_details['submaster_id'];
+                                            $subject_category = $base_case_subject_category_details['subject_category'];
                                             $subcode1 = $base_case_subject_category_details['subcode1'];
                                             $sc_case_type_id = $base_case_subject_category_details['case_type_id'];
                                         } else {
