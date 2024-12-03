@@ -911,7 +911,7 @@ body.loading .overlay{
 //   alert(resArr[1]);
                     if (resArr[0] == 1) {
                         $('#msg').show();
-                        $("#case_result").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()></span></p>")
+                        $("#case_result").html("<p class='message center invalid' style='color: red;' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()></span></p>")
                         // setTimeout(function () {
                         //     $("#case_result_not_found").hide();
                         // }, 5000);
