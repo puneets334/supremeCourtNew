@@ -6684,7 +6684,7 @@ p.comnt-name {
 }
 
 .dashboard-section {
-    margin: 20px 0;
+    margin: 0 0 15px 0;
 }
 
 .dash-card {
@@ -6724,6 +6724,11 @@ p.comnt-name {
 }
 
 /* Table-css start  */
+
+.custom-table {
+margin-bottom: 5px!important;
+}
+
 .custom-table thead th {
     background: #d9d7d7df;
     color: #000000;
@@ -8665,7 +8670,7 @@ form span.fa.fa-calendar-o.form-control-feedback.left {position: absolute;right:
 /* 25-11-24 start */
 .view-accordion .accordion-item {border: 1px solid #123d8c36;border-radius: 15px !important;overflow: hidden;border-top: 1px solid #123d8c36 !important;}
 .view-accordion .accordion-item + .accordion-item {margin-top: 5px;}
-.view-accordion .accordion-button {transition: background 0.4s;background: #f0f0f0;}
+.view-accordion .accordion-button {transition: background 0.4s;background: #f0f0f0;padding: 10px 15px;}
 .view-accordion .accordion-button:not(.collapsed) , .view-accordion .accordion-button:hover {background: #0d48be;color: #fff;}
 .efiled-cases-table .table td .btn {font-size: 14px;text-wrap: nowrap;}
 /* 25-11-24 End */
