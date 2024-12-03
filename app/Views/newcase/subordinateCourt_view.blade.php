@@ -222,7 +222,7 @@
                                             <span class="input-group-addon"
                                                 data-placement="bottom"
                                                 data-toggle="popover"
-                                                data-content="Please enter CNR ">
+                                                title="Please enter CNR ">
                                                 <i class="fa fa-question-circle-o"></i>
                                             </span>
                                             <div class="input-note-pos"><p class="pt-2"> <strong style="font-size:13px;">Kindly
@@ -1137,6 +1137,9 @@
                 url: "<?php echo base_url('newcase/Ajaxcalls_subordinate_court/get_hc_bench_list'); ?>",
                 success: function(data) {
                     $('#hc_court_bench').html(data);
+                    if(hc_bench_value && court_type == 1){
+                        $('#hc_court_bench').val(hc_bench_value).select2().trigger("change");
+                    }
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
