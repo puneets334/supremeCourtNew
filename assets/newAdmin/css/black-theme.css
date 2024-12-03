@@ -214,3 +214,12 @@
 .black-theme .datepicker td.day:hover {color: #ffffff !important;outline: 1px solid #ffffff}
 .black-theme .datepicker td.disabled.day:hover {color:#9f9ca3!important;outline:none}
 /* 2-12-24 End  */
+.black-theme .or-divider span {
+    background: #000 !important;
+}
+.black-theme .or-divider:before {
+    background: #cccccc75;
+}
+.black-theme .form-with-tooltip .col-lg-4 .mb-3 span.input-group-addon {
+    background: #000;
+}
