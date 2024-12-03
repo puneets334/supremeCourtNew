@@ -6857,7 +6857,7 @@ margin-bottom: 5px!important;
     position: absolute;
     z-index: 999;
     width: 150px;
-    padding: 12px 0 0;
+    padding: 31px 0 0;
     background: #ff000000;
     top: 13px;
     display: none;
@@ -6866,7 +6866,7 @@ margin-bottom: 5px!important;
 .user-action-sec:before {
     content: '';
     position: absolute;
-    top: 2px;
+    top: 21px;
     left: 19px;
     height: 10px;
     width: 16px;
@@ -8707,3 +8707,13 @@ label.error {
 .datepicker td.day:hover {color: #0d48bd !important;outline: 1px solid #0d47bc;}
 .datepicker td.disabled.day:hover {color:#9f9ca3!important;outline:none}
 /* 2-12-24 End  */
+/* 3-12-24  start  */
+form .addon-col-div {position: relative;}
+form .addon-col-div span.input-group-addon {border-left: 1px solid #e1e1e1!important;padding: 10px 10px;border-radius: 0 15px 15px 0;position: absolute;height: 38px;right: 11px;bottom: 0;display: flex;align-items: center;background: #f1f1f1;margin: 1px 2px 2px 0;}
+form .addon-col-div span.input-group-addon a.pin-code-loc {margin-left: 5px;}
+form .addon-col-div .input-note-pos {position: absolute;}
+label.text-ryt {text-align: right;width: 100%;padding: 0;}
+.or-divider {position: relative;}
+.or-divider:before {content: '';position: absolute;top: 12px;left: 0;height: 1px;background: #e7e7e7;width: 60%;right: 0;margin: 0 auto;}
+.or-divider span {background: #fff;z-index: 1;position: relative;padding: 0 15px;}
+/* 3-12-24  start  */
