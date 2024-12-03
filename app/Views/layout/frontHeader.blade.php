@@ -9,7 +9,7 @@
                 <div class="col-12 col-sm-12 col-md-9 col-lg-6 top-right-nav wow fadeInDown">
            
                 <ul>
-                    <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
+                    <!-- <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li> -->
                     <!-- <li><a class="hide" href="<?php // echo base_url('online_copying/screen_reader');?>">Screen Reader Access</a></li> -->
                     <li class="text-size">
                         <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-icon.svg" alt="" class="txt-icon"></a>

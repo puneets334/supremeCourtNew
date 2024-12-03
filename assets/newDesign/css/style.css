@@ -70,11 +70,11 @@ button.btn:hover, button.btn:hover{background: #0D48BE;}
 /* Top Header css Start */
 .select-lang {border: none;line-height: 0px !important;padding: 0!important;}
 .select-lang option {min-height: auto !important;line-height: 0;padding: 0 !important;}
-.top-right-nav {background: #fff;border-radius: 0px 0px 12px 12px;border: 1px solid #EFEFEF;padding-left: 0;}
+.top-right-nav {/* background: #fff; *//* border-radius: 0px 0px 12px 12px; *//* border: 1px solid #EFEFEF; *//* padding-left: 0; */}
 .top-header ul li.theme-color a.blackbg {background: #000;color: #fff;}
 .top-header ul li.theme-color a {padding: 4px !important;border: 1px solid #000;}
-.top-header ul li:last-child{border:none;padding-right:0}
-.top-header ul{display:flex;margin-bottom:0;padding-left:0;align-items:center;justify-content: space-between;}
+.top-header ul li:last-child{border:none;/* padding-right:0; */}
+.top-header ul{display:flex;margin-bottom:0;padding-left:0;align-items:center;justify-content: space-between;background: #fff;border-radius: 0px 0px 12px 12px;border: 1px solid #EFEFEF;width: fit-content;float: right;}
 .top-header ul li{padding: 0 20px;line-height:1;display:flex;border-right: 1px solid #b3b3b38c;}
 .top-header ul li a{color: #0B1636;font-size: 14px;padding: 8px 3px;}
 .top-left-nav ul{justify-content:flex-start}
@@ -367,6 +367,10 @@ ul.innpg-ul {
 .login-area.full-loginarea-pg .login-section  .login-s-inner {border-radius: 15px;}
 .login-area.full-loginarea-pg .veryfy-img-sec {margin-left: 50px;width: fit-content;padding: 7px;border: 1px dashed #dddddd;}
 /* 25-11-24 End  */
+.login-banner-inner .banimg-sec:before{content:'';background: url(../images/SCI-banner-newbg.jpg) no-repeat;position: absolute;bottom: 0;left: 0;height: 100%;width: 100%;background-size: contain;background-position: bottom;opacity: 0.1;}
+
+
+
 
 /* @media (max-width: 767px){
 
@@ -510,7 +514,7 @@ ul.innpg-ul {
     padding-left: 0;
 }
 /* End #############  */
-.banimg-sec img.img-fluid.logo-at-banner {width: 50%;}
+.banimg-sec img.img-fluid.logo-at-banner {width: 50%;z-index: 1;}
 .banimg-sec {
     background: #ddebfe;
     border-radius: 21px 0 0 21px;
