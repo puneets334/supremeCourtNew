@@ -166,8 +166,8 @@ span.select2.select2-container.select2-container--default {
                                 }
                                     }
                                 ?>
-                                <input type="number" class="form-control cus-form-ctrl" 
-                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  tabindex='6'  value="<?php echo ($res_age); ?>" >
+                                <input type="text" class="form-control cus-form-ctrl age_calculate" 
+                                name="pet_age" id="pet_age" maxlength="2" placeholder="Age"  onkeyup="return isNumber(event)"  tabindex='6'  value="<?php echo ($res_age); ?>" >
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Approx. age in years only.">
                                     <i class="fa fa-question-circle-o"  ></i>
                                 </span>
@@ -486,6 +486,9 @@ span.select2.select2-container.select2-container--default {
 
 @push('script') 
 <script>
+    function isNumber(value) {
+        return typeof value === 'number';
+    }
     $(".sci_validation").keyup(function () {
         var initVal = $(this).val();
         outputVal = initVal.replace(/[^a-z_,^A-Z^0-9\.@,/'()\s"\-]/g, "").replace(/^\./, "");
@@ -502,7 +505,9 @@ span.select2.select2-container.select2-container--default {
         }
     } 
         $(document).ready(function () { 
-
+            $("input[name='pet_age']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
             // get_caveator_as(party_as_sel)
 
         var party_as_sel = '<?php echo isset($caveatee_details[0]['resorgid'])?$caveatee_details[0]['resorgid']:''; ?>';
@@ -599,6 +604,7 @@ span.select2.select2-container.select2-container--default {
 
 <script>
     $(document).ready(function() {
+        $('.filter_select_dropdown').select2();
         var today = new Date(); 
         $('#pet_dob').datepicker({
             changeMonth: true,
