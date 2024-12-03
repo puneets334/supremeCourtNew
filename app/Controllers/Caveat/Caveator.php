@@ -232,17 +232,17 @@ public function add_caveators() {
     $is_govt_filing = !empty($is_govt_filing) ? 1 : 0;
 
     $data = [
-        'pet_name' => strtoupper($pet_complainant),
+        'pet_name' => isset($pet_complainant) ? strtoupper($pet_complainant) : NULL,
         'orgid' => $organisation_id,
         'pet_sex' => $pet_gender,
         'pet_gender' => $pet_gender,
         'pet_father_flag' => $pet_relation,
-        'pet_father_name' => strtoupper($relative_name),
+        'pet_father_name' => isset($relative_name) ? strtoupper($relative_name) : NULL,
         'pet_age' => $pet_age,
         'pet_dob' => $pet_dob,
-        'pet_email' => strtoupper($pet_email),
+        'pet_email' => isset($pet_email) ? strtoupper($pet_email) : NULL,
         'pet_mobile' => $pet_mobile,
-        'petadd' => strtoupper($pet_address),
+        'petadd' => isset($pet_address) ? strtoupper($pet_address) : NULL,
         'pet_pincode' => $pet_pincode,
         'state_id' => $state_id,
         'dist_code' => $district_id,

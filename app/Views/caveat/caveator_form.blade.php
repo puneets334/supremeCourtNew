@@ -226,7 +226,7 @@ textarea {
                                 }
                                     }
                                 ?>
-                                <input type="number" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
+                                <input type="text" tabindex='7'  class="form-control cus-form-ctrl age_calculate"
                                 name="pet_age" id="pet_age" maxlength="2" onkeyup="return isNumber(event)" placeholder="Age" value="<?php echo ($pet_age); ?>">
                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover"
                                 title="Approx. age in years only.">
@@ -563,6 +563,9 @@ textarea {
 
 
 <script>
+    function isNumber(value) {
+        return typeof value === 'number';
+    }
     $(".sci_validation").keyup(function () {
         var initVal = $(this).val();
         outputVal = initVal.replace(/[^a-z_,^A-Z^0-9\.@,/'()\s"\-]/g, "").replace(/^\./, "");
@@ -579,7 +582,10 @@ textarea {
         }
     } 
    $(document).ready(function() { 
-    
+    $("input[name='pet_age']").on('input', function(e) {
+            $(this).val($(this).val().replace(/[^0-9]/g, ''));
+        });
+    $('.filter_select_dropdown').select2();
         //---------- Organisation State Name----------------------//
         $('#org_state').change(function () {
 
@@ -733,11 +739,11 @@ textarea {
             $(this).val(outputVal);
         }
     } 
-        $('#pet_complainant').attr('required', true);
-        $(".filter_select_dropdown").select2().on('select2-focus', function() {
-            // debugger;
-            $(this).data('select2-closed', true)
-        });
+        // $('#pet_complainant').attr('required', true);
+        // $(".filter_select_dropdown").select2().on('select2-focus', function() {
+        //     // debugger;
+        //     $(this).data('select2-closed', true)
+        // });
         
         var party_as = $('select#party_is option:selected').val();
         if (party_as == 'I') {          
@@ -898,11 +904,10 @@ textarea {
 
     }); 
      
-    function isNumber(value) {
-        return typeof value === 'number';
-    }
+    
 
       $(document).ready(function () {   
+        
         var today = new Date();
         
         // alert(today);
