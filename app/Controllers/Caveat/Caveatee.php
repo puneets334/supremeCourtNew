@@ -242,17 +242,17 @@ class Caveatee extends BaseController {
         $pet_gender = NULL;
         }
         $data = array(
-            'res_name' => strtoupper($pet_complainant),
+            'res_name' => isset($pet_complainant) ? strtoupper($pet_complainant) : NULL,
             'resorgid' => $organisation_id,
             'res_sex' => $pet_gender,
             'res_gender' => $pet_gender,
             'res_father_flag' => $pet_relation,
-            'res_father_name' => strtoupper($relative_name),
+            'res_father_name' => isset($relative_name) ? strtoupper($relative_name) : NULL,
             'res_age' => $pet_age,
             'res_dob' => $pet_dob,
-            'res_email' => strtoupper($pet_email),
+            'res_email' => isset($pet_email) ? strtoupper($pet_email) : NULL,
             'res_mobile' => $pet_mobile,
-            'resadd' => strtoupper($pet_address),
+            'resadd' => isset($pet_address) ? strtoupper($pet_address) : NULL,
             'res_pincode' => $pet_pincode,
             'res_state_id' => $state_id,
             'res_dist' => $district_id,

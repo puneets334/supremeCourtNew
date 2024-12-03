@@ -131,7 +131,7 @@
                                                                 <label for="inputPassword6" class="col-form-label">Diary No</label>
                                                             </div>
                                                             <div class="col-12 pe-0">
-                                                                <input class="form-control cus-form-ctrl" id="diaryno" name="diaryno" maxlength="10" placeholder="Diary No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
+                                                                <input class="form-control cus-form-ctrl" id="diaryno" name="diaryno" maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Diary No" type="text">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -228,7 +228,7 @@
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
-                                                            <button type="submit" class="quick-btn gray-btn">Search</button>
+                                                            <button type="submit" class="quick-btn">Search</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -499,8 +499,7 @@
                                 } else if (resArr[0] == 2) {
                                     $('#show_search_result').html(resArr[1]);
                                 } else if (resArr[0] == 3) {
-                                    // alert(resArr[1]); 
-                                    
+                                    alert(resArr[1]);                                     
                                 }
                                 $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

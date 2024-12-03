@@ -27,7 +27,7 @@
         <div class="mngmntUserSection">
             <div class="top-right-nav">
                 <ul>
-                    <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li>
+                    <!-- <li><a href="#SkipContent" class="hide skiptomain" aria-label="Skip to main content" title="Skip to main content">Skip To Main Content</a></li> -->
                     <!-- <li><a class="hide" href="<?php // echo base_url('online_copying/screen_reader');?>">Screen Reader Access</a></li> -->
                     <li class="text-size">
                         <a href="javascript:void(0)"><img src="<?= base_url().'assets/newAdmin/'?>images/text-icon.svg" alt="" class="txt-icon"></a>
@@ -88,7 +88,7 @@
                     <!--userDetail-->
                     <div class="userDetail" id="usr-action-btn" tabindex="0" role="button">
                         <div class="userName"> <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : ''; ?> <i class="fas fa-chevron-down"></i>
-                            <span class="division"><?= '<strong>Last Login Details</strong>' . "<br>" . "Date : " . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '');
+                            <span class="division"><?= '<strong>Last Login: </strong>' . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '');
                             // . "<br>" . "IP : " . (!empty($login_time) ? htmlentities($login_time->ip_address, ENT_QUOTES) : '')
                             ?></span>
                         </div>
