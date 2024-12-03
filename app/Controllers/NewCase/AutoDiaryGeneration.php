@@ -502,11 +502,9 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
         else if(strtoupper(trim($response['status'])) == 'ERROR_CAVEAT'){
 
         }
-        if(strtoupper(trim($response['status'])) != 'ERROR_ALREADY_IN_ICMIS'){
-            array_push($response, array("field_name" => "diaryStatus", "field_value" => $diaryStatus));
-            $updateDiaryDetailsStatus=$this->updateDiaryDetails($efiling_no,$registration_id,$ref_m_efiled_type_id,$file_type,$insertData);
-            return $updateDiaryDetailsStatus;
-        }
+        array_push($response, array("field_name" => "diaryStatus", "field_value" => $diaryStatus));
+        $updateDiaryDetailsStatus=$this->updateDiaryDetails($efiling_no,$registration_id,$ref_m_efiled_type_id,$file_type,$insertData);
+        return $updateDiaryDetailsStatus;
 
 
     }
