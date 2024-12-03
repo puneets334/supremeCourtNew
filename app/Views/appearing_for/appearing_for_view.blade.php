@@ -175,8 +175,8 @@ $parties_details = $data['parties_details'];
                         $pet_default_checked = (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'P') ? 'checked' : NULL;
                         $res_checked = (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
                         ?>
-                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
-                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
+                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="P" <?php //echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
+                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="R" <?php //echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
 
                         <?php
                         if ($pet_default_checked) {

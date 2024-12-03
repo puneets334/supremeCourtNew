@@ -35,7 +35,7 @@ class FinalSubmit extends BaseController {
         }
 
         $registration_id = $_SESSION['efiling_details']['registration_id'];
-
+        $next_stage = 0;
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway']) {
             $next_stage = Transfer_to_IB_Stage;
         } elseif ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
