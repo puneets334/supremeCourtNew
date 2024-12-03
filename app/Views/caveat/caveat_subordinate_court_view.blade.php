@@ -117,23 +117,24 @@ body.loading .overlay{
                                 <div class="mb-3">
                                     <div class="row justify-content-center">
                                         <div class="col-12 col-sm-12 col-md-1 col-lg-1">
-                                            <label for="" class="form-label">CNR <span style="color: red">*</span></label>
+                                            <label for="" class="form-label text-ryt ">CNR <span style="color: red">*</span></label>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                             <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
                                         type="text"  maxlength="16" > 
+                                       <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower case details using CNR preferably for swift data retrieval</strong></p>
+
                                         </div>    
                                             <?php
                                             // pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                             ?>
                                     
                                         
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                        <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                             <div class="d-flex h-100 align-items-center">
-                                            <strong style="color: red;font-size:14px;"><b>Kindly search lower case details using CNR preferably for swift data retrieval</b></strong>
-
+                                            
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                    
 
@@ -142,7 +143,7 @@ body.loading .overlay{
                         </div>
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                <center><p><h2>OR</h2></p></center>
+                                <h2 class="text-center or-divider"><span>OR</span></h2>
                             </div>
                         </div>
                         <div class="row">
@@ -233,21 +234,31 @@ body.loading .overlay{
                     
                     <div class="row" id="district_court_info" style="display: none;">
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">CNR <span style="color: red">*</span></label>
+                                    <div class="row justify-content-center">
+                                    <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                    <label for="" class="form-label text-ryt">CNR <span style="color: red">*</span></label>
+                                    </div>
                                     <?php
                                     //  pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     ?>
+                                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16"
-                                    type="text"  maxlength="16" > <strong style="color: red;font-size:14px;"><b>Kindly search lower case details using CNR preferably for swift data retrieval</b></strong>
-
+                                    type="text"  maxlength="16" > 
+                                    <p class="pt-2"><strong style="font-size:13px;">Kindly search lower case details using CNR preferably for swift data retrieval</strong></p>
+                                     </div>
+                                     <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                     <div class="d-flex h-100 align-items-center">
+                                    
+                                     </div></div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                <center><p><h2>OR</h2></p></center>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                <h2 class="text-center or-divider"><span>OR</span></h2>
                             </div>
                         </div>
                         <div class="row">
@@ -521,8 +532,8 @@ body.loading .overlay{
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
-                                    <label for="" class="form-label">If Police Station not in list, please enter Police Station name and Complete FIR number below.</label>
-                                    <label>FIR No</label>
+                                   
+                                    <label class="form-label">FIR No</label>
                                     <?php
                                     
                                     ?>
@@ -553,6 +564,9 @@ body.loading .overlay{
                                     </select>
 
                                 </div>
+                            </div>
+                            <div class="col-12">
+                            <label for="" class="form-label">If Police Station not in list, please enter Police Station name and Complete FIR number below.</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">

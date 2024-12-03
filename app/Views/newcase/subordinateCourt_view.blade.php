@@ -96,10 +96,7 @@
                     <div class="row"
                         id="hc_entry_div">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            <label for=""
-                                class="form-label"><b>Select Court
-                                    <span style="color: red"
-                                        class="astriks">*</span></b></label>
+                            
                             <div class="mb-3">
                                 <?php
                                 $court_type = !empty($caseData['court_type']) ? $caseData['court_type'] : null;
@@ -109,6 +106,10 @@
                                 $estab_id = !empty($caseData['estab_id']) ? $caseData['estab_id'] : null;
                                 //echo '<pre>'; print_r($caseData['court_type']); exit;
                                 ?>
+                                <label for=""
+                                class="form-label">Select Court
+                                    <span style="color: red"
+                                        class="astriks">*</span></label>
                                 <label class="radio-inline"><input tabindex='1'
                                         type="radio"
                                         id="radio_selected_court1"
@@ -201,38 +202,47 @@
                         <div class="row"
                             id="high_court_info"
                             style="display: none;">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div class="mb-3">
-                                    <label for=""
-                                        class="form-label">CNR <span style="color: red"
-                                            class="astriks">*</span></label>
-                                    <input tabindex='0'
-                                        id="cnr"
-                                        name="cnr"
-                                        maxlength="16"
-                                        pattern="^[A-Z]{4}[0-9]{12}$"
-                                        placeholder="CNR"
-                                        class="form-control cus-form-ctrl age_calculate"
-                                        type="text">
-                                    <span class="input-group-addon"
-                                        data-placement="bottom"
-                                        data-toggle="popover"
-                                        data-content="Please enter CNR ">
-                                        <i class="fa fa-question-circle-o"></i>
-                                    </span>
-                                    <div class="col-sm-12 col-xs-12 input-note-pos">
-                                        <strong style="color: red;font-size:14px;"><b>Kindly
-                                                search lower case details using CNR
-                                                preferably for swift data
-                                                retrieval</b></strong>
+                                    <div class="row justify-content-center">
+                                        <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                            <label for=""
+                                                class="form-label text-ryt">CNR <span style="color: red"
+                                                    class="astriks">*</span></label>
+                                        </div>   
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 addon-col-div">     
+                                            <input tabindex='0'
+                                                id="cnr"
+                                                name="cnr"
+                                                maxlength="16"
+                                                pattern="^[A-Z]{4}[0-9]{12}$"
+                                                placeholder="CNR"
+                                                class="form-control cus-form-ctrl age_calculate"
+                                                type="text">
+                                            <span class="input-group-addon"
+                                                data-placement="bottom"
+                                                data-toggle="popover"
+                                                title="Please enter CNR ">
+                                                <i class="fa fa-question-circle-o"></i>
+                                            </span>
+                                            <div class="input-note-pos"><p class="pt-2"> <strong style="font-size:13px;">Kindly
+                                                        search lower case details using CNR
+                                                        preferably for swift data
+                                                        retrieval</strong></p>
+                                            </div>
+                                        
+                                        </div>
+                                        <!-- <div class="col-sm-12 col-xs-12 input-note-pos">
+                                        
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
-                            <center>
-                                <p>
-                                <h2>OR</h2>
-                                </p>
-                            </center>
+                         
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                                <h2 class="text-center or-divider"><span>OR</span></h2>
+                            </div>
+                   
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for=""
@@ -337,11 +347,15 @@
                         <div class="row"
                             id="district_court_info"
                             style="display: none;">
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
-                                    <label for=""
-                                        class="form-label">CNR <span style="color: red"
-                                            class="astriks">*</span></label>
+                                <div class="row justify-content-center">
+                                    <div class="col-12 col-sm-12 col-md-1 col-lg-1">
+                                        <label for=""
+                                            class="form-label text-ryt">CNR <span style="color: red"
+                                                class="astriks">*</span></label>
+                                        </div>  
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 addon-col-div">       
                                     <input tabindex='0'
                                         id="dc_cnr"
                                         name="dc_cnr"
@@ -356,19 +370,26 @@
                                         data-content="Please enter CNR ">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>
-                                    <div class="col-sm-12 col-xs-12 input-note-pos">
+                                    <div class="input-note-pos">
+                                        <p class="pt-2"><strong style="font-size:13px;">Kindly
+                                                search lower case details using CNR
+                                                preferably for swift data
+                                                retrieval</strong>
+                                                </p>
+                                    </div>
+                                        </div>
+                                    <!-- <div class="col-sm-12 col-xs-12 input-note-pos">
                                         <strong style="color: red;font-size:14px;"><b>Kindly
                                                 search lower case details using CNR
                                                 preferably for swift data
                                                 retrieval</b></strong>
-                                    </div>
+                                    </div> -->
+                                </div>
                                 </div>
                             </div>
-                            <center>
-                                <p>
-                                <h2>OR</h2>
-                                </p>
-                            </center>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                                <h2 class="text-center or-divider"><span>OR</span></h2>
+                            </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for=""
@@ -1116,6 +1137,9 @@
                 url: "<?php echo base_url('newcase/Ajaxcalls_subordinate_court/get_hc_bench_list'); ?>",
                 success: function(data) {
                     $('#hc_court_bench').html(data);
+                    if(hc_bench_value && court_type == 1){
+                        $('#hc_court_bench').val(hc_bench_value).select2().trigger("change");
+                    }
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                     });
