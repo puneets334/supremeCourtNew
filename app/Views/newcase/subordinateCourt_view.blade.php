@@ -300,7 +300,7 @@
                                     <input type="text"
                                         name="hc_case_type_name"
                                         id="hc_case_type_name"
-                                        class="form-control cus-form-ctrl"
+                                        class="form-control cus-form-ctrl hcctname"
                                         placeholder="Enter Case Type Name..">
                                 </div>
                             </div>
@@ -458,7 +458,7 @@
                                     <input type="text"
                                         name="dc_case_type_name"
                                         id="dc_case_type_name"
-                                        class="form-control cus-form-ctrl"
+                                        class="form-control cus-form-ctrl dcctname"
                                         placeholder="Enter Case Type Name..">
                                 </div>
                             </div>
@@ -772,9 +772,7 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                            If Police Station not in list, please enter Police
-                                            Station
-                                            name and Complete FIR number below.
+                                            
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                             <div class="mb-3">
@@ -823,6 +821,9 @@
                                                     ?>
                                                 </select>
                                             </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <label class="form-label">If Police Station not in list, please enter Police Station name and Complete FIR number below.</label>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                             <div class="mb-3">
@@ -950,8 +951,10 @@
             if (case_type_selectedText === 'NOT IN LIST') {
                 $('.hc_case_type_name').show();
                 alert('Are you sure that it is not in list');
+                $('.hcctname').attr('required', true);
             } else {
                 $('.hc_case_type_name').hide();
+                $('.hcctname').attr('required', false);
             }
         });
         $('#dc_case_type_id').on('change', function() {
@@ -960,8 +963,10 @@
             if (case_type_selectedText === 'NOT IN LIST') {
                 $('.dc_case_type_name').show();
                 alert('Are you sure that it is not in list');
+                $('.dcctname').attr('required', true);
             } else {
                 $('.dc_case_type_name').hide();
+                $('.dcctname').attr('required', true);
             }
         });
         $('#agency_case_type_id').on('change', function() {

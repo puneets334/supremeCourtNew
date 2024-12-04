@@ -621,141 +621,137 @@ td {
                         <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
                             @endif
                             <div class="left-content-inner comn-innercontent">
-
                                 <div class="dashboard-section">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-                                            <div class="dash-card" >
-                                                <div class="title-sec">
-                                                    <h5 class="unerline-title" tabindex="0">My Cases <small
-                                                            class="uk-text-muted">soon to be listed</small></h5>
-                                                </div>
-                                                <div class="table-sec ">
-                                                    <div class="table-responsive ">
-                                                        <table id="datatable-responsive-sc_cases"
-                                                            class="table table-striped custom-table  soon-listing-table">
-                                                            <thead>
-                                                                <tr class="uk-text-bold">
-                                                                    <th class="uk-text-bold" tabindex="0">Case</th>
-                                                                    <th class="uk-text-bold" tabindex="0">Date & Bench</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            @if(!empty($scheduled_cases))
+                                        @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                                                <div class="dash-card" >
+                                                    <div class="title-sec">
+                                                        <h5 class="unerline-title" tabindex="0">My Cases <small class="uk-text-muted">soon to be listed</small></h5>
+                                                    </div>
+                                                    <div class="table-sec ">
+                                                        <div class="table-responsive ">
+                                                            <table id="datatable-responsive-sc_cases"
+                                                                class="table table-striped custom-table  soon-listing-table">
+                                                                <thead>
+                                                                    <tr class="uk-text-bold">
+                                                                        <th class="uk-text-bold" tabindex="0">Case</th>
+                                                                        <th class="uk-text-bold" tabindex="0">Date & Bench</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @if(!empty($scheduled_cases))
+                                                                        <?php $i=1; ?>
+                                                                        @foreach($scheduled_cases as $scheduled_case)
+                                                                            @if(is_array($scheduled_case) || is_object($scheduled_case))
+                                                                                @foreach($scheduled_case as $scheduled)
+                                                                                    <tr>
+                                                                                        <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align: left;">
+                                                                                            <div><span class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span></div>
+                                                                                            <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($scheduled['petitioner_name']))}}</div>
+                                                                                            <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($scheduled['respondent_name']))}}</div>
+                                                                                        </td>
+                                                                                        <td class="uk-table-expand" uk-margin
+                                                                                            data-key="Date & Bench" tabindex="0" width=60%>
+                                                                                            <div>
+                                                                                                <li class="mycases-li">
+                                                                                                    <button type="button"
+                                                                                                        class="btn btn-primary accordion-button collapsed"
+                                                                                                        data-bs-toggle="collapse"
+                                                                                                        data-bs-target="#collapse<?php echo $i; ?>"
+                                                                                                        aria-expanded="false"
+                                                                                                        aria-controls="collapse<?php echo $i; ?>">{{date_format(date_create($scheduled['meta']['listing']['listed_on']), 'D, jS M')}}</button>
+                                                                                                    <ul id="collapse<?php echo $i; ?>"
+                                                                                                        class="submenu accordion-collapse collapse"
+                                                                                                        aria-labelledby="heading<?php echo $i; ?>"
+                                                                                                        data-bs-parent="#accordionExample">
+                                                                                                        @if(!empty($scheduled['office_reports']['current']['uri']))
+                                                                                                        <li><a class="btn-link"
+                                                                                                                href="{{$scheduled['office_reports']['current']['uri']}}"
+                                                                                                                target="_blank"><span
+                                                                                                                    uk-icon="icon: file-pdf"></span>
+                                                                                                                Office Report</a></li>
+                                                                                                        @endif
+                                                                                                        @if(!empty($scheduled['rop_judgments']['current']['uri']))
+                                                                                                        <li><a class="btn-link"
+                                                                                                                href="{{$scheduled['rop_judgments']['current']['uri']}}"
+                                                                                                                target="_blank"><span
+                                                                                                                    uk-icon="icon: file-pdf"></span>
+                                                                                                                Previous Order
+                                                                                                                ({{$scheduled['rop_judgments']['current']['dated']}})</a>
+                                                                                                        </li>
+                                                                                                        @endif
+                                                                                                        <li><a style="cursor: pointer;"
+                                                                                                                title="Send SMS"
+                                                                                                                onClick="get_message_data(this.id)"
+                                                                                                                id="<?php echo $scheduled['diary_number'] .'#'.$scheduled['diary_year'].'#'.$scheduled['registration_number'].'#'.$scheduled['petitioner_name'].'#'.$scheduled['respondent_name'].'#'.$scheduled['item_number'].'#'.$scheduled['meta']['listing']['court']['name'],'#'.date_format(date_create($scheduled['meta']['listing']['listed_on']), 'D, jS M Y'); ?>"><span
+                                                                                                                    uk-icon="icon: comment"></span>
+                                                                                                                Send SMS</a></li>
+                                                                                                        <?php if($scheduled['vc_url']!=null) { ?>
+                                                                                                        <li><a class="btn-link"
+                                                                                                                href="{{$scheduled['vc_url']}}"
+                                                                                                                target="_blank"><span
+                                                                                                                    uk-icon="icon: file-text"></span>
+                                                                                                                Join Virtual Court</a></li>
+                                                                                                        <?php } ?>
+                                                                                                        <li>
+                                                                                                            @if($scheduled['meta']['listing']['court']['number']!=1)
 
-                                                                <?php $i=1; ?>
-                                                                @foreach($scheduled_cases as $scheduled_case)
-                                                                @if(is_array($scheduled_case) ||
-                                                                is_object($scheduled_case))
-                                                                @foreach($scheduled_case as $scheduled)
-                                                                <tr>
-                                                                    <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align: left;">
-                                                                        <div><span class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span></div>
-                                                                        <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($scheduled['petitioner_name']))}}</div>
-                                                                        <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($scheduled['respondent_name']))}}</div>
-                                                                    </td>
-                                                                    <td class="uk-table-expand" uk-margin
-                                                                        data-key="Date & Bench" tabindex="0" width=60%>
-                                                                        <div>
-                                                                            <li class="mycases-li">
-                                                                                <button type="button"
-                                                                                    class="btn btn-primary accordion-button collapsed"
-                                                                                    data-bs-toggle="collapse"
-                                                                                    data-bs-target="#collapse<?php echo $i; ?>"
-                                                                                    aria-expanded="false"
-                                                                                    aria-controls="collapse<?php echo $i; ?>">{{date_format(date_create($scheduled['meta']['listing']['listed_on']), 'D, jS M')}}</button>
-                                                                                <ul id="collapse<?php echo $i; ?>"
-                                                                                    class="submenu accordion-collapse collapse"
-                                                                                    aria-labelledby="heading<?php echo $i; ?>"
-                                                                                    data-bs-parent="#accordionExample">
-                                                                                    @if(!empty($scheduled['office_reports']['current']['uri']))
-                                                                                    <li><a class="btn-link"
-                                                                                            href="{{$scheduled['office_reports']['current']['uri']}}"
-                                                                                            target="_blank"><span
-                                                                                                uk-icon="icon: file-pdf"></span>
-                                                                                            Office Report</a></li>
-                                                                                    @endif
-                                                                                    @if(!empty($scheduled['rop_judgments']['current']['uri']))
-                                                                                    <li><a class="btn-link"
-                                                                                            href="{{$scheduled['rop_judgments']['current']['uri']}}"
-                                                                                            target="_blank"><span
-                                                                                                uk-icon="icon: file-pdf"></span>
-                                                                                            Previous Order
-                                                                                            ({{$scheduled['rop_judgments']['current']['dated']}})</a>
-                                                                                    </li>
-                                                                                    @endif
-                                                                                    <li><a style="cursor: pointer;"
-                                                                                            title="Send SMS"
-                                                                                            onClick="get_message_data(this.id)"
-                                                                                            id="<?php echo $scheduled['diary_number'] .'#'.$scheduled['diary_year'].'#'.$scheduled['registration_number'].'#'.$scheduled['petitioner_name'].'#'.$scheduled['respondent_name'].'#'.$scheduled['item_number'].'#'.$scheduled['meta']['listing']['court']['name'],'#'.date_format(date_create($scheduled['meta']['listing']['listed_on']), 'D, jS M Y'); ?>"><span
-                                                                                                uk-icon="icon: comment"></span>
-                                                                                            Send SMS</a></li>
-                                                                                    <?php if($scheduled['vc_url']!=null) { ?>
-                                                                                    <li><a class="btn-link"
-                                                                                            href="{{$scheduled['vc_url']}}"
-                                                                                            target="_blank"><span
-                                                                                                uk-icon="icon: file-text"></span>
-                                                                                            Join Virtual Court</a></li>
-                                                                                    <?php } ?>
-                                                                                    <li>
-                                                                                        @if($scheduled['meta']['listing']['court']['number']!=1)
-
-                                                                                        <a href="<?php echo base_url("case/paper_book_viewer/".(string)$scheduled['diary_id'].""); ?>"
-                                                                                            target="_blank"
-                                                                                            rel="noopener">
-                                                                                            <span
-                                                                                                uk-icon="icon: bookmark"></span>
-                                                                                            Paper Book (with Indexing)
-                                                                                        </a>
-                                                                                        @endif
-                                                                                        @if($scheduled['meta']['listing']['court']['number']==1)
-                                                                                        <a href="<?php echo base_url("case/3pdf_paper_book_viewer/".(string)$scheduled['diary_id'].""); ?>"
-                                                                                            target="_blank"
-                                                                                            rel="noopener">
-                                                                                            <span
-                                                                                                uk-icon="icon: bookmark"></span>
-                                                                                            Paper Book (3 PDF)
-                                                                                        </a>
-                                                                                        @endif
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </li>
-                                                                        </div>
-                                                                        <div>
-                                                                            <span class="uk-label md-bg-grey-900"
-                                                                                uk-tooltip="{{$scheduled['meta']['listing']['court']['listing_cum_board_type'] . str_replace(':','.',$scheduled['meta']['listing']['court']['scheduled_time'])}}">{{'Item '.($scheduled['item_number_alt'] ?: $scheduled['item_number'])}}
-                                                                                @
-                                                                                {{$scheduled['meta']['listing']['court']['name']}}</span>
-                                                                        </div>
-                                                                        <div>
-                                                                            <small>
-                                                                                <b>Bench:</b><br>
-                                                                                <?php echo ucwords(strtolower(implode(',<br> ', $scheduled['meta']['listing']['court']['judges']))); ?>
-                                                                            </small>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <?php $i++; ?>
-                                                                @endforeach
-                                                                @endif
-                                                                @endforeach
-
-                                                                @endif
-                                                            </tbody>
-                                                        </table>
+                                                                                                            <a href="<?php echo base_url("case/paper_book_viewer/".(string)$scheduled['diary_id'].""); ?>"
+                                                                                                                target="_blank"
+                                                                                                                rel="noopener">
+                                                                                                                <span
+                                                                                                                    uk-icon="icon: bookmark"></span>
+                                                                                                                Paper Book (with Indexing)
+                                                                                                            </a>
+                                                                                                            @endif
+                                                                                                            @if($scheduled['meta']['listing']['court']['number']==1)
+                                                                                                            <a href="<?php echo base_url("case/3pdf_paper_book_viewer/".(string)$scheduled['diary_id'].""); ?>"
+                                                                                                                target="_blank"
+                                                                                                                rel="noopener">
+                                                                                                                <span
+                                                                                                                    uk-icon="icon: bookmark"></span>
+                                                                                                                Paper Book (3 PDF)
+                                                                                                            </a>
+                                                                                                            @endif
+                                                                                                        </li>
+                                                                                                    </ul>
+                                                                                                </li>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <span class="uk-label md-bg-grey-900"
+                                                                                                    uk-tooltip="{{$scheduled['meta']['listing']['court']['listing_cum_board_type'] . str_replace(':','.',$scheduled['meta']['listing']['court']['scheduled_time'])}}">{{'Item '.($scheduled['item_number_alt'] ?: $scheduled['item_number'])}}
+                                                                                                    @
+                                                                                                    {{$scheduled['meta']['listing']['court']['name']}}</span>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <small>
+                                                                                                    <b>Bench:</b><br>
+                                                                                                    <?php echo ucwords(strtolower(implode(',<br> ', $scheduled['meta']['listing']['court']['judges']))); ?>
+                                                                                                </small>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                    <?php $i++; ?>
+                                                                                @endforeach
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <hr class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">
                                             </div>
-                                            <hr
-                                                class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">
-                                        </div> 
+                                        @endif 
                                         <!-- start sr advocate soon -->
                                         @if(!empty($sr_advocate_soon_cases))
                                         <!-- <div class="uk-width uk-width-large@l uk-margin-medium-top uk-overflow-auto uktable-responsive">
                                             <h4 class="uk-heading-bullet uk-text-bold">My cases <small class="uk-text-muted">soon to be listed</small></h4>
                                             <table class="uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" id="soon-to-be-listed-cases-table"> -->
                                         @if(!empty($sr_advocate_data))
-                                        <div class="col-12 col-sm-12 col-md-3 col-lg-4">
+                                        <div class="col-12 col-sm-12 col-md-3 col-lg-3">
                                             @else
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                                 @endif
@@ -865,13 +861,12 @@ td {
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr
-                                            class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">
+                                        <!-- <hr class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m"> -->
                                         @endif
                                         <!-- end sr advocate soon -->
                                         <!-- start sr advocate data -->
-                                        @if(!empty($sr_advocate_data))
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        @if(!empty($sr_advocate_soon_cases))
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-9">
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">My Cases <small class="uk-text-muted">assigned by AOR</small></h5>
