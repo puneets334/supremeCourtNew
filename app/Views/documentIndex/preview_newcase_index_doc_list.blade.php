@@ -13,7 +13,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                         <th>#</th>
                        <!-- <th>Document(s) Title</th>    -->
                         <th>Index - Title</th>
-                        <?php if ((in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
+                        <?php if (!empty(getSessionData('login')) && !empty($_SESSION['efiling_details']) && (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) || (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages))) {
                             ?>
                             <th>Doc No.</th>
                         <?php } ?>

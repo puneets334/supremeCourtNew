@@ -166,7 +166,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             }
                             }
                             ?>
-                        <a href="<?php echo isset($_SERVER['HTTP_REFERER']); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                        <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
                 
