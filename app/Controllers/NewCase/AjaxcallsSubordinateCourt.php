@@ -127,13 +127,13 @@ class AjaxcallsSubordinateCourt extends BaseController {
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('/'));
         }
-
-        $this->validation->setRules([
+        $validation_rules = [];
+        $validation_rules = [
             "selected_court" => [
                 "label" => "Court Type",
                 "rules" => "required|trim|in_list[1,2,3,4,5]"
             ],
-        ]);
+        ];
         $selected_court_type = $_POST['selected_court'];
 
         if ($selected_court_type == '1') { //---High Court
@@ -141,14 +141,14 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 $case_type_array = url_decryption($_POST['case_type_id']);
                 $case_type_ids = explode('##', $case_type_array);
                 if ($case_type_ids[0]=='0'){
-                    $this->validation->setRules([
+                    $validation_rules = [
                         "case_type_name" => [
                             "label" => "Case Type Name",
                             "rules" => "required|trim"
                         ],
-                    ]);
+                    ];
                 }
-                $this->validation->setRules([
+                $validation_rules = [
                     "high_court_id" => [
                         "label" => "High Court",
                         "rules" => "required|trim"
@@ -169,22 +169,22 @@ class AjaxcallsSubordinateCourt extends BaseController {
                         "label" => "Case Year",
                         "rules" => "required|trim"
                     ],
-                ]);
+                ];
             }
             else{
-                $this->validation->setRules([
+                $validation_rules = [
                     "cnr" => [
                         "label" => "CNR Number",
                         "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Z]{4}[0-9]{12}$/]"
                     ],
-                ]);
+                ];
             }
 
 
         } elseif ($selected_court_type == '4') { //---Supreme Court
             $case_type_array = url_decryption($_POST['case_type_id']);
             $case_type_ids = explode('#$', $case_type_array);
-            $this->validation->setRules([
+            $validation_rules = [
                 "case_type_id" => [
                     "label" => "Case Type",
                     "rules" => "required|trim"
@@ -197,21 +197,13 @@ class AjaxcallsSubordinateCourt extends BaseController {
                     "label" => "Case Year",
                     "rules" => "required|trim"
                 ],
-            ]);
+            ];
 
         } elseif ($selected_court_type == '3') { //---District Court
             if(isset($_POST['cnr']) && trim($_POST['cnr'])==''){
                 $case_type_array = url_decryption($_POST['case_type_id']);
-                $case_type_ids = explode('#$', $case_type_array);
-                if ($case_type_ids[0]=='0'){
-                    $this->validation->setRules([
-                        "case_type_name" => [
-                            "label" => "Case Type Name",
-                            "rules" => "required|trim"
-                        ],
-                    ]);
-                }
-                $this->validation->setRules([
+                $case_type_ids = explode('##', $case_type_array);
+                $validation_rules = [
                     "estab_id" => [
                         "label" => "Establishment",
                         "rules" => "required|trim"
@@ -228,28 +220,34 @@ class AjaxcallsSubordinateCourt extends BaseController {
                         "label" => "Case Year",
                         "rules" => "required|trim"
                     ],
-                ]);
+                ];
+                if ($case_type_ids[0] == '0') {
+                    $validation_rules["case_type_name"] = [
+                        "label" => "Case Type Name",
+                        "rules" => "required"
+                    ];
+                }
             }
             else{
-                $this->validation->setRules([
+                $validation_rules = [
                     "cnr" => [
                         "label" => "CNR Number",
                         "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Z]{4}[0-9]{12}$/]"
                     ],
-                ]);
+                ];
             }
         } elseif ($selected_court_type == '5') { //---Agency Court
             $agency_case_type = explode('##', url_decryption($_POST['case_type_id']));
             if ($agency_case_type[0]=='0'){
-                $this->validation->setRules([
+                $validation_rules = [
                     "case_type_name" => [
                         "label" => "Case Type Name",
                         "rules" => "required|trim"
                     ],
-                ]);
+                ];
             }
         }
-
+        $this->validation->setRules($validation_rules);
         // $this->form_validation->set_error_delimiters('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
          
@@ -334,7 +332,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                     $case_number = $_POST['case_number'];
                     $case_year = url_decryption($_POST['case_year']);
 
-                    if (!empty($establishment_id) && !empty($case_type_id) && !empty($case_number) && !empty($case_year) && !empty(E_FILING_FOR_ESTABLISHMENT)) {
+                    if (!empty($establishment_id) && (!empty($case_type_id) || $case_type_id == 0) && !empty($case_number) && !empty($case_year) && !empty(E_FILING_FOR_ESTABLISHMENT)) {
                         $case_result = $this->efiling_webservices->getOpenAPIcaseHistoryWebService($establishment_id, $case_type_id, $case_number, $case_year);
                         if (isset($case_result[0]) && !empty($case_result[0])) {
                             $cino = isset($case_result[0]->casenos) ? $case_result[0]->casenos->case1->cino : '';
