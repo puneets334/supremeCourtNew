@@ -50,8 +50,8 @@
                 <div class="row">
                     <?php //var_dump($court_fee_list1) 
                     ?>
-                    <div class="col-sm-12 col-xs-12">
-                        <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <table id="datatable-responsive1" class="table table-striped table-bordered dt-responsive custom-table  nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr class="success">
                                     <th>#</th>
@@ -318,12 +318,12 @@
                         </table>
 
                     </div>
-                    <div class="col-sm-12 col-xs-12" style="margin-top: 5%;">
-                        <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="row justify-content-end align-items-end h-100 court-fee-sec">
                             <?= ASTERISK_RED_MANDATORY; ?>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                <div class="form-group">
-                                    <label class="control-label col-md-8 col-sm-12 col-xs-12 input-sm">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-10 court-fee-box">
+                                <div class="form-group  mb-2">
+                                    <label class="control-label input-sm form-label">Want to pay more Court Fee ( <i class="fa fa-rupee"></i> )
                                         <span style="color: red">*</span></label>
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="input-group ">
@@ -331,8 +331,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Court Fee ( <i class="fa fa-rupee"></i> ) (To Pay)
                                         <span style="color: red">*</span></label>
@@ -374,6 +372,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                
+                            </div> -->
                         </div>
                     </div>
                     <!--<label style="margin-top: 2px;font-weight: bold;color: red;><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AT PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY.ANY DEFICIT COURT FEE WHICH REMAINS AS DIFFERENCE SHALL BE RAISED AS DEFECT AT SCRUTINY STAGE AND THE PAYMENT TO SUCH EFFECT COMPLYING THE DEFECT RAISED SHALL BE MADE BY THE AOR/PARTY-IN-PERSON."</label>-->

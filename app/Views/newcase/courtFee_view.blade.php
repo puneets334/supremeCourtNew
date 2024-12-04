@@ -574,8 +574,8 @@
                         </table>
                     </div>
                     <div class="col-sm-12 col-xs-12 col-md-4 col-lg-4">
-                        <div class="row justify-content-end align-items-end h-100">
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+                        <div class="row justify-content-end align-items-end h-100 court-fee-sec">
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-10 court-fee-box">
                             <div class="form-group">
                             <label class="form-label">Want to pay more Court Fee ( ₹ ) <span style="color: red" class="astriks">*</span> :</label>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-6">
