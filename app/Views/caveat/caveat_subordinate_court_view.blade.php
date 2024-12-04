@@ -566,7 +566,7 @@ body.loading .overlay{
                                 </div>
                             </div>
                             <div class="col-12">
-                            <label for="" class="form-label">If Police Station not in list, please enter Police Station name and Complete FIR number below.</label>
+                             <label for="" class="form-label">If Police Station not in list, please enter Police Station name and Complete FIR number below.</label>
                             </div>
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
