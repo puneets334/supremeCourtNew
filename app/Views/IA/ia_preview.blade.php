@@ -62,7 +62,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                       
                                                         <div class="accordion-item">
                                                             <div class="row">
                                                                 <h2 class="accordion-header <?php if(isset($hidepencilbtn) && $hidepencilbtn != 'true') { ?> col-12 <?php } else { ?> col-sm-12 <?php } ?>" id="headingTwo">
