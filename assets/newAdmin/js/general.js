@@ -403,45 +403,45 @@ window.onload = handleResponsiveTables;
 // }
 
 
-function adjustIframeHeight(iframe) {
-  try {
-    const iframeDocument = iframe.contentWindow.document;
+// function adjustIframeHeight(iframe) {
+//   try {
+//     const iframeDocument = iframe.contentWindow.document;
 
-    // Filter out hidden elements (display: none)
-    const visibleContentHeight = Array.from(iframeDocument.body.children)
-      .filter(element => window.getComputedStyle(element).display !== 'none') // Exclude hidden elements
-      .reduce((height, element) => height + element.offsetHeight, 0);
+//     // Filter out hidden elements (display: none)
+//     const visibleContentHeight = Array.from(iframeDocument.body.children)
+//       .filter(element => window.getComputedStyle(element).display !== 'none') // Exclude hidden elements
+//       .reduce((height, element) => height + element.offsetHeight, 0);
 
-    // Set the iframe height to match the visible content
-    const newHeight = visibleContentHeight + 'px';
-    iframe.style.setProperty('height', newHeight, 'important');
-  } catch (error) {
-    console.error('Error adjusting iframe height:', error);
-  }
-}
+//     // Set the iframe height to match the visible content
+//     const newHeight = visibleContentHeight + 'px';
+//     iframe.style.setProperty('height', newHeight, 'important');
+//   } catch (error) {
+//     console.error('Error adjusting iframe height:', error);
+//   }
+// }
 
-document.querySelectorAll('.iframe-scroll-bar').forEach(iframe => {
-  iframe.addEventListener('load', () => {
-    // Initial height adjustment after iframe content loads
-    adjustIframeHeight(iframe);
+// document.querySelectorAll('.iframe-scroll-bar').forEach(iframe => {
+//   iframe.addEventListener('load', () => {
+//     // Initial height adjustment after iframe content loads
+//     adjustIframeHeight(iframe);
 
-    // Monitor DOM changes inside the iframe for dynamic content
-    const observer = new MutationObserver(() => {
-      adjustIframeHeight(iframe);
-    });
+//     // Monitor DOM changes inside the iframe for dynamic content
+//     const observer = new MutationObserver(() => {
+//       adjustIframeHeight(iframe);
+//     });
 
-    observer.observe(iframe.contentWindow.document.body, {
-      childList: true,    // Detect when child nodes are added/removed
-      subtree: true,      // Observe all descendants of the body
-      attributes: true,   // Detect attribute changes (e.g., for display toggling)
-      characterData: true // Detect text changes
-    });
+//     observer.observe(iframe.contentWindow.document.body, {
+//       childList: true,    // Detect when child nodes are added/removed
+//       subtree: true,      // Observe all descendants of the body
+//       attributes: true,   // Detect attribute changes (e.g., for display toggling)
+//       characterData: true // Detect text changes
+//     });
 
-    // Adjust height if iframe content resizes
-    iframe.contentWindow.addEventListener('resize', () => {
-      adjustIframeHeight(iframe);
-    });
-  });
-});
+//     // Adjust height if iframe content resizes
+//     iframe.contentWindow.addEventListener('resize', () => {
+//       adjustIframeHeight(iframe);
+//     });
+//   });
+// });
 // ------JS For Iframe End ------------
 
