@@ -502,11 +502,12 @@
             get_party_as(party_as_sel); //--call to selected
         }
     });
-    // $('.party_name').attr('required', true);
-    // $('.relative_name').attr('required', true);
-    // $('#relation').attr('required', true);
-    // $('#org_state').attr('required', false);
-    // $('input[name="party_gender"]').attr('required', true);
+    $('.party_name').attr('required', true);
+    $('.relative_name').attr('required', true);
+    $('#relation').attr('required', true);
+    $('#org_state').attr('required', false);
+    $('input[name="party_gender"]').attr('required', true);
+    $('#party_age').attr('required', true);
 
     // function get_party_as(value) {
     //     var party_as = value;
@@ -659,7 +660,17 @@ if (party_as == 'I') {
     $('#otherOrgState').hide();
     $('#otherOrgDept').hide();
     $('#otherOrgPost').hide();
+    $('.party_name').attr('required', true);
+    $('.relative_name').attr('required', true);
+    $('#relation').attr('required', true); 
+    $('#party_age').attr('required', true);
+    $('input[name="party_gender"]').attr('required', true);
 } else {
+    $('.party_name').attr('required', false);
+    $('.relative_name').attr('required', false);
+    $('#relation').attr('required', false); 
+    $('#party_age').attr('required', false);
+    $('input[name="party_gender"]').attr('required', false);
     get_departments(party_as);
     get_posts();
     $('#indvidual_form').hide();
