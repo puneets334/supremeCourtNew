@@ -33,7 +33,7 @@
 .black-theme .regester-txts h6.htsmall {color: #ffffff;}
 .black-theme .regester-txts .gray-txt {color: #ffffff !important;}
 .black-theme a.blue-txt:hover, .black-theme a.blue-txt:focus {text-decoration: underline;color: #ff0 !important;}
-.black-theme .top-right-nav {background: #333333;border: 1px solid #dfdfdf38;}
+/* .black-theme .top-right-nav {background: #333333;border: 1px solid #dfdfdf38;} */
 .black-theme .form-control::placeholder {color:#ffff00}
 .black-theme .form-control {background: #333333;border-color: #ffffff69;color: #ffffff;}
 .black-theme label{color: #ffffff;}
@@ -91,3 +91,4 @@
 .black-theme  .card.video-crd {
     border-color: #595959;background: #333333;
 }
+.black-theme .login-banner-inner .banimg-sec:before{display:none}
