@@ -173,7 +173,7 @@
     .dashboard-tiles-area .dashbord-tile {/* margin-top: 15px; *//* height: auto; */}   
     .dashboard-section.dashboard-tiles-area > .row{row-gap:10px}
     .dashboard-tiles-area .col-md-6:nth-child(2), .dashboard-tiles-area .col-md-6:nth-child(4) {padding-left: 0;}
-    .dashbord-tile #byMe{margin:-30px 70px;}
+    .dashbord-tile #byMe{/*margin:-30px 70px;*/}
     .application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;}
     .dashboard-section.dashboard-tiles-area { margin-top: 0;}
     .dash-card {/* height: 100%;*/}
@@ -194,7 +194,7 @@
     .dashboard-section.dashboard-tiles-area > .row > .col-md-6.col-lg-3 {width: 50%;margin-top: 15px;}
     .dashboard-section.dashboard-tiles-area {margin-top: 0 !important;}
     .dashboard-section.dashboard-tiles-area > .row > .col-lg-2{width: 20%;}
-    .title-comnt-bref {width: 430px !important;overflow: scroll;}
+    .title-comnt-bref {width: 430px !important;    /*overflow: scroll;*/}
     .dashboard-section.dashboard-tiles-area .col-md-6:nth-child(2) .tiles-comnts .tile-comnt:nth-child(2) .title-comnt-bref{right: 0;}
     .dashboard-section.dashboard-tiles-area .col-md-6:nth-child(2) .tiles-comnts .tile-comnt:nth-child(4) .title-comnt-bref:after {right: 29px;left: auto;}
     /* Tiles CSS End  */
@@ -202,12 +202,17 @@
 }
 @media screen and (max-width: 1599px) and (min-width: 1201px){
     /* Tiles CSS Start  */
-    .dashboard-tiles-area .application-tile-sections {flex-wrap: wrap;gap: 20px;margin-top: -38px;justify-content: space-between;}
+    .dashboard-tiles-area .application-tile-sections {flex-wrap: wrap;gap: 10px;margin-top: -48px;/* justify-content: space-between; */}
     .dashboard-tiles-area .application-tile-sections .applictin-tile-sec:first-child {width: 75%;}
-    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec:first-child:before {width: 90%;height: 1px;top: auto;bottom: -11px;margin: 0 auto;right: 0;left: 0;}
-    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec:before {right: -11px;}
-    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec {width: 45%;}
+    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec:first-child:before {width: 90%;height: 1px;top: auto;bottom: -4px;margin: 0 auto;right: 0;left: 0;}
+    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec:before {right: -5px;}
+    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec {width: 47%;}
     .dashboard-section.dashboard-tiles-area > .row > .col-lg-2{width: 20%;}
+    .dashboard-tiles-area .application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {margin-bottom: 8px;font-size: 13px;}
+.dashboard-tiles-area .application-tile-sections .appliction-til-nam {text-wrap: nowrap;}
+.dashboard-section.dashboard-tiles-area .col-lg-3 {padding: 0 3px;}
+.dashboard-section.dashboard-tiles-area .col-lg-3:first-child {padding-left: 10px;}
+.dashboard-section.dashboard-tiles-area .col-lg-3:last-child {padding-right: 10px;}
     /* Tiles CSS End  */
 
 }

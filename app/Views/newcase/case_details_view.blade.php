@@ -46,7 +46,7 @@
             <?php
             $attribute = ['class' => 'form-horizontal', 'name' => 'add_case_details', 'id' => 'add_case_details', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data'];
             echo form_open('#', $attribute);
-            $cause_title = explode(' Vs. ', @$new_case_details[0]->cause_title);
+            $cause_title = explode(' Vs. ', @$new_case_details[0]->cause_title ?? '');
             ?>
             <div class="tab-form-inner">
                 <div class="row">
@@ -101,7 +101,7 @@
 
                             <label for="" class="form-label">Cause Title Respondent <span style="color: red" class="astriks">*</span></label>
 
-                            <textarea tabindex='2' rows="1" id="cause_res" name="cause_res" minlength="3" maxlength="99" style="text-transform: uppercase" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" oninput="validateInput(event)" type="text" required><?php echo_data(@$cause_title[1]); ?></textarea>
+                            <textarea tabindex='2' rows="1" id="cause_res" name="cause_res" minlength="3" maxlength="99" style="text-transform: uppercase" class="form-control cus-form-ctrl" placeholder="Cause Title Respondent" oninput="validateInput(event)" type="text" required><?php echo_data(@$cause_title[1] ?? ''); ?></textarea>
 
 
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
