@@ -72,14 +72,7 @@ class DefaultController extends BaseController {
                                     'updated_by_ip' => getClientIP(),
                                 );
 
-                                if ($response->verification_date != '' 
-                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='SCR -> CAT' : '') 
-                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='CAT -> IB-Ex' : '' ) 
-                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='AUTO -> CAT' : '' ) 
-                                || (isset($response->fil_trap_data[0]) ? $response->fil_trap_data[0]->remarks=='CAT -> TAG' : '' )) {
-
-                                    // echo "<br>verfication_date " . $response->verification_date;
-
+                                if (!empty($response->verification_date) || (isset($response->fil_trap_data[0]) && $response->fil_trap_data[0]->remarks=='SCR -> CAT') || (isset($response->fil_trap_data[0]) && $response->fil_trap_data[0]->remarks=='CAT -> IB-Ex') || (isset($response->fil_trap_data[0]) && $response->fil_trap_data[0]->remarks=='AUTO -> CAT') || (isset($response->fil_trap_data[0]) && $response->fil_trap_data[0]->remarks=='CAT -> TAG')) {
 
                                     $reg_no_display = $response->reg_no_display;
                                     $reg_date = $response->registration_date;
@@ -130,35 +123,35 @@ class DefaultController extends BaseController {
 
 
 
-                                // echo "<br><br>" . "Reg id " . $response->registration_id;
-                                // echo "<br>" . "next stage " . $next_stage;
-                                // echo "<br>" . "curr_dt " . $curr_dt;
-                                // echo "<br>case details:";
-                                // print_r($case_details);
+                                echo "<br><br>" . "Reg id " . $response->registration_id;
+                                echo "<br>" . "next stage " . $next_stage;
+                                echo "<br>" . "curr_dt " . $curr_dt;
+                                echo "<br>case details:";
+                                print_r($case_details);
 
-                                // echo "<br>obj status1 :";
-                                // print_r(isset($objections_status[1]) ? $objections_status[1] : NULL);
-                                // echo "<br>obj status2 :";
-                                // print_r(isset($objections_status[2]) ? $objections_status[2] : NULL);
-                                // echo "<br>";
-                                // echo "<br>----------<br>";
+                                echo "<br>obj status1 :";
+                                print_r(isset($objections_status[1]) ? $objections_status[1] : NULL);
+                                echo "<br>obj status2 :";
+                                print_r(isset($objections_status[2]) ? $objections_status[2] : NULL);
+                                echo "<br>";
+                                echo "<br>----------<br>";
 
  
-                                // echo "Objection 1: <br>";
-                                // var_dump(isset($objections_status[1]) ? $objections_status[1] : NULL);
-                                // echo "<br>Objection 2: <br>";
-                                // var_dump(isset($objections_status[2]) ? $objections_status[2] : NULL);
+                                echo "Objection 1: <br>";
+                                var_dump(isset($objections_status[1]) ? $objections_status[1] : NULL);
+                                echo "<br>Objection 2: <br>";
+                                var_dump(isset($objections_status[2]) ? $objections_status[2] : NULL);
                             //  pr($objections_status); 
                                 $update_status = $this->Default_model->update_icmis_case_status($response->registration_id, $next_stage, $curr_dt, $case_details, isset($objections_status[1]) ? $objections_status[1] : [], isset($objections_status[2]) ? $objections_status[2] : []);
 
                                 if ($update_status) {
                                     if ($next_stage) {
                                         if ($next_stage == I_B_Defected_Stage) {
-                                            echo "eFiling No. " . $response->efiling_no . " updated to Defective Stage.";
+                                            echo "eFiling No. " . $response->efiling_no . " updated to Defective Stage. <br>";
                                         } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
-                                            echo "eFiling No. " . $response->efiling_no . " updated to Pending Scrutiny Stage.";
+                                            echo "eFiling No. " . $response->efiling_no . " updated to Pending Scrutiny Stage.<br>";
                                         } elseif ($next_stage == E_Filed_Stage) {
-                                            echo "eFiling No. " . $response->efiling_no . " updated to Efiled Stage.";
+                                            echo "eFiling No. " . $response->efiling_no . " updated to Efiled Stage.<br>";
                                         }
                                     }
                                 }
