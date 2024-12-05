@@ -57,7 +57,7 @@ class Database extends Config
         'hostname'     => '10.25.78.48',
         'username'     => 'postgres',
         'password'     => 'postgres',
-        'database'     => 'sci_cmis_final_09_08',
+        'database'     => 'sci_cmis_final_09_08_june',
         'DBDriver'     => 'Postgre',
         'cacheOn'       => false,
         'cacheDir' => '',
