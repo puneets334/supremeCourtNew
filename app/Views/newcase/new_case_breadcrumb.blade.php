@@ -24,9 +24,15 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 <div class="col-12 defects-h5-table">
                     <?php remark_preview(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
                 </div>
+                  <div class="col-12">
+                  <?php if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $sas)) {
+                            echo '<div class="row"><div class="col-md-12 "><h5 class="defects-h5-msg">Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
+                        }?>
+                  </div>
             </div>
         
     </div>
+    
 </div>
 <?php } ?>
 <div class="dash-card dashboard-section">
@@ -90,9 +96,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             <li><a class="red-dot"> <span class="mdi mdi-record"></span> Required </a></li>
                         </ul>
                     </div>
-                    <?php if (!empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], $sas)) {
-                            echo '<div class="row"><div class="col-md-12 "><h5 class="defects-h5-msg">Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div></div>';
-                        }?>
+                    
                 </div>
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">

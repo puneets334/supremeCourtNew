@@ -2102,39 +2102,39 @@ logo h1 {
     background-position: -37px -432px;
 }
 
-.dashboardLeftNav li:nth-child(1) a:hover:before {
+.dashboardLeftNav li:nth-child(1) a:hover:before, .dashboardLeftNav li:nth-child(1) a:focus:before {
     background-position: -3px -44px;
 }
 
-.dashboardLeftNav li:nth-child(2) a:hover:before {
+.dashboardLeftNav li:nth-child(2) a:hover:before , .dashboardLeftNav li:nth-child(2) a:focus:before {
     background-position: 4px -93px;
 }
 
-.dashboardLeftNav li:nth-child(3) a:hover:before {
+.dashboardLeftNav li:nth-child(3) a:hover:before, .dashboardLeftNav li:nth-child(3) a:focus:before {
     background-position: 2px -145px;
 }
 
-.dashboardLeftNav li:nth-child(4) a:hover:before {
+.dashboardLeftNav li:nth-child(4) a:hover:before , .dashboardLeftNav li:nth-child(4) a:focus:before {
     background-position: 2px -194px;
 }
 
-.dashboardLeftNav li:nth-child(5) a:hover:before {
+.dashboardLeftNav li:nth-child(5) a:hover:before , .dashboardLeftNav li:nth-child(5) a:focus:before {
     background-position: 0px -245px;
 }
 
-.dashboardLeftNav li:nth-child(6) a:hover:before {
+.dashboardLeftNav li:nth-child(6) a:hover:before , .dashboardLeftNav li:nth-child(6) a:focus:before {
     background-position: 1px -292px;
 }
 
-.dashboardLeftNav li:nth-child(7) a:hover:before {
+.dashboardLeftNav li:nth-child(7) a:hover:before , .dashboardLeftNav li:nth-child(7) a:focus:before {
     background-position: 0px -342px;
 }
 
-.dashboardLeftNav li:nth-child(8) a:hover:before {
+.dashboardLeftNav li:nth-child(8) a:hover:before, .dashboardLeftNav li:nth-child(8) a:focus:before {
     background-position: 0px -394px;
 }
 
-.dashboardLeftNav li:nth-child(9) a:hover:before {
+.dashboardLeftNav li:nth-child(9) a:hover:before , .dashboardLeftNav li:nth-child(9) a:focus:before {
     background-position: 1px -433px;
 }
 
@@ -8284,7 +8284,7 @@ input[type="radio"] {
 /* Close Loader  */
 
 /* 24 sept 2024 start  */
-.application-tile-sections {display: flex;gap: 10px;justify-content: space-between;}
+.application-tile-sections {display: flex;gap: 10px;justify-content: space-between;align-items: end;}
 .application-tile-sections .applictin-tile-sec .appliction-til-nam h6 {font-size: 14px;text-align: center;font-family: 'noto_sansmedium';margin-bottom: 13px;/* z-index: 1; */}
 .application-tile-sections .applictin-tile-sec:before {content: '';position: absolute;top: 7px;right: -5px;height: 78%;width: 1px;background: #ffffff7a;}
 .application-tile-sections .applictin-tile-sec .tile-comnt:first-child {padding-right: 4px;}
