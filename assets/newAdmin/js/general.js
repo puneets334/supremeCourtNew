@@ -213,7 +213,7 @@ $(document).ready(function() {
   $affectedElements.each(function() {
     var $this = $(this);
     $this.data("orig-size", $this.css("font-size"));
-    $this.data("orig-line", $this.css("line-height"));
+    // $this.data("orig-line", $this.css("line-height"));
   });
 
   // Cache iframe and define variables for iframe content elements
@@ -233,14 +233,14 @@ $(document).ready(function() {
     $iframeContent.each(function() {
       var $this = $(this);
       $this.data("orig-size", $this.css("font-size"));
-      $this.data("orig-line", $this.css("line-height"));
+      // $this.data("orig-line", $this.css("line-height"));
     });
 
     // Save original font sizes for .select2 elements in the iframe
     $iframeSelect2Span.each(function() {
       var $this = $(this);
       $this.data("orig-size", $this.css("font-size"));
-      $this.data("orig-line", $this.css("line-height"));
+      // $this.data("orig-line", $this.css("line-height"));
     });
   });
 
@@ -282,7 +282,7 @@ $(document).ready(function() {
       // Ensure the new font size is within the range (for example, 12px to 28px)
       if (newSize >= 12 && newSize <= 28) {
         $this.css("font-size", newSize + "px");
-        $this.css("line-height", newSize + "px");
+        // $this.css("line-height", newSize + "px");
       }
     });
 
@@ -296,7 +296,7 @@ $(document).ready(function() {
         // Ensure the new font size is within the range (for example, 12px to 28px)
         if (newSize >= 12 && newSize <= 28) {
           $this.css("font-size", newSize + "px");
-          $this.css("line-height", newSize + "px");
+          // $this.css("line-height", newSize + "px");
         }
       });
     }
@@ -322,7 +322,7 @@ $(document).ready(function() {
       $elements.each(function() {
         var $this = $(this);
         $this.css("font-size", $this.data("orig-size"));
-        $this.css("line-height", $this.data("orig-line"));
+        // $this.css("line-height", $this.data("orig-line"));
       });
     }
   }
@@ -331,7 +331,7 @@ $(document).ready(function() {
 
 
 
-// Table TD height JS 
+// Table TD height JS  Start
 
 // document.querySelectorAll('.custom-table td').forEach(td => {
 //   const contentHeight = td.scrollHeight; 
@@ -367,9 +367,10 @@ function handleResponsiveTables() {
     tableElements.forEach(adjustDataKey);
   });
 }
-
-// Call the function to initialize responsive behavior on page load
 window.onload = handleResponsiveTables;
+
+// Table TD height JS  End
+
 // ------JS For Iframe StarT ------------
 
 // function adjustIframeHeight(iframe) {
@@ -409,7 +410,12 @@ function adjustIframeHeight(iframe) {
 
     // Filter out hidden elements (display: none)
     const visibleContentHeight = Array.from(iframeDocument.body.children)
-      .filter(element => window.getComputedStyle(element).display !== 'none') // Exclude hidden elements
+      // .filter(element => window.getComputedStyle(element).display !== 'none') // Exclude hidden elements
+      .filter(element => {
+        return window.getComputedStyle(element).display !== 'none' &&
+               !element.classList.contains('sweet-overlay') &&
+               !(element.id === 'loader-wrapper');
+    }) 
       .reduce((height, element) => height + element.offsetHeight, 0);
 
     // Set the iframe height to match the visible content
@@ -431,10 +437,10 @@ document.querySelectorAll('.iframe-scroll-bar').forEach(iframe => {
     });
 
     observer.observe(iframe.contentWindow.document.body, {
-      // childList: true,    // Detect when child nodes are added/removed
-      // subtree: true,      // Observe all descendants of the body
-      // attributes: true,   // Detect attribute changes (e.g., for display toggling)
-      // characterData: true // Detect text changes
+      childList: true,    // Detect when child nodes are added/removed
+      subtree: true,      // Observe all descendants of the body
+      attributes: true,   // Detect attribute changes (e.g., for display toggling)
+      characterData: true // Detect text changes
     });
 
     // Adjust height if iframe content resizes
