@@ -446,9 +446,9 @@
                         ContentType: 'application/json',
                         cache:false,
                         success: function(updateData){
-                            // if(typeof updateData == 'string'){
+                            if(typeof updateData == 'string'){
                                 updateData = JSON.parse(updateData);
-                                console.log(updateData);
+                                // console.log(updateData);
                                 var message = updateData.message;
                                 if(updateData.status=='SUCCESS'){
                                     $("#customErrorMessage").html('');
@@ -457,7 +457,7 @@
                                     $("#customErrorMessage").html('');
                                     $("#customErrorMessage").html(message);
                                 }
-                            // }
+                            }
 
                             // console.log(updateData);
                             // return false;
