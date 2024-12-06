@@ -34,9 +34,6 @@
     .datepicker-dropdown {
         background-color: #ffffff;
     }
-    #cnr, #dc_cnr {
-        text-transform: uppercase;
-    }
 </style>
 <div id="loader-wrapper" style="display: none;">
     <div id="loader"></div>
