@@ -55,7 +55,7 @@
       if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && isset($stage_id) && !empty($stage_id) && $stage_id == Transfer_to_IB_Stage) {
           $collapse_class = 'collapse in';
           $area_extended = true;
-          $diary_generate_button = '<a  href="javaScript:void(0)" class="btn btn-primary" data-efilingtype="new_case" id="generateDiaryNoPop" type="button" style="float: left;margin-right: 120px;">Generate Diary No.</a>';
+          $diary_generate_button = '<div class="center-buttons"><a  href="javaScript:void(0)" class="quick-btn" data-efilingtype="new_case" id="generateDiaryNoPop" type="button">Generate Diary No.</a></div>';
       }
       $stages_array = ['', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE];
       if(isset(getSessionData('efiling_details')['stage_id'])){
