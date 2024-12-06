@@ -23,7 +23,7 @@ class Reports extends BaseController {
         //     exit(0);
         // }
         $allowed_users_array = array(USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('adminDashboard'));
             exit(0);
         }
@@ -48,7 +48,7 @@ class Reports extends BaseController {
                 echo "1@@@".'Permission denied please contact computer cell!';exit(0);
             }
             $allowed_users_array = array(USER_ADMIN);
-            if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
                 echo "1@@@".'Permission denied please contact computer cell';exit(0);
             }
             if (!empty($this->request->getGet('from_date'))) {

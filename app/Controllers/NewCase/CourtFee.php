@@ -48,7 +48,7 @@ class CourtFee extends ShilclientController
             if (!empty($index_pdf_details)) {
 
                 $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-                if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+                if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
                     return redirect()->to(base_url('/'));
                 }
 
@@ -138,7 +138,7 @@ window.location.href='" . base_url() . "documentIndex';</script>";
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             $_SESSION['MSG'] = 'Unauthorised Access !';
             redirect('login');
             exit(0);
@@ -285,10 +285,9 @@ window.location.href='" . base_url() . "documentIndex';</script>";
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             $_SESSION['MSG'] = 'Unauthorised Access !';
-            redirect('login');
-            exit(0);
+            return response()->redirect(base_url('/')); 
         }
 
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);

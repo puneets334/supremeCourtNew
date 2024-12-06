@@ -83,8 +83,8 @@ class SupadminController extends BaseController {
     {
         // new work start for pushpendra
         // $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
-        // if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-        //     redirect('login');
+        // if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        //     return response()->redirect(base_url('/')); 
         //     exit(0);
         // }
         $allowed_users = array(USER_ADMIN);

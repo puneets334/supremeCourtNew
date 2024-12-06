@@ -29,11 +29,10 @@ class DefaultController extends BaseController
     public function reportForm()
     {
         if (empty(getSessionData('login')['ref_m_usertype_id'])) {
-            redirect('login');
-            exit(0);
+            return response()->redirect(base_url('/')); 
         }
         $allowed_users_array = array(USER_EFILING_ADMIN, USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('filingAdmin');
             exit(0);
         }
@@ -50,7 +49,7 @@ class DefaultController extends BaseController
             exit(0);
         }
         $allowed_users_array = array(USER_EFILING_ADMIN, USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('filingAdmin');
             exit(0);
         }
@@ -343,7 +342,7 @@ class DefaultController extends BaseController
             exit(0);
         }
         $allowed_users_array = array(USER_EFILING_ADMIN, USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('filingAdmin');
             exit(0);
         }
@@ -1140,7 +1139,7 @@ class DefaultController extends BaseController
             exit(0);
         }
         $allowed_users_array = array(USER_EFILING_ADMIN, USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('filingAdmin');
             exit(0);
         }
@@ -1156,7 +1155,7 @@ class DefaultController extends BaseController
             exit(0);
         }
         $allowed_users_array = array(USER_EFILING_ADMIN, USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('filingAdmin');
             exit(0);
         }

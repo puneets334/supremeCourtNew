@@ -131,7 +131,7 @@ class AutoDiary extends BaseController
     {
         //var_dump($_SESSION);
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('dashboard'));
         }
         if (empty(getSessionData('efiling_details')) || empty(getSessionData('efiling_details'))) {
