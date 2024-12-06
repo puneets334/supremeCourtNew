@@ -22,7 +22,7 @@ class Home extends BaseController {
         $dbs = \Config\Database::connect();
         $this->db = $dbs->connect();
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('adminDashboard'));
             exit(0);
         }

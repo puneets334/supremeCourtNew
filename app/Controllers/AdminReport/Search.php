@@ -22,11 +22,10 @@ class Search extends BaseController
         ini_set('max_execution_time', 0);
         error_reporting(2);
         if (empty(getSessionData('login')['ref_m_usertype_id'])) {
-            redirect('login');
-            exit(0);
+            return response()->redirect(base_url('/')); 
         }
         $allowed_users_array = array(USER_ADMIN, USER_ADMIN_READ_ONLY);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('adminDashboard');
             exit(0);
         }

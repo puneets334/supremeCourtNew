@@ -37,7 +37,7 @@ class Petitioner extends BaseController {
     public function index() {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
-        if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('admindashboard');
             exit(0);
         }
