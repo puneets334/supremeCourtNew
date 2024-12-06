@@ -1,7 +1,7 @@
 
-Welcome To Admin Dashboard
+<!-- Welcome To Admin Dashboard -->
 
-{{-- @extends('responsive_variant.layouts.master.uikit_scutum_2.index')
+<!-- {{-- @extends('responsive_variant.layouts.master.uikit_scutum_2.index') -->
 @section('title', 'Dashboard')
 @section('pinned-main-offcanvas') @endsection
 @section('content-container-ribbon')@endsection
@@ -15,4 +15,4 @@ Welcome To Admin Dashboard
     }
 
 </script>
-@endsection --}}
+@endsection

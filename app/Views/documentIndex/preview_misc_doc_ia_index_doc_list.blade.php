@@ -26,7 +26,7 @@ $segment = service('uri');
                 <tbody>
                     <?php
                     $sr = 1;
-                    if(isset($efiled_docs_list)) {
+                    if(isset($efiled_docs_list) && !empty($efiled_docs_list)) {
                         foreach ($efiled_docs_list as $doc_list) {
                             ?>
                             <tr>
