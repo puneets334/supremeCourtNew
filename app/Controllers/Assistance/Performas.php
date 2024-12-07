@@ -25,12 +25,22 @@ class Performas extends BaseController {
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
         helper(['file']);
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
+        $allowed_users = array(USER_ADMIN, USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE);
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users)) {
+            return response()->redirect(base_url('/'));
+            exit(0);
+        }
     }
 
     public function index() {
-        $allowed_users = array(USER_ADMIN, USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,SR_ADVOCATE);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users)) {
-            redirect('login');
+        $allowed_users = array(USER_ADMIN, USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE);
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users)) {
+            return response()->redirect(base_url('/'));
             exit(0);
         }
         $data['notice_circualrs'] = $this->Performas_model->notice_circulars_list();
@@ -41,8 +51,8 @@ class Performas extends BaseController {
     }
 
     public function edit($id = NULL) {
-        if ((getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)) {
-            redirect('login');
+        if (getSessionData('login') != '' && (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)) {
+            return response()->redirect(base_url('/'));
             exit(0);
         }
         if ($id != NULL) {
@@ -56,8 +66,8 @@ class Performas extends BaseController {
     }
 
     public function add_notice_circurlar($edit_id = null) {
-        if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN) {
-            redirect('login');
+        if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN) {
+            return response()->redirect(base_url('/'));
             exit(0);
         }
         $InputArray = $this->request->getPost();
@@ -143,8 +153,8 @@ class Performas extends BaseController {
     }
 
     public function action($action) {
-        if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN) {
-            redirect('login');
+        if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN) {
+            return response()->redirect(base_url('/'));
             exit(0);
         }
         $action = explode('$$', url_decryption($action));

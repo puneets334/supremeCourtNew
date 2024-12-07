@@ -28,6 +28,11 @@ class SupadminController extends BaseController {
     
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         // $this->load->helper('captcha');
         // $this->load->model('admin/Supadmin_model');
         // $this->load->model('common/Dropdown_list_model');
@@ -88,7 +93,7 @@ class SupadminController extends BaseController {
         //     exit(0);
         // }
         $allowed_users = array(USER_ADMIN);
-        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users)) {
+        if (getSessionData('login') != '' && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users)) {
             return redirect()->to(base_url('login'));
             exit(0);
         }

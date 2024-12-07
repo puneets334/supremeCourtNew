@@ -1,4 +1,4 @@
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+@if(getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @extends('layout.app')
 @else
     @extends('layout.advocateApp')

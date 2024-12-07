@@ -27,6 +27,11 @@ class AdvocateListing extends BaseController
         // $this->load->database('physical_hearing');
         // $this->load->model('Adv_listing_model');
         $this->Adv_listing_model = new AdvListingModel();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
     }
 
     /*public function index()

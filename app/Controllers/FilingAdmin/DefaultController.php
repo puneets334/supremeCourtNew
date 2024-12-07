@@ -14,6 +14,11 @@ class DefaultController extends BaseController {
     protected $agent;
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $this->FilingAdminModel = new FilingAdminModel;
         $this->ReportModel = new ReportModel;
         $this->AdminDashboardModel = new AdminDashboardModel();
@@ -24,7 +29,12 @@ class DefaultController extends BaseController {
 
     }
 
-    public function index() {        
+    public function index() {  
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }      
         $data = array();
         $params = array();
         $params['user_type'] = USER_ADMIN;
@@ -292,7 +302,11 @@ class DefaultController extends BaseController {
 
     public function userListing()
     {
-   
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }   
         $data = array();
         $params = array();
         $params['user_type'] = USER_ADMIN;
@@ -329,6 +343,11 @@ class DefaultController extends BaseController {
     }
 
     public function userFileTransferForm(){
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $data = array();
         if (empty($this->session->get('login')['ref_m_usertype_id'])) {
             redirect('login');

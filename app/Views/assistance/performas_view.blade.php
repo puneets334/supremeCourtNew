@@ -1,4 +1,4 @@
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+@if(getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
 @extends('layout.app')
 @else
 @extends('layout.advocateApp')
@@ -20,7 +20,7 @@
                             </div>
                             {{-- Page Title End --}}
                             {{-- Main Start --}}
-                            @if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
+                            @if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
                                     <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link">Circulars</a>
@@ -50,7 +50,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12 col-xs-12">
                                             <div class="x_panel">
-                                                <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                     <div class="x_title">
                                                         <h2><i class="fa  fa-newspaper-o"></i> Performa(s) </h2>
                                                         <div class="clearfix"></div>
@@ -125,7 +125,7 @@
                                                             <tr class="success input-sm" role="row">
                                                                 <th>#</th>
                                                                 <th> Performa(s) </th>
-                                                                <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                                <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                     <th>Action</th>
                                                                 <?php } ?>
                                                             </tr>
@@ -143,7 +143,7 @@
                                                                             (<?php echo htmlentities(date('d-m-Y', strtotime($itm['create_date'])), ENT_QUOTES); ?>)
                                                                         </a>
                                                                     </td>
-                                                                    <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                                    <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                         <td width="15%" data-key="Action">
                                                                             <a href="<?php echo base_url('assistance/performas/edit/' . url_encryption($itm['id'])); ?>" class="btn btn-secondary" role="button">Edit</a>
                                                                             <?php if ($itm['is_deleted'] == 'f') { ?>
@@ -175,7 +175,7 @@
 </div>
 @endsection
 @push('script')
-<?php if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) { ?>
+<?php if (getSessionData('login') != '' && $_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN) { ?>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.news_datepicker').datepicker({

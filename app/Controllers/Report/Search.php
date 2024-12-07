@@ -17,6 +17,11 @@ class Search extends BaseController {
 
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
        
         $this->ReportModel = new ReportModel;
         $this->session = \Config\Services::session();
@@ -35,8 +40,13 @@ class Search extends BaseController {
     }
 
     public function index() {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $allowed_users_array = array(USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
-        if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');
             exit(0);
         }

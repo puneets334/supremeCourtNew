@@ -12,6 +12,11 @@ class Reports extends BaseController {
 
     public function __construct() {
         parent:: __construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $this->request = \Config\Services::request();
         $this->AdminReportsModel = new AdminReportsModel();
         // $this->load->model('adminReport/AdminReportsModel');
