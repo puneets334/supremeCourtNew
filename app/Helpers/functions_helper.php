@@ -208,7 +208,7 @@ if (!function_exists('script_remove')) {
     {
 
         //return trim(pg_escape_string(strip_tags($term, '<table><thead><tr><td><tbody><tfoot><th><b><i><ol><li><br><br/><a>')));
-        return trim(strip_tags($term, '<table><thead><tr><td><tbody><tfoot><th><b><i><ol><li><br><br/><a>'));
+        return trim(strip_tags($term ?? '', '<table><thead><tr><td><tbody><tfoot><th><b><i><ol><li><br><br/><a>'));
     }
 }
 if (!function_exists('escape_data')) {
@@ -221,7 +221,7 @@ if (!function_exists('escape_data')) {
 
 function echo_data($value)
 {
-    $data = htmlentities(script_remove($value), ENT_COMPAT);
+    $data = htmlentities(script_remove($value ?? ''), ENT_COMPAT);
     echo $value = str_replace("''", "'", $data);
 }
 

@@ -40,24 +40,25 @@ $court_type_details = '';
                             foreach ($subordinate_court_details as $exp) {
                                 $court_type_details = '';
                                 if($exp['court_type']==1) {
-                                    $court_type='Court Type:High Court'.'<br>';
-                                    $state_name='State Name:'.$exp['state_name'].'<br>';
-                                    $district_name='Agency Name:'.$exp['estab_name'].'<br>';
-                                    $high_court_name='High Court Name:'.$exp['estab_name'].'<br>';
-                                    $high_bench_name='Bench Name:'.$exp['bench_name'].'<br>';
-                                    $court_type_details=$court_type.$state_name.$district_name.$high_court_name.$high_bench_name;
+                                    $court_type='Court Type: High Court'.'<br>';
+                                    // $state_name='State Name: '.$exp['state_name'].'<br>';
+                                    // $district_name='Agency Name: '.$exp['estab_name'].'<br>';
+                                    $high_court_name='High Court Name: '.$exp['estab_name'].'<br>';
+                                    $high_bench_name='Bench Name: '.$exp['bench_name'].'<br>';
+                                    $court_type_details=$court_type.$high_court_name.$high_bench_name;
+                                    // $court_type_details=$court_type.$state_name.$district_name.$high_court_name.$high_bench_name;
                                 } elseif ($exp['court_type']==3) {
-                                    $court_type='Court Type:District Court'.'<br>';
-                                    $state_name='State Name:'.$exp['state_name'].'<br>';
-                                    $district_name='Agency Name:'.$exp['estab_name'].'<br>';
+                                    $court_type='Court Type: District Court'.'<br>';
+                                    $state_name='State Name: '.$exp['state_name'].'<br>';
+                                    $district_name='Agency Name: '.$exp['estab_name'].'<br>';
                                     $court_type_details=$court_type.$state_name.$district_name;
                                 } elseif ($exp['court_type']==4) {
-                                    $court_type='Court Type:Supreme Court'.'<br>';
+                                    $court_type='Court Type: Supreme Court'.'<br>';
                                     $court_type_details=$court_type;
                                 } elseif ($exp['court_type']==5) {
-                                    $court_type='Court Type:Agency Court'.'<br>';
-                                    $state_name='State Name:'.$exp['state_name'].'<br>';
-                                    $agency_name='Agency Name:'.$exp['estab_name'].'<br>';
+                                    $court_type='Court Type: Agency Court'.'<br>';
+                                    $state_name='State Name: '.$exp['state_name'].'<br>';
+                                    $agency_name='Agency Name: '.$exp['estab_name'].'<br>';
                                     $court_type_details=$court_type.$state_name.$agency_name;
                                 }
                                 $case_type = '<b>Case Type </b> : ' . $exp['casetype_name'] . '<br/> ';
@@ -163,6 +164,11 @@ $court_type_details = '';
 <!--end modal-->
 @section('script')
     <script>
+        $(document).ready(function() {
+            $("#datatable-responsive").DataTable({
+                "ordering": false,
+            });
+        });
         function getDataEarlierCourtUpdateModal(earlierCourtArr) {
             var act_null='';
             $('#EarlierCourt').val(act_null);
