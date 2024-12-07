@@ -40,13 +40,13 @@ class ResponsiveVariantRouteController extends BaseController
         $this->MentioningModel = new MentioningModel();
         $this->CitationModel = new CitationModel();
         $this->efiling_webservices = new Efiling_webservices();
-        if(empty(getSessionData('login')['ref_m_usertype_id'])){
+        if(empty(getSessionData('login'))){
             return response()->redirect(base_url('/')); 
         }else{
             is_user_status();
         }
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('adminDashboard'));
             exit(0);
         }
@@ -60,9 +60,13 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showDashboardAlt()
     {
-         
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }         
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
             exit(0);
         } 
@@ -559,8 +563,8 @@ class ResponsiveVariantRouteController extends BaseController
     {       
         log_message('info', 'My cases access on ' . date('d-m-Y') . ' at ' . date("h:i:s A") . getClientIP() . '</b>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
         // $advocate_id = $this->session->userdata['login']['adv_sci_bar_id'];
-        $advocate_id = getSessionData('login')['adv_sci_bar_id'];
-        if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {            
+        $advocate_id = !empty(getSessionData('login')) ? getSessionData('login')['adv_sci_bar_id'] : '';
+        if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {            
 
             // $this->load->model('common/CommonModel');
             $params = array();

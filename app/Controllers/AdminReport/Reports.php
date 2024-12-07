@@ -12,6 +12,11 @@ class Reports extends BaseController {
 
     public function __construct() {
         parent:: __construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $this->request = \Config\Services::request();
         $this->AdminReportsModel = new AdminReportsModel();
         // $this->load->model('adminReport/AdminReportsModel');
@@ -23,7 +28,7 @@ class Reports extends BaseController {
         //     exit(0);
         // }
         $allowed_users_array = array(USER_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('adminDashboard'));
             exit(0);
         }
@@ -48,7 +53,7 @@ class Reports extends BaseController {
                 echo "1@@@".'Permission denied please contact computer cell!';exit(0);
             }
             $allowed_users_array = array(USER_ADMIN);
-            if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
                 echo "1@@@".'Permission denied please contact computer cell';exit(0);
             }
             if (!empty($this->request->getGet('from_date'))) {

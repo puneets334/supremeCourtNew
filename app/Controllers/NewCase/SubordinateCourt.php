@@ -40,7 +40,7 @@ class SubordinateCourt extends BaseController {
 
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
 
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('admindashboard'));
         }
         if (check_party() !=true) {  //func added on 15 JUN 2021

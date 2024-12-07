@@ -22,6 +22,11 @@ class View extends BaseController {
 	
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $this->request = \Config\Services::request();
 		$this->View_model = new ViewModel();
         $this->UploadDocs_model = new UploadDocsModel();
@@ -31,6 +36,11 @@ class View extends BaseController {
     }
 
     public function index() {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $this->check_caveator_info();
         if (!empty(getSessionData('efiling_details')) && (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT)) {
             $registration_id = getSessionData('efiling_details')['registration_id'];
@@ -77,6 +87,11 @@ class View extends BaseController {
     }
 
     function check_caveator_info() {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         if (isset(getSessionData('efiling_for_details')['case_type_pet_title']) && !empty(getSessionData('efiling_for_details')['case_type_pet_title'])) {
             $case_type_pet_title = htmlentities(getSessionData('efiling_for_details')['case_type_pet_title'], ENT_QUOTES);
         } else {

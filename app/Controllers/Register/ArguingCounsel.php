@@ -40,11 +40,16 @@ class ArguingCounsel extends BaseController {
         $this->request = \Config\Services::request();
         $this->config = \Config\Services::config();
         helper(['security']);
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         
     }
 
     public function index(){
-        if (getSessionData('login')['ref_m_usertype_id'] != USER_ADVOCATE){
+        if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] != USER_ADVOCATE){
             redirect('login');
             exit(0);
         }

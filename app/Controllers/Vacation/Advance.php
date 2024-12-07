@@ -23,13 +23,23 @@ class Advance extends BaseController
         $this->db = \Config\Database::connect();
         // $this->slice = new Slice();
         helper(['form', 'file']);
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
     }
 
     public function index()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $data['tab'] = 'vacation/advance/alllist';
-        $aor_code = $this->session->get('login')['aor_code'];
-        $userIDValue = $this->session->get('login')['id'];
+        $aor_code = getSessionData('login')['aor_code'];
+        $userIDValue = getSessionData('login')['id'];
         $data = null;
         $data['vacation_advance_list'] = $this->Vacation_advance_model->get_vacation_advance_list($aor_code);
         $data['matters_declined_by_counter'] = $this->Vacation_advance_model->get_matters_declined_by_counter_list($aor_code);
@@ -47,7 +57,7 @@ class Advance extends BaseController
 
     public function alllist()
     {
-        $aor_code = $this->session->get('login')['aor_code'];
+        $aor_code = getSessionData('login')['aor_code'];
         $data = null;
         $data['vacation_advance_list'] = $this->Vacation_advance_model->get_vacation_advance_list($aor_code);
         $data['matters_declined_by_counter'] = $this->Vacation_advance_model->get_matters_declined_by_counter_list($aor_code);
@@ -56,7 +66,7 @@ class Advance extends BaseController
 
     public function get_declinelist()
     {
-        $aor_code = $this->session->get('login')['aor_code'];
+        $aor_code = getSessionData('login')['aor_code'];
         $data = null;
         $data['vacation_advance_list'] = $this->Vacation_advance_model->get_vacation_advance_list($aor_code, 'D');
         $data['matters_declined_by_counter'] = $this->Vacation_advance_model->get_matters_declined_by_counter_list($aor_code);
@@ -71,8 +81,8 @@ class Advance extends BaseController
     public function declineVacationListCasesAOR()
     {
 
-        $aor_code = $this->session->get('login')['aor_code'];
-        $userID = $this->session->get('login')['id'];
+        $aor_code = getSessionData('login')['aor_code'];
+        $userID = getSessionData('login')['id'];
         $dairyNos = $_POST['diary_no'];
         $userIP = getClientIP();
         if (empty($dairyNos)) {
@@ -118,8 +128,8 @@ class Advance extends BaseController
         /* $request = \Config\Services::request();
         if ($request->getMethod() === 'post') { */
 
-        $aor_code = $this->session->get('login')['aor_code'];
-        $userID = $this->session->get('login')['id'];
+        $aor_code = getSessionData('login')['aor_code'];
+        $userID = getSessionData('login')['id'];
 
         // pr($aor_code);
         $diary_no = $_POST['diary_no'];

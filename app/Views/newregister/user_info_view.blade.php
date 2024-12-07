@@ -9,6 +9,24 @@
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="dash-card">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <?php if (session()->getFlashdata('msg')) : ?>
+                                            <div class="alert alert-dismissible text-center flashmessage">
+                                                <div class="flas-msg-inner">
+                                                    <?= session()->getFlashdata('msg') ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        <?php if (session()->getFlashdata('deactivate_msg')) : ?>
+                                            <div class="alert alert-danger text-center flashmessage">
+                                                <div class="flas-msg-inner">
+                                                    <?= session()->getFlashdata('deactivate_msg') ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
 
                                 <div class="title-sec">
                                     <h5 class="unerline-title">
@@ -27,30 +45,11 @@
                                         ?>
                                     </h5>
                                 </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <?php if (session()->getFlashdata('msg')) : ?>
-                                            <div class="alert alert-dismissible text-center flashmessage">
-                                                <div class="flas-msg-inner">
-                                                    <?= session()->getFlashdata('msg') ?>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <?php if (session()->getFlashdata('deactivate_msg')) : ?>
-                                            <div class="alert alert-danger text-center flashmessage">
-                                                <div class="flas-msg-inner">
-                                                    <?= session()->getFlashdata('deactivate_msg') ?>
-                                                </div>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
                                 <div class="profile-details">
                                     <div class="row mt-4">
                                         <div class="col-12 col-sm-12 col-md-2 col-lg-1">
                                             <div class="usrprofile-img">
-                                                <img src="http://localhost/supremeCourt/assets/images/user.png" alt="">
+                                                <!-- <img src="http://localhost/supremeCourt/assets/images/user.png" alt=""> -->
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-10 col-lg-11">
@@ -195,14 +194,19 @@
                                                 <?php
                                                 if ($profile[0]['is_active'] == 0) { ?>
                                                     <div class="alert alert-danger">DEACTIVATED</div>
-                                                <?php } ?>
-                                                <?php if ($profile[0]['is_active'] == 1) { ?>
+                                                    <?php
+                                                }
+                                                if ($profile[0]['is_active'] == 1) {
+                                                    ?>
                                                     <div class="alert alert-success">ACTIVATED</div>
-
                                                 <?php } ?>
                                             </div>
                                         </div>
                                     </div>
+                                    <?php
+                                    $uri = service('uri');
+                                    $uri_segment = htmlentities(trim($uri->getSegment(4)), ENT_QUOTES);
+                                    ?>
                                     <div class="center-buttons">
                                         <a href="<?= base_url('NewRegister/Advocate/activate/') . $uri_segment ?>" class="quick-btn">APPROVE</a>
                                         <a href="<?= base_url('NewRegister/Advocate/deactivate/') . $uri_segment ?>" class="quick-btn gray-btn">DEACTIVATE</a>

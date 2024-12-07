@@ -1,4 +1,4 @@
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+@if(getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @extends('layout.app')
 @else
     @extends('layout.advocateApp')
@@ -22,7 +22,7 @@
                                 </div>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
-                                @if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
+                                @if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
                                             <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link active">Circulars</a>
@@ -52,7 +52,7 @@
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12 col-xs-12">            
                                                 <div class="x_panel">                
-                                                    <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                    <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                         <div class="x_title">
                                                             <h2><i class="fa  fa-newspaper-o"></i> Notice and Circulars</h2>
                                                             <div class="clearfix"></div>
@@ -141,7 +141,7 @@
                                                                     <th>#</th>
                                                                     <th>Item</th>
                                                                     <th>Notice / Circualr &nbsp;&nbsp;(Dated) </th>
-                                                                    <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                                    <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                         <th>Will Deactivate On</th>
                                                                         <th>Action</th>
                                                                     <?php } ?>
@@ -162,7 +162,7 @@
                                                                                 (<?php echo htmlentities(date('d-m-Y', strtotime($itm['create_date'])), ENT_QUOTES); ?>)
                                                                             </a>
                                                                         </td> 
-                                                                        <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                                                                        <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                             <td width="10%" data-key="Will Deactivate On"> <?php echo htmlentities(date('d-m-Y', strtotime($itm['deactive_date'])), ENT_QUOTES); ?></td>                                    
                                                                             <td width="15%" data-key="Action">
                                                                                 <a href="<?php echo base_url('assistance/notice_circulars/edit/' . url_encryption($itm['id'])); ?>" class="btn btn-primary" role="button"><i class="fa fa-pencil"></i></a>
@@ -195,7 +195,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-<?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+<?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
     <script type="text/javascript">
         $(document).ready(function () {
             $('.news_datepicker').datepicker({

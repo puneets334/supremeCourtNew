@@ -28,10 +28,20 @@ class ConsentVC extends BaseController
         $this->consent_model = new ConsentModel(); 
         $this->hearing_model = new HearingModel(); 
         $session = session();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
     }
 
     public function index($court=null)
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $next_misc_working_date=getNextMiscDayOfHearing();
         // $listing_date=array("'$next_misc_working_date'");
         // pr($listing_date); 
@@ -43,7 +53,7 @@ class ConsentVC extends BaseController
         //     redirect('auth');
         // }
         // $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
-        // if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        // if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
         //     return response()->redirect(base_url('adminDashboard'));
         //     exit(0);
         // }

@@ -34,6 +34,11 @@ class AddressController extends BaseController
 
     public function applicantAddress()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $mobile_number=$emailid='';
         if(!empty(getSessionData('login')['mobile_number'])){
             $mobile_number=getSessionData('login')['mobile_number'];

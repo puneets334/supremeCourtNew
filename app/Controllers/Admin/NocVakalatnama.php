@@ -12,6 +12,11 @@ class NocVakalatnama extends BaseController
     public function __construct()
     {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $this->NocVakalatnama_model = new NocVakalatnamaModel();
         $this->session = \Config\Services::session();
         $this->agent = \Config\Services::request()->getUserAgent();
@@ -19,6 +24,11 @@ class NocVakalatnama extends BaseController
 
     public function index()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $allowed_users_array = array(USER_EFILING_ADMIN,USER_ADMIN);
         if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('superAdmin'));

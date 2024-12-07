@@ -86,8 +86,8 @@ class Search extends BaseController
     {
         $efiling_type = getSessionData('efiling_type');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            return response()->redirect(base_url('login'));
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            return response()->redirect(base_url('/'));
         }
         // $_SESSION['efiling_type'] = $efiling_type = url_decryption($efiling_type);
         // var_dump($efiling_type); die();
@@ -109,9 +109,8 @@ class Search extends BaseController
     public function search_case_details()
     {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            redirect('login');
-            exit(0);
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            return response()->redirect(base_url('/')); 
         }
         $diary_type = $_POST['search_filing_type'] ?? $this->request->getGet('search_filing_type');
         if ($diary_type == 'diary') {
@@ -245,10 +244,8 @@ class Search extends BaseController
     {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            // pr($allowed_users_array);
-            redirect('login');
-            exit(0);
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            return response()->redirect(base_url('/')); 
         }
        
         $this->validation->setRules([

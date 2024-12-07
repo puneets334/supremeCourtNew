@@ -13,6 +13,11 @@ class StageList extends BaseController {
 	
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
 
 		$this->session = \Config\Services::session();
 		
@@ -55,7 +60,7 @@ class StageList extends BaseController {
     
     public function index($stages) {
         $users_array = array(USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
-        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) {
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) {
             return redirect()->to(base_url('login'));
             exit(0);
         }		 

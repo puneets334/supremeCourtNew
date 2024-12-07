@@ -481,7 +481,7 @@
 
     $('.party_gender1').attr('required', 'required');
     $('.party_name').attr('required', true);
-    $('.relative_name').attr('required', true);
+    // $('.relative_name').attr('required', true);
     $('#relation').attr('required', true);
     $('#org_state').attr('required', false);
     $('input[name="party_gender"]').attr('required', true);
@@ -644,7 +644,7 @@
             $('#org_state_row').show();
             //$('.party_gender1').attr('required', 'required');
             $('.party_name').attr('required', true);
-            $('.relative_name').attr('required', true);
+            // $('.relative_name').attr('required', true);
             $('#relation').attr('required', true); 
             $('#party_age').attr('required', true);
             $('input[name="party_gender"]').attr('required', true);

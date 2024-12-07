@@ -24,14 +24,29 @@ class AdvocateController extends BaseController
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
         $this->e_services = \Config\Database::connect('e_services');
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
     }
 
     public function index()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         // $model = new AdvocateModel();
     }
 
     public function listed_cases() {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $pager = \Config\Services::pager();
         $aor_code='';
         if(!empty(getSessionData('login')['aor_code'])){
