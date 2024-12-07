@@ -122,7 +122,7 @@ body.loading .overlay{
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                             <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
                                         type="text"  maxlength="16" > 
-                                       <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower case details using CNR preferably for swift data retrieval</strong></p>
+                                       <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
 
                                         </div>    
                                             <?php
@@ -246,7 +246,7 @@ body.loading .overlay{
                                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16"
                                     type="text"  maxlength="16" > 
-                                    <p class="pt-2"><strong style="font-size:13px;">Kindly search lower case details using CNR preferably for swift data retrieval</strong></p>
+                                    <p class="pt-2"><strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
                                      </div>
                                      <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                      <div class="d-flex h-100 align-items-center">

@@ -97,7 +97,7 @@ class Ajaxcalls extends BaseController
             $st_indx = 1;
             $end_indx = 0;
             foreach ($efiled_docs_list as $doc_list) {
-                if(isset($result) && strtotime($doc_list['uploaded_on']) > strtotime($result[0]->max_date)) {
+                if(isset($result) && strtotime($doc_list['uploaded_on'] ?? '') > strtotime($result[0]->max_date ?? '')) {
                     $delete_button = '<a onclick = "delete_index(' . "'" . htmlentities(url_encryption(trim($doc_list['doc_id'] . '$$' . $registration_id), ENT_QUOTES)) . "'" . ')"class="btn btn-danger btn-xs"><i class="fa fa-trash"></i></a>';
                 }else {
                     $delete_button = '-';

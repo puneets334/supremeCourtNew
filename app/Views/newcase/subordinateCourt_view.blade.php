@@ -74,7 +74,7 @@
                                         name="chk_nohc"
                                         id="chk_nohc"
                                         onchange="toggle_entry_div()"> I hereby confirm that
-                                    there is no earlier courts cetails pertaining to this
+                                    there is no earlier courts details pertaining to this
                                     matter. &nbsp; &nbsp; <input type="button"
                                         class="btn btn-success"
                                         <?php echo $noHCButton; ?>id="nohc_save"
@@ -226,7 +226,7 @@
                                                 <i class="fa fa-question-circle-o"></i>
                                             </span>
                                             <div class="input-note-pos"><p class="pt-2"> <strong style="font-size:13px;">Kindly
-                                                        search lower case details using CNR
+                                                        search lower court details using CNR
                                                         preferably for swift data
                                                         retrieval</strong></p>
                                             </div>
