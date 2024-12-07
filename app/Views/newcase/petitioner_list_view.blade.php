@@ -82,7 +82,11 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                 if(isset($hidepencilbtn)) {
                                     if($hidepencilbtn!='true') {
                                         ?>
-                                        <td data-key="Action" class="efiling_search"><a href="<?php echo base_url('newcase/extra_party/' . url_encryption($exp['id'])); ?>">Edit</a>&nbsp;&nbsp;&nbsp;<a href="<?php echo base_url('newcase/deleteParty/' . url_encryption($exp['id'])); ?>">Delete</a></td>
+                                        <td data-key="Action" class="efiling_search">
+                                            <a href="<?php echo base_url('newcase/extra_party/' . url_encryption($exp['id'])); ?>">Edit</a>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <!-- <a href="<?php // echo base_url('newcase/deleteParty/' . url_encryption($exp['id'])); ?>">Delete</a> -->
+                                        </td>
                                         <?php
                                     }
                                 }

@@ -10,6 +10,11 @@ class DefaultController extends BaseController {
     protected $GETDetailsModel;
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $this->AppearingForModel = new AppearingForModel();
         $this->GETDetailsModel= new GETDetailsModel();
     }
@@ -22,7 +27,7 @@ class DefaultController extends BaseController {
             exit(0);
         }
         $stages_array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
-        if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+        if (getSessionData('efiling_details') != '' && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS) {
                 redirect('miscellaneous_docs/view');
                 exit(0);
