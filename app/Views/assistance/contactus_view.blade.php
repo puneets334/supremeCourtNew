@@ -1,4 +1,4 @@
-@if(getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
+@if(getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)
     @extends('layout.app')
 @else
     @extends('layout.advocateApp')
@@ -20,7 +20,7 @@
                                 </div>
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
-                                @if (getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
+                                @if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] != USER_ADMIN)
                                     <ul class="nav nav-tabs">
                                         <li class="nav-item">
                                             <a href="<?= base_url('assistance/notice_circulars'); ?>" aria-current="page" class="nav-link">Circulars</a>

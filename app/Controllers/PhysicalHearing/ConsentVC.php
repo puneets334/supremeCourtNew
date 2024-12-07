@@ -28,10 +28,20 @@ class ConsentVC extends BaseController
         $this->consent_model = new ConsentModel(); 
         $this->hearing_model = new HearingModel(); 
         $session = session();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
     }
 
     public function index($court=null)
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $next_misc_working_date=getNextMiscDayOfHearing();
         // $listing_date=array("'$next_misc_working_date'");
         // pr($listing_date); 

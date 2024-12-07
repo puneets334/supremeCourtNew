@@ -32,10 +32,9 @@ class DefaultController extends BaseController
         $this->session = \Config\Services::session();
         $this->slice = [];
         parent::__construct();
-        if (empty($this->session->get('login'))) {
-            return response()->redirect(base_url('/'));
-            exit(0);
-        } else {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
             is_user_status();
         }
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL, USER_SUPER_ADMIN);
@@ -121,6 +120,11 @@ class DefaultController extends BaseController
 
     public function index()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         $session = session();
         $session->remove('data_arrays');
         if ($session->get('login')) {
@@ -145,6 +149,11 @@ class DefaultController extends BaseController
 
     public function updateProfile($param)
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }else{
+            is_user_status();
+        }
         helper('captcha_helper');
         $session = session();
         if ($session->get('login')) {

@@ -67,6 +67,11 @@ class DefaultController extends BaseController
 
     public function copySearch()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $category = $this->Common_model->getCategory();
         return $this->render('onlineCopying.copy_search', compact('category'));
     }
@@ -130,6 +135,11 @@ class DefaultController extends BaseController
     }
     public function faq()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $faqs = $this->Common_model->copyFaq();
         return $this->render('onlineCopying.faq', compact('faqs'));
     }
@@ -143,6 +153,11 @@ class DefaultController extends BaseController
     }
     public function caseSearch()
     {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $caseType = $this->Common_model->getCaseType();
         return $this->render('onlineCopying.case_search', compact('caseType'));
     }
