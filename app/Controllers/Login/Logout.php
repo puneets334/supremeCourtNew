@@ -32,7 +32,7 @@ class Logout extends BaseController {
     }
 
     private function logUser($action) {
-        $data['log_id'] = $this->session->get('login')['log_id'];
+        $data['log_id'] = !empty(getSessionData('login')) ? getSessionData('login')['log_id'] : '';
         $data['logout_time'] = date('Y-m-d H:i:s');
         $this->Login_model->logUser($action, $data);
     }
