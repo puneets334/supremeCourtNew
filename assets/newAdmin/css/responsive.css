@@ -134,6 +134,19 @@
     .tabs-section .nav-tabs li.nav-item .nav-link:after {content: '';position: absolute;top: 0;left: -19px;height: 100%;width: 20px;background: #d3d3d3;clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 100% 50%);}
     /* 25-11-24 End  */
     .court-fee-box{margin-left: 0;}
+    /* 9-12-24 start  */
+    .mob-pe-0 {padding-right: 0;}    
+    .mob-ps-0 {padding-left: 0;}
+    form .mob-ryt-radius-0 {
+        border-top-right-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        padding-right: 15px !important;
+    }
+    .mob-lft-radius-0 span.select2{
+        border-top-left-radius: 0 !important;
+        border-bottom-left-radius: 0 !important;
+        padding: 5px 5px !important;
+    }
 
 }
 
