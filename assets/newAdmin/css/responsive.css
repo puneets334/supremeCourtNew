@@ -147,7 +147,7 @@
         border-bottom-left-radius: 0 !important;
         padding: 5px 5px !important;
     }
-
+    .profile-photo-view-pg{margin: 0 auto;margin-bottom: 15px;}
 }
 
 @media screen and (max-width:380px) and (min-width:300px){
