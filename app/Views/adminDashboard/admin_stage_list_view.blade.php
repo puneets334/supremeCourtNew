@@ -295,10 +295,10 @@
                                     <?php if (getSessionData('login')['userid'] != SC_ADMIN){ ?>
                                         <?php if($re->ref_m_efiled_type_id == E_FILING_TYPE_IA || $re->ref_m_efiled_type_id == E_FILING_TYPE_MISC_DOCS){
                                             ?>
-                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"> <input type="submit" class="btn-success input-sm" Value="<?php echo htmlentities($button_label, ENT_QUOTES) ?>"  onclick="callController('<?php echo htmlentities(url_encryption(trim($re->icmis_diary_no .$re->icmis_diary_year.'#'.$re->registration_id), ENT_QUOTES)); ?>')"  />
+                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"> <input type="submit" class="quick-btn" Value="<?php echo htmlentities($button_label, ENT_QUOTES) ?>"  onclick="callController('<?php echo htmlentities(url_encryption(trim($re->icmis_diary_no .$re->icmis_diary_year.'#'.$re->registration_id), ENT_QUOTES)); ?>')"  />
                                        <?php } else { ?>
                                         <!--<td width="12%"> <input type="submit" class="btn-success input-sm" Value="<?php /*echo htmlentities($button_label, ENT_QUOTES) */?>"  onclick="TransferToSection('<?php /*echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_case_reg_id . '#' . $re->efiling_no), ENT_QUOTES)); */?>')"  />-->
-                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"><a class="btn-success input-sm" href="<?php  echo $redirect_url.'/'. htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no), ENT_QUOTES)); ?>"><?php echo $button_label;?></a></td>
+                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"><a class="quick-btn" href="<?php  echo $redirect_url.'/'. htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no), ENT_QUOTES)); ?>"><?php echo $button_label;?></a></td>
                                     <?php } ?>
                                     <?php }else{ echo '<td width="16%"></td>';} ?>
                                     </tr>
