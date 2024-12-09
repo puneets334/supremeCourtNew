@@ -581,7 +581,37 @@ textarea {
             $(this).val(outputVal);
         }
     } 
+
+    $(document).ready(function() {
+        var party_as_sel = '<?php echo @$caveator_details[0]['orgid']; ?>';
+        if (party_as_sel != '') {
+            get_caveator_as(party_as_sel); //--call to selected
+        }  
+    });
    $(document).ready(function() { 
+    var party_as_sel = '<?php echo isset($caveator_details[0]['orgid'])?$caveator_details[0]['orgid']:''; ?>';
+            var OrgState_ID= '<?php echo isset($caveator_details[0]['org_state'])?$caveator_details[0]['org_state']:''; ?>';
+            var OrgDept_ID='<?php echo isset($caveator_details[0]['org_dept'])?$caveator_details[0]['org_dept']:''; ?>';
+            var OrgPost_ID='<?php echo isset($caveator_details[0]['org_post'])?$caveator_details[0]['org_post']:''; ?>';
+            //alert(OrgDept_ID);
+            if(OrgState_ID==0 && OrgState_ID!=''){
+                $('#otherOrgState').show();
+                var OrgState_NAME='<?php echo isset($caveator_details[0]['org_state_name'])?$caveator_details[0]['org_state_name']:''; ?>';
+                $('#org_state_name').text(OrgState_NAME);
+            }
+            if(OrgDept_ID==0 || OrgDept_ID==''){
+                $('#otherOrgDept').show();
+                var OrgDept_NAME='<?php echo isset($caveator_details[0]['org_dept_name'])?$caveator_details[0]['org_dept_name']:''; ?>';
+                $('#org_dept_name').text(OrgDept_NAME);
+            }
+            if(OrgPost_ID==0 || OrgPost_ID==''){
+                $('#otherOrgPost').show();
+                var OrgPost_NAME='<?php echo isset($caveator_details[0]['org_post_name'])?$caveator_details[0]['org_post_name']:''; ?>';
+                $('#org_post_name').text(OrgPost_NAME);
+            }
+            if (party_as_sel != '') {
+                get_caveator_as(party_as_sel);//--call to selected
+            }
     $("input[name='pet_age']").on('input', function(e) {
             $(this).val($(this).val().replace(/[^0-9]/g, ''));
         });
@@ -669,8 +699,8 @@ textarea {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-        var selected_org_st_id = '<?php echo url_encryption(isset($caveator_details[0]['org_state_id'])?$caveator_details[0]['org_state_id']:''); ?>';
-        var selected_dept_id = '<?php echo url_encryption(isset($caveator_details[0]['org_dept_id'])?$caveator_details[0]['org_dept_id']:''); ?>';
+        var selected_org_st_id = '<?php echo url_encryption(isset($caveator_details[0]['org_state'])?$caveator_details[0]['org_state']:''); ?>';
+        var selected_dept_id = '<?php echo url_encryption(isset($caveator_details[0]['org_dept'])?$caveator_details[0]['org_dept']:''); ?>';
 
         $.ajax({
             type: "POST",
@@ -698,7 +728,7 @@ textarea {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-        var selected_post_id = '<?php echo url_encryption(isset($caveator_details[0]['org_post_id'])?$caveator_details[0]['org_post_id']:''); ?>';
+        var selected_post_id = '<?php echo url_encryption(isset($caveator_details[0]['org_post'])?$caveator_details[0]['org_post']:''); ?>';
 
         $.ajax({
             type: "POST",
@@ -729,9 +759,11 @@ textarea {
 
 
 
-
+    //---------- Hide and show Individual and Org form----------------------//
+  
 
     $(document).ready(function() {
+       
         function validateInput(event) {
         const input = event.target.value;
         outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
@@ -1152,34 +1184,7 @@ textarea {
 
 </script>
 <script type="text/javascript">
-    
-    //---------- Hide and show Individual and Org form----------------------//
-    $(document).ready(function () {
-        var party_as_sel = '<?php echo isset($caveator_details[0]['caveator_type'])?$caveator_details[0]['caveator_type']:''; ?>';
-
-        var OrgState_ID= '<?php echo isset($caveator_details[0]['org_state'])?$caveator_details[0]['org_state']:''; ?>';
-        var OrgDept_ID='<?php echo isset($caveator_details[0]['org_dept'])?$caveator_details[0]['org_dept']:''; ?>';
-        var OrgPost_ID='<?php echo isset($caveator_details[0]['org_post'])?$caveator_details[0]['org_post']:''; ?>';
-        //alert(OrgDept_ID);
-        if(OrgState_ID==0 && OrgState_ID!=''){
-            $('#otherOrgState').show();
-            var OrgState_NAME='<?php echo isset($caveator_details[0]['org_state_name'])?$caveator_details[0]['org_state_name']:''; ?>';
-            $('#org_state_name').text(OrgState_NAME);
-        }
-        if(OrgDept_ID==0 || OrgDept_ID==''){
-            $('#otherOrgDept').show();
-            var OrgDept_NAME='<?php echo isset($caveator_details[0]['org_dept_name'])?$caveator_details[0]['org_dept_name']:''; ?>';
-            $('#org_dept_name').text(OrgDept_NAME);
-        }
-        if(OrgPost_ID==0 || OrgPost_ID==''){
-            $('#otherOrgPost').show();
-            var OrgPost_NAME='<?php echo isset($caveator_details[0]['org_post_name'])?$caveator_details[0]['org_post_name']:''; ?>';
-            $('#org_post_name').text(OrgPost_NAME);
-        }
-        if (party_as_sel != '') {
-            get_caveator_as(party_as_sel);//--call to selected
-        }
-    });
+  
     
   
        
