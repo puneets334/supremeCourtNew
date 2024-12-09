@@ -730,16 +730,16 @@
                                                       if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                                           if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                                           ?>
-                                       <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
+                                       <button class="quick-btn submit-btn btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
                                        <?php } else {
                                           ?>
-                                       <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
+                                       <button class="quick-btn submit-btn  btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
                                        <?php
                                           }
                                           }
                                           } else {
                                           if (!empty(getSessionData('efiling_details')) && in_array(JAIL_PETITION_SUBORDINATE_COURT, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-                                          ?><a href="<?php echo base_url('jailPetition/FinalSubmit') ?>" class="quick-btn btn btn-success btn-sm" id='jail'>
+                                          ?><a href="<?php echo base_url('jailPetition/FinalSubmit') ?>" class="quick-btn submit-btn  btn-sm" id='jail'>
                                        SUBMIT FOR EFILING</a>
                                        <?php }
                                           }

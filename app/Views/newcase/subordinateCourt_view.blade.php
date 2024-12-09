@@ -147,7 +147,7 @@
                                                         placeholder=""> --}}
                             </div>
                         </div>
-                        <div class="row" id="supreme_court_info" style="display: block;">
+                        <div class="" id="supreme_court_info" style="display: block;">
                             <div class="col-12">
                             <div class="row">
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
@@ -169,11 +169,11 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Case No. And Year<span style="color: red" class="astriks">*</span></label>
                                     <div class="row">
-                                        <div class="col-6">
-                                            <input id="sci_case_number" name="sci_case_number" tabindex='5' maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl age_calculate caseno" type="text">
+                                        <div class="col-8 col-sm-8 col-md-6 col-lg-6 mob-pe-0">
+                                            <input id="sci_case_number" name="sci_case_number" tabindex='5' maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl mob-ryt-radius-0 age_calculate caseno" type="text">
                                         </div>
-                                        <div class="col-6">
-                                            <select tabindex='6' class="form-control cus-form-ctrl filter_select_dropdown col-4" id="sci_case_year" name="sci_case_year">
+                                        <div class="col-4 col-sm-4 col-md-6 col-lg-6 mob-ps-0 mob-lft-radius-0">
+                                            <select tabindex='6' class="form-control cus-form-ctrl  filter_select_dropdown col-4" id="sci_case_year" name="sci_case_year">
                                                 <option value="">Year</option>
                                                 <?php
                                                 $end_year = 47;
