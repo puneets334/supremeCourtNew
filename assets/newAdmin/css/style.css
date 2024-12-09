@@ -8729,4 +8729,8 @@ label.text-ryt {text-align: right;width: 100%;padding: 0;}
     white-space: break-spaces;
     text-wrap: wrap !important;
 }
+.profile-photo-view-pg {width: fit-content;border: 1px solid #e4e4e4;text-align: center;display: block;}
+.profile-photo-view-pg #show_profile_pic {white-space: nowrap;padding: 7px 15px;display: block;font-size: 14px;color: #0d48be; cursor: pointer;}
+.profile-photo-view-pg img {border: none;padding: 15px;width: 140px;height: 140px;}
+.profile-photo-view-pg #show_profile_pic:hover {background: #0d48be;color: #fff;}
 /* 9-12-24  End  */
