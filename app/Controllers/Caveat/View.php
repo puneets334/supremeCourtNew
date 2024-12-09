@@ -97,7 +97,7 @@ class View extends BaseController {
         } else {
             $case_type_pet_title = htmlentities('Caveator', ENT_QUOTES);
         }
-        if (!in_array(CAVEAT_BREAD_CAVEATOR, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+        if ($_SESSION['efiling_details'] != '' && !in_array(CAVEAT_BREAD_CAVEATOR, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
             $_SESSION['MSG'] = message_show("fail", 'Please complete <b>" ' . $case_type_pet_title . ' "</b> section.');
             redirect('caveat/caveator');
             exit(0);
