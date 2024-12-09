@@ -78,36 +78,38 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                                    <div class="row">
-                                                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
-                                                            <label class="prof-label">AOR Code :</label>
-                                                        </div>
-                                                        <div class="col-8 col-sm-8 col-md-8 col-lg-8">
-                                                            <div class="prof-outp">
-                                                                <?= $profile->aor_code ?>
+                                                <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { ?>
+                                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                                                <label class="prof-label">AOR Code :</label>
+                                                            </div>
+                                                            <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                                                                <div class="prof-outp">
+                                                                    <?= $profile->aor_code ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                                                    <div class="row">
-                                                        <div class="col-4 col-sm-4 col-md-4 col-lg-4">
-                                                            <label class="prof-label">Enroll. Date :</label>
-                                                        </div>
-                                                        <div class="col-8 col-sm-8 col-md-8 col-lg-8">
-                                                            <div class="prof-outp">
-                                                                <?php
-                                                                // if ($profile['enroll_date'] !=null && !empty($profile->enroll_date) && $profile->enroll_date!='0000-00-00') {
-                                                                //     echo ucwords(htmlentities(date("d-m-Y", strtotime($profile->enroll_date)), ENT_QUOTES));
-                                                                // } else {
-                                                                //     echo 'N/A';
-                                                                // }
-                                                                ?>
+                                                    <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                                        <div class="row">
+                                                            <div class="col-4 col-sm-4 col-md-4 col-lg-4">
+                                                                <label class="prof-label">Enroll. Date :</label>
+                                                            </div>
+                                                            <div class="col-8 col-sm-8 col-md-8 col-lg-8">
+                                                                <div class="prof-outp">
+                                                                    <?php
+                                                                    // if ($profile['enroll_date'] !=null && !empty($profile->enroll_date) && $profile->enroll_date!='0000-00-00') {
+                                                                    //     echo ucwords(htmlentities(date("d-m-Y", strtotime($profile->enroll_date)), ENT_QUOTES));
+                                                                    // } else {
+                                                                    //     echo 'N/A';
+                                                                    // }
+                                                                    ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                <?php } ?>
                                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
@@ -133,7 +135,11 @@
                                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
-                                                            <label class="prof-label">Permanent Address :</label>
+                                                            <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { ?>
+                                                                <label class="prof-label">Permanent Address :</label>
+                                                            <?php } else{ ?>
+                                                                <label class="prof-label">Residential Address :</label>
+                                                            <?php } ?>
                                                         </div>
                                                         <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                             <div class="prof-outp">
@@ -165,7 +171,11 @@
                                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                                     <div class="row">
                                                         <div class="col-4 col-sm-4 col-md-4 col-lg-4">
-                                                            <label class="prof-label">Chamber Address :</label>
+                                                            <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { ?>
+                                                                <label class="prof-label">Chamber Address :</label>
+                                                            <?php } else{ ?>
+                                                                <label class="prof-label">Office Address :</label>
+                                                            <?php } ?>
                                                         </div>
                                                         <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                             <div class="prof-outp">
@@ -188,8 +198,12 @@
                                                                     $moblie_number = htmlentities($profile->moblie_number, ENT_QUOTES);
                                                                 }
                                                                 echo $moblie_number;
-                                                                ?>
-                                                                <a href="<?= base_url('profile/updateProfile/contact'); ?>"><i class="fa fa-edit"></i></a>
+                                                                if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { 
+                                                                    echo '';
+                                                                } else{
+                                                                    ?>
+                                                                    <a href="<?= base_url('profile/updateProfile/contact'); ?>"><i class="fa fa-edit"></i></a>
+                                                                <?php } ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -208,8 +222,12 @@
                                                                     $emailid = '<span style="color:red;">' . htmlentities('Update Your Email ID ', ENT_QUOTES) . '</span>';
                                                                 }
                                                                 echo $emailid;
-                                                                ?> 
-                                                                <a href="<?= base_url('profile/updateProfile/email'); ?>"><i class="fa fa-edit"></i></a>
+                                                                if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { 
+                                                                    echo '';
+                                                                } else{
+                                                                    ?> 
+                                                                    <a href="<?= base_url('profile/updateProfile/email'); ?>"><i class="fa fa-edit"></i></a>
+                                                                <?php } ?>
                                                             </div>
                                                         </div>
                                                     </div>
