@@ -38,7 +38,7 @@ if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
             <td style="width:150px;"><?php echo htmlentities($view_data['efiling_no'], ENT_QUOTES) ?></td>
             <td style="width:100px;"><?php echo $lbl_efiling_dt; ?></td>
             <td class="collon">:</td>
-            <td style="width:120px;"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime($submitted_on)), ENT_QUOTES) ?></td>
+            <td style="width:120px;"><?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 Hours 30 Minutes', strtotime($submitted_on))), ENT_QUOTES) ?></td>
         </tr>
 <tr>
     <td> Efiled</td> <td class="collon">:</td>
@@ -150,6 +150,6 @@ if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
 
     </table>  
     <br>
-    <div style="text-align: right;"><strong>Generated Date: <?php echo htmlentities(date('d-m-Y h:i:s A'), ENT_QUOTES) ?>  </strong></div>
+    <div style="text-align: right;"><strong>Generated Date: <?php echo htmlentities(date('d-m-Y h:i:s A', strtotime('+5 Hours 30 Minutes')), ENT_QUOTES) ?>  </strong></div>
 
 </div>

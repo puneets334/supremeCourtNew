@@ -98,10 +98,13 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr>
+                                                                    <tr>                                                                    
                                                                         <td data-key="<?php echo $lbl_efiling_no; ?> " width="14%"><?php echo htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES); ?></td>
                                                                         <td data-key="Case No.& Cause Title"><?php echo $cause_title ?></td>
-                                                                        <td data-key="Type" width="14%"><?php echo htmlentities($filing_type, ENT_QUOTES); ?></td>
+                                                                        <td data-key="Type" width="14%">
+                                                                            <?php // echo htmlentities($filing_type, ENT_QUOTES); ?>
+                                                                            <?php echo htmlentities($type, ENT_QUOTES); ?>
+                                                                        </td>
                                                                         <!--<td width="14%"><a href="<?/*= base_url() */ ?>history/efiled_case/user_info/<?php /*echo htmlentities(url_encryption(trim($efiled_by_user[0]->id)), ENT_QUOTES) . '/' . htmlentities(url_encryption(trim($efiled_by_user[0]->ref_m_usertype_id)), ENT_QUOTES); */ ?>"><?php /*echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); */ ?></a></td>-->
                                                                         <td data-key="Submitted By" width="14%"><?php echo htmlentities(strtoupper($efiled_by), ENT_QUOTES); ?></td>
                                                                     </tr>
