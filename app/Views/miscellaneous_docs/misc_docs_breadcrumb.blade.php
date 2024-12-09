@@ -224,10 +224,12 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     }
                     ?>
 
-                    <a href="<?= $appearing_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="
+                    <!-- <a href="<?= $appearing_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="
                      <?php if (!in_array(MISC_BREAD_CASE_DETAILS, $StageArray)) {
                             echo $disabled_status;
-                        } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Appearing for</a>
+                        } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Appearing for</a> -->
+                        <a href="<?= $appearing_url; ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true"  style=" z-index:10;">
+                            <span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> Appearing for</a>
                 </li>
                 <li class="nav-item" role="presentation">
                     <?php
