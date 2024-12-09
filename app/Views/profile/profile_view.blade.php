@@ -26,7 +26,8 @@
                             {{-- Main Start --}}
                             <div class="profile-details">
                                 <div class="row mt-4">
-                                    <div class="col-md-12">
+                                    
+                                    <div class="col-sm-12 col-md-12 col-lg-12 mb-3">
                                         <div class="col-md-7 col-xs-6">
                                             <h2> Profile (
                                                 <?php
@@ -51,7 +52,17 @@
                                             </h2>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-10 col-lg-12">
+                                    <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { echo ''; } else{ ?>                                     
+                                        <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+                                            <div class="profile-photo-view-pg">
+                                                <img class="img-thumbnail img-responsive" src="<?php echo base_url('assets/newAdmin/images/profile-img.png'); ?>" >
+                                                <div> 
+                                                    <a class="" id="show_profile_pic"  maxlength="1">Change Profile Photo</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="col-12 col-sm-12 col-md-10 col-lg-10">
                                         <div class="usrprofile-details">
                                             <div class="row">
                                                 <div class="col-12 col-sm-12 col-md-6 col-lg-6">
