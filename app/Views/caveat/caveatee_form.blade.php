@@ -540,66 +540,10 @@ span.select2.select2-container.select2-container--default {
 
 
         var party_as = $('select#party_is option:selected').val();
-        if (party_as == 'I') {          
-            $('#org_dept').removeAttr('required');
-            $('#org_state').removeAttr('required');
-            $('#org_post').removeAttr('required');
-        $('#pet_complainant').attr('required', 'required');
-        $('#pet_rel_flag').attr('required', 'required'); 
-        $('#relative_name').attr('required', 'required'); 
-        $('#pet_age').attr('required', 'required'); 
-        $('input[name="pet_gender"]').attr('required', 'required');
-            $('#indvidual_form').show(); 
-            $('#org_form').hide();
-            $('#org_state_row').show();
-            $('#org_state').val('');
-            $('#org_dept').val('');
-            $('#org_post').val('');
-            $('#otherOrgState').hide();
-            $('#otherOrgDept').hide();
-            $('#otherOrgPost').hide();
-        }else {
-            $('#pet_complainant').attr('required', 'required');
-        $('#pet_rel_flag').attr('required', 'required'); 
-        $('#relative_name').attr('required', 'required'); 
-        $('#pet_age').attr('required', 'required'); 
-        $('input[name="pet_gender"]').attr('required', 'required');
-            if (party_as == 'D3') { 
-                // Add 'required' attribute
-                $('#org_dept').attr('required', true);
-                $('#org_post').attr('required', true);
-                // Remove 'required' attribute
-                $('#org_state').removeAttr('required');
-                $('#indvidual_form').hide(); 
-                $('#org_form').show();
-                $('#org_state_row').hide();
-                $('#otherOrgState').hide();
-                $('#caveator_name').val('');
-                $('#relation').val('');
-                $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                /*$('#party_gender1').val('');
-                 $('#party_gender2').val('');
-                 $('#party_gender3').val('');*/
-            } else {
-                                // Add 'required' attribute
-                                $('#org_dept').attr('required', true);
-                $('#org_state').attr('required', true);
-                $('#org_post').attr('required', true); 
-                
-        $('#pet_complainant').attr('required', false);
-        $('#indvidual_form').hide(); 
-                $('#org_form').show();
-                $('#org_state_row').show();
-                $('#caveator_name').val('');
-                $('#relation').val('');
-                $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                $("#stateDivBox").show();
-            }
+        if (party_as != '') {
+            get_caveator_as(party_as);//--call to selected
         }
+         
     });
     function get_caveator_as(value) {        
         var party_as = value;
@@ -608,10 +552,10 @@ span.select2.select2-container.select2-container--default {
             $('#org_state').removeAttr('required');
             $('#org_post').removeAttr('required');
             $('#pet_complainant').attr('required', 'required');
-        $('#pet_rel_flag').attr('required', 'required'); 
-        $('#relative_name').attr('required', 'required'); 
-        $('#pet_age').attr('required', 'required'); 
-        $('input[name="pet_gender"]').attr('required', 'required');
+            $('#pet_rel_flag').attr('required', 'required'); 
+            $('#relative_name').attr('required', 'required'); 
+            $('#pet_age').attr('required', 'required'); 
+            $('input[name="pet_gender"]').attr('required', 'required');
 
             $('#indvidual_form').show();
             $('#org_form').hide();
@@ -622,8 +566,12 @@ span.select2.select2-container.select2-container--default {
             $('#otherOrgState').hide();
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
-        } else {
-
+        } else { 
+            $('#pet_complainant').removeAttr('required');
+            $('#pet_rel_flag').removeAttr('required'); 
+            $('#relative_name').removeAttr('required'); 
+            $('#pet_age').removeAttr('required'); 
+            $('input[name="pet_gender"]').removeAttr('required');
             get_departments(party_as);
             get_posts();
             if (party_as == 'D3') {
