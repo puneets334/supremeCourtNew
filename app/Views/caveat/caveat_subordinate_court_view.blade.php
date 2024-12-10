@@ -32,23 +32,30 @@ body.loading {
 body.loading .overlay{
     display: block;
 }
-
-.loader {
-      border: 8px solid #f3f3f3; /* Light grey */
-      border-top: 8px solid #3498db; /* Blue */
+#loader-wrapper {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			z-index: 1000; /* Ensure it's on top of other content */
+		}
+/* .loader {
+      border: 8px solid #f3f3f3;  
+      border-top: 8px solid #3498db;  
       border-radius: 50%;
       width: 50px;
       height: 50px;
       animation: spin 2s linear infinite;
-      margin: 0 auto; /* Center the loader */
+      margin: 0 auto;  
     }
 
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
-    }
+    } */
 </style>
-
+<div id="loader-wrapper" style="display: none;">
+            <div id="loader"></div>
+        </div>
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
         <div class="tab-pane Active" id="messages" role="tabpanel" aria-labelledby="messages-tab">                                 
@@ -444,7 +451,7 @@ body.loading .overlay{
                         
                             
                     </div> 
-                    <div id="nloader_div" class="loader" style="display: none;"></div> 
+                    
                     <div class="col-md-12 col-sm-12 col-xs-12 text-center" id="search_button_div">
                         <div class="col-sm-12 col-xs-12 col-md-offset-5">
                             <div class="mb-3">
@@ -890,7 +897,7 @@ body.loading .overlay{
 
         $("#search_case_hc").click(function () {
             $('#search_button_div').hide();
-            $('#nloader_div').show();
+            $('#loader-wrapper').show();
             var court_type = $("input[name=radio_selected_court]:checked").val() ?? 1;
             // alert(court_type);
             if (court_type == 1) { //-High Court
@@ -932,7 +939,7 @@ body.loading .overlay{
                 data: {cnr:cnr, selected_court: court_type, high_court_id: hc_court, hc_name: hc_court_name, hc_court_bench: hc_court_bench, estab_id: estab_id, case_type_id: case_type,case_type_name:case_type_name, case_number: case_number, case_year: case_year},
                 async: true,
                 success: function (data) {
-                    $('#nloader_div').hide();
+                    $('#loader-wrapper').hide();
                     $('#search_button_div').show();
                     var resArr = data.split('@@@');
                     if(resArr[0] == 3){
