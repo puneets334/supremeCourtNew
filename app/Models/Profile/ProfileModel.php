@@ -302,7 +302,8 @@ class ProfileModel extends Model
         $builder = $this->db->table('efil.tbl_users');
         // $this->db->set();
         $builder->WHERE('userid', $userid);
-        $result = $builder->UPDATE('other_contact_number', $other_contact_number);
+        $builder->set('other_contact_number', $other_contact_number);
+        $result = $builder->UPDATE();
         if ($result) {
             return $result;
         } else {
@@ -313,14 +314,25 @@ class ProfileModel extends Model
     public function updatePhoto($userid, $photo_data)
     {
         $builder = $this->db->table('efil.tbl_users');
-        // $this->db->set();
+        $builder->select('id');
         $builder->WHERE('userid', $userid);
-        $result = $builder->UPDATE('photo_path', $photo_data);
-        if ($result) {
-            return $result;
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getRow();
+            $builder = $this->db->table('efil.tbl_users');
+            // $this->db->set();
+            $builder->WHERE('id', $result->id);
+            $builder->set('photo_path', $photo_data);
+            $res = $builder->update();
+            if ($res) {
+                return $res;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
+        
     }
 
     function deactive_adminuser($id)

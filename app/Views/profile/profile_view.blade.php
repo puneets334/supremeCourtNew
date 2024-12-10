@@ -14,6 +14,13 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                         <div class="dash-card">
                             {{-- Page Title Start --}}
+                            <?php if (session()->getFlashdata('msg')) : ?>
+                                <div class="alert alert-dismissible text-center flashmessage">
+                                    <div class="flas-msg-inner">
+                                        <?= session()->getFlashdata('msg') ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                             <div class="title-sec">
                                 <h5 class="unerline-title">My Profile </h5>
                                 <div class="end-buttons my-0">
@@ -52,10 +59,10 @@
                                             </h2>
                                         </div>
                                     </div>
-                                    <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { echo ''; } else{ ?>                                     
+                                    <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { echo ''; } else{ // pr($profile); ?>                                     
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                             <div class="profile-photo-view-pg">
-                                                <img class="img-thumbnail img-responsive" src="<?php echo base_url('assets/newAdmin/images/profile-img.png'); ?>" >
+                                                <img class="img-thumbnail img-responsive" src="<?php echo empty(getSessionData('login')['photo_path']) ? base_url('assets/newAdmin/images/profile-img.png') : getSessionData('login')['photo_path']; ?>" >
                                                 <div> 
                                                     <a class="" id="show_profile_pic"  maxlength="1">Change Profile Photo</a>
                                                 </div>
@@ -213,7 +220,7 @@
                                                                     echo '';
                                                                 } else{
                                                                     ?>
-                                                                    <a href="<?= base_url('profile/updateProfile/contact'); ?>"><i class="fa fa-edit"></i></a>
+                                                                    <a class="edit-pen-btn" href="<?= base_url('profile/updateProfile/contact'); ?>"><i class="fa fa-edit"></i></a>
                                                                 <?php } ?>
                                                             </div>
                                                         </div>
@@ -237,7 +244,7 @@
                                                                     echo '';
                                                                 } else{
                                                                     ?> 
-                                                                    <a href="<?= base_url('profile/updateProfile/email'); ?>"><i class="fa fa-edit"></i></a>
+                                                                    <a class="edit-pen-btn" href="<?= base_url('profile/updateProfile/email'); ?>"><i class="fa fa-edit"></i></a>
                                                                 <?php } ?>
                                                             </div>
                                                         </div>
@@ -247,6 +254,38 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div id="profile_pic" style="display:none;">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div style="color:#f3441c" class=""> 
+                                            <center><p>NOTE : Please upload only JPG or JPEG. File name maximun length can be 40 characters including digits characters, spaces, hypens and underscore. maximum file size 1MB.</p></center>
+                                        </div>
+                                        <?php
+                                        $attribute = array('class' => 'form-horizontal form-label-left', 'name' => 'advocate_login_uploads', 'id' => 'advocate_login_uploads', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
+                                        echo form_open('profile/DefaultController/uploadPhoto', $attribute);
+                                        ?>
+                                            <div class="center-buttons">
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <?// = $this->lang->line('choose_profile_pic'); ?>
+                                                        <div class="input-group">   
+                                                            <input id="advocate_image" accept="image/*" required name="advocate_image" placeholder="Profile Image" maxlength="50" class="form-control cus-form-ctrl" type="file">
+                                                            <span style="color: red;"><?php // echo form_error('advocate_image'); ?></span>
+                                                        </div> 
+                                                    </div>
+                                                </div>  
+                                                <!-- <input class="quick-btn" name="profile_pic_upload_id" type="submit" value="UPDATE PHOTO"> -->
+                                                
+                                            </div>
+                                            <div class="center-buttons">
+                                                <button class="quick-btn" name="profile_pic_upload_id" type="submit">UPDATE PHOTO</button>
+                                                <a class="quick-btn gray-btn" id="profile_pic_hide">CANCEL</a>
+                                            </div>
+                                        <?php echo form_close(); ?>                            
+                                    </div>
+                                </div>                                
                             </div>
                             {{-- Main End --}}
                         </div>

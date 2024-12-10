@@ -32,8 +32,22 @@ body.loading {
 body.loading .overlay{
     display: block;
 }
+
+.loader {
+      border: 8px solid #f3f3f3; /* Light grey */
+      border-top: 8px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 2s linear infinite;
+      margin: 0 auto; /* Center the loader */
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 </style>
- 
 
 <div class="center-content-inner comn-innercontent">
     <div class="tab-content">
@@ -430,7 +444,7 @@ body.loading .overlay{
                         
                             
                     </div> 
-
+                    <div id="nloader_div" class="loader" style="display: none;"></div> 
                     <div class="col-md-12 col-sm-12 col-xs-12 text-center" id="search_button_div">
                         <div class="col-sm-12 col-xs-12 col-md-offset-5">
                             <div class="mb-3">
@@ -876,7 +890,7 @@ body.loading .overlay{
 
         $("#search_case_hc").click(function () {
             $('#search_button_div').hide();
-            $('#loader_div').show();
+            $('#nloader_div').show();
             var court_type = $("input[name=radio_selected_court]:checked").val() ?? 1;
             // alert(court_type);
             if (court_type == 1) { //-High Court
@@ -909,7 +923,6 @@ body.loading .overlay{
                 var case_type_name = $('#agency_case_type_name').val();
             }
             //alert(case_number);alert(case_year);
-
             $('#msg').hide();
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
@@ -919,10 +932,12 @@ body.loading .overlay{
                 data: {cnr:cnr, selected_court: court_type, high_court_id: hc_court, hc_name: hc_court_name, hc_court_bench: hc_court_bench, estab_id: estab_id, case_type_id: case_type,case_type_name:case_type_name, case_number: case_number, case_year: case_year},
                 async: true,
                 success: function (data) {
-                    $('#loader_div').hide();
+                    $('#nloader_div').hide();
                     $('#search_button_div').show();
                     var resArr = data.split('@@@');
-//   alert(resArr[1]);
+                    if(resArr[0] == 3){
+                        alert(resArr[1]); 
+                    }
                     if (resArr[0] == 1) {
                         $('#msg').show();
                         $("#case_result").html("<p class='message center invalid' style='color: red; font-weight: bold; ' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()></span></p>")

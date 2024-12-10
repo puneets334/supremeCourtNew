@@ -558,77 +558,265 @@ class DefaultController extends BaseController
         }
     }
 
-    function uploadPhoto()
-    {
-        $upload_id_bar = $_POST['edit_new_adv_idproof'];
+    // function uploadPhoto()
+    // {
+    //     $upload_id_bar = $_POST['edit_new_adv_idproof'];
+    //     $update_profile = $_POST['profile_pic_upload_id'];
+    //     ///------START : Validation For IMAGE-------//
+    //     if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload !</div>');
+    //         return redirect()->to(base_url('profile'));
+    //         exit(0);
+    //     }
+    //     if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload !</div>');
+    //         return redirect()->to(base_url('profile'));
+    //         exit(0);
+    //     }
+    //     if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image No double extension allowed in JPEG/JPG !</div>');
+    //         return redirect()->to(base_url('profile'));
+    //         exit(0);
+    //     }
+    //     if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !</div>');
+    //         return redirect()->to(base_url('profile'));
+    //         exit(0);
+    //     }
+    //     if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!</div>');
+    //         return redirect()->to(base_url('profile'));
+    //         exit(0);
+    //     }
+    //     if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
+    //         $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!</div>');
+    //         return redirect()->to(base_url('profile'));
+    //         exit(0);
+    //     }
+    //     $new_filename = time() . rand() . ".jpeg";
+    //     if ($_FILES["advocate_id_prof"]['type'] == 'image/jpeg') {
+    //         $new_pdf_extens = ".jpeg";
+    //     }
+    //     if ($_FILES["advocate_id_prof"]['type'] == 'application/pdf') {
+    //         $new_pdf_extens = ".pdf";
+    //     }
+    //     $new_pdf_file_name = time() . rand() . $new_pdf_extens;
+    //     if ($_FILES["advocate_id_prof"]['type'] == 'image/jpeg') {
+    //         $new_bar_pdf_extens = ".jpeg";
+    //     }
+    //     if ($_FILES["advocate_id_prof"]['type'] == 'application/pdf') {
+    //         $new_bar_pdf_extens = ".pdf";
+    //     }
+    //     $new_bar_reg_name = time() . rand() . $new_bar_pdf_extens;
+    //     $this->load->library('upload');
+    //     $photo_file_path = "uploaded_docs/user_images/photo/" . $new_filename;
+    //     $pdf_file_path = "uploaded_docs/user_images/id_proof/" . $new_pdf_file_name;
+    //     $photo_thums_path = "uploaded_docs/user_images/thumbnail/" . $new_filename;
+    //     $bar_reg_certificate_path = "uploaded_docs/user_images/barReg_Certificate/" . $new_bar_reg_name;
+    //     $data = array(
+    //         'profile_photo' => $photo_file_path,
+    //         'profile_thumbnail' => $photo_thums_path,
+    //         'id_proof_photo' => $pdf_file_path,
+    //         'bar_reg_certificate' => $bar_reg_certificate_path
+    //     );
+    //     $id = $_SESSION['inserted_id'];
+    //     $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
+    //     $upload_pdf = $this->pdf_file_upload('advocate_id_prof', $pdf_file_path, $new_pdf_file_name);
+    //     $upload_pdf_bar_reg = $this->bar_reg_certificate_upload('bar_reg_certificate', $bar_reg_certificate_path, $new_bar_reg_name);
+    //     if (!$thumb) {
+    //         $_SESSION['login']['photo_path'] = $photo_file_path;
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Please Upload Image Is Requerd!</div>');
+    //         return redirect()->to(base_url('profile'));
+    //     } else if ($thumb && $upload_pdf && $upload_pdf_bar_reg) {
+    //         $_SESSION['login']['photo_path'] = $photo_file_path;
+    //         $_SESSION['photo_path'] = $photo_file_path;
+    //         $_SESSION['image_and_id_view'] = $data;
+    //         $_SESSION['profile_photo'] = $update_profile;
+    //         $this->Profile_model->updatePhoto(getSessionData('login')['userid'], $photo_file_path);
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-success text-center flashmessage">Successful!</div>');
+    //         return redirect()->to(base_url('profile'));
+    //     } else {
+    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Updation Failed !</div>');
+    //         return redirect()->to(base_url('profile'));
+    //     }
+    // }
+
+    // function image_upload($images, $file_path, $file_temp_name)
+    // {
+    //     $thumbnail_path = 'uploaded_docs/user_images/thumbnail/';
+    //     if (!is_dir($thumbnail_path)) {
+    //         $uold = umask(0);
+    //         if (mkdir('uploaded_docs/user_images/thumbnail/', 0777, true)) {
+    //             $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+    //             write_file($thumbnail_path . '/index.html', $html);
+    //         }
+    //         umask($uold);
+    //     }
+    //     $photo_path = 'uploaded_docs/user_images/photo/';
+    //     if (!is_dir($photo_path)) {
+    //         $uold = umask(0);
+    //         if (mkdir('uploaded_docs/user_images/photo/', 0777, true)) {
+    //             $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+    //             write_file($thumbnail_path . '/index.html', $html);
+    //         }
+    //         umask($uold);
+    //     }
+    //     $config['upload_path'] = './uploaded_docs/user_images/photo/';
+    //     $config['allowed_types'] = 'jpg|jpeg';
+    //     $config['overwrite'] = TRUE;
+    //     $config['file_name'] = $file_temp_name;
+    //     $this->load->library('upload');
+    //     $this->upload->initialize($config);
+    //     $this->upload->do_upload($images);
+    //     $uploadData = $this->upload->data();
+    //     $filename = $uploadData['file_name'];
+    //     $data['picture'] = $filename;
+    //     $this->_generate_thumbnail($filename);
+    //     return $data;
+    // }
+
+    // function _generate_thumbnail($picture)
+    // {
+    //     $this->load->library('image_lib');
+    //     $config['image_library'] = 'gd2';
+    //     $config['source_image'] = 'uploaded_docs/user_images/photo/' . $picture;
+    //     $config['new_image'] = 'uploaded_docs/user_images/thumbnail/' . $picture;
+    //     $config['maintain_ratio'] = TRUE;
+    //     $config['width'] = 150;
+    //     $config['height'] = 150;
+    //     $this->load->library('image_lib', $config);
+    //     $this->image_lib->initialize($config);
+    //     $this->image_lib->resize();
+    //     return true;
+    // }
+
+    // function pdf_file_upload($images, $file_path, $new_pdf_file_name)
+    // {
+    //     $id_path = 'uploaded_docs/user_images/id_proof/';
+    //     if (!is_dir($id_path)) {
+    //         $uold = umask(0);
+    //         if (mkdir('uploaded_docs/user_images/id_proof/', 0777, true)) {
+    //             $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+    //             write_file($thumbnail_path . '/index.html', $html);
+    //         }
+    //         umask($uold);
+    //     }
+    //     $config['upload_path'] = 'uploaded_docs/user_images/id_proof/';
+    //     $config['allowed_types'] = 'jpg|jpeg';
+    //     $config['overwrite'] = TRUE;
+    //     $config['file_name'] = $new_pdf_file_name;
+    //     $this->load->library('upload', $config);
+    //     $this->upload->initialize($config);
+    //     $this->upload->do_upload($images);
+    //     $uploadData = $this->upload->data();
+    //     return $uploadData;
+    // }
+
+    // function bar_reg_certificate_upload($images, $file_path, $new_pdf_file_name)
+    // {
+    //     $bar_cer_path = 'uploaded_docs/user_images/barReg_Certificate/';
+    //     if (!is_dir($bar_cer_path)) {
+    //         $uold = umask(0);
+    //         if (mkdir('uploaded_docs/user_images/barReg_Certificate/', 0777, true)) {
+    //             $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
+    //             write_file($bar_cer_path . '/index.html', $html);
+    //         }
+    //         umask($uold);
+    //     }
+    //     $config['upload_path'] = 'uploaded_docs/user_images/barReg_Certificate/';
+    //     $config['allowed_types'] = 'jpg|jpeg';
+    //     $config['overwrite'] = TRUE;
+    //     $config['file_name'] = $new_pdf_file_name;
+    //     $this->load->library('upload', $config);
+    //     $this->upload->initialize($config);
+    //     $this->upload->do_upload($images);
+    //     $uploadData = $this->upload->data();
+    //     return $uploadData;
+    // }
+
+    // function updateProfile_adv()
+    // {
+    //     $user_id = $_SESSION['login']['id'];
+    //     $profile_photo_path = url_decryption($_POST['photo_path']);
+    //     $profile_photo = url_decryption($_POST['thumb_path']);
+    //     $id_proof = url_decryption($_POST['id_proof_path']);
+    //     $bar_reg_certificate = url_decryption($_POST['bar_reg_certificate']);
+    //     $update_profile = $this->Profile_model->update_photo($user_id, $profile_photo_path, $id_proof, $bar_reg_certificate);
+    //     if ($update_profile) {
+    //         unset($_SESSION['image_and_id_view']);
+    //         $_SESSION['photo_path'] = $profile_photo;
+    //         $this->session->setFlashdata('msg_objection', '<div class="alert alert-success text-center flashmessage">Profile photo Updated Successful!</div>');
+    //         return redirect()->to(base_url('profile'));
+    //     }
+    // }
+
+    // function unset_upload()
+    // {
+    //     unset($_SESSION['image_and_id_view']);
+    //     return redirect()->to(base_url('profile'));
+    // }
+    
+    function upload_photo() {
+        // $upload_id_bar = $_POST['edit_new_adv_idproof'];
         $update_profile = $_POST['profile_pic_upload_id'];
         ///------START : Validation For IMAGE-------//
         if ($_FILES["advocate_image"]['type'] != 'image/jpeg') {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload.</div>');
             return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (mime_content_type($_FILES["advocate_image"]['tmp_name']) != 'image/jpeg') {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image Only JPEG/JPG are allowed in document upload.</div>');
             return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (substr_count($_FILES["advocate_image"]['name'], '.') > 1) {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image No double extension allowed in JPEG/JPG !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image No double extension allowed in JPEG/JPG.</div>');
             return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (preg_match("/[^0-9a-zA-Z\s.,-_ ]/i", $_FILES["advocate_image"]['name'])) {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores !</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores.</div>');
             return redirect()->to(base_url('profile'));
             exit(0);
         }
         if (strlen($_FILES["advocate_image"]['name']) > File_FIELD_LENGTH) {
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG file name max. length can be 45 characters only. JPEG/JPG file name may contain digits, characters, spaces, hyphens and underscores.</div>');
             return redirect()->to(base_url('profile'));
             exit(0);
         }
         if ($_FILES["advocate_image"]['size'] > UPLOADED_FILE_SIZE) {
             $file_size = (UPLOADED_FILE_SIZE / 1024) / 1024;
-            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB!</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Profile Image JPEG/JPG uploaded should be less than ' . $file_size . ' MB.</div>');
             return redirect()->to(base_url('profile'));
             exit(0);
         }
         $new_filename = time() . rand() . ".jpeg";
-        if ($_FILES["advocate_id_prof"]['type'] == 'image/jpeg') {
+        if (isset($_FILES["advocate_id_prof"]) && $_FILES["advocate_id_prof"]['type'] == 'image/jpeg') {
             $new_pdf_extens = ".jpeg";
         }
-        if ($_FILES["advocate_id_prof"]['type'] == 'application/pdf') {
-            $new_pdf_extens = ".pdf";
-        }
-        $new_pdf_file_name = time() . rand() . $new_pdf_extens;
-        if ($_FILES["advocate_id_prof"]['type'] == 'image/jpeg') {
-            $new_bar_pdf_extens = ".jpeg";
-        }
-        if ($_FILES["advocate_id_prof"]['type'] == 'application/pdf') {
-            $new_bar_pdf_extens = ".pdf";
-        }
-        $new_bar_reg_name = time() . rand() . $new_bar_pdf_extens;
-        $this->load->library('upload');
         $photo_file_path = "uploaded_docs/user_images/photo/" . $new_filename;
-        $pdf_file_path = "uploaded_docs/user_images/id_proof/" . $new_pdf_file_name;
-        $photo_thums_path = "uploaded_docs/user_images/thumbnail/" . $new_filename;
-        $bar_reg_certificate_path = "uploaded_docs/user_images/barReg_Certificate/" . $new_bar_reg_name;
         $data = array(
-            'profile_photo' => $photo_file_path,
-            'profile_thumbnail' => $photo_thums_path,
-            'id_proof_photo' => $pdf_file_path,
-            'bar_reg_certificate' => $bar_reg_certificate_path
+            'profile_photo' => base_url() . $photo_file_path
         );
-        $id = $_SESSION['inserted_id'];
+        $_SESSION['profile_image'] = $data;
         $thumb = $this->image_upload('advocate_image', $photo_file_path, $new_filename);
-        $upload_pdf = $this->pdf_file_upload('advocate_id_prof', $pdf_file_path, $new_pdf_file_name);
-        $upload_pdf_bar_reg = $this->bar_reg_certificate_upload('bar_reg_certificate', $bar_reg_certificate_path, $new_bar_reg_name);
-        if (!$thumb) {
+        $file_path_thumbs = '';
+        // if (!$thumb) {
+        //     $_SESSION['login']['photo_path'] = $file_path_thumbs;
+        //     $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Please Upload Image Is Requerd.</div>');
+        //     return redirect()->to(base_url('profile'));
+        //     exit(0);
+        // }
+        // if ($thumb) {
+        //     echo '<img class="image-preview" src="' . $_SESSION['profile_image']['profile_photo'] . ' " class="upload-preview" height="94" width="94" />';
+        // }
+            if (!$thumb) {
             $_SESSION['login']['photo_path'] = $photo_file_path;
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center flashmessage">Please Upload Image Is Requerd!</div>');
             return redirect()->to(base_url('profile'));
-        } else if ($thumb && $upload_pdf && $upload_pdf_bar_reg) {
+        } else if ($thumb) {
             $_SESSION['login']['photo_path'] = $photo_file_path;
             $_SESSION['photo_path'] = $photo_file_path;
             $_SESSION['image_and_id_view'] = $data;
@@ -642,119 +830,48 @@ class DefaultController extends BaseController
         }
     }
 
-    function image_upload($images, $file_path, $file_temp_name)
-    {
+    function image_upload($images, $file_path, $file_temp_name) {
         $thumbnail_path = 'uploaded_docs/user_images/thumbnail/';
-        if (!is_dir($thumbnail_path)) {
-            $uold = umask(0);
-            if (mkdir('uploaded_docs/user_images/thumbnail/', 0777, true)) {
-                $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
-                write_file($thumbnail_path . '/index.html', $html);
-            }
-            umask($uold);
-        }
         $photo_path = 'uploaded_docs/user_images/photo/';
-        if (!is_dir($photo_path)) {
-            $uold = umask(0);
-            if (mkdir('uploaded_docs/user_images/photo/', 0777, true)) {
-                $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
-                write_file($thumbnail_path . '/index.html', $html);
-            }
-            umask($uold);
-        }
-        $config['upload_path'] = './uploaded_docs/user_images/photo/';
-        $config['allowed_types'] = 'jpg|jpeg';
-        $config['overwrite'] = TRUE;
+        $this->create_directory($thumbnail_path);
+        $this->create_directory($photo_path);
+        $config['upload_path'] = $photo_path;
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['overwrite'] = true;
         $config['file_name'] = $file_temp_name;
-        $this->load->library('upload');
-        $this->upload->initialize($config);
-        $this->upload->do_upload($images);
-        $uploadData = $this->upload->data();
-        $filename = $uploadData['file_name'];
-        $data['picture'] = $filename;
-        $this->_generate_thumbnail($filename);
-        return $data;
+        $file = $this->request->getFile($images);
+        if ($file && $file->isValid() && !$file->hasMoved()) { 
+            $file->move($photo_path, $file_temp_name);  
+            $data['picture'] = $file_temp_name; 
+            return $data;
+        } else {
+            return ['error' => 'File upload failed: ' . $file->getErrorString()];
+        }
     }
 
-    function _generate_thumbnail($picture)
-    {
-        $this->load->library('image_lib');
-        $config['image_library'] = 'gd2';
-        $config['source_image'] = 'uploaded_docs/user_images/photo/' . $picture;
-        $config['new_image'] = 'uploaded_docs/user_images/thumbnail/' . $picture;
+    function create_directory($path) {
+        if (!is_dir($path)) {
+            $uold = umask(0);
+            if (!mkdir($path, 0777, true)) {
+                die('Failed to create directory: ' . $path . ' - Error: ' . error_get_last()['message']);
+            }
+            umask($uold);
+        }
+    }
+    
+    function create_thumbnail($filename, $thumbnail_path) {
+        $config['source_image'] = 'uploaded_docs/user_images/photo/' . $filename;
+        $config['new_image'] = $thumbnail_path . $filename;
         $config['maintain_ratio'] = TRUE;
-        $config['width'] = 150;
-        $config['height'] = 150;
-        $this->load->library('image_lib', $config);
-        $this->image_lib->initialize($config);
-        $this->image_lib->resize();
-        return true;
-    }
-
-    function pdf_file_upload($images, $file_path, $new_pdf_file_name)
-    {
-        $id_path = 'uploaded_docs/user_images/id_proof/';
-        if (!is_dir($id_path)) {
-            $uold = umask(0);
-            if (mkdir('uploaded_docs/user_images/id_proof/', 0777, true)) {
-                $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
-                write_file($thumbnail_path . '/index.html', $html);
-            }
-            umask($uold);
+        $config['width'] = 150; // Set your desired thumbnail width
+        $config['height'] = 150; // Set your desired thumbnail height    
+        // Load the image library
+        $image_lib = \Config\Services::image();
+        $image_lib->initialize($config);    
+        // Create the thumbnail
+        if (!$image_lib->resize(150, 150)) {
+            return ['error' => $image_lib->display_errors()];
         }
-        $config['upload_path'] = 'uploaded_docs/user_images/id_proof/';
-        $config['allowed_types'] = 'jpg|jpeg';
-        $config['overwrite'] = TRUE;
-        $config['file_name'] = $new_pdf_file_name;
-        $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-        $this->upload->do_upload($images);
-        $uploadData = $this->upload->data();
-        return $uploadData;
-    }
-
-    function bar_reg_certificate_upload($images, $file_path, $new_pdf_file_name)
-    {
-        $bar_cer_path = 'uploaded_docs/user_images/barReg_Certificate/';
-        if (!is_dir($bar_cer_path)) {
-            $uold = umask(0);
-            if (mkdir('uploaded_docs/user_images/barReg_Certificate/', 0777, true)) {
-                $html = '<!DOCTYPE html><html><head><title>403 Forbidden</title></head><body><p>Directory access is forbidden.</p></body></html>';
-                write_file($bar_cer_path . '/index.html', $html);
-            }
-            umask($uold);
-        }
-        $config['upload_path'] = 'uploaded_docs/user_images/barReg_Certificate/';
-        $config['allowed_types'] = 'jpg|jpeg';
-        $config['overwrite'] = TRUE;
-        $config['file_name'] = $new_pdf_file_name;
-        $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-        $this->upload->do_upload($images);
-        $uploadData = $this->upload->data();
-        return $uploadData;
-    }
-
-    function updateProfile_adv()
-    {
-        $user_id = $_SESSION['login']['id'];
-        $profile_photo_path = url_decryption($_POST['photo_path']);
-        $profile_photo = url_decryption($_POST['thumb_path']);
-        $id_proof = url_decryption($_POST['id_proof_path']);
-        $bar_reg_certificate = url_decryption($_POST['bar_reg_certificate']);
-        $update_profile = $this->Profile_model->update_photo($user_id, $profile_photo_path, $id_proof, $bar_reg_certificate);
-        if ($update_profile) {
-            unset($_SESSION['image_and_id_view']);
-            $_SESSION['photo_path'] = $profile_photo;
-            $this->session->setFlashdata('msg_objection', '<div class="alert alert-success text-center flashmessage">Profile photo Updated Successful!</div>');
-            return redirect()->to(base_url('profile'));
-        }
-    }
-
-    function unset_upload()
-    {
-        unset($_SESSION['image_and_id_view']);
-        return redirect()->to(base_url('profile'));
     }
 
     function logged_profile()
