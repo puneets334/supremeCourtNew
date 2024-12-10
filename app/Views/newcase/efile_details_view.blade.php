@@ -983,7 +983,7 @@
                </div>
                <div class="modal-body" id="checkAllSections">
                </div>
-               <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style="">
+               <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div">
                </div>
                <a data-efilingType="<?php echo strtolower($filing_type); ?>" class="btn btn-primary" id="createDiaryNo" type="button" style="margin-left: 224px;margin-bottom: 23px;">Generate Diary No.</a>
             </div>
@@ -1682,7 +1682,7 @@
                      var ct = dataas[0];
                      var dataarr = dataas[1].slice(1).split(',');
                      if ((dataarr[0] != 2) && (dataarr[0] != 3) && (dataarr[0] != 7) && (dataarr[0]) != 8 && (dataarr[0]) != 10) {
-                         alert("all completed");
+                         alert("All Completed");
                          // window.location.href = "<?php echo base_url('newcase/AutoDiary') ?>"; //ENABLED THIS FOR AUTO DIARY
                          showLoaderAndRedirect("<?php echo base_url('newcase/AutoDiary') ?>");
                      }
