@@ -228,6 +228,7 @@ $routes->match(['GET', 'POST'], 'profile/updatePass', 'Profile\DefaultController
 $routes->match(['GET', 'POST'], 'profile/updateContact', 'Profile\DefaultController::updateContact');
 $routes->match(['GET', 'POST'], 'profile/updateEmail', 'Profile\DefaultController::updateEmail');
 $routes->match(['GET', 'POST'], 'profile/mobileSave', 'Profile\DefaultController::mobileSave');
+$routes->match(['GET', 'POST'], 'profile/DefaultController/uploadPhoto', 'Profile\DefaultController::upload_photo');
 // $routes->get('support/(:any)', 'ResponsiveVariantRouteController::showSupport/$1');
 // $routes->get('support', 'ResponsiveVariantRouteController::showSupport');
 $routes->get('assistance/notice_circulars', 'Assistance\NoticeCirculars::index');

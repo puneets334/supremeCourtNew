@@ -108,8 +108,20 @@
                     <!--userImg-->
                     <div class="userImgWrap">
                         <div class="userImg">
-                            <a href="#"><img src="<?= $profile_photo ?>" alt="Admin" width="56" height="56"></a>
-                            {{-- <a href="#"><img src="<?= base_url().'assets/newAdmin/'?>images/user.jpg" alt="Admin" title="admin" width="56" height="56"></a> --}}
+                            <!-- <a href="#"> -->
+                                <img src="<?= empty(getSessionData('login')['photo_path']) ? base_url('assets/newAdmin/images/profile-img.png') : getSessionData('login')['photo_path'] ?>" alt="Admin" width="56" height="56">
+                            <!-- </a> -->
+                           
+                        </div>
+                        <div class="user-action-sec">
+                            <ul>
+                                <li>
+                                    <a href="<?= base_url('profile'); ?>">Profile</a>
+                                </li>
+                                <li>
+                                    <a href="<?= base_url('logout'); ?>">Log Out</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <!--userImg-->

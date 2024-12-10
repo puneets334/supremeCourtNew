@@ -4189,7 +4189,8 @@ input[type="file"] {
 }
 
 .mngmntHeader .userImg img {
-    vertical-align: top;
+    vertical-align: top;    height: 100%;
+    object-fit: cover;
 }
 
 .mngmntHeader .userDetail {
@@ -8730,7 +8731,22 @@ label.text-ryt {text-align: right;width: 100%;padding: 0;}
     text-wrap: wrap !important;
 }
 .profile-photo-view-pg {width: fit-content;border: 1px solid #e4e4e4;text-align: center;display: block;}
-.profile-photo-view-pg #show_profile_pic {white-space: nowrap;padding: 7px 15px;display: block;font-size: 14px;color: #0d48be; cursor: pointer;}
+.profile-photo-view-pg #show_profile_pic {white-space: nowrap;padding: 7px 15px;display: block;font-size: 14px;background: #0d48be;cursor: pointer;color: #fff;}
 .profile-photo-view-pg img {border: none;padding: 15px;width: 140px;height: 140px;}
-.profile-photo-view-pg #show_profile_pic:hover {background: #0d48be;color: #fff;}
+.profile-photo-view-pg #show_profile_pic:hover {background: #022651;}
 /* 9-12-24  End  */
+/* 10-12-24 start  */
+a.edit-pen-btn {
+    background: #0d48be;
+    color: #fff;
+    padding: 2px 5px 0px 7px;
+    margin-left: 5px;
+    border-radius: 5px;
+}
+
+a.edit-pen-btn:hover {
+    background: #022651;
+}
+.mngmntHeader .userImgWrap:hover .user-action-sec{ right: 0;padding-top: 45px;}
+.mngmntHeader .userImgWrap:hover .user-action-sec {display: block;}
+.mngmntHeader .userImgWrap .user-action-sec:before {right: 14px !important;left: auto;top: 35px;}
