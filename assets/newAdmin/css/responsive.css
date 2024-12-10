@@ -133,7 +133,7 @@
     .tabs-section .nav-tabs li.nav-item .nav-link.active:after, .tabs-section .nav-tabs li.nav-item .nav-link:hover:after, .tabs-section .nav-tabs li.nav-item .nav-link:focus:after{background: #0d48be;}
     .tabs-section .nav-tabs li.nav-item .nav-link:after {content: '';position: absolute;top: 0;left: -19px;height: 100%;width: 20px;background: #d3d3d3;clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 100% 50%);}
     /* 25-11-24 End  */
-    .court-fee-box{margin-left: 0;}
+    .court-fee-box{margin-right: 0;}
     /* 9-12-24 start  */
     .mob-pe-0 {padding-right: 0;}    
     .mob-ps-0 {padding-left: 0;}
@@ -194,6 +194,18 @@
     .dashboard-section.dashboard-tiles-area .col-md-6:nth-child(2) .tiles-comnts .tile-comnt .title-comnt-bref{right: 0;}
     .dashboard-section.dashboard-tiles-area .col-md-6:nth-child(2) .tiles-comnts .tile-comnt .title-comnt-bref:after {right: 29px;left: auto;}
     .court-fee-box{margin-left: 0;} 
+    /* 10-12-24 start  */
+    .dashboard-section.tabs-section {margin-top: 15px;} 
+    .tabs-section .nav-tabs {top: 0!important;padding: 15px 0 40px !important;row-gap: 4px;left: -17px;overflow: hidden;}
+    .tabs-section .nav-tabs li.nav-item .nav-link {padding: 12px 20px!important;border-radius:0 !important;position: relative;margin-right: 20px;}
+    .tabs-section .nav-tabs li.nav-item+li.nav-item {margin-left: 0px!important;}
+    .tabs-section .nav-tabs li.nav-item .nav-link:before {content: '';position: absolute;top: 0;right: -19px;height: 100%;width: 20px;background: #d3d3d3;clip-path: polygon(100% 50%, 0 0, 0 100%);}
+    .tabs-section .nav-tabs li.nav-item .nav-link.active:before , .tabs-section .nav-tabs li.nav-item .nav-link:hover:before, .tabs-section .nav-tabs li.nav-item .nav-link:focus:before{background: #0d48be;}
+    .tabs-section .nav-tabs li.nav-item .nav-link.active:after, .tabs-section .nav-tabs li.nav-item .nav-link:hover:after, .tabs-section .nav-tabs li.nav-item .nav-link:focus:after{background: #0d48be;}
+    .tabs-section .nav-tabs li.nav-item .nav-link:after {content: '';position: absolute;top: 0;left: -19px;height: 100%;width: 20px;background: #d3d3d3;clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 100% 50%);}
+    .dashboard-bradcrumb .ryt-dash-breadcrumb {width: 100%;justify-content: end;}
+    .current-pg-actions a.quick-btn{text-wrap: nowrap;}
+     /* 10-12-24 End  */
 }
 /* Tablet CSS End  */
 
