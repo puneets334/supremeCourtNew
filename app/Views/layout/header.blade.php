@@ -112,7 +112,7 @@
                                 <?php if((getSessionData('login')['ref_m_usertype_id'] == 1) || (getSessionData('login')['ref_m_usertype_id'] == 2)) { ?>
                                     <img src="<?= base_url('assets/images/user.png'); ?>" alt="User Image" width="56" height="56">
                                 <?php } else{ ?>
-                                    <img src="<?php echo empty(getSessionData('login')['photo_path']) ? base_url('assets/images/user.png') : getSessionData('login')['photo_path']; ?>" alt="Admin Image" width="56" height="56">
+                                    <img src="<?php echo empty(getSessionData('login')['photo_path']) ? base_url('assets/images/user.png') : base_url().getSessionData('login')['photo_path']; ?>" alt="Admin Image" width="56" height="56">
                                 <?php } ?>
                             <!-- </a> -->
                            
