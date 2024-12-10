@@ -672,9 +672,13 @@ class SubordinateCourt extends BaseController {
             $delete_status = $this->DeleteSubordinateCourt_model->delete_case_subordinate_court($registration_id, $delete_id,$firData);
             if ($delete_status) {
                 reset_affirmation($registration_id);
-                $_SESSION['MSG'] = message_show("success", "Earlier Court Details deleted successfully."); // this msg is not being displayed. checking required
+                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
+
+                //$_SESSION['MSG'] = message_show("success", "Earlier Court Details deleted successfully."); // this msg is not being displayed. checking required
             } else {
-                $_SESSION['MSG'] = message_show("fail", "Some error. Please try again."); // this msg is not being displayed. checking required
+                $this->session->setFlashdata('fail', 'Some error. Please try again.');
+
+                //$_SESSION['MSG'] = message_show("fail", "Some error. Please try again."); // this msg is not being displayed. checking required
             }
             if(!empty(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT){
                 return redirect()->to(base_url('caveat/defaultController/processing/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_CAVEAT . '#' . getSessionData('efiling_details')['stage_id']))));

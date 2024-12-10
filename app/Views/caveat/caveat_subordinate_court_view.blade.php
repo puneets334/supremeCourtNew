@@ -967,6 +967,8 @@ body.loading .overlay{
                 },
                 error: function () {
                     $('#loader_div').hide();
+                    $('#loader-wrapper').hide();
+
                     $('#search_button_div').show();
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
