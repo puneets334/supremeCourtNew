@@ -71,6 +71,8 @@
                                             $type = 'Case Data Entry';
                                             $lbl_history = 'Case Data Entry Hisotry';
                                             $lbl_efiling_no = 'CDE No.';
+                                        }elseif($filing_type == E_FILING_TYPE_CAVEAT){
+                                            $type = 'Caveat';
                                         }
                                         $cause_title = htmlentities(@$result[0]['cause_title'], ENT_QUOTES);
                                     }
