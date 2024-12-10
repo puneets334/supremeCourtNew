@@ -81,9 +81,8 @@ span.select2.select2-container.select2-container--default {
                                     $showHideIndividual = 'display:none';
                                 }
                                 ?>
-                                    <select class="form-select cus-form-ctrl"
+                                    <select class="form-select cus-form-ctrl filter_select_dropdown"
                                     aria-label="Default select example" name="party_is" id="party_is"   tabindex = "1"  onchange="get_caveator_as(this.value)" required>
-                                    <option value="" title="Select" @required(true)>Select</option>
                                     <option value="I" <?php echo $selectIndividual; ?> >Individual</option>
                                     <option value="D1" <?php echo $selectStateDept; ?>>State Department</option>
                                     <option value="D2" <?php echo $selectCentralDept; ?>>Central Department</option>
@@ -114,7 +113,7 @@ span.select2.select2-container.select2-container--default {
                                 ?>
                                 
                                 <select tabindex='3' name="pet_rel_flag" id="pet_rel_flag"
-                                    class="form-control cus-form-ctrl" >
+                                    class="form-control cus-form-ctrl filter_select_dropdown" >
                                     <option value="" >Select Relation</option>
                                     <option <?php echo $selectSon; ?> value="S">Son Of</option>
                                     <option <?php echo $selectDaughter; ?> value="D">Daughter Of</option>
@@ -397,7 +396,7 @@ span.select2.select2-container.select2-container--default {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">State <span style="color: red" class="astriks">*</span></label>
-                                <select class="form-select cus-form-ctrl"  name="party_state" id="party_state"  tabindex='19'  required>
+                                <select class="form-select cus-form-ctrl filter_select_dropdown"  name="party_state" id="party_state"  tabindex='19'  required>
                                 <option value="" title="Select">Select State</option>
                                 <?php
                                 $stateArr = array();
@@ -425,7 +424,7 @@ span.select2.select2-container.select2-container--default {
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for="" class="form-label">District <span style="color: red" class="astriks">*</span></label>
-                                    <select class="form-select cus-form-ctrl"
+                                    <select class="form-select cus-form-ctrl filter_select_dropdown"
                                         aria-label="Default select example" name="party_district" id="party_district"  tabindex='20' required>
                                         <option value="" title="Select">Select District</option>
                                         <?php
@@ -505,6 +504,8 @@ span.select2.select2-container.select2-container--default {
         }
     } 
         $(document).ready(function () { 
+        $('.filter_select_dropdown').select2();
+
             $("input[name='pet_age']").on('input', function(e) {
             $(this).val($(this).val().replace(/[^0-9]/g, ''));
         });
@@ -533,6 +534,71 @@ span.select2.select2-container.select2-container--default {
         }
         if (party_as_sel != '') {
             get_caveator_as(party_as_sel);//--call to selected
+        }
+
+
+
+
+        var party_as = $('select#party_is option:selected').val();
+        if (party_as == 'I') {          
+            $('#org_dept').removeAttr('required');
+            $('#org_state').removeAttr('required');
+            $('#org_post').removeAttr('required');
+        $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
+            $('#indvidual_form').show(); 
+            $('#org_form').hide();
+            $('#org_state_row').show();
+            $('#org_state').val('');
+            $('#org_dept').val('');
+            $('#org_post').val('');
+            $('#otherOrgState').hide();
+            $('#otherOrgDept').hide();
+            $('#otherOrgPost').hide();
+        }else {
+            $('#pet_complainant').attr('required', 'required');
+        $('#pet_rel_flag').attr('required', 'required'); 
+        $('#relative_name').attr('required', 'required'); 
+        $('#pet_age').attr('required', 'required'); 
+        $('input[name="pet_gender"]').attr('required', 'required');
+            if (party_as == 'D3') { 
+                // Add 'required' attribute
+                $('#org_dept').attr('required', true);
+                $('#org_post').attr('required', true);
+                // Remove 'required' attribute
+                $('#org_state').removeAttr('required');
+                $('#indvidual_form').hide(); 
+                $('#org_form').show();
+                $('#org_state_row').hide();
+                $('#otherOrgState').hide();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                /*$('#party_gender1').val('');
+                 $('#party_gender2').val('');
+                 $('#party_gender3').val('');*/
+            } else {
+                                // Add 'required' attribute
+                                $('#org_dept').attr('required', true);
+                $('#org_state').attr('required', true);
+                $('#org_post').attr('required', true); 
+                
+        $('#pet_complainant').attr('required', false);
+        $('#indvidual_form').hide(); 
+                $('#org_form').show();
+                $('#org_state_row').show();
+                $('#caveator_name').val('');
+                $('#relation').val('');
+                $('#relative_name').val('');
+                $('#caveator_dob').val('');
+                $('#caveator_age').val('');
+                $("#stateDivBox").show();
+            }
         }
     });
     function get_caveator_as(value) {        
@@ -604,7 +670,6 @@ span.select2.select2-container.select2-container--default {
 
 <script>
     $(document).ready(function() {
-        $('.filter_select_dropdown').select2();
         var today = new Date(); 
         $('#pet_dob').datepicker({
             changeMonth: true,
