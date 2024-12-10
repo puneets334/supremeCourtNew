@@ -922,7 +922,9 @@ body.loading .overlay{
                     $('#loader_div').hide();
                     $('#search_button_div').show();
                     var resArr = data.split('@@@');
-//   alert(resArr[1]);
+                    if(resArr[0] == 3){
+                        alert(resArr[1]); 
+                    }
                     if (resArr[0] == 1) {
                         $('#msg').show();
                         $("#case_result").html("<p class='message center invalid' style='color: red; font-weight: bold; ' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()></span></p>")
