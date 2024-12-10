@@ -7011,7 +7011,7 @@ add-new-area:hover .add-new-options, .add-new-area:hover .add-new-options ul, .a
     display: flex;
     gap: 30px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between;flex-wrap: wrap;
 }
 
 .dashboard-bradcrumb .left-dash-breadcrumb {
