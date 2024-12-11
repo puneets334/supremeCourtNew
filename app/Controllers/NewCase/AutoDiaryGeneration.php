@@ -546,6 +546,9 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
                 $diary_year = substr($postData['diaryNo'], -4);
             }
 
+            // echo $diary_num;
+            // pr($diary_year);
+
             //alloted_to
             $alloted_to_name = NULL;
             if(!empty($postData['alloted_to']) && isset($postData['alloted_to'])) {
@@ -1048,7 +1051,7 @@ window.location.href='" . base_url() . "newcase/view';</script>";exit();
             //go to scrutiny
             $diary_no = !empty($diary_no) ? (int)$diary_no : NULL;
             if(isset($diary_no) && !empty($diary_no)){
-
+                $diary_year = substr($diary_year, -4);
                 $diary_id = $diary_no . $diary_year;
                 #from AOR to fdr for scrutiny
                 $this->efiling_webservices->updateFilTrapAORtoFDR($efiling_no);

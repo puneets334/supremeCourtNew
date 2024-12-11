@@ -352,21 +352,16 @@ class FinalSubmit extends BaseController
 
     public function index()
     {
-
-        //var_dump($_SESSION);
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('admindashboard'));
             exit(0);
         }
-
         if (empty($_SESSION['efiling_details']) || empty($_SESSION['estab_details'])) {
             return redirect()->to(base_url('dashboard'));
             exit(0);
         }
         $registration_id = $_SESSION['efiling_details']['registration_id'];
-
         //Add Final Submit Validations for mark defect cured checkbox
         $marked_defect_tobe_shown_stages = array(I_B_Defected_Stage, I_B_Rejected_Stage);
         if (in_array($_SESSION['efiling_details']['stage_id'], $marked_defect_tobe_shown_stages)) {
