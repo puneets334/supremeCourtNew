@@ -21,6 +21,11 @@ class View extends BaseController {
 
     public function __construct() {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $this->GetDetailsModel = new GetDetailsModel();
         $this->View_model = new ViewModel();
         $this->Affirmation_model = new AffirmationModel();
@@ -37,7 +42,7 @@ class View extends BaseController {
     function index() {
         // pr('test view');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN, USER_CLERK, USER_DEPARTMENT);
-        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
+        if (!empty($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');
             exit(0);
         }

@@ -34,6 +34,11 @@ class CaseDetails extends BaseController
     public function __construct()
     {
         parent::__construct();
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         $this->Common_model = new CommonModel();
         $this->New_case_model = new NewCaseModel();
         $this->Dropdown_list_model = new DropdownListModel();
@@ -310,6 +315,8 @@ class CaseDetails extends BaseController
             foreach ($errors as $field => $error) {
                 if(strpos($error, '{field}')){
                     echo str_replace('{field}', $field, $error) . "<br>";
+                }else{
+                    echo $error;
                 }
             }
             // echo $this->validation->getError('no_of_petitioner') . $this->validation->getError('no_of_respondent') . $this->validation->getError('cause_pet') . $this->validation->getError('cause_res') . $this->validation->getError('sc_case_type') . $this->validation->getError('sc_sp_case_type_id') .
