@@ -778,7 +778,8 @@ class CommonModel extends Model
                     //refiled  scrutiny user
                     if (isset($stage_id) && !empty($stage_id) && $stage_id == I_B_Defected_Stage) {
                         // pr("Pyare Man Mohan 1");
-                        $diaryNo = getSessionData('efiling_details')['diary_no'] . getSessionData('efiling_details')['diary_year'];
+                        $dyear = !empty(getSessionData('efiling_details')['diary_year']) ? substr(getSessionData('efiling_details')['diary_year'], -4) : '';
+                        $diaryNo = getSessionData('efiling_details')['diary_no'] . $dyear;
                         $assoc_arr = array();
                         $assoc_arr['diaryNo'] = $diaryNo;
                         $assoc_json = json_encode($assoc_arr);
