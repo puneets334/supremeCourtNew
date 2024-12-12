@@ -77,62 +77,63 @@ class Petitioner extends BaseController {
             echo '1@@@' . htmlentities("Update in Petitioner details can be done only at 'Draft', 'For Compliance' stages' and 'Defective' stages.", ENT_QUOTES);
             exit(0);
         }
+        $validations = [];
         $country_id = !empty($_POST['country_id']) ? url_decryption($_POST['country_id']) : NULL;
-        $this->validation->setRules([
+        $validations = [
             "party_as" => [
                 "label" => "Party As",
                 "rules" => "required|in_list[I,D1,D2,D3]"
             ],
-        ]);
+        ];
         if($_POST['is_dead_minor'] == '0'){
             $is_dead_minor = false;
             $is_dead_file_status = false;
         }
         if ($_POST['party_as'] == 'I') {
-            $this->validation->setRules([
+            $validations += [
                 "party_name" => [
+                    "label" => "Petitioner name",
+                    "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
+                ],
+                "relation" => [
                     "label" => "Relation",
                     "rules" => "required|in_list[S,D,W,N]"
                 ],
-                "relation" => [
-                    "label" => "Petitioner name",
-                    "rules" => "required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
-                ],
-            ]);
+            ];
             $rel = escape_data($_POST["relation"]);
             if($rel=='N'){
-                $this->validation->setRules([
+                $validations += [
                     "relative_name" => [
                         "label" => "Father/Husband name",
-                        "rules" => "trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                        "rules" => "trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                     ],
-                ]);
+                ];
             }else{
-                $this->validation->setRules([
+                $validations += [
                     "relative_name" => [
                         "label" => "Father/Husband name",
-                        "rules" => "required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                        "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                     ],
-                ]);
+                ];
             }
             if($_POST['is_dead_minor'] == '0'){
                 $is_dead_minor = false;
                 $is_dead_file_status = false;
-                $this->validation->setRules([
+                $validations += [
                     "party_age" => [
                         "label" => "Age",
                         "rules" => "trim|required|min_length[1]|max_length[2]|is_natural"
                     ],
                     "party_address" => [
                         "label" => "Address",
-                        "rules" => "required|trim|min_length[3]|max_length[250]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                        "rules" => "required|trim|min_length[3]|max_length[250]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                     ],
-                ]);
+                ];
                 if(isset($country_id) && !empty($country_id) && $country_id == 96){
-                    $this->validation->setRules([
+                    $validations += [
                         "party_city" => [
                             "label" => "City",
-                            "rules" => "required|trim|min_length[3]|max_length[49]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                            "rules" => "required|trim|min_length[3]|max_length[49]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                         ],
                         "party_state" => [
                             "label" => "State",
@@ -142,13 +143,13 @@ class Petitioner extends BaseController {
                             "label" => "District",
                             "rules" => "required|trim|validate_encrypted_value"
                         ],
-                    ]);
+                    ];
                 }
                 else  if(isset($country_id) && !empty($country_id) && $country_id != 96 && $this->request->getPost('is_dead_minor') == '1'){
-                    $this->validation->setRules([
+                    $validations += [
                         "party_city" => [
                             "label" => "City",
-                            "rules" => "trim|min_length[3]|max_length[49]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                            "rules" => "trim|min_length[3]|max_length[49]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                         ],
                         "party_state" => [
                             "label" => "State",
@@ -158,7 +159,7 @@ class Petitioner extends BaseController {
                             "label" => "District",
                             "rules" => "trim|validate_encrypted_value"
                         ],
-                    ]);
+                    ];
                 }
             }
             else{
@@ -166,64 +167,64 @@ class Petitioner extends BaseController {
                 $is_dead_file_status = false;
             }
             /*END OF CHANGES ON on 03/09/20.*/
-            $this->validation->setRules([
+            $validations += [
                 "party_dob" => [
                     "label" => "D.O.B.",
-                    "rules" => "trim|exact_length[10]|validate_date_dd_mm_yyyy"
+                    "rules" => "trim"
                 ],
                 "party_gender" => [
                     "label" => "Gender",
                     "rules" => "trim|required|in_list[M,F,O]"
                 ],
-            ]);
+            ];
         } else {
             if ($_POST['party_as'] != 'D3') {
-                $this->validation->setRules([
+                $validations += [
                     "org_state" => [
                         "label" => "Organisation State Name",
                         "rules" => "required|trim|validate_encrypted_value"
                     ],
-                ]);
+                ];
                 if (url_decryption($_POST['org_state']) == 0) {
-                    $this->validation->setRules([
+                    $validations += [
                         "org_state_name" => [
                             "label" => "Organisation Other State Name",
                             "rules" => "required|trim|min_length[5]|max_length[200]|validate_alpha_numeric_space_dot_hyphen"
                         ],
-                    ]);
+                    ];
                 }
             }
-            $this->validation->setRules([
+            $validations += [
                 "org_dept" => [
                     "label" => "Organisation Department name",
                     "rules" => "required|trim|validate_encrypted_value"
                 ],
-            ]);
+            ];
             if (isset($_POST['org_dept']) && url_decryption($_POST['org_dept']) == 0) {
-                $this->validation->setRules([
+                $validations += [
                     "org_dept_name" => [
                         "label" => "Other Department name",
                         "rules" => "required|trim|min_length[5]|max_length[200]|validate_alpha_numeric_space_dot_hyphen"
                     ],
-                ]);
+                ];
             }
 
-            $this->validation->setRules([
+            $validations += [
                 "org_post" => [
                     "label" => "Post",
                     "rules" => "required|trim|validate_encrypted_value"
                 ],
-            ]);
+            ];
             if (isset($_POST['org_post']) && url_decryption($_POST['org_post']) == 0) {
-                $this->validation->setRules([
+                $validations += [
                     "org_post_name" => [
                         "label" => "Other Post",
                         "rules" => "required|trim|min_length[5]|max_length[200]|validate_alpha_numeric_space_dot_hyphen"
                     ],
-                ]);
+                ];
             }
         }
-        $this->validation->setRules([
+        $validations += [
             "party_email" => [
                 "label" => "Email",
                 "rules" => "required|trim|min_length[6]|max_length[49]|valid_email"
@@ -236,15 +237,25 @@ class Petitioner extends BaseController {
                 "label" => "Pincode",
                 "rules" => "required|trim|exact_length[6]|is_natural"
             ],
-        ]);
-
+        ];
+        // pr($validations);
+        $this->validation->setRules($validations);
         // $this->form_validation->set_error_delimiters('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             echo '3@@@';
-            echo $this->validation->getError('party_as') . $this->validation->getError('party_name') . $this->validation->getError('relation') . $this->validation->getError('relative_name'). $this->validation->getError('party_age') .
-            $this->validation->getError('party_gender') . $this->validation->getError('org_state') . $this->validation->getError('org_state_name') . $this->validation->getError('org_dept') . $this->validation->getError('org_dept_name') .
-            $this->validation->getError('org_post') . $this->validation->getError('org_post_name') . $this->validation->getError('party_email') . $this->validation->getError('party_mobile') .
-            $this->validation->getError('party_address') . $this->validation->getError('party_city') . $this->validation->getError('party_state') . $this->validation->getError('party_district') . $this->validation->getError('party_pincode');
+            // echo $this->validation->getError('party_as') . $this->validation->getError('party_name') . $this->validation->getError('relation') . $this->validation->getError('relative_name'). $this->validation->getError('party_age') .
+            // $this->validation->getError('party_gender') . $this->validation->getError('org_state') . $this->validation->getError('org_state_name') . $this->validation->getError('org_dept') . $this->validation->getError('org_dept_name') .
+            // $this->validation->getError('org_post') . $this->validation->getError('org_post_name') . $this->validation->getError('party_email') . $this->validation->getError('party_mobile') .
+            // $this->validation->getError('party_address') . $this->validation->getError('party_city') . $this->validation->getError('party_state') . $this->validation->getError('party_district') . $this->validation->getError('party_pincode');
+            $errors = $this->validation->getErrors();
+
+            foreach ($errors as $field => $error) {
+                if(strpos($error, '{field}')){
+                    echo str_replace('{field}', $field, $error) . "<br>";
+                }else{
+                    echo $error . "<br>";
+                }
+            }
             exit(0);
         }
 

@@ -46,6 +46,9 @@
                     <h6 class="text-center fw-bold">Respondent Information</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
+                <div class="row" id="errDiv" style="display: none;">
+                    <div class="alert alert-danger" role="alert" id="alertMsg"></div>
+                </div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                         <div class="form-group mb-3">
@@ -72,7 +75,8 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Main Respondent Name
-                                <span style="color: red" class="astriks">*</span></label>
+                                <span style="color: red" class="astriks">*</span>
+                            </label>
                             <textarea rows="1" oninput="validateInput(event)"  tabindex='2' id="party_name"  style="text-transform: uppercase"  name="party_name" minlength="3" maxlength="99" class="form-control cus-form-ctrl sci_validation party_name" placeholder="First Name Middle Name Last Name" type="text"><?php echo (@$party_details[0]['party_name']); ?></textarea>
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Respondent name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                 <i class="fa fa-question-circle-o"></i>
@@ -1306,7 +1310,9 @@ if (org_dept == '<?php echo url_encryption(0); ?>') {
                             window.location.href = resArr[2];
 
                         } else if (resArr[0] == 3) {
-                            alert(resArr[1]);
+                            // alert(resArr[1]);
+                            $('#errDiv').show();
+                            $('#alertMsg').html(resArr[1]);
                         }
                         $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

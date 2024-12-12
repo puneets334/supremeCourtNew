@@ -48,6 +48,9 @@
                     <h6 class="text-center fw-bold">Petitioner Information</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
+                <div class="row" id="errDiv" style="display: none;">
+                    <div class="alert alert-danger" role="alert" id="alertMsg"></div>
+                </div>
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                         <div class="form-group mb-3">
@@ -1221,7 +1224,9 @@
                             window.location.href = resArr[2];
 
                         } else if (resArr[0] == 3) {
-                            alert(resArr[1]);
+                            // alert(resArr[1]);
+                            $('#errDiv').show();
+                            $('#alertMsg').html(resArr[1]);
                         }
                         $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function(result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
