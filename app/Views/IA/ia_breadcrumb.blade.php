@@ -118,8 +118,8 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         $ArrayDISPOSED = array(DISPOSED);
                         if ((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                             // if ($details['details'][0]['c_status'] != 'D') {
-                            if ($details[0]['c_status'] != 'D') {
-                                if ((!in_array(getSessionData('efiling_details')['stage_id'], $ArrayDISPOSED))) {
+                            if (isset($details) && !empty($details[0]) && $details[0]['c_status'] != 'D') {
+                                if (!in_array(getSessionData('efiling_details')['stage_id'], $ArrayDISPOSED)) {
                                     ?>
                                     <a data-bs-toggle="modal" href="#approveModal" class="btn quick-btn success-btn btn-success btn-sm" style="background-color:#169F85;">Approve</a>
                                     <a data-bs-toggle="modal" href="#disapproveModal" class="btn quick-btn danger-btn btn-danger btn-sm" style="background-color:#C11900;">Disapprove</a>
@@ -132,9 +132,11 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     <?php
                                 }
                             }
-                            if ((!in_array(getSessionData('efiling_details')['stage_id'], $ArrayDISPOSED))) {
+                            if (!in_array(getSessionData('efiling_details')['stage_id'], $ArrayDISPOSED)) {
                                 // echo $details['details'][0]['c_status'] == 'D' ? '<a data-toggle="modal" href="#disposedModal" class="btn btn-success btn-sm" >Disposed</a>' : '';
-                                echo $details[0]['c_status'] == 'D' ? '<a data-toggle="modal" href="#disposedModal" class="btn quick-btn btn-success btn-sm" style="background-color:#169F85;">Disposed</a>' : '';
+                                if(isset($details) && !empty($details[0])) {
+                                    echo $details[0]['c_status'] == 'D' ? '<a data-toggle="modal" href="#disposedModal" class="btn quick-btn btn-success btn-sm" style="background-color:#169F85;">Disposed</a>' : '';
+                                }
                             }
                         }
                         $idle_Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage);
