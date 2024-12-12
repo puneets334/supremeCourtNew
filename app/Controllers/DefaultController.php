@@ -19,6 +19,11 @@ class DefaultController extends BaseController {
 
     public function __construct() {
         parent::__construct();
+        if (empty($this->session->get('login'))) {
+            return response()->redirect(base_url('/'));
+        } else {
+            is_user_status();
+        }
         $this->Login_model = new LoginModel();
         $this->efiling_webservices = new Efiling_webservices();
         $this->agent = \Config\Services::request()->getUserAgent();
@@ -464,41 +469,42 @@ class DefaultController extends BaseController {
 
     function redirect_on_login() {
         // print_r($this->session->get('login')['ref_m_usertype_id']);die;
-        if ($this->session->get('login')['ref_m_usertype_id'] == USER_SUPER_ADMIN) {
+        if (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_SUPER_ADMIN) {
             return response()->redirect("superAdmin");
             exit();
-        } elseif ($this->session->get('login')['ref_m_usertype_id'] == USER_DISTRICT_ADMIN) {
+        } elseif (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_DISTRICT_ADMIN) {
             return response()->redirect("adminDashboard/work_done");
             exit();
-        } elseif ($this->session->get('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN) {
+        } elseif (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN) {
             return response()->redirect("adminDashboard/work_done");
             exit();
-        } elseif ($this->session->get('login')['ref_m_usertype_id'] == USER_ADMIN || $this->session->get('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN) {
+        } elseif ((!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_ADMIN) || (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN)) {
             return response()->redirect("adminDashboard");
             exit();
-        } elseif ($this->session->get('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
+        } elseif (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
             return response()->redirect('mycases/updation');
             exit(0);
-        } elseif ($this->session->get('login')['ref_m_usertype_id'] == USER_CLERK) {
+        } elseif (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_CLERK) {
             return response()->redirect('mycases/updation');
             exit(0);
-        } elseif ($this->session->get('login')['ref_m_usertype_id'] == USER_BAR_COUNCIL) {
+        } elseif (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_BAR_COUNCIL) {
             return response()->redirect('Bar_council');
             exit(0);
-        }
-        elseif ($this->session->get('login')['ref_m_usertype_id'] == JAIL_SUPERINTENDENT) {
+        } elseif (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == JAIL_SUPERINTENDENT) {
             return response()->redirect('jail_dashboard');
             exit(0);
-        }else if ($this->session->get('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN) {
+        } else if (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN) {
             return response()->redirect("filingAdmin");
             exit();
-        }else if ($this->session->get('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
+        } else if (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
             return response()->redirect("dashboard_alt");
             exit();
-        } /* elseif ($this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_PENDING_APPROVAL || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_OBJECTION || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_REJECTED || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_DEACTIVE || $this->session->userdata['login']['bar_approval_status'] == BAR_APPROVAL_STATUS_ON_HOLD || $this->session->userdata['login']['bar_approval_status'] == BAR_APPROVAL_STATUS_DEACTIVATED) {
-          redirect('profile');
-          exit(0);
-          } */ else {
+        }
+        /* elseif ($this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_PENDING_APPROVAL || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_OBJECTION || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_REJECTED || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_DEACTIVE || $this->session->userdata['login']['bar_approval_status'] == BAR_APPROVAL_STATUS_ON_HOLD || $this->session->userdata['login']['bar_approval_status'] == BAR_APPROVAL_STATUS_DEACTIVATED) {
+            redirect('profile');
+            exit(0);
+        } */
+        else{
             return response()->redirect("dashboard");
             exit();
         }

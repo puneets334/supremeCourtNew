@@ -315,8 +315,8 @@ class CaseDetails extends BaseController
             foreach ($errors as $field => $error) {
                 if(strpos($error, '{field}')){
                     echo str_replace('{field}', $field, $error) . "<br>";
-                }else{
-                    echo $error;
+                } else{
+                    echo $error.'<br>';
                 }
             }
             // echo $this->validation->getError('no_of_petitioner') . $this->validation->getError('no_of_respondent') . $this->validation->getError('cause_pet') . $this->validation->getError('cause_res') . $this->validation->getError('sc_case_type') . $this->validation->getError('sc_sp_case_type_id') .
