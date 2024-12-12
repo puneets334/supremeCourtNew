@@ -7,15 +7,19 @@ use App\Models\OnBehalfOf\OnBehalfOfModel;
 
 class DefaultController extends BaseController
 {
+
     protected $OnBehalfOfModel;
     protected $validation;
     protected $request;
 
-
-
     public function __construct()
     {
         parent::__construct();
+        if(empty(getSessionData('login'))) {
+            return response()->redirect(base_url('/')); 
+        } else{
+            is_user_status();
+        }
         error_reporting(0);
         //$this->load->model('miscellaneous_docs/Get_details_model');
         $this->OnBehalfOfModel = new OnBehalfOfModel();
@@ -25,48 +29,37 @@ class DefaultController extends BaseController
 
     public function index()
     {
-
-
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('dashboard'));
         }
-
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
-        if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-
+        if (!empty(getSessionData('efiling_details')) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS) {
                 return redirect()->to(base_url('miscellaneous_docs/view'));
             } elseif (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) {
                 return redirect()->to(base_url('IA/view'));
             }
         }
-
         if (isset(getSessionData('efiling_details')['registration_id']) && !empty(getSessionData('efiling_details')['registration_id'])) {
-
             $registration_id = getSessionData('efiling_details')['registration_id'];
-
             $data['parties_details'] = $this->OnBehalfOfModel->get_case_parties_list($registration_id);
             $data['appearing_for_details'] = $this->OnBehalfOfModel->get_appearing_for_details($registration_id, $_SESSION['login']['id']);
             $this->render('on_behalf_of.on_behalf_of_view', $data);
         } else {
-            // pr('testg');
             return redirect()->to(base_url('miscellaneous_docs/view'));
         }
     }
 
     public function save_filing_for()
     {
-
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);
         }
-
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
-        if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+        if (!empty(getSessionData('efiling_details')) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);
         }
@@ -77,7 +70,6 @@ class DefaultController extends BaseController
             ]
 
         ]);
-
         //    if ($this->validation->withRequest($this->request)->run() === FALSE) {
         //         $data = [
         //             'validation' => $this->validator,
@@ -89,17 +81,13 @@ class DefaultController extends BaseController
         //     echo form_error('party_name[]') . form_error('selected_party[]');
         //     exit(0);
         // }
-
-
         $registration_id = $_SESSION['efiling_details']['registration_id'];
         $parties_selected = [];
-
         $parties_selected = $_POST['selected_party'];
         /*if(count($parties_selected)<=0){
             echo "2@@@Some Error ! Select at least one party for whome filing.";
             exit(0);
-        }*/
-        
+        }*/        
         if (!empty($parties_selected)) {
             foreach ($parties_selected as $seleced_party) {
                 $selected_parties_details = url_decryption($seleced_party);
@@ -109,12 +97,8 @@ class DefaultController extends BaseController
                 }
                 $parties_sr_no = $selected_parties_details[1];
                 $filing_for = $parties_sr_no . '$$';
-
                 $party_type = $selected_parties_details[2];
-
-
                 $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
-
                 $update_filing_for_detail = array(
                     'filing_for_parties' => !empty($filing_for) ? rtrim($filing_for, '$$') : '',
                     'p_r_type' => $party_type,
@@ -123,22 +107,20 @@ class DefaultController extends BaseController
                     'updated_on' => date('Y-m-d H:i:s'),
                     'is_govt_filing' => $is_govt_filing
                 );
-           
-                //  pr($update_filing_for_detail);
-                //var_dump($registration_id);exit(0);
-                $update_status = $this->OnBehalfOfModel->update_filing_for($update_filing_for_detail, $registration_id);
-         
+                $update_status = $this->OnBehalfOfModel->update_filing_for($update_filing_for_detail, $registration_id);         
                 if ($update_status) {
-                    if ($update_filing_for_detail['is_govt_filing'] == 1)
+                    if ($update_filing_for_detail['is_govt_filing'] == 1) {
                         getSessionData('efiling_details')['doc_govt_filing'] = 1;
-                    else
+                    } else{
                         getSessionData('efiling_details')['doc_govt_filing'] = 0;
+                    }
                     echo "1@@@Filing for updated successfully.";
-                } else {
+                } else{
                     echo "2@@@Some Error ! Please try after some time.";
                 }
             }
         }
            
     }
+
 }
