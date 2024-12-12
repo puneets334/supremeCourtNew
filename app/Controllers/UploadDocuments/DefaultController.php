@@ -205,7 +205,7 @@ class DefaultController extends BaseController {
             $this->validation->setRules([
                 "doc_title" => [
                     "label" => "Document Title",
-                    "rules" => "required|trim|min_length[3]|max_length[75]"
+                    "rules" => "required|trim|min_length[3]|max_length[75]|validate_alpha_numeric_space_dot_hyphen"
                 ],
             ]);
 
