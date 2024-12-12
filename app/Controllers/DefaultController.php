@@ -19,11 +19,6 @@ class DefaultController extends BaseController {
 
     public function __construct() {
         parent::__construct();
-        if (empty($this->session->get('login'))) {
-            return response()->redirect(base_url('/'));
-        } else {
-            is_user_status();
-        }
         $this->Login_model = new LoginModel();
         $this->efiling_webservices = new Efiling_webservices();
         $this->agent = \Config\Services::request()->getUserAgent();
