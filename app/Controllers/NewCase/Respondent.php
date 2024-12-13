@@ -198,7 +198,7 @@ class Respondent extends BaseController {
                         "rules" => "required|trim|validate_encrypted_value"
                     ],
                 ];
-                if (url_decryption($_POST['org_state']) == 0) {
+                if (isset($_POST['org_state']) && url_decryption($_POST['org_state']) == 0) {
                     $validations += [
                         "org_state_name" => [
                             "label" => "Organisation Other State Name",
@@ -213,7 +213,7 @@ class Respondent extends BaseController {
                     "rules" => "required|trim|validate_encrypted_value"
                 ],
             ];
-            if (url_decryption($_POST['org_dept']) == 0) {
+            if (isset($_POST['org_dept']) && url_decryption($_POST['org_dept']) == 0) {
                 $validations += [
                     "org_dept_name" => [
                         "label" => "Other Department name",
@@ -227,7 +227,7 @@ class Respondent extends BaseController {
                     "rules" => "required|trim|validate_encrypted_value"
                 ],
             ];
-            if (url_decryption($_POST['org_post']) == 0) {
+            if (isset($_POST['org_post']) && url_decryption($_POST['org_post']) == 0) {
                 $validations += [
                     "org_post_name" => [
                         "label" => "Other Post",

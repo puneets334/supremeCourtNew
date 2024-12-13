@@ -18,6 +18,7 @@ $routes->get('newcase/', 'NewCase\DefaultController::index');
 $routes->get('newcase/caseDetails', 'NewCase\CaseDetails::index');
 $routes->get('newcase/petitioner', 'NewCase\Petitioner::index');
 $routes->match(['GET', 'POST'], 'newcase/petitioner/add_petitioner', 'NewCase\Petitioner::add_petitioner');
+$routes->match(['GET', 'POST'], 'newcase/extra_party/(:any)', 'NewCase\ExtraParty::index/$1');
 $routes->get('newcase/defaultController/(:any)', 'NewCase\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'newcase/courtFee', 'NewCase\CourtFee::index');
 $routes->match(['GET', 'POST'], 'newcase/respondent', 'NewCase\Respondent::index');
@@ -136,7 +137,7 @@ $routes->match(['GET', 'POST'], 'case/citation/(:any)', 'ResponsiveVariantRouteC
 $routes->match(['GET', 'POST'], 'case/mentioning/(:any)', 'ResponsiveVariantRouteController::showCaseMentioningListing/$1');
 $routes->match(['GET', 'POST'], 'case/certificate/(:any)', 'ResponsiveVariantRouteController::showCaseCertificateListing/$1');
 $routes->match(['GET', 'POST'], 'case/advocate/(:num)', 'ResponsiveVariantRouteController::showAdvocateData/$1');
-$routes->match(['GET', 'POST'], 'efiling_search', 'EfilingSearch/DefaultController/efiling_search');
+$routes->match(['GET', 'POST'], 'efiling_search/(:any)', 'EfilingSearch/DefaultController/efiling_search/$1');
 $routes->match(['GET', 'POST'], 'efiling_search/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch/DefaultController/identify/$1/$2/$3/$4');
 $routes->match(['GET', 'POST'], 'efiling_search/view/(:any)', 'EfilingSearch/DefaultController/view/$1');
 // $routes->match(['GET', 'POST'], 'efiling_search/get_view_data/(:any)', 'EfilingSearch/DefaultController/get_view_data/$1');
