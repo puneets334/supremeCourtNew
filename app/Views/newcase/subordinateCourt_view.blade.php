@@ -58,8 +58,8 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-2">
                         <div class="form-group">
                             <?php
-                            $noHcEntry = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted']) == 't' ? 'checked="checked"' : '';
-                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted']) == 't' ? 'style="display:none;' : '';
+                            $noHcEntry = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'checked="checked"' : '';
+                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'style="display:none;' : '';
                             $scchecked = @$party_details[0]['selected_court'] == '4' ? 'checked="checked"' : '';
                             $hcchecked = @$party_details[0]['selected_court'] == '1' ? 'checked="checked"' : '';
                             $dcchecked = @$party_details[0]['selected_court'] == '3' ? 'checked="checked"' : '';
@@ -68,7 +68,7 @@
                                 <div align="center"
                                     id="nohc">
                                     <input type="checkbox"
-                                        <?php //echo $noHcEntry; 
+                                        <?php echo $noHcEntry; 
                                         ?>
                                         value="1"
                                         name="chk_nohc"
