@@ -103,11 +103,11 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="8" style="color: red;">
+                    <td colspan="8" style="color: red; white-space: normal !important;">
                         <b>NOTE :</b>
                         <ul>
-                            <li style="margin-left: 15px;">   If for the initiated transaction your amount is deducted from your bank account but due to some technical reason the same is not updated to efiling application then you can update your payment status using ‘Update Status’ link.</li>
-                            <li style="margin-left: 15px;">   Do not make payment again, if your payment request is under process.</li>
+                            <li style="margin-left: 15px;">If for the initiated transaction your amount is deducted from your bank account but due to some technical reason the same is not updated to efiling application then you can update your payment status using ‘Update Status’ link.</li>
+                            <li style="margin-left: 15px;">Do not make payment again, if your payment request is under process.</li>
                         </ul>
                     </td>
                 </tr>

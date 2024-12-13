@@ -16,8 +16,8 @@ if ($uris->getSegment(2) != 'view') {
     }
 }
 ?>
-<div class="panel panel-default panel-body m-3">
-    <div class="col-md-12 text-center mb-3">
+<div class="panel panel-default panel-body">
+    <div class="col-md-12 text-center">
         <h4>Case Details </h4>
     </div>
     <div class="col-12">
@@ -34,10 +34,10 @@ if ($uris->getSegment(2) != 'view') {
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="row">
-                    <div class="col-3">
+                    <div class="col-4">
                         <label><strong>Registration No. :</strong></label>
                     </div>
-                    <div class="col-9">
+                    <div class="col-8">
                         <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p> 
                     </div>
                 </div>
@@ -64,11 +64,11 @@ if ($uris->getSegment(2) != 'view') {
                 </div>
             </div>
         </div>
-        <div class="row mt-2 mb-4">
+        <!-- <div class="row mt-2 mb-4">
             <div class="col-12">
                 <div class="row"></div>
             </div>
-        </div>
+        </div> -->
         <div class="row">
             <div class="col-md-12">
                 <?php
@@ -140,7 +140,6 @@ if ($uris->getSegment(2) != 'view') {
                         </div>
                     </div>
                 <?php } ?>
-                </br>
                 <?php // echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>
                 <?php if ($uris->getSegment(2) != 'view') { ?>
                     <div class="row">
