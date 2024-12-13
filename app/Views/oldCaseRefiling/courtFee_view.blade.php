@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-    <h4 style="text-align: center;color: #31B0D5"> Pay eCourt Fee </h4>
+    <h6 class="text-center fw-bold mb-2">Pay eCourt Fee</h6>
     <h5 style="text-align: center;"><b>Please note that No Printing charges are required to be paid </b> </h5>
     <div class="panel-body">
         
@@ -416,14 +416,14 @@
                 $next_url = '#';
             }
             ?>
-            <a href="<?= $prev_url ?>" class="btn btn-primary btnPrevious" type="button"><b>Previous</b></a>
+            <a href="<?= $prev_url ?>" class="btn quick-btn gray-btn btnPrevious" type="button">PREVIOUS</a>
             <span id="payCourtFeeSection">
                 <?php if ($pending_court_fee > 0) { ?>
                     <input type="submit" class="btn btn-success" id="pay_fee" name="submit" value="PAY">
                 <?php } ?>
             </span>
             <?php if ($pending_court_fee <= 0) { ?>
-                <a href="<?= $next_url ?>" class="btn btn-primary btnNext" type="button"><b>Next</b></a>
+                <a href="<?= $next_url ?>" class="btn quick-btn btnNext" type="button">NEXT</a>
             <?php } ?>
 
         </div>
