@@ -125,10 +125,10 @@ if ($segment->getSegment(2) != 'view') {
         </div>
    
         <div class="text-center mt-4">            
-            <a href="<?= base_url('appearing_for'); ?>" class="btn btn-primary btnPrevious" type="button"><b>Previous</b></a>
+            <a href="<?= base_url('appearing_for'); ?>" class="btn quick-btn gray-btn btnPrevious" type="button">PREVIOUS</a>
             <?php if (isset($appearing_for_details[0]['filing_for_parties']) && !empty($appearing_for_details[0]['filing_for_parties'])) { ?>
                 <input type="submit" class="btn btn-success" id="save_efiling_for" name="submit" value="UPDATE">
-                <a href="<?= base_url('uploadDocuments'); ?>" class="btn btn-primary btnNext" type="button"><b>Next</b></a>
+                <a href="<?= base_url('uploadDocuments'); ?>" class="btn quick-btn btnNext" type="button">NEXT</a>
             <?php } else { ?>
                 <input type="submit" class="quick-btn gray-btn" id="save_efiling_for" value="SAVE" name="submit"  >
             <?php } ?>
