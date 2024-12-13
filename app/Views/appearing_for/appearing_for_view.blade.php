@@ -20,7 +20,7 @@ $parties_details = $data['parties_details'];
 
 
 <div class="panel panel-default">
-    <h4>Appearing For Parties</h4>
+    <h6 class="text-center fw-bold mb-2">Appearing For Parties</h6>
     <div class="panel-body">
         <?php
         $attribute = array('class' => 'form-horizontal', 'name' => 'add_appearing_details', 'id' => 'add_appearing_details', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
@@ -144,10 +144,10 @@ $parties_details = $data['parties_details'];
         <?php
         } else {
         ?>
-            <span class="text-danger">
+            <center><span class="text-danger">
                 [ Select party(s) to whom you represent in the present case. <br>
                 It is recommended to provide email and mobile of parties, which you representing, for your own convenience. ]
-            </span>
+            </span></center>
             <div class="row  mt-4 mb-4">
                 <label class="form-label mt-0 col-lg-1 col-md-2 col-sm-12 col-xs-12 pe-0">Appearing For<span style="color: red">*</span> :</label>
                 <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
@@ -273,10 +273,10 @@ $parties_details = $data['parties_details'];
         }
         ?>
         <div class="text-center mt-4">
-            <a href="<?= base_url('case_details'); ?>" class="btn btn-primary btnPrevious" type="button"><b>Previous</b></a>
+            <a href="<?= base_url('case_details'); ?>" class="btn quick-btn gray-btn btnPrevious" type="button">PREVIOUS</a>
             <?php if (isset($appearing_for_details[0]['appearing_for']) && !empty($appearing_for_details[0]['appearing_for'])) { ?>
                 <input type="submit" class="btn btn-success" id="save_efiling_for" name="submit" value="UPDATE">
-                <a href="<?= base_url('on_behalf_of'); ?>" class="btn btn-primary btnNext" type="button"><b>Next</b></a>
+                <a href="<?= base_url('on_behalf_of'); ?>" class="btn quick-btn btnNext" type="button">NEXT</a>
             <?php } else { ?>
                 <input type="submit" class="btn btn-success" id="save_efiling_for" name="submit" value="SAVE">
             <?php } ?>

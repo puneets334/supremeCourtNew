@@ -146,19 +146,19 @@ if ($uris->getSegment(2) != 'view') {
                     <div class="row">
                         <div class="col-md-offset-5 col-md-2 col-sm-offset-3 col-sm-6 col-xs-12 efiling_search">
                             <?php if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) { ?>
-                                <a href="<?= base_url('mentioning/Listing'); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('mentioning/Listing'); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CITATION) { ?>
-                                <a href="<?= base_url('citation/CitationController'); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('citation/CitationController'); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_CERTIFICATE_REQUEST) { ?>
-                                <a href="<?= base_url('certificate/AddDetails'); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('certificate/AddDetails'); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == OLD_CASES_REFILING) { ?>
-                                <a href="<?= base_url('uploadDocuments/DefaultController'); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('uploadDocuments/DefaultController'); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) { ?>
-                                <a href="<?= base_url('appearing_for'); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('appearing_for'); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php  } else if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS) { ?>
-                                <a href="<?= base_url('appearing_for'); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('appearing_for'); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php } else { ?>
-                                <a href="<?= base_url('case/interim_application/crud_registration/' . url_encryption(trim($_SESSION['efiling_details']['registration_id'] . '#' . $_SESSION['efiling_details']['ref_m_efiled_type_id'] . '#' . 1))); ?>" class="btn btn-primary btn-block" type="button"><b>Next</b></a>
+                                <a href="<?= base_url('case/interim_application/crud_registration/' . url_encryption(trim($_SESSION['efiling_details']['registration_id'] . '#' . $_SESSION['efiling_details']['ref_m_efiled_type_id'] . '#' . 1))); ?>" class="btn quick-btn" type="button">NEXT</a>
                             <?php } ?>
                         </div>
                     </div>
