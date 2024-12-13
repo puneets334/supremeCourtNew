@@ -13,8 +13,25 @@ $court_type_details = '';
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <?php if(isset($subordinate_court_details[0]->is_hc_exempted) && $subordinate_court_details[0]->is_hc_exempted=='t') { ?>
-                <p> No Earlier Court Details</p>
+            <?php if(isset($subordinate_court_details[0]['is_hc_exempted']) && $subordinate_court_details[0]['is_hc_exempted']=='t') { ?>
+                <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
+                <thead>
+                        <tr class="success">
+                            <th>#</th>
+                            <th style="width:23%;">Case Details</th>
+                            <th>Cause Title</th>
+                            <th>Decision Date</th>
+                            <th>Order Challenged</th>
+                            <th>Order Type</th>
+                            <th>Caveat Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        <td colspan="7"> No Earlier Court Details</td>
+                        </tr>
+                    </tbody>
+                </table>
             <?php } else{ ?>
                 <!-- <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%"> -->
                 <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">            
