@@ -74,11 +74,11 @@ class CaveatFinalSubmit extends BaseController {
                 //   send_mobile_sms($_SESSION['login']['mobile_number'], $sms_text, $sms_data);
                 //   send_mail_msg($_SESSION['login']['emailid'], $subject, $sms_text, $user_name);
                 getSessionData('caveat_msg',true);
-                $this->session->setFlashData('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
+                $this->session->set('msg', '<div class="alert alert-success text-center"> E-filing number ' . efile_preview($_SESSION['efiling_details']['efiling_no']) . ' submitted successfully for approval of E-filing Admin.!</div>');
                 // log_message('CUSTOM', " E-filing number ". efile_preview($_SESSION['efiling_details']['efiling_no']) . "submitted successfully for approval of E-filing Admin.!");
                 // redirect('dashboard');
             } else {
-                $this->session->setFlashData('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
+                $this->session->set('msg', '<div class="alert alert-danger text-center">Submition failed. Please try again!</div>');
                 // redirect('dashboard');
             }             
             return redirect()->to(base_url('caveat/defaultController/processing/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_CAVEAT . '#2'))));
