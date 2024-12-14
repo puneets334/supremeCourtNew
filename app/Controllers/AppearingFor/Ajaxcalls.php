@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 // namespace App\Controllers;
 use App\Models\AppearingFor\AppearingForModel;
 class Ajaxcalls extends BaseController {
-    protected $AppearingForModel;
+    protected $Appearing_for_model;
     public function __construct() {
         parent::__construct();
         $this->Appearing_for_model = new AppearingForModel();
