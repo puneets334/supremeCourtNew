@@ -21,7 +21,7 @@ protected $GetDetailsModel;
         }
 
         $stages_array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage,CITATION_E_FILED,MENTIONING_E_FILED,CERTIFICATE_E_FILED);
-        if (!in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
+        if (!empty(getSessionData('efiling_details')) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
             return redirect()->to(base_url('miscellaneous_docs/view'));
 
         }
