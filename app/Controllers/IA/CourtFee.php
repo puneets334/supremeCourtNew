@@ -80,11 +80,11 @@ class CourtFee extends BaseController {
                     $data['court_fee_list3'] = $this->Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null);
 
 
-                    // $court_fee_part2 = calculate_court_fee(null, 2, 'wd', null);
+                    $court_fee_part2 = calculate_court_fee(null, 2, 'wd', null);
                     // $court_fee_part1 = calculate_court_fee(null, 1, null, 'O');
 
-                    // $total_court_fee = (int)$court_fee_part2;
-                    $total_court_fee=0;
+                    $total_court_fee = (int)$court_fee_part2;
+                    // $total_court_fee=0;
                  
                     
                     $data['court_fee'] = $total_court_fee;
