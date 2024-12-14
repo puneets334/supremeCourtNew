@@ -6,6 +6,7 @@ use App\Models\History\HistoryModel;
 use App\Models\MiscellaneousDocs\GetDetailsModel;
 use App\Models\UploadDocuments\UploadDocsModel;
 use App\Models\NewCase\ViewModel;
+use App\Models\Caveat\ViewModel as CaveatViewModel;
 
 
 class EfiledCase extends BaseController {
@@ -14,6 +15,7 @@ class EfiledCase extends BaseController {
     protected $Get_details_model;
     protected $UploadDocsModel;
     protected $ViewModel;
+    protected $CaveatViewModel;
     public function __construct() {
         parent::__construct();
         $this->History_model = new HistoryModel();
@@ -21,6 +23,7 @@ class EfiledCase extends BaseController {
         $this->Get_details_model = new GetDetailsModel();
         $this->UploadDocsModel = new UploadDocsModel();
         $this->ViewModel = new ViewModel(); 
+        $this->CaveatViewModel = new CaveatViewModel(); 
     }
 
     public function index() {
@@ -38,10 +41,10 @@ class EfiledCase extends BaseController {
             if (isset(getSessionData('efiling_details')['registration_id'])) {
                 $regid = getSessionData('efiling_details')['registration_id'];
                 $type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
-                
+                // pr($type);
 
                 $remark = $this->History_model->get_intials_defects_for_history($regid);
-                if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA || $type == E_FILING_TYPE_DEFICIT_COURT_FEE   || $type ==  E_FILING_TYPE_CAVEAT ) {
+                if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA || $type == E_FILING_TYPE_DEFICIT_COURT_FEE ) {
 //                    $cnr_details = $this->Common_model->get_CNR_Details($regid);
                     $case_details = $this->Get_details_model->get_case_details($regid);
                     if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA) {
@@ -58,6 +61,10 @@ class EfiledCase extends BaseController {
                     $uploaded_docs = $this->Common_model->get_uploaded_documents_efile_history($regid); 
                     $uploaded_docs_name = $this->UploadDocsModel->get_uploaded_pdfs($regid);
                     $created_by = $result[0]['created_by'];
+                }elseif($type ==  E_FILING_TYPE_CAVEAT){
+                    $uploaded_docs = $this->CaveatViewModel->get_caveat_index_items_list($regid);      
+                    $uploaded_docs_name = $this->UploadDocsModel->get_uploaded_pdfs($regid);
+                    $created_by = getSessionData('efiling_details')['created_by'];
                 }
                 // pr($uploaded_docs);
                 
