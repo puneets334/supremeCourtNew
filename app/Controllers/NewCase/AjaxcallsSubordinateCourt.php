@@ -288,10 +288,18 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
                         $string = $this->highcourt_webservices->by_cino($cino);
                         $case_data_array = json_decode($string, true);
-                        $case_data[0] = $case_data_array;
-                        //var_dump($case_data_array);
-                        $highcourt_name = $case_data[0]['court_est_name'];
-                        $case_data[0]['case_no']='0000'.str_pad($case_data[0]['reg_no'],4,"0",STR_PAD_LEFT).$case_data[0]['reg_year'];
+                        if(!empty($case_data_array)){
+                            $case_data[0] = $case_data_array;
+                            //var_dump($case_data_array);
+                            $highcourt_name = $case_data[0]['court_est_name'];
+                            $case_data[0]['case_no']='0000'.str_pad($case_data[0]['reg_no'],4,"0",STR_PAD_LEFT).$case_data[0]['reg_year'];
+                        }else{
+                            echo '1@@@' . htmlentities('Case data not found !', ENT_QUOTES);
+
+                        exit(0);
+                        }
+
+                        
                     }
                     if (isset($case_data) && !empty($case_data) && isset($case_data[0]['pet_name'])) {
 
