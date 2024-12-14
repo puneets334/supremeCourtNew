@@ -960,6 +960,34 @@ class CommonModel extends Model
         }
     }
 
+    function get_uploaded_documents_efile_history($registration_id)
+    {
+        $builder = $this->db->table('efil.tbl_efiled_docs'); 
+        $builder->SELECT('*'); 
+        $builder->distinct('pdf_id');
+        $builder->WHERE('registration_id', $registration_id);
+        $builder->WHERE('is_deleted', false);
+        $builder->ORDERBY('doc_id');
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            // Now, filter the results to return only one entry per pdf_id
+        $filteredResult = [];
+        $seenPdfIds = [];
+
+        foreach ($result as $row) {
+            if (!in_array($row['pdf_id'], $seenPdfIds)) {
+                $filteredResult[] = $row;
+                $seenPdfIds[] = $row['pdf_id'];
+            }
+        }
+
+        return $filteredResult;
+        } else {
+            return FALSE;
+        }
+    }
+
     function get_estab_details_for_search($efiling_for_type_id, $efiling_for_id)
     {
         if (isset($efiling_for_type_id) && !empty($efiling_for_type_id) && isset($efiling_for_id) && !empty($efiling_for_id)) {

@@ -30,8 +30,8 @@ class DefaultController extends BaseController
     public function index()
     {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            return redirect()->to(base_url('dashboard'));
+        if (!empty(getSessionData('login')) && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            return redirect()->to(base_url('/'));
         }
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
         if (!empty(getSessionData('efiling_details')) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {

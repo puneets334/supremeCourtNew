@@ -377,14 +377,21 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         <li class="nav-item" role="presentation">
                             <?php
                             //  echo $segment->getSegment(2) ;
+                            // if ($segment->getSegment(1)  == 'case_details') {
+                            //     $ColorCode = 'background-color: #01ADEF';
+                            //     $status_color = 'first active';
+                            // } elseif (in_array(IA_BREAD_CASE_DETAILS, $StageArray)) {
+                            //     $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            //     $status_color = '';
+                            // } else {
+                            //     $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            //     $status_color = '';
+                            // }
                             if ($segment->getSegment(1)  == 'case_details') {
-                                $ColorCode = 'background-color: #01ADEF';
-                                $status_color = 'first active';
-                            } elseif (in_array(IA_BREAD_CASE_DETAILS, $StageArray)) {
                                 $ColorCode = 'background-color: #169F85;color:#ffffff;';
-                                $status_color = '';
-                            } else {
-                                $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                                $status_color = 'first active';
+                            } else{
+                                $ColorCode = 'background-color: #169F85;color:#ffffff;';
                                 $status_color = '';
                             }
                             ?>
