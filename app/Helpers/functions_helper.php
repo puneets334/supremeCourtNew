@@ -1970,7 +1970,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                 if (!empty($court_fee_calculation_param1)) {
                     $no_of_lower_court_order_challanged = $court_fee_calculation_param1[0]['order_challanged'];
 
-                    if ($case_nature == 'C') // court fee only applicable for civil matters and 0 for criminal matter based on its casetype
+                    if (rtrim($case_nature) == 'C') // court fee only applicable for civil matters and 0 for criminal matter based on its casetype
                     {
                         if ($court_fee_calculation_param1[0]['sc_case_type_id'] == '9' || $court_fee_calculation_param1[0]['sc_case_type_id'] == '25') // MA removed from the above condition on 17-07-2023 by KBPUJARI
                         // for Review Petition , Curative Petition and MA : Court Fee is to be paid same as having paid in the Main/base Matter
@@ -2101,7 +2101,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                         if (!in_array('12', $all_added_docs_and_ias) && !in_array('13', $all_added_docs_and_ias)) {
                             if ($sc_case_type_id != 39) {
                                 $court_fee_calculation_param2 = $Common_model->get_ia_or_misc_doc_court_fee(null, 12, 0);
-                                if ($case_nature == 'C') {
+                                if (rtrim($case_nature) == 'C') {
                                     if ($sc_case_type_id == '5')  // for writ petition
                                     {
                                         $total_court_fee = (int)$total_court_fee + (int)$court_fee_calculation_param2[0]['docfee'] * (int)$case_total_petitioners;
@@ -2149,7 +2149,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                 }
 
                 //TODO code for getting details of SC case nature which entry is done as lower court case if :done by kbp on 08122023
-                if ($case_nature == 'C' || empty($case_nature)) {
+                if (rtrim($case_nature) == 'C' || empty($case_nature)) {
                     //echo ICMIS_SERVICE_URL . '/ConsumedData/getCaseLowerCtDetailsWithCaseNature?diary_no'.$diary_no;exit();
                     $case_lct_details = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseLowerCtDetailsWithCaseNature?diary_no=' . $diary_no);
                     $case_lct_details = $case_lct_details ? json_decode($case_lct_details) : null;
@@ -2179,7 +2179,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                             $case_nature = $caveat_details[0]['nature'];
                     }
 
-                    if (($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || ($case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) && $sc_case_type_id != '19') // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
+                    if ((rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) && $sc_case_type_id != '19') // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
                     //if($case_nature == 'C' || getSessionData('efiling_details')['ref_m_efiled_type_id']==4 || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT && $sc_case_type_id!='19') // court fee only applicable for civil matters and 0 for criminal matter based on its casetype
                     {
                         $no_of_lower_court_order_challanged_for_caveat = !empty($court_fee_calculation_param3) ? $court_fee_calculation_param3[0]['trial_court_order_challanged_for_caveat'] : '';
@@ -2230,12 +2230,12 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                                         $total_court_fee = (int)$total_court_fee + (int)$row['docfee'];
                                     }
                                 } elseif (in_array((int)$doc, $doc_list_of_zero_doc_fee_for_criminal_matter, TRUE)) {
-                                    if ($case_nature == 'C') //these documents fee only applicable for civil matters
+                                    if (rtrim($case_nature) == 'C') //these documents fee only applicable for civil matters
                                         $total_court_fee = (int)$total_court_fee + (int)$row['docfee'];
                                     else
                                         $total_court_fee = (int)$total_court_fee + 0;
                                 } elseif (in_array((int)$doc, $doc_list_no_of_non_party_appellant, TRUE)) {
-                                    if ($case_nature == 'C') {
+                                    if (rtrim($case_nature) == 'C') {
                                         if ((int)$row['no_of_petitioner_appellant'] > 0) {
                                             $total_court_fee = (int)$total_court_fee + (int)$row['docfee'] * (int)$row['no_of_petitioner_appellant'];
                                         } else {

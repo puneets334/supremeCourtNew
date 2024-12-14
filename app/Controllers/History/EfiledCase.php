@@ -45,7 +45,7 @@ class EfiledCase extends BaseController {
 //                    $cnr_details = $this->Common_model->get_CNR_Details($regid);
                     $case_details = $this->Get_details_model->get_case_details($regid);
                     if ($type == E_FILING_TYPE_MISC_DOCS || $type == E_FILING_TYPE_IA) {
-                        $uploaded_docs = $this->Common_model->get_uploaded_documents($regid);
+                        $uploaded_docs = $this->Common_model->get_uploaded_documents_efile_history($regid);
                         $uploaded_docs_name = $this->UploadDocsModel->get_uploaded_pdfs($regid);
 
                     }
@@ -55,11 +55,11 @@ class EfiledCase extends BaseController {
                     $result = $this->History_model->get_new_case_details($regid);
                    
                     // $uploaded_docs = $this->UploadDocsModel->get_uploaded_pdfs($regid);
-                    $uploaded_docs = $this->Common_model->get_uploaded_documents($regid); 
+                    $uploaded_docs = $this->Common_model->get_uploaded_documents_efile_history($regid); 
                     $uploaded_docs_name = $this->UploadDocsModel->get_uploaded_pdfs($regid);
                     $created_by = $result[0]['created_by'];
                 }
-                // pr($uploaded_docs_name);
+                // pr($uploaded_docs);
                 
                 $efiled_by_user = $this->History_model->get_efiled_by_user($created_by);
                 $stage = $this->History_model->get_stages($regid);

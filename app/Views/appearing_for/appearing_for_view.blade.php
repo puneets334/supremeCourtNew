@@ -20,6 +20,7 @@ $parties_details = $data['parties_details'];
 
 
 <div class="panel panel-default">
+    <div id="result" class="text-center"></div>
     <h6 class="text-center fw-bold mb-2">Appearing For Parties</h6>
     <div class="panel-body">
         <?php
@@ -339,23 +340,32 @@ $parties_details = $data['parties_details'];
                     $(".user_type_PR").prop("disabled", true);
                     $('#modal_loader').hide();
                     var resArr = data.split('@@@');
+                    // alert(resArr[1]);
                     if (resArr[0] == 1) {
-                        $('#msg').show();
-                        $(".form-response").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                        setTimeout(function() {
-                            location.reload();
-                        });
+                        // $('#msg').show();
+                        // $(".form-response").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        // setTimeout(function() {
+                        //     location.reload();
+                        // });
+						$('.msg').show();
+						$("#result").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                        location.reload();
                     }
                     if (resArr[0] == 2) {
-                        $('#msg').show();
-                        $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                        setTimeout(function() {
-                            location.reload();
-                        });
+                        // $('#msg').show();
+                        // $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        // setTimeout(function() {
+                        //     location.reload();
+                        // });
+						$('.msg').show();
+						$("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                        location.reload();
                     }
                     if (resArr[0] == 3) {
-                        $('#msg').show();
-                        $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        // $('#msg').show();
+                        // $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+						$('.msg').show();
+						$("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                     }
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

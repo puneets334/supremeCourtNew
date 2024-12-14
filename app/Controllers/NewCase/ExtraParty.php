@@ -1,19 +1,24 @@
 <?php
+
+// if (!defined('BASEPATH')) exit('No direct script access allowed');
+
 namespace App\Controllers\Newcase;
 
 use App\Controllers\BaseController;
 use App\Models\Common\CommonModel;
+use App\Models\Common\FormValidationModel;
+use App\Models\NewCase\NewCaseModel;
 use App\Models\NewCase\DropdownListModel;
 use App\Models\NewCase\GetDetailsModel;
-use App\Models\NewCase\NewCaseModel;
 
-class Petitioner extends BaseController {
+class ExtraParty extends BaseController {
 
     protected $session;
-    protected $Common_model;
-    protected $New_case_model;
-    protected $Dropdown_list_model;
-    protected $Get_details_model;
+    protected $CommonModel;
+    protected $FormValidationModel;
+    protected $NewCaseModel;
+    protected $DropdownListModel;
+    protected $GetDetailsModel;
     protected $request;
     protected $validation;
 
@@ -22,62 +27,94 @@ class Petitioner extends BaseController {
         $this->session = \Config\Services::session();
         if (empty($this->session->get('login'))) {
             return response()->redirect(base_url('/'));
-        } else {
+        } else{
             is_user_status();
         }
-
-        $this->Common_model = new CommonModel();
-        $this->New_case_model = new NewCaseModel();
-        $this->Dropdown_list_model = new DropdownListModel();
-        $this->Get_details_model = new GetDetailsModel();
+        $this->CommonModel = new CommonModel();
+        $this->FormValidationModel = new FormValidationModel();
+        $this->NewCaseModel = new NewCaseModel();
+        $this->FormValidationModel = new FormValidationModel();
+        $this->DropdownListModel = new DropdownListModel();
+        $this->GetDetailsModel = new GetDetailsModel();
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
     }
 
-    public function index() {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+    // public function _remap($param = NULL) {        
+    //     if($this->uri->total_segments()== 4) {             
+    //         $this->add_extra_party($this->uri->segment(4));
+    //     } elseif ($param == 'index') {
+    //         $this->index(NULL);
+    //     } elseif ($param == 'add_extra_party') {
+    //         $this->add_extra_party();
+    //     } else{
+    //         $this->index($param);
+    //     }
+    // }
 
-        if (getSessionData('login') != '' && !in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
-            redirect('admindashboard');
+    public function index($party_id = NULL) {
+        return redirect()->to(base_url('newcase/subordinate_court')); exit(0);
+        if (isset($party_id) && !empty($party_id)) {
+            $party_id = url_decryption($party_id);
+            if (!$party_id) {
+                $_SESSION['MSG'] = message_show("fail", "Invalid ID.");
+                return redirect()->to(base_url('newcase/extra_party'));
+                exit(0);
+            }
+        }
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
+            return redirect()->to(base_url('admindashboard'));
             exit(0);
         }
+        // $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage, E_REJECTED_STAGE);
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage,  E_REJECTED_STAGE);
-        if (!empty(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-            return response()->redirect(base_url('newcase/view'));
+        if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
+            return redirect()->to(base_url('newcase/view'));
             exit(0);
         }
-        $data['state_list'] = $this->Dropdown_list_model->get_address_state_list();
-        $countryList = $this->Dropdown_list_model->getCountryList();
+        // $data['state_list'] = $this->DropdownListModel->get_states_list();
+        $data['state_list'] = $this->DropdownListModel->get_address_state_list();
+        $countryList = $this->DropdownListModel->getCountryList();
         $data['countryList'] = !empty($countryList) ? $countryList : NULL;
-        if (isset(getSessionData('efiling_details')['registration_id']) && !empty(getSessionData('efiling_details')['registration_id'])) {
-            $registration_id = getSessionData('efiling_details')['registration_id'];
-            $data['party_details'] = $this->Get_details_model->get_case_parties_details($registration_id, array('p_r_type' => 'P', 'm_a_type' => 'M', 'party_id' => NULL, 'view_lr_list' => FALSE));
-            if(!empty($data['party_details'])){
-                $data['district_list'] = $this->Dropdown_list_model->get_districts_list($data['party_details'][0]['state_id']);
-            }else{
-                $data['district_list'] = [];
+        if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
+            $registration_id = $_SESSION['efiling_details']['registration_id'];
+            $data['extra_parties_list'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => NULL, 'm_a_type' => 'A', 'party_id' => NULL, 'view_lr_list'=> FALSE)); 
+            if (isset($party_id) && !empty($party_id)) {                
+                $data['party_id'] = $party_id;
+                $data['party_details'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => NULL, 'm_a_type' => NULL, 'party_id' => $party_id, 'view_lr_list'=> FALSE));
+                $data['district_list'] = $this->DropdownListModel->get_districts_list($data['party_details'][0]['state_id']);
             }
-            $this->Get_details_model->get_case_table_ids($registration_id);
         }
-        if(!empty(getSessionData('efiling_details')['breadcrumb_status'])){
-            $breadCrumArr = explode(',',getSessionData('efiling_details')['breadcrumb_status']);
-            if(in_array(NEW_CASE_LRS,$breadCrumArr)){
+        if(!empty($this->session->userdata['efiling_details']['breadcrumb_status'])) {
+            $breadCrumArr = explode(',',$this->session->userdata['efiling_details']['breadcrumb_status']);
+            if(in_array(NEW_CASE_LRS,$breadCrumArr)) {
                 $data['is_dead_data'] = true;
-            }
-            else{
+            } else{
                 $data['is_dead_data'] = false;
             }
         }
+        // $this->load->view('templates/header');
+        // $this->load->view('newcase/new_case_view', $data);
+        // $this->load->view('templates/footer');
         return $this->render('newcase.new_case_view', $data);
     }
 
-    public function add_petitioner() {
-        $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
-        if (!empty(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
-            echo '1@@@' . htmlentities("Update in Petitioner details can be done only at 'Draft', 'For Compliance' stages' and 'Defective' stages.", ENT_QUOTES);
-            exit(0);
+    public function add_extra_party($party_id = NULL) {        
+        if (isset($party_id) && !empty($party_id)) {
+            $party_id = url_decryption($party_id);
+            if (!$party_id) {
+                $_SESSION['MSG'] = message_show("fail", "Invalid ID.");
+                return redirect()->to(base_url('newcase/extra_party'));
+                exit(0);
+            }
         }
         $validations = [];
+        $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
+        if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
+            echo '1@@@' . htmlentities("Update in Party details can be done only at 'Draft', 'For Compliance' stages' and 'Defective' stages.", ENT_QUOTES);
+            exit(0);
+        }
         $country_id = !empty($_POST['country_id']) ? url_decryption($_POST['country_id']) : NULL;
         $validations = [
             "party_as" => [
@@ -85,10 +122,12 @@ class Petitioner extends BaseController {
                 "rules" => "required|in_list[I,D1,D2,D3]"
             ],
         ];
-        if($_POST['is_dead_minor'] == '0'){
-            $is_dead_minor = false;
-            $is_dead_file_status = false;
-        }
+        $validations += [
+            "p_r_type" => [
+                "label" => "Extra Party Side",
+                "rules" => "required|in_list[P,R]"
+            ],
+        ];
         if ($_POST['party_as'] == 'I') {
             $validations += [
                 "party_name" => [
@@ -101,14 +140,14 @@ class Petitioner extends BaseController {
                 ],
             ];
             $rel = escape_data($_POST["relation"]);
-            if($rel=='N'){
+            if($rel=='N') {
                 $validations += [
                     "relative_name" => [
                         "label" => "Father/Husband name",
                         "rules" => "trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                     ],
                 ];
-            }else{
+            } else{
                 $validations += [
                     "relative_name" => [
                         "label" => "Father/Husband name",
@@ -116,7 +155,7 @@ class Petitioner extends BaseController {
                     ],
                 ];
             }
-            if($_POST['is_dead_minor'] == '0'){
+            if($_POST['is_dead_minor'] == '0') {
                 $is_dead_minor = false;
                 $is_dead_file_status = false;
                 $validations += [
@@ -129,7 +168,7 @@ class Petitioner extends BaseController {
                         "rules" => "required|trim|min_length[3]|max_length[250]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                     ],
                 ];
-                if(isset($country_id) && !empty($country_id) && $country_id == 96){
+                if(isset($country_id) && !empty($country_id) && $country_id == 96) {
                     $validations += [
                         "party_city" => [
                             "label" => "City",
@@ -144,8 +183,7 @@ class Petitioner extends BaseController {
                             "rules" => "required|trim|validate_encrypted_value"
                         ],
                     ];
-                }
-                else  if(isset($country_id) && !empty($country_id) && $country_id != 96 && $this->request->getPost('is_dead_minor') == '1'){
+                } elseif(isset($country_id) && !empty($country_id) && $country_id != 96 && $_POST['is_dead_minor'] == '1') {
                     $validations += [
                         "party_city" => [
                             "label" => "City",
@@ -161,8 +199,7 @@ class Petitioner extends BaseController {
                         ],
                     ];
                 }
-            }
-            else{
+            } else{
                 $is_dead_minor = true;
                 $is_dead_file_status = false;
             }
@@ -177,7 +214,7 @@ class Petitioner extends BaseController {
                     "rules" => "trim|required|in_list[M,F,O]"
                 ],
             ];
-        } else {
+        } else{
             if ($_POST['party_as'] != 'D3') {
                 $validations += [
                     "org_state" => [
@@ -208,7 +245,6 @@ class Petitioner extends BaseController {
                     ],
                 ];
             }
-
             $validations += [
                 "org_post" => [
                     "label" => "Post",
@@ -238,88 +274,76 @@ class Petitioner extends BaseController {
                 "rules" => "required|trim|exact_length[6]|is_natural"
             ],
         ];
-        // pr($validations);
         $this->validation->setRules($validations);
-        // $this->form_validation->set_error_delimiters('<br/>', '');
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             echo '3@@@';
-            // echo $this->validation->getError('party_as') . $this->validation->getError('party_name') . $this->validation->getError('relation') . $this->validation->getError('relative_name'). $this->validation->getError('party_age') .
-            // $this->validation->getError('party_gender') . $this->validation->getError('org_state') . $this->validation->getError('org_state_name') . $this->validation->getError('org_dept') . $this->validation->getError('org_dept_name') .
-            // $this->validation->getError('org_post') . $this->validation->getError('org_post_name') . $this->validation->getError('party_email') . $this->validation->getError('party_mobile') .
-            // $this->validation->getError('party_address') . $this->validation->getError('party_city') . $this->validation->getError('party_state') . $this->validation->getError('party_district') . $this->validation->getError('party_pincode');
             $errors = $this->validation->getErrors();
-
             foreach ($errors as $field => $error) {
                 if(strpos($error, '{field}')){
                     echo str_replace('{field}', $field, $error) . "<br>";
-                }else{
+                } else{
                     echo $error . "<br>";
                 }
             }
             exit(0);
         }
-
-        $is_org = FALSE;
-
-        $party_as = !empty($_POST["party_as"]) ? $_POST["party_as"] : '';
-
-        $party_name = !empty($_POST["party_name"]) ? $_POST["party_name"] : '';
-        $party_relation = !empty($_POST["relation"]) ? $_POST["relation"] : '';
-        $relative_name = !empty($_POST["relative_name"]) ? $_POST["relative_name"] : '';
-
+        $registration_id = $_SESSION['efiling_details']['registration_id'];        
+        $p_r_type = strtoupper(escape_data($_POST["p_r_type"]));        
+        $party_max = $this->GetDetailsModel->get_max_party_num_n_id($registration_id, $p_r_type);
+        $is_org = FALSE;        
+        $party_as = strtoupper(escape_data($_POST["party_as"]));
+        $party_name = strtoupper(escape_data($_POST["party_name"]));
+        $party_relation = escape_data($_POST["relation"]);
+        $relative_name = strtoupper(escape_data($_POST["relative_name"]));
+        $party_dob = escape_data($_POST["party_dob"]);
         if (isset($_POST['party_dob']) && !empty($_POST['party_dob'])) {
-
-            // $party_dob = $_POST["party_dob"];
-
-            $dateTime = \DateTime::createFromFormat('d/m/Y', $_POST["party_dob"]);
-            if ($dateTime !== false) {
-                $party_dob = $dateTime->format('Y-m-d'); // Convert to 'Y-m-d'
-            } else {
-                // Handle the error (invalid date format)
-                $party_dob = NULL;
-            }
-        } else {
+            $party_dob_array = explode('/', $party_dob);
+            $party_dob = $party_dob_array[2] . '-' . $party_dob_array[1] . '-' . $party_dob_array[0];
+        } else{
             $party_dob = NULL;
         }
-        $party_age = (!empty($_POST["party_age"]) && $_POST["party_age"] != 'NaN') ? $_POST["party_age"] : NULL;
-        $party_gender = !empty($_POST["party_gender"]) ? $_POST["party_gender"] : '';
-
+        $party_age = !empty($_POST["party_age"]) ? escape_data($_POST["party_age"]) : NULL;
+        $party_gender = escape_data($_POST["party_gender"]);
         if ($party_as != 'I') {
             $is_org = TRUE;
             if ($party_as != 'D3') {
-                $org_state = url_decryption($_POST["org_state"]);
+                $org_state = url_decryption(escape_data($_POST["org_state"]));
                 if ($org_state == '0') {
-                    $org_state_name = $_POST["org_state_name"];
+                    $org_state_name = strtoupper(escape_data($_POST["org_state_name"]));
                     $org_state_not_in_list = TRUE;
-                } else {
+                } else{
                     $org_state_name = NULL;
                     $org_state_not_in_list = FALSE;
                 }
-            } else {
-                $org_state = 00;
+            } else{
+                $org_state = 0;
                 $org_state_name = NULL;
                 $org_state_not_in_list = FALSE;
             }
-
-            $org_dept = url_decryption($_POST["org_dept"]);
+            $org_dept = url_decryption(escape_data($_POST["org_dept"]));
             if ($org_dept == '0') {
-                $org_dept_name = $_POST["org_dept_name"];
+                $org_dept_name = strtoupper(escape_data($_POST["org_dept_name"]));
                 $org_dept_not_in_list = TRUE;
-            } else {
+            } else{
                 $org_dept_name = NULL;
                 $org_dept_not_in_list = FALSE;
             }
-
-            $org_post = url_decryption($_POST["org_post"]);
+            $org_post = url_decryption(escape_data($_POST["org_post"]));
             if ($org_post == '0') {
-                $org_post_name = $_POST["org_post_name"];
+                $org_post_name = strtoupper(escape_data($_POST["org_post_name"]));
                 $org_post_not_in_list = TRUE;
-            } else {
+            } else{
                 $org_post_name = NULL;
                 $org_post_not_in_list = FALSE;
             }
-        } else {
-            $org_state = 00;
+            $party_name = NULL;
+            $party_relation = NULL;
+            $relative_name = NULL;
+            $party_age = NULL;
+            $party_dob = NULL;
+            $party_gender = NULL;
+        } else{
+            $org_state = 0;
             $org_state_name = NULL;
             $org_state_not_in_list = FALSE;
             $org_dept = 0;
@@ -329,15 +353,14 @@ class Petitioner extends BaseController {
             $org_post_name = NULL;
             $org_post_not_in_list = FALSE;
         }
-
-        $party_email = !empty($_POST["party_email"]) ? $_POST["party_email"] : NULL;
-        $party_mobile = !empty($_POST["party_mobile"]) ? $_POST["party_mobile"] : NULL;
-        $party_address = !empty($_POST["party_address"]) ? $_POST["party_address"] : NULL;
-        $party_city = !empty($_POST["party_city"]) ? $_POST["party_city"] : NULL;
-        $party_state_id = !empty($_POST["party_state"]) ? url_decryption($_POST["party_state"]) : NULL;
-        $party_district_id = !empty($_POST["party_district"]) ? url_decryption($_POST["party_district"]) : NULL;
-        $party_pincode = !empty($_POST["party_pincode"]) ? $_POST["party_pincode"] : '';
-
+        $party_email = strtoupper(escape_data($_POST["party_email"]));
+        $party_mobile = escape_data($_POST["party_mobile"]);
+        $party_address = strtoupper(escape_data($_POST["party_address"]));
+        $party_city = !empty($_POST["party_city"]) ? strtoupper(escape_data($_POST["party_city"])) : NULL;
+        $party_state_id = !empty($_POST["party_state"]) ? escape_data(url_decryption($_POST["party_state"])) : NULL;
+        $party_district_id = !empty($_POST["party_district"]) ?  escape_data(url_decryption($_POST["party_district"])) : NULL;
+        $party_pincode = escape_data($_POST["party_pincode"]);
+        $curr_dt_time = date('Y-m-d H:i:s');
         $party_address_details = array(
             'email_id' => $party_email,
             'mobile_num' => $party_mobile,
@@ -348,7 +371,6 @@ class Petitioner extends BaseController {
             'pincode' => $party_pincode,
             'country_id'=>$country_id
         );
-
         $party_organisation = array(
             'org_state_id' => $org_state,
             'org_state_name' => $org_state_name,
@@ -360,68 +382,74 @@ class Petitioner extends BaseController {
             'org_post_name' => $org_post_name,
             'org_post_not_in_list' => $org_post_not_in_list
         );
-        $party_dob = trim($party_dob); // Remove any extra whitespace
-
-        // if ($party_dob && strtotime($party_dob) !== false) {
-        //     $formatted_date = date('Y-m-d', strtotime($party_dob));
-        // } else {
-        //     $formatted_date = null;
-        // }
-
         $party_individual = array(
             'party_name' => $party_name,
             'relation' => $party_relation,
             'relative_name' => $relative_name,
-            'party_age' => ($party_age != 'NaN') ? $party_age : null,
+            'party_age' => $party_age,
             'party_dob' => $party_dob,
             'gender' => $party_gender,
             'is_dead_minor'=>$is_dead_minor,
             'is_dead_file_status'=>$is_dead_file_status
         );
-
         $party_type = array(
             'is_org' => $is_org,
             'party_type' => $party_as,
-            'p_r_type' => 'P',
-            'm_a_type' => 'M',
-            'party_no' => 1,
-            'party_id' => 1
+            'p_r_type' => $p_r_type,
+            'm_a_type' => 'A',
+            'party_no' => $party_max[0]['max_party_no']+1,            
+            'party_id' => $party_max[0]['max_party_id']+1
         );
         $party_details = array_merge($party_type, $party_individual, $party_organisation, $party_address_details);
-       // echo '<pre>'; print_r($party_details); exit;
-
-        $registration_id = getSessionData('efiling_details')['registration_id'];
-        $curr_dt_time = date('Y-m-d H:i:s');
-        if (isset($registration_id) && !empty($registration_id) && !empty(getSessionData('case_table_ids')->m_petitioner_id) && isset(getSessionData('case_table_ids')->m_petitioner_id)) {
+        if (isset($registration_id) && !empty($registration_id) && isset($party_id) && !empty($party_id)) {
             $party_update_data = array(
                 'updated_on' => $curr_dt_time,
-                'updated_by' => getSessionData('login')['id'],
+                'updated_by' => $this->session->userdata['login']['id'],
                 'updated_by_ip' => $_SERVER['REMOTE_ADDR']
             );
             $party_details = array_merge($party_details, $party_update_data);
-            $status = $this->New_case_model->add_update_case_parties($registration_id, $party_details, NEW_CASE_PETITIONER, $_SESSION['case_table_ids']->m_petitioner_id);
+            //UPDATE EXTRA PARTY DETAILS
+            $status = $this->NewCaseModel->add_update_case_parties($registration_id, $party_details, NEW_CASE_EXTRA_PARTY, $party_id);
             if ($status) {
-                log_message('info', "Petitioner details updated successfully!");
                 reset_affirmation($registration_id);
-                echo '2@@@' . htmlentities('Petitioner details updated successfully!', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . getSessionData('efiling_details')['stage_id'])));
-            } else {
-                echo '1@@@' . htmlentities('Some error ! Please Try again.', ENT_QUOTES);
+                echo '2@@@' . htmlentities('Party details updated successfully !', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . $_SESSION['efiling_details']['stage_id'])));
+            } else{
+                echo '1@@@' . htmlentities('Some error occurred ! Please Try again.', ENT_QUOTES);
             }
-        } else {
+        } else{
             $party_create_data = array(
                 'registration_id' => $registration_id,
                 'created_on' => $curr_dt_time,
-                'created_by' => getSessionData('login')['id'],
+                'created_by' => $this->session->userdata['login']['id'],
                 'created_by_ip' => $_SERVER['REMOTE_ADDR']
             );
             $party_details = array_merge($party_details, $party_create_data);
-            $inserted_party_id = $this->New_case_model->add_update_case_parties($registration_id, $party_details, NEW_CASE_PETITIONER);
+            $all_party_no = get_extra_party_P_or_R($p_r_type);
+            $breadcrumb_statusGet = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);
+            $breadcrumb_status=count($breadcrumb_statusGet); $step=11;
+            if ($step >= $breadcrumb_status) {
+                if ($p_r_type == 'P') {
+                    $extra_party_check_current_case_details = ($_SESSION['efiling_details']['no_of_petitioners']);
+                    //if ($extra_party_check_current_case_details > $all_party_no) {
+                    if ($extra_party_check_current_case_details > $all_party_no || $extra_party_check_current_case_details != $all_party_no) {
+                        $inserted_party_id = $this->NewCaseModel->add_update_case_parties($registration_id, $party_details, NEW_CASE_EXTRA_PARTY);
+                    } else{
+                        echo '1@@@' . htmlentities('Your limit of number of ' . $extra_party_check_current_case_details . ' petitioner(s) already exhausted, if you want to add more petitioner(s) first update number of petitioners in case details tab.', ENT_QUOTES);
+                    }
+                } elseif ($p_r_type == 'R') {
+                    $extra_party_check_current_case_details = ($_SESSION['efiling_details']['no_of_respondents']);
+                    //if ($extra_party_check_current_case_details > $all_party_no) {
+                    if ($extra_party_check_current_case_details > $all_party_no || $extra_party_check_current_case_details != $all_party_no) {
+                        $inserted_party_id = $this->NewCaseModel->add_update_case_parties($registration_id, $party_details, NEW_CASE_EXTRA_PARTY);
+                    } else{
+                        echo '1@@@' . htmlentities('Your limit of number of ' . $extra_party_check_current_case_details . ' respondents(s) already exhausted, if you want to add more respondent(s) first update number of respondent in case details tab.', ENT_QUOTES);
+                    }
+                }
+            }
             if ($inserted_party_id) {
-
-                $_SESSION['case_table_ids']->m_petitioner_id = $inserted_party_id;
-                echo '2@@@' . htmlentities('Petitioner details added successfully', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . Draft_Stage)));
-            } else {
-                echo '1@@@' . htmlentities('Some error ! Please Try again.', ENT_QUOTES);
+                echo '2@@@' . htmlentities('Party details added successfully !', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . Draft_Stage)));
+            } else{
+                echo '1@@@' . htmlentities('Some error occurred ! Please Try again.', ENT_QUOTES);
             }
         }
     }

@@ -40,10 +40,9 @@ class View extends BaseController {
     }
 
     function index() {
-        // pr('test view');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN, USER_CLERK, USER_DEPARTMENT);
-        if (!empty($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
-            redirect('login');
+        if (isset($_SESSION['login']) && !empty($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
+            return redirect()->to(base_url('/'));
             exit(0);
         }
         if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
@@ -101,7 +100,7 @@ class View extends BaseController {
             // $this->load->view('miscellaneous_docs/misc_docs_preview', $data);
             // $this->load->view('templates/footer');
         } else {
-            redirect('login');
+            return redirect()->to(base_url('login'));
             exit(0);
         }
 

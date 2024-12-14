@@ -71,484 +71,480 @@ class ResponsiveVariantRouteController extends BaseController
             exit(0);
         } 
         $advocate_id = getSessionData('login')['adv_sci_bar_id'];
-        if(isset($advocate_id)) {
-            $sr_advocate_data = '';
-            if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE || getSessionData('login')['ref_m_usertype_id']  == ARGUING_COUNSEL) {
-                $params = array();
-                switch (getSessionData('login')['ref_m_usertype_id']) {
-                    case SR_ADVOCATE:
-                        $params['table_name'] = 'efil.tbl_sr_advocate_engage';
-                        $params['whereFieldName'] = 'sr_advocate_id';
-                        $params['whereFieldValue'] = (int)$advocate_id;
-                        $params['is_active'] = true;
-                        $srAdvocateData = $this->CommonModel->getData($params);
-                        $diaryIdsArr = array();
-                        if (isset($srAdvocateData) && !empty($srAdvocateData)) {
-                            $diaryIdsArr = array_column($srAdvocateData, 'diary_no');
-                        }
-                        $fgc_context = array(
-                            'http' => array(
-                                'user_agent' => 'Mozilla',
-                            ),
-                            "ssl" => array(
-                                "verify_peer" => false,
-                                "verify_peer_name" => false,
-                            ),
-                        );
-                        $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
-                        list($sr_advocate_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                        $or_request_params = [];
-                        $or_request_params['documentType'] = 'or';
-                        $or_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
-                        $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
-                        $office_reports = (isset($or_response) && !empty($or_response)) ? $or_response->data : array();
-                        $rop_judgment_request_params = [];
-                        $rop_judgment_request_params['documentType'] = 'rop-judgment';
-                        $rop_judgment_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
-                        $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
-                        $rop_judgments = (isset($rop_judgment_response) && !empty($rop_judgment_response)) ? $rop_judgment_response->data : array();
-                        foreach ($office_reports as $office_report) {
-                            foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
-                                if ($sr_advocate_soon_case->diary_id == $office_report->diaryId && $sr_advocate_soon_case->meta->listing->listed_on == $office_report->dated) {
-                                    $sr_advocate_soon_case->office_reports = new stdClass();
-                                    $sr_advocate_soon_case->office_reports->current = new stdClass();
-                                    $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
-                                    $sr_advocate_soon_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
-                                }
+        $sr_advocate_data = '';
+        if (getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE || getSessionData('login')['ref_m_usertype_id']  == ARGUING_COUNSEL) {
+            $params = array();
+            switch (getSessionData('login')['ref_m_usertype_id']) {
+                case SR_ADVOCATE:
+                    $params['table_name'] = 'efil.tbl_sr_advocate_engage';
+                    $params['whereFieldName'] = 'sr_advocate_id';
+                    $params['whereFieldValue'] = (int)$advocate_id;
+                    $params['is_active'] = true;
+                    $srAdvocateData = $this->CommonModel->getData($params);
+                    $diaryIdsArr = array();
+                    if (isset($srAdvocateData) && !empty($srAdvocateData)) {
+                        $diaryIdsArr = array_column($srAdvocateData, 'diary_no');
+                    }
+                    $fgc_context = array(
+                        'http' => array(
+                            'user_agent' => 'Mozilla',
+                        ),
+                        "ssl" => array(
+                            "verify_peer" => false,
+                            "verify_peer_name" => false,
+                        ),
+                    );
+                    $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
+                    list($sr_advocate_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                    $or_request_params = [];
+                    $or_request_params['documentType'] = 'or';
+                    $or_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
+                    $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
+                    $office_reports = (isset($or_response) && !empty($or_response)) ? $or_response->data : array();
+                    $rop_judgment_request_params = [];
+                    $rop_judgment_request_params['documentType'] = 'rop-judgment';
+                    $rop_judgment_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
+                    $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
+                    $rop_judgments = (isset($rop_judgment_response) && !empty($rop_judgment_response)) ? $rop_judgment_response->data : array();
+                    foreach ($office_reports as $office_report) {
+                        foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
+                            if ($sr_advocate_soon_case->diary_id == $office_report->diaryId && $sr_advocate_soon_case->meta->listing->listed_on == $office_report->dated) {
+                                $sr_advocate_soon_case->office_reports = new stdClass();
+                                $sr_advocate_soon_case->office_reports->current = new stdClass();
+                                $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
+                                $sr_advocate_soon_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
                             }
                         }
-                        foreach ($rop_judgments as $rop_judgment) {
-                            foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
-                                if ($sr_advocate_soon_case->diary_id == $rop_judgment->diaryId) {
-                                    $sr_advocate_soon_case->rop_judgments = new stdClass();
-                                    $sr_advocate_soon_case->rop_judgments->current = new stdClass();
-                                    $sr_advocate_soon_case->rop_judgments->current->dated = $rop_judgment->dated;
-                                    $sr_advocate_soon_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
-                                }
+                    }
+                    foreach ($rop_judgments as $rop_judgment) {
+                        foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
+                            if ($sr_advocate_soon_case->diary_id == $rop_judgment->diaryId) {
+                                $sr_advocate_soon_case->rop_judgments = new stdClass();
+                                $sr_advocate_soon_case->rop_judgments->current = new stdClass();
+                                $sr_advocate_soon_case->rop_judgments->current->dated = $rop_judgment->dated;
+                                $sr_advocate_soon_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
                             }
                         }
-                        // data for my cases
-                        $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
-                        $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                        if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
-                            $arr = array();
-                            $arr['sr_advocate_id'] = $advocate_id;
-                            $arr['diary_no'] = $diaryIdsArr;
-                            $arr['sr_advocate_arguing_type'] = SR_ADVOCATE;
-                            $tmpArr = array();
-                            $srAdvocateEngageData = $this->CommonModel->getSrAdvocateDataByDiaryNo($arr);
-                            if (isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)) {
-                                foreach ($srAdvocateEngageData as $k => $v) {
-                                    $tmpArr[$v->diary_no] = $v->createdAt . '@' . $v->assignedby;
-                                }
-                            }
-                            foreach ($sr_advocate_data['details'] as $key => $val) {
-                                if (array_key_exists($val->diary_no, $tmpArr)) {
-                                    $arr = explode('@', $tmpArr[$val->diary_no]);
-                                    $createdAt = !empty($arr[0]) ? $arr[0] : '';
-                                    $assignedby = !empty($arr[1]) ? $arr[1] : '';
-                                    $sr_advocate_data['details'][$key]->createdAt = $createdAt;
-                                    $sr_advocate_data['details'][$key]->assignedby = $assignedby;
-                                }
+                    }
+                    // data for my cases
+                    $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
+                    $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                    if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
+                        $arr = array();
+                        $arr['sr_advocate_id'] = $advocate_id;
+                        $arr['diary_no'] = $diaryIdsArr;
+                        $arr['sr_advocate_arguing_type'] = SR_ADVOCATE;
+                        $tmpArr = array();
+                        $srAdvocateEngageData = $this->CommonModel->getSrAdvocateDataByDiaryNo($arr);
+                        if (isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)) {
+                            foreach ($srAdvocateEngageData as $k => $v) {
+                                $tmpArr[$v->diary_no] = $v->createdAt . '@' . $v->assignedby;
                             }
                         }
-                        break;
-                    case ARGUING_COUNSEL:
-                        $advocate_id = (int)getSessionData('login')['id'];
-                        $params['login_id'] = $advocate_id;
-                        $arguingCounselDiaryDetails = $this->CommonModel->getArguingCounselDiaryNo($params);
-                        $diaryIdsArr = array();
-                        if (isset($arguingCounselDiaryDetails[0]) && !empty($arguingCounselDiaryDetails[0])) {
-                            $diaryIdsArr = explode(',', $arguingCounselDiaryDetails[0]['diary_no']);
-                        }
-                        $fgc_context = array(
-                            'http' => array(
-                                'user_agent' => 'Mozilla',
-                            ),
-                            "ssl" => array(
-                                "verify_peer" => false,
-                                "verify_peer_name" => false,
-                            ),
-                        );
-                        $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
-                        list($sr_advocate_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                        $or_request_params = [];
-                        $or_request_params['documentType'] = 'or';
-                        $or_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
-                        $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
-                        $office_reports = $or_response->data;
-                        $rop_judgment_request_params = [];
-                        $rop_judgment_request_params['documentType'] = 'rop-judgment';
-                        $rop_judgment_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
-                        $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
-                        $rop_judgments = $rop_judgment_response->data;
-                        foreach ($office_reports as $office_report) {
-                            foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
-                                if ($sr_advocate_soon_case->diary_id == $office_report->diaryId && $sr_advocate_soon_case->meta->listing->listed_on == $office_report->dated) {
-                                    $sr_advocate_soon_case->office_reports = new stdClass();
-                                    $sr_advocate_soon_case->office_reports->current = new stdClass();
-                                    $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
-                                    $sr_advocate_soon_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
-                                }
+                        foreach ($sr_advocate_data['details'] as $key => $val) {
+                            if (array_key_exists($val->diary_no, $tmpArr)) {
+                                $arr = explode('@', $tmpArr[$val->diary_no]);
+                                $createdAt = !empty($arr[0]) ? $arr[0] : '';
+                                $assignedby = !empty($arr[1]) ? $arr[1] : '';
+                                $sr_advocate_data['details'][$key]->createdAt = $createdAt;
+                                $sr_advocate_data['details'][$key]->assignedby = $assignedby;
                             }
                         }
-                        foreach ($rop_judgments as $rop_judgment) {
-                            foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
-                                if ($sr_advocate_soon_case->diary_id == $rop_judgment->diaryId) {
-                                    $sr_advocate_soon_case->rop_judgments = new stdClass();
-                                    $sr_advocate_soon_case->rop_judgments->current = new stdClass();
-                                    $sr_advocate_soon_case->rop_judgments->current->dated = $rop_judgment->dated;
-                                    $sr_advocate_soon_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
-                                }
+                    }
+                    break;
+                case ARGUING_COUNSEL:
+                    $advocate_id = (int)getSessionData('login')['id'];
+                    $params['login_id'] = $advocate_id;
+                    $arguingCounselDiaryDetails = $this->CommonModel->getArguingCounselDiaryNo($params);
+                    $diaryIdsArr = array();
+                    if (isset($arguingCounselDiaryDetails[0]) && !empty($arguingCounselDiaryDetails[0])) {
+                        $diaryIdsArr = explode(',', $arguingCounselDiaryDetails[0]['diary_no']);
+                    }
+                    $fgc_context = array(
+                        'http' => array(
+                            'user_agent' => 'Mozilla',
+                        ),
+                        "ssl" => array(
+                            "verify_peer" => false,
+                            "verify_peer_name" => false,
+                        ),
+                    );
+                    $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
+                    list($sr_advocate_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                    $or_request_params = [];
+                    $or_request_params['documentType'] = 'or';
+                    $or_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
+                    $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
+                    $office_reports = $or_response->data;
+                    $rop_judgment_request_params = [];
+                    $rop_judgment_request_params['documentType'] = 'rop-judgment';
+                    $rop_judgment_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
+                    $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
+                    $rop_judgments = $rop_judgment_response->data;
+                    foreach ($office_reports as $office_report) {
+                        foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
+                            if ($sr_advocate_soon_case->diary_id == $office_report->diaryId && $sr_advocate_soon_case->meta->listing->listed_on == $office_report->dated) {
+                                $sr_advocate_soon_case->office_reports = new stdClass();
+                                $sr_advocate_soon_case->office_reports->current = new stdClass();
+                                $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
+                                $sr_advocate_soon_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
                             }
                         }
-                        // data for my cases
-                        $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
-                        $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                        if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
-                            $arr = array();
-                            $arr['sr_advocate_id'] = $advocate_id;
-                            $arr['diary_no'] = $diaryIdsArr;
-                            $arr['sr_advocate_arguing_type'] = ARGUING_COUNSEL;
-                            $tmpArr = array();
-                            $srAdvocateEngageData = $this->CommonModel->getSrAdvocateDataByDiaryNo($arr);
-                            if (isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)) {
-                                foreach ($srAdvocateEngageData as $k => $v) {
-                                    $tmpArr[$v->diary_no] = $v->createdAt . '@' . $v->assignedby;
-                                }
-                            }
-                            foreach ($sr_advocate_data['details'] as $key => $val) {
-                                if (array_key_exists($val->diary_no, $tmpArr)) {
-                                    $arr = explode('@', $tmpArr[$val->diary_no]);
-                                    $createdAt = !empty($arr[0]) ? $arr[0] : '';
-                                    $assignedby = !empty($arr[1]) ? $arr[1] : '';
-                                    $sr_advocate_data['details'][$key]->createdAt = $createdAt;
-                                    $sr_advocate_data['details'][$key]->assignedby = $assignedby;
-                                }
+                    }
+                    foreach ($rop_judgments as $rop_judgment) {
+                        foreach ($sr_advocate_soon_cases as &$sr_advocate_soon_case) {
+                            if ($sr_advocate_soon_case->diary_id == $rop_judgment->diaryId) {
+                                $sr_advocate_soon_case->rop_judgments = new stdClass();
+                                $sr_advocate_soon_case->rop_judgments->current = new stdClass();
+                                $sr_advocate_soon_case->rop_judgments->current->dated = $rop_judgment->dated;
+                                $sr_advocate_soon_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
                             }
                         }
-                        break;
-                    default:
-                }
-            } else {            
-                //  echo "AOR id is: ".getSessionData('login')['adv_sci_bar_id']; die;
-                $from_date = date("Y-m-d", strtotime("-3 months"));
-                $to_date = date('Y-m-d');
-                $incomplete_applications = [];
-                $recent_documents_by_me = [];
-                $recent_documents_by_me_grouped_by_document_type = [];
-                $recent_documents_by_me_grouped_by_document_type['ia'] = [];
-                $recent_documents_by_me_grouped_by_document_type['reply'] = [];
-                $recent_documents_by_me_grouped_by_document_type['rejoinder'] = [];
-                $recent_documents_by_me_grouped_by_document_type['other'] = [];
-                $recent_documents_by_others = [];
-                $recent_documents_by_others_grouped_by_document_type = [];
-                $recent_documents_by_others_grouped_by_document_type['ia'] = [];
-                $recent_documents_by_others_grouped_by_document_type['reply'] = [];
-                $recent_documents_by_others_grouped_by_document_type['rejoinder'] = [];
-                //$recent_documents_by_others_grouped_by_document_type = [];
-                $recent_documents_by_others_grouped_by_document_type['adjournment_requests'] = [];
-                $recent_documents_by_others_grouped_by_document_type['other'] = [];
-                //echo "Recent Document Start:".date('H:i:s').'<br/>';
-                $serviceUrl = ICMIS_SERVICE_URL;
-                $from_date_encoded = $from_date;
-                $to_date_encoded = $to_date;
-                // Construct the URL
-                $url = $serviceUrl . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date_encoded . '%20to%20' . $to_date_encoded;
-                // Fetch the data from the external service
-                $recent_documents_str = file_get_contents($url);
-                // Handle the response (convert to JSON, process it, etc.)
-                $recent_documents = json_decode($recent_documents_str, true);
-                // $recent_documents_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date . '%20to%20' . $to_date . '');
-                // $recent_documents = json_decode($recent_documents_str);
-                if (!empty($recent_documents) && count($recent_documents) > 0 && is_array($recent_documents)) {
-                    if (is_array($recent_documents['data'])) {
-                        foreach ($recent_documents['data'] as $index => $data) {
-                            //echo $index." Record<br/>";
-                            if ($data['advocatecode'] == $advocate_id) {
-                                //$recent_documents_by_me[] = $data; //old comments by anshu
-                                if ($data['isia'] && $data['status'] == 'PENDING') {
-                                    //echo $index." its IA<br/>";
-                                    $recent_documents_by_me[] = $data;
-                                    $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
-                                } else {
-                                    if ($data['status'] == 'PENDING') {
-                                        //echo $index." its non-IA<br/>";
-                                        switch ($data['typename']) {
-                                            case 'REPLY':
-                                                $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
-                                                $recent_documents_by_me[] = $data;
-                                                break;
-                                            case 'REJOINDER AFFIDAVIT':
-                                                $recent_documents_by_me_grouped_by_document_type['rejoinder'][] = $data;
-                                                $recent_documents_by_me[] = $data;
-                                                break;
-                                            default:
-                                                $recent_documents_by_me_grouped_by_document_type['other'][] = $data;
-                                                $recent_documents_by_me[] = $data;
-                                                break;
-                                        }
+                    }
+                    // data for my cases
+                    $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
+                    $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                    if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
+                        $arr = array();
+                        $arr['sr_advocate_id'] = $advocate_id;
+                        $arr['diary_no'] = $diaryIdsArr;
+                        $arr['sr_advocate_arguing_type'] = ARGUING_COUNSEL;
+                        $tmpArr = array();
+                        $srAdvocateEngageData = $this->CommonModel->getSrAdvocateDataByDiaryNo($arr);
+                        if (isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)) {
+                            foreach ($srAdvocateEngageData as $k => $v) {
+                                $tmpArr[$v->diary_no] = $v->createdAt . '@' . $v->assignedby;
+                            }
+                        }
+                        foreach ($sr_advocate_data['details'] as $key => $val) {
+                            if (array_key_exists($val->diary_no, $tmpArr)) {
+                                $arr = explode('@', $tmpArr[$val->diary_no]);
+                                $createdAt = !empty($arr[0]) ? $arr[0] : '';
+                                $assignedby = !empty($arr[1]) ? $arr[1] : '';
+                                $sr_advocate_data['details'][$key]->createdAt = $createdAt;
+                                $sr_advocate_data['details'][$key]->assignedby = $assignedby;
+                            }
+                        }
+                    }
+                    break;
+                default:
+            }
+        } else {            
+            //  echo "AOR id is: ".getSessionData('login')['adv_sci_bar_id']; die;
+            $from_date = date("Y-m-d", strtotime("-3 months"));
+            $to_date = date('Y-m-d');
+            $incomplete_applications = [];
+            $recent_documents_by_me = [];
+            $recent_documents_by_me_grouped_by_document_type = [];
+            $recent_documents_by_me_grouped_by_document_type['ia'] = [];
+            $recent_documents_by_me_grouped_by_document_type['reply'] = [];
+            $recent_documents_by_me_grouped_by_document_type['rejoinder'] = [];
+            $recent_documents_by_me_grouped_by_document_type['other'] = [];
+            $recent_documents_by_others = [];
+            $recent_documents_by_others_grouped_by_document_type = [];
+            $recent_documents_by_others_grouped_by_document_type['ia'] = [];
+            $recent_documents_by_others_grouped_by_document_type['reply'] = [];
+            $recent_documents_by_others_grouped_by_document_type['rejoinder'] = [];
+            //$recent_documents_by_others_grouped_by_document_type = [];
+            $recent_documents_by_others_grouped_by_document_type['adjournment_requests'] = [];
+            $recent_documents_by_others_grouped_by_document_type['other'] = [];
+            //echo "Recent Document Start:".date('H:i:s').'<br/>';
+            $serviceUrl = ICMIS_SERVICE_URL;
+            $from_date_encoded = $from_date;
+            $to_date_encoded = $to_date;
+            // Construct the URL
+            $url = $serviceUrl . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date_encoded . '%20to%20' . $to_date_encoded;
+            // Fetch the data from the external service
+            $recent_documents_str = file_get_contents($url);
+            // Handle the response (convert to JSON, process it, etc.)
+            $recent_documents = json_decode($recent_documents_str, true);
+            // $recent_documents_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateDocuments/?advocateIds[]=' . $advocate_id . '&status=P&filingDateRange=' . $from_date . '%20to%20' . $to_date . '');
+            // $recent_documents = json_decode($recent_documents_str);
+            if (!empty($recent_documents) && count($recent_documents) > 0 && is_array($recent_documents)) {
+                if (is_array($recent_documents['data'])) {
+                    foreach ($recent_documents['data'] as $index => $data) {
+                        //echo $index." Record<br/>";
+                        if ($data['advocatecode'] == $advocate_id) {
+                            //$recent_documents_by_me[] = $data; //old comments by anshu
+                            if ($data['isia'] && $data['status'] == 'PENDING') {
+                                //echo $index." its IA<br/>";
+                                $recent_documents_by_me[] = $data;
+                                $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
+                            } else {
+                                if ($data['status'] == 'PENDING') {
+                                    //echo $index." its non-IA<br/>";
+                                    switch ($data['typename']) {
+                                        case 'REPLY':
+                                            $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
+                                            $recent_documents_by_me[] = $data;
+                                            break;
+                                        case 'REJOINDER AFFIDAVIT':
+                                            $recent_documents_by_me_grouped_by_document_type['rejoinder'][] = $data;
+                                            $recent_documents_by_me[] = $data;
+                                            break;
+                                        default:
+                                            $recent_documents_by_me_grouped_by_document_type['other'][] = $data;
+                                            $recent_documents_by_me[] = $data;
+                                            break;
                                     }
                                 }
+                            }
+                        } else {
+                            //$recent_documents_by_others[] = $data; //old comments by anshu
+                            if ($data['status'] == 'PENDING') {
+                                //echo $index." its IA<br/>";
+                                $recent_documents_by_others[] = $data;
+                                $recent_documents_by_others_grouped_by_document_type['ia'][] = $data;
                             } else {
-                                //$recent_documents_by_others[] = $data; //old comments by anshu
                                 if ($data['status'] == 'PENDING') {
-                                    //echo $index." its IA<br/>";
-                                    $recent_documents_by_others[] = $data;
-                                    $recent_documents_by_others_grouped_by_document_type['ia'][] = $data;
-                                } else {
-                                    if ($data['status'] == 'PENDING') {
-                                        //echo $index." its non-IA<br/>";
-                                        switch ($data['typename']) {
-                                            case 'REPLY':
-                                                $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
-                                                $recent_documents_by_others[] = $data;
-                                                break;
-                                            case 'REJOINDER AFFIDAVIT':
-                                                $recent_documents_by_others_grouped_by_document_type['rejoinder'][] = $data;
-                                                $recent_documents_by_others[] = $data;
-                                                break;
-                                            default:
-                                                $recent_documents_by_others_grouped_by_document_type['other'][] = $data;
-                                                $recent_documents_by_others[] = $data;
-                                                break;
-                                        }
+                                    //echo $index." its non-IA<br/>";
+                                    switch ($data['typename']) {
+                                        case 'REPLY':
+                                            $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
+                                            $recent_documents_by_others[] = $data;
+                                            break;
+                                        case 'REJOINDER AFFIDAVIT':
+                                            $recent_documents_by_others_grouped_by_document_type['rejoinder'][] = $data;
+                                            $recent_documents_by_others[] = $data;
+                                            break;
+                                        default:
+                                            $recent_documents_by_others_grouped_by_document_type['other'][] = $data;
+                                            $recent_documents_by_others[] = $data;
+                                            break;
                                     }
                                 }
                             }
                         }
                     }
                 }
-                //Adjournment Request Started
-                $recent_documents_str_advocate_others = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true');
-                
-                $recent_documents_advocate_others = json_decode($recent_documents_str_advocate_others);
-                $adjournment_by_others_data = (isset($recent_documents_advocate_others)) ? $recent_documents_advocate_others->data : '';
-                $others_all_diaryId_data = array_column((array)$adjournment_by_others_data, 'diaryId');
-                $adjournment_by_others = array();
-                if (count($others_all_diaryId_data) > 0 && $others_all_diaryId_data != null && !empty($others_all_diaryId_data)) {
-                    $adjournment_by_others = $this->AdjournmentModel->getAdjournmentRequests(getSessionData('login')['id'], $others_all_diaryId_data, "", true);
-                }
-                $adjournment_by_me = $this->AdjournmentModel->getAdjournmentRequests(getSessionData('login')['id']);
-                //$recent_documents_by_others_grouped_by_document_type['adjournment_requests']=$adjournment_by_others;
-                //$recent_documents_by_me_grouped_by_document_type['adjournment_requests']=$adjournment_by_me;
-                $recent_documents_by_me = json_decode(json_encode($recent_documents_by_me));
-                $recent_documents_by_me_grouped_by_document_type = json_decode(json_encode($recent_documents_by_me_grouped_by_document_type));
-                $recent_documents_by_others = json_decode(json_encode($recent_documents_by_others));
-                $recent_documents_by_others_grouped_by_document_type = json_decode(json_encode($recent_documents_by_others_grouped_by_document_type));
-                //echo "Recent Document End:".date('H:i:s').'<br/>';
-                //echo "Defect Start:".date('H:i:s').'<br/>';
-                $open_defects_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false');
-                $open_defects_response = json_decode($open_defects_response_str);
-                $open_defects = !empty($open_defects_response) ? $open_defects_response->data : '';
-                $open_defects_diary_ids_csv_defult = "";
-                $open_defects_diary_ids_csv = !empty($open_defects) ?  "'" . implode("','", array_unique(array_map(function ($open_defect) {
-                    return $open_defect->diaryId;
-                }, $open_defects))) . "'" : $open_defects_diary_ids_csv_defult;
-                $db = \Config\Database::connect();
-                $builder = $db->table('efil.tbl_efiling_nums en');
-                $builder->join('efil.tbl_case_details cd', 'en.registration_id=cd.registration_id');
-                if ($open_defects_diary_ids_csv != '') {
-                    $builder->whereIn('concat(cd.sc_diary_num,cd.sc_diary_year)', $open_defects_diary_ids_csv);
-                }
-                $query = $builder->get();
-                $open_defect_applications = $query->getResult();
-                // $open_defect_applications = $this->db->query($open_defect_applications_query)->result();
-                $open_defects_grouped_by_days_left_to_due_date = [];
-                $open_defects_grouped_by_days_left_to_due_date['days-left-10'] = [];
-                $open_defects_grouped_by_days_left_to_due_date['days-left-20'] = [];
-                $open_defects_grouped_by_days_left_to_due_date['days-left-30'] = [];
-                $open_defects_grouped_by_days_left_to_due_date['over-due'] = [];
-                $open_defect_combined = [];
-                if (!empty($open_defects) && count($open_defects) > 0) {
-                    foreach ($open_defects as $open_defect) {
-                        $open_defect_application = array_filter($open_defect_applications, function ($open_defect_application) use ($open_defect) {
-                            return $open_defect_application->diaryid == $open_defect->diaryId;
-                        });
-                        if (count($open_defect_application) > 0) {
-                            foreach ($open_defect_application as $key => $value) {
-                                if (@$open_defect_application[$key]->diaryid != null) {
-                                    $open_defect->registration_id = @$open_defect_application[$key]->registration_id;
-                                    $open_defect->ref_m_efiled_type_id = @$open_defect_application[$key]->ref_m_efiled_type_id;
-                                    break;
-                                }
+            }
+            //Adjournment Request Started
+            $recent_documents_str_advocate_others = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true');
+            
+            $recent_documents_advocate_others = json_decode($recent_documents_str_advocate_others);
+            $adjournment_by_others_data = (isset($recent_documents_advocate_others)) ? $recent_documents_advocate_others->data : '';
+            $others_all_diaryId_data = array_column((array)$adjournment_by_others_data, 'diaryId');
+            $adjournment_by_others = array();
+            if (count($others_all_diaryId_data) > 0 && $others_all_diaryId_data != null && !empty($others_all_diaryId_data)) {
+                $adjournment_by_others = $this->AdjournmentModel->getAdjournmentRequests(getSessionData('login')['id'], $others_all_diaryId_data, "", true);
+            }
+            $adjournment_by_me = $this->AdjournmentModel->getAdjournmentRequests(getSessionData('login')['id']);
+            //$recent_documents_by_others_grouped_by_document_type['adjournment_requests']=$adjournment_by_others;
+            //$recent_documents_by_me_grouped_by_document_type['adjournment_requests']=$adjournment_by_me;
+            $recent_documents_by_me = json_decode(json_encode($recent_documents_by_me));
+            $recent_documents_by_me_grouped_by_document_type = json_decode(json_encode($recent_documents_by_me_grouped_by_document_type));
+            $recent_documents_by_others = json_decode(json_encode($recent_documents_by_others));
+            $recent_documents_by_others_grouped_by_document_type = json_decode(json_encode($recent_documents_by_others_grouped_by_document_type));
+            //echo "Recent Document End:".date('H:i:s').'<br/>';
+            //echo "Defect Start:".date('H:i:s').'<br/>';
+            $open_defects_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false');
+            $open_defects_response = json_decode($open_defects_response_str);
+            $open_defects = !empty($open_defects_response) ? $open_defects_response->data : '';
+            $open_defects_diary_ids_csv_defult = "";
+            $open_defects_diary_ids_csv = !empty($open_defects) ?  "'" . implode("','", array_unique(array_map(function ($open_defect) {
+                return $open_defect->diaryId;
+            }, $open_defects))) . "'" : $open_defects_diary_ids_csv_defult;
+            $db = \Config\Database::connect();
+            $builder = $db->table('efil.tbl_efiling_nums en');
+            $builder->join('efil.tbl_case_details cd', 'en.registration_id=cd.registration_id');
+            if ($open_defects_diary_ids_csv != '') {
+                $builder->whereIn('concat(cd.sc_diary_num,cd.sc_diary_year)', $open_defects_diary_ids_csv);
+            }
+            $query = $builder->get();
+            $open_defect_applications = $query->getResult();
+            // $open_defect_applications = $this->db->query($open_defect_applications_query)->result();
+            $open_defects_grouped_by_days_left_to_due_date = [];
+            $open_defects_grouped_by_days_left_to_due_date['days-left-10'] = [];
+            $open_defects_grouped_by_days_left_to_due_date['days-left-20'] = [];
+            $open_defects_grouped_by_days_left_to_due_date['days-left-30'] = [];
+            $open_defects_grouped_by_days_left_to_due_date['over-due'] = [];
+            $open_defect_combined = [];
+            if (!empty($open_defects) && count($open_defects) > 0) {
+                foreach ($open_defects as $open_defect) {
+                    $open_defect_application = array_filter($open_defect_applications, function ($open_defect_application) use ($open_defect) {
+                        return $open_defect_application->diaryid == $open_defect->diaryId;
+                    });
+                    if (count($open_defect_application) > 0) {
+                        foreach ($open_defect_application as $key => $value) {
+                            if (@$open_defect_application[$key]->diaryid != null) {
+                                $open_defect->registration_id = @$open_defect_application[$key]->registration_id;
+                                $open_defect->ref_m_efiled_type_id = @$open_defect_application[$key]->ref_m_efiled_type_id;
+                                break;
                             }
                         }
-                        $days_to_due_date = (int)$open_defect->daysToDueDate;
-                        //if($days_to_due_date>=0 && $days_to_due_date<=$open_defect->totalDaysToDueDate){
-                        if ($days_to_due_date >= 0 && $days_to_due_date <= $open_defect->totalDaysToDueDate) {
-                            if ($days_to_due_date <= 10) {
-                                $open_defects_grouped_by_days_left_to_due_date['days-left-10'][] = $open_defect;
-                                $open_defect_combined[] = $open_defect;
-                            } elseif ($days_to_due_date <= 20) {
-                                $open_defects_grouped_by_days_left_to_due_date['days-left-20'][] = $open_defect;
-                                $open_defect_combined[] = $open_defect;
-                            } elseif ($days_to_due_date <= 30) {
-                                $open_defects_grouped_by_days_left_to_due_date['days-left-30'][] = $open_defect;
-                                $open_defect_combined[] = $open_defect;
-                            } else {
-                                $open_defects_grouped_by_days_left_to_due_date['over-due'][] = $open_defect;
-                            }
+                    }
+                    $days_to_due_date = (int)$open_defect->daysToDueDate;
+                    //if($days_to_due_date>=0 && $days_to_due_date<=$open_defect->totalDaysToDueDate){
+                    if ($days_to_due_date >= 0 && $days_to_due_date <= $open_defect->totalDaysToDueDate) {
+                        if ($days_to_due_date <= 10) {
+                            $open_defects_grouped_by_days_left_to_due_date['days-left-10'][] = $open_defect;
+                            $open_defect_combined[] = $open_defect;
+                        } elseif ($days_to_due_date <= 20) {
+                            $open_defects_grouped_by_days_left_to_due_date['days-left-20'][] = $open_defect;
+                            $open_defect_combined[] = $open_defect;
+                        } elseif ($days_to_due_date <= 30) {
+                            $open_defects_grouped_by_days_left_to_due_date['days-left-30'][] = $open_defect;
+                            $open_defect_combined[] = $open_defect;
                         } else {
                             $open_defects_grouped_by_days_left_to_due_date['over-due'][] = $open_defect;
                         }
+                    } else {
+                        $open_defects_grouped_by_days_left_to_due_date['over-due'][] = $open_defect;
                     }
                 }
-                $open_defects = [];
-                $open_defects = $open_defect_combined;
-                //echo "Defect End:".date('H:i:s').'<br/>';
-                //echo "Listed Case Start:".date('H:i:s').'<br/>';
-                $fgc_context = array(
-                    'http' => array(
-                        'user_agent' => 'Mozilla',
-                    ),
-                    "ssl" => array(
-                        "verify_peer" => false,
-                        "verify_peer_name" => false,
-                    ),
-                );
-                //$schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'advocates'=> [7,1207,9147,2505,1373000,1222000,920], 'fromDat' => '2020-05-05', 'forDate' => 'all'];
-                $scheduled_cases = array();
-                if (!empty($advocate_id) && $advocate_id != null) {
-                    // $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'advocates' => [$advocate_id], 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
-                    // list($scheduled_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                    $schedule_request_params = [
-                        'responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO',
-                        'advocates' => [$advocate_id],
-                        'forDate' => 'all',
-                        'ifSkipDigitizedCasesStageComputation' => true
-                    ];
-                    // Fetching the JSON response
-                    $json_response = @file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context));
-                    $decoded_response = @json_decode($json_response, true); // Use true to get an associative array
-                    // Assign the first element to $scheduled_cases
-                    $scheduled_cases = (!empty($decoded_response) && count($decoded_response) > 0) ? $decoded_response : [];
-                }
-                $or_request_params = [];
-                $or_request_params['documentType'] = 'or';
-                $or_request_params['diaryIds'] = array_column($scheduled_cases, 'diary_id');
-                $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
-                $office_reports = (!empty($or_response)) ? $or_response->data : [];
-                $rop_judgment_request_params = [];
-                $rop_judgment_request_params['documentType'] = 'rop-judgment';
-                $rop_judgment_request_params['diaryIds'] = array_column($scheduled_cases, 'diary_id');
-                $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
-                $rop_judgments = (!empty($rop_judgment_response)) ? $rop_judgment_response->data : [];
-                if (!empty($office_reports) && count($office_reports) > 0) {
-                    foreach ($office_reports as $office_report) {
-                        foreach ($scheduled_cases as &$scheduled_case) {
-                            if ($scheduled_case->diary_id == $office_report->diaryId && $scheduled_case->meta->listing->listed_on == $office_report->dated) {
-                                $scheduled_case->office_reports = new stdClass();
-                                $scheduled_case->office_reports->current = new stdClass();
-                                $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
-                                //officereport/2020/13581/13581_2020_2020-09-11_1307.html
-                                $scheduled_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
-                            }
+            }
+            $open_defects = [];
+            $open_defects = $open_defect_combined;
+            //echo "Defect End:".date('H:i:s').'<br/>';
+            //echo "Listed Case Start:".date('H:i:s').'<br/>';
+            $fgc_context = array(
+                'http' => array(
+                    'user_agent' => 'Mozilla',
+                ),
+                "ssl" => array(
+                    "verify_peer" => false,
+                    "verify_peer_name" => false,
+                ),
+            );
+            //$schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'advocates'=> [7,1207,9147,2505,1373000,1222000,920], 'fromDat' => '2020-05-05', 'forDate' => 'all'];
+            $scheduled_cases = array();
+            if (!empty($advocate_id) && $advocate_id != null) {
+                // $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'advocates' => [$advocate_id], 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
+                // list($scheduled_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                $schedule_request_params = [
+                    'responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO',
+                    'advocates' => [$advocate_id],
+                    'forDate' => 'all',
+                    'ifSkipDigitizedCasesStageComputation' => true
+                ];
+                // Fetching the JSON response
+                $json_response = @file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context));
+                $decoded_response = @json_decode($json_response, true); // Use true to get an associative array
+                // Assign the first element to $scheduled_cases
+                $scheduled_cases = (!empty($decoded_response) && count($decoded_response) > 0) ? $decoded_response : [];
+            }
+            $or_request_params = [];
+            $or_request_params['documentType'] = 'or';
+            $or_request_params['diaryIds'] = array_column($scheduled_cases, 'diary_id');
+            $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
+            $office_reports = (!empty($or_response)) ? $or_response->data : [];
+            $rop_judgment_request_params = [];
+            $rop_judgment_request_params['documentType'] = 'rop-judgment';
+            $rop_judgment_request_params['diaryIds'] = array_column($scheduled_cases, 'diary_id');
+            $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
+            $rop_judgments = (!empty($rop_judgment_response)) ? $rop_judgment_response->data : [];
+            if (!empty($office_reports) && count($office_reports) > 0) {
+                foreach ($office_reports as $office_report) {
+                    foreach ($scheduled_cases as &$scheduled_case) {
+                        if ($scheduled_case->diary_id == $office_report->diaryId && $scheduled_case->meta->listing->listed_on == $office_report->dated) {
+                            $scheduled_case->office_reports = new stdClass();
+                            $scheduled_case->office_reports->current = new stdClass();
+                            $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
+                            //officereport/2020/13581/13581_2020_2020-09-11_1307.html
+                            $scheduled_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
                         }
                     }
                 }
-                if (!empty($rop_judgments) && count($rop_judgments) > 0) {
-                    foreach ($rop_judgments as $rop_judgment) {
-                        foreach ($scheduled_cases as &$scheduled_case) {
-                            if ($scheduled_case->diary_id == $rop_judgment->diaryId) {
-                                $scheduled_case->rop_judgments = new stdClass();
-                                $scheduled_case->rop_judgments->current = new stdClass();
-                                $scheduled_case->rop_judgments->current->dated = $rop_judgment->dated;
-                                $scheduled_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
-                            }
+            }
+            if (!empty($rop_judgments) && count($rop_judgments) > 0) {
+                foreach ($rop_judgments as $rop_judgment) {
+                    foreach ($scheduled_cases as &$scheduled_case) {
+                        if ($scheduled_case->diary_id == $rop_judgment->diaryId) {
+                            $scheduled_case->rop_judgments = new stdClass();
+                            $scheduled_case->rop_judgments->current = new stdClass();
+                            $scheduled_case->rop_judgments->current->dated = $rop_judgment->dated;
+                            $scheduled_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
                         }
                     }
                 }
-                //echo "Listed Case End:".date('H:i:s').'<br/>';
-                //echo "Draft Case Start:".date('H:i:s').'<br/>';
-                $draft_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id']));
-                if ($draft_applications == false) {
-                    $draft_applications = array();
-                }
-                $initially_defective_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(4), getSessionData('login')['id']));
-                if ($initially_defective_applications == false) {
-                    $initially_defective_applications = array();
-                }
-                $incomplete_applications = array_merge($draft_applications, $initially_defective_applications);
-                usort($incomplete_applications, function ($item_1, $item_2) {
-                    $datetime1 = strtotime($item_1->activated_on);
-                    $datetime2 = strtotime($item_2->activated_on);
-                    return $datetime2 - $datetime1;
-                });
-                $defect_notified = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(10), getSessionData('login')['id']));
-                if ($defect_notified == false) {
-                    $defect_notified = array();
-                }
-                $pending_scrutiny = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(8, 9, 11), getSessionData('login')['id']));
-                if ($pending_scrutiny == false) {
-                    $pending_scrutiny = array();
-                }
-                //echo "Draft Case End:".date('H:i:s').'<br/>';
-                //echo "Efiled Case Start:".date('H:i:s').'<br/>';
-                // $limit = $this->request->getVar('limit') ?? 25;  
-                // $page = $this->request->getVar('page') ?? 1;  
-                //  $offset = ($page - 1) * $limit; 
-                // pr($data);    
-                $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
-                // $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
-                // $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
-                // $pages = ceil($totalRecords / $limit);
-                if ($final_submitted_applications == false) {
-                    $final_submitted_applications = array();
-                }
-                //echo "Efiled Case Start:".date('H:i:s').'<br/>';
-                $my_cases_recently_updated = [];
-            } 
-            $mobile = $_SESSION['login']['mobile_number'];
-            $email = $_SESSION['login']['emailid'];        
-            // Connect to the second database
-            $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
-            // Online applications
-            $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
-            $builder->select([
-                'COUNT(mobile) AS total_online_application',
-                "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
-                "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
-            ]);
-            $builder->where('mobile', $mobile);
-            $builder->where('email', $email);
-            $builder->where('source', 6);
-            $builder->where('is_deleted', FALSE);
-            $builder->groupBy('is_deleted');
-            $online = $builder->get()->getRow(); // Fetch online applications        
-            // Reset builder for the next query (offline applications)
-            $builder->resetQuery();        
-            // Offline applications
-            $builder->select([
-                'COUNT(mobile) AS total_offline_application',
-                "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
-                "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
-            ]);
-            $builder->where('mobile', $mobile);
-            $builder->where('email', $email);
-            $builder->where('source !=', 6);
-            $builder->where('is_deleted', FALSE);
-            $builder->groupBy('is_deleted');
-            $offline = $builder->get()->getRow(); // Fetch offline applications        
-            // Reset builder again for the next query (requests)
-            $builder->resetQuery();        
-            // Requests
-            $builder = $sci_cmis_final->table('copying_request_verify');
-            $builder->select([
-                'COUNT(mobile) AS total_request',
-                "SUM(CASE WHEN application_status = 'D' THEN 1 ELSE 0 END) AS disposed_request",
-                "SUM(CASE WHEN application_status = 'P' THEN 1 ELSE 0 END) AS pending_request",
-            ]);
-            $builder->where('mobile', $mobile);
-            $builder->where('email', $email);
-            $builder->where('allowed_request', 'request_to_available');
-            $builder->where('is_deleted', FALSE); 
-            $builder->groupBy('is_deleted');
-            $request = $builder->get()->getRow(); // Fetch request data                
-            return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','online','offline','request'));
-        } else{
-            return redirect()->to(base_url('/'));
-        }
+            }
+            //echo "Listed Case End:".date('H:i:s').'<br/>';
+            //echo "Draft Case Start:".date('H:i:s').'<br/>';
+            $draft_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id']));
+            if ($draft_applications == false) {
+                $draft_applications = array();
+            }
+            $initially_defective_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(4), getSessionData('login')['id']));
+            if ($initially_defective_applications == false) {
+                $initially_defective_applications = array();
+            }
+            $incomplete_applications = array_merge($draft_applications, $initially_defective_applications);
+            usort($incomplete_applications, function ($item_1, $item_2) {
+                $datetime1 = strtotime($item_1->activated_on);
+                $datetime2 = strtotime($item_2->activated_on);
+                return $datetime2 - $datetime1;
+            });
+            $defect_notified = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(10), getSessionData('login')['id']));
+            if ($defect_notified == false) {
+                $defect_notified = array();
+            }
+            $pending_scrutiny = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(8, 9, 11), getSessionData('login')['id']));
+            if ($pending_scrutiny == false) {
+                $pending_scrutiny = array();
+            }
+            //echo "Draft Case End:".date('H:i:s').'<br/>';
+            //echo "Efiled Case Start:".date('H:i:s').'<br/>';
+            // $limit = $this->request->getVar('limit') ?? 25;  
+            // $page = $this->request->getVar('page') ?? 1;  
+            //  $offset = ($page - 1) * $limit; 
+            // pr($data);    
+            $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            // $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            // $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
+            // $pages = ceil($totalRecords / $limit);
+            if ($final_submitted_applications == false) {
+                $final_submitted_applications = array();
+            }
+            //echo "Efiled Case Start:".date('H:i:s').'<br/>';
+            $my_cases_recently_updated = [];
+        } 
+        $mobile = $_SESSION['login']['mobile_number'];
+        $email = $_SESSION['login']['emailid'];        
+        // Connect to the second database
+        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
+        // Online applications
+        $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
+        $builder->select([
+            'COUNT(mobile) AS total_online_application',
+            "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
+            "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('source', 6);
+        $builder->where('is_deleted', FALSE);
+        $builder->groupBy('is_deleted');
+        $online = $builder->get()->getRow(); // Fetch online applications        
+        // Reset builder for the next query (offline applications)
+        $builder->resetQuery();        
+        // Offline applications
+        $builder->select([
+            'COUNT(mobile) AS total_offline_application',
+            "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
+            "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('source !=', 6);
+        $builder->where('is_deleted', FALSE);
+        $builder->groupBy('is_deleted');
+        $offline = $builder->get()->getRow(); // Fetch offline applications        
+        // Reset builder again for the next query (requests)
+        $builder->resetQuery();        
+        // Requests
+        $builder = $sci_cmis_final->table('copying_request_verify');
+        $builder->select([
+            'COUNT(mobile) AS total_request',
+            "SUM(CASE WHEN application_status = 'D' THEN 1 ELSE 0 END) AS disposed_request",
+            "SUM(CASE WHEN application_status = 'P' THEN 1 ELSE 0 END) AS pending_request",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('allowed_request', 'request_to_available');
+        $builder->where('is_deleted', FALSE); 
+        $builder->groupBy('is_deleted');
+        $request = $builder->get()->getRow(); // Fetch request data                
+        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','online','offline','request'));
     }
 
     public function showCases()
