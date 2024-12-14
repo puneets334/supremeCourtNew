@@ -82,7 +82,7 @@
                                     $doc_list_for_per_petition_calculation = array(84);
                                     $doc_list_for_per_lower_court_order_challanged_number = array(85, 86, 87, 817, 120, 827, 828, 829, 830, 831, 835, 895, 8328);
                                     $doc_list_of_zero_doc_fee_for_criminal_matter = array(842, 8120, 8137, 8144, 8152, 8153, 8160, 8252, 8271, 8302, 8324, 8346, 8368, 8385);
-                                    // var_dump($court_fee_list3);
+                                    // pr($court_fee_list3);
                                     $diary_no = (int)$court_fee_list3[0]['diary_no'] . (int)$court_fee_list3[0]['diary_year'];
                                     $case_nature = $court_fee_list3[0]['nature'];
                                     if (empty($case_nature)) {
@@ -111,7 +111,6 @@
 
 
                                         if (in_array((int)$doc, $doc_list_with_affidavit, TRUE)) {
-
                                             $doc_court_fee = 0;
                                             $doc_extra_details = '';
                                             if ($row['court_fee_calculation_helper_flag'] == 'Y') //DOC submit with Affidavit flag
@@ -145,7 +144,6 @@
                                     <?php
                                             $sr_no++;
                                         } elseif (in_array((int)$doc, $doc_list_of_affidavit_attested_place, TRUE)) {
-
                                             $doc_court_fee = 0;
                                             $doc_extra_details = '';
                                             if ($case_nature == 'C')
@@ -236,7 +234,6 @@
                                     <?php
                                             $sr_no++;
                                         } elseif (in_array((int)$doc, $doc_list_for_per_lower_court_order_challanged_number, TRUE)) {
-
                                     ?>
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td data-key="#"><?= $sr_no ?></td>
@@ -297,11 +294,14 @@
                                             <td data-key="#"><?= $sr_no; ?></td>
                                             <td data-key="Court Fee Details"> <?= $row['docdesc']; ?> </td>
                                             <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
-                                                <?php if ($case_nature == 'C')
+                                                <?php 
+                                                $doc_court_fee = 0;
+                                                if (rtrim($case_nature) == 'C'){
                                                     $doc_court_fee = (int)$row['docfee'];
-                                                else
-                                                    $doc_court_fee = 0;
-
+                                                }
+                                                // else{
+                                                //     $doc_court_fee = 0;
+                                                // }
                                                 if ($case_if_sclsc_status == 1)  // code added on 19082023 by kbp for making court fee 0 : when any document/is filed in the if_sclsc case
                                                 {
                                                     $doc_court_fee = 0;

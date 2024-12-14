@@ -37,8 +37,8 @@ if ($uris->getSegment(2) != 'view') {
                     <div class="col-4">
                         <label><strong>Registration No. :</strong></label>
                     </div>
-                    <div class="col-8">
-                        <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p> 
+                    <div class="col-9">
+                        <p> <?php echo_data($case_details[0]['reg_no_display']); ?></p> 
                     </div>
                 </div>
             </div>
