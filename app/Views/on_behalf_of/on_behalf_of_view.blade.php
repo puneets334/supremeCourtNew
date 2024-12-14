@@ -11,6 +11,7 @@ if ($segment->getSegment(2) != 'view') {
 }
 ?>
 <div class="panel panel-default panel-body">
+    <div id="result" class="text-center"></div>
     <h6 class="text-center fw-bold mb-2">Filing For</h6>
     <div class="col-12 mb-3">
         <div class="row">        
@@ -152,12 +153,16 @@ if ($segment->getSegment(2) != 'view') {
                     $('#modal_loader').hide();
                     var resArr = data.split('@@@');
                     if (resArr[0] == 1) {
-                        $('#msg').show();
-                        $(".form-response").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        // $('#msg').show();
+                        // $(".form-response").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+						$('.msg').show();
+						$("#result").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                         location.reload();
                     } else if (resArr[0] == 3) {
-                        $('#msg').show();
-                        $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                        // $('#msg').show();
+                        // $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+						$('.msg').show();
+						$("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                     }
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                         $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
