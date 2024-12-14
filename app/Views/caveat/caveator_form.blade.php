@@ -949,6 +949,7 @@ textarea {
             yearRange: "-100",
             format: "dd/mm/yyyy",
             defaultDate: "-40y",
+            "autoclose": true,
             endDate: today 
             
         });
