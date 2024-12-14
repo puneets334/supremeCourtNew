@@ -45,8 +45,8 @@ class Appearing_for extends BaseController {
             echo form_error('user_type'). form_error('party_name[]') . form_error('party_email[]') . form_error('party_mob[]'). form_error('selected_party[]');
             exit(0);
         } */
-        $registration_id = $_SESSION['efiling_details']['registration_id'];
-        if(!empty($registration_id)) {
+        if(isset($_SESSION['efiling_details']) && !empty($_SESSION['efiling_details'])) {
+            $registration_id = $_SESSION['efiling_details']['registration_id'];
             $party_type = escape_data($_POST['user_type']);
             $party_name = $_POST['party_name'];
             $parties_selected = isset($_POST['selected_party'])?$_POST['selected_party']:'';
@@ -105,7 +105,7 @@ class Appearing_for extends BaseController {
                     'appearing_for' => !empty($appearing_for) ? rtrim($appearing_for, '$$') : '',
                     'updated_by' => $_SESSION['login']['id'],
                     'updated_by_ip' => $_SERVER['REMOTE_ADDR'],
-                    'updated_on' => date('Y-m-d H:i:s')
+                    'updated_on' => date('Y-m-d H:i:s', strtotime('+5 hours 30 minutes'))
                 );
                 $update_contact_details = array(
                     'p_name' => !empty($contact_p_name) ? rtrim($contact_p_name, '$$') : '',
@@ -115,7 +115,7 @@ class Appearing_for extends BaseController {
                     'contact_type' => $party_type,
                     'updated_by' => $_SESSION['login']['id'],
                     'update_ip' => $_SERVER['REMOTE_ADDR'],
-                    'updated_on' => date('Y-m-d H:i:s')
+                    'updated_on' => date('Y-m-d H:i:s', strtotime('+5 hours 30 minutes'))
                 );
                 $result = $this->AppearingForModel->update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id,$registration_id);
                 if ($result) {
@@ -125,7 +125,7 @@ class Appearing_for extends BaseController {
                 }
             }
         } else{
-            return response()->redirect(base_url('/'));
+            return response()->redirect(base_url('dashboard_alt'));
         }
     }
 
