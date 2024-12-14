@@ -625,7 +625,7 @@ span.select2.select2-container.select2-container--default {
             yearRange: "-100",
             format: "dd/mm/yyyy",
             defaultDate: "-40y",
-
+            "autoclose": true, 
             endDate: today 
             
         });
