@@ -1273,6 +1273,8 @@
                     });
                 },
                 error: function() {
+                    document.getElementById('loader-wrapper').style.display = 'none';
+
                     $('#loader_div').hide();
                     $('#search_button_div').show();
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
