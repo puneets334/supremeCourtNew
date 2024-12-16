@@ -230,10 +230,10 @@ class Caveatee extends BaseController {
         // $org_post = !empty($_POST['org_post']) ?  url_decryption(escape_data($_POST['org_post'])) : NULL;
         // $org_post_name = !empty($_POST['org_post_name']) ?  escape_data($_POST['org_post_name']) : NULL;
        
-        // if(($this->request->getPost("pet_gender"))=='undefined')
-        // {
-        // $pet_gender = NULL;
-        // }
+        if($pet_gender=='undefined')
+        {
+        $pet_gender = NULL;
+        }
         if ($organisation_id != 'I') {
             $is_org = TRUE;
             if ($organisation_id != 'D3') {
