@@ -1016,8 +1016,7 @@ function cin_preview($cin)
 
 function efile_preview($efile_no)
 {
-    return substr($efile_no, 0, 2) . '-' . substr($efile_no, 2, 6) . '-' . substr($efile_no, 8, 5) . '-' .
-        substr($efile_no, 13, 4);
+    return substr($efile_no, 0, 2) . '-' . substr($efile_no, 2, 6) . '-' . substr($efile_no, 8, -4) . '-' . substr($efile_no, -4);
 }
 
 function validate_number($field_value, $is_required, $field_min_length, $field_max_length, $field_label)
@@ -1153,39 +1152,29 @@ function remark_preview($reg_id, $current_stage_id)
     $Common_model = new CommonModel();
     $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
 
+    $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
+
     $result_icmis = $Common_model->get_cis_defects_remarks($reg_id, FALSE);
 
     $defects['pdfdefects'] = $Common_model->get_pdf_defects_remarks($reg_id);
-    // echo 'saurabh'; pr($defects);
-    //echo "<pre>";    print_r($result_icmis); echo "</pre>";
     if (isset($result_icmis) && !empty($result_icmis)) {
-        $msg = '<div class="alert table-responsive-sm"><div class="table-sec">
-                    <div class="table-responsive">';
+
+        $total_aor_cured=sizeof($result_icmis); $acr=0;$checkedAll='';
+        foreach ($result_icmis as $row) { $is_aor_cured = (isset($row['aor_cured']) && !empty($row['aor_cured'])) ? $row['aor_cured'] : "f";
+            if ($is_aor_cured == "t") {  $acr++;  }
+        }
+        if ($total_aor_cured == $acr) { $checkedAll = "checked"; }
+
+        $msg = '<div class="alert table-responsive-sm">';
         $msg .= '<table id="datatable-defects" class="table table-striped custom-table"
-                    cellspacing="0" width="100%">'
-            . '<thead class="success">
-                        <th>Mark Cured<br /><input type="checkbox" id="checkAll" onclick="checkAll()"/></th>
-                        <th>#</th>
-                        <th>Defect Description</th>
-                        <th>Defect Remark</th>
-                        <th>Prepare Dt.</th>
-                        <th>Remove Dt.</th>
-                        <th>Index Title</th>
-                        <th>Defective Page No.</th>
-                    </thead>'
+//                     cellspacing="0" width="100%">'
+            . '<thead class="success"><th>Mark Cured<br/><input type="checkbox" id="checkAll" '.$checkedAll.'></th><th>#</th><th>Defect Description</th><th>Defect Remark</th><th>Prepare Dt.</th><th>Remove Dt.</th><th>Index Title</th><th>Defective Page No.</th></thead>'
             . '<tbody style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $i = 1;
-       
         foreach ($result_icmis as $re) {
-            // pr($re);
-            $prep_dt = (isset($re['obj_prepare_date']) && !empty($re['obj_prepare_date'])) ? date(
-                'd-M-Y H:i:s',
-                strtotime($re['obj_prepare_date'])
-            ) : null;
-            $remove_dt = (isset($re['obj_removed_date']) && !empty($re['obj_removed_date'])) ? date('d-M-Y
-                        H:i:s', strtotime($re['obj_removed_date'])) : null;
-            $pspdfdocumentid = (isset($re['pspdfkit_document_id']) && !empty($re['pspdfkit_document_id'])) ?
-                $re['pspdfkit_document_id'] : null;
+            $prep_dt = (isset($re['obj_prepare_date']) && !empty($re['obj_prepare_date'])) ? date('d-M-Y H:i:s', strtotime($re['obj_prepare_date'])) : null;
+            $remove_dt = (isset($re['obj_removed_date']) && !empty($re['obj_removed_date'])) ? date('d-M-Y H:i:s', strtotime($re['obj_removed_date'])) : null;
+            $pspdfdocumentid = (isset($re['pspdfkit_document_id']) && !empty($re['pspdfkit_document_id'])) ? $re['pspdfkit_document_id'] : null;
             $aor_cured = (isset($re['aor_cured']) && !empty($re['aor_cured'])) ? $re['aor_cured'] : "f";
             $checked = "";
             $markdefectclass = "";
@@ -1194,11 +1183,8 @@ function remark_preview($reg_id, $current_stage_id)
                 $markdefectclass = "curemarked";
             }
 
-            $link_url = base_url('documentIndex?pspdfkitdocumentid=' . $pspdfdocumentid .
-                '&tobemodifiedpagesraw=');
-            $tobemodifiedpagesdisplay = (isset($re['to_be_modified_pspdfkit_document_pages_raw']) &&
-                !empty($re['to_be_modified_pspdfkit_document_pages_raw'])) ?
-                $re['to_be_modified_pspdfkit_document_pages_raw'] : null;
+            $link_url = base_url('documentIndex?pspdfkitdocumentid=' . $pspdfdocumentid . '&tobemodifiedpagesraw=');
+            $tobemodifiedpagesdisplay = (isset($re['to_be_modified_pspdfkit_document_pages_raw']) && !empty($re['to_be_modified_pspdfkit_document_pages_raw'])) ? $re['to_be_modified_pspdfkit_document_pages_raw'] : null;
             $pdf_title = '';
             $pdf_pages_total = '';
 
@@ -1209,14 +1195,11 @@ function remark_preview($reg_id, $current_stage_id)
                     $pdf_pages_total = $pdf_info->page_no;
                 }
             }
-            $tobemodifiedpagesdisplaytext = '<span title="sequence no.s of (Total Pages)">' .
-                $tobemodifiedpagesdisplay . ' of (' . $pdf_pages_total . '-pages)' . '</span>';
-            $tobemodifiedpagesdisplaytextdisplay = (!empty($tobemodifiedpagesdisplay)) ?
-                $tobemodifiedpagesdisplaytext : "";
+            $tobemodifiedpagesdisplaytext = '<span title="sequence no.s of (Total Pages)">' . $tobemodifiedpagesdisplay . ' of (' . $pdf_pages_total . '-pages)' . '</span>';
+            $tobemodifiedpagesdisplaytextdisplay = (!empty($tobemodifiedpagesdisplay)) ? $tobemodifiedpagesdisplaytext : "";
 
-            $msg .= '<tr id="row' . $re['id'] . '" class="' . $markdefectclass . '">';
-            $msg .= '<td>' . '<input type="checkbox" ' . $checked . ' id="' . $re['id'] . '"
-                                    onchange="setCuredDefect(this.id)" class="checkOneByOne">' . '</td>';
+            $msg .= '<tr id="row' . $re['id'] . '" class="' . $markdefectclass . '  setCuredDefectAllToggle">';
+            $msg .= '<td>' . '<input type="checkbox" ' . $checked . ' id="' . $re['id'] . '" onchange="setCuredDefect(this.id)"  name="setCuredDefectAll[]" class="setCuredDefectAll" value="'.$re['id'].'">' . '</td>';
             $msg .= '<td>' . $i++ . '</td>';
             $msg .= '<td>' . escape_data($re['objdesc']) . '</td>';
             $msg .= '<td>' . escape_data($re['remarks']) . '</td>';
@@ -1226,9 +1209,9 @@ function remark_preview($reg_id, $current_stage_id)
             $msg .= '<td>' . $tobemodifiedpagesdisplaytextdisplay . '</td>';
             $msg .= '</tr>';
         }
-        $msg .= '</tbody>
-                </table>';
+        $msg .= '</tbody></table>';
         $msg .= '</div>';
+
         if (!empty($defects['pdfdefects'])) {
             $connecter = '';
             $msg .= '<div>';
@@ -1240,41 +1223,152 @@ function remark_preview($reg_id, $current_stage_id)
             $msg .= '</b>';
             $msg .= '</div>';
         }
-        $msg .= '</div>';
-        $msg .= '</div>';
-
-
-        echo $msg;
-        
-    } elseif (isset($result_initial) && !empty($result_initial)) { 
-        
+        return $msg;
+    } elseif (isset($result_initial) && !empty($result_initial)) {
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
-        $msg .= '<p><strong>Defect Raised On : </strong>' . date(
-            'd-m-Y H:i:s', strtotime('+5 Hours 30 Minutes', strtotime($result_initial['defect_date'] ?? $result_initial['defect_date']) )
-        ) . '
-                <p>';
-        $msg .= '
-                <p><strong>Defects :</strong>
-                <p>';
-        $msg .= '
-                <p>' . script_remove($result_initial['defect_remark'] ?? $result_initial['defect_remark']) . '
-                <p>';
+        $msg .= '<p><strong>Defect Raised On : </strong>' . date('d-m-Y H:i:s', strtotime($result_initial['defect_date'])) . '<p>';
+        $msg .= '<p><strong>Defects :</strong><p>';
+        $msg .= '<p>' . script_remove($result_initial['defect_remark']) . '<p>';
+
         if ($result_initial['defect_cured_date'] ?? $result_initial['defect_cured_date'] != NULL) {
-            $msg .= '[
-                <p] align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
-                'd-m-Y H:i:s', strtotime('+5 Hours 30 Minutes', strtotime($result_initial['defect_cured_date']))
-            ), ENT_QUOTES) . '
-                <p>';
+            $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result_initial['defect_cured_date'])), ENT_QUOTES) . '<p>';
         }
 
-        $msg .= '
-            </div>';
-        echo $msg;
+        $msg .= '</div>';
+        return $msg;
     } else {
         return false;
     }
-
 }
+
+// function remark_preview($reg_id, $current_stage_id)
+// {
+//     // echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
+//     $Common_model = new CommonModel();
+//     $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
+
+//     $result_icmis = $Common_model->get_cis_defects_remarks($reg_id, FALSE);
+
+//     $defects['pdfdefects'] = $Common_model->get_pdf_defects_remarks($reg_id);
+//     // echo 'saurabh'; pr($defects);
+//     //echo "<pre>";    print_r($result_icmis); echo "</pre>";
+//     if (isset($result_icmis) && !empty($result_icmis)) {
+//         $msg = '<div class="alert table-responsive-sm"><div class="table-sec">
+//                     <div class="table-responsive">';
+//         $msg .= '<table id="datatable-defects" class="table table-striped custom-table"
+//                     cellspacing="0" width="100%">'
+//             . '<thead class="success">
+//                         <th>Mark Cured<br /><input type="checkbox" id="checkAll" onclick="checkAll()"/></th>
+//                         <th>#</th>
+//                         <th>Defect Description</th>
+//                         <th>Defect Remark</th>
+//                         <th>Prepare Dt.</th>
+//                         <th>Remove Dt.</th>
+//                         <th>Index Title</th>
+//                         <th>Defective Page No.</th>
+//                     </thead>'
+//             . '<tbody style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
+//         $i = 1;
+       
+//         foreach ($result_icmis as $re) {
+//             // pr($re);
+//             $prep_dt = (isset($re['obj_prepare_date']) && !empty($re['obj_prepare_date'])) ? date(
+//                 'd-M-Y H:i:s',
+//                 strtotime($re['obj_prepare_date'])
+//             ) : null;
+//             $remove_dt = (isset($re['obj_removed_date']) && !empty($re['obj_removed_date'])) ? date('d-M-Y
+//                         H:i:s', strtotime($re['obj_removed_date'])) : null;
+//             $pspdfdocumentid = (isset($re['pspdfkit_document_id']) && !empty($re['pspdfkit_document_id'])) ?
+//                 $re['pspdfkit_document_id'] : null;
+//             $aor_cured = (isset($re['aor_cured']) && !empty($re['aor_cured'])) ? $re['aor_cured'] : "f";
+//             $checked = "";
+//             $markdefectclass = "";
+//             if ($aor_cured == "t") {
+//                 $checked = "checked";
+//                 $markdefectclass = "curemarked";
+//             }
+
+//             $link_url = base_url('documentIndex?pspdfkitdocumentid=' . $pspdfdocumentid .
+//                 '&tobemodifiedpagesraw=');
+//             $tobemodifiedpagesdisplay = (isset($re['to_be_modified_pspdfkit_document_pages_raw']) &&
+//                 !empty($re['to_be_modified_pspdfkit_document_pages_raw'])) ?
+//                 $re['to_be_modified_pspdfkit_document_pages_raw'] : null;
+//             $pdf_title = '';
+//             $pdf_pages_total = '';
+
+//             if ($pspdfdocumentid != null) {
+//                 $pdf_info = $Common_model->getPdfInfo($pspdfdocumentid);
+//                 if (!empty($pdf_info)) {
+//                     $pdf_title = $pdf_info->doc_title;
+//                     $pdf_pages_total = $pdf_info->page_no;
+//                 }
+//             }
+//             $tobemodifiedpagesdisplaytext = '<span title="sequence no.s of (Total Pages)">' .
+//                 $tobemodifiedpagesdisplay . ' of (' . $pdf_pages_total . '-pages)' . '</span>';
+//             $tobemodifiedpagesdisplaytextdisplay = (!empty($tobemodifiedpagesdisplay)) ?
+//                 $tobemodifiedpagesdisplaytext : "";
+
+//             $msg .= '<tr id="row' . $re['id'] . '" class="' . $markdefectclass . '">';
+//             $msg .= '<td>' . '<input type="checkbox" ' . $checked . ' id="' . $re['id'] . '"
+//                                     onchange="setCuredDefect(this.id)" class="checkOneByOne">' . '</td>';
+//             $msg .= '<td>' . $i++ . '</td>';
+//             $msg .= '<td>' . escape_data($re['objdesc']) . '</td>';
+//             $msg .= '<td>' . escape_data($re['remarks']) . '</td>';
+//             $msg .= '<td>' . escape_data($prep_dt) . '</td>';
+//             $msg .= '<td>' . escape_data($remove_dt) . '</td>';
+//             $msg .= '<td>' . '<a href="' . $link_url . '">' . $pdf_title . '</span></a>' . '</td>';
+//             $msg .= '<td>' . $tobemodifiedpagesdisplaytextdisplay . '</td>';
+//             $msg .= '</tr>';
+//         }
+//         $msg .= '</tbody>
+//                 </table>';
+//         $msg .= '</div>';
+//         if (!empty($defects['pdfdefects'])) {
+//             $connecter = '';
+//             $msg .= '<div>';
+//             $msg .= "<b>NOTE- You also have pdf defects mentioned in ";
+//             foreach ($defects['pdfdefects'] as $key => $val) {
+//                 $msg .= $connecter . "1 file on pageno- " . implode(",", $val);
+//                 $connecter = " AND ";
+//             }
+//             $msg .= '</b>';
+//             $msg .= '</div>';
+//         }
+//         $msg .= '</div>';
+//         $msg .= '</div>';
+
+
+//         echo $msg;
+        
+//     } elseif (isset($result_initial) && !empty($result_initial)) { 
+        
+//         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
+//         $msg .= '<p><strong>Defect Raised On : </strong>' . date(
+//             'd-m-Y H:i:s', strtotime('+5 Hours 30 Minutes', strtotime($result_initial['defect_date'] ?? $result_initial['defect_date']) )
+//         ) . '
+//                 <p>';
+//         $msg .= '
+//                 <p><strong>Defects :</strong>
+//                 <p>';
+//         $msg .= '
+//                 <p>' . script_remove($result_initial['defect_remark'] ?? $result_initial['defect_remark']) . '
+//                 <p>';
+//         if ($result_initial['defect_cured_date'] ?? $result_initial['defect_cured_date'] != NULL) {
+//             $msg .= '[
+//                 <p] align="right"><strong>Defect Cured On : </strong>' . htmlentities(date(
+//                 'd-m-Y H:i:s', strtotime('+5 Hours 30 Minutes', strtotime($result_initial['defect_cured_date']))
+//             ), ENT_QUOTES) . '
+//                 <p>';
+//         }
+
+//         $msg .= '
+//             </div>';
+//         echo $msg;
+//     } else {
+//         return false;
+//     }
+
+// }
 
 function encryptData($data)
 {

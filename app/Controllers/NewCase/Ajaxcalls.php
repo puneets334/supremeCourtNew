@@ -336,6 +336,8 @@ class Ajaxcalls extends BaseController {
                         $tmpArr['jail_signature_date'] = !empty($case_details[0]->jail_signature_date) ? $case_details[0]->jail_signature_date : NULL;
                         $tmpArr['efiling_no'] = !empty($case_details[0]->efiling_no) ? $case_details[0]->efiling_no : NULL;
                         $tmpArr['if_sclsc']=!empty($case_details[0]->if_sclsc)?$case_details[0]->if_sclsc:0;
+                        $tmpArr['sclsc_amr_no'] = !empty($case_details[0]->sclsc_amr_no) ? $case_details[0]->sclsc_amr_no : NULL;
+                        $tmpArr['sclsc_amr_year'] = !empty($case_details[0]->sclsc_amr_year) ? $case_details[0]->sclsc_amr_year : NULL;
                         $tmpArr['special_category']=!empty($case_details[0]->special_category) ? $case_details[0]->special_category : 0;
                         $created_by = !empty($case_details[0]->created_by) ? $case_details[0]->created_by : NULL;
                         if (isset($created_by) && !empty($created_by)) {

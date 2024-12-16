@@ -484,18 +484,66 @@ class Ajaxcalls extends BaseController
     public function markCuredDefect()
     {
         extract($_POST);
-        if(!empty($val) && !empty($objectionId)){
-            $dbs = \Config\Database::connect();
-            $builder = $dbs->table('efil.tbl_icmis_objections');
-            $builder->where('id', $objectionId);
-            $builder->where('is_deleted', false);
-            $updated = $builder->update(['aor_cured' => $val]);
-            if ($updated) {
-                return 1;
-            } else {
-                return 0;
+        if (!empty($type) && $type !='All'){
+            if(!empty($val) && !empty($objectionId)){
+                $dbs = \Config\Database::connect();
+                $builder = $dbs->table('efil.tbl_icmis_objections');
+                $builder->set('aor_cured', $val);
+                $builder->WHERE('id', $objectionId);
+                $builder->WHERE('is_deleted', false);
+                $updated = $builder->update();
+            }
+        }else if (!empty($type) && $type=='All'){
+            if(!empty($_POST)){
+                if(!empty($objectionId)) {
+                    foreach ($objectionId as $key => $value) {
+                        $id = $value;
+                        if (!empty($objectionId)) {
+                            $dbs = \Config\Database::connect();
+                            $builder = $dbs->table('efil.tbl_icmis_objections');
+                            $builder->SELECT('*');
+                            // $this->db->FROM('efil.tbl_icmis_objections');
+                            $builder->WHERE('id', $id);
+                            $builder->WHERE('is_deleted', false);
+                            $builder->WHERE('aor_cured', true);
+                            $query = $builder->get();
+                            if ($query->getNumRows() >= 1) {
+
+                            } else {
+                                $dbs = \Config\Database::connect();
+                                $builder = $dbs->table('efil.tbl_icmis_objections');
+                                $builder->set('aor_cured', true);
+                                $builder->WHERE('id', $id);
+                                $builder->WHERE('is_deleted', false);
+                                $builder->UPDATE();
+                            }
+                        }
+                    }
+                }else{
+                    $registration_id=$_SESSION['efiling_details']['registration_id'];
+                    if (!empty($registration_id)){
+                        $dbs = \Config\Database::connect();
+                        $builder = $dbs->table('efil.tbl_icmis_objections');
+                        $builder->set('aor_cured', false);
+                        $builder->WHERE('registration_id', $registration_id);
+                        $builder->WHERE('is_deleted', false);
+                        $builder->UPDATE();
+                    }
+                }
             }
         }
+        // if(!empty($val) && !empty($objectionId)){
+        //     $dbs = \Config\Database::connect();
+        //     $builder = $dbs->table('efil.tbl_icmis_objections');
+        //     $builder->where('id', $objectionId);
+        //     $builder->where('is_deleted', false);
+        //     $updated = $builder->update(['aor_cured' => $val]);
+        //     if ($updated) {
+        //         return 1;
+        //     } else {
+        //         return 0;
+        //     }
+        // }
 
     }
 }

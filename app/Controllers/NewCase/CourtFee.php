@@ -140,7 +140,7 @@ window.location.href='" . base_url() . "documentIndex';</script>";
 
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             $_SESSION['MSG'] = 'Unauthorised Access !';
-            redirect('login');
+            return redirect()->to(base_url('/'));
             exit(0);
         }
 
@@ -197,6 +197,15 @@ window.location.href='" . base_url() . "documentIndex';</script>";
         if (!empty($already_paid_payment[0]['court_fee_already_paid']))
             $total_court_fee = $total_court_fee - (int)$already_paid_payment[0]['court_fee_already_paid'];
 
+        /* Code changed by Mr.Anshu on 23082024 to redirect the user to dashboard, if user want to process the case via court fee tempering : start*/
+        if (!empty($total_court_fee) && $_SESSION['efiling_details']['is_govt_filing'] !=1 && $_POST['usr_court_fee'] < $total_court_fee){
+            $court_fee_aler = 'The unapproved court fee of : ₹ '.$_POST['usr_court_fee'].'  will be rejected, and the amount owed should be changed to the : ₹'.$total_court_fee.' minimum.';
+            $_SESSION['msg'] = $court_fee_aler;
+            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">'.$court_fee_aler.'</p> </div>');
+            return redirect()->to(base_url('/'));
+            exit();
+        }
+        /* Code changed by Mr.Anshu on 23082024 to redirect the user to dashboard, if user want to process the case via court fee tempering : end*/
 
         /*$data_to_save = array(
             'registration_id' => $registration_id,            
