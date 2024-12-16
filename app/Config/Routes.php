@@ -445,6 +445,7 @@ $routes->match(['GET', 'POST'], 'admin/EfilingAction/noaction', 'Admin\EfilingAc
 $routes->match(['GET', 'POST'], 'admin/efilingAction/disposed', 'Admin\EfilingAction::disposed');
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/markAsErrorCase', 'Admin\EfilingAction::markAsErrorCase');
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/updateDocumentNumber', 'Admin\EfilingAction::updateDocumentNumber');
+$routes->match(['GET', 'POST'], 'cron/Amicus_curiae', 'Cron\AmicusCuriae::index');
 
 
 

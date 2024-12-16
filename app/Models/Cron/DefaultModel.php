@@ -312,7 +312,7 @@ class DefaultModel extends Model {
                     $efil_tbl_users_updated .= $aor_code . ',';
                 } else { 
 
-                    if (!empty(($mobile) && $mobile != null) && (!empty($email) && $email != null) && (!empty($aor_code) && $aor_code != null)) { 
+                    if (!empty(($mobile) && $mobile != null) && (!empty($email) && $email != null) && (!empty($aor_code) && $aor_code != null) && (isset($row->if_aor) && $row->if_aor=='Y')) { 
 
                         $is_efil_tbl_users = $this->efil_tbl_users($aor_code, $mobile, $email);
                         if (empty($is_efil_tbl_users)) {
