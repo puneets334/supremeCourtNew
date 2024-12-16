@@ -393,7 +393,7 @@ class CaseDetails extends BaseController
             } else{
                 $jailsignDt = escape_data($_POST["datesignjail"]);
             }
-            $if_sclsc=trim($_POST["if_sclsc"]);
+            $if_sclsc= isset($_POST["if_sclsc"]) ? trim($_POST["if_sclsc"]) : 0;
             $if_sclsc =  !empty($if_sclsc) ? 1 : 0;
             $sclsc_amr_no   = (isset($_POST['sclsc_amr_no']) && !empty($_POST['sclsc_amr_no']) && $if_sclsc==1) ? $_POST['sclsc_amr_no'] : NULL;
             $sclsc_amr_year = (isset($_POST['sclsc_amr_year']) && !empty($_POST['sclsc_amr_year']) && $if_sclsc==1) ? $_POST['sclsc_amr_year'] : NULL;
