@@ -197,16 +197,69 @@ public function add_caveators() {
     if (empty($organisation_id)) {
         $organisation_id = NULL;
     }
-    if(($this->request->getPost("pet_gender"))=='undefined')
-    {
-        $pet_gender = NULL;
+    // if(($this->request->getPost("pet_gender"))=='undefined')
+    // {
+    //     $pet_gender = NULL;
+    // }
+    if ($organisation_id != 'I') {
+        $is_org = TRUE;
+        if ($organisation_id != 'D3') {
+            $org_state = url_decryption($_POST["org_state"]);
+            if ($org_state == '0') {
+                $org_state_name = $_POST["org_state_name"];
+                $org_state_not_in_list = TRUE;
+            } else {
+                $org_state_name = NULL;
+                $org_state_not_in_list = FALSE;
+            }
+        } else {
+            $org_state = 00;
+            $org_state_name = NULL;
+            $org_state_not_in_list = FALSE;
+        }
+
+        $org_dept = url_decryption($_POST["org_dept"]);
+        if ($org_dept == '0') {
+            $org_dept_name = $_POST["org_dept_name"];
+            $org_dept_not_in_list = TRUE;
+        } else {
+            $org_dept_name = NULL;
+            $org_dept_not_in_list = FALSE;
+        }
+
+        $org_post = url_decryption($_POST["org_post"]);
+        if ($org_post == '0') {
+            $org_post_name = $_POST["org_post_name"];
+            $org_post_not_in_list = TRUE;
+        } else {
+            $org_post_name = NULL;
+            $org_post_not_in_list = FALSE;
+        }
+    } else {
+        $org_state = 00;
+        $org_state_name = NULL;
+        $org_state_not_in_list = FALSE;
+        $org_dept = 0;
+        $org_dept_name = NULL;
+        $org_dept_not_in_list = FALSE;
+        $org_post = 0;
+        $org_post_name = NULL;
+        $org_post_not_in_list = FALSE;
     }
-    $org_state = !empty($this->request->getPost('org_state')) ? url_decryption($this->request->getPost('org_state')) : NULL;
-    $org_state_name = !empty(($this->request->getPost('org_state_name')))?$this->request->getPost('org_state_name'): NULL;
-    $org_dept = !empty($this->request->getPost('org_dept')) ? url_decryption($this->request->getPost('org_dept')) : NULL;
-    $org_dept_name = !empty((string) ($this->request->getPost('org_dept_name')))?$this->request->getPost('org_dept_name'):NULL;
-    $org_post = !empty((string) $this->request->getPost('org_post')) ? url_decryption(escape_data($this->request->getPost('org_post'))) : NULL;
-    $org_post_name = !empty((string) ($this->request->getPost('org_post_name')))? $this->request->getPost('org_post_name'): NULL;
+
+
+
+ 
+    // $org_state = !empty($this->request->getPost('org_state')) ? url_decryption($this->request->getPost('org_state')) : NULL;
+    // $org_state_name = !empty(($this->request->getPost('org_state_name')))?$this->request->getPost('org_state_name'): NULL;
+    // $org_dept = !empty($this->request->getPost('org_dept')) ? url_decryption($this->request->getPost('org_dept')) : NULL;
+    // $org_dept_name = !empty((string) ($this->request->getPost('org_dept_name')))?$this->request->getPost('org_dept_name'):NULL;
+    // $org_post = !empty((string) $this->request->getPost('org_post')) ? url_decryption(escape_data($this->request->getPost('org_post'))) : NULL;
+    // $org_post_name = !empty((string) ($this->request->getPost('org_post_name')))? $this->request->getPost('org_post_name'): NULL;
+
+
+
+
     $pet_email = !empty((string) ($this->request->getPost("pet_email"))) ? $this->request->getPost("pet_email"): NULL;
     $pet_mobile = !empty($this->request->getPost("pet_mobile"))? $this->request->getPost("pet_mobile"): NULL;
     $pet_address = !empty($this->request->getPost("pet_address"))? $this->request->getPost("pet_address"): NULL;
@@ -214,11 +267,11 @@ public function add_caveators() {
     $district_id = !empty($this->request->getPost('party_district')) ? url_decryption($this->request->getPost('party_district')) : NULL;
     $pet_pincode =  !empty($this->request->getPost('party_pincode')) ? $this->request->getPost('party_pincode'): NULL;
     $pet_city = !empty((string) ($this->request->getPost('party_city')))? $this->request->getPost('party_city'): NULL;
-    if(empty($org_state)){$org_state=NULL;}
-    if(empty($org_post_name)){$org_post_name=NULL;}
-    if(empty($org_dept_name)){$org_dept_name=NULL;}
-    if(empty($org_post)){$org_post=NULL;}
-    if(empty($org_dept)){$org_dept=NULL;}
+    // if(empty($org_state)){$org_state=NULL;}
+    // if(empty($org_post_name)){$org_post_name=NULL;}
+    // if(empty($org_dept_name)){$org_dept_name=NULL;}
+    // if(empty($org_post)){$org_post=NULL;}
+    // if(empty($org_dept)){$org_dept=NULL;}
     if(empty($state_id)){$state_id=NULL;}
     if(empty($pet_email)){$pet_email=NULL;}
     if(empty($pet_pincode)){$pet_pincode=NULL;}

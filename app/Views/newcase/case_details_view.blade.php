@@ -214,11 +214,28 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
-                            <label for="" class="form-label">If SCLSC</label>
-                            <div class="form-check form-switch">
-                                <input tabindex="9" class="form-check-input" type="checkbox" id="" name="if_sclsc" id="if_sclsc flexSwitchCheckDefault" <?php echo !empty(@$new_case_details[0]->if_sclsc) && @$new_case_details[0]->if_sclsc == 1 ? 'checked' : ''; ?>>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-2 col-lg-2">
+                                    <label for="" class="form-label">If SCLSC</label>
+                                    <div class="form-check form-switch">
+                                        <input tabindex="9" class="form-check-input if_sclsc" type="checkbox" name="if_sclsc" id="if_sclsc flexSwitchCheckDefault" <?php echo !empty(@$new_case_details[0]->if_sclsc) && @$new_case_details[0]->if_sclsc == 1 ? 'checked' : ''; ?>>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-5 col-lg-5 toggle_amr">
+                                    <label class="form-label">ANR No
+                                        <span style="color: red">*</span>
+                                    </label>
+                                    <input id="sclsc_amr_no" class="form-control cus-form-ctrl" name="sclsc_amr_no" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->sclsc_amr_no; ?>" minlength="1" placeholder="Enter ANR No" type="text">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-5 col-lg-5 toggle_amr">
+                                    <label class="form-label">ANR Year
+                                        <span style="color: red">*</span>
+                                    </label>
+                                    <select id="sclsc_amr_year" name="sclsc_amr_year" class="form-control filter_select_dropdown">  </select>
+                                </div>
                             </div>
                         </div>
+                        
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
@@ -497,6 +514,46 @@
 
 {{-- @endsection --}}
 <script>
+    <?php
+    if(isset($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1){ ?>
+    $(document).ready(function () {
+        $(".toggle_amr").show();
+        $(".if_sclsc").click(function() {
+            if($(this).is(":checked")) {
+                $(".toggle_amr").show(300);
+            } else {
+                $(".toggle_amr").hide(200);
+            }
+        });
+    });
+    <?php } else{ ?>
+    $(document).ready(function () {
+        $(".toggle_amr").hide();
+        $(".if_sclsc").click(function() {
+            if($(this).is(":checked")) {
+                $(".toggle_amr").show(300);
+            } else {
+                $(".toggle_amr").hide(200);
+            }
+        });
+    });
+    <?php } ?>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startYear = 1940;
+        const currentYear = new Date().getFullYear();
+        const yearDropdown = document.getElementById('sclsc_amr_year');
+        for (let year = currentYear; year >= startYear; year--) {
+            const option = document.createElement('option');
+            option.value = year;
+            option.textContent = year;
+            yearDropdown.appendChild(option);
+        }
+        // Set the selected value
+        <?php
+        if((isset($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1) && (isset($new_case_details[0]->sclsc_amr_year) && !empty($new_case_details[0]->sclsc_amr_year))){ ?>
+        yearDropdown.value = "<?=@$new_case_details[0]->sclsc_amr_year;?>"; // Make sure to use a string for the value
+        <?php } ?>
+    });
     $('#party_dob').datepicker({
         onSelect: function(value) { 
             var parts = value.split("/");
@@ -1607,6 +1664,7 @@
 
                 });
         }
+        
     </script>
 
 <?php } ?>

@@ -1044,11 +1044,11 @@
                     }
                 } else if (radio_slct_valid == 3) {
                     var dc_case_year = $('#dc_case_year').val();
-                    if (dc_case_year == '') {
-                        alert("Please fill Case No. And Year.");
-                        $("#dc_case_year").css('border-color', 'red');
-                        return false;
-                    }
+                    // if (dc_case_year == '') {
+                    //     alert("Please fill Case No. And Year.");
+                    //     $("#dc_case_year").css('border-color', 'red');
+                    //     return false;
+                    // }
                 } else if (radio_slct_valid == 5) {
                     var case_year = $('#case_year').val();
                     if (case_year == '') {
@@ -1460,8 +1460,8 @@
             $('#supreme_court_info').hide();
             $('#search_button_div').show();
             $('#agency_state').removeAttr('required');
-                    $('#agency').removeAttr('required');
-                    $('#agency_case_type_id').removeAttr('required');
+            $('#agency').removeAttr('required');
+            $('#agency_case_type_id').removeAttr('required');
             get_state_list();
         } else if (court_as == '5') {
             $('#state_agency_info').show(); 

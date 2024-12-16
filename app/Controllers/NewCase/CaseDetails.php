@@ -393,7 +393,18 @@ class CaseDetails extends BaseController
             } else{
                 $jailsignDt = escape_data($_POST["datesignjail"]);
             }
-            $if_sclsc = !empty($_POST["if_sclsc"]) ? 1 : 0;
+            $if_sclsc=trim($_POST["if_sclsc"]);
+            $if_sclsc =  !empty($if_sclsc) ? 1 : 0;
+            $sclsc_amr_no   = (isset($_POST['sclsc_amr_no']) && !empty($_POST['sclsc_amr_no']) && $if_sclsc==1) ? $_POST['sclsc_amr_no'] : NULL;
+            $sclsc_amr_year = (isset($_POST['sclsc_amr_year']) && !empty($_POST['sclsc_amr_year']) && $if_sclsc==1) ? $_POST['sclsc_amr_year'] : NULL;
+            if($if_sclsc==1){
+                if (empty($sclsc_amr_no)){
+                    echo '1@@@SCLSC ANR No  field is required.'; exit();
+                }
+                if (empty($sclsc_amr_year)){
+                    echo '1@@@SCLSC ANR Year field is required.'; exit();
+                }
+            }
             $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
             $special_category = !empty($_POST["special_category"]) ? url_decryption(escape_data($_POST["special_category"])) : 0;
             if(isset($jailsignDt) && !empty($jailsignDt)){ 
@@ -430,6 +441,8 @@ class CaseDetails extends BaseController
                 'court_type' => $court_type ? $court_type : null,
                 'jail_signature_date' => $jailsignDt ? (escape_data($_POST["sc_sp_case_type_id"]) == 6 ? $jailsignDt : null) : null,
                 'special_category' => $special_category ? $special_category : null,
+                'sclsc_amr_no'=>$sclsc_amr_no,
+                'sclsc_amr_year'=>$sclsc_amr_year
             );
             // pr($case_details);
             if (isset($_SESSION['impersonated_department']))

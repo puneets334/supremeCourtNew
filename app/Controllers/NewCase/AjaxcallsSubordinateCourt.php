@@ -360,6 +360,11 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
                 if (isset($cino) && !empty($cino) && strlen($cino)==16) {
                     $case_data = $this->efiling_webservices->getOpenAPICNRSearch($cino);
+                    if($case_data[0]->status=='INVALID_CNR'){
+                        echo '1@@@' . htmlentities('Invalid CNR Number !', ENT_QUOTES);
+                            exit(0);
+                    }
+                    // pr($case_data);
                     $this->est_case_details($case_data);
                 } else {
                     echo '1@@@' . htmlentities('Case data not found !', ENT_QUOTES);

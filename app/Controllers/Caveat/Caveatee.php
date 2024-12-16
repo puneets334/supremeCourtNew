@@ -205,6 +205,7 @@ class Caveatee extends BaseController {
            
         ]);
       
+        // pr($_POST["pet_age"]);
        
         $pet_complainant = !empty($_POST["pet_complainant"]) ?  escape_data(strtoupper($_POST["pet_complainant"])) : NULL;
         $pet_relation = !empty($_POST['pet_rel_flag']) ? escape_data($_POST['pet_rel_flag']) : NULL;
@@ -220,15 +221,65 @@ class Caveatee extends BaseController {
         else {
             $pet_dob = NULL;
         }
-        
        
         $organisation_id = !empty($_POST['party_is']) ?  escape_data($_POST['party_is']) : NULL;
-        $org_state = !empty($_POST['org_state']) ?  url_decryption(escape_data($_POST['org_state'])) : NULL;
-        $org_state_name = !empty($_POST['org_state_name']) ?  escape_data($_POST['org_state_name']) : NULL;
-        $org_dept = !empty($_POST['org_dept']) ?  url_decryption(escape_data($_POST['org_dept'])) : NULL;
-        $org_dept_name = !empty($_POST['org_dept_name']) ?  escape_data($_POST['org_dept_name']) : NULL;
-        $org_post = !empty($_POST['org_post']) ?  url_decryption(escape_data($_POST['org_post'])) : NULL;
-        $org_post_name = !empty($_POST['org_post_name']) ?  escape_data($_POST['org_post_name']) : NULL;
+        // $org_state = !empty($_POST['org_state']) ?  url_decryption(escape_data($_POST['org_state'])) : NULL;
+        // $org_state_name = !empty($_POST['org_state_name']) ?  escape_data($_POST['org_state_name']) : NULL;
+        // $org_dept = !empty($_POST['org_dept']) ?  url_decryption(escape_data($_POST['org_dept'])) : NULL;
+        // $org_dept_name = !empty($_POST['org_dept_name']) ?  escape_data($_POST['org_dept_name']) : NULL;
+        // $org_post = !empty($_POST['org_post']) ?  url_decryption(escape_data($_POST['org_post'])) : NULL;
+        // $org_post_name = !empty($_POST['org_post_name']) ?  escape_data($_POST['org_post_name']) : NULL;
+       
+        if($pet_gender=='undefined')
+        {
+        $pet_gender = NULL;
+        }
+        if ($organisation_id != 'I') {
+            $is_org = TRUE;
+            if ($organisation_id != 'D3') {
+                $org_state = url_decryption($_POST["org_state"]);
+                if ($org_state == '0') {
+                    $org_state_name = $_POST["org_state_name"];
+                    $org_state_not_in_list = TRUE;
+                } else {
+                    $org_state_name = NULL;
+                    $org_state_not_in_list = FALSE;
+                }
+            } else {
+                $org_state = 00;
+                $org_state_name = NULL;
+                $org_state_not_in_list = FALSE;
+            }
+    
+            $org_dept = url_decryption($_POST["org_dept"]);
+            if ($org_dept == '0') {
+                $org_dept_name = $_POST["org_dept_name"];
+                $org_dept_not_in_list = TRUE;
+            } else {
+                $org_dept_name = NULL;
+                $org_dept_not_in_list = FALSE;
+            }
+    
+            $org_post = url_decryption($_POST["org_post"]);
+            if ($org_post == '0') {
+                $org_post_name = $_POST["org_post_name"];
+                $org_post_not_in_list = TRUE;
+            } else {
+                $org_post_name = NULL;
+                $org_post_not_in_list = FALSE;
+            }
+        } else {
+            $org_state = 00;
+            $org_state_name = NULL;
+            $org_state_not_in_list = FALSE;
+            $org_dept = 0;
+            $org_dept_name = NULL;
+            $org_dept_not_in_list = FALSE;
+            $org_post = 0;
+            $org_post_name = NULL;
+            $org_post_not_in_list = FALSE;
+        }
+
         $pet_email = !empty($_POST["pet_email"]) ? escape_data(strtoupper($_POST["pet_email"])) : NULL;
         $pet_mobile = !empty($_POST["pet_mobile"]) ? escape_data(strtoupper($_POST["pet_mobile"])) : NULL;
         $pet_address = !empty($_POST["pet_address"]) ? escape_data(strtoupper($_POST["pet_address"])) : NULL;
@@ -236,11 +287,7 @@ class Caveatee extends BaseController {
         $district_id = !empty($_POST['party_district']) ? url_decryption(escape_data($_POST['party_district'])) : NULL;
         $pet_pincode = !empty($_POST['party_pincode']) ? escape_data($_POST['party_pincode']) : NULL;
         $pet_city = !empty($_POST['party_city']) ? escape_data($_POST['party_city']) : NULL;
-        if(empty($org_dept)){$org_dept=NULL;}
-        if(($this->request->getPost("pet_gender"))=='undefined')
-        {
-        $pet_gender = NULL;
-        }
+        
         $data = array(
             'res_name' => isset($pet_complainant) ? strtoupper($pet_complainant) : NULL,
             'resorgid' => $organisation_id,

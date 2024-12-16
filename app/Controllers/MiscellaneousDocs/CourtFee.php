@@ -108,9 +108,8 @@ class CourtFee extends BaseController
         // echo "<pre>"; print_r($_SESSION); die();
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
-            pr($_SESSION);
             $_SESSION['MSG'] = 'Unauthorised Access !';
-            redirect('login');
+            return redirect()->to(base_url('/'));
             exit(0);
         }
         $stages_array = array('', Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
@@ -158,6 +157,16 @@ class CourtFee extends BaseController
         $already_paid_payment = $this->Common_model->get_already_paid_court_fee($registration_id);
         if (!empty($already_paid_payment[0]['court_fee_already_paid']))
             $total_court_fee = $total_court_fee - (int)$already_paid_payment[0]['court_fee_already_paid'];
+
+        /* Code changed by Mr.Anshu on 23082024 to redirect the user to dashboard, if user want to process the case via court fee tempering : start*/
+        if (!empty($total_court_fee) && $_SESSION['efiling_details']['is_govt_filing'] !=1 && $_POST['usr_court_fee'] < $total_court_fee){
+            $court_fee_aler = 'The unapproved court fee of : ₹ '.$_POST['usr_court_fee'].'  will be rejected, and the amount owed should be changed to the : ₹'.$total_court_fee.' minimum.';
+            $_SESSION['msg'] = $court_fee_aler;
+            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">'.$court_fee_aler.'</p> </div>');
+            return redirect()->to(base_url('/'));
+            exit();
+        }
+        /* Code changed by Mr.Anshu on 23082024 to redirect the user to dashboard, if user want to process the case via court fee tempering : end*/
         /*$data_to_save = array(
             'registration_id' => $registration_id,
             'entry_for_type_id' => $_SESSION['efiling_details']['efiling_for_type_id'],

@@ -38,6 +38,7 @@ echo form_open(base_url('case/search/search_case_details'), $attribute);
 </div>
 @endsection
 @push('script')
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script type="text/javascript">
     $(function() {
         $('#case-ia-crud-form').submit();

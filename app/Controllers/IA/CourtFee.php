@@ -13,6 +13,8 @@ class CourtFee extends BaseController {
     protected $Payment_model;
     protected $Court_Fee_model;
     protected $DocumentIndex_Select_model;
+    protected $request;
+    protected $validation;
 
     public function __construct() {
         parent::__construct();
@@ -128,14 +130,24 @@ class CourtFee extends BaseController {
             exit(0);
         }
 
-        $this->form_validation->set_rules('print_fee_details', 'Printing Details', 'required|trim|validate_encrypted_value');
-        $this->form_validation->set_rules('usr_court_fee', 'Court Fee', 'required|trim|min_length[1]|max_length[5]|is_natural');
-        $this->form_validation->set_rules('user_declared_extra_fee', 'want to more pay Court Fee', 'required|trim|min_length[1]|max_length[5]|is_natural');
-        $this->form_validation->set_error_delimiters('<br/>', '');
-        if (!$this->form_validation->run()) {
-
-            $_SESSION['MSG'] = form_error('print_fee_details') . form_error('usr_court_fee');
-            redirect('IA/courtFee');
+        $this->validation->setRules([
+            "print_fee_details" => [
+                "label" => "Printing Details",
+                "rules" => "required|trim"
+            ],
+            "usr_court_fee" => [
+                "label" => "Court Fee",
+                "rules" => "required|trim|min_length[1]|max_length[5]|is_natural"
+            ],
+            "user_declared_extra_fee" => [
+                "label" => "want to more pay Court Fee",
+                "rules" => "required|trim|min_length[1]|max_length[5]|is_natural"
+            ],
+        ]);
+      
+        if ($this->validation->withRequest($this->request)->run() === FALSE) {
+            $_SESSION['MSG'] = $this->validation->getError('print_fee_details') . $this->validation->getError('usr_court_fee');
+            return redirect()->to(base_url('IA/courtFee'));
             exit(0);
         }
 
@@ -161,7 +173,15 @@ class CourtFee extends BaseController {
         if(!empty($already_paid_payment[0]['court_fee_already_paid']))
             $total_court_fee=$total_court_fee-(int)$already_paid_payment[0]['court_fee_already_paid'];
 
-
+        /* Code changed by Mr.Anshu on 23082024 to redirect the user to dashboard, if user want to process the case via court fee tempering : start*/
+        if (!empty($total_court_fee) && $_SESSION['efiling_details']['is_govt_filing'] !=1 && $_POST['usr_court_fee'] < $total_court_fee){
+            $court_fee_aler = 'The unapproved court fee of : ₹ '.$_POST['usr_court_fee'].'  will be rejected, and the amount owed should be changed to the : ₹'.$total_court_fee.' minimum.';
+            $_SESSION['msg'] = $court_fee_aler;
+            $this->session->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a > <p style="text-align: center;">'.$court_fee_aler.'</p> </div>');
+            return redirect()->to(base_url('/'));
+            exit();
+        }
+        /* Code changed by Mr.Anshu on 23082024 to redirect the user to dashboard, if user want to process the case via court fee tempering : end*/
 
 
         /*$data_to_save = array(

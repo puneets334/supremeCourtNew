@@ -178,6 +178,7 @@ span.select2.select2-container.select2-container--default {
                                 <label for="" class="form-label">Gender <span style="color: red" class="astriks">*</span></label>
                             </div>
                             <?php $gmchecked ='';
+                            // pr($caveatee_details[0]);
                                 $gmchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender'] == 'M') ? 'checked="checked"' : '';
                                 $gfchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'F' )? 'checked="checked"' : '';
                                 $gochecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
@@ -584,14 +585,12 @@ span.select2.select2-container.select2-container--default {
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
-                $('#caveator_name').val('');
+                $('#pet_complainant').val('');
                 $('#relation').val('');
                 $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
-                /*$('#party_gender1').val('');
-                 $('#party_gender2').val('');
-                 $('#party_gender3').val('');*/
+                $('#pet_dob').val('');
+                $('#pet_age').val('');
+                $('input[name="pet_gender"]').val(''); 
             } else {
                                 // Add 'required' attribute
                                 $('#org_dept').attr('required', true);
@@ -600,11 +599,13 @@ span.select2.select2-container.select2-container--default {
                 $('#indvidual_form').hide();
                 $('#org_form').show();
                 $('#org_state_row').show();
-                $('#caveator_name').val('');
+                $('#pet_complainant').val('');
                 $('#relation').val('');
                 $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
+                $('#pet_dob').val('');
+                $('#pet_age').val('');
+                $('input[name="pet_gender"]').val(''); 
+
                 $("#stateDivBox").show();
 
                 /*$('#party_gender1').val('');
@@ -625,7 +626,7 @@ span.select2.select2-container.select2-container--default {
             yearRange: "-100",
             format: "dd/mm/yyyy",
             defaultDate: "-40y",
-
+            "autoclose": true, 
             endDate: today 
             
         });
