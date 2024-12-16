@@ -348,7 +348,7 @@ textarea {
                                             <label for="" class="form-label">Post Name
                                                 <span style="color: red">*</span>
                                              </label><br>
-                                            <select  style="width:100% !important;"  tabindex='15' name="org_post" id="org_post" class="form-control cus-form-ctrl filter_select_dropdown org_post" required>
+                                            <select  style="width:100% !important;"  tabindex='15' name="org_post" id="org_post" class="form-control cus-form-ctrl filter_select_dropdown org_post">
                                                 <?php
                                                     echo '<option  value="' . url_encryption(0) . '">' . strtoupper('NOT IN LIST') . '</option>';
                                                     $post_sel = '';
@@ -593,7 +593,6 @@ textarea {
             var OrgState_ID= '<?php echo isset($caveator_details[0]['org_state'])?$caveator_details[0]['org_state']:''; ?>';
             var OrgDept_ID='<?php echo isset($caveator_details[0]['org_dept'])?$caveator_details[0]['org_dept']:''; ?>';
             var OrgPost_ID='<?php echo isset($caveator_details[0]['org_post'])?$caveator_details[0]['org_post']:''; ?>';
-            //alert(OrgDept_ID);
             if(OrgState_ID==0 && OrgState_ID!=''){
                 $('#otherOrgState').show();
                 var OrgState_NAME='<?php echo isset($caveator_details[0]['org_state_name'])?$caveator_details[0]['org_state_name']:''; ?>';
@@ -666,12 +665,14 @@ textarea {
                 $('#org_dept_name').attr('required', true);  
                 $('#otherOrgPost').show();
                 $('#org_post').val('<?php echo url_encryption(0); ?>');
+                $('#org_post_name').attr('required', true);   
                 $('#org_post').select2();
             } else {
                 $('#otherOrgDept').hide();
                 $('#org_dept_name').removeAttr('required'); 
                 $('#otherOrgPost').hide();
                 $('#org_post').val('');
+                $('#org_post_name').val('');   
                 $('#org_post').select2();
             }
             });
@@ -690,6 +691,8 @@ textarea {
             } else {
                 $('#otherOrgPost').hide();
                 $('#org_post_name').removeAttr('required'); 
+                $('#org_post_name').val('');  
+
 
             }
             });
@@ -699,9 +702,10 @@ textarea {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
 
-        var selected_org_st_id = '<?php echo url_encryption(isset($caveator_details[0]['org_state'])?$caveator_details[0]['org_state']:''); ?>';
-        var selected_dept_id = '<?php echo url_encryption(isset($caveator_details[0]['org_dept'])?$caveator_details[0]['org_dept']:''); ?>';
-
+        // var selected_org_st_id = '<?php echo url_encryption(isset($caveator_details[0]['org_state'])?$caveator_details[0]['org_state']:''); ?>';
+        // var selected_dept_id = '<?php echo url_encryption(isset($caveator_details[0]['org_dept'])?$caveator_details[0]['org_dept']:''); ?>';
+        var selected_org_st_id = '<?php echo isset($caveator_details[0]['org_state']) ?  url_encryption($caveator_details[0]['org_state']) : '' ?>';
+        var selected_dept_id = '<?php echo isset($caveator_details[0]['org_dept']) ?  url_encryption($caveator_details[0]['org_dept']) : '' ?>';
         $.ajax({
             type: "POST",
             data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, party_is: party_is, selected_org_st_id: selected_org_st_id, selected_dept_id: selected_dept_id},
@@ -727,8 +731,11 @@ textarea {
 
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        <?php $pos_id = !empty(@$caveator_details[0]['org_post']) ? url_encryption(@$caveator_details[0]['org_post']) : ''; ?>
+        
+        var selected_post_id = '<?php echo isset($caveator_details[0]['org_post']) ? url_encryption($caveator_details[0]['org_post']) : '' ?>';
 
-        var selected_post_id = '<?php echo url_encryption(isset($caveator_details[0]['org_post'])?$caveator_details[0]['org_post']:''); ?>';
+        // var selected_post_id = '<?php echo url_encryption(isset($caveator_details[0]['org_post'])?$caveator_details[0]['org_post']:''); ?>';
 
         $.ajax({
             type: "POST",
@@ -782,11 +789,11 @@ textarea {
             $('#org_dept').removeAttr('required');
             $('#org_state').removeAttr('required');
             $('#org_post').removeAttr('required');
-        $('#pet_complainant').attr('required', 'required');
-        $('#pet_rel_flag').attr('required', 'required'); 
-        $('#relative_name').attr('required', 'required'); 
-        $('#pet_age').attr('required', 'required'); 
-        $('input[name="pet_gender"]').attr('required', 'required');
+            $('#pet_complainant').attr('required', 'required');
+            $('#pet_rel_flag').attr('required', 'required'); 
+            $('#relative_name').attr('required', 'required'); 
+            $('#pet_age').attr('required', 'required'); 
+            $('input[name="pet_gender"]').attr('required', 'required');
             $('#indvidual_form').show(); 
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -797,11 +804,11 @@ textarea {
             $('#otherOrgDept').hide();
             $('#otherOrgPost').hide();
         }else {
-            $('#pet_complainant').attr('required', 'required');
-        $('#pet_rel_flag').attr('required', 'required'); 
-        $('#relative_name').attr('required', 'required'); 
-        $('#pet_age').attr('required', 'required'); 
-        $('input[name="pet_gender"]').attr('required', 'required');
+            $('#pet_complainant').removeAttr('required');
+            $('#pet_rel_flag').removeAttr('required'); 
+            $('#relative_name').removeAttr('required'); 
+            $('#pet_age').removeAttr('required'); 
+            $('input[name="pet_gender"]').removeAttr('required');
             if (party_as == 'D3') { 
                 // Add 'required' attribute
                 $('#org_dept').attr('required', true);
@@ -812,29 +819,50 @@ textarea {
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
-                $('#caveator_name').val('');
+                $('#pet_complainant').val('');
                 $('#relation').val('');
                 $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
+                $('#pet_dob').val('');
+                $('#pet_age').val('');
+                $('input[name="pet_gender"]').val('');
+
+
+                var org_dept = '<?php echo isset($caveator_details[0]) ? $caveator_details[0]['org_dept'] : ''; ?>';
+                if (org_dept == 0) {
+                    $('#otherOrgDept').show();
+                    $('#org_post').val('<?php echo url_encryption(0); ?>');
+                    $('#org_dept_name').val('<?php isset($caveator_details[0]) ? echo_data($caveator_details[0]['org_dept_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgDept').hide();
+                    $('#org_dept_name').val('');
+                }
+                var org_post = '<?php echo isset($caveator_details[0]) ? $caveator_details[0]['org_post'] : ''; ?>';
+                if (org_post == 0) {
+                    $('#otherOrgPost').show();
+                    $('#org_post').val('<?php echo url_encryption(0); ?>');
+                    $('#org_post_name').val('<?php isset($caveator_details[0]) ? echo_data($caveator_details[0]['org_post_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgPost').hide();
+                    $('#org_post_name').val('');
+                }
                 /*$('#party_gender1').val('');
                  $('#party_gender2').val('');
                  $('#party_gender3').val('');*/
             } else {
-                                // Add 'required' attribute
-                                $('#org_dept').attr('required', true);
+                // Add 'required' attribute
+                $('#org_dept').attr('required', true);
                 $('#org_state').attr('required', true);
                 $('#org_post').attr('required', true); 
                 
-        $('#pet_complainant').attr('required', false);
-        $('#indvidual_form').hide(); 
+                $('#pet_complainant').attr('required', false);
+                $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').show();
                 $('#caveator_name').val('');
                 $('#relation').val('');
                 $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
+                $('#pet_dob').val('');
+                $('#pet_age').val('');
                 $("#stateDivBox").show();
             }
         }
@@ -847,7 +875,7 @@ textarea {
             $('#org_dept').removeAttr('required');
             $('#org_state').removeAttr('required');
             $('#org_post').removeAttr('required');
-        $('#pet_complainant').attr('required', true);
+            $('#pet_complainant').attr('required', true);
             $('#indvidual_form').show(); 
             $('#org_form').hide();
             $('#org_state_row').show();
@@ -866,16 +894,35 @@ textarea {
                 $('#org_post').attr('required', true);
                 // Remove 'required' attribute
                 $('#org_state').removeAttr('required');
-        $('#pet_complainant').attr('required', false);
-        $('#indvidual_form').hide(); 
+                $('#pet_complainant').attr('required', false);
+                $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').hide();
                 $('#otherOrgState').hide();
                 $('#caveator_name').val('');
                 $('#relation').val('');
                 $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
+                $('#pet_dob').val('');
+                $('#pet_age').val('');
+                var org_dept = '<?php echo isset($caveator_details[0]) ? $caveator_details[0]['org_dept'] : ''; ?>';
+                if (org_dept == 0) {
+                    $('#otherOrgDept').show();
+                    $('#org_post').val('<?php echo url_encryption(0); ?>');
+                    $('#org_dept_name').val('<?php isset($caveator_details[0]) ? echo_data($caveator_details[0]['org_dept_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgDept').hide();
+                    $('#org_dept_name').val('');
+                }
+                var org_post = '<?php echo isset($caveator_details[0]) ? $caveator_details[0]['org_post'] : ''; ?>';
+
+                if (org_post == 0) {
+                    $('#otherOrgPost').show();
+                    $('#org_post').val('<?php echo url_encryption(0); ?>');
+                    $('#org_post_name').val('<?php isset($caveator_details[0]) ? echo_data($caveator_details[0]['org_post_name']) : ''; ?>');
+                } else {
+                    $('#otherOrgPost').hide();
+                    $('#org_post_name').val('');
+                }
                 /*$('#party_gender1').val('');
                  $('#party_gender2').val('');
                  $('#party_gender3').val('');*/
@@ -885,15 +932,15 @@ textarea {
                 $('#org_state').attr('required', true);
                 $('#org_post').attr('required', true); 
                // alert(party_as);
-        $('#pet_complainant').attr('required', false);
-        $('#indvidual_form').hide(); 
+                $('#pet_complainant').attr('required', false);
+                $('#indvidual_form').hide(); 
                 $('#org_form').show();
                 $('#org_state_row').show();
                 $('#caveator_name').val('');
                 $('#relation').val('');
                 $('#relative_name').val('');
-                $('#caveator_dob').val('');
-                $('#caveator_age').val('');
+                $('#pet_dob').val('');
+                $('#pet_age').val('');
                 $("#stateDivBox").show();
                 //$('#otherstateDivBox').show();
                 /*$('#party_gender1').val('');
