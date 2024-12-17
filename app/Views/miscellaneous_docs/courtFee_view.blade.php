@@ -138,7 +138,7 @@
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td data-key="#"><?= $sr_no ?></td>
                                             <td data-key="Court Fee Details"> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td data-key='Amount ₹' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
 
                                     <?php
@@ -177,7 +177,7 @@
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td data-key='#'><?= $sr_no ?></td>
                                             <td data-key='Court Fee Details '> <?= $row['docdesc'] ?> <?= $doc_extra_details ?> <?= $affidavit_no_of_copies ?></td>
-                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
 
                                     <?php
@@ -206,7 +206,7 @@
                                             <td data-key='#'><?= $sr_no;
                                                 $doc ?></td>
                                             <td data-key='Court Fee Details '> <?= $row['docdesc'] ?><?= $doc_extra_details ?> </td>
-                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i> <?= $doc_court_fee ?></td>
                                         </tr>
                                     <?php
                                             $sr_no++;
@@ -217,7 +217,7 @@
                                             <td data-key="Court Fee Details"> <?= $row['docdesc'] ?> <br> (No. of petitioners
                                                 : <?= $row['total_petitioners']; ?>)
                                             </td>
-                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i>
                                                 <?php if ($case_nature == 'C')
                                                     $doc_court_fee = $row['docfee'];
                                                 else
@@ -243,7 +243,7 @@
                                                     : <?= $row['order_challanged']; ?>)
                                                 <?php } ?>
                                             </td>
-                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i>
                                                 <?php if ($case_nature == 'C')
                                                     $doc_court_fee = $row['docfee'];
                                                 else
@@ -284,7 +284,7 @@
                                             <td data-key="#"><?= $sr_no ?></td>
                                             <td data-key="Court Fee Details"> <?= $row['docdesc'] ?>
                                             </td>
-                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= (int)$doc_court_fee; ?></td>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i> <?= (int)$doc_court_fee; ?></td>
                                         </tr>
                                     <?php
                                             $sr_no++;
@@ -293,7 +293,7 @@
                                         <tr style="color: #0055aa;size: 20px;">
                                             <td data-key="#"><?= $sr_no; ?></td>
                                             <td data-key="Court Fee Details"> <?= $row['docdesc']; ?> </td>
-                                            <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i>
+                                            <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i>
                                                 <?php 
                                                 $doc_court_fee = 0;
                                                 if (rtrim($case_nature) == 'C'){
@@ -321,7 +321,7 @@
                                             <tr style="color: #0055aa;size: 20px;">
                                                 <td data-key="#"><?= $sr_no; ?></td>
                                                 <td data-key="Court Fee Details"> Extra Court Fee </td>
-                                                <td data-key='Amount ( <i class="fa fa-rupee"></i> )' align="center"><i class="fa fa-rupee"></i> <?= (int)$Efee['user_declared_extra_fee']; ?></td>
+                                                <td data-key='Amount (₹)' align="center"><i class="fa fa-rupee"></i> <?= (int)$Efee['user_declared_extra_fee']; ?></td>
                                             </tr>
                                         <?php $sr_no++;
                                         } ?>
