@@ -137,11 +137,13 @@ $routes->match(['GET', 'POST'], 'case/citation/(:any)', 'ResponsiveVariantRouteC
 $routes->match(['GET', 'POST'], 'case/mentioning/(:any)', 'ResponsiveVariantRouteController::showCaseMentioningListing/$1');
 $routes->match(['GET', 'POST'], 'case/certificate/(:any)', 'ResponsiveVariantRouteController::showCaseCertificateListing/$1');
 $routes->match(['GET', 'POST'], 'case/advocate/(:num)', 'ResponsiveVariantRouteController::showAdvocateData/$1');
-$routes->match(['GET', 'POST'], 'efiling_search/(:any)', 'EfilingSearch/DefaultController/efiling_search/$1');
-$routes->match(['GET', 'POST'], 'efiling_search/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch/DefaultController/identify/$1/$2/$3/$4');
-$routes->match(['GET', 'POST'], 'efiling_search/view/(:any)', 'EfilingSearch/DefaultController/view/$1');
+$routes->match(['GET', 'POST'], 'efiling_search/DefaultController', 'EfilingSearch\DefaultController::index');
+$routes->match(['GET', 'POST'], 'efiling_search/DefaultController/get_view_data/(:any)', 'EfilingSearch\DefaultController::get_view_data/$1');
+// $routes->match(['GET', 'POST'], 'efiling_search/(:any)', 'EfilingSearch\DefaultController::efiling_search/$1');
+$routes->match(['GET', 'POST'], 'efiling_search/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch\DefaultController::identify/$1/$2/$3/$4');
+$routes->match(['GET', 'POST'], 'efiling_search/view/(:any)', 'EfilingSearch\DefaultController::view/$1');
 // $routes->match(['GET', 'POST'], 'efiling_search/get_view_data/(:any)', 'EfilingSearch/DefaultController/get_view_data/$1');
-$routes->match(['GET', 'POST'], 'efiling_search/identifyByicmis/(:any)', 'EfilingSearch/DefaultController/identifyByicmis/$1');
+$routes->match(['GET', 'POST'], 'efiling_search/identifyByicmis/(:any)', 'EfilingSearch\DefaultController::identifyByicmis/$1');
 $routes->match(['GET', 'POST'], 'case/paper_book_viewer/(:any)', 'ResponsiveVariantRouteController::showCasePaperBookViewer/$1');
 $routes->match(['GET', 'POST'], 'case/3pdf_paper_book_viewer/(:any)', 'ResponsiveVariantRouteController::showCase3PDFPaperBookViewer/$1');
 $routes->match(['GET', 'POST'], 'case/ancillary/checklist', 'ResponsiveVariantRouteController::showCaseChecklist/');
@@ -262,10 +264,10 @@ $routes->match(['GET', 'POST'], 'case/document/crud_registration/(:any)', 'Respo
 $routes->get('adminReport/search', 'AdminReport\Search::index');
 $routes->match(['GET', 'POST'], 'adminReport/Search/get_list_doc_fromDate_toDate', 'AdminReport\Search::get_list_doc_fromDate_toDate');
 $routes->match(['GET', 'POST'], 'efiling_search', 'EfilingSearch\DefaultController::efiling_search');
-$routes->match(['GET', 'POST'], 'efiling_search/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch\DefaultController::identify/$1/$2/$3/$4');
+// $routes->match(['GET', 'POST'], 'efiling_search/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch\DefaultController::identify/$1/$2/$3/$4');
 $routes->match(['GET', 'POST'], 'efiling_search/view/(:any)', 'EfilingSearch\DefaultController::view/$1');
 $routes->match(['GET', 'POST'], 'efiling_search/get_view_data/(:any)', 'EfilingSearch\DefaultController::get_view_data/$1');
-$routes->match(['GET', 'POST'], 'efiling_search/identifyByicmis/(:any)', 'EfilingSearch\DefaultController::identifyByicmis/$1');
+// $routes->match(['GET', 'POST'], 'efiling_search/identifyByicmis/(:any)', 'EfilingSearch\DefaultController::identifyByicmis/$1');
 $routes->match(['GET', 'POST'], 'cronJobScrutinyStatus', 'EfilingSearch\DefaultController::cronJobForScrutinyStatus');
 $routes->match(['GET', 'POST'], 'dashboard_alt/getDailyCaseCounts', 'ResponsiveVariantRouteController::getDailyCaseCounts');
 $routes->match(['GET', 'POST'], 'dashboard_alt/getDayCaseDetails', 'ResponsiveVariantRouteController::getDayCaseDetails');
@@ -329,7 +331,6 @@ $routes->match(['GET', 'POST'], 'adminReport/DefaultController/reportForm', 'Adm
 $routes->match(['GET', 'POST'], 'adminReport/DefaultController/getReportData', 'AdminReport\DefaultController::getReportData');
 $routes->match(['GET', 'POST'], 'adminReport/DefaultController/getFilingStageTypeData', 'AdminReport\DefaultController::getFilingStageTypeData');
 $routes->match(['GET', 'POST'], 'efiling_search/DefaultController/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch\DefaultController::identify/$1/$2/$3/$4');
-$routes->match(['GET', 'POST'], 'efiling_search/DefaultController/get_view_data/(:any)', 'EfilingSearch\DefaultController::get_view_data/$1');
 $routes->match(['GET', 'POST'], 'case/search/save_searched_case_result', 'Case\Search::save_searched_case_result');
 $routes->match(['GET', 'POST'], 'caveat/caveatee/add_caveatee', 'Caveat\Caveatee::add_caveatee');
 $routes->match(['GET', 'POST'], 'IA/defaultController/(:any)', 'IA\DefaultController::index/$1');
@@ -338,8 +339,8 @@ $routes->match(['GET', 'POST'], 'IA/courtFee', 'IA\CourtFee::index');
 $routes->get('on_behalf_of', 'OnBehalfOf\DefaultController::index');
 $routes->get('appearing_for', 'AppearingFor\DefaultController::index');
 
-// code by saurabh 12112024
-$routes->match(['GET', 'POST'], 'appearing_for/ajaxcalls/get_parties_list', 'AppearingFor\Ajaxcalls::get_parties_list'); 
+// code by saurabh 12112024  efiling_search/get_view_data
+$routes->match(['GET', 'POST'], 'appearing_for/ajaxcalls/get_parties_list', 'AppearingFor\Ajaxcalls::get_parties_list');  
 //end code by saurabh 12112024
 $routes->get('case_details', 'CaseDetails\DefaultController::index');
 $routes->get('shareDoc', 'ShareDoc\DefaultController::index');
