@@ -1105,7 +1105,7 @@ class ResponsiveVariantRouteController extends BaseController
     public function showCase3PDFPaperBookViewer($diary_id = null)
     {
         $file_name = "Casefile_of_DNo_" . $diary_id . "_" . date('d-m-Y_H:i:s') . ".zip";
-        $requestedBy = @ucfirst(@trim(@strtolower($this->session->userdata['login']['first_name']))) . ' ' . @ucfirst(@trim(@strtolower($this->session->userdata['login']['last_name'])));
+        $requestedBy = @ucfirst(@trim(@strtolower($this->session->userdata['login']['first_name'] ?? ''))) . ' ' . @ucfirst(@trim(@strtolower($this->session->userdata['login']['last_name'] ?? '')));
         $requestedBy = ucwords($requestedBy);
         $designation = "";
         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
