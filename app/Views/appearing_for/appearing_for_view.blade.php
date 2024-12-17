@@ -6,19 +6,12 @@ if ($segment->getSegment(2) != 'view') {
     } elseif (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) {
         render('IA.ia_breadcrumb');
     } elseif (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) {
-        render('mentioning/mentioning_breadcrumb');
+        render('mentioning.mentioning_breadcrumb');
     }
 }
-
 $appearing_for_details = $data['appearing_for_details'];
 $parties_details = $data['parties_details'];
-// pr($appearing_for_details);
-
-// echo $_SESSION['login']['id'];
-
 ?>
-
-
 <div class="panel panel-default">
     <div id="result" class="text-center"></div>
     <h6 class="text-center fw-bold mb-2">Appearing For Parties</h6>
@@ -27,7 +20,7 @@ $parties_details = $data['parties_details'];
         $attribute = array('class' => 'form-horizontal', 'name' => 'add_appearing_details', 'id' => 'add_appearing_details', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
         echo form_open('#', $attribute);
         if (!empty(getSessionData('radio_appearing_for')) && getSessionData('radio_appearing_for') == 'N' && !empty($appearing_for_details)) {
-        ?>
+            ?>
             <div class="row mt-4 mb-4 mt-4">
                 <label class="control-label col-md-1 col-sm-6 col-xs-1">Appearing For <span style="color: red">*</span> :</label>
                 <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
@@ -37,7 +30,6 @@ $parties_details = $data['parties_details'];
                             $petitioner_user_type_disabled = '';
                             $respondent_user_type_disabled = '';
                         } else {
-
                             if ($appearing_for_details[0]['partytype'] == 'P') {
                                 $petitioner_user_type_disabled = '';
                                 $respondent_user_type_disabled = 'disabled';
@@ -57,10 +49,11 @@ $parties_details = $data['parties_details'];
                         $res_checked = ($appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
                         ?>
                         <label class="radio-inline">
-                            <input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
+                            <input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong>
+                        </label>
                         <label class="radio-inline">
-                            <input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
-
+                            <input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong>
+                        </label>
                         <?php
                         if ($pet_default_checked) {
                             $party_name_array = explode('##', $parties_details[0]['p_partyname']);
@@ -69,16 +62,12 @@ $parties_details = $data['parties_details'];
                             $party_name_array = explode('##', $parties_details[0]['r_partyname']);
                             $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);
                         }
-
                         $parties_list = array_combine($party_sr_no_array, $party_name_array);
-
                         if (($appearing_for_details[0]['partytype'] == 'P') || ($appearing_for_details[0]['partytype'] == 'R')) {
                             $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
                             $saved_appearing_for = explode('$$', $saved_appearing_for);
-
                             $saved_appearing_for_email = $appearing_for_details[0]['p_email'];
                             $saved_appearing_for_email = explode('$$', $saved_appearing_for_email);
-
                             $saved_appearing_for_mobile = $appearing_for_details[0]['p_mobile'];
                             $saved_appearing_for_mobile = explode('$$', $saved_appearing_for_mobile);
                         } else {
@@ -105,36 +94,28 @@ $parties_details = $data['parties_details'];
                         //echo "<pre>"; print_r($parties_list); echo "</pre>";
                         if (count($parties_list) > 0) {
                             $i = 1;
-
+                            $email = '';
+                            $mobile = '';
                             foreach ($parties_list as $key => $value) {
-
-
                                 $selected = (in_array($key, $saved_appearing_for)) ? 'checked' : NULL;
                                 $saved_sr_no = array_search($key, $saved_appearing_for);
-                                $email = null;
-                                $mobile = null;
-
                                 if (isset($saved_appearing_for_email[$saved_sr_no]) && $saved_appearing_for_email[$saved_sr_no] != '') {
                                     $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
                                 }
-
                                 if (isset($saved_appearing_for_mobile[$saved_sr_no]) && $saved_appearing_for_mobile[$saved_sr_no] != '') {
                                     $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
                                 }
-
-
-
                                 $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
                                 $appearing_id = $appearing_for_details[0]['id'];
                                 $appearing_contact_id = $appearing_for_details[0]['contact_tbl_id'];
-                        ?>
+                                ?>
                                 <tr>
                                     <td data-key="Party Name"><input class="form-control cus-form-ctrl" name="party_name[]" type="text" value="<?php echo_data($value); ?>"></td>
                                     <td data-key="Email"><input class="form-control cus-form-ctrl" name="party_email[]" type="email" placeholder="Email" value="<?php echo ($email); ?>"></td>
                                     <td data-key="Mobile"><input class="form-control cus-form-ctrl" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
                                     <td data-key="Select" class="text-center"><input class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>" <?php echo $selected; ?>></td>
                                 </tr>
-                        <?php
+                                <?php
                                 $i++;
                             }
                         }
@@ -142,9 +123,9 @@ $parties_details = $data['parties_details'];
                     </tbody>
                 </table>
             </div>
-        <?php
+            <?php
         } else {
-        ?>
+            ?>
             <center><span class="text-danger">
                 [ Select party(s) to whom you represent in the present case. <br>
                 It is recommended to provide email and mobile of parties, which you representing, for your own convenience. ]
@@ -158,7 +139,6 @@ $parties_details = $data['parties_details'];
                             $petitioner_user_type_disabled = '';
                             $respondent_user_type_disabled = '';
                         } else {
-
                             if (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'P') {
                                 $petitioner_user_type_disabled = '';
                                 $respondent_user_type_disabled = 'disabled';
@@ -172,13 +152,11 @@ $parties_details = $data['parties_details'];
                                 $respondent_user_type_disabled = '';
                             }
                         }
-
                         $pet_default_checked = (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'P') ? 'checked' : NULL;
                         $res_checked = (isset($appearing_for_details[0]) && $appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
                         ?>
-                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="P" <?php //echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
-                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="R" <?php //echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
-
+                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="P" <?php echo $petitioner_user_type_disabled; ?> <?php echo $pet_default_checked; ?>><strong>Petitioner / Complainant</strong></label>
+                        <label class="radio-inline"><input type="radio" name="user_type" class="user_type_PR" value="R" <?php echo $respondent_user_type_disabled; ?> <?php echo $res_checked; ?>><strong>Respondent / Accused</strong></label>
                         <?php
                         if ($pet_default_checked) {
                             $party_name_array = explode('##', $parties_details[0]['p_partyname']);
@@ -187,18 +165,15 @@ $parties_details = $data['parties_details'];
                             $party_name_array = explode('##', $parties_details[0]['r_partyname']);
                             $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);
                         }
-
                         $parties_list = array_combine($party_sr_no_array, $party_name_array);
-
-                        if (isset($appearing_for_details[0]) && ($appearing_for_details[0]['partytype'] == 'P') || isset($appearing_for_details[0]) && ($appearing_for_details[0]['partytype'] == 'R')) {
-                            $saved_appearing_for = isset($appearing_for_details[0]) && $appearing_for_details[0]['appearing_for'];
+                        if ($appearing_for_details[0]['partytype'] == 'P' || $appearing_for_details[0]['partytype'] == 'R') {
+                            // pr($appearing_for_details);
+                            $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
                             $saved_appearing_for = explode('$$', $saved_appearing_for);
-
-                            $saved_appearing_for_email = isset($appearing_for_details[0]) && $appearing_for_details[0]['p_email'];
-                            $saved_appearing_for_email = explode('$$', $saved_appearing_for_email);
-
-                            $saved_appearing_for_mobile =  isset($appearing_for_details[0]) && $appearing_for_details[0]['p_mobile'];
-                            $saved_appearing_for_mobile = explode('$$', $saved_appearing_for_mobile);
+                            $saved_appearing_for_email = $appearing_for_details[0]['p_email'];
+                            $saved_appearing_for_email = explode('$$', $saved_appearing_for_email ?? '');
+                            $saved_appearing_for_mobile =  $appearing_for_details[0]['p_mobile'];
+                            $saved_appearing_for_mobile = explode('$$', $saved_appearing_for_mobile ?? '');
                         } else {
                             $saved_appearing_for = NULL;
                             $saved_appearing_for_email = NULL;
@@ -223,33 +198,25 @@ $parties_details = $data['parties_details'];
                         // echo "<pre>"; print_r($parties_list); echo "</pre>";
                         if (count($parties_list) > 0) {
                             $i = 1;
-
+                            $email = '';
+                            $mobile = '';
                             foreach ($parties_list as $key => $value) {
                                 $selected = isset($saved_appearing_for) && (in_array($key, $saved_appearing_for)) ? 'checked' : NULL;
                                 $saved_sr_no = isset($saved_appearing_for) && array_search($key, $saved_appearing_for);
                                 // $selected = NULL;
                                 // echo "<pre>"; print_r($parties_list); die;
-
                                 // $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
                                 // $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
-
-                                $email = null;
-                                $mobile = null;
-
+                                // pr($saved_appearing_for_email[$saved_sr_no]);
                                 if (isset($saved_appearing_for_email[$saved_sr_no]) && $saved_appearing_for_email[$saved_sr_no] != '') {
                                     $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
                                 }
-
                                 if (isset($saved_appearing_for_mobile[$saved_sr_no]) && $saved_appearing_for_mobile[$saved_sr_no] != '') {
                                     $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
                                 }
-
-
-
-
                                 $appearing_id = isset($appearing_for_details[0]['id']) ? $appearing_for_details[0]['id'] : '';
                                 $appearing_contact_id = isset($appearing_for_details[0]['contact_tbl_id']) ? $appearing_for_details[0]['contact_tbl_id'] : '';
-                        ?>
+                                ?>
                                 <tr>
                                     <td data-key="Party Name">
                                         <input class="form-control cus-form-ctrl" name="party_name[]" type="text" value="<?php echo_data($value); ?>" readonly="">
@@ -257,10 +224,10 @@ $parties_details = $data['parties_details'];
                                     <td data-key="Email"><input class="form-control cus-form-ctrl" name="party_email[]" type="email" placeholder="Email" value="<?php echo_data($email); ?>"></td>
                                     <td data-key="Mobile"><input class="form-control cus-form-ctrl" name="party_mob[]" placeholder="Mobile" value="<?php echo_data($mobile); ?>" type="text" maxlength="10" minlength="10" value=""></td>
                                     <td data-key="Select" class="text-center"><input data-index='{{$appearing_contact_id}}' class="checkBoxClass" type="checkbox" name="selected_party[]" value="<?php echo url_encryption($i . '$$$' . $key . '$$$' . $appearing_id . '$$$' . $appearing_contact_id); ?>"
-                                            <?php echo $selected; ?>>
+                                        <?php echo $selected; ?>>
                                     </td>
                                 </tr>
-                        <?php
+                                <?php
                                 $i++;
                             }
                         }
@@ -268,11 +235,7 @@ $parties_details = $data['parties_details'];
                     </tbody>
                 </table>
             </div>
-
-
-        <?php
-        }
-        ?>
+        <?php } ?>
         <div class="text-center mt-4">
             <a href="<?= base_url('case_details'); ?>" class="btn quick-btn gray-btn btnPrevious" type="button">PREVIOUS</a>
             <?php if (isset($appearing_for_details[0]['appearing_for']) && !empty($appearing_for_details[0]['appearing_for'])) { ?>
@@ -281,12 +244,9 @@ $parties_details = $data['parties_details'];
             <?php } else { ?>
                 <input type="submit" class="btn btn-success" id="save_efiling_for" name="submit" value="SAVE">
             <?php } ?>
-
         </div>
-        <?php
-        echo form_close();
-        ?>
-    </div>
+    <?php echo form_close(); ?>
+</div>
 </div>
 </div>
 </div>
@@ -311,7 +271,6 @@ $parties_details = $data['parties_details'];
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-
         $('#add_appearing_details').on('submit', function() {
             var selectedCases = [];
             $('#onbehalf_table input:checked').each(function() {
@@ -325,13 +284,9 @@ $parties_details = $data['parties_details'];
             if (len === 0) {
                 alert('Please Select Petitioner / Complainant OR Respondent / Accused');
             }
-
-
-
             $(".user_type_PR").prop("disabled", false);
             var form_data = $(this).serialize();
             $('#modal_loader').show();
-
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('appearing_for/appearing_for/save_appearing_details'); ?>",
@@ -380,7 +335,6 @@ $parties_details = $data['parties_details'];
             return false;
         });
     });
-
     $('[name="user_type"]').change(function() {
         var partytype = $(this).val();
         $('#modal_loader').show();

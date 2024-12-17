@@ -78,7 +78,7 @@ class Appearing_for extends BaseController {
                     'appearing_for' => !empty($appearing_for) ? rtrim($appearing_for, '$$') : '',
                     'created_by' => $_SESSION['login']['id'],
                     'created_by_ip' => $_SERVER['REMOTE_ADDR'],
-                    'created_on' => date('Y-m-d H:i:s')
+                    'created_on' => date('Y-m-d H:i:s', strtotime('+5 hours 30 minutes'))
                 );
                 $contact_details = array(
                     'userid' => $_SESSION['login']['id'],
@@ -89,7 +89,7 @@ class Appearing_for extends BaseController {
                     'partyid' => !empty($contact_partyid) ? rtrim($contact_partyid, '$$') : '',
                     'contact_type' => $party_type,
                     'created_by' => $_SESSION['login']['id'],
-                    'created_on' => date('Y-m-d H:i:s'),
+                    'created_on' => date('Y-m-d H:i:s', strtotime('+5 hours 30 minutes')),
                     'create_ip' => $_SERVER['REMOTE_ADDR']
                 );
                 $details_saved_status = $this->AppearingForModel->add_appearing_for($appearing_party_detail, $contact_details, $registration_id);
