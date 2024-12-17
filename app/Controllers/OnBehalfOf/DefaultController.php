@@ -104,7 +104,7 @@ class DefaultController extends BaseController
                     'p_r_type' => $party_type,
                     'updated_by' => getSessionData('login')['id'],
                     'updated_by_ip' => getClientIP(),
-                    'updated_on' => date('Y-m-d H:i:s'),
+                    'updated_on' => date('Y-m-d H:i:s', strtotime('+5 hours 30 minutes')),
                     'is_govt_filing' => $is_govt_filing
                 );
                 $update_status = $this->OnBehalfOfModel->update_filing_for($update_filing_for_detail, $registration_id);         
