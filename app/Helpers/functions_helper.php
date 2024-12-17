@@ -215,7 +215,7 @@ if (!function_exists('escape_data')) {
 
     function escape_data($post)
     {
-        return trim(strip_tags($post));
+        return trim(strip_tags($post ?? ''));
     }
 }
 
@@ -1150,7 +1150,7 @@ function remark_preview($reg_id, $current_stage_id)
 {
     // echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
     $Common_model = new CommonModel();
-    $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
+    // $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
 
     $result_initial = $Common_model->get_intials_defects_remarks($reg_id, $current_stage_id);
 
@@ -1223,7 +1223,8 @@ function remark_preview($reg_id, $current_stage_id)
             $msg .= '</b>';
             $msg .= '</div>';
         }
-        return $msg;
+        
+        echo $msg;
     } elseif (isset($result_initial) && !empty($result_initial)) {
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date('d-m-Y H:i:s', strtotime($result_initial['defect_date'])) . '<p>';
@@ -1235,7 +1236,7 @@ function remark_preview($reg_id, $current_stage_id)
         }
 
         $msg .= '</div>';
-        return $msg;
+        echo $msg;
     } else {
         return false;
     }
@@ -2000,15 +2001,18 @@ function get_challanged_sc_base_case_details($registration_id)
         $case_year = (!empty($base_disposed_cases) && is_array($base_disposed_cases)) ? $base_disposed_cases[0]['case_year'] : '';
         $case_data = json_decode(curl_get_contents(ICMIS_SERVICE_URL . "/ConsumedData/caseDetails/?searchBy=C&caseTypeId=$case_type_id&caseNo=$case_no&caseYear=$case_year"));
         $case_data = !empty($case_data) ? $case_data->case_details[0] : '';
-        $base_disposed_case_diary_no = $case_data->diary_no . $case_data->diary_year;
+        $base_disposed_case_diary_no = !empty($case_data) ? $case_data->diary_no . $case_data->diary_year : '';
+        if(!empty($base_disposed_case_diary_no)){
+            $bdcdetails = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails?diaryNo=' . $base_disposed_case_diary_no);
+            $bdcdetailsData = json_decode($bdcdetails);
+            // get the submaster id of the base case
+            $base_case_subject_category_details = !empty($bdcdetailsData) ? $bdcdetailsData->details : '';
+            //  pr($base_case_subject_category_details);
 
-        // get the submaster id of the base case
-        $base_case_subject_category_details = json_decode(file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails?diaryNo=' . $base_disposed_case_diary_no))->details;
-        //  pr($base_case_subject_category_details);
-
-        $subject_category = $base_case_subject_category_details[0]->submaster_id;
-        $subcode1 = $base_case_subject_category_details[0]->subcode1;
-        $sc_case_type_id = $case_type_id;
+            $subject_category = !empty($base_case_subject_category_details) ? $base_case_subject_category_details[0]->submaster_id : '';
+            $subcode1 = !empty($base_case_subject_category_details) ? $base_case_subject_category_details[0]->subcode1 : '';
+            $sc_case_type_id = $case_type_id;
+        }
     }
     return array('subject_category' => $subject_category, 'subcode1' => $subcode1, 'case_type_id' => $sc_case_type_id, 'lower_court_type' => $lower_court_type);
 }

@@ -358,7 +358,9 @@
                                 //     $('#msg').hide();
                                 // }, 3000);
                                 // window.location.href = "#";
-                                alert(resArr[1]);
+                                // alert(resArr[1]);
+                                $('#dangerAlert').show();
+                                $('#dangerAlert').html(resArr[1]);
                             } else if (resArr[0] == 2) {
                                 $('#msg').show();
                                 $('#page_no_from,#page_no_to').val('');
@@ -378,7 +380,9 @@
                                 $("#show_current_pdf").attr("src", frame_src_refresh);*/
                                 //--END : Load pdf on Last Page--//
                                 //$(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[2] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                alert(resArr[2]);
+                                // alert(resArr[2]);
+                                $('#successAlert').show();
+                                $('#successAlert').html(resArr[2]);
                                 $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                                     reload_document_index();
@@ -402,7 +406,9 @@
                                 //     $('#msg').hide();
                                 // }, 3000);
                                 // window.location.href = "#";
-                                alert(resArr[1]);
+                                // alert(resArr[1]);
+                                $('#dangerAlert').show();
+                                $('#dangerAlert').html(resArr[1]);
                             }
                         },
                         error: function() {
@@ -734,11 +740,15 @@
                                 if (resArr[0] == 1) {
                                     // $('#msg').show();
                                     // $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                    alert(resArr[1]);
+                                    // alert(resArr[1]);
+                                    $('#dangerAlert').show();
+                                    $('#dangerAlert').html(resArr[1]);
                                 } else if (resArr[0] == 2) {
                                     // $(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
                                     // $('#msg').show();
-                                    alert(resArr[1]);
+                                    // alert(resArr[1]);
+                                    $('#successAlert').show();
+                                    $('#successAlert').html(resArr[1]);
                                     location.reload();
                                 } else if (resArr[0] == 3) {
                                     // $('#msg').show();
@@ -748,7 +758,9 @@
                                     // $('#msg').show();
                                     $('.progress').hide();
                                     // $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                    alert(resArr[1]);
+                                    // alert(resArr[1]);
+                                    $('#dangerAlert').show();
+                                    $('#dangerAlert').html(resArr[1]);
                                 }
                                 $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

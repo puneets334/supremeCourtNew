@@ -1105,7 +1105,7 @@ class ResponsiveVariantRouteController extends BaseController
     public function showCase3PDFPaperBookViewer($diary_id = null)
     {
         $file_name = "Casefile_of_DNo_" . $diary_id . "_" . date('d-m-Y_H:i:s') . ".zip";
-        $requestedBy = @ucfirst(@trim(@strtolower($this->session->userdata['login']['first_name']))) . ' ' . @ucfirst(@trim(@strtolower($this->session->userdata['login']['last_name'])));
+        $requestedBy = @ucfirst(@trim(@strtolower($this->session->userdata['login']['first_name'] ?? ''))) . ' ' . @ucfirst(@trim(@strtolower($this->session->userdata['login']['last_name'] ?? '')));
         $requestedBy = ucwords($requestedBy);
         $designation = "";
         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
@@ -1117,7 +1117,7 @@ class ResponsiveVariantRouteController extends BaseController
         if (!empty($requestedBy))
             $requestedBy = str_replace([' ', '(', ')'], ['%20', '%28', '%29'], $requestedBy);
 
-        list($case_file_paper_books, $response_code) = (curl_get_contents(env('API_SCI_INTERACT_PAPERBOOK_PDF') . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
+        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
         if ($response_code == 417) {
             echo $case_file_paper_books;
         } else {

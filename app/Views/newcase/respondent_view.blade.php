@@ -1304,9 +1304,13 @@ if (org_dept == '<?php echo url_encryption(0); ?>') {
                         $('#pet_save').prop('disabled', false);
                         var resArr = data.split('@@@');
                         if (resArr[0] == 1) {
-                            alert(resArr[1]);
+                            // alert(resArr[1]);
+                            $('#dangerAlert').show();
+                            $('#dangerAlert').html(resArr[1]);
                         } else if (resArr[0] == 2) {
-                            alert(resArr[1]);
+                            // alert(resArr[1]);
+                            $('#successAlert').show();
+                            $('#successAlert').html(resArr[1]);
                             window.location.href = resArr[2];
 
                         } else if (resArr[0] == 3) {
