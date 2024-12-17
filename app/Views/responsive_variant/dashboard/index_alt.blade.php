@@ -646,7 +646,7 @@ td {
                                                                             @if(is_array($scheduled_case) || is_object($scheduled_case))
                                                                                 @foreach($scheduled_case as $scheduled)
                                                                                     <tr>
-                                                                                        <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align: left;">
+                                                                                        <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align-items: left;">
                                                                                             <div><span class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span></div>
                                                                                             <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($scheduled['petitioner_name']))}}</div>
                                                                                             <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($scheduled['respondent_name']))}}</div>
@@ -774,7 +774,7 @@ td {
                                                                     @foreach($sr_advocate_soon_cases as
                                                                     $sr_advocate_soon_case)
                                                                     <tr>
-                                                                        <td data-key="Case" class="uk-width-small@m" style="width: 40%; text-align: left; align: left;">
+                                                                        <td data-key="Case" class="uk-width-small@m" style="width: 40%; text-align: left; align-items: left;">
                                                                             <div>
                                                                                 <span class="uk-text-muted">{{$sr_advocate_soon_case->registration_number ?: ('D. No.' . $sr_advocate_soon_case->diary_number . '/' . $sr_advocate_soon_case->diary_year)}}</span>
                                                                             </div>
