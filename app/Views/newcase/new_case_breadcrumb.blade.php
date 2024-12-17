@@ -323,6 +323,16 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
     ?>
 </div>
 
+<div class="alert alert-success text-center"
+    role="alert" id="successAlert" style="display: none;"
+    data-auto-dismiss="5000">
+</div>
+
+<div class="alert alert-danger text-center"
+    role="alert" id="dangerAlert" style="display: none;"
+    data-auto-dismiss="5000">
+</div>
+
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">

@@ -290,7 +290,7 @@
     }
     </script>
 @endpush
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(document).ready(function () {
         var oTable = $("#datatable-defects").dataTable();
 
@@ -317,6 +317,50 @@
         jQuery('.checkOneByOne').each(function(index, currentElement) {
             var value = currentElement.id;
             setCuredDefect(value);
+        });
+    }
+</script> -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var oTable = $("#datatable-defects").dataTable();
+        $("#checkAll").click(function() {
+            var isChecked = $(this).prop("checked");
+            oTable.$("input[type=\'checkbox\']").prop("checked", isChecked);
+            var setCuredDefectAllValues = [];
+            if (isChecked) { 
+                oTable.$("input.setCuredDefectAll:checked").each(function () { 
+                    setCuredDefectAllValues.push($(this).val()); 
+                }); 
+            }
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: 'POST',
+                url: '<?=base_url("documentIndex/Ajaxcalls/markCuredDefect")?>',
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: setCuredDefectAllValues, val:true,type:'All'},
+                success: function () {
+                    if(setCuredDefectAllValues.length===0){
+                        $(".setCuredDefectAllToggle").removeClass("curemarked");
+                    }else{
+                        $(".setCuredDefectAllToggle").addClass("curemarked");
+                    }
+                }
+            });
+
+        });
+    });
+    function setCuredDefect(id) {
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var value = $("#" + id).is(":checked"); 
+        $.ajax({
+            type: 'POST',
+            url: '<?= base_url("documentIndex/Ajaxcalls/markCuredDefect")?>',
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value,type:'One'},
+            success: function () {
+            $("#row"+id).toggleClass("curemarked")
+            
+            },
+            error: function () {alert("failed");}
         });
     }
 </script>
