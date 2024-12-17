@@ -10,7 +10,7 @@ class AppearingForModel extends Model
     function __construct()
     {
         parent::__construct();
-        $db      = \Config\Database::connect();
+        $db = \Config\Database::connect();
     }
 
     function get_case_parties_list($registration_id)
@@ -24,18 +24,17 @@ class AppearingForModel extends Model
         $builder->WHERE('en.is_deleted', FALSE);
         $builder->WHERE('misc_ia.is_deleted', FALSE);
         $builder->WHERE('sc.is_deleted', FALSE);
-        $query = $builder->get(); //echo  $this->db->last_query();
+        $query = $builder->get();
         if ($query->getNumRows() >= 1) {
             $result = $query->getResultArray();
             return $result;
-        } else {
+        } else{
             return FALSE;
         }
     }
 
     function get_appearing_for_details($registration_id, $advocate_id)
     {
-
         $builder = $this->db->table('efil.tbl_appearing_for appearing');
         $builder->SELECT("appearing.*, cc.id contact_tbl_id,cc.p_name,cc.p_email,cc.p_mobile,cc.contact_type, cc.partyid");
         $builder->JOIN('efil.tbl_misc_docs_ia misc_ia', 'misc_ia.diary_no = appearing.diary_num AND misc_ia.diary_year = appearing.diary_year');
@@ -51,47 +50,39 @@ class AppearingForModel extends Model
         // print_r($sql);
         // die;
         $query = $builder->get();
-
         // if ($query === false) {
         //     // Log or handle the error
         //     log_message('error', 'Query failed: ' . $this->db->getLastQuery());
         //     return false;
-        // } 
-        //echo  $this->db->last_query();die;
+        // }
         if ($query->getNumRows() >= 1) {
             $result = $query->getResultArray();
             return $result;
-        } else {
+        } else{
             return FALSE;
         }
     }
 
     public function add_appearing_for($appearing_party_detail, $contact_details, $registration_id)
-    {
-
-        
+    {        
         $builder = $this->db->table('efil.tbl_appearing_for');
         $builder->INSERT($appearing_party_detail);
-
         if ($this->db->insertID()) {
-
             if (!empty($contact_details)) {
                 $builder = $this->db->table('efil.tbl_case_contacts');
                 $builder->INSERT($contact_details);
             }
             $this->update_breadcrumbs($registration_id, MISC_BREAD_APPEARING_FOR);
-
             $this->db->transComplete();
         }
         if ($this->db->transStatus() === FALSE) {
             return FALSE;
-        } else {
+        } else{
             return TRUE;
         }
     }
 
-    public function update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id, $registration_id = "")
-    {
+    public function update_appearing_for($update_appearing_party_detail, $appearing_for_tbl_id, $update_contact_details, $contact_tbl_id, $registration_id = "") {
         $this->db->transStart();
         $builder = $this->db->table('efil.tbl_appearing_for');
         $builder->WHERE('userid', getSessionData('login')['id']);
@@ -109,18 +100,16 @@ class AppearingForModel extends Model
         $this->db->transComplete();
         if ($this->db->transStatus() === FALSE) {
             return FALSE;
-        } else {
+        } else{
             return TRUE;
         }
     }
 
     function update_breadcrumbs($registration_id, $step_no)
     {
-
         $old_breadcrumbs = getSessionData('efiling_details')['breadcrumb_status'] . ',' . $step_no;
         $old_breadcrumbs_array = explode(',', $old_breadcrumbs);
         $new_breadcrumbs_array = array_unique($old_breadcrumbs_array);
-
         sort($new_breadcrumbs_array);
         $new_breadcrumbs = implode(',', $new_breadcrumbs_array);
         getSessionData('efiling_details')['breadcrumb_status'] = $new_breadcrumbs;
@@ -129,8 +118,9 @@ class AppearingForModel extends Model
         $builder->UPDATE(array('breadcrumb_status' => $new_breadcrumbs));
         if ($this->db->affectedRows() > 0) {
             return TRUE;
-        } else {
+        } else{
             return FALSE;
         }
     }
+
 }
