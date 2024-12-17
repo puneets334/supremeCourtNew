@@ -215,7 +215,7 @@ if (!function_exists('escape_data')) {
 
     function escape_data($post)
     {
-        return trim(strip_tags($post));
+        return trim(strip_tags($post ?? ''));
     }
 }
 

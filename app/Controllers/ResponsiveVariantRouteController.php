@@ -1117,7 +1117,7 @@ class ResponsiveVariantRouteController extends BaseController
         if (!empty($requestedBy))
             $requestedBy = str_replace([' ', '(', ')'], ['%20', '%28', '%29'], $requestedBy);
 
-        list($case_file_paper_books, $response_code) = (curl_get_contents(env('API_SCI_INTERACT_PAPERBOOK_PDF') . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
+        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
         if ($response_code == 417) {
             echo $case_file_paper_books;
         } else {
