@@ -91,14 +91,16 @@ class DefaultController extends BaseController
         }
         // $this->load->model('report/ReportModel');
 
-
         $efiling_no =$efiling_number;
 
         $data = $this->ReportModel->get_efilingByefiling_no($efiling_no);
+
         if (!empty($data) && $data != null && count($data) != 0 && $data[0]->efiling_no != null) {
             //echo $status = 'Data is found';
             $report=$data[0];
            // echo '<pre>';print_r($report);
+// pr($report);
+
             if($report->efiling_type !='' && $report->efiling_type=='new_case') {
                 $rd='newcase.defaultController'; //. equal to / required
                 $id='/'.$report->registration_id . '/'. $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
@@ -119,22 +121,25 @@ class DefaultController extends BaseController
                 $rd='oldCaseRefiling.DefaultController'; //. equal to / required
                 $id='/'.$report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
             }
+
             $redirect_url =base_url('efiling_search/identify').$id;
             //echo $efiling_no= '<a target="_blank" id="'.$id.'" href="'.$redirect_url.'">'. $report->efiling_no . '</a>';
+            //pr($redirect_url);
 
-            redirect($redirect_url);exit();
+            return redirect()->to($redirect_url);
         }
 
 
-        $this->load->view('templates/user_header');
-        $this->load->view('efiling_search/efiling_search', @compact('efiling_number'));
-        $this->load->view('templates/footer');
+        // $this->load->view('templates/user_header');
+        // $this->load->view('efiling_search/efiling_search', @compact('efiling_number'));
+        // $this->load->view('templates/footer');
     }
 
     public function efiling_search()
     {
-        // pr('test');
-        return $this->render('responsive_variant.case.efiling_search.search');
+        // pr($_REQUEST);
+       return $this->render('responsive_variant.case.efiling_search.search'); 
+
     }
 
     function search()
@@ -189,22 +194,22 @@ class DefaultController extends BaseController
     }
    public function identify()
    {
-        
     // $uris = $this->request->uri->segment(1);
     $uris = service('uri');
     $sLast = $uris->getSegment(1);
-    // pr($uris);
     $uris = $this->request->getUri(1);
+    // pr($uris->getSegment(3));
+
     $muri = str_replace('.', '/', $sLast);
-    
+   
         // $registration_id = $this->uri->segment(3);
         // $type = $this->uri->segment(4);
         // $stage = $this->uri->segment(5);
         // $efiling_type = $this->uri->segment(6);
-    $registration_id = $uris->getSegment(4);
-    $type = $uris->getSegment(5);
-    $stage = $uris->getSegment(6);
-    $efiling_type = $uris->getSegment(7);
+    $registration_id = $uris->getSegment(3);
+    $type = $uris->getSegment(4);
+    $stage = $uris->getSegment(5);
+    $efiling_type = $uris->getSegment(6);
     $this->CommonModel->get_efiling_num_basic_Details($registration_id);
     $ids = $registration_id . '#' . $type . '#' . $stage . '#' . $efiling_type;
              //registration_id # ref_m_usertype_id # stage_id #  efiling_type (efiling_type='CAVEAT' or 'IA' or 'misc_document' or 'new_case')
@@ -234,9 +239,9 @@ class DefaultController extends BaseController
 
     function get_view_data($id = null)
     {
-        
         if ($id) {
             $id = url_decryption($id);
+
             $InputArrray = explode('#', $id);
             $data['registration_id'] = $registration_id = $InputArrray[0];
             $data['ref_m_usertype_id'] = $type = $InputArrray[1];
@@ -319,6 +324,7 @@ class DefaultController extends BaseController
                     // $this->load->view('templates/footer');
                 }
                 else if ($efiling_type == 'misc_document') {
+                  
 
                     $data['case_details'] = $this->MDGetDetailsModel->get_case_details($registration_id);
                     $data['filing_for_details'] = $this->MDViewModel->get_filing_for_parties($registration_id);
@@ -352,6 +358,7 @@ class DefaultController extends BaseController
 
                 }
                 else if ($efiling_type == 'new_case') {
+                     
                     $data['new_case_details'] = $this->GetDetailsModel->get_new_case_details($registration_id);
                     $data['sc_case_type'] = $this->NewCaseDropdownListModel->get_sci_case_type_name($data['new_case_details'][0]->sc_case_type_id);
                     $data['main_subject_cat'] = $this->NewCaseDropdownListModel->get_main_subject_category($data['new_case_details'][0]->subject_cat);
