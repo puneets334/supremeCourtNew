@@ -35,7 +35,8 @@ class Trash extends BaseController {
         $result = $this->UserActions_model->trashSubmit($registration_id, $next_stage);
         if ($result) {            
             $subject = "Trashed : Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
-            $sentSMS = "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been sent to trash from your account. - Supreme Court of India";            
+            // $sentSMS = "Efiling no. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " has been sent to trash from your account. - Supreme Court of India"; 
+            $sentSMS = "Efiling no. ".efile_preview($_SESSION['efiling_details']['efiling_no'])." has been sent to trash from your account; if you have not done that please report the issue. - Supreme Court of India";           
             $user_name = $_SESSION['login']['first_name'] . ' ' . $_SESSION['login']['last_name'];
             send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS,SCISMS_Efiling_Trashed);
             send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);

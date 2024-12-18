@@ -89,7 +89,7 @@
                                                     <label for="inputPassword6" class="col-form-label">Case No. *</label>
                                                 </div>
                                                 <div class="col-12 pe-0">
-                                                    <input class="form-control cus-form-ctrl" id="case_no" name="case_no" maxlength="6" placeholder="Case No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" onkeypress="return isNumber(event)" type="text" required>
+                                                    <input class="form-control cus-form-ctrl" id="case_no" name="case_no" maxlength="6" placeholder="Case No." onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" type="text" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -133,7 +133,7 @@
                                                     <label for="inputPassword6" class="col-form-label">Diary No.</label>
                                                 </div>
                                                 <div class="col-12 pe-0">
-                                                    <input class="form-control cus-form-ctrl" id="t_h_cno" name="t_h_cno" maxlength="5" placeholder="Diary No" type="text" onkeypress="return isNumber(event)">
+                                                    <input class="form-control cus-form-ctrl" id="t_h_cno" name="t_h_cno" maxlength="5" placeholder="Diary No" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');">
                                                 </div>
                                             </div>
                                         </div>
@@ -794,14 +794,14 @@
         }
     });
 
-    function isNumber(evt) {
-        evt = (evt) ? evt : window.event;
-        var charCode = (evt.which) ? evt.which : evt.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-            return false;
-        }
-        return true;
-    }
+    // function isNumber(evt) {
+    //     evt = (evt) ? evt : window.event;
+    //     var charCode = (evt.which) ? evt.which : evt.keyCode;
+    //     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+    //         return false;
+    //     }
+    //     return true;
+    // }
         
     $(document).on("change", "#affidavit", function () {
         var fileName = $(this).val().replace('C:\\fakepath\\', " ");

@@ -2173,4 +2173,64 @@ class Efiling_webservices {
         }
     }
 
+    /*Start retrieval data for json comparison 19-sep-2024 Manoj*/
+    public function getGeneratedCaseDiary($efile_no,$registrtion_id){
+        $postdata = http_build_query(
+            array(
+                'efile_no' => $efile_no
+            )
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $url      = ICMIS_SERVICE_URL;
+
+        return $result = file_get_contents($url.'/ConsumedData/getDiaryDetails', false, $context);
+    }
+
+    public function getCaseDiaryNo($efile_no){
+
+        $postdata = http_build_query(
+            array(
+                'efile_no' => $efile_no
+            )
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $url      = ICMIS_SERVICE_URL;
+
+        return $result = file_get_contents($url.'/ConsumedData/getDiaryNo', false, $context);
+    }
+
+    public function getDiaryDetailForTemplate($diary_no){
+        $postdata = http_build_query(
+            array(
+                'diary_no' => $diary_no
+            )
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $url      = ICMIS_SERVICE_URL;
+
+        return $result = file_get_contents($url.'/ConsumedData/getDiaryDetailForTemplate', false, $context);
+    }
+/*end retrieval data for json comparison 19-sep-2024 Manoj*/
+
 }
