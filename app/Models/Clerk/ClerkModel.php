@@ -9,88 +9,28 @@ class ClerkModel extends Model {
         parent::__construct();
     }
 
-    /*function add_clerk_user($data, $clerk_name) {
-        $this->db->trans_start();
-        //$this->db = $this->load->database(unserialize('efil.tbl_users users'_connection), TRUE);
-        $this->db->INSERT('efil.tbl_users', $data);
-        $user_id = $this->db->insert_id();
-        if ($user_id) {
-            $parent_ids = $_SESSION['login']['id'];
-            $clerk_data = array('clerk_id' => $user_id, 'parent_ids' => $parent_ids, 'clerk_name' => $clerk_name);
-            $this->db->INSERT('efil.m_tbl_clerks', $clerk_data);
-            $this->db->trans_complete();
-        }
-        if ($this->db->trans_status() === FALSE) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
-
-    function get_clerk_users($clerk_user_id) {
-        $sql = "SELECT * FROM efil.m_tbl_clerks cl 
-        JOIN efil.tbl_users users on users.id = cl.clerk_id
-        WHERE parent_ids=$clerk_user_id ";
-        $query = $this->db->query($sql);
-        if ($query->num_rows() >= 1) {
-            $result = $query->result_array();
-            return $result;
-        } else {
-            return FALSE;
-        }
-    }
-
-    function get_clerk_details($clerk_user_id) {
-        $sql = "SELECT * FROM efil.m_tbl_clerks cl 
-        JOIN  " . 'efil.tbl_users users' . " on users.id = cl.clerk_id
-        WHERE users.id =" . $clerk_user_id;
-        $query = $this->db->query($sql);
-        if ($query->num_rows() >= 1) {
-            $result = $query->result_array();
-            return $result;
-        } else {
-            return FALSE;
-        }
-    }
-
-    function update_clerk_user($clerk_id, $data, $clerk_name) {
-        //$this->db = $this->load->database(unserialize('efil.tbl_users users'_connection), TRUE);
-        $this->db->WHERE('id', $clerk_id);
-        $this->db->UPDATE('efil.tbl_users', $data);
-        if ($this->db->affected_rows() > 0) {
-            $data_clerk = array('clerk_name' => $clerk_name);
-            $this->db->WHERE('clerk_id', $clerk_id);
-            $this->db->UPDATE('efil.m_tbl_clerks', $data_clerk);
-            if ($this->db->affected_rows() > 0) {
-                return TRUE;
-            }
-        } else {
-            return FALSE;
-        }
-    }
-
     function check_email_present($email, $dep_id) {
-        $this->db->SELECT('*');
-        $this->db->FROM('efil.tbl_users users');
-        $this->db->WHERE('users.emailid', $email);
-        $this->db->WHERE('users.id!=', $dep_id);
-        $query = $this->db->get();
-        if ($query->num_rows() >= 1) {
+        $builder = $this->db->table('efil.tbl_users users');
+        $builder->SELECT('*');
+        $builder->WHERE('users.emailid', $email);
+        $builder->WHERE('users.id!=', $dep_id);
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
             return TRUE;
-        } else {
+        } else{
             return false;
         }
     }
 
     function check_mobno_present($mobile, $dep_id) {
-        $this->db->SELECT('*');
-        $this->db->FROM('efil.tbl_users users');
-        $this->db->WHERE('users.moblie_number', $mobile);
-        $this->db->WHERE('users.id!=', $dep_id);
-        $query = $this->db->get();
-        if ($query->num_rows() >= 1) {
+        $builder = $this->db->table('efil.tbl_users users');
+        $builder->SELECT('*');
+        $builder->WHERE('users.moblie_number', $mobile);
+        $builder->WHERE('users.id!=', $dep_id);
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
             return TRUE;
-        } else {
+        } else{
             return false;
         }
     }
@@ -100,38 +40,103 @@ class ClerkModel extends Model {
         JOIN  efil.m_tbl_clerks cl on users.id = cl.parent_ids
         WHERE cl.clerk_id = $clerk_user_id  Order by created_datetime desc";
         $query = $this->db->query($sql);
-        if ($query->num_rows() >= 1) {
-            $result = $query->result_array();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            return $result;
+        } else{
+            return FALSE;
+        }
+    }
+    
+    function update_clerk_user($clerk_id, $data, $clerk_name) {
+        // $this->db = $this->load->database(unserialize('efil.tbl_users users'_connection), TRUE);
+        $builder = $this->db->table('efil.tbl_users');
+        $builder->WHERE('id', $clerk_id);
+        $builder->UPDATE($data);
+        if ($this->db->affectedRows() > 0) {
+            $data_clerk = array('clerk_name' => $clerk_name);
+            $builder1 = $this->db->table('efil.m_tbl_clerks');
+            $builder1->WHERE('clerk_id', $clerk_id);
+            $builder1->UPDATE($data_clerk);
+            if ($this->db->affectedRows() > 0) {
+                return TRUE;
+            }
+        } else{
+            return FALSE;
+        }
+    }    
+
+    function get_districts_list($state_id) {
+        $builder = $this->db->table('icmis.state st1');
+        $builder->SELECT("st2.id_no as dist_code,st2.name as dist_name");
+        $builder->JOIN('icmis.state st2', 'st1.state_code = st2.state_code');
+        $builder->WHERE('st1.id_no', $state_id);
+        $builder->WHERE('st2.district_code !=0');
+        $builder->WHERE('st2.sub_dist_code = 0');
+        $builder->WHERE('st2.village_code = 0');
+        $builder->WHERE('st2.display', 'Y');
+        $builder->WHERE('st1.display', 'Y');
+        $builder->WHERE('st2.display', 'Y');
+        $builder->orderBy("st2.name", "asc");
+        $query = $builder->get();
+        return $query->getResult();
+    }
+    
+    function get_clerk_details($clerk_user_id) {
+        $sql = "SELECT * FROM efil.m_tbl_clerks cl 
+        JOIN  " . 'efil.tbl_users users' . " on users.id = cl.clerk_id
+        WHERE users.id =" . $clerk_user_id;
+        $query = $this->db->query($sql);
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+            return $result;
+        } else{
+            return FALSE;
+        }
+    }
+    
+    function add_clerk_user($data, $clerk_name) {
+        $this->db->transStart();
+        // $this->db = $this->load->database(unserialize('efil.tbl_users users'_connection), TRUE);
+        $builder = $this->db->table('efil.tbl_users');
+        $builder->INSERT($data);
+        $user_id = $this->db->insertID();
+        if ($user_id) {
+            $parent_ids = $_SESSION['login']['id'];
+            $clerk_data = array('clerk_id' => $user_id, 'parent_ids' => $parent_ids, 'clerk_name' => $clerk_name);
+            $builder1 = $this->db->table('efil.m_tbl_clerks');
+            $builder1->INSERT($clerk_data);
+            $this->db->transComplete();
+        }
+        if ($this->db->transStatus() === FALSE) {
+            return FALSE;
+        } else{
+            return TRUE;
+        }
+    }
+
+    function get_states_list() {
+        $builder = $this->db->table('icmis.ref_agency_state');
+        $builder->SELECT("cmis_state_id as state_code,agency_state as state_name");
+        $builder->WHERE('is_deleted', 'False');
+        $builder->WHERE('id!=9999');
+        $builder->orderBy("agency_state", "asc");
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    function get_clerk_users($clerk_user_id) {
+        $sql = "SELECT * FROM efil.m_tbl_clerks cl 
+        JOIN efil.tbl_users users on users.id = cl.clerk_id
+        WHERE parent_ids=$clerk_user_id ";
+        $query = $this->db->query($sql);
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
             return $result;
         } else {
             return FALSE;
         }
     }
-    function get_states_list() {
-        $this->db->SELECT("cmis_state_id as state_code,agency_state as state_name");
-        $this->db->FROM('icmis.ref_agency_state');
-        $this->db->WHERE('is_deleted', 'False');
-        $this->db->where('id!=9999');
-        $this->db->ORDER_BY("agency_state", "asc");
-        $query = $this->db->get();
-        return $query->result();
-    }
-
-    function get_districts_list($state_id) {
-        $this->db->SELECT("st2.id_no as dist_code,st2.name as dist_name");
-        $this->db->FROM('icmis.state st1');
-        $this->db->JOIN('icmis.state st2', 'st1.state_code = st2.state_code');
-        $this->db->WHERE('st1.id_no', $state_id);
-        $this->db->WHERE('st2.district_code !=0');
-        $this->db->WHERE('st2.sub_dist_code = 0');
-        $this->db->WHERE('st2.village_code = 0');
-        $this->db->WHERE('st2.display', 'Y');
-        $this->db->WHERE('st1.display', 'Y');
-        $this->db->WHERE('st2.display', 'Y');
-        $this->db->ORDER_BY("st2.name", "asc");
-        $query = $this->db->get();
-        return $query->result();
-    }*/
 
     function get_clerk_aor($clerk_id) {
         $result = null;

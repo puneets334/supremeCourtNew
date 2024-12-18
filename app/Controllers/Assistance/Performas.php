@@ -16,15 +16,6 @@ class Performas extends BaseController {
 
     public function __construct() {
         parent::__construct();
-        // $this->load->helper();
-        // $this->load->model('assistance/Performas_model');
-        // $this->load->library('form_validation');
-        // $this->load->helper('file');
-        $this->Performas_model = new Performas_model();
-        $this->session = \Config\Services::session();
-        $this->request = \Config\Services::request();
-        $this->validation = \Config\Services::validation();
-        helper(['file']);
         if(empty(getSessionData('login'))){
             return response()->redirect(base_url('/')); 
         } else{
@@ -35,6 +26,10 @@ class Performas extends BaseController {
             return response()->redirect(base_url('/'));
             exit(0);
         }
+        $this->Performas_model = new Performas_model();
+        $this->session = \Config\Services::session();
+        $this->request = \Config\Services::request();
+        $this->validation = \Config\Services::validation();
     }
 
     public function index() {
@@ -45,9 +40,7 @@ class Performas extends BaseController {
         }
         $data['notice_circualrs'] = $this->Performas_model->notice_circulars_list();
         $data['get_data'] = array();
-        // $this->load->view('templates/header');
         $this->render('assistance.performas_view', $data);
-        // $this->load->view('templates/footer');
     }
 
     public function edit($id = NULL) {
@@ -60,9 +53,7 @@ class Performas extends BaseController {
             $data['get_data'] = $this->Performas_model->get_news_by_id($id);
         }
         $data['notice_circualrs'] = $this->Performas_model->notice_circulars_list();
-        // $this->load->view('templates/admin_header');
         $this->render('assistance.performas_view', $data);
-        // $this->load->view('templates/footer');
     }
 
     public function add_notice_circurlar($edit_id = null) {
@@ -71,23 +62,11 @@ class Performas extends BaseController {
             exit(0);
         }
         $InputArray = $this->request->getPost();
-        // $this->form_validation->set_rules('performa_title', 'Title', 'required|trim|min_length[5]|max_length[240]|validate_alpha_numeric_space_dot_hyphen');
-        // if ($this->form_validation->run() == FALSE) {
-        //     $error = $this->form_validation->error_array();
-        //     setSessionData('performa_title', '<div class="text-danger">' . $error['performa_title'] . '</div>');
-        //     setSessionData('pdf_is', '<div class="text-danger">' . $error['news_view[]'] . '</div>');
-        //     redirect('assistance/performas');
-        //     exit(0);
-        // }
         $this->validation->setRules([
             "performa_title" => [
                 "label" => "Title",
                 "rules" => "required|trim|min_length[5]|max_length[240]|regex_match[/^[a-zA-Z0-9 .-]+$/]"
             ],
-            // "news_doc" => [
-            //     "label" => "PDF",
-            //     "rules" => "required"
-            // ],
         ]);
         if ($this->validation->withRequest($this->request)->run() === FALSE) {
             $this->session->setFlashdata('performa_title', '<div class="text-danger">' . $this->validation->getError('performa_title') . '</div>');
@@ -186,7 +165,7 @@ class Performas extends BaseController {
             return redirect()->to(base_url('assistance/performas'));
         } else{
             $this->session->setFlashdata('MSG', '<div class="alert alert-danger text-center">Something Went Wrong! Please try Again.</div>');
-            return redirect('assistance/notice_circulars/' . $id);
+            return redirect()->to(base_url('assistance/notice_circulars/' . $id));
         }
     }
 
@@ -198,7 +177,6 @@ class Performas extends BaseController {
             exit(0);
         } else{
             $result = $this->Performas_model->get_news_by_id($id);
-            // pr($result);
             if (isset($result) && !empty($result)) {
                 $file_name = $result[0]['file_name'];
                 $file_uploaded_path = base_url($result[0]['file_uploaded_path']);
