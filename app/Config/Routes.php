@@ -451,5 +451,10 @@ $routes->match(['GET', 'POST'], 'cron/Amicus_curiae', 'Cron\AmicusCuriae::index'
 
 
 
+$routes->match(['GET', 'POST'], 'casewithAI', 'AIAssisted\CaseWithAI::index');
+
+
+
+
 
 
