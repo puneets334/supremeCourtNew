@@ -977,3 +977,5 @@ define('CEPT_GOV_IN', 'https://api.cept.gov.in/tariff/api/values/gettariff');
 define('SCISMS_URL', '10.0.0.0:36521/api/v1/send');
 define('SCISMS_e_copying_crn_created','e-copying_crn_created');
 define('DOCUMENT_CASETYPE_URL', 'http://10.25.78.48:81/');
+define('AIASSISTED_USER_IN_LIST',[6282,1975,1378,1537,2563,1600,1619,2309]) ;
+define('CHANGE_EFILE_STAGE',['3','5','6','8','9','10','11']);

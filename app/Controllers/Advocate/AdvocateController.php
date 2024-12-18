@@ -193,7 +193,7 @@ class AdvocateController extends BaseController
                 'fas' => $fas,
                 'btn_color' => $btnColor
             ]);
-            return response()->json(array('status' => 'error', 'next_dt' => $request->input('next_dt'), 'id' => $request->input('id'),'is_active' => $data['is_active'],'fas' => $fas,'btn_color' => $btn_color));
+            return response()->setJSON(array('status' => 'error', 'next_dt' => $request->input('next_dt'), 'id' => $request->input('id'),'is_active' => $data['is_active'],'fas' => $fas,'btn_color' => $btn_color));
         }
     }
 
@@ -238,7 +238,7 @@ class AdvocateController extends BaseController
         $box = $this->request->getPost();
         $timout_validation = $this->timeout_validation($box['next_dt']);
         if ($timout_validation) {
-            return response()->json(array('status' => 'timeout'));
+            return response()->setJSON(array('status' => 'timeout'));
             exit;
         }
         $myValue = array();

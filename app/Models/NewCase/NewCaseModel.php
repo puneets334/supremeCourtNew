@@ -2107,4 +2107,17 @@ class NewCaseModel extends Model {
         }
     }
 
+    function get_efiled_by_user($user_id) {
+        $builder = $this->db->table('users');
+        $builder->SELECT('id,ref_m_usertype_id,first_name, last_name, moblie_number, emailid');
+        $builder->WHERE('id', $user_id);
+        $query = $builder->get();
+        if ($query->getNumRows()) {
+            $result = $query->getResult();
+            return $result;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -1044,7 +1044,8 @@ class Ajaxcalls extends BaseController {
                                         $efiling_no = $efilingNoData[0]->efiling_no;
                                     }
                                     if(isset($mobile) && !empty($mobile)){
-                                        $message = 'Your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.'';
+                                        // $message = 'Your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.'';
+                                        $message = 'Your caveat efiling no. '.$efiling_no.' , '.$cuase_title.' is filed with Caveat No. '.$caveatNo.' on '.$current_date.' - Supreme Court of India';
                                         $smsRes = send_mobile_sms($mobile,$message,SCISMS_EFILING_CAVEAT);
                                         //send_whatsapp_message($registration_id,$efiling_no," - files with Caveat Number $caveatNo ");
 
