@@ -9,7 +9,7 @@ class DefaultController extends BaseController {
     }
 
     public function index() {
-        redirect('dashboard');
+        return redirect()->to(base_url('dashboard'));
         exit(0);
     }
    

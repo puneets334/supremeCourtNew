@@ -1,5 +1,7 @@
 <?php
-namespace App\Affirmation\Controllers;
+
+namespace App\Controllers\Affirmation;
+
 use App\Controllers\BaseController;
 use App\Models\Affirmation\AffirmationModel;
 
@@ -10,7 +12,6 @@ class ViewSignedCertificate extends BaseController {
     public function __construct() {
         parent::__construct();
         $this->Affirmation_model = new AffirmationModel();
-        // $this->load->model('affirmation/Affirmation_model');
     }
 
     public function _remap($param = NULL) {

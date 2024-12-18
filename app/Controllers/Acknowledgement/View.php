@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers\Acknowledgement;
+
 use App\Controllers\BaseController;
 use App\Models\Acknowledgement\AcknowledgementModel;
 use App\Models\Common\CommonModel;
@@ -11,48 +12,40 @@ use TCPDF;
 
 class view extends BaseController
 {
+
     protected $History_model;
     protected $Common_model;
     protected $Get_details_model;
     protected $Acknowledgement_model;
     protected $PDFDOC;
+
     public function __construct()
     {
-        // $this->load->helper('functions');
         parent::__construct();
-        // $this->load->library('PDFDOC');
-        // $this->load->helper('functions_helper');
-        //header("Content-Type: application/pdf");
         $this->History_model = new HistoryModel();
         $this->Common_model = new CommonModel();
         $this->Get_details_model = new GetDetailsModel();
         $this->Acknowledgement_model = new AcknowledgementModel();
     }
 
-    public function index()
-    {
+    public function index() {
         if (!($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON)) {
             return false;
         }
         if (empty($_SESSION['efiling_details']['registration_id'])) {
-            redirect('login');
+            return redirect()->to(base_url('login'));
         }
-
         $registration_id = $_SESSION['efiling_details']['registration_id'];
-
         $efiling_allocated_data = $this->Acknowledgement_model->get_allocated_to_details($registration_id);
         $efiling_submitted_on = $this->Acknowledgement_model->get_submitted_on($registration_id);
         $data['allocated_to'] = $efiling_allocated_data[0]['admin_name'];
         $data['submitted_on'] = $efiling_submitted_on[0]['activated_on'];
         $data['current_status'] = $efiling_submitted_on[0]['stage_id'];
         $qr_code_base64 = generate_qr_code(['data' => 'dkhjsdfkh'])->base64;
-
         $img_encoded = 'data:image/png;base64,' . $qr_code_base64;
         $img = '<img src="@' . preg_replace('#^data:image/[^;]+;base64,#', '', $img_encoded) . '"';
-        //   $pdf->writeHTML($img);
-
+        // $pdf->writeHTML($img);
         // $data['s']=$qr_code_base64;
-// pr($registration_id);
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
             $payment_type = $this->Acknowledgement_model->get_payment_status($registration_id);
         }
@@ -61,11 +54,9 @@ class view extends BaseController
         $total_fee_paid = 0;
         if(is_array($payment_type)){
             foreach ($payment_type as $dataRes) {
-
                 if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] != E_FILING_TYPE_CDE) {
                     if (isset($dataRes['payment_type']) && $dataRes['payment_type'] == PAYMENT_THROUGH_RECEIPT) {
                         $fee_payment_mode = 'Offline';
-
                         if (isset($dataRes['payment_method_name']) && !empty($dataRes['payment_method_name'])) {
                             $payment_method = '( ' . $dataRes['payment_method_name'] . ' )';
                         }
@@ -75,13 +66,11 @@ class view extends BaseController
                             $fee_payment_mode_and_fee .= 'Court Fee: Rs. ' . $dataRes['user_declared_court_fee'] . '<br>Printing Charges:  Rs.' . $dataRes['printing_total'] . '<br> Total: Rs. ' . $dataRes['received_amt'] . ' ( Online ' . ' ( Receipts no. : ' . $dataRes['grn_number'] . ' ))<br>';
                         }
                         $total_fee_paid += $dataRes['received_amt'];
-                    } elseif ($dataRes['payment_mode'] == 'online') {
-                        
+                    } elseif ($dataRes['payment_mode'] == 'online') {                        
                         if (isset($dataRes['payment_mode_name']) && !empty($dataRes['payment_mode_name'])) {
                             // $payment_method = '( ' . $dataRes['payment_method_name' ?? ''] . ' )';
                             $payment_method = '( ' . $dataRes['payment_mode_name' ?? ''] . ' )';
                         }
-
                         if (!empty($dataRes['txnDate'])) {
                             $payment_date_time = ' Date :' . date('d-m-Y H:i:s A', strtotime($dataRes['txnDate'])) . '<br>';
                         } else {
@@ -98,14 +87,10 @@ class view extends BaseController
             }
         }
         $fee_payment_mode_and_fee = !empty($fee_payment_mode_and_fee) ? rtrim($fee_payment_mode_and_fee, '<br>') : '';
-
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_NEW_CASE) {
-
             $new_case_details = $this->Acknowledgement_model->get_new_case_details($registration_id);
-            // pr($_SESSION['efiling_details']);
             $title = explode('Vs.', $new_case_details[0]['cause_title']);
             //$get_IA = $this->Acknowledgement_model->get_IA_no($registration_id);
-
             $data['view_data'] = array(
                 'efiling_name' => !empty($_SESSION['efiling_details']['efiling_for_name']) ? $_SESSION['efiling_details']['efiling_for_name'] : '',
                 'efiling_type' => 'New Case',
@@ -125,32 +110,22 @@ class view extends BaseController
                 'casename' => $new_case_details[0]['casename'],
                 'cdeval' => $new_case_details[0]['ifcde'],
                 'data_for_qr' => $new_case_details[0]['security_code'],
-
             );
-
             if (($data['view_data']['cdeval']) == 1) {
                 $efil_no = str_replace('-', '', $data['view_data']['efiling_no']);
                 $qrtext = $_SESSION['efiling_details']['registration_id'] . "-" . $efil_no . "-" . ($data['view_data']['data_for_qr']);
                 $qr_code_base64 = generate_qr_code(['data' => $qrtext])->base64;
                 $imag_base64_en = 'data:image/png;base64' . ',' . $qr_code_base64;
-                // var_dump($imag_base64_en);
-
                 $image_cntent = file_get_contents($imag_base64_en);
-
                 $path = tempnam(sys_get_temp_dir(), 'prefix');
                 file_put_contents($path, $image_cntent);
                 $img = '<img width="100" height="100" src="' . $path . '">';
-                //  var_dump($img);
-
-
             }
             $file_name_prefix = 'NEW_CASE_';
         }
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS) {
-
             $case_details = $this->Get_details_model->get_case_details($registration_id);
-            $title = explode('VS.', $case_details[0]['cause_title']);
-           
+            $title = explode('VS.', $case_details[0]['cause_title']);           
             $data['view_data'] = array(
                 'efiling_name' => !empty($_SESSION['efiling_details']['efiling_for_name']) ? $_SESSION['efiling_details']['efiling_for_name'] : '',
                 'efiling_type' => 'Misc. Document',
@@ -161,8 +136,7 @@ class view extends BaseController
                 'res_name' =>  $title[1],
                 'total_ia' => 'NA',
                 // 'ref_file_no' => cin_preview($_SESSION['cnr_details']['cnr_num']) ?? '',
-                'ref_file_no' => 'NA',
-                
+                'ref_file_no' => 'NA',                
                 'payment_type' => $payment_type[0]['payment_type'] ?? '',
                 'payment_method_code' => $payment_type[0]['payment_method_code'] ?? '',
                 'payment_details' => $fee_payment_mode_and_fee ?? '',
@@ -170,7 +144,6 @@ class view extends BaseController
                 'total_amount' => $total_fee_paid ?? '',
                 's' => $img
             );
-
             $file_name_prefix = 'MISC_DOCS_';
         }
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE) {
