@@ -67,8 +67,8 @@
                 <div class="dashboard-section">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <div id="result" class="text-center"></div>
-                            <div class="loader_div" id="loader_div"></div>
+                            <div class="form-response" id="msg" style="background-color: green; color: #fff; text-align: center;"></div>
+                            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div"></div>
                             <div class="dash-card">
                                 <div class="title-sec">
                                     <h5 class="unerline-title">Upload Main Petitions for AI Assisted Case filing</h5>
@@ -245,33 +245,33 @@
                                 var resArr = data.split('@@@');
                                 // alert(resArr[0]); exit;
                                 if (resArr[0] == 1) {
-                                    // $('#msg').show();
-                                    // $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                    $('.msg').show();
-                                    $("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                                    $('#msg').show();
+                                    $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                                    // $('.msg').show();
+                                    // $("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                                     location.reload();
                                 } else if (resArr[0] == 2) {
                                     $('#pet_save').show();
                                     $('#newCaseSaveForm').show();
-                                    // $(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                    // $('#msg').show();
-                                    $('.msg').show();
-                                    $("#result").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                                    $(".form-response").html("<p class='message valid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                                    $('#msg').show();
+                                    // $('.msg').show();
+                                    // $("#result").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                                     location.reload();
                                     /*var targetUrl = "<//?php echo base_url('case/crud'); ?>";
                                     window.parent.location.href=targetUrl;*/
                                     /*window.location.href="<//?php echo base_url('newcase/caseDetails')?>";*/
                                 } else if (resArr[0] == 3) {
-                                    // $('#msg').show();
-                                    // $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                    $('.msg').show();
-                                    $("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                                    $('#msg').show();
+                                    $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                                    // $('.msg').show();
+                                    // $("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                                 } else if (resArr[0] == 4) {
-                                    // $('#msg').show();
-                                    // $('.progress').hide();
-                                    // $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                                    $('.msg').show();
-                                    $("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
+                                    $('#msg').show();
+                                    $('.progress').hide();
+                                    $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
+                                    // $('.msg').show();
+                                    // $("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                                 }
                                 $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
                                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

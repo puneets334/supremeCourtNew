@@ -170,7 +170,7 @@
                                     <label for="" class="form-label">Case No. And Year<span style="color: red" class="astriks">*</span></label>
                                     <div class="row">
                                         <div class="col-8 col-sm-8 col-md-6 col-lg-6 mob-pe-0">
-                                            <input id="sci_case_number" name="sci_case_number" tabindex='5' maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl mob-ryt-radius-0 age_calculate caseno" type="text">
+                                            <input id="sci_case_number" name="sci_case_number" tabindex='5' maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" placeholder="Case No." class="form-control cus-form-ctrl mob-ryt-radius-0 age_calculate caseno" type="text" value="<?=isset($case_num) ? $case_num:'';?>">
                                         </div>
                                         <div class="col-4 col-sm-4 col-md-6 col-lg-6 mob-ps-0 mob-lft-radius-0">
                                             <select tabindex='6' class="form-control cus-form-ctrl  filter_select_dropdown col-4" id="sci_case_year" name="sci_case_year">
@@ -218,7 +218,7 @@
                                                 pattern="^[A-Z]{4}[0-9]{12}$"
                                                 placeholder="CNR"
                                                 class="form-control cus-form-ctrl age_calculate"
-                                                type="text">
+                                                type="text" value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>" >
                                             <span class="input-group-addon"
                                                 data-placement="bottom"
                                                 data-toggle="popover"
@@ -318,7 +318,7 @@
                                                 onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                                 placeholder="Case No."
                                                 class="form-control cus-form-ctrl age_calculate caseno"
-                                                type="text">
+                                                type="text" value="<?=isset($case_num) ? $case_num:'';?>">
                                         </div>
                                         <div class="col-3">
                                             <select tabindex='10'
@@ -364,7 +364,7 @@
                                         pattern="^[A-Z]{4}[0-9]{12}$"
                                         placeholder="CNR"
                                         class="form-control cus-form-ctrl age_calculate"
-                                        type="text">
+                                        type="text"  value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>">
                                     <span class="input-group-addon"
                                         data-placement="bottom"
                                         data-toggle="popover"
@@ -476,7 +476,7 @@
                                                 onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                                 placeholder="Case No."
                                                 class="form-control cus-form-ctrl age_calculate caseno"
-                                                type="text">
+                                                type="text" value="<?=isset($case_num) ? $case_num:'';?>">
                                         </div>
                                         <div class="col-3">
                                             <select tabindex='16'
@@ -574,7 +574,7 @@
                                             onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                             placeholder="Case No."
                                             class="form-control cus-form-ctrl age_calculate caseno"
-                                            type="text">
+                                            type="text" value="<?=isset($case_num) ? $case_num:'';?>">
                                     </div>
                                     <div class="col-3">
                                         <select tabindex='10'
@@ -649,7 +649,7 @@
                                                     name="order_date"
                                                     maxlength="10"
                                                     placeholder="DD/MM/YYYY"
-                                                    type="text">
+                                                    type="text" value="<?=isset($impugned_order_date) && !empty($impugned_order_date) ? $impugned_order_date :'';?>">
                                                 <select id="order_dates_list" style="width: 0% !important;" class="form-select cus-form-ctrl" aria-label="Default select example">
                                                 </select>
                                             </div>                                                                          

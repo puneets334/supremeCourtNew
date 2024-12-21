@@ -83,6 +83,9 @@
                                         <span class="uk-text-uppercase md-bg-grey-700 md-color-grey-50 uk-text-small" style="padding:0.2rem;">{{$application->efiling_type}}</span>
                                         <b class="uk-text-muted">{{$application->efiling_no}}</b>
                                     </div>
+                                    @if(isset($application->id_jsonai) && !empty($application->id_jsonai) && isset($application->registration_id_jsonai) && !empty($application->registration_id_jsonai))
+                                        <img src="{{base_url('assets/images/ai.png')}}" style="width:32px;" class='img-circle'>
+                                    @endif
                                     @if(!empty($application->diary_no))
                                     <div>{{$application->reg_no_display}} <span class="uk-text-muted">(D. No.: {{$application->diary_no}}/{{$application->diary_year}})</span></div>
                                     @endif

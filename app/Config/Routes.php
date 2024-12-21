@@ -451,3 +451,4 @@ $routes->match(['GET', 'POST'], 'AIAssisted/viewDocument/(:any)', 'AIAssisted\Vi
 $routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/get_AIAssist_case_efling', 'AIAssisted\CaseWithAI::get_AIAssist_case_efling');
 $routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/json_decode/(:any)', 'AIAssisted\CaseWithAI::json_decode/$1');
 $routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/defect_list/(:any)', 'AIAssisted\CaseWithAI::defect_list/$1');
+$routes->match(['GET', 'POST'], 'AIAssisted/Cron', 'AIAssisted\Cron::index');

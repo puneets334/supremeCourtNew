@@ -278,8 +278,10 @@
 		<a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
 		<div class="add-new-options">
 			<ul>
-				<?php if(in_array($_SESSION['login']['id'],AIASSISTED_USER_IN_LIST)) { ?>
-					<li class="" uk-tooltip="title:File a fresh case;pos:right"><a href="{{base_url('casewithAI')}}" class="md-color-grey-50"><span class="uk-margin-small-right" ukicon="icon: location"></span> AI Assisted Case Filing</a></li>
+				<?php if(isset($_SESSION['login']['id']) && in_array($_SESSION['login']['id'], AIASSISTED_USER_IN_LIST)) { ?>
+					<li>
+						<a style="color: #fff; width: 100%; display: inline-block; padding: 9px 12px; font-size: 14px;" href="{{base_url('casewithAI')}}" class="add-link">AI Assisted Case Filing</a>
+					</li>
 				<?php } ?>
 				<li>
 					<a href="javascript:void(0)" class="add-lnk">Case</a>
