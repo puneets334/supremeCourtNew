@@ -62,7 +62,9 @@ class DefaultController extends BaseController
 
             $registration_id = $InputArrray[0];
             $_SESSION['regid'] = $registration_id;
-
+            if (!empty($registration_id)) {
+                casewithAIByregistration_id($registration_id);
+            }
             log_message('debug', 'Fetching establishment details');
             $estab_details = $this->Common_model->get_establishment_details();
             if ($estab_details) {

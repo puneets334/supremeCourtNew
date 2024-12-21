@@ -757,19 +757,19 @@
     }
 </script>
 <script type="text/javascript">
-    <?php if (isset($new_case_details[0]) && !empty($new_case_details[0]) && $new_case_details[0]->subj_sub_cat_1 == 222) { ?>
+    <?php if (isset($new_case_details[0]->subj_sub_cat_1) && !empty($new_case_details[0]->subj_sub_cat_1) && $new_case_details[0]->subj_sub_cat_1 == 222) { ?>
         var selected_sub_cat = '<?php echo_data(url_encryption($new_case_details[0]->subj_sub_cat_1 . '##' . $new_case_details[0]->court_fee_calculation_helper_flag)); ?>';
         get_matrimonial(selected_sub_cat);
 
 
     <?php } ?>
-    <?php if (isset($new_case_details[0]) && !empty($new_case_details[0]) && $new_case_details[0]->sc_case_type_id == 7) { ?>
+    <?php if (isset($new_case_details[0]->sc_case_type_id) && !empty($new_case_details[0]->sc_case_type_id) && $new_case_details[0]->sc_case_type_id == 7) { ?>
         var selected_case_type = '<?php echo_data(isset($new_case_details) ? url_encryption($new_case_details[0]->sc_case_type_id . '"##"' . $new_case_details[0]->court_fee_calculation_helper_flag) : ''); ?>';
         get_matrimonial_for_casetype(selected_case_type);
     <?php } ?>
 
     <?php if (isset($new_case_details[0]) && !empty($new_case_details[0])) { ?>
-        var selected_sub_cat = '<?php echo_data(isset($new_case_details) ? url_encryption($new_case_details[0]->subj_sub_cat_1) : ''); ?>';
+        var selected_sub_cat = '<?php echo_data(isset($new_case_details[0]->subj_sub_cat_1) ? url_encryption($new_case_details[0]->subj_sub_cat_1) : ''); ?>';
         get_sub_category('subj_sub_cat_1', 'subj_cat_main', selected_sub_cat);
     <?php } ?>
 

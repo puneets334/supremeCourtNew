@@ -113,36 +113,35 @@ class CommonCasewithAIModel extends Model
         }
         return false;
     }
-    function get_casewithAI_data_extract($id,$type='registration_id')
-    {
+
+    function get_casewithAI_data_extract($id,$type='registration_id') {
         $builder = $this->db->table('efil.tbl_uploaded_pdfs_jsonai');
         $builder->SELECT("*");
-        
         if (!empty($id) && $type!='registration_id') { $builder->WHERE('id', $id); }
         if (!empty($id) && $type=='registration_id') { $builder->WHERE('registration_id', $id); }
         $builder->WHERE('is_active_iitm',true);
         $builder->orderBy('id','DESC');
         $builder->LIMIT(1);
         $query = $builder->get();
-        //echo $this->db->last_query();exit();
+        // pr($this->db->getLastQuery());
         if ($query->getNumRows() >= 1) {
             $response_result= $query->getResultArray();
-            if (!empty($response_result)){
+            if (!empty($response_result)) {
                 $decoded_data=json_decode($response_result[0]['iitm_api_json'],TRUE);
-                if (!empty($decoded_data)){
+                if (!empty($decoded_data)) {
                     $merge_array_data = array_merge(array('id'=>$response_result[0]['id'],'registration_id'=>$response_result[0]['registration_id'],'efiling_no'=>$response_result[0]['efiling_no'],'sc_case_type'=>$response_result[0]['sc_case_type']), $decoded_data);
-                    $session_data_extract = array( 'casewithAI' => $merge_array_data);
-                    $this->session->set_userdata($session_data_extract);
+                    // $session_data_extract = array( 'casewithAI' => $merge_array_data);
+                    $session_data_extract = array($merge_array_data);
+                    setSessionData('casewithAI', $session_data_extract);
                     return $session_data_extract;
                 }
-
                 return $response_result;
             }
-
-        } else {
+        } else{
             return  $query->getResultArray();
         }
     }
+
     public function get_casewithAI_data_extract_details($id)
     {
         $builder = $this->db->table('efil.tbl_uploaded_pdfs_jsonai');

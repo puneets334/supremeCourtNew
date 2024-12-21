@@ -1467,3 +1467,94 @@
             });
     }
 </script>
+<?php
+$segment = service('uri');
+$segment = $segment->getSegment(2);
+if (isset($segment) && !empty($segment) && $segment=='petitioner' || $segment=='respondent') {
+    if (isset($party_details) && !empty($party_details)) {
+        if (isset($party_details[0]['id']) && empty($party_details[0]['id']) && isset($party_details[0]['registration_id']) && empty($party_details[0]['registration_id'])) {
+            if (isset($_SESSION['casewithAI']) && !empty($_SESSION['casewithAI'])) {
+                ?>
+                <script>
+                    <?php if ($segment=='petitioner') {
+                        $pincode=isset($_SESSION['casewithAI']['main_petitioner']['pincode']) && $_SESSION['casewithAI']['main_petitioner']['pincode']!='NA' ? $_SESSION['casewithAI']['main_petitioner']['pincode']:null;
+                        ?>
+                        pincodeByDetails('<?=$pincode;?>');
+                    <?php } elseif ($segment=='respondent') {
+                        $pincode=isset($_SESSION['casewithAI']['main_reposndent']['pincode']) && $_SESSION['casewithAI']['main_reposndent']['pincode']!='NA' ? $_SESSION['casewithAI']['main_reposndent']['pincode']:null;
+                        ?>
+                        pincodeByDetails('<?=$pincode;?>');
+                    <?php } ?>
+                    function pincodeByDetails(pincode) {
+                        var CSRF_TOKEN = 'CSRF_TOKEN';
+                        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+                        var pincode = pincode;
+                        if (pincode) {
+                            var stateObj = JSON.parse(state_Arr);
+                            var options = '';
+                            options += '<option value="">Select State</option>';
+                            stateObj.forEach((response) =>
+                                options += '<option value="' + response.id + '">' + response.state_name + '</option>');
+                            $('#party_state').html(options).select2().trigger("change");
+                            $.ajax({
+                                type: "POST",
+                                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, pincode: pincode},
+                                url: "<?php echo base_url('newcase/Ajaxcalls/getAddressByPincode'); ?>",
+                                success: function (response) {
+                                    var taluk_name;
+                                    var district_name;
+                                    var state;
+                                    if (response) {
+                                        var resData = JSON.parse(response);
+                                        if (resData) {
+                                            taluk_name = resData[0]['taluk_name'].trim().toUpperCase();
+                                            district_name = resData[0]['district_name'].trim().toUpperCase();
+                                            state = resData[0]['state'].trim().toUpperCase();
+                                        }
+                                        if (taluk_name) {
+                                            $("#party_city").val('');
+                                            $("#party_city").val(taluk_name);
+                                        } else {
+                                            $("#party_city").val('');
+                                        }
+                                        if (state) {
+                                            var stateObj = JSON.parse(state_Arr);
+                                            if (stateObj) {
+                                                var singleObj = stateObj.find(
+                                                    item => item['state_name'] === state
+                                                );
+                                            }
+                                            if (singleObj) {
+                                                $('#party_state').val('');
+                                                $('#party_state').val(singleObj.id).select2().trigger("change");
+                                            } else {
+                                                $('#party_state').val('');
+                                            }
+                                            if (district_name) {
+                                                var stateId = $('#party_state').val();
+                                                setSelectedDistrict(stateId, district_name);
+                                            }
+                                        } else {
+                                            $('#party_state').val('');
+                                        }
+                                    }
+                                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                                    });
+                                },
+                                error: function () {
+                                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                                    });
+                                }
+                            });
+                        }
+                    }
+                </script>
+                <?php
+            }
+        }
+    }
+}
+?>
+<!--end ActionToTrash with sweetAlert-->

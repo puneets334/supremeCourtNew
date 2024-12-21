@@ -349,15 +349,14 @@ if (!function_exists('casewithAI_UploadPdfIntomain')) {
 
 }
 
-function getCourtTypeAndState($metadata_extracted_court_type_string)
-{
-    //$metadata_extracted_court_type_string='SUPREME Court of Jharkhand at Ranchi'
-// Sample string to check which is returing from IITM API in the court_type field
+function getCourtTypeAndState($metadata_extracted_court_type_string) {
+    // $metadata_extracted_court_type_string='SUPREME Court of Jharkhand at Ranchi'
+    // Sample string to check which is returing from IITM API in the court_type field
     if (is_array($metadata_extracted_court_type_string)) {
         $metadata_extracted_court_type_string = isset($metadata_extracted_court_type_string[0]) && $metadata_extracted_court_type_string[0] != 'NA' ? $metadata_extracted_court_type_string[0] : '';
     }
     $string = (!empty($metadata_extracted_court_type_string)?$metadata_extracted_court_type_string:null);
-// Array of high courts to check for
+    // Array of high courts to check for
     $highCourtsNameAsPerEfilMasters = [
         'Allahabad', 'Allahabad Bench', 'Bombay', 'Calcutta', 'Chhattisgarh', 'Delhi',
         'Gauhati', 'Gujarat', 'Himachal Pradesh', 'Jammu & Kashmir', 'Jharkhand',
@@ -366,42 +365,37 @@ function getCourtTypeAndState($metadata_extracted_court_type_string)
         'Sikkim', 'Supreme Court of India', 'Telangana & Andhra Pradesh',
         'Tripura', 'Uttarakhand'
     ];
-// 1. Check for the presence of phrases "high court", "supreme court", "district court", or "state agency" (case insensitive)
+    // 1. Check for the presence of phrases "high court", "supreme court", "district court", or "state agency" (case insensitive)
     $phrasePattern = '/\b(high court|supreme court|district court|state agency)\b/i';
     $stateToCheck = null;
     $courtType = null;
     $highCourtsResult=array();
-
-    if(!empty($string))
-    {
-// Check for phrases in the string
+    if(!empty($string)) {
+        // Check for phrases in the string
         if (preg_match($phrasePattern, $string, $matches)) {
             $courtType = strtolower($matches[0]);
-
             if ($courtType === 'supreme court') {
                 // If 'Supreme Court' is matched, set the state name to 'Delhi'
                 $state = 'Delhi';
-            } else {
+            } else{
                 // Otherwise, use the list of high courts names
                 $stateToCheck = implode('|', $highCourtsNameAsPerEfilMasters);
             }
-
         }
-// 2. Check for the combination of "high court" and any of the specified high courts in any order
+        // 2. Check for the combination of "high court" and any of the specified high courts in any order
         if ($stateToCheck !== null && $courtType !== 'supreme court') {
             if ($courtType === 'high court') {
                 $statePattern = '/\bhigh court\b.*?\b(' . $stateToCheck . ')\b/i';
                 if (preg_match($statePattern, $string, $stateMatches)) {
-                    //print_r($stateMatches);
+                    // print_r($stateMatches);
                     $state=$stateMatches[1];
                 }
             }
         }
     }
-
     $court_db_id=array();
     $court_type='';
-    if (!empty($state)){
+    if (!empty($state)) {
         $court_db_id = get_high_courts_id($state);
     }
     if (isset($courtType) && ucwords($courtType) == 'High Court') {
@@ -409,11 +403,15 @@ function getCourtTypeAndState($metadata_extracted_court_type_string)
     } else if (isset($courtType) && ucwords($courtType) == 'Supreme Court') {
         $court_type = 4;
     }
-    $highCourtsResult=['court_type_name_api'=>ucwords($courtType),'state_name_api'=>$state,'court_type'=>$court_type];
-    if (!empty($court_db_id)){
+    $highCourtsResult = [
+        'court_type_name_api' => ucwords($courtType),
+        'state_name_api' => $state,
+        'court_type' => $court_type
+    ];
+    if (!empty($court_db_id)) {
         $highCourtsResult=array_merge($highCourtsResult,$court_db_id);
     }
-    //echo '<pre>';print_r($highCourtsResult);exit();
+    // echo '<pre>'; print_r($highCourtsResult); exit();
     return $highCourtsResult;
 }
 

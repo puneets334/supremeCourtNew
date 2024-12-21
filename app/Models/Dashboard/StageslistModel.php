@@ -131,9 +131,9 @@ class StageslistModel extends Model
             '(SELECT CONCAT(department_name, \' <br>(\', ministry_name, \')\') FROM efil.department_filings df 
             JOIN efil.m_departments md ON md.id = df.ref_department_id 
             WHERE registration_id=en.registration_id) as dept_file',
-            '(SELECT \'Entered by Clerk\' FROM efil.clerk_filings WHERE registration_id=en.registration_id) as clerk_file'
+            '(SELECT \'Entered by Clerk\' FROM efil.clerk_filings WHERE registration_id=en.registration_id) as clerk_file',
+            'jsonai.registration_id as registration_id_jsonai','jsonai.id as id_jsonai'
         ]);
-
         $builder->join('efil.tbl_efiling_num_status as cs', 'en.registration_id = cs.registration_id');
         $builder->join('public.tbl_efiling_caveat as ec', 'en.registration_id = ec.ref_m_efiling_nums_registration_id', 'left');
         $builder->join('efil.m_tbl_efiling_type as et', 'en.ref_m_efiled_type_id=et.id');
@@ -144,7 +144,7 @@ class StageslistModel extends Model
         $builder->join('efil.m_tbl_dashboard_stages as mtds', 'cs.stage_id = mtds.stage_id ', 'left');
         $builder->join('(SELECT * FROM efil.tbl_efiling_allocation tea ORDER BY tea.allocated_on DESC LIMIT 1) as tea', 'en.registration_id = tea.registration_id', 'left');
         $builder->join('efil.tbl_users as allocated_users', 'tea.admin_id=allocated_users.id', 'left');
-
+        $builder->join('efil.tbl_uploaded_pdfs_jsonai as jsonai', "en.registration_id = jsonai.registration_id AND jsonai.iitm_api_json is not null AND jsonai.is_deleted ='false'", 'left');
         $builder->where('cs.is_active', 'TRUE');
         $builder->where('en.is_active', 'TRUE');
         $builder->where('en.is_deleted', 'FALSE');
