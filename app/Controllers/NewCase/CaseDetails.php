@@ -148,6 +148,74 @@ class CaseDetails extends BaseController
         } else{
             $high_courts = $this->Dropdown_list_model->high_courts();
             $data['high_court_drop_down'] = $high_courts;
+            // start case with AI
+            // pr($_SESSION['casewithAI'][0]);
+            // $_SESSION['casewithAI'] = getSessionData('casewithAI')['casewithAI'];
+            if (isset($_SESSION['casewithAI']) && !empty($_SESSION['casewithAI'][0])) {
+                $court_type_api=isset($_SESSION['casewithAI'][0]) ? $_SESSION['casewithAI'][0]['case_details']['court_type']:null;
+                if (!empty($court_type_api)) {
+                    $court_type_api = getCourtTypeAndState($court_type_api);
+                    if (!empty($court_type_api)) {
+                        $court_type = $court_type_api['court_type'];
+                        $estab_id= $court_type_api['hc_id'];
+                        if (isset($court_type) && !empty($court_type)) {
+                            switch ($court_type) {
+                                case 1:
+                                    $high_courts = $this->Dropdown_list_model->high_courts();
+                                    $data['high_court_drop_down'] = $high_courts;
+                                    $params = array();
+                                    $params['type'] = 2;
+                                    $params['hc_id'] = (int)$estab_id;
+                                    $data['high_court_bench'] = $this->Common_model->getHighCourtData($params);
+                                    break;
+                                case 4:
+                                    $supreme_court_stateArr = array();
+                                    $supreme_court_stateArr[] = array('id' => 490506, 'name' => 'DELHI');
+                                    $data['supreme_court_state'] = $supreme_court_stateArr;
+                                    $supreme_court_benchArr = array();
+                                    $supreme_court_benchArr[] = array('id' => '10000', 'name' => 'DELHI');
+                                    $data['supreme_court_bench'] = $supreme_court_benchArr;
+                                    break;
+                                default:
+                            }
+                        }
+                    }
+                }
+                $pet_name_causetitle=isset($_SESSION['casewithAI'][0]) ? $_SESSION['casewithAI'][0]['case_details']['pet_name_causetitle'][0]:null;
+                $res_name_causetitle=isset($_SESSION['casewithAI'][0]) ? $_SESSION['casewithAI'][0]['case_details']['res_name_causetitle'][0]:null;
+                $response_court_type=isset($_SESSION['casewithAI'][0]) ? $_SESSION['casewithAI'][0]['case_details']['court_type']:null;
+                $sc_sp_case_type_id=isset($_SESSION['casewithAI'][0]['case_details']['sc_sp_case_type_id']) ? $_SESSION['casewithAI'][0]['case_details']['sc_sp_case_type_id']:null;
+                if (!empty($sc_sp_case_type_id)) {
+                    if (strtoupper($sc_sp_case_type_id)=='NONE') {
+                        $sc_sp_case_type_id=1;
+                    } elseif (strtoupper($sc_sp_case_type_id)=='JAIL PETITION') {
+                        $sc_sp_case_type_id=6;
+                    } elseif (strtoupper($sc_sp_case_type_id)=='PUD') {
+                        $sc_sp_case_type_id=7;
+                    }
+                }
+                $jail_signature_date=isset($_SESSION['casewithAI'][0]['case_details']['jail_signature_date']) ? $_SESSION['casewithAI'][0]['case_details']['jail_signature_date']:'';
+                if (!empty($jail_signature_date)) {
+                    $jail_signature_date=date('Y-m-d',strtotime($jail_signature_date));
+                }
+                $cause_title='';
+                if (!empty($pet_name_causetitle) && !empty($pet_name_causetitle)) {
+                    $cause_title=$pet_name_causetitle.' Vs. '.$res_name_causetitle;
+                }
+                // $this->load->model('AIAssisted/Common_casewithAI_model');
+                $sc_case_type_id=isset($_SESSION['casewithAI'][0]['sc_case_type']) && !empty($_SESSION['casewithAI'][0]['sc_case_type'])? $_SESSION['casewithAI'][0]['sc_case_type']:0;
+                $data['new_case_details'][] = [
+                    'cause_title' => $cause_title,
+                    'no_of_petitioners' => isset($_SESSION['casewithAI'][0]['case_details']['pno']) ? $_SESSION['casewithAI'][0]['case_details']['pno']:0,
+                    'no_of_respondents' => isset($_SESSION['casewithAI'][0]['case_details']['pno']) ? $_SESSION['casewithAI'][0]['case_details']['rno']:0,
+                    'sc_sp_case_type_id' => $sc_sp_case_type_id,
+                    'jail_signature_date' =>$jail_signature_date,
+                    'estab_id' => $estab_id,
+                    'court_type' => isset($court_type) && !empty($court_type) ? $court_type:null,
+                    'sc_case_type_id' => $sc_case_type_id,
+                ];
+            }
+            /*end code here json api*/
         }
         $this->render('newcase.new_case_view', $data);
     }

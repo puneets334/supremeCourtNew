@@ -143,6 +143,79 @@ class SubordinateCourt extends BaseController {
         $data['caseData'] = $caseData;
         $data['criminal_case']=$criminal_case;
         $data['sc_casetypearr']=$sc_casetype;
+        /*start code here json api IITM*/
+        $data_to_be_populated_year = null; $impugned_order_date = null; $case_num=null; $judgement_type=null; $is_judgment_challenged=null; $decision_date='';
+        if (isset($_SESSION['casewithAI'][0]['earlier_courts']['impugned_order_date'])) {
+            if (is_array($_SESSION['casewithAI'][0]['earlier_courts']['impugned_order_date'])) {
+                $impugned_order_date = $_SESSION['casewithAI'][0]['earlier_courts']['impugned_order_date'][0];
+            }
+            if (empty($impugned_order_date)) {
+                $impugned_order_date = $_SESSION['casewithAI'][0]['earlier_courts']['impugned_order_date'];
+            }
+            if (!empty($impugned_order_date)) {
+                $impugned_order_date = date('d/m/Y', strtotime($impugned_order_date));
+            }
+        }
+        if (isset($_SESSION['casewithAI'][0]['earlier_courts']['decision_date'])) {
+            if (is_array($_SESSION['casewithAI'][0]['earlier_courts']['decision_date'])) {
+                $decision_date = $_SESSION['casewithAI'][0]['earlier_courts']['decision_date'][0];
+            }
+            if (empty($decision_date)) {
+                $decision_date = $_SESSION['casewithAI'][0]['earlier_courts']['decision_date'];
+            }
+            if (!empty($decision_date)) {
+                $decision_date = date('d/m/Y', strtotime($decision_date));
+            }
+        }
+        if (isset($_SESSION['casewithAI'][0]['earlier_courts']['case_year'])) {
+            if (is_array($_SESSION['casewithAI'][0]['earlier_courts']['case_year'])) {
+                $data_to_be_populated_year = isset($_SESSION['casewithAI'][0]['earlier_courts'][0]['case_year']) && $_SESSION['casewithAI'][0]['earlier_courts'][0]['case_year'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts'][0]['case_year'] : '';
+            }
+            if (empty($data_to_be_populated_year)) {
+                $data_to_be_populated_year = isset($_SESSION['casewithAI'][0]['earlier_courts']['case_year']) && $_SESSION['casewithAI'][0]['earlier_courts']['case_year'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts']['case_year'] : '';
+            }
+        }
+        if (isset($_SESSION['casewithAI'][0]['earlier_courts']['case_num'])) {
+            if (is_array($_SESSION['casewithAI'][0]['earlier_courts']['case_num'])) {
+                $case_num = isset($_SESSION['casewithAI'][0]['earlier_courts'][0]['case_num']) && $_SESSION['casewithAI'][0]['earlier_courts'][0]['case_num'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts'][0]['case_num'] : '';
+            }
+            if (empty($case_num)) {
+                $case_num = isset($_SESSION['casewithAI'][0]['earlier_courts']['case_num']) && $_SESSION['casewithAI'][0]['earlier_courts']['case_num'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts']['case_num'] : '';
+            }
+        }
+        if (isset($_SESSION['casewithAI'][0]['earlier_courts']['judgement_type'])) {
+            if (is_array($_SESSION['casewithAI'][0]['earlier_courts']['judgement_type'])) {
+                $judgement_type = isset($_SESSION['casewithAI'][0]['earlier_courts'][0]['judgement_type']) && $_SESSION['casewithAI'][0]['earlier_courts'][0]['judgement_type'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts'][0]['judgement_type'] : '';
+            }
+            if (empty($judgement_type)) {
+                $judgement_type = isset($_SESSION['casewithAI'][0]['earlier_courts']['judgement_type']) && $_SESSION['casewithAI'][0]['earlier_courts']['judgement_type'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts']['judgement_type'] : '';
+            }
+            if (!empty($judgement_type) && $judgement_type=='F') {
+                $impugned_order_date=!empty($decision_date) ? $decision_date :$impugned_order_date;
+            }
+
+        }
+        if (isset($_SESSION['casewithAI'][0]['earlier_courts']['is_judgment_challenged'])) {
+            if (is_array($_SESSION['casewithAI'][0]['earlier_courts']['is_judgment_challenged'])) {
+                $is_judgment_challenged = isset($_SESSION['casewithAI'][0]['earlier_courts'][0]['is_judgment_challenged']) && $_SESSION['casewithAI'][0]['earlier_courts'][0]['is_judgment_challenged'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts'][0]['is_judgment_challenged'] : '';
+            }
+            if (empty($is_judgment_challenged)) {
+                $is_judgment_challenged = isset($_SESSION['casewithAI'][0]['earlier_courts']['is_judgment_challenged']) && $_SESSION['casewithAI'][0]['earlier_courts']['is_judgment_challenged'] != 'NA' ? $_SESSION['casewithAI'][0]['earlier_courts']['is_judgment_challenged'] : '';
+            }
+            if (!empty($is_judgment_challenged) && $is_judgment_challenged==true){
+                $is_judgment_challenged=1;
+            }else{
+                $is_judgment_challenged=2;
+            }
+        }
+        $data['new_case_details'][] = [
+            'judgement_type' => $judgement_type,
+            'judgement_challenged' => $is_judgment_challenged,
+        ];
+        // $data['data_to_be_populated']['year'] = $data_to_be_populated_year;
+        $data['case_num']=$case_num;
+        $data['impugned_order_date'] = $impugned_order_date;
+        /*end code here json api IITM*/
         // $this->load->view('templates/header');
         // $this->load->view('newcase/new_case_view', $data);
         // $this->load->view('templates/footer');

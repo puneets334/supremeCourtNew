@@ -68,6 +68,62 @@ class Respondent extends BaseController {
                 $data['is_dead_data'] = false;
             }
         }
+        /*start code here json api IITM*/
+        // pr($_SESSION);
+        if ((isset($data['party_details']) && empty($data['party_details'])) && (isset($_SESSION['casewithAI'][0]) && !empty($_SESSION['casewithAI'][0]))) {
+            $gender=isset($_SESSION['casewithAI'][0]['main_reposndent']['party_age']) && $_SESSION['casewithAI'][0]['main_reposndent']['gender']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['gender']:null;
+            if (!empty($gender) && (strtolower($gender)=='male' || strtolower($gender)=='m')) {
+                $gender='M';
+            } elseif (!empty($gender) && (strtolower($gender)=='female' || strtolower($gender)=='f')) {
+                $gender='F';
+            }
+            $party_dob=isset($_SESSION['casewithAI'][0]['main_reposndent']['party_dob']) && $_SESSION['casewithAI'][0]['main_reposndent']['party_dob']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['party_dob']:null;
+            if (!empty($party_dob)){ $party_dob=date('Y-m-d',strtotime($party_dob)); }
+            $country_id=isset($_SESSION['casewithAI'][0]['main_reposndent']['country_id']) && $_SESSION['casewithAI'][0]['main_reposndent']['country_id']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['country_id']:null;
+            $pincode=isset($_SESSION['casewithAI'][0]['main_reposndent']['pincode']) && $_SESSION['casewithAI'][0]['main_reposndent']['pincode']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['pincode']:null;
+            if (!empty($country_id) && strtolower($country_id)=='india'){ $country_id=96;}
+            $mobile_num=isset($_SESSION['casewithAI'][0]['main_reposndent']['mobile_num']) && $_SESSION['casewithAI'][0]['main_reposndent']['mobile_num']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['mobile_num']:null;
+            $email_id=isset($_SESSION['casewithAI'][0]['main_reposndent']['email_id']) && $_SESSION['casewithAI'][0]['main_reposndent']['email_id']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['email_id']:null;
+            if (is_array($_SESSION['casewithAI'][0]['main_reposndent']['party_name'])) {
+                $party_name=$_SESSION['casewithAI'][0]['main_reposndent']['party_name'][0];
+            } else{
+                $party_name=isset($_SESSION['casewithAI'][0]['main_reposndent']['party_name']) ? $_SESSION['casewithAI'][0]['main_reposndent']['party_name']:null;
+            }
+            $relation=isset($_SESSION['casewithAI'][0]['main_reposndent']['relation']) && $_SESSION['casewithAI'][0]['main_reposndent']['relation']!='NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['relation']:'N';
+            if (!empty($relation)) {
+                $relation=strtolower($relation);
+                if ($relation=='father' || $relation=='s' || $relation=='son of') {
+                    $relation='S';
+                } elseif ($relation=='daughter' || $relation=='d' || $relation=='daughter of') {
+                    $relation = 'D';
+                } elseif ($relation=='spouse' || $relation=='wife' || $relation=='spouse of') {
+                    $relation = 'W';
+                }
+            }
+            $data['party_details'][] =[
+                'p_r_type' => 'R',
+                'm_a_type' => 'M',
+                'party_no' => 1,
+                'party_name' => !empty($party_name) ? $party_name:null,
+                'relation' => $relation,
+                'relative_name' => isset($_SESSION['casewithAI'][0]['main_reposndent']['relative_name']) ? $_SESSION['casewithAI'][0]['main_reposndent']['relative_name']:null,
+                'party_age' => isset($_SESSION['casewithAI'][0]['main_reposndent']['party_age']) && $_SESSION['casewithAI'][0]['main_reposndent']['party_age']=!'NA' ? $_SESSION['casewithAI'][0]['main_reposndent']['party_age']:null,
+                'gender' => $gender,
+                'party_dob' => $party_dob,
+                'address' => isset($_SESSION['casewithAI'][0]['main_reposndent']['address']) ? $_SESSION['casewithAI'][0]['main_reposndent']['address']:null,
+                'city' => isset($_SESSION['casewithAI'][0]['main_reposndent']['city']) ? $_SESSION['casewithAI'][0]['main_reposndent']['city']:null,
+                'district_id' => null,
+                'state_id' => null,
+                'pincode' => $pincode,
+                'country_id' => $country_id,
+                'mobile_num' => $mobile_num,
+                'email_id' => $email_id,
+                'id' => 0,
+                'registration_id' => 0,
+                'party_type' => NULL,
+            ];
+        }
+        /*end code here json api IITM*/
         //get total is_dead_minor
         $params = array();
         $params['registration_id'] = !empty(getSessionData('efiling_details')['registration_id']) ? getSessionData('efiling_details')['registration_id'] : NULL;

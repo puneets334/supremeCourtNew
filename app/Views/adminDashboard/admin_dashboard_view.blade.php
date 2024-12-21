@@ -77,17 +77,18 @@
 </style>
 @endpush
 @section('content')
-<div class="container-fluid">
-		
+	<div class="container-fluid">		
         <div class="row" >
 			<div class="col-lg-12">
-			 <?php $users_array = array(USER_ADMIN);
-             if (in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) { ?>
-				<div class="dashboard-section dashboard-tiles-area">
+				<?php
+				$users_array = array(USER_ADMIN);
+				if (in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) {
+					?>
+					<div class="dashboard-section dashboard-tiles-area">
 						<div class="row">
 							<div class="col-12 col-sm-12 col-md-4 col-lg-2">
 							<?php if (isset($count_efiling_data) && $count_efiling_data[0]->total_new_efiling == 0) { ?>
-								<a href="javascript:void(0);">  
+								<a href="#"> </a>  
 							<?php } else { ?>
 								<a href="<?= base_url('adminDashboard/stageList/' . htmlentities(url_encryption(New_Filing_Stage, ENT_QUOTES))); ?>">
 								<?php } ?>
@@ -101,7 +102,7 @@
 							</div>
 							<div class="col-12 col-sm-12 col-md-4 col-lg-2">
 								 <?php if ($count_efiling_data[0]->total_refiled_cases == 0) { ?>
-									<a href="javascript:void(0);">  
+									<a href="#"> </a>  
 								<?php } else { ?>
 									<a href="<?= base_url('adminDashboard/stageList/' . htmlentities(url_encryption(Initial_Defects_Cured_Stage, ENT_QUOTES))); ?>">
 									<?php } ?>
@@ -113,7 +114,7 @@
 							</div>
 							<div class="col-12 col-sm-12 col-md-4 col-lg-2">
 								 <?php if ($count_efiling_data[0]->total_transfer_to_efiling_sec == 0) { ?>
-									<a href="javascript:void(0);">  
+									<a href="#"> </a>  
 								<?php } else { ?>
 									<a href="<?= base_url('adminDashboard/stageList/' . htmlentities(url_encryption(Transfer_to_IB_Stage, ENT_QUOTES))); ?>" >
 									<?php } ?>
@@ -125,7 +126,7 @@
 							</div>
 							<div class="col-12 col-sm-12 col-md-4 col-lg-2">
 								<?php if ($count_efiling_data[0]->total_pending_scrutiny == 0) { ?>
-									<a href="javascript:void(0);">  
+									<a href="#"> </a>  
 								<?php } else { ?>
 									<a href="<?= base_url('adminDashboard/stageList/' . htmlentities(url_encryption(I_B_Approval_Pending_Admin_Stage, ENT_QUOTES))); ?>" >
 									<?php } ?>
@@ -137,7 +138,7 @@
 							</div>
 							<div class="col-12 col-sm-12 col-md-4 col-lg-2">
 								 <?php if ($count_efiling_data[0]->total_defect_cured == 0) { ?>
-									<a href="javascript:void(0);">  
+									<a href="#"> </a>  
 								<?php } else { ?>
 									<a href="<?= base_url('adminDashboard/stageList/' . htmlentities(url_encryption(I_B_Defects_Cured_Stage, ENT_QUOTES))); ?>" >
 									<?php } ?>
@@ -149,17 +150,17 @@
 							</div>
 						</div>
 					</div>
-						<?php
-						if (!empty(getSessionData('MSG'))) {
-							echo getSessionData('MSG');
-						}
-						if (!empty(getSessionData('msg'))) {
-							echo getSessionData('msg');
-						}
-						$session = session();
+					<?php
+					if (!empty(getSessionData('MSG'))) {
+						echo getSessionData('MSG');
+					}
+					if (!empty(getSessionData('msg'))) {
+						echo getSessionData('msg');
+					}
+					$session = session();
+					$users_array = array(USER_ADMIN);
+					if (in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) {
 						?>
-					<?php $users_array = array(USER_ADMIN);
-					  if (in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) { ?>
 						<div class="row" style="display: none;">
 							<div class="col-sm-12 col-xs-12">
 								<div class="form-group">
@@ -173,7 +174,7 @@
 								</div>
 							</div>
 						</div>
-						 <?php } ?>
+					<?php } ?>
 					<div class="dashboard-section">
 						<div class="row">
 							<div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -194,39 +195,39 @@
 														</th>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(New_Filing_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class = "fa fa-square green"></i> New Filing </a></td>
-														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_new_efiling, ENT_QUOTES); ?></a>  </td>
+														<?php $href = ($count_efiling_data[0]->total_new_efiling == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(New_Filing_Stage, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class = "fa fa-square green"></i> New Filing </a></p></td>
+														<td><p><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_new_efiling, ENT_QUOTES); ?></a> </p>  </td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defected_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square red"></i> For Compliance </a> </td>
-														<td><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->total_not_accepted, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_not_accepted == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defected_Stage, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class="fa fa-square red"></i> For Compliance </a> </p></td>
+														<td><p><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->total_not_accepted, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square dark_blue"></i> Pay Deficit Fee</a>  </td>
-														<td><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->deficit_crt_fee, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->deficit_crt_fee == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class="fa fa-square dark_blue"></i> Pay Deficit Fee</a></p>  </td>
+														<td><p><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->deficit_crt_fee, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defects_Cured_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square purple"></i> Complied Objections</a></td>
-														<td><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->total_refiled_cases, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_refiled_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defects_Cured_Stage, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class="fa fa-square purple"></i> Complied Objections</a></p></td>
+														<td><p><a href=<?php echo $href; ?>><?php echo htmlentities($count_efiling_data[0]->total_refiled_cases, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Transfer_to_IB_Stage, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Transfer to ICMIS</a></td>
-														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_transfer_to_efiling_sec, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_transfer_to_efiling_sec == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Transfer_to_IB_Stage, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Transfer to ICMIS</a></p></td>
+														<td><p><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_transfer_to_efiling_sec, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(HOLD, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Hold</a></td>
-														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_hold_cases ?? '', ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_hold_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(HOLD, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Hold</a></p></td>
+														<td><p><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_hold_cases, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DISPOSED, ENT_QUOTES))); ?>
-														<td><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Disposed</a></td>
-														<td><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_hold_disposed_cases, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_hold_disposed_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DISPOSED, ENT_QUOTES))); ?>
+														<td><p><a href=<?php echo $href; ?>><i class="fa fa-square yellow"></i> Disposed</a></p></td>
+														<td><p><a href=<?php echo $href; ?>> <?php echo htmlentities($count_efiling_data[0]->total_hold_disposed_cases, ENT_QUOTES); ?></a></p></td>
 													</tr>
 												</tbody>
 											</table>
@@ -251,25 +252,29 @@
 															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 														</th>
 													</tr>
+													<!--<tr>
+														<?php /*$href = ($count_efiling_data[0]->total_available_for_cis == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Transfer_to_CIS_Stage, ENT_QUOTES))); */?>
+														<td><p><a href="<?php /*echo $href; */?>"><i class="fa fa-square orange "></i>Get ICMIS Status</a> </p></td>
+														<td><p><a href="<?php /*echo $href; */?>"> <?php /*echo htmlentities($count_efiling_data[0]->total_available_for_cis, ENT_QUOTES); */?></a></p></td>
+													</tr>-->
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Approval_Pending_Admin_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i> Pending Scrutiny</a></td>
-														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_pending_scrutiny, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_pending_scrutiny == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Approval_Pending_Admin_Stage, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i> Pending Scrutiny</a></p></td>
+														<td><p><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_pending_scrutiny, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i> Defective</a></td>
-														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_waiting_defect_cured, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_waiting_defect_cured == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i> Defective</a></p></td>
+														<td><p><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_waiting_defect_cured, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr> 
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defects_Cured_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i> Defects Cured</a></td>
-														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_defect_cured, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_defect_cured == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defects_Cured_Stage, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i> Defects Cured</a></p></td>
+														<td><p><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_defect_cured, ENT_QUOTES); ?></a></p></td>
 													</tr>
 												</tbody>
 											</table>
-										</div>
-									 
+										</div>									 
 									</div>
 								</div>													
 							</div>
@@ -291,55 +296,50 @@
 														</th>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(E_Filed_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square aero "></i> Cases</td>
-														<td><a href="<?php echo $href; ?>"> <?php echo htmlentities($count_efiling_data[0]->total_efiled_cases, ENT_QUOTES); ?> </a> </td>
-
+														<?php $href = ($count_efiling_data[0]->total_efiled_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(E_Filed_Stage, ENT_QUOTES))); ?>
+														<td><a href="<?php echo $href; ?>"><p><i class="fa fa-square aero "></i> Cases</p></a></td>
+														<td><p><a href="<?php echo $href; ?>"> <?php echo htmlentities($count_efiling_data[0]->total_efiled_cases, ENT_QUOTES); ?> </a></p> </td>
 													</tr>
 													<tr> 
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Document_E_Filed, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i> Documents</a></td>
-														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_efiled_docs, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_efiled_docs == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Document_E_Filed, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square purple"></i> Documents</a></p></td>
+														<td><p><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_efiled_docs, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE_E_FILED, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i> Paid Deficit Fee</a></td>
-														<td><a href="<?php echo $href; ?>">  <?php echo htmlentities($count_efiling_data[0]->total_efiled_deficit, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_efiled_deficit == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(DEFICIT_COURT_FEE_E_FILED, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i> Paid Deficit Fee</a></p></td>
+														<td><p><a href="<?php echo $href; ?>">  <?php echo htmlentities($count_efiling_data[0]->total_efiled_deficit, ENT_QUOTES); ?></a></p></td>
 													</tr>
-													<?php if (ENABLE_E_FILE_IA_FOR_HC  || ENABLE_E_FILE_IA_FOR_ESTAB) { ?>
+													<?php if (env('ENABLE_E_FILE_IA_FOR_HC') || env('ENABLE_E_FILE_IA_FOR_ESTAB')) { ?>
 														<tr>
-															<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(IA_E_Filed, ENT_QUOTES))); ?>
-															<td><a href="<?php echo $href; ?>"><i class="fa fa-square green"></i> IA</a></td>
-															<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_efiled_ia, ENT_QUOTES); ?></a></td>
+															<?php $href = ($count_efiling_data[0]->total_efiled_ia == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(IA_E_Filed, ENT_QUOTES))); ?>
+															<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square green"></i> IA</a></p> </td>
+															<td><p><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_efiled_ia, ENT_QUOTES); ?></a></p></td>
 														</tr>
 													<?php } ?>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Rejected_Stage, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i> Rejected</a></td>
-														<td><a href="<?php echo $href; ?>"> <?php echo htmlentities($count_efiling_data[0]->total_rejected, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_rejected == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Rejected_Stage, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square red"></i> Rejected</a></p></td>
+														<td><p><a href="<?php echo $href; ?>"> <?php echo htmlentities($count_efiling_data[0]->total_rejected, ENT_QUOTES); ?></a></p></td>
 													</tr>
 													<tr>
-														<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage.'@'.MARK_AS_ERROR, ENT_QUOTES))); ?>
-														<td><a href="<?php echo $href; ?>"><i class="fa fa-square yellow"></i> Idle/Unprocessed e-Filed No.'s</a></td>
-														<td><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_lodged_cases, ENT_QUOTES); ?></a></td>
+														<?php $href = ($count_efiling_data[0]->total_lodged_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(I_B_Defected_Stage.'@'.MARK_AS_ERROR, ENT_QUOTES))); ?>
+														<td><p><a href="<?php echo $href; ?>"><i class="fa fa-square yellow"></i> Idle/Unprocessed e-Filed No.'s</a></p></td>
+														<td><p><a href="<?php echo $href; ?>"><?php echo htmlentities($count_efiling_data[0]->total_lodged_cases, ENT_QUOTES); ?></a></p></td>
 													</tr>
 												</tbody>
 											</table>
-										</div>
-										 
+										</div>										 
 									</div>
 								</div>													
 							</div>
 						</div>
-					</div>
-					
-			 <?php }?>
-			 
-			 
-			 
-			<?php $users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
-            if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?> 
-			<div class="dashboard-section">
+					</div>					
+				<?php
+			}
+			$users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
+			if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?> 
+				<div class="dashboard-section">
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-4 col-lg-4">
 							<div class="dash-card">
@@ -357,62 +357,64 @@
 													<th>														 
 														<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><b>Count</b></div>
 													</th>
-												</tr>
-											 
+												</tr>											 
 												<?php												 
 												foreach ($stage_list as $row) {
-													if($row->meant_for =='R'){
+													if($row->meant_for =='R') {
 														$total_count=0;
-														if($row->stage_id ==New_Filing_Stage){
-															$total_count=$count_efiling_data[0]->total_new_efiling ?? '';
-														}elseif($row->stage_id ==DEFICIT_COURT_FEE){
+														if($row['stage_id']==New_Filing_Stage) {
+															$total_count=$count_efiling_data[0]->total_new_efiling;
+														} elseif($row['stage_id']==DEFICIT_COURT_FEE) {
 															$total_count=$count_efiling_data[0]->total_efiled_deficit;
-														}elseif($row->stage_id ==Initial_Defected_Stage){
+														} elseif($row['stage_id']==Initial_Defected_Stage) {
 															$total_count=$count_efiling_data[0]->total_not_accepted;
-														}elseif($row->stage_id ==Transfer_to_CIS_Stage){
+														} elseif($row['stage_id']==Transfer_to_CIS_Stage) {
 															$total_count=$count_efiling_data[0]->total_available_for_cis;
-														}elseif($row->stage_id ==Get_From_CIS_Stage){
+														} elseif($row['stage_id']==Get_From_CIS_Stage) {
 															$total_count=0;
-														}elseif($row->stage_id ==Initial_Defects_Cured_Stage || $row->stage_id ==DEFICIT_COURT_FEE_PAID){
-															$total_count=$count_efiling_data[0]->total_refiled_cases ??'';
-														}elseif($row->stage_id ==Transfer_to_IB_Stage){
-															$total_count=$count_efiling_data[0]->total_transfer_to_efiling_sec ?? '';
-														}elseif($row->stage_id ==I_B_Approval_Pending_Admin_Stage){
-															$total_count=$count_efiling_data[0]->total_pending_scrutiny ?? '';
-														}elseif($row->stage_id ==I_B_Defected_Stage){
+														} elseif($row['stage_id']==Initial_Defects_Cured_Stage || $row['stage_id']==DEFICIT_COURT_FEE_PAID) {
+															$total_count=$count_efiling_data[0]->total_refiled_cases;
+														} elseif($row['stage_id']==Transfer_to_IB_Stage) {
+															$total_count=$count_efiling_data[0]->total_transfer_to_efiling_sec;
+														} elseif($row['stage_id']==I_B_Approval_Pending_Admin_Stage) {
+															$total_count=$count_efiling_data[0]->total_pending_scrutiny;
+														} elseif($row['stage_id']==I_B_Defected_Stage) {
 															$total_count=$count_efiling_data[0]->total_lodged_cases;
-														}elseif($row->stage_id ==I_B_Rejected_Stage  || $row->stage_id ==E_REJECTED_STAGE){
+														} elseif($row['stage_id']==I_B_Rejected_Stage  || $row['stage_id']==E_REJECTED_STAGE) {
 															$total_count=$count_efiling_data[0]->total_rejected;
-														}elseif($row->stage_id ==I_B_Defects_Cured_Stage){
-															$total_count=$count_efiling_data[0]->total_defect_cured ?? '';
-														}elseif($row->stage_id ==LODGING_STAGE || $row->stage_id ==DELETE_AND_LODGING_STAGE || $row->stage_id ==MARK_AS_ERROR){
-															$total_count=$count_efiling_data[0]->total_lodged_cases ?? '';
-														}elseif($row->stage_id ==E_Filed_Stage || $row->stage_id ==E_FILING_TYPE_NEW_CASE || $row->stage_id ==CDE_ACCEPTED_STAGE || $row->stage_id ==E_FILING_TYPE_CDE){
+														} elseif($row['stage_id']==I_B_Defects_Cured_Stage) {
+															$total_count=$count_efiling_data[0]->total_defect_cured;
+														} elseif($row['stage_id']==LODGING_STAGE || $row['stage_id']==DELETE_AND_LODGING_STAGE || $row['stage_id']==MARK_AS_ERROR) {
+															$total_count=$count_efiling_data[0]->total_lodged_cases;
+														} elseif($row['stage_id']==E_Filed_Stage || $row['stage_id']==E_FILING_TYPE_NEW_CASE || $row['stage_id']==CDE_ACCEPTED_STAGE || $row['stage_id']==E_FILING_TYPE_CDE) {
 															$total_count=$count_efiling_data[0]->total_efiled_cases;
-														}elseif($row->stage_id ==Document_E_Filed || $row->stage_id ==E_FILING_TYPE_MISC_DOCS){
+														} elseif($row['stage_id']==Document_E_Filed || $row['stage_id']==E_FILING_TYPE_MISC_DOCS) {
 															$total_count=$count_efiling_data[0]->total_efiled_docs;
-														}elseif($row->stage_id ==DEFICIT_COURT_FEE_E_FILED || $row->stage_id ==E_FILING_TYPE_DEFICIT_COURT_FEE){
-															$total_count=$count_efiling_data[0]->total_efiled_deficit ?? '';
-														}elseif($row->stage_id ==IA_E_Filed || $row->stage_id ==E_FILING_TYPE_IA){
+														} elseif($row['stage_id']==DEFICIT_COURT_FEE_E_FILED || $row['stage_id']==E_FILING_TYPE_DEFICIT_COURT_FEE) {
+															$total_count=$count_efiling_data[0]->total_efiled_deficit;
+														} elseif($row['stage_id']==IA_E_Filed || $row['stage_id']==E_FILING_TYPE_IA) {
 															$total_count=$count_efiling_data[0]->total_efiled_ia;
-														}elseif($row->stage_id ==HOLD){
-															$total_count= $count_efiling_data[0]->total_hold_cases ?? '';
-														}elseif($row->stage_id ==DISPOSED){
+														} elseif($row['stage_id']==HOLD) {
+															$total_count=$count_efiling_data[0]->total_hold_cases;
+														} elseif($row['stage_id']==DISPOSED) {
 															$total_count=$count_efiling_data[0]->total_hold_disposed_cases;
 														}
-													?>
-													<tr>
-														<?php $users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
-														 if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?>
-														<?php $href = base_url("report/search/list/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
-														<?php }else{ ?>
-															<?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
-														<?php } ?>
-														<td> <a href="<?php echo $href; ?>" ><i class="fa fa-square purple"></i> <?=$row->admin_stage_name ?></a></td>
-														<td> <a href="<?php echo $href; ?>" ><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></td>
-													</tr>
-													 <?php } }?>
-												</tbody>
+														?>
+														<tr>
+															<?php $users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
+															if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?>
+															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("report/search/list/" . htmlentities(url_encryption($row['stage_id'], ENT_QUOTES))); ?>
+															<?php } else{ ?>
+																<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row['stage_id'], ENT_QUOTES))); ?>
+															<?php } ?>
+															<td><p><a href="<?php echo $href; ?>" ><i class="fa fa-square purple"></i><?=$row['admin_stage_name']?></a></p></td>
+															<td><p><a href="<?php echo $href; ?>" ><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></p></td>
+														</tr>
+														<?php
+													}
+												}
+												?>
+											</tbody>
 										</table>
 									</div>									 
 								</div>
@@ -436,68 +438,67 @@
 													</th>
 												</tr>
 												<?php
-                                        foreach ($stage_list as $row) {
-                                            if($row->meant_for =='A'){
-                                                $total_count=0;
-                                                if($row->stage_id ==New_Filing_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_new_efiling ?? '';
-                                                }elseif($row->stage_id ==DEFICIT_COURT_FEE){
-                                                    $total_count=$count_efiling_data[0]->total_efiled_deficit ?? '';
-                                                }elseif($row->stage_id ==Initial_Defected_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_not_accepted ?? '';
-                                                }elseif($row->stage_id ==Transfer_to_CIS_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_available_for_cis ?? '';
-                                                }elseif($row->stage_id ==Get_From_CIS_Stage){
-                                                    $total_count=0;
-                                                }elseif($row->stage_id ==Initial_Defects_Cured_Stage || $row->stage_id ==DEFICIT_COURT_FEE_PAID){
-                                                    $total_count=$count_efiling_data[0]->total_refiled_cases ?? '';
-                                                }elseif($row->stage_id ==Transfer_to_IB_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_transfer_to_efiling_sec ?? '';
-                                                }elseif($row->stage_id ==I_B_Approval_Pending_Admin_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_pending_scrutiny ?? '';
-                                                }elseif($row->stage_id ==I_B_Defected_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_lodged_cases ?? '';
-                                                }elseif($row->stage_id ==I_B_Rejected_Stage  || $row->stage_id ==E_REJECTED_STAGE){
-                                                    $total_count=$count_efiling_data[0]->total_rejected ?? '';
-                                                }elseif($row->stage_id ==I_B_Defects_Cured_Stage){
-                                                    $total_count=$count_efiling_data[0]->total_defect_cured ?? '';
-                                                }elseif($row->stage_id ==LODGING_STAGE || $row->stage_id ==DELETE_AND_LODGING_STAGE || $row->stage_id ==MARK_AS_ERROR){
-                                                    $total_count=$count_efiling_data[0]->total_lodged_cases ?? '';
-                                                }elseif($row->stage_id ==E_Filed_Stage || $row->stage_id ==E_FILING_TYPE_NEW_CASE || $row->stage_id ==CDE_ACCEPTED_STAGE || $row->stage_id ==E_FILING_TYPE_CDE){
-                                                    $total_count=$count_efiling_data[0]->total_efiled_cases ?? '';
-                                                }elseif($row->stage_id ==Document_E_Filed || $row->stage_id ==E_FILING_TYPE_MISC_DOCS){
-                                                    $total_count=$count_efiling_data[0]->total_efiled_docs ?? '';
-                                                }elseif($row->stage_id ==DEFICIT_COURT_FEE_E_FILED || $row->stage_id ==E_FILING_TYPE_DEFICIT_COURT_FEE){
-                                                    $total_count=$count_efiling_data[0]->total_efiled_deficit ?? '';
-                                                }elseif($row->stage_id ==IA_E_Filed || $row->stage_id ==E_FILING_TYPE_IA){
-                                                    $total_count=$count_efiling_data[0]->total_efiled_ia ?? '';
-                                                }elseif($row->stage_id ==HOLD){
-                                                    $total_count=$count_efiling_data[0]->total_hold_cases ?? '';
-                                                }elseif($row->stage_id ==DISPOSED){
-                                                    $total_count=$count_efiling_data[0]->total_hold_disposed_cases ?? '';
-                                                }
-                                                ?>
-                                                <tr>
-                                                    <?php $href = base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))); ?>
-                                                    <td><a href="<?php echo $href; ?>" target="_blank"><i class="fa fa-square purple"></i> <?=$row->admin_stage_name ?></a></td>
-                                                    <td><a href="<?php echo $href; ?>" target="_blank"><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></td>
-                                                </tr>
-                                            <?php } }?>
+												foreach ($stage_list as $row) {
+													if($row->meant_for =='A') {
+														$total_count=0;
+														if($row['stage_id']==New_Filing_Stage) {
+															$total_count=$count_efiling_data[0]->total_new_efiling;
+														} elseif($row['stage_id']==DEFICIT_COURT_FEE) {
+															$total_count=$count_efiling_data[0]->total_efiled_deficit;
+														} elseif($row['stage_id']==Initial_Defected_Stage) {
+															$total_count=$count_efiling_data[0]->total_not_accepted;
+														} elseif($row['stage_id']==Transfer_to_CIS_Stage) {
+															$total_count=$count_efiling_data[0]->total_available_for_cis;
+														} elseif($row['stage_id']==Get_From_CIS_Stage) {
+															$total_count=0;
+														} elseif($row['stage_id']==Initial_Defects_Cured_Stage || $row['stage_id']==DEFICIT_COURT_FEE_PAID) {
+															$total_count=$count_efiling_data[0]->total_refiled_cases;
+														} elseif($row['stage_id']==Transfer_to_IB_Stage) {
+															$total_count=$count_efiling_data[0]->total_transfer_to_efiling_sec;
+														} elseif($row['stage_id']==I_B_Approval_Pending_Admin_Stage) {
+															$total_count=$count_efiling_data[0]->total_pending_scrutiny;
+														} elseif($row['stage_id']==I_B_Defected_Stage) {
+															$total_count=$count_efiling_data[0]->total_lodged_cases;
+														} elseif($row['stage_id']==I_B_Rejected_Stage  || $row['stage_id']==E_REJECTED_STAGE) {
+															$total_count=$count_efiling_data[0]->total_rejected;
+														} elseif($row['stage_id']==I_B_Defects_Cured_Stage) {
+															$total_count=$count_efiling_data[0]->total_defect_cured;
+														} elseif($row['stage_id']==LODGING_STAGE || $row['stage_id']==DELETE_AND_LODGING_STAGE || $row['stage_id']==MARK_AS_ERROR) {
+															$total_count=$count_efiling_data[0]->total_lodged_cases;
+														} elseif($row['stage_id']==E_Filed_Stage || $row['stage_id']==E_FILING_TYPE_NEW_CASE || $row['stage_id']==CDE_ACCEPTED_STAGE || $row['stage_id']==E_FILING_TYPE_CDE) {
+															$total_count=$count_efiling_data[0]->total_efiled_cases;
+														} elseif($row['stage_id']==Document_E_Filed || $row['stage_id']==E_FILING_TYPE_MISC_DOCS) {
+															$total_count=$count_efiling_data[0]->total_efiled_docs;
+														} elseif($row['stage_id']==DEFICIT_COURT_FEE_E_FILED || $row['stage_id']==E_FILING_TYPE_DEFICIT_COURT_FEE) {
+															$total_count=$count_efiling_data[0]->total_efiled_deficit;
+														} elseif($row['stage_id']==IA_E_Filed || $row['stage_id']==E_FILING_TYPE_IA) {
+															$total_count=$count_efiling_data[0]->total_efiled_ia;
+														} elseif($row['stage_id']==HOLD) {
+															$total_count=$count_efiling_data[0]->total_hold_cases;
+														} elseif($row['stage_id']==DISPOSED) {
+															$total_count=$count_efiling_data[0]->total_hold_disposed_cases;
+														}
+														?>
+														<tr>
+															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row['stage_id'], ENT_QUOTES))); ?>
+															<td><a href="<?php echo $href; ?>" target="_blank"><i class="fa fa-square purple"></i> <?=$row->admin_stage_name ?></a></td>
+															<td><a href="<?php echo $href; ?>" target="_blank"><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></td>
+														</tr>
+                                            			<?php
+													}
+												}
+												?>
 											</tbody>
 										</table>
-									</div>
-								 
+									</div>								 
 								</div>
 							</div>													
 						</div>						 
 					</div>
 				</div>
-			<?php }?>  
-			 
-			 
-			
-			</div>		 
-        </div>     
+			<?php } ?>			
+		</div>		 
+	</div>     
 </div>
 @endsection
 @push('script')
@@ -510,5 +511,4 @@
         window.location.href = "<?=base_url('adminDashboard/DefaultController/ActionToAllUserCount?AllUserCount=')?>"+AllUserCount;
     }
 </script>
-
 @endpush

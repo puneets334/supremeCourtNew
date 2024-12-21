@@ -1857,7 +1857,7 @@ class NewCaseModel extends Model {
                             'lregis_date' => $subordinate_court_data[0]['lregis_date'],
                             'lcc_applied_date' => $subordinate_court_data[0]['lcc_applied_date'],
                             'lcc_received_date' => $subordinate_court_data[0]['lcc_received_date'],
-                            ' case_no' => $subordinate_court_data[0]['case_no'],
+                            'case_no' => $subordinate_court_data[0]['case_no'],
                             'filing_no' => $subordinate_court_data[0]['filing_no'],
                             'lowerjocode' => $subordinate_court_data[0]['lowerjocode'],
                             'lower_taluka_code' => $subordinate_court_data[0]['lower_taluka_code'],

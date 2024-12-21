@@ -435,9 +435,6 @@ $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload', 'Register\AdvSignUp
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/upload_id_proof', 'Register\AdvSignUp::upload_id_proof');
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit', 'Register\AdvSignUp::final_submit');
 
-
-
-
 //code started --14-10-2024
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/getCISData', 'Admin\EfilingAction::getCISData');
 $routes->match(['GET', 'POST'], 'newcase/AutoDiaryGeneration/updateRefiledCase', 'NewCase\AutoDiaryGeneration::updateRefiledCase');
@@ -448,13 +445,10 @@ $routes->match(['GET', 'POST'], 'admin/EfilingAction/markAsErrorCase', 'Admin\Ef
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/updateDocumentNumber', 'Admin\EfilingAction::updateDocumentNumber');
 $routes->match(['GET', 'POST'], 'cron/Amicus_curiae', 'Cron\AmicusCuriae::index');
 
-
-
-
 $routes->match(['GET', 'POST'], 'casewithAI', 'AIAssisted\CaseWithAI::index');
-
-
-
-
-
-
+$routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/is_upload_pdf', 'AIAssisted\CaseWithAI::is_upload_pdf');
+$routes->match(['GET', 'POST'], 'AIAssisted/viewDocument/(:any)', 'AIAssisted\ViewDocument::index/$1');
+$routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/get_AIAssist_case_efling', 'AIAssisted\CaseWithAI::get_AIAssist_case_efling');
+$routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/json_decode/(:any)', 'AIAssisted\CaseWithAI::json_decode/$1');
+$routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/defect_list/(:any)', 'AIAssisted\CaseWithAI::defect_list/$1');
+$routes->match(['GET', 'POST'], 'AIAssisted/Cron', 'AIAssisted\Cron::index');
