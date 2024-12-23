@@ -34,7 +34,12 @@
                                                         Vacation List (Declined Matters)</button>
                                                 </li>
                                             </ul>
-
+                                            <?php
+                                            if(!is_vacation_advance_list_duration()) {
+                                                echo 'Advance Summer Vacation List not authorized access';
+                                                exit();
+                                            }
+                                            ?>
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                                     <div class="tab-form-inner">

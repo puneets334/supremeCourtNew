@@ -3033,8 +3033,8 @@ function isRefilingCompulsoryIADefect($reg_id, $current_stage_id)
         $max_allowable_defect_cured_date = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/checkAndGetMaxDateForCuringDefectWhileRefilingTheCase/?allow_defect_remove_max_date=' . $defect_removal_max_date);
         $today_date = date('Y-m-d');
         if (json_decode($max_allowable_defect_cured_date)->date_for_curing_defect_while_refiling >= $today_date) {
-            //echo "allow to refile the case- $max_allowable_defect_cured_date";exit();
-            return true;
+            $max_allowable_defect_cured_data=json_decode($max_allowable_defect_cured_date,true);
+            $max_allowable_defect_cured_date=(!empty($max_allowable_defect_cured_data) ? $max_allowable_defect_cured_data['date_for_curing_defect_while_refiling']:null);
         } else {
             //echo "beyond > 28 days  than .$max_allowable_defect_cured_date";exit();
             $result = $Common_model->isRefilingCompulsoryIADefect($reg_id, FALSE);
@@ -3217,30 +3217,25 @@ function send_sms_whatsapp_through_uni_notify($api_type = null, $mobile_nos = []
 
 function is_vacation_advance_list_duration()
 {
-    /*  $ci = &get_instance();
-    $ci->load->model('vacation/Vacation_advance_model');
-    $ci->load->library('session'); */
-
     if (!empty($loginid) && $loginid != null) {
         $loginid = $loginid;
-    } else {
-
+    } else{
         $loginid = getSessionData('login')['id'];
     }
-
     $Vacation_advance_model = new \App\Models\Vacation\VacationAdvanceModel();
     $is_vacation_advance_list_duration = $Vacation_advance_model->is_vacation_advance_list_duration();
     return $is_vacation_advance_list_duration;
 }
-function is_vacation_advance_list_duration_m()
-{
-    // $ci = &get_instance();
-    // $ci->load->model('vacation/Vacation_advance_model_m');
-    // $ci->load->library('session');
-    $Vacation_advance_model_m = new VacationAdvanceModel();
-    $is_vacation_advance_list_duration = $Vacation_advance_model_m->is_vacation_advance_list_duration();
-    return $is_vacation_advance_list_duration;
-}
+
+// function is_vacation_advance_list_duration_m()
+// {
+//     // $ci = &get_instance();
+//     // $ci->load->model('vacation/Vacation_advance_model_m');
+//     // $ci->load->library('session');
+//     $Vacation_advance_model_m = new VacationAdvanceModel();
+//     $is_vacation_advance_list_duration = $Vacation_advance_model_m->is_vacation_advance_list_duration();
+//     return $is_vacation_advance_list_duration;
+// }
 
 function getClientIP()
 {
