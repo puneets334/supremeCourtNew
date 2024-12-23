@@ -28,6 +28,11 @@ class Advance extends BaseController
         } else{
             is_user_status();
         }
+        is_vacation_advance_list_duration();
+        if(!is_vacation_advance_list_duration()) {
+            echo 'Advance Summer Vacation List not authorized access';
+            exit();
+        }
     }
 
     public function index()
