@@ -13,51 +13,95 @@ class VacationAdvanceModel extends Model
         // Call the Model constructor
         parent::__construct();
     }
+
     public function is_vacation_advance_list_duration()
     {
-        helper('date');
-        $output = true;
+        // $output = 'N';
+        $output = false;
         $current_year = date('Y');
-        $builder =  $this->db->table('icmis.vacation_advance_list_duration');
+        $builder = $this->db->table('icmis.vacation_advance_list_duration');
         $builder->SELECT("*");
         $builder->WHERE('vacation_list_year', $current_year);
         $builder->WHERE('is_active', 't');
         $query = $builder->get();
-        $result = $query->getRow();
+        $result= $query->getRowArray();
         if ($result) {
-            $current_date = date('Y-m-d');
-            $activated_from_date = $result->activated_from_date;
-            $activated_to_date = $result->activated_to_date;
-            $activated_from_time = $result->activated_from_time;
-            $activated_to_time = $result->activated_to_time;
-            $activated_from_date = !empty($activated_from_date) ? date('Y-m-d', strtotime($activated_from_date)) : '';
-            $activated_to_date = !empty($activated_to_date) ? date('Y-m-d', strtotime($activated_to_date)) : '';
-            if (($current_date >= $activated_from_date) && ($current_date <= $activated_to_date)) {
-                $response = "is between";
+            $current_date=date('Y-m-d');            
+            $activated_from_date=$result['activated_from_date'];
+            $activated_to_date=$result['activated_to_date'];    
+            $activated_from_time=$result['activated_from_time'];
+            $activated_to_time=$result['activated_to_time'];    
+            // echo $paymentDate; // echos today!
+            $activated_from_date =!empty($activated_from_date) ? date('Y-m-d', strtotime($activated_from_date)) : '';
+            $activated_to_date =!empty($activated_to_date) ? date('Y-m-d', strtotime($activated_to_date)) : '';    
+            if (($current_date >= $activated_from_date) && ($current_date <= $activated_to_date)){
+                $response="is between";
                 if (!empty($activated_from_time) && !empty($activated_to_time)) {
-                    $current_time = date('H:i a');
+                    $current_time=date('H:i a');
                     $sunrise = $activated_from_time;
                     $sunset = $activated_to_time;
                     $date1 = DateTime::createFromFormat('H:i a', $current_time);
                     $date2 = DateTime::createFromFormat('H:i a', $sunrise);
                     $date3 = DateTime::createFromFormat('H:i a', $sunset);
                     if ($date1 > $date2 && $date1 < $date3) {
-                        $output = true;
-                        //echo 'Time is between';exit();
-                    } else {
-                        //echo "Time NO GO!"; exit();
+                        $output=true;
+                        // echo 'Time is between'; exit();
+                    } else{
+                        // echo "Time NO GO!"; exit();
                     }
-                } else {
-                    $output = true;
-                }
-            }
-        }
-
+                } else{
+                    $output=true;
+                }    
+            }    
+        }    
         if ($output) {
             return $output;
-        } else {
+        } else{
             return $output;
         }
+        // helper('date');
+        // $output = true;
+        // $current_year = date('Y');
+        // $builder =  $this->db->table('icmis.vacation_advance_list_duration');
+        // $builder->SELECT("*");
+        // $builder->WHERE('vacation_list_year', $current_year);
+        // $builder->WHERE('is_active', 't');
+        // $query = $builder->get();
+        // $result = $query->getRow();
+        // if ($result) {
+        //     $current_date = date('Y-m-d');
+        //     $activated_from_date = $result->activated_from_date;
+        //     $activated_to_date = $result->activated_to_date;
+        //     $activated_from_time = $result->activated_from_time;
+        //     $activated_to_time = $result->activated_to_time;
+        //     $activated_from_date = !empty($activated_from_date) ? date('Y-m-d', strtotime($activated_from_date)) : '';
+        //     $activated_to_date = !empty($activated_to_date) ? date('Y-m-d', strtotime($activated_to_date)) : '';
+        //     if (($current_date >= $activated_from_date) && ($current_date <= $activated_to_date)) {
+        //         $response = "is between";
+        //         if (!empty($activated_from_time) && !empty($activated_to_time)) {
+        //             $current_time = date('H:i a');
+        //             $sunrise = $activated_from_time;
+        //             $sunset = $activated_to_time;
+        //             $date1 = DateTime::createFromFormat('H:i a', $current_time);
+        //             $date2 = DateTime::createFromFormat('H:i a', $sunrise);
+        //             $date3 = DateTime::createFromFormat('H:i a', $sunset);
+        //             if ($date1 > $date2 && $date1 < $date3) {
+        //                 $output = true;
+        //                 //echo 'Time is between';exit();
+        //             } else {
+        //                 //echo "Time NO GO!"; exit();
+        //             }
+        //         } else {
+        //             $output = true;
+        //         }
+        //     }
+        // }
+
+        // if ($output) {
+        //     return $output;
+        // } else {
+        //     return $output;
+        // }
     }
 
 
