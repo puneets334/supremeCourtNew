@@ -187,6 +187,12 @@ date_default_timezone_set('Asia/Kolkata');
                         <?php if(!empty(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY && !empty(getSessionData('login')['userid']) && (getSessionData('login')['userid'] == 'SCI4599' || getSessionData('login')['userid'] == 'SCI4578' || getSessionData('login')['userid'] == 'SCI4581')) { ?>
                             <li class="health "><a href="<?= base_url('adminReport/search') ?>" class="btn-link">Download Files Casewise</a></li>
                         <?php } ?>
+                        <?php  if (in_array(getSessionData('login')['userid'], ICMIS_IITM_EFILE_COMPARISON_USERS)) { ?>
+                            <li class="health "><a href="<?= base_url('adminReport/UploadedPdfJsonComparison'); ?>" class="btn-link">Metadata Comparison Report</a> </li>
+                        <?php } ?>
+                        <?php  if(!empty(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
+                            <li class="health "><a href="<?= base_url('adminReport/EfileStages'); ?>" class="btn-link">Manage E-file Stages</a> </li>
+                        <?php } ?>
                         <?php if ($segment->getSegment(1) == 'adminDashboard') { ?>
                         <?php } else if ($segment->getSegment(1) == 'profile') { ?>
                             <li><a href="<?= base_url('profile') ?>" style="background-color: #737373 !important;"><i class="fa fa-dashboard "></i> PROFILE </a></li>

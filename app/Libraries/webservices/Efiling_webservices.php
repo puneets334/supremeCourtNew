@@ -2228,9 +2228,26 @@ class Efiling_webservices {
         );
         $context  = stream_context_create($opts);
         $url      = ICMIS_SERVICE_URL;
-
         return $result = file_get_contents($url.'/ConsumedData/getDiaryDetailForTemplate', false, $context);
     }
-/*end retrieval data for json comparison 19-sep-2024 Manoj*/
+    /*end retrieval data for json comparison 19-sep-2024 Manoj*/
+
+    public function getObjectionsByDiaryNo($diaryno) {        
+        $postdata = http_build_query(
+            array(
+                'diary_no' => $diaryno
+            )
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context = stream_context_create($opts);
+        $url     = ICMIS_SERVICE_URL;
+        return $result = file_get_contents($url.'/ConsumedData/getObjectionsByDiaryNo', false, $context);
+    }
 
 }

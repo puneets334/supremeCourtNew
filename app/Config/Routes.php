@@ -460,3 +460,9 @@ $routes->match(['GET', 'POST'], 'generate_template/GenerateTemplate_Controller/i
 $routes->match(['GET', 'POST'], 'admin/PrepareTemplate_Controller/prepared_templates_download', 'Admin\PrepareTemplateController::prepared_templates_download');
 $routes->match(['GET', 'POST'], 'admin/PrepareTemplate_Controller', 'Admin\PrepareTemplateController::index');
 $routes->match(['GET', 'POST'], 'admin/PrepareTemplate_Controller', 'Admin\PrepareTemplateController::index');
+
+// Stage Changes Related Routing
+// $routes->match(['GET', 'POST'], 'adminReport/UploadedPdfJsonComparison', 'AdminReport\EfileStages::index');
+$routes->match(['GET', 'POST'], 'adminReport/EfileStages', 'AdminReport\EfileStages::index');
+$routes->match(['GET', 'POST'], 'adminReport/EfileStages/search', 'AdminReport\EfileStages::search');
+$routes->match(['GET', 'POST'], 'adminReport/EfileStages/updateStage', 'AdminReport\EfileStages::updateStage');

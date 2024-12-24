@@ -978,3 +978,4 @@ define('SCISMS_e_copying_crn_created','e-copying_crn_created');
 define('DOCUMENT_CASETYPE_URL', 'http://10.25.80.170:82/');
 define('AIASSISTED_USER_IN_LIST',[6282,1975,1378,1537,2563,1600,1619,2309,2465,2121]);
 define('CHANGE_EFILE_STAGE',['3','5','6','8','9','10','11']);
+define('ICMIS_IITM_EFILE_COMPARISON_USERS',['SCI4599','SC-ADMIN']);
