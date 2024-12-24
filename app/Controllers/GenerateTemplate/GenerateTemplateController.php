@@ -74,7 +74,7 @@ class GenerateTemplateController extends BaseController {
             if($error) {
                 $err_message = 'Please Select '.implode(', ' ,$error_messages).'.';
                 $this->session->setFlashdata('message', "<div class='alert alert-danger'>$err_message</div>");
-                redirect('generate_template/GenerateTemplate_Controller/index?case='.$data['case']);
+                return redirect()->to(base_url('generate_template/GenerateTemplate_Controller/index?case='.$data['case']));
             }            
             if($case_name=='P') {
                 if(isset($efileno) && !empty($efileno)) {
@@ -83,7 +83,7 @@ class GenerateTemplateController extends BaseController {
                         $this->create_template($results,$sc_template_id,'efile');
                     } else{
                         $this->session->setFlashdata('message', "<div class='alert alert-danger'>No records found.</div>");
-                        redirect('generate_template/GenerateTemplate_Controller/index?case='.$data['case']);
+                        return redirect()->to(base_url('generate_template/GenerateTemplate_Controller/index?case='.$data['case']));
                     }
                 } else{
                     $results = $this->efiling_webservices->getDiaryDetailForTemplate($diary_no.$diary_year);
@@ -91,7 +91,7 @@ class GenerateTemplateController extends BaseController {
                         $this->create_template($results,$sc_template_id,'icmis');
                     } else{
                         $this->session->setFlashdata('message', "<div class='alert alert-danger'>No records found.</div>");
-                        redirect('generate_template/GenerateTemplate_Controller/index?case='.$data['case']);
+                        return redirect()->to(base_url('generate_template/GenerateTemplate_Controller/index?case='.$data['case']));
                     }
                 }
             } else{
@@ -100,7 +100,7 @@ class GenerateTemplateController extends BaseController {
                     $this->create_template($results,$sc_template_id,'icmis');
                 } else{
                     $this->session->setFlashdata('message', "<div class='alert alert-danger'>No records found.</div>");
-                    redirect('generate_template/GenerateTemplate_Controller/index?case='.$data['case']);
+                    return redirect()->to(base_url('generate_template/GenerateTemplate_Controller/index?case='.$data['case']));
                 }
             }
         }      
