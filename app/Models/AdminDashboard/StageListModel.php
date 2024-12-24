@@ -29,7 +29,7 @@ class StageListModel extends Model
                   'ec.reg_case_type_name', 'ec.reg_no', 'ec.reg_year',
                   'ia.ia_fil_case_type_name', 'ia.ia_filno', 'ia.ia_filyear', 'ia.ia_reg_case_type_name', 'ia.ia_regno', 'ia.ia_regyear', 'ia.cino ia_cnr_num',
                   'ms.case_type_name', 'ms.cnr_num', 'ms.fil_no misc_fil_no', 'ms.fil_year misc_fil_year', 'ms.reg_no misc_reg_no', 'ms.reg_year misc_reg_year',
-                  'ms.cause_title', 'ms.efiling_case_reg_id' */, 'ec.pet_name', 'ec.res_name', 'ec.ref_m_efiling_nums_registration_id caveat_reg', 'ec.orgid', 'ec.resorgid'
+                  'ms.cause_title', 'ms.efiling_case_reg_id' */, 'ec.pet_name', 'ec.res_name', 'ec.ref_m_efiling_nums_registration_id caveat_reg', 'ec.orgid', 'ec.resorgid','concat(mdia.diary_no,mdia.diary_year) diaryid'
         ));
 
         $builder->JOIN('efil.tbl_efiling_num_status as cs', 'en.registration_id = cs.registration_id');

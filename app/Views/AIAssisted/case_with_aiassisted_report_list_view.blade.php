@@ -1,3 +1,9 @@
+@extends('layout.app')
+@section('content')
+<div class="container-fluid">
+    <div class="row">
+    <div class="dash-card">
+
 <div class="panel panel-default">
     <div class="panel-body">
         <h4 style="text-align: center;color: #31B0D5">AI Assisted Case filing Report </h4>
@@ -21,7 +27,9 @@
                 $sr = 1;
                 //$filing_num_label='E-Filing no :DRAFT-';
                 $filing_num_label='DRAFT-'; $defect='';
-                foreach ($report_list as $doc) {
+
+                // pr($data['report_list']);
+                foreach ($data['report_list'] as $doc) {
                     if ($doc['stage_id']==1 || empty($doc['stage_id'])){
                         $file_name = !empty($doc['file_name']) ? $doc['file_name'] : NULL;
                         $iitm_api_json = !empty($doc['iitm_api_json']) ? $doc['iitm_api_json'] : NULL;
@@ -90,3 +98,7 @@
         </div>
     </div>
 </div>
+</div>
+</div>
+</div>
+@endsection

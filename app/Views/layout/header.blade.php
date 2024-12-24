@@ -87,7 +87,13 @@
                 <div class="userInformation">
                     <!--userDetail-->
                     <div class="userDetail" id="usr-action-btn" tabindex="0" role="button">
-                        <div class="userName"> <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : ''; ?> <i class="fas fa-chevron-down"></i>
+
+                        <?php if(getSessionData('login')['aor_code'] == 10017){ ?>
+                            <div class="userName"> <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : ''; ?> <i class="fas fa-chevron-down"></i>
+                        <?php  } else { ?>
+                            <div class="userName"> <?= !empty(getSessionData('login')) ? strtoupper(getSessionData('login')['first_name']) : ''; ?> <i class="fas fa-chevron-down"></i>
+                        <?php } ?>
+                        
                             <span class="division"><?= '<strong>Last Login: </strong>' . (!empty($last_login) ?  htmlentities($last_login, ENT_QUOTES) : '');
                             // . "<br>" . "IP : " . (!empty($login_time) ? htmlentities($login_time->ip_address, ENT_QUOTES) : '')
                             ?></span>
