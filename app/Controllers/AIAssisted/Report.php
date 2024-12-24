@@ -7,8 +7,11 @@ use App\Models\AIAssisted\CommonCasewithAIModel;
 
 class Report extends BaseController {
     protected $Common_casewithAI_model;
+    protected $db;
     public function __construct() {
         parent::__construct();
+        $dbs = \Config\Database::connect();
+        $this->db = $dbs->connect();
         $this->Common_casewithAI_model = new CommonCasewithAIModel();
     }
     public function index()
@@ -17,8 +20,10 @@ class Report extends BaseController {
     }
 
     public function list($id=null){
-        $builder = $this->db->table('efil.tbl_uploaded_pdfs_jsonai j');
-        $this->db->SELECT("j.*,ct.casename,trai.api_url,concat(u.first_name,u.last_name) user_uploaded_by ");
+        $db = \Config\Database::connect();
+        $builder = $db->table('efil.tbl_uploaded_pdfs_jsonai j');
+        // $builder = $this->db->table('efil.tbl_uploaded_pdfs_jsonai j');
+        $builder->SELECT("j.*,ct.casename,trai.api_url,concat(u.first_name,u.last_name) user_uploaded_by ");
         
         $builder->JOIN('icmis.casetype ct', 'j.sc_case_type = ct.casecode', 'left');
         $builder->JOIN('efil.tbl_round_robin_api_iitm trai', 'j.tbl_round_robin_api_iitm_id = trai.id');
@@ -29,7 +34,7 @@ class Report extends BaseController {
         $builder->WHERE('j.api_stage_id', 1);
         $builder->WHERE('trai.api_type', 1);
         if (!empty($id)){ $builder->WHERE('u.id', $id); }
-        $builder->ORDER_BY('j.iitm_api_json_updated_on', 'DESC');
+        $builder->ORDERBY('j.iitm_api_json_updated_on', 'DESC');
         $query = $builder->get();
         $result=  $query->getResultArray();
         $data['report_list'] =$result;
