@@ -38,7 +38,12 @@ date_default_timezone_set('Asia/Kolkata');
                 <div class="profile-info">
                     <?php //echo '<pre>'; pr($_SESSION); ?>
                     <h6>
+                    <?php if(getSessionData('login')['aor_code'] == 10017){ ?>
                         <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?>
+                        <?php  } else { ?>
+                            <?= !empty(getSessionData('login')) ? strtoupper(getSessionData('login')['first_name']) : '' ?>
+                        <?php } ?>
+                       
                         <p></p>
                         <!-- <p style="color: white;">(<?//= !empty(getSessionData('login')) ? getSessionData('login')['aor_code'] : ''?>)</p> -->
                     </h6>
