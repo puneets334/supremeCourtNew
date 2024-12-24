@@ -452,3 +452,7 @@ $routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/get_AIAssist_case_efling'
 $routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/json_decode/(:any)', 'AIAssisted\CaseWithAI::json_decode/$1');
 $routes->match(['GET', 'POST'], 'AIAssisted/CaseWithAI/defect_list/(:any)', 'AIAssisted\CaseWithAI::defect_list/$1');
 $routes->match(['GET', 'POST'], 'AIAssisted/Cron', 'AIAssisted\Cron::index');
+
+// Generate and Download Templates Related Routing
+$routes->match(['GET', 'POST'], 'generate_template/GenerateTemplate_Controller/index', 'GenerateTemplate\GenerateTemplateController::index');
+$routes->match(['GET', 'POST'], 'admin/PrepareTemplate_Controller/prepared_templates_download', 'GenerateTemplate\GenerateTemplateController::index');

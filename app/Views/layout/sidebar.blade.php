@@ -116,6 +116,10 @@ date_default_timezone_set('Asia/Kolkata');
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
                             </ul>
                         </li>
+                        <!-- Start Generate and Download Template -->
+                        <li class="premium"><a href="<?php echo base_url('admin/PrepareTemplate_Controller/prepared_templates_download?case=P'); ?>" class="btn-link">Download Templates</a> </li>
+                        <li class="premium"><a href="<?php echo base_url('generate_template/GenerateTemplate_Controller/index?case=P'); ?>" class="btn-link">Generate Template</a> </li>
+                        <!-- End Generate and Download Template -->
                         <?php if ($segment->getSegment(1) == 'superAdmin') { ?>
                         <?php } else if ($segment->getSegment(1) == 'profile') { ?>
                             <li class="health "><a href="<?= base_url('profile') ?>">Profile</a></li>
