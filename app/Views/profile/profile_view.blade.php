@@ -79,7 +79,12 @@
                                                         </div>
                                                         <div class="col-8 col-sm-8 col-md-8 col-lg-8">
                                                             <div class="prof-outp">
-                                                                <?= $profile->first_name ?>
+                                                            <?php if(getSessionData('login')['aor_code'] == 10017){  
+                                                                echo $profile->first_name   ;
+                                                                  } else {  
+                                                               echo strtoupper($profile->first_name) ;
+
+                                                                } ?>
                                                             </div>
                                                         </div>
                                                     </div>
