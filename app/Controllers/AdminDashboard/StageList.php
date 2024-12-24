@@ -89,7 +89,44 @@ class StageList extends BaseController {
                 $data['tabs_heading'] = "New Filing";
                 $data['tab_head'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Submitted On', 'Action');
                 $data['data_key'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Submitted On', 'Action');
-                $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(New_Filing_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
+                $diaryIdsArr= $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(New_Filing_Stage), $_SESSION['login']['admin_for_type_id'], $_SESSION['login']['admin_for_id'], $data['limit'],$offset);
+                $diaryIdsArrFinal=array();
+                if (isset($diaryIdsArr) && !empty($diaryIdsArr)){
+                    $diaryIds="";
+                    $diaryIds = implode(",",array_diff(array_column($diaryIdsArr, 'diaryid'),['']));
+                    //echo (env('ICMIS_SERVICE_URL')."/ConsumedData/future_tentaive_date_cases?diaryIds[]=$diaryIds");exit();
+                    $tentaive_date_data= json_decode(file_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/future_tentaive_date_cases?diaryIds[]=$diaryIds"));
+                    if (isset($tentaive_date_data->data) && !empty($tentaive_date_data->data)) {
+                        foreach ($diaryIdsArr as $row) {
+                            if (!empty($row->icmis_diary_no) && $row->icmis_diary_year) {
+                                $diary_no_db = $row->icmis_diary_no.$row->icmis_diary_year;
+                                $is_tentaive_date_data=$this->get_tentaive_date_data($tentaive_date_data->data,$diary_no_db);
+                                if (!empty($is_tentaive_date_data)){
+                                    $tentaive_date=array('tentaive_date' => $is_tentaive_date_data);
+                                }else{
+                                    $tentaive_date=array('tentaive_date' => '');
+                                }
+
+                            }
+                            else{
+                                $tentaive_date=array('tentaive_date' => '');
+                            }
+                            // Cast the array to stdClass Object
+                            $tentaive_date = (object) $tentaive_date;
+                            // Convert stdClass objects to arrays
+                            $array1 = (array) $row;
+                            $array2 = (array) $tentaive_date;
+                            // Merge arrays
+                            $merged_array = array_merge($array1, $array2);
+                            // Convert merged array back to stdClass object
+                            $diaryIdsArrFinal[] = (object) $merged_array;
+                        }
+                    }else{
+                        $diaryIdsArrFinal= $diaryIdsArr;
+                    }
+                }
+                // $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(New_Filing_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
+                $data['result'] = $diaryIdsArrFinal;
                 $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(New_Filing_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // pr($totalRecords);
@@ -114,8 +151,6 @@ class StageList extends BaseController {
                 // pr($totalRecords);
                 $data['pages'] = ceil($totalRecords / $data['limit']);
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id'], $data['limit'],$offset);
-
-
             }
             if ($stages == Transfer_to_CIS_Stage) {               
                 $data['tabs_heading'] = "Get ICMIS Status";
