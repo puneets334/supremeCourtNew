@@ -111,8 +111,29 @@ if ($uris->getSegment(2) != 'view') {
                             <?php } ?>
                         </div>
                     </div>
-                    <?php
-                } if (isset($details) && !empty($details)) {
+                    <?php  }?>
+                <div class="col-md-6"></div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <?php if(isset($case_listing_details->all_listed) && !empty($case_listing_details->all_listed)) {?>
+
+                            <label  class="control-label col-md-4 text-right" for="case_status">Listed : </label>
+                            <div class="col-md-8">
+                                <?=sizeof($case_listing_details->all_listed);?> TIMES
+                            </div>
+                            <?php  }else{ ?>
+
+                            <label  class="control-label col-md-4 text-right" for="case_status">Listed : </label>
+                            <div class="col-md-8">
+                                <span  style="font-size:14px; font-weight: bold;">FRESH </span>
+                            </div>
+
+                            <?php  } ?>
+                        </div>
+                    </div>
+
+                <?php 
+                if (isset($details) && !empty($details)) {
                     ?>
                     <div class="col-12 col-md-4 col-lg-4">
                         <label class="control-label col-md-6 text-right">
