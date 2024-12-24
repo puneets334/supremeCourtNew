@@ -195,6 +195,8 @@
                                     <?php
                                     //-----------------Final Submited List------------------------------//
                                     if ($stages == New_Filing_Stage) { 
+                                        $tentaive_date=$re->tentaive_date=isset($re->tentaive_date) && !empty($re->tentaive_date) ? '<br/><span style="color:red;"> Listed for : '. date("d-m-Y", strtotime($re->tentaive_date)).'</span>': '';
+                                        $case_details=$case_details.$tentaive_date
                                         ?>
                                         <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></td>
                                         <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
