@@ -39,9 +39,8 @@ class GenerateTemplateModel extends Model {
     }
 
     function get_template($template_id) {
-        $builder = $this->db->table('efil.tbl_static_templates tst');
+        $builder = $this->db->table('efil.tbl_static_templates as tst');
         $builder->select("tst.id, tst.template_text, td.name");
-        $builder->from('efil.tbl_static_templates tst');
         $builder->join('efil.tbl_templates td','tst.template_id=td.id');
         $builder->where('tst.template_id', $template_id);
         $builder->where('tst.is_active', true);
