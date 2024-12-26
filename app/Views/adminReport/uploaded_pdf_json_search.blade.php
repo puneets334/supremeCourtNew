@@ -36,7 +36,6 @@
                             {{-- Page Title Start --}}
                             <div class="title-sec">
                                 <h5 class="unerline-title"> Metadata Comparison Report </h5>
-                                <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
                                 <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             {{-- Page Title End --}}
@@ -100,9 +99,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php 
+                                            <?php
                                             if(isset($case_details) && !empty($case_details)) {
                                                 foreach ($case_details as $case_detail) {
+                                                    // pr($case_detail); 
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $case_detail->efiling_no; ?></td>
@@ -111,11 +111,11 @@
                                                         <td><?php echo $case_detail->uploaded_on; ?></td>
                                                         <td>
                                                             <?php
-                                                            if(json_decode($case_detail->iitm_api_json) && json_decode($case_detail->efiling_json) && json_decode($case_detail->icmis_json) && !empty($case_detail->iitm_api_json) && !empty($case_detail->efiling_json) && !empty($case_detail->icmis_json)) { ?>
+                                                            if(isJSON($case_detail->iitm_api_json) && isJSON($case_detail->efiling_json) && isJSON($case_detail->icmis_json) && !empty($case_detail->iitm_api_json) && !empty($case_detail->efiling_json) && !empty($case_detail->icmis_json)) { ?>
                                                                 <a class="btn btn-success" href="<?php echo base_url('adminReport/UploadedPdfJsonComparison/compare?registration_id='.$case_detail->registration_id);?>&view_type=table" target="_blank">Compare as table view</a>
                                                             <?php } ?>
                                                             <?php
-                                                            if(json_decode($case_detail->iitm_api_json) && json_decode($case_detail->efiling_json) && json_decode($case_detail->icmis_json) && !empty($case_detail->iitm_api_json) && !empty($case_detail->efiling_json) && !empty($case_detail->icmis_json)) { ?>
+                                                            if(isJSON($case_detail->iitm_api_json) && isJSON($case_detail->efiling_json) && isJSON($case_detail->icmis_json) && !empty($case_detail->iitm_api_json) && !empty($case_detail->efiling_json) && !empty($case_detail->icmis_json)) { ?>
                                                                 <a class="btn btn-success" href="<?php echo base_url('adminReport/UploadedPdfJsonComparison/compare?registration_id='.$case_detail->registration_id);?>&view_type=json" target="_blank">Compare as json</a>
                                                             <?php } ?>
                                                         </td>

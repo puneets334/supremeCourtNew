@@ -17,7 +17,6 @@
                             {{-- Page Title Start --}}
                             <div class="title-sec">
                                 <h5 class="unerline-title"> Metadata Comparison Report </h5>
-                                <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-3" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
                                 <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             {{-- Page Title End --}}
@@ -27,28 +26,28 @@
                                     <table id="datatable-responsive" class="table table-striped table-border custom-table" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                            <th style="width:33%" scope="col">IITM JSON</th>
-                                            <th style="width:33%" scope="col">EFILING JSON</th>
-                                            <th style="width:33%" scope="col">ICMIS JSON</th>
+                                                <th scope="col">IITM JSON</th>
+                                                <th scope="col">EFILING JSON</th>
+                                                <th scope="col">ICMIS JSON</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="d-flex">
-                                                <td style="width:33%" class="col-4">
+                                            <tr>
+                                                <td class="col-4">
                                                     <?php
                                                     echo "<pre>";
                                                     echo json_encode(json_decode($json_detail->iitm_api_json, true), JSON_PRETTY_PRINT);
                                                     echo "</pre>";
                                                     ?>
                                                 </td>
-                                                <td style="width:33%" class="col-4">
+                                                <td class="col-4">
                                                     <?php                                    
                                                     echo "<pre>";
                                                     echo json_encode(json_decode($json_detail->efiling_json, true), JSON_PRETTY_PRINT);
                                                     echo "</pre>";
                                                     ?>
                                                 </td>
-                                                <td style="width:33%" class="col-4">
+                                                <td class="col-4">
                                                     <?php
                                                     echo "<pre>";
                                                     echo json_encode(json_decode($json_detail->icmis_json, true), JSON_PRETTY_PRINT);
