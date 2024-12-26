@@ -112,11 +112,11 @@
                                                         <td>
                                                             <?php
                                                             if(isJSON($case_detail->iitm_api_json) && isJSON($case_detail->efiling_json) && isJSON($case_detail->icmis_json) && !empty($case_detail->iitm_api_json) && !empty($case_detail->efiling_json) && !empty($case_detail->icmis_json)) { ?>
-                                                                <a class="btn btn-success" href="<?php echo base_url('adminReport/UploadedPdfJsonComparison/compare?registration_id='.$case_detail->registration_id);?>&view_type=table" target="_blank">Compare as table view</a>
+                                                                <a class="quick-btn" href="<?php echo base_url('adminReport/UploadedPdfJsonComparison/compare?registration_id='.$case_detail->registration_id);?>&view_type=table" target="_blank">Compare as table view</a>
                                                             <?php } ?>
                                                             <?php
                                                             if(isJSON($case_detail->iitm_api_json) && isJSON($case_detail->efiling_json) && isJSON($case_detail->icmis_json) && !empty($case_detail->iitm_api_json) && !empty($case_detail->efiling_json) && !empty($case_detail->icmis_json)) { ?>
-                                                                <a class="btn btn-success" href="<?php echo base_url('adminReport/UploadedPdfJsonComparison/compare?registration_id='.$case_detail->registration_id);?>&view_type=json" target="_blank">Compare as json</a>
+                                                                <a class="quick-btn gray-btn" href="<?php echo base_url('adminReport/UploadedPdfJsonComparison/compare?registration_id='.$case_detail->registration_id);?>&view_type=json" target="_blank">Compare as json</a>
                                                             <?php } ?>
                                                         </td>
                                                     </tr>
