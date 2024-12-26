@@ -1,6 +1,7 @@
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script type="text/javascript" src="<?= base_url() ?>/assets/js/case_status/common.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet"> 
+<script src="<?=base_url()?>assets/js/bootstrap.min.js"></script>
+
 <!-- Case Status modal-start-->
 <style>
     /* tr.hide-table-padding td {
