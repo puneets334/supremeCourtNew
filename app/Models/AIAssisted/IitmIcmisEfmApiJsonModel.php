@@ -1,18 +1,16 @@
 <?php
 
 namespace App\Models\AIAssisted;
+
 use CodeIgniter\Model;
+class IitmIcmisEfmApiJsonModel extends Model {
 
-class IitmIcmisEfmApiJsonModel extends Model
-{
-
-    function __construct()
-    {
+    function __construct() {
         // Call the Model constructor
         parent::__construct();
     }
-    public function get_uploaded_pdf_detail_list($fromDate,$toDate,$efileno='')
-    {
+
+    public function get_uploaded_pdf_detail_list($fromDate,$toDate,$efileno='') {
         $builder = $this->db->table('efil.tbl_uploaded_pdfs tup');
         $builder->SELECT("
             tup.registration_id,
@@ -24,30 +22,30 @@ class IitmIcmisEfmApiJsonModel extends Model
             MAX(tupj.icmis_json) AS icmis_json,
             MAX(tup.uploaded_on) AS uploaded_on"
         );
-        
         $builder->JOIN('efil.tbl_efiling_nums ten','tup.registration_id=ten.registration_id', 'left');
         $builder->JOIN('efil.tbl_efiling_num_status tens','tup.registration_id=tens.registration_id', 'left');
         $builder->JOIN('efil.tbl_iitm_icmis_efm_api_json tupj','tup.registration_id=tupj.registration_id', 'left');
-        if(isset($efileno) && !empty($efileno)){
+        if(isset($efileno) && !empty($efileno)) {
             $builder->WHERE('ten.efiling_no', $efileno);
-        }else{
+        } else{
             $builder->WHERE('DATE(tup.uploaded_on) >=', $fromDate);
             $builder->WHERE('DATE(tup.uploaded_on) <=', $toDate);
         }
-
         $builder->WHERE('tup.is_active', true);
         $builder->WHERE('tup.is_deleted', FALSE);
         $builder->where('tens.stage_id',1);
         $builder->where('ten.ref_m_efiled_type_id',1);
-        //$this->db->where_in('tupj.api_stage_id', ['2','3','4']);
+        //$builder->where_in('tupj.api_stage_id', ['2','3','4']);
         $builder->groupBy("tup.registration_id");
         $query = $builder->get();
-        return  $query->getResultObject();
-
+        if ($query) {        
+            return $query->getResultObject();
+        } else {        
+            return FALSE;
+        }
     }
 
-    public function get_uploaded_pdf_details($fromDate,$toDate,$efileno='',$service_for)
-    {
+    public function get_uploaded_pdf_details($fromDate,$toDate,$efileno='',$service_for) {
         $builder = $this->db->table('efil.tbl_uploaded_pdfs tup');
         $builder->SELECT("
             tup.*,
@@ -57,57 +55,47 @@ class IitmIcmisEfmApiJsonModel extends Model
             tupj.efiling_json AS efiling_json,
             tupj.icmis_json AS icmis_json"
         );
-        
         $builder->JOIN('efil.tbl_efiling_nums ten','tup.registration_id=ten.registration_id', 'left');
         $builder->JOIN('efil.tbl_efiling_num_status tens','tup.registration_id=tens.registration_id', 'left');
         $builder->JOIN('efil.tbl_iitm_icmis_efm_api_json tupj','tup.registration_id=tupj.registration_id', 'left');
-        if(isset($efileno) && !empty($efileno)){
+        if(isset($efileno) && !empty($efileno)) {
             $builder->WHERE('tupj.efiling_no', $efileno);
-        }else{
+        } else{
             $builder->WHERE('DATE(tup.uploaded_on) >=', $fromDate);
             $builder->WHERE('DATE(tup.uploaded_on) <=', $toDate);
         }
-
         $builder->WHERE('tup.is_active', true);
         $builder->WHERE('tup.is_deleted', FALSE);
         $builder->where('tens.stage_id',1);
         $builder->where('ten.ref_m_efiled_type_id',1);
         if($service_for=='iitm'){
             $builder->WHERE('tupj.iitm_api_json IS NULL');
-        }elseif($service_for=='efile'){
+        } elseif($service_for=='efile') {
             $builder->WHERE('tupj.efiling_json IS NULL');
-        }elseif($service_for=='icmis'){
+        } elseif($service_for=='icmis') {
             $builder->WHERE('tupj.icmis_json IS NULL');
         }
-
         $query = $builder->get();
         return  $query->getResultObject();
-
     }
 
-    public function get_uploaded_pdf_json_data($registration_id)
-    {
+    public function get_uploaded_pdf_json_data($registration_id) {
         $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json tupj');
-        $builder->SELECT("tupj.iitm_api_json,tupj.efiling_json,tupj.icmis_json");
-        
+        $builder->SELECT("tupj.iitm_api_json,tupj.efiling_json,tupj.icmis_json");        
         $builder->WHERE('tupj.registration_id', $registration_id);
         $query = $builder->get();
         return  $query->getRow();
     }
 
-    public function update_iitm_api_json($case_detail,$data,$operation_type){
-
-        if($operation_type=='update' )
-        {
+    public function update_iitm_api_json($case_detail,$data,$operation_type) {
+        if($operation_type=='update' ) {
             $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json');
             $builder->set('iitm_api_json', $data);
             $builder->set('is_active_iitm', true);
             $builder->set('iitm_api_json_updated_on',date('Y-m-d H:i:s'));
             $builder->where('registration_id', $case_detail->registration_id);
             $builder->update();
-
-        } else {
-
+        } else{
             $data = [
                 'file_name'=>$case_detail->file_name,
                 'file_path'=>$case_detail->file_path,
@@ -134,22 +122,18 @@ class IitmIcmisEfmApiJsonModel extends Model
         }
     }
 
-    public function update_efiiling_json($case_detail,$data){
+    public function update_efiiling_json($case_detail,$data) {
         $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json');
         $builder->where('registration_id',$case_detail->registration_id);
         $q = $builder->get();
-
-        if ( $q->getNumRows() > 0 )
-        {
+        if ( $q->getNumRows() > 0 ) {
             $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json');
             $builder->set('efiling_json', $data);
             $builder->set('is_active_efiling', true);
             $builder->set('efiling_json_updated_on',date('Y-m-d H:i:s'));
             $builder->where('registration_id', $case_detail->registration_id);
             $builder->update();
-
-        } else {
-
+        } else{
             $data = [
                 'file_name'=>$case_detail->file_name,
                 'file_path'=>$case_detail->file_path,
@@ -177,22 +161,18 @@ class IitmIcmisEfmApiJsonModel extends Model
         }
     }
 
-    public function update_icmis_api_json($case_detail,$data){
+    public function update_icmis_api_json($case_detail,$data) {
         $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json');
         $builder->where('registration_id',$case_detail->registration_id);
         $q = $builder->get();
-
-        if ( $q->getNumRows() > 0 )
-        {
+        if ( $q->getNumRows() > 0 ) {
             $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json');
             $builder->set('icmis_json', $data);
             $builder->set('is_active_icmis', true);
             $builder->set('icmis_json_updated_on',date('Y-m-d H:i:s'));
             $builder->where('registration_id', $case_detail->registration_id);
             $builder->update();
-
-        } else {
-
+        } else{
             $data = [
                 'file_name'=>$case_detail->file_name,
                 'file_path'=>$case_detail->file_path,
@@ -220,14 +200,14 @@ class IitmIcmisEfmApiJsonModel extends Model
         }
     }
 
-    public function get_uploaded_pdf_detail_data($registration_id){
+    public function get_uploaded_pdf_detail_data($registration_id) {
         $builder = $this->db->table('efil.tbl_iitm_icmis_efm_api_json');
         $builder->where('registration_id',$registration_id);
         $query = $builder->get();
         return $query->getRow();
     }
-    public function getEarlierCourtDetailByRegistrationId($registration_id)
-    {
+
+    public function getEarlierCourtDetailByRegistrationId($registration_id) {
         if (isset($registration_id) && !empty($registration_id)) {
             $builder = $this->db->table('efil.tbl_case_details tcd ');
             $builder->SELECT("tcd.estab_code,tcd.estab_id,tcd.court_type,tcd.state_id,tcd.district_id,
@@ -255,8 +235,7 @@ class IitmIcmisEfmApiJsonModel extends Model
             else case when tcd.court_type = '4' then 0 ::integer
             else case when tcd.court_type is null  then 0 ::integer
             end end end end end )as ref_agency_code_id   
-             ");
-            
+            ");            
             $builder->JOIN('efil.m_tbl_high_courts_bench hcb', 'tcd.estab_code=hcb.est_code', 'left');
             $builder->JOIN('efil.m_tbl_district_courts_establishments dce', 'tcd.state_id=dce.state_code AND tcd.district_id= dce.district_code AND dce.court_code=3', 'left');
             $builder->JOIN('icmis.ref_agency_code rac', 'tcd.state_id=rac.cmis_state_id AND tcd.estab_id=rac.id  ', 'left');
@@ -266,13 +245,12 @@ class IitmIcmisEfmApiJsonModel extends Model
             if ($query->getNumRows() >= 1) {
                 $new_case_details = $query->getResultArray();
                 return $new_case_details;
-            } else {
+            } else{
                 return FALSE;
             }
-        } else {
+        } else{
             return FALSE;
         }
     }
+
 }
-
-

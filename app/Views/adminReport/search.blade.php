@@ -1,6 +1,6 @@
 @extends('layout.app')
 @section('content')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+<link href="<?= base_url() ?>assets/css/bootstrap-multiselect.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <div class="container-fluid">

@@ -79,7 +79,11 @@ class EfileStages extends BaseController {
             ];
         }
         if(count($errors)) {
-            $this->output->set_content_type('application/json')->set_output(json_encode($errors))->_display();
+            // $this->output->set_content_type('application/json')->set_output(json_encode($errors))->_display();
+            $response = service('response'); 
+            $response->setContentType('application/json');
+            $response->setBody(json_encode($response)); 
+            $response->send();
             $errors = [];
             exit;
         }
@@ -123,7 +127,11 @@ class EfileStages extends BaseController {
                 ];
             }          
             if(count($errors)) {
-                $this->output->set_content_type('application/json')->set_output(json_encode($errors))->_display();
+                // $this->output->set_content_type('application/json')->set_output(json_encode($errors))->_display();
+                $response = service('response'); 
+                $response->setContentType('application/json');
+                $response->setBody(json_encode($response)); 
+                $response->send();                
                 exit;
             }
             die;
@@ -142,7 +150,11 @@ class EfileStages extends BaseController {
                 ];
                
             }
-            $this->output->set_content_type('application/json')->set_output(json_encode($response))->_display();
+            // $this->output->set_content_type('application/json')->set_output(json_encode($response))->_display();
+            $response = service('response'); 
+            $response->setContentType('application/json');
+            $response->setBody(json_encode($response)); 
+            $response->send();
             exit;
         } else{
             $errors = [
@@ -152,7 +164,11 @@ class EfileStages extends BaseController {
             ];
         }
         if(count($errors)) {
-            $this->output->set_content_type('application/json')->set_output(json_encode($errors))->_display();
+            // $this->output->set_content_type('application/json')->set_output(json_encode($errors))->_display();
+            $response = service('response'); 
+            $response->setContentType('application/json');
+            $response->setBody(json_encode($response)); 
+            $response->send();
             exit;
         }
     }
