@@ -4560,3 +4560,10 @@ function encrypt_doc_id($doc_id) {
 
     return $encrypted_doc_id;
 }
+
+
+if (!function_exists('isJSON')) {
+    function isJSON($string){
+        return (is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE)) ? true : false;
+    }
+}
