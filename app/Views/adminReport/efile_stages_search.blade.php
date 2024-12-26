@@ -98,7 +98,7 @@
                                                     No
                                                     @endif
                                                 </td>
-                                                <td>{{$case_detail->user_stage_name}} ({{$case_detail->stage_id}} )<div class="pull-right">{{$stage_status}}</div></td>
+                                                <td>{{$case_detail->user_stage_name}} ({{$case_detail->stage_id}} )<div class="pull-right"><?= $stage_status; ?></div></td>
                                                 <td>
                                                     @if(in_array($case_detail->stage_id,CHANGE_EFILE_STAGE) && $show_stage_change_button && $case_detail->is_active=='t')
                                                     @php 
