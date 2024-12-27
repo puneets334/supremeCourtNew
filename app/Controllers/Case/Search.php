@@ -85,7 +85,7 @@ class Search extends BaseController
     public function index($efiling_type = null)
     {
         $efiling_type = getSessionData('efiling_type');
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
         }
@@ -108,7 +108,7 @@ class Search extends BaseController
 
     public function search_case_details()
     {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/')); 
         }
@@ -167,6 +167,16 @@ class Search extends BaseController
                 $diary_no = $web_service_result->case_details[0]->diary_no;
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
+                    if ($_SESSION['login']['ref_m_usertype_id']==AMICUS_CURIAE_USER) {
+                        $amicus_curiae_request_params = ['type' => 'D','value' => $diary_no.$diary_year];
+                        //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocate?' . http_build_query($amicus_curiae_request_params);
+                        $amicus_curiae_advocate = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
+                        // echo 'amicus_curiae_advocate=<pre>';print_r($amicus_curiae_advocate);
+                        if (isset($amicus_curiae_advocate->data) && !empty($amicus_curiae_advocate->data[0]->is_ac !='Y')) {
+                            echo '3@@@ No Record found!.';
+                            exit(0);
+                        }
+                    }
                     $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
                     // $data['listing_details'] = $listing_data->listed[0];
                     // $data['listing_details'] = $listing_data->listed[0];
@@ -242,7 +252,7 @@ class Search extends BaseController
 
     function save_searched_case_result()
     {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/')); 
@@ -577,7 +587,7 @@ class Search extends BaseController
     /* code written for old efiling cases : start */
     public function search_old_efiling_case_details()
     {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('login');
             exit(0);

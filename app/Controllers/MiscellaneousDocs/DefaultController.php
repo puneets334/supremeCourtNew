@@ -64,7 +64,7 @@ class DefaultController extends BaseController {
         }        
         if (isset($_SESSION['efiling_details']) && !empty($_SESSION['efiling_details'])) {
             $stages_array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
-            $allowed_users = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN, USER_CLERK);            
+            $allowed_users = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN, USER_CLERK,AMICUS_CURIAE_USER);
             if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || $_SESSION['login']['ref_m_usertype_id'] == USER_EFILING_ADMIN || !in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
                 return redirect()->to(base_url('miscellaneous_docs/view'));
                 exit(0);

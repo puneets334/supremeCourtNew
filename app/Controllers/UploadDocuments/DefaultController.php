@@ -36,7 +36,7 @@ class DefaultController extends BaseController {
 
     function check_login() {
 
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,JAIL_SUPERINTENDENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,JAIL_SUPERINTENDENT,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             echo '1@@@Invalid attempt.';
             exit(0);

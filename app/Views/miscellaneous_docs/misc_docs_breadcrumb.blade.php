@@ -87,7 +87,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
                     $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
                     if($segment->getSegment(2) == 'view'){
-                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
                                 if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {    
                                     if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') || (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL && (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't'))) {
@@ -105,7 +105,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             }
                         }
                     }
-                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+                    if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                         $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
                         if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
                             ?>
@@ -170,7 +170,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
             <?php
             $StageArray = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);
             $disabled_status = 'pointer-events: none; cursor: default;';
-            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                 $cnr_url = base_url('case_details');
                 $appearing_url = base_url('appearing_for');
                 $onbehlaf_url = base_url('on_behalf_of');

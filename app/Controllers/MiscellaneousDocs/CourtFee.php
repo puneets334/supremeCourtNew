@@ -42,7 +42,7 @@ class CourtFee extends BaseController
             $index_pdf_details = $this->DocumentIndex_Select_model->is_index_created($registration_id);
            
             if (!empty($index_pdf_details)) {
-                $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+                $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
                 
                 if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
                     redirect('login');
@@ -106,7 +106,7 @@ class CourtFee extends BaseController
     public function add_court_fee_details()
     {
         // echo "<pre>"; print_r($_SESSION); die();
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             $_SESSION['MSG'] = 'Unauthorised Access !';
             return redirect()->to(base_url('/'));

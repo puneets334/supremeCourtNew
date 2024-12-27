@@ -56,13 +56,17 @@ class RegisterModel extends Model
         }
     }
 
-    public function check_already_reg_mobile($mobile)
+    public function check_already_reg_mobile($mobile,$withoutApprovedByAOR=null)
     {
-        $query = $this->db->table('efil.tbl_users')
-            ->select('moblie_number, first_name, last_name')
-            ->where('moblie_number', $mobile)
-            ->where('is_active', '1')
-            ->get();
+        $builder = $this->db->table('efil.tbl_users');
+        $builder->select('moblie_number, first_name, last_name');
+        $builder->where('moblie_number', $mobile);
+        if (!empty($withoutApprovedByAOR) && $withoutApprovedByAOR !=null && $withoutApprovedByAOR=='Y') {
+            $builder->WHERE('is_active','0');
+        } else{
+            $builder->WHERE('is_active','1');
+        }
+        $query = $builder->get();
 
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();
@@ -71,13 +75,17 @@ class RegisterModel extends Model
         }
     }
 
-    public function check_already_reg_email($email)
+    public function check_already_reg_email($email,$withoutApprovedByAOR=null)
     {
-        $query = $this->db->table('efil.tbl_users')
-            ->select('emailid, first_name, last_name')
-            ->where('UPPER(emailid)', $email)
-            ->where('is_active', '1')
-            ->get();
+        $builder = $this->db->table('efil.tbl_users');
+        $builder->select('emailid, first_name, last_name');
+        $builder->where('UPPER(emailid)', $email);
+        if (!empty($withoutApprovedByAOR) && $withoutApprovedByAOR !=null && $withoutApprovedByAOR=='Y'){
+            $builder->WHERE('is_active','0');
+        }else{
+            $builder->WHERE('is_active','1');
+        }
+        $query = $builder->get();
 
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();
@@ -156,7 +164,7 @@ class RegisterModel extends Model
     }
 
     /// Advocate start
-    function check_already_reg_mobile_arguing_counsel($mobile)
+    function check_already_reg_mobile_arguing_counsel($mobile,$withoutApprovedByAOR=null)
     {
         // $this->db->SELECT('advocate_name,mobile_number,emailid');
         // $this->db->FROM('dscr.tbl_arguing_counsels');
@@ -168,11 +176,16 @@ class RegisterModel extends Model
         // } else {
         //     return false;
         // }
-        $query = $this->db->table('dscr.tbl_arguing_counsels')
-            ->select('advocate_name,mobile_number,emailid')
-            ->where('mobile_number', $mobile)
-            ->where('is_deleted', false)
-            ->get();
+        $builder = $this->db->table('dscr.tbl_arguing_counsels');
+        $builder->select('advocate_name,mobile_number,emailid');
+        $builder->where('mobile_number', $mobile);
+        if (!empty($withoutApprovedByAOR) && $withoutApprovedByAOR !=null && $withoutApprovedByAOR=='Y'){
+            $builder->WHERE('is_deleted',true);
+            $builder->WHERE('is_user_registered',true);
+        } else{
+            $this->db->WHERE('is_deleted',false);
+        }
+        $query = $builder->get();
 
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();
@@ -181,7 +194,7 @@ class RegisterModel extends Model
         }
     }
 
-    function check_already_reg_email_arguing_counsel($email)
+    function check_already_reg_email_arguing_counsel($email,$withoutApprovedByAOR=null)
     {
         // $this->db->SELECT('advocate_name,mobile_number,emailid');
         // $this->db->FROM('dscr.tbl_arguing_counsels');
@@ -194,11 +207,16 @@ class RegisterModel extends Model
         // } else {
         //     return false;
         // }
-        $query = $this->db->table('dscr.tbl_arguing_counsels')
-            ->select('advocate_name,mobile_number,emailid')
-            ->where('emailid', $email)
-            ->where('is_deleted', false)
-            ->get();
+        $builder = $this->db->table('dscr.tbl_arguing_counsels');
+        $builder->select('advocate_name,mobile_number,emailid');
+        $builder->where('emailid', $email);
+        if (!empty($withoutApprovedByAOR) && $withoutApprovedByAOR !=null && $withoutApprovedByAOR=='Y'){
+            $builder->WHERE('is_deleted',true);
+            $builder->WHERE('is_user_registered',true);
+        } else{
+            $builder->WHERE('is_deleted',false);
+        }
+        $query = $builder->get();
 
         if ($query->getNumRows() >= 1) {
             return $query->getResultArray();

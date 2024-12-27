@@ -1,5 +1,5 @@
 <?php
-if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE_CIS) {
+if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE_CIS || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
     /* if ($this->uri->segment(2) != 'affirmation') {
       unset($_SESSION['MOB_OTP_VERIFY_UPLOADED_DOCS']);
       }
@@ -14,7 +14,7 @@ if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login
     include 'user_header.php';
 } elseif ($_SESSION['login']['ref_m_usertype_id'] == USER_PDE) {
     include 'pde_header.php';
-} elseif ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK || $_SESSION['login']['ref_m_usertype_id'] == SR_ADVOCATE) {
+} elseif ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK || $_SESSION['login']['ref_m_usertype_id'] == SR_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
     include 'user_header.php';
 } else {
     include 'admin_header.php';

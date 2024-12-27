@@ -513,6 +513,16 @@ class EfilingAction extends BaseController {
         }else{
             $userIcmisCode=$_SESSION['login']['icmis_usercode'];
         }
+        $amicus_curiae_request_params = ['type' => 'D','value' => $diary_no];
+        //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocate?' . http_build_query($amicus_curiae_request_params);
+        $amicus_curiae_advocate = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
+        $advocate_id=0;
+        if (isset($amicus_curiae_advocate->data) && !empty($amicus_curiae_advocate->data[0])){
+            $advocate_id=$amicus_curiae_advocate->data[0]->advocate_id;
+        }else{
+            $advocate_id=$efiling_data[0]->aor_code;
+        }
+        $advocate_id=empty($advocate_id) ? $efiling_data[0]->aor_code  : $advocate_id;
         $doc_details_data=array(
             'efiling_no'=>$efiling_data[0]['efiling_no'],
             'doc_id'=>$doc_id,
@@ -523,7 +533,7 @@ class EfilingAction extends BaseController {
             'usercode'=>$userIcmisCode,
             'ent_dt'=>date('Y-m-d H:i:s'),
             'display'=>'Y',
-            'advocate_id'=>$efiling_data[0]['aor_code'],
+            'advocate_id'=>$advocate_id,
             'no_of_copy'=>$efiling_data[0]['no_of_copies'],
             'filedby'=>$efiling_data[0]['first_name'].' '.$efiling_data[0]['last_name'],
             'remarks'=>$remarks,

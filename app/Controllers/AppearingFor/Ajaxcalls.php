@@ -14,7 +14,7 @@ class Ajaxcalls extends BaseController {
     }
 
     function get_parties_list() {        
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         if ($_SESSION['login'] != '' && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);
