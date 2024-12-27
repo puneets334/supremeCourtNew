@@ -552,12 +552,12 @@ class ResponsiveVariantRouteController extends BaseController
         $request = $builder->get()->getRow(); // Fetch request data
 
         /*Start Amicus */
-        if($this->session->userdata['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+        if(getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
             $amicus_curiae_request_params = [
-                'mobile' => $this->session->userdata['login']['mobile_number'],
+                'mobile' => getSessionData('login')['mobile_number'],
             ];
             //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params);exit();
-            $amicus_curiae_diary_no = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
+            $amicus_curiae_diary_no = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
             //echo '<pre>';print_r($amicus_curiae_diary_no);
             $diaryIdsArr = [];
             if (isset($amicus_curiae_diary_no) && !empty($amicus_curiae_diary_no->data)) {
@@ -580,19 +580,19 @@ class ResponsiveVariantRouteController extends BaseController
             if(!empty($diaryIdsArr)) {
                 $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true, 'conditions' => ['ifOnlyAor' => 'false']];
                 //echo env('API_CAUSELIST_URI').'?' . http_build_query($schedule_request_params); exit();
-                list($amicus_curiae_user_soon_cases) = (array)@json_decode(@file_get_contents(env('API_CAUSELIST_URI') . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                list($amicus_curiae_user_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
             }
 
             $or_request_params = [];
             $or_request_params['documentType'] = 'or';
             $or_request_params['diaryIds'] = array_column($amicus_curiae_user_soon_cases, 'diary_id');
-            $or_response = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
+            $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
             $office_reports = $or_response->data;
             //echo '<pre>';print_r($amicus_curiae_user_soon_cases);exit();
             $rop_judgment_request_params = [];
             $rop_judgment_request_params['documentType'] = 'rop-judgment';
             $rop_judgment_request_params['diaryIds'] = array_column($amicus_curiae_user_soon_cases, 'diary_id');
-            $rop_judgment_response = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
+            $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
             $rop_judgments = $rop_judgment_response->data;
 
             foreach ($office_reports as $office_report) {
@@ -1178,7 +1178,7 @@ class ResponsiveVariantRouteController extends BaseController
     public function showCase3PDFPaperBookViewer($diary_id = null)
     {
         $file_name = "Casefile_of_DNo_" . $diary_id . "_" . date('d-m-Y_H:i:s') . ".zip";
-        $requestedBy = @ucfirst(@trim(@strtolower($this->session->userdata['login']['first_name'] ?? ''))) . ' ' . @ucfirst(@trim(@strtolower($this->session->userdata['login']['last_name'] ?? '')));
+        $requestedBy = @ucfirst(@trim(@strtolower(getSessionData('login')['first_name'] ?? ''))) . ' ' . @ucfirst(@trim(@strtolower(getSessionData('login')['last_name'] ?? '')));
         $requestedBy = ucwords($requestedBy);
         $designation = "";
         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {

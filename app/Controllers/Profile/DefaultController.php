@@ -956,12 +956,12 @@ class DefaultController extends BaseController
                                 'processid' => getmypid(),
                                 'department_id' => $row->ref_department_id
                             );
-                            $sessiondata = array(
-                                'login' => $logindata
-                            );
+                            // $sessiondata = array(
+                            //     'login' => $logindata
+                            // );
                             unset($_SESSION['login']);
-                            $this->session->set_userdata($sessiondata);
-                            $this->session->sess_regenerate(TRUE);
+                            setSessionData('login', $logindata);
+                            // $this->session->sess_regenerate(TRUE);
                             return redirect()->to(base_url('login'));exit();
                             //redirect("profile/DefaultController");exit();
                         }
