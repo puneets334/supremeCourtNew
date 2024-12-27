@@ -90,10 +90,15 @@
 </div>
 @endsection
 @push('script')
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script> -->
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script> 
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/bootstrap-multiselect.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script>
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script>
