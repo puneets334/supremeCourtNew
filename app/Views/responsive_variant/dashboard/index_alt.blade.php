@@ -1735,9 +1735,9 @@ td {
     </div>
     @endsection
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
-    <link href="<?= base_url() ?>assets/css/main.min.css" rel="stylesheet"> 
-    <link href="<?= base_url() ?>assets/js/main.min.js" rel="stylesheet">
-    <link href="<?= base_url() ?>assets/js/locales-all.min.js" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js'></script>
  
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>

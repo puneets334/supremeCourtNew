@@ -461,47 +461,47 @@ class DefaultController extends BaseController
         }
     }
 
-    public function updateAddress()
-    {
-        $session = session();
-        if ($session->get('login')) {
-            $data['address1'] = escape_data($this->request->getPost("address1"));
-            $data['address2'] = escape_data($this->request->getPost("address2"));
-            $data['city'] = escape_data($this->request->getPost("city"));
-            $data['pincode'] = escape_data($this->request->getPost("pincode"));
-            if (!empty($this->request->getPost("ref_m_states_id"))) {
-                $data['ref_m_states_id'] = escape_data(url_decryption($this->request->getPost("ref_m_states_id")));
-            } else {
-                $district_id = explode("#$", url_decryption($_POST['njdg_m_dist_id']));
-                $ref_m_states_id = explode("#$", url_decryption($_POST['njdg_m_states_id']));
-                $data['njdg_dist_id'] = $district_id[0];
-                $data['njdg_dist_name'] = $district_id[1];
-                $data['njdg_st_id'] = $ref_m_states_id[0];
-                $data['njdg_st_name'] = $ref_m_states_id[1];
-            }
-            $this->form_validation->set_rules("address1", "Address1", "trim|required|max_length[101]|regex_match[/^[a-z0-9.:,-_ ]+$/]");
-            $this->form_validation->set_rules("address2", "Address2", "trim|max_length[101]|regex_match[/^[a-z0-9.:,-_ ]+$/]");
-            $this->form_validation->set_rules("city", "City", "trim|required|alpha_numeric_spaces|max_length[101]");
-            $this->form_validation->set_rules("pincode", "Pincode", "trim|required|numeric|min_length[6]|max_length[6]");
-            if ($this->form_validation->run() == TRUE) {
-                $this->Profile_model->updateAddress(getSessionData('login')['userid'], $data);
-                $this->session->setFlashdata('msg', '<div class="alert alert-success alert-dismissible text-center flashmessage">Address Updated successfully !</div>');
-                redirect('profile');
-            } else {
-                $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
-                $data['updatedata'] = 'address';
-                if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-                    $this->load->view('templates/header');
-                } else {
-                    $this->load->view('templates/admin_header');
-                }
-                $this->load->view('profile/profile_update_view', $data);
-                $this->load->view('templates/footer');
-            }
-        } else {
-            return redirect()->to(base_url('login'));
-        }
-    }
+    // public function updateAddress()
+    // {
+    //     $session = session();
+    //     if ($session->get('login')) {
+    //         $data['address1'] = escape_data($this->request->getPost("address1"));
+    //         $data['address2'] = escape_data($this->request->getPost("address2"));
+    //         $data['city'] = escape_data($this->request->getPost("city"));
+    //         $data['pincode'] = escape_data($this->request->getPost("pincode"));
+    //         if (!empty($this->request->getPost("ref_m_states_id"))) {
+    //             $data['ref_m_states_id'] = escape_data(url_decryption($this->request->getPost("ref_m_states_id")));
+    //         } else {
+    //             $district_id = explode("#$", url_decryption($_POST['njdg_m_dist_id']));
+    //             $ref_m_states_id = explode("#$", url_decryption($_POST['njdg_m_states_id']));
+    //             $data['njdg_dist_id'] = $district_id[0];
+    //             $data['njdg_dist_name'] = $district_id[1];
+    //             $data['njdg_st_id'] = $ref_m_states_id[0];
+    //             $data['njdg_st_name'] = $ref_m_states_id[1];
+    //         }
+    //         $this->form_validation->set_rules("address1", "Address1", "trim|required|max_length[101]|regex_match[/^[a-z0-9.:,-_ ]+$/]");
+    //         $this->form_validation->set_rules("address2", "Address2", "trim|max_length[101]|regex_match[/^[a-z0-9.:,-_ ]+$/]");
+    //         $this->form_validation->set_rules("city", "City", "trim|required|alpha_numeric_spaces|max_length[101]");
+    //         $this->form_validation->set_rules("pincode", "Pincode", "trim|required|numeric|min_length[6]|max_length[6]");
+    //         if ($this->form_validation->run() == TRUE) {
+    //             $this->Profile_model->updateAddress(getSessionData('login')['userid'], $data);
+    //             $this->session->setFlashdata('msg', '<div class="alert alert-success alert-dismissible text-center flashmessage">Address Updated successfully !</div>');
+    //             redirect('profile');
+    //         } else {
+    //             $data['profile'] = $this->Profile_model->getProfileDetail(getSessionData('login')['userid']);
+    //             $data['updatedata'] = 'address';
+    //             if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
+    //                 $this->load->view('templates/header');
+    //             } else {
+    //                 $this->load->view('templates/admin_header');
+    //             }
+    //             $this->load->view('profile/profile_update_view', $data);
+    //             $this->load->view('templates/footer');
+    //         }
+    //     } else {
+    //         return redirect()->to(base_url('login'));
+    //     }
+    // }
 
     public function emailSave()
     {

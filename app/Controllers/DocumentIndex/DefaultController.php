@@ -7,6 +7,7 @@ use App\Models\DocumentIndex\DocumentIndexSelectModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\ShcilPayment\PaymentModel;
 use App\Models\UploadDocuments\UploadDocsModel;
+use GuzzleHttp\Exception\GuzzleException;
 
 class DefaultController extends BaseController
 {
