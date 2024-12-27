@@ -183,7 +183,7 @@ class RegisterModel extends Model
             $builder->WHERE('is_deleted',true);
             $builder->WHERE('is_user_registered',true);
         } else{
-            $this->db->WHERE('is_deleted',false);
+            $builder->WHERE('is_deleted',false);
         }
         $query = $builder->get();
 
