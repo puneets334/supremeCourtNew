@@ -290,6 +290,25 @@
                                             </div>
                                         <?php echo form_close(); ?>                            
                                     </div>
+                                    <?php
+                                    if (isset($login_multi_account) && !empty($login_multi_account)){
+                                    $attribute = array('class' => 'form_horizontal', 'name' => 'form_horizontal', 'id' => 'login-form','accept-charset'=>'utf-8', 'autocomplete' => 'off' ,'onsubmit'=>'enableSubmit();');
+                                    echo form_open(base_url('profile/DefaultController/verify'), $attribute); ?>
+                                    <div class="uk-margin uk-grid-small uk-child-width-auto uk-grid uk-text-center" style="margin-left: 5%;">
+                                        <b>I'd want to sign in to the roll of : </b>
+                                        <?php
+                                        foreach ($login_multi_account as $row){
+                                        $checked = ($this->session->userdata['login']['ref_m_usertype_id'] == $row->ref_m_usertype_id) ? "checked" : '';
+                                        ?>
+                                        <label><input class="uk-radio" type="radio" name="adv_type_select" id="adv_type_select" value="<?php echo htmlentities(url_encryption($row->ref_m_usertype_id), ENT_QUOTES); ?>" <?=$checked;?>> <?=$row->user_type;?></label>
+                                        <?php  } ?>
+                                        <button type="submit" class="btn-primary" style="height:3.2rem;border-radius:9px;"><b>Switch account</b></button>
+                                    </div>
+
+                                    <input type="hidden" name="ctvrg">
+                                    <?= form_close() ?>
+                                    <?php  } ?>
+
                                 </div>                                
                             </div>
                             {{-- Main End --}}
@@ -302,6 +321,34 @@
 </div>
 @endsection
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
+<script>
+    function switchAccount(){
+        var adv_type_select= $("input[type='radio'][name='adv_type_select']:checked").val();
+        if (adv_type_select){
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>profile/DefaultController",
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE,adv_type_select:adv_type_select},
+                async: false,
+                success: function (data) {
+                    var targetUrl =resArr[1]; "<?php echo base_url('profile/DefaultController'); ?>";
+                    window.parent.location.href=targetUrl;
+                    //location.reload();
+                    $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function () {
+                    $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    }
+</script>
 <script>
     $(document).ready(function() {
         $("#hide").click(function() {

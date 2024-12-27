@@ -45,6 +45,22 @@ class LoginModel extends Model
             } else {
                 return false;
             }
+        }else if ($query->getNumRows() > 1) {
+            $res_array = $query->getFirstRow();
+
+            if (!$if_match_password || $res_array->password . $_SESSION['login_salt'] == $pwd) {
+                if ($if_loggable) { //for efiling_assistant
+                    if ($res_array[0]->ref_m_usertype_id==USER_CLERK){
+                        //is_clerk_aor($res_array[0]->id,$res_array[0]->ref_m_usertype_id);
+                    }
+                    $builder = $this->db->table('efil.tbl_users as users');
+                    $builder->where('id', $res_array->id);
+                    $builder->update(array('login_ip' => getClientIP()));
+                }
+                return $res_array;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

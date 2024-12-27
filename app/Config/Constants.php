@@ -267,6 +267,7 @@ define('SR_ADVOCATE', 19);
 define('ARGUING_COUNSEL', 21);
 define('USER_EFILING_ADMIN', 20);
 define('USER_ADMIN_READ_ONLY', 22);
+define('AMICUS_CURIAE_USER',23);
 define('ACCOUNT_STATUS_PENDING_APPROVAL', 1); // When account is to be approved by e-admin or CIS in case of advocate and party in person
 define('ACCOUNT_STATUS_ACTIVE', 2); // when account is activated
 define('ACCOUNT_STATUS_REJECTED', 3); // when account is rejected by e-admin / cis/ bar

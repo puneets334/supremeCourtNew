@@ -70,7 +70,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         <?php
                         $final_submit_continue_action = '';
                         $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                     $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
@@ -147,7 +147,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         <?php } ?>
                         <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left pt-1"></span>Back</a> -->
                         <?php
-                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             $allowed_users_array = array(Initial_Approaval_Pending_Stage, I_B_Defects_Cured_Stage, Initial_Defects_Cured_Stage);
                             if (in_array(getSessionData('efiling_details')['stage_id'], $allowed_users_array)) {
                                 ?>
@@ -231,7 +231,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
             <?php
             $StageArray = explode(',', getSessionData('efiling_details')['breadcrumb_status']);
             $disabled_status = 'pointer-events: none; cursor: default;';
-            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) {
+            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
 
                 $case_details_url = base_url('case_details');
                 $appearing_url = base_url('appearing_for');

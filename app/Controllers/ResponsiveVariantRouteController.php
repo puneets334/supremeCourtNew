@@ -45,7 +45,7 @@ class ResponsiveVariantRouteController extends BaseController
         }else{
             is_user_status();
         }
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('adminDashboard'));
             exit(0);
@@ -65,7 +65,7 @@ class ResponsiveVariantRouteController extends BaseController
         }else{
             is_user_status();
         }         
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
             exit(0);
@@ -96,6 +96,9 @@ class ResponsiveVariantRouteController extends BaseController
                     );
                     $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
                     list($sr_advocate_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                    if (empty($sr_advocate_soon_cases)){
+                        $sr_advocate_soon_cases=array();
+                    }
                     $or_request_params = [];
                     $or_request_params['documentType'] = 'or';
                     $or_request_params['diaryIds'] = array_column($sr_advocate_soon_cases, 'diary_id');
@@ -323,7 +326,10 @@ class ResponsiveVariantRouteController extends BaseController
             
             $recent_documents_advocate_others = json_decode($recent_documents_str_advocate_others);
             $adjournment_by_others_data = (isset($recent_documents_advocate_others)) ? $recent_documents_advocate_others->data : '';
-            $others_all_diaryId_data = array_column((array)$adjournment_by_others_data, 'diaryId');
+            $others_all_diaryId_data = array();
+            if ($adjournment_by_others_data != null && !empty($adjournment_by_others_data)) {
+                $others_all_diaryId_data = array_column((array)$adjournment_by_others_data, 'diaryId');
+            }
             $adjournment_by_others = array();
             if (count($others_all_diaryId_data) > 0 && $others_all_diaryId_data != null && !empty($others_all_diaryId_data)) {
                 $adjournment_by_others = $this->AdjournmentModel->getAdjournmentRequests(getSessionData('login')['id'], $others_all_diaryId_data, "", true);
@@ -543,8 +549,75 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->where('allowed_request', 'request_to_available');
         $builder->where('is_deleted', FALSE); 
         $builder->groupBy('is_deleted');
-        $request = $builder->get()->getRow(); // Fetch request data                
-        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','online','offline','request'));
+        $request = $builder->get()->getRow(); // Fetch request data
+
+        /*Start Amicus */
+        if($this->session->userdata['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+            $amicus_curiae_request_params = [
+                'mobile' => $this->session->userdata['login']['mobile_number'],
+            ];
+            //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params);exit();
+            $amicus_curiae_diary_no = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
+            //echo '<pre>';print_r($amicus_curiae_diary_no);
+            $diaryIdsArr = [];
+            if (isset($amicus_curiae_diary_no) && !empty($amicus_curiae_diary_no->data)) {
+                $diaryIdsArr = array_column($amicus_curiae_diary_no->data, 'diary_no');
+            }
+            //echo '<pre>';print_r($diaryIdsArr); exit();
+            $fgc_context = [
+                'http' => [
+                    'user_agent' => 'Mozilla',
+                ],
+                "ssl" => [
+                    "verify_peer" => false,
+                    "verify_peer_name" => false,
+                ],
+            ];
+
+            //echo '<pre>';print_r($amicus_curiae_diary_no);
+            //echo '<pre>';print_r($diaryIdsArr); exit();
+            $amicus_curiae_user_soon_cases = array();
+            if(!empty($diaryIdsArr)) {
+                $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true, 'conditions' => ['ifOnlyAor' => 'false']];
+                //echo env('API_CAUSELIST_URI').'?' . http_build_query($schedule_request_params); exit();
+                list($amicus_curiae_user_soon_cases) = (array)@json_decode(@file_get_contents(env('API_CAUSELIST_URI') . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+            }
+
+            $or_request_params = [];
+            $or_request_params['documentType'] = 'or';
+            $or_request_params['diaryIds'] = array_column($amicus_curiae_user_soon_cases, 'diary_id');
+            $or_response = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
+            $office_reports = $or_response->data;
+            //echo '<pre>';print_r($amicus_curiae_user_soon_cases);exit();
+            $rop_judgment_request_params = [];
+            $rop_judgment_request_params['documentType'] = 'rop-judgment';
+            $rop_judgment_request_params['diaryIds'] = array_column($amicus_curiae_user_soon_cases, 'diary_id');
+            $rop_judgment_response = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
+            $rop_judgments = $rop_judgment_response->data;
+
+            foreach ($office_reports as $office_report) {
+                foreach ($amicus_curiae_user_soon_cases as &$amicus_curiae_user_soon_case) {
+                    if ($amicus_curiae_user_soon_case->diary_id == $office_report->diaryId && $amicus_curiae_user_soon_case->meta->listing->listed_on == $office_report->dated) {
+                        $amicus_curiae_user_soon_case->office_reports = new stdClass();
+                        $amicus_curiae_user_soon_case->office_reports->current = new stdClass();
+                        $path = substr($office_report->diaryId, strlen($office_report->diaryId) - 4) . '/' . substr($office_report->diaryId, 0, -4) . '/';
+                        $amicus_curiae_user_soon_case->office_reports->current->uri = 'https://main.sci.gov.in/officereport/' . $path . $office_report->fileUri;
+                    }
+                }
+            }
+            foreach ($rop_judgments as $rop_judgment) {
+                foreach ($amicus_curiae_user_soon_cases as &$amicus_curiae_user_soon_case) {
+                    if ($amicus_curiae_user_soon_case->diary_id == $rop_judgment->diaryId) {
+                        $amicus_curiae_user_soon_case->rop_judgments = new stdClass();
+                        $amicus_curiae_user_soon_case->rop_judgments->current = new stdClass();
+                        $amicus_curiae_user_soon_case->rop_judgments->current->dated = $rop_judgment->dated;
+                        $amicus_curiae_user_soon_case->rop_judgments->current->uri = 'https://main.sci.gov.in/' . $rop_judgment->fileUri;
+                    }
+                }
+            }
+        }
+        /*end Amicus */
+        return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','online','offline','request','amicus_curiae_user_soon_cases'));
     }
 
     public function showCases()

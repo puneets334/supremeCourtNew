@@ -23,7 +23,7 @@ class Appearing_for extends BaseController {
     }
 
     public function save_appearing_details() {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         if (!empty($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);

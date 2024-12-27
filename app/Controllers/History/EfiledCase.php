@@ -35,7 +35,7 @@ class EfiledCase extends BaseController {
 
     public function view() {
         
-        if (getSessionData('login')['ref_m_usertype_id'] == USER_PDE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || getSessionData('login')['ref_m_usertype_id'] ==USER_EFILING_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK || getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
+        if (getSessionData('login')['ref_m_usertype_id'] == USER_PDE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || getSessionData('login')['ref_m_usertype_id'] ==USER_EFILING_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK || getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
             // pr(getSessionData('efiling_details'));
             // pr(getSessionData('efiling_details')['created_by']);
             if (isset(getSessionData('efiling_details')['registration_id'])) {
@@ -88,7 +88,7 @@ class EfiledCase extends BaseController {
 
     public function user_info($user_id, $user_type) {
 
-        if (getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY  || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN) {
+        if (getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_MASTER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY  || getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
             $user_id = url_decryption($user_id);
             $user_type = url_decryption($user_type);
 

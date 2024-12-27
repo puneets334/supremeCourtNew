@@ -37,7 +37,7 @@ class DefaultController extends BaseController
         }else{
             is_user_status();
         }
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL, USER_SUPER_ADMIN);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL, USER_SUPER_ADMIN,AMICUS_CURIAE_USER);
         if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
             exit(0);
@@ -140,7 +140,7 @@ class DefaultController extends BaseController
             $aor_code = session()->get('login.aor_code');
             $data['user_type_id'] = $user_type_id;
             $data['aor_code'] = $aor_code;
-            $header_view = ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK || $_SESSION['login']['ref_m_usertype_id'] == SR_ADVOCATE) ? 'templates/header' : 'templates/admin_header';
+            $header_view = ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK || $_SESSION['login']['ref_m_usertype_id'] == SR_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) ? 'templates/header' : 'templates/admin_header';
             return render('profile.profile_view', $data);
         } else {
             return redirect()->to(base_url('login'));
@@ -322,7 +322,7 @@ class DefaultController extends BaseController
                         $Mail_message = 'Your OTP is ' . $rand . ' to validate new email-id with eFiling applications.';
                         $user_name = $_SESSION['login']['first_name'] . " " . $_SESSION['login']['last_name'];
                         send_mail_msg($emailid, $subject, $Mail_message, $user_name);
-                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
+                        if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             // $this->load->view('templates/header');
                         } else {
                             // $this->load->view('templates/admin_header');
@@ -916,5 +916,58 @@ class DefaultController extends BaseController
             return redirect()->to(base_url('profile/logged_profile'));
         }
     }
-
+    public function verify($usr_result=null,$adv_type_select=null) {
+        $usr_result = $this->Common_login_model->get_login_multi_account(getSessionData('login')['mobile_number']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (!empty($this->request->getPost("adv_type_select"))) {
+                $adv_type_select = !empty($this->request->getPost("adv_type_select")) ? escape_data(url_decryption($this->request->getPost("adv_type_select"))) : NULL;
+                if (!empty($adv_type_select)) {
+                    //$usr_result = $_SESSION['login_multi_account'];
+                    $impersonator_user = new stdClass();
+                    $impersonated_user = new stdClass();
+                    foreach ($usr_result as $row) {
+                        if ($adv_type_select == $row->ref_m_usertype_id) {
+                            $pg_request_function = $row->pg_request_function;
+                            $pg_response_function = $row->pg_response_function;
+                            $admin_estab_code = $row->estab_code;
+                            $logindata = array(
+                                'id' => $row->id,
+                                'userid' => $row->userid,
+                                'ref_m_usertype_id' => $row->ref_m_usertype_id,
+                                'first_name' => $row->first_name,
+                                'last_name' => $row->last_name,
+                                'mobile_number' => $row->moblie_number,
+                                'emailid' => $row->emailid,
+                                'adv_sci_bar_id' => $row->adv_sci_bar_id,
+                                'aor_code' => $row->aor_code,
+                                'bar_reg_no' => $row->bar_reg_no,
+                                'gender' => $row->gender,
+                                'pg_request_fun' => $pg_request_function,
+                                'pg_response_fun' => $pg_response_function,
+                                'photo_path' => $row->photo_path,
+                                //'state_name' => $state_name,
+                                'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
+                                'admin_for_type_id' => $row->admin_for_type_id,
+                                'admin_for_id' => $row->admin_for_id,
+                                'account_status' => $row->account_status,
+                                'refresh_token' => $row->refresh_token,
+                                //'bar_approval_status' => $row->bar_approval_status,
+                                'impersonator_user' => $impersonator_user,//for efiling_assistant
+                                'processid' => getmypid(),
+                                'department_id' => $row->ref_department_id
+                            );
+                            $sessiondata = array(
+                                'login' => $logindata
+                            );
+                            unset($_SESSION['login']);
+                            $this->session->set_userdata($sessiondata);
+                            $this->session->sess_regenerate(TRUE);
+                            return redirect()->to(base_url('login'));exit();
+                            //redirect("profile/DefaultController");exit();
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

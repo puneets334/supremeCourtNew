@@ -29,7 +29,7 @@ class DefaultController extends BaseController
 
     public function index()
     {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (!empty(getSessionData('login')) && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('/'));
         }
@@ -53,7 +53,7 @@ class DefaultController extends BaseController
 
     public function save_filing_for()
     {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);

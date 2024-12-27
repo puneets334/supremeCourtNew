@@ -17,7 +17,7 @@ class PaymentCheckStatus extends BaseController {
     }
 
     public function index() {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_ADMIN);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_ADMIN,AMICUS_CURIAE_USER);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('login'));
             exit(0);

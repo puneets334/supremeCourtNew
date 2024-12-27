@@ -2830,7 +2830,7 @@ function logged_in_check_user_type($user_type)
 {
     //$allowed_users_array = array(USER_ADMIN, USER_EFILING_ADMIN,USER_SUPER_ADMIN, USER_ADMIN_READ_ONLY); //For Admin Portal
     //$allowed_users_array = array(USER_ADVOCATE,USER_IN_PERSON,ARGUING_COUNSEL,SR_ADVOCATE); //For Advocate Portal
-    $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, ARGUING_COUNSEL, SR_ADVOCATE, USER_ADMIN, USER_EFILING_ADMIN, USER_SUPER_ADMIN, USER_DEPARTMENT, USER_CLERK, USER_ADMIN_READ_ONLY); //For Advocate Portal and Admin Portal
+    $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, ARGUING_COUNSEL, SR_ADVOCATE, USER_ADMIN, USER_EFILING_ADMIN, USER_SUPER_ADMIN, USER_DEPARTMENT, USER_CLERK, USER_ADMIN_READ_ONLY,AMICUS_CURIAE_USER); //For Advocate Portal and Admin Portal
     if (!in_array($user_type, $allowed_users_array)) {
         return true;
     }
