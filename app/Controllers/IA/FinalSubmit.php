@@ -35,6 +35,24 @@ class FinalSubmit extends BaseController {
         }
 
         $registration_id = $_SESSION['efiling_details']['registration_id'];
+        $marked_defect_tobe_shown_stages = array(I_B_Defected_Stage, I_B_Rejected_Stage);
+        if (in_array($_SESSION['efiling_details']['stage_id'], $marked_defect_tobe_shown_stages)) {
+            $result_icmis = $this->Common_model->get_ia_docs_cis_defects_remarks($registration_id, FALSE);
+            if (isset($result_icmis) && !empty($result_icmis)) {
+                foreach ($result_icmis as $re) {
+                    $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
+                    if ($aor_cured == 'f') {
+                        $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit...</div>');
+                        redirect('documentIndex');exit();
+                    }
+                }
+                //isRefilingCompulsoryIADefect($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);
+                if(!empty($_SESSION['efiling_details']['registration_id']))
+                {
+                    redirect('efilingAction/IAMiscDocsRefiledFinalSubmit'); exit(0);
+                }
+            }
+        }
         $next_stage = 0;
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway']) {
             $next_stage = Transfer_to_IB_Stage;

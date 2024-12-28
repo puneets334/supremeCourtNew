@@ -4567,3 +4567,160 @@ if (!function_exists('isJSON')) {
         return (is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE)) ? true : false;
     }
 }
+function remark_preview_ia_docs($reg_id, $current_stage_id)
+{
+    //echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
+    $ci = &get_instance();
+    $ci->load->model('common/Common_model');
+    $ci->load->library('session');
+    $result_initial = $ci->Common_model->get_ia_docs_intials_defects_remarks($reg_id, $current_stage_id);
+    $result_icmis = $ci->Common_model->get_ia_docs_cis_defects_remarks($reg_id, FALSE);
+    $defects['pdfdefects'] = $ci->Common_model->get_ia_docs_pdf_defects_remarks($reg_id);
+
+    if (isset($result_icmis) && !empty($result_icmis)) {
+
+        $total_aor_cured=sizeof($result_icmis); $acr=0;$checkedAll='';
+        foreach ($result_icmis as $row) { $is_aor_cured = (isset($row->aor_cured) && !empty($row->aor_cured)) ? $row->aor_cured : "f";
+            if ($is_aor_cured == "t") {  $acr++;  }
+        }
+        if ($total_aor_cured == $acr) { $checkedAll = "checked"; }
+
+        $msg = '<div class="alert table-responsive-sm">';
+        $msg .= '<table id="datatable-defects" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" >'
+            . '<thead class="success"><th>Mark Cured<br/><input type="checkbox" id="checkAll" '.$checkedAll.'></th><th>#</th><th>Defect Description</th><th>Defect Remark</th><th>Prepare Dt.</th><th>Remove Dt.</th><th>Index Title</th><th>Defective Page No.</th></thead>'
+            . '<tbody style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
+        $i = 1;
+
+        foreach ($result_icmis as $re) {
+            $prep_dt = (isset($re->obj_prepare_date) && !empty($re->obj_prepare_date)) ? date('d-M-Y H:i:s', strtotime($re->obj_prepare_date)) : null;
+            $remove_dt = (isset($re->obj_removed_date) && !empty($re->obj_removed_date)) ? date('d-M-Y H:i:s', strtotime($re->obj_removed_date)) : null;
+            $pspdfdocumentid = (isset($re->pspdfkit_document_id) && !empty($re->pspdfkit_document_id)) ? $re->pspdfkit_document_id : null;
+            $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
+            $checked = "";
+            $markdefectclass = "";
+            if ($aor_cured == "t") {
+                $checked = "checked";
+                $markdefectclass = "curemarked";
+            }
+
+            $link_url = base_url('documentIndex?pspdfkitdocumentid=' . $pspdfdocumentid . '&tobemodifiedpagesraw=');
+            $tobemodifiedpagesdisplay = (isset($re->to_be_modified_pspdfkit_document_pages_raw) && !empty($re->to_be_modified_pspdfkit_document_pages_raw)) ? $re->to_be_modified_pspdfkit_document_pages_raw : null;
+            $pdf_title = '';
+            $pdf_pages_total = '';
+
+            if ($pspdfdocumentid != null) {
+                $pdf_info = $ci->Common_model->getPdfInfo($pspdfdocumentid);
+                if (!empty($pdf_info)) {
+                    $pdf_title = $pdf_info->doc_title;
+                    $pdf_pages_total = $pdf_info->page_no;
+                }
+            }
+            $tobemodifiedpagesdisplaytext = '<span title="sequence no.s of (Total Pages)">' . $tobemodifiedpagesdisplay . ' of (' . $pdf_pages_total . '-pages)' . '</span>';
+            $tobemodifiedpagesdisplaytextdisplay = (!empty($tobemodifiedpagesdisplay)) ? $tobemodifiedpagesdisplaytext : "";
+
+            $msg .= '<tr id="row' . $re->id . '" class="' . $markdefectclass . '  setCuredDefectAllToggle">';
+            $msg .= '<td>' . '<input type="checkbox" ' . $checked . ' id="' . $re->id . '" onchange="setCuredDefect(this.id)"  name="setCuredDefectAll[]" class="setCuredDefectAll" value="'.$re->id.'">' . '</td>';
+            $msg .= '<td>' . $i++ . '</td>';
+            $msg .= '<td>' . escape_data($re->objdesc) . '</td>';
+            $msg .= '<td>' . escape_data($re->remarks) . '</td>';
+            $msg .= '<td>' . escape_data($prep_dt) . '</td>';
+            $msg .= '<td>' . escape_data($remove_dt) . '</td>';
+            $msg .= '<td>' . '<a href="' . $link_url . '">' . $pdf_title . '</span></a>' . '</td>';
+            $msg .= '<td>' . $tobemodifiedpagesdisplaytextdisplay . '</td>';
+            $msg .= '</tr>';
+        }
+        $msg .= '</tbody></table>';
+        $msg .= '</div>';
+
+        if (!empty($defects['pdfdefects'])) {
+            $connecter = '';
+            $msg .= '<div>';
+            $msg .= "<b>NOTE- You also have pdf defects mentioned in ";
+            foreach ($defects['pdfdefects'] as $key => $val) {
+                $msg .= $connecter . "1 file on pageno- " . implode(",", $val);
+                $connecter = " AND ";
+            }
+            $msg .= '</b>';
+            $msg .= '</div>';
+        }
+        $msg .= '<script type="text/javascript">';
+        $msg .= '$(document).ready(function () {';
+        $msg .= 'var oTable = $("#datatable-defects").dataTable();';
+        $msg .= '$("#checkAll").click(function() {';
+        $msg .= 'var isChecked = $(this).prop("checked");';
+        $msg .= 'oTable.$("input[type=\'checkbox\']").prop("checked", isChecked);';
+        $msg .= 'var setCuredDefectAllValues = [];';
+        $msg .= 'if (isChecked) { oTable.$("input.setCuredDefectAll:checked").each(function () { setCuredDefectAllValues.push($(this).val()); }); }';
+        $msg .= 'var CSRF_TOKEN_VALUE = $(\'[name="CSRF_TOKEN"]\').val();';
+        $msg .= '$.ajax({';
+        $msg .= 'type: \'GET\',';
+        $msg .= 'url: \'' . base_url("documentIndex/Ajaxcalls/markCuredDefectIAMiscDocs") . '\',';
+        $msg .= 'data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: setCuredDefectAllValues, val:true,type:\'All\'},';
+        $msg .= 'success: function () {';
+        $msg .= 'if(setCuredDefectAllValues.length===0){';
+        $msg .= '$(".setCuredDefectAllToggle").removeClass("curemarked");';
+        $msg .= '}else{';
+        $msg .= '$(".setCuredDefectAllToggle").addClass("curemarked");';
+        $msg .= '}';
+        $msg .= '}';
+        $msg .= '});';
+
+        $msg .= '});';
+        $msg .= '});';
+        $msg .= 'function setCuredDefect(id) {';
+        $msg .= 'var CSRF_TOKEN_VALUE = $(\'[name="CSRF_TOKEN"]\').val();';
+        $msg .= 'var value = $("#" + id).is(":checked"); ';
+        $msg .= '$.ajax({';
+        $msg .= 'type: \'GET\',';
+        $msg .= 'url: \'' . base_url("documentIndex/Ajaxcalls/markCuredDefectIAMiscDocs") . '\',';
+        $msg .= 'data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, objectionId: id, val:value,type:\'One\'},';
+        $msg .= 'success: function () {';
+        $msg .= '$("#row"+id).toggleClass("curemarked")';
+        $msg .= '';
+        $msg .= '},';
+        $msg .= 'error: function () {alert("failed");}';
+        $msg .= '});';
+        $msg .= '}';
+        $msg .= '</script>';
+        $msg .= '<style>';
+        $msg .= '.curemarked {';
+        $msg .= ' font-weight: bold; text-decoration: line-through;';
+        $msg .= '}';
+        $msg .= '</style>';
+
+        return $msg;
+
+    } elseif (isset($result_initial) && !empty($result_initial)) {
+
+        $msg .= '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
+        $msg .= '<p><strong>Defect Raised On : </strong>' . date('d-m-Y H:i:s', strtotime($result_initial->defect_date)) . '<p>';
+        $msg .= '<p><strong>Defects :</strong><p>';
+        $msg .= '<p>' . script_remove($result_initial->defect_remark) . '<p>';
+
+        if ($result->defect_cured_date != NULL) {
+            $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result_initial->defect_cured_date)), ENT_QUOTES) . '<p>';
+        }
+        $msg .= '</div>';
+
+        return $msg;
+    } else {
+        return false;
+    }
+}
+function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id)
+{
+    $response=array();
+    if (isset($ref_tbl_lower_court_details_id) && !empty($ref_tbl_lower_court_details_id) && isset($registration_id) && !empty($registration_id)){
+        $ci = &get_instance();
+        $ci->load->model('login/Login_model');
+        $ci->db->SELECT("*");
+        $ci->db->FROM('efil.tbl_certified_copy_details');
+        $ci->db->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
+        $ci->db->WHERE('registration_id', $registration_id);
+        $ci->db->WHERE('is_deleted',false);
+        $query = $ci->db->get();
+        $response= $query->result_array();
+    }
+    return $response;
+
+}

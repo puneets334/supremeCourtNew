@@ -171,13 +171,16 @@
                                             </div>
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                                                 <div class="save-btns text-center">
-                                                    <?php if (!empty($document_id)) { ?>
+                                                        <?php if(!empty($document_id)){?>
                                                         <input type="hidden" name="pdfs_list" value="<?php echo (!empty($index_details) ? url_encryption($index_details[0]['pdf_id']) : ''); ?>">
                                                         <button type="submit" class="quick-btn" id="save_docs" name="save_docs"> UPDATE</button>
-                                                    <?php } else { ?>
+                                                            <?php } else {?>
+                                                            <?php $stages_array_defected = array(I_B_Defected_Stage);
+                                                            if (($_SESSION['efiling_details']['ref_m_efiled_type_id'] ==E_FILING_TYPE_IA  || $_SESSION['efiling_details']['ref_m_efiled_type_id'] ==E_FILING_TYPE_MISC_DOCS) && (in_array($_SESSION['efiling_details']['stage_id'], $stages_array_defected))) {?>
+                                                            <?php  }else{ ?>
                                                         <button type="submit" class="quick-btn" id="save_docs" name="save_docs"> ADD</button>
-                                                    <?php } ?>
-                                                    <i class="fa fa-spinner fa-spin save_spinner" style="font-size:15px;display: none;"></i>
+                                                        <?php }?>
+                                                        <?php } ?>
                                                 </div>
                                             </div>
                                             <?php echo form_close(); ?>

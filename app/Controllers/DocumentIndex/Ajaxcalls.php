@@ -493,5 +493,49 @@ class Ajaxcalls extends BaseController {
         //     }
         // }
     }
+    public function markCuredDefectIAMiscDocs()
+    {
+        extract($_GET);
+        if (!empty($type) && $type !='All'){
+            if(!empty($val) && !empty($objectionId)){
+                $this->db->set('aor_cured', $val);
+                $this->db->WHERE('id', $objectionId);
+                $this->db->WHERE('is_deleted', false);
+                $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+            }
+        }else if (!empty($type) && $type=='All'){
+            if(!empty($_GET)){
+                if(!empty($objectionId)) {
+                    foreach ($objectionId as $key => $value) {
+                        $id = $value;
+                        if (!empty($objectionId)) {
+                            $this->db->SELECT('*');
+                            $this->db->FROM('efil.tbl_icmis_ai_docs_objections');
+                            $this->db->WHERE('id', $id);
+                            $this->db->WHERE('is_deleted', false);
+                            $this->db->WHERE('aor_cured', true);
+                            $query = $this->db->get();
+                            if ($query->num_rows() >= 1) {
 
+                            } else {
+                                $this->db->set('aor_cured', true);
+                                $this->db->WHERE('id', $id);
+                                $this->db->WHERE('is_deleted', false);
+                                $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+                            }
+                        }
+                    }
+                }else{
+                    $registration_id=$_SESSION['efiling_details']['registration_id'];
+                    if (!empty($registration_id)){
+                        $this->db->set('aor_cured', false);
+                        $this->db->WHERE('registration_id', $registration_id);
+                        $this->db->WHERE('is_deleted', false);
+                        $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+                    }
+                }
+            }
+        }
+
+    }
 }

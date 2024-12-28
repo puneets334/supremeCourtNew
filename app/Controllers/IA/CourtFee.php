@@ -51,7 +51,10 @@ class CourtFee extends BaseController {
                 if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
                     return redirect()->to(base_url('IA/view'));
                 }
-
+                $stages_array_defected = array(I_B_Defected_Stage);
+                if (in_array($_SESSION['efiling_details']['stage_id'], $stages_array_defected)) {
+                    return redirect()->to(base_url('IA/view'));
+                }
                 if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
                     $registration_id = $_SESSION['efiling_details']['registration_id'];
                     //todo change code when user change doctype which has more than 0 court fee

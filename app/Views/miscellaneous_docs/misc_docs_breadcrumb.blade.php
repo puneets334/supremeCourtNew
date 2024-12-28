@@ -84,8 +84,8 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         //     echo $details['details'][0]['c_status'] ?? $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
                         // }
                     }
-                    $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE);
-                    $_SESSION['efiling_details']['gras_payment_status'] = 'Y';
+                    $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Rejected_Stage, E_REJECTED_STAGE);
+                    $refiling_stages_array = array(I_B_Defected_Stage);
                     if($segment->getSegment(2) == 'view'){
                         if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
@@ -102,7 +102,20 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
                                     <?php
                                 }
+                            }elseif (in_array($_SESSION['efiling_details']['stage_id'], $refiling_stages_array)) {
+                            echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                            if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+
+                                if (($_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
+                                    ( $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
+                                        ($_SESSION['efiling_details']['is_payment_defecit'] == 't' || $_SESSION['efiling_details']['is_payment_defective'] == 't')
+                                    )) {
+
+                                    //echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>';
+                                    echo '<a href="' . base_url('efilingAction/IAMiscDocsRefiledFinalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>';
+                                }
                             }
+                        }
                         }
                     }
                     if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
@@ -161,9 +174,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
     </div>
 </div>
 
-<?php
-echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);
-?>
+<?php echo remark_preview_ia_docs(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
         <form action="">
@@ -192,6 +203,47 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
             }
             ?>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                <?php
+                if(in_array($_SESSION['efiling_details']['stage_id'], $refiling_stages_array)){ ?>
+                    <li class="nav-item" role="presentation">
+
+                        <?php
+                        if ($segment->getSegment(1) == 'uploadDocuments' || $segment->getSegment(1) == 'documentIndex') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                        } elseif (in_array(MISC_BREAD_UPLOAD_DOC, $StageArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                        } else {
+
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                        }
+                        ?>
+                        <a href="<?=isset($doc_index_url) && !empty($doc_index_url)  ? $doc_index_url : '' ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="
+                    <?php if (!in_array(MISC_BREAD_ON_BEHALF_OF, $StageArray)) {
+                            echo $disabled_status;
+                        } ?>"><span class="tab-num" style="<?php echo $ColorCode; ?>">4</span> Upload Document / Index</a>
+
+                    </li>
+
+                    <li class="nav-item" role="presentation">
+                        <?php
+                        if ($segment->getSegment(2) == 'view') {
+                            $ColorCode = 'background-color: #01ADEF';
+                            $status_color = 'first active';
+                        } elseif (in_array(MISC_BREAD_CASE_DETAILS, $StageArray) && in_array(MISC_BREAD_ON_BEHALF_OF, $StageArray) && in_array(MISC_BREAD_UPLOAD_DOC, $StageArray) && in_array(MISC_BREAD_SHARE_DOC, $StageArray)) {
+                            $ColorCode = 'background-color: #169F85;color:#ffffff;';
+                            $status_color = '';
+                        } else {
+                            $ColorCode = 'background-color: #C11900;color:#ffffff;';
+                            $status_color = '';
+                        }
+                        ?>
+                        <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">2</span> View </a>
+                    </li>
+                <?php }else{?>
                 <li class="nav-item" role="presentation">
                     <?php
                     if ($segment->getSegment(1) == 'case_details') {
@@ -309,6 +361,7 @@ echo remark_preview($_SESSION['efiling_details']['registration_id'], $_SESSION['
                     ?>
                     <a href="<?= base_url('miscellaneous_docs/view') ?>" class="nav-link <?php echo $status_color; ?>" id="home-tab" type="button" role="tab" aria-controls="home" aria-selected="true" style="z-index:1;"><span class="tab-num" style="<?php echo $ColorCode; ?>">7</span> View </a>
                 </li>
+                    <?php } ?>
             </ul>
             <!-- <div class="row m-3 ">
                 <div class="col-md-12 text-end"> -->
