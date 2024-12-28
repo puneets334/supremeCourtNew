@@ -2169,4 +2169,203 @@ class CommonModel extends Model
         }
         return $output;
     }
+    /*start new add Refiling IA MiscDocs 28Dec24*/
+    function check_efiling_sms_log($mobileNo,$sms_datetime)
+    {
+        $from_sms_datetime=$_SESSION['from_sms_datetime'];
+        $end_sms_datetime=$_SESSION['last_sms_datetime'];
+        $this->db->SELECT("*");
+        $this->db->FROM('efil.tbl_efiling_sms_log');
+        $this->db->WHERE('mobile_no', $mobileNo);
+        //$this->db->WHERE('sent_on', $start_sms_datetime);
+        $this->db->where('sent_on between \'' . $from_sms_datetime . '\' and \'' . $end_sms_datetime . '\'');
+        $this->db->ORDER_BY('sent_on','DESC');
+        // $this->db->ORDER_BY(' id', 'DESC');
+        $queryCD = $this->db->get();
+        //echo $this->db->last_query();exit();
+        if ($queryCD->num_rows() >= 1) {
+            return $queryCD->result_array();
+        } else {
+            return FALSE;
+        }
+    }
+    function insert_efiling_sms_email_dtl($sms_details)
+    {
+        $this->db->INSERT('efil.otp_requests', $sms_details);
+        if ($this->db->insert_id()) {
+            return true;
+        } else{
+            return false;
+        }
+    }
+    function check_efiling_sms_email_log($to_email,$request_time_time_period,$ip_address)
+    {
+        $this->db->where('ip_address', $ip_address);
+        $this->db->where('email', $to_email);
+        $this->db->where('request_time >', $request_time_time_period);
+        $request_count = $this->db->count_all_results('efil.otp_requests');
+        return $request_count;
+    }
+    function check_efiling_sms_mobile_no_log($mobile_no,$request_time_time_period,$ip_address)
+    {
+        $this->db->where('ip_address', $ip_address);
+        $this->db->where('mobile_no', $mobile_no);
+        $this->db->where('request_time >', $request_time_time_period);
+        $request_count = $this->db->count_all_results('efil.otp_requests');
+        return $request_count;
+    }
+    public function update_efiling_nums($registration_id,$case_details_update_data)
+    {
+        $this->db->WHERE('registration_id', $registration_id);
+        $this->db->WHERE('is_active', TRUE);
+        $this->db->UPDATE('efil.tbl_efiling_nums', $case_details_update_data);
+    }
+
+    function get_ia_docs_intials_defects_remarks($registration_id, $current_stage_id)
+    {
+        if (empty($registration_id)) {
+            return FALSE;
+        }
+        $this->db->SELECT('*');
+        $this->db->FROM('efil.tbl_initial_defects');
+        $this->db->WHERE('is_approved', FALSE);
+        if (in_array($current_stage_id, array(Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE, LODGING_STAGE, DELETE_AND_LODGING_STAGE))) {
+            $this->db->WHERE('is_defect_cured', FALSE);
+        } elseif (in_array($current_stage_id, array(Initial_Approaval_Pending_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID,
+            I_B_Approval_Pending_Stage, I_B_Approval_Pending_Admin_Stage, I_B_Defects_Cured_Stage))) {
+            $this->db->WHERE('is_defect_cured', TRUE);
+        }
+        $this->db->WHERE('registration_id', $registration_id);
+        $this->db->ORDER_BY('initial_defects_id', 'DESC');
+
+        $query = $this->db->get(); //echo $this->db->last_query(); die;
+
+        if ($query->num_rows() >= 1) {
+            $arr = $query->result();
+            return $arr[0];
+        } else {
+            return false;
+        }
+    }
+
+    function get_ia_docs_cis_defects_remarks($registration_id, $show_always)
+    {
+        if (empty($registration_id)) {
+            return FALSE;
+        }
+
+        if (!$show_always) {
+            $this->db->SELECT('count(id) obj_count');
+            $this->db->FROM('efil.tbl_icmis_ai_docs_objections');
+            $this->db->WHERE('registration_id', $registration_id);
+            $this->db->WHERE('is_deleted', FALSE);
+            $this->db->WHERE('obj_removed_date', NULL);
+
+            $query = $this->db->get();
+            $obj_exists = $query->result();
+
+            if ($obj_exists[0]->obj_count == 0) {
+                return FALSE;
+            }
+        }
+
+        $this->db->SELECT('obj.obj_id,obj.id, icmis_obj.objdesc, obj.remarks, obj.obj_prepare_date, obj.obj_removed_date, obj.pspdfkit_document_id, obj.to_be_modified_pspdfkit_document_pages_raw, obj.to_be_modified_pspdfkit_document_pages_parsed, obj.aor_cured');
+        $this->db->FROM('efil.tbl_icmis_ai_docs_objections obj');
+        $this->db->JOIN('icmis.objection icmis_obj', 'obj.obj_id = icmis_obj.objcode','left');
+        $this->db->WHERE('registration_id', $registration_id);
+        $this->db->WHERE('obj.is_deleted', FALSE);
+        $this->db->ORDER_BY('obj.id', 'asc');
+
+        $query = $this->db->get();
+        if ($query->num_rows() >= 1) {
+            $arr = $query->result();
+            return $arr;
+        } else {
+            return false;
+        }
+    }
+
+    function get_ia_docs_pdf_defects_remarks($reg)
+    {
+        $pdfdefectsarr = array();
+        $result2 = $this->getIaDocsPspdfkitDocId($reg);
+        foreach ($result2 as $res) {
+            $pspdfkit_document_id = $res['pspdfkit_document_id'];
+            if ($pspdfkit_document_id != '') {
+                $pages = array();
+                $notedpages = array();
+                $response = $this->getIaDocsPdfAnnotations($pspdfkit_document_id);
+                $data = json_decode($response, true);
+                foreach ($data['data']['annotations'] as $obj) {
+                    $pageIndex = (int)$obj['content']['pageIndex'];
+                    $pageNo = $pageIndex + 1;
+                    if (!in_array($pageNo, $notedpages)) {
+                        array_push($pages, $pageNo);
+                        array_push($notedpages, $pageNo);
+                    }
+                }
+                if (!empty($pages)) {
+                    $pdfdefectsarr[$pspdfkit_document_id] = $pages;
+                }
+            }
+        }
+        return $pdfdefectsarr;
+    }
+
+    function get_certified_copy_details($registration_id)
+    {
+        $this->db->SELECT("tccd.*,tlcd.court_type,
+            (case when tlcd.court_type = '1' then 'High Court'   
+            else case when tlcd.court_type = '3' then 'District Court'
+            else case when tlcd.court_type = '5' then 'State Agency or Tribunal'
+            else case when tlcd.court_type = '4' then 'Supreme Court'
+            else case when tlcd.court_type is null  then 'Unknown Court'
+            end end end end end )as court_type_name  
+             ");
+        $this->db->FROM('efil.tbl_certified_copy_details tccd');
+        $this->db->JOIN('efil.tbl_lower_court_details tlcd', 'tccd.ref_tbl_lower_court_details_id=tlcd.id and tccd.registration_id=tlcd.registration_id');
+        $this->db->WHERE('tccd.registration_id', $registration_id);
+        $this->db->WHERE('tccd.is_deleted', FALSE);
+        $this->db->WHERE('tlcd.is_deleted', FALSE);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+    function getIaDocsPspdfkitDocId($reg)
+    {
+        $this->db->SELECT('ed.pspdfkit_document_id');
+        $this->db->FROM('efil.tbl_efiled_docs ed');
+        $this->db->WHERE('ed.registration_id', $reg);
+        $this->db->WHERE('ed.is_deleted', FALSE);
+
+        $query = $this->db->get();
+        if ($query->num_rows() >= 1) {
+            $result = $query->result_array();
+            return $result;
+        } else {
+            return false;
+        }
+    }
+    function getIaDocsPdfAnnotations($pspdfkit_document_id)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => env('PSPDFKIT_SERVER_URI') . "/api/documents/" . $pspdfkit_document_id . "/annotations",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "Accept: application/json",
+                "Authorization: Token token=secret"
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return $response;
+    }
+    /*end new add Refiling IA MiscDocs*/
 }

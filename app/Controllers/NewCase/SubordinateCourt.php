@@ -556,7 +556,17 @@ class SubordinateCourt extends BaseController {
         }
         else
             $fir_details = null;
-
+        $certified_copy_details = array(
+            'registration_id' => $registration_id,
+            'application_date' => (isset($_POST['application_date']) && !empty($_POST['application_date']))? $_POST['application_date']:NULL,
+            'application_no' => (isset($_POST['application_no']) && !empty($_POST['application_no']))? $_POST['application_no']:NULL,
+            'exemption_filed' => (isset($_POST['exemption_filed']) && !empty($_POST['exemption_filed']))? $_POST['exemption_filed']:NULL,
+            'tentative_date' => (isset($_POST['tentative_date']) && !empty($_POST['tentative_date']))? $_POST['tentative_date']:NULL,
+            'issuance_date' => (isset($_POST['issuance_date']) && !empty($_POST['issuance_date']))? $_POST['issuance_date']:NULL,
+            'created_by' => $_SESSION['login']['id'],
+            'created_by_ip' => getClientIP(),
+            'created_on' => date('Y-m-d H:i:s')
+        );
         if (isset($registration_id) && !empty($registration_id)) {
             $subordinate_court_details = $this->Get_details_model->get_subordinate_court_details($registration_id);
             if(!empty(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT){
@@ -570,7 +580,7 @@ class SubordinateCourt extends BaseController {
             }
             else
             {
-                $status = $this->New_case_model->add_subordinate_court_info($registration_id, $case_details, NEW_CASE_SUBORDINATE_COURT,$fir_details,$subordinate_court_details);
+                $status = $this->New_case_model->add_subordinate_court_info($registration_id, $case_details, NEW_CASE_SUBORDINATE_COURT,$fir_details,$subordinate_court_details,$certified_copy_details);
                 if ($status) {
                     reset_affirmation($registration_id);
                     echo '2@@@' . htmlentities('Details added successfully!', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . getSessionData('efiling_details')['stage_id'])));
@@ -742,7 +752,17 @@ class SubordinateCourt extends BaseController {
             if(isset($result) && !empty($result)){
                 $firData = true;
             }
-            $delete_status = $this->DeleteSubordinateCourt_model->delete_case_subordinate_court($registration_id, $delete_id,$firData);
+            $params =array();
+            $params['table_name'] = "efil.tbl_certified_copy_details";
+            $params['whereFieldName'] = "ref_tbl_lower_court_details_id";
+            $params['whereFieldValue'] = $delete_id;
+            $params['is_deleted'] =false;
+            $certified_copy_result= $this->common_model->getData($params);
+            $certified_copyData = false;
+            if(isset($certified_copy_result) && !empty($certified_copy_result)){
+                $certified_copyData = true;
+            }
+            $delete_status = $this->DeleteSubordinateCourt_model->delete_case_subordinate_court($registration_id, $delete_id,$firData,$certified_copyData);
             if ($delete_status) {
                 reset_affirmation($registration_id);
                     $this->session->setFlashdata('msg', 'Invalid Captcha!');

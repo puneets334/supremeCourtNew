@@ -44,6 +44,7 @@ $court_type_details = '';
                             <th>Order Challenged</th>
                             <th>Order Type</th>
                             <th>Caveat Details</th>
+                            <th style="width:15%;">Certified Copy Details</th>
                             <?php if($hidepencilbtn!='true') { ?>
                                 <th class="efiling_search">Action</th>
                             <?php } ?>
@@ -52,9 +53,22 @@ $court_type_details = '';
                     <tbody>
                         <?php
                         // pr($subordinate_court_details);
-                        $i = 1;
+                        $i = 1; $certified_copy_details='';
                         if(isset($subordinate_court_details) && !empty($subordinate_court_details)) {
                             foreach ($subordinate_court_details as $exp) {
+                        //start cert Certified Copy
+                        $application_date=$application_no=$exemption_filed=$tentative_date=$issuance_date=$certified_copy_details='';
+                        $certified_copy_details_data=is_certified_copy_details($exp['id'],$exp['registration_id']);
+                        if (isset($certified_copy_details_data) && !empty($certified_copy_details_data)) {
+                            $application_date = (isset($certified_copy_details_data[0]['application_date']) && !empty($certified_copy_details_data[0]['application_date'])) ? 'Application Date :' . $certified_copy_details_data[0]['application_date'] : '';
+                            $tentative_date = (isset($certified_copy_details_data[0]['tentative_date']) && !empty($certified_copy_details_data[0]['tentative_date'])) ? '<br/>Tentative Date :' . $certified_copy_details_data[0]['tentative_date'] : '';
+                            $issuance_date = (isset($certified_copy_details_data[0]['issuance_date']) && !empty($certified_copy_details_data[0]['issuance_date'])) ? '<br/>Issuance Date :' . $certified_copy_details_data[0]['issuance_date'] : '';
+
+                            $application_no = (isset($certified_copy_details_data[0]['application_no'])) ? '<br/>Application No. :' . $certified_copy_details_data[0]['application_no'] : '';
+                            $exemption_filed = (isset($certified_copy_details_data[0]['exemption_filed'])) ? '<br/>Exemption Filed :' . $certified_copy_details_data[0]['exemption_filed'] : '';
+                            $certified_copy_details = $application_date . $application_no . $exemption_filed . $tentative_date . $issuance_date;
+                        }
+                        //end cert Certified Copy
                                 $court_type_details = '';
                                 if($exp['court_type']==1) {
                                     $court_type='Court Type: High Court'.'<br>';
@@ -144,6 +158,7 @@ $court_type_details = '';
                                         }
                                         ?>
                                     </td>
+                                    <td><?php echo $certified_copy_details;?></td>
                                     <?php if($hidepencilbtn!='true') { ?>
                                         <td data-key="Action" class="efiling_search"><a href="<?php echo base_url('newcase/Subordinate_court/DeleteSubordinateCourt/' . url_encryption($exp['id'])); ?>">Delete</a></td>
                                     <?php } ?>

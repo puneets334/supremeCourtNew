@@ -368,7 +368,7 @@ class NewCaseModel extends Model {
         }
     }
 
-    function add_subordinate_court_info($registration_id, $data, $breadcrumb_step,$fir_data,$subordinate_court_details) {
+    function add_subordinate_court_info($registration_id, $data, $breadcrumb_step,$fir_data,$subordinate_court_details,$add_subordinate_court_info) {
         $this->db->transStart();
         if($subordinate_court_details && $subordinate_court_details[0]['is_hc_exempted']=='t') {
             $curr_dt_time = date('Y-m-d H:i:s');
@@ -393,6 +393,13 @@ class NewCaseModel extends Model {
             $fir_data['ref_tbl_lower_court_details_id']=$insert_id;
             $builder = $this->db->table('efil.tbl_fir_details');
             $builder->insert($fir_data);
+        }
+        if (isset($data) && isset($data['court_type']) && !empty($data['court_type']) && !empty($insert_id)){
+            if (isset($certified_copy_details) && !empty($certified_copy_details) && $certified_copy_details['application_no'] && $certified_copy_details['application_date'] && $certified_copy_details['exemption_filed']){
+                $certified_copy_details_final=array_merge($certified_copy_details,['ref_tbl_lower_court_details_id'=>$insert_id]);
+               $builder_certified_copy = $this->db->table('efil.tbl_certified_copy_details');
+                $builder_certified_copy->insert($certified_copy_details_final);
+            }
         }
         $this->db->transComplete();
         if ($this->db->transStatus() === FALSE) {
