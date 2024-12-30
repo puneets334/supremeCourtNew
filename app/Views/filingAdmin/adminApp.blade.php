@@ -278,23 +278,27 @@
 		<a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
 		<div class="add-new-options">
 			<ul>
-				<?php if(isset($_SESSION['login']['id']) && in_array($_SESSION['login']['id'], AIASSISTED_USER_IN_LIST)) { ?>
+				<?php if (getSessionData('login')['ref_m_usertype_id'] != AMICUS_CURIAE_USER) { ?>
+					<?php if(isset($_SESSION['login']['id']) && in_array($_SESSION['login']['id'], AIASSISTED_USER_IN_LIST)) { ?>
+						<li>
+							<a style="color: #fff; width: 100%; display: inline-block; padding: 9px 12px; font-size: 14px;" href="{{base_url('casewithAI')}}" class="add-link">AI Assisted Case Filing</a>
+						</li>
+					<?php } ?>
 					<li>
-						<a style="color: #fff; width: 100%; display: inline-block; padding: 9px 12px; font-size: 14px;" href="{{base_url('casewithAI')}}" class="add-link">AI Assisted Case Filing</a>
+						<a href="javascript:void(0)" class="add-lnk">Case</a>
 					</li>
 				<?php } ?>
-				<li>
-					<a href="javascript:void(0)" class="add-lnk">Case</a>
-				</li>
 				<li>
 					<a href="javascript:void(0)" class="add-lnk">IA</a>
 				</li>
 				<li>
 					<a href="javascript:void(0)" class="add-lnk">Misc. Docs</a>
 				</li>
-				<li>
-					<a href="javascript:void(0)" class="add-lnk">Caveat</a>
-				</li>
+				<?php if (getSessionData('login')['ref_m_usertype_id'] != AMICUS_CURIAE_USER) { ?>
+					<li>
+						<a href="javascript:void(0)" class="add-lnk">Caveat</a>
+					</li>
+				<?php } ?>
 			</ul>
 		</div>
 	</div>
