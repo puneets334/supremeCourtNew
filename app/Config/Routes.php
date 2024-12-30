@@ -468,3 +468,13 @@ $routes->match(['GET', 'POST'], 'adminReport/UploadedPdfJsonComparison/compare',
 $routes->match(['GET', 'POST'], 'adminReport/EfileStages', 'AdminReport\EfileStages::index');
 $routes->match(['GET', 'POST'], 'adminReport/EfileStages/search', 'AdminReport\EfileStages::search');
 $routes->match(['GET', 'POST'], 'adminReport/EfileStages/updateStage', 'AdminReport\EfileStages::updateStage');
+
+
+
+
+
+//new implemented code route
+$routes->match(['GET', 'POST'], 'efilingAction/IAMiscDocsRefiledFinalSubmit', 'efilingAction\IAMiscDocsRefiledFinalSubmit::index');
+
+
+

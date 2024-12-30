@@ -106,8 +106,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     }
                                 }
                             }
-                            }
-                        }
+                            } 
                         if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
                             if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {

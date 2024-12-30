@@ -5,6 +5,7 @@ use App\Models\AppearingFor\AppearingForModel;
 use \App\Models\Common\CommonModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\Caveat\ViewModel;
+use App\Models\Login\LoginModel;
 use App\Models\Supplements\SupplementModel;
 use App\Models\Vacation\VacationAdvanceModel;
 use GuzzleHttp\Client;
@@ -4570,12 +4571,15 @@ if (!function_exists('isJSON')) {
 function remark_preview_ia_docs($reg_id, $current_stage_id)
 {
     //echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
-    $ci = &get_instance();
-    $ci->load->model('common/Common_model');
-    $ci->load->library('session');
-    $result_initial = $ci->Common_model->get_ia_docs_intials_defects_remarks($reg_id, $current_stage_id);
-    $result_icmis = $ci->Common_model->get_ia_docs_cis_defects_remarks($reg_id, FALSE);
-    $defects['pdfdefects'] = $ci->Common_model->get_ia_docs_pdf_defects_remarks($reg_id);
+    // $ci = &get_instance();
+    // $ci->load->model('common/Common_model');
+
+    $Common_model = new CommonModel();
+
+    // $ci->load->library('session');
+    $result_initial = $Common_model->get_ia_docs_intials_defects_remarks($reg_id, $current_stage_id);
+    $result_icmis = $Common_model->get_ia_docs_cis_defects_remarks($reg_id, FALSE);
+    $defects['pdfdefects'] = $Common_model->get_ia_docs_pdf_defects_remarks($reg_id);
 
     if (isset($result_icmis) && !empty($result_icmis)) {
 
@@ -4609,7 +4613,7 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
             $pdf_pages_total = '';
 
             if ($pspdfdocumentid != null) {
-                $pdf_info = $ci->Common_model->getPdfInfo($pspdfdocumentid);
+                $pdf_info = $Common_model->getPdfInfo($pspdfdocumentid);
                 if (!empty($pdf_info)) {
                     $pdf_title = $pdf_info->doc_title;
                     $pdf_pages_total = $pdf_info->page_no;
@@ -4692,12 +4696,12 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
 
     } elseif (isset($result_initial) && !empty($result_initial)) {
 
-        $msg .= '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
+        $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date('d-m-Y H:i:s', strtotime($result_initial->defect_date)) . '<p>';
         $msg .= '<p><strong>Defects :</strong><p>';
         $msg .= '<p>' . script_remove($result_initial->defect_remark) . '<p>';
 
-        if ($result->defect_cured_date != NULL) {
+        if ($result_initial->defect_cured_date != NULL) {
             $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result_initial->defect_cured_date)), ENT_QUOTES) . '<p>';
         }
         $msg .= '</div>';
@@ -4711,15 +4715,28 @@ function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration
 {
     $response=array();
     if (isset($ref_tbl_lower_court_details_id) && !empty($ref_tbl_lower_court_details_id) && isset($registration_id) && !empty($registration_id)){
-        $ci = &get_instance();
-        $ci->load->model('login/Login_model');
-        $ci->db->SELECT("*");
-        $ci->db->FROM('efil.tbl_certified_copy_details');
-        $ci->db->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
-        $ci->db->WHERE('registration_id', $registration_id);
-        $ci->db->WHERE('is_deleted',false);
-        $query = $ci->db->get();
-        $response= $query->result_array();
+        // $ci = &get_instance();
+        // $ci->load->model('login/Login_model');
+        // //$loginModel = 
+        // $ci->db->SELECT("*");
+        // $ci->db->FROM('efil.tbl_certified_copy_details');
+        // $ci->db->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
+        // $ci->db->WHERE('registration_id', $registration_id);
+        // $ci->db->WHERE('is_deleted',false);
+        // $query = $ci->db->get();
+        // $response= $query->result_array();
+
+
+        $loginModel = new LoginModel();  
+        $db = Database::connect('efiling_near');
+
+        $builder = $db->table('efil.tbl_certified_copy_details');
+        $builder->select('*');
+        $builder->where('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
+        $builder->where('registration_id', $registration_id);
+        $builder->where('is_deleted', false);
+        $query = $builder->get();
+        $response = $query->getResultArray();
     }
     return $response;
 
