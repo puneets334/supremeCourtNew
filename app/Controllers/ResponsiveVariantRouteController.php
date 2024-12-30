@@ -587,13 +587,14 @@ class ResponsiveVariantRouteController extends BaseController
             $or_request_params['documentType'] = 'or';
             $or_request_params['diaryIds'] = array_column($amicus_curiae_user_soon_cases, 'diary_id');
             $or_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($or_request_params)));
-            $office_reports = $or_response->data;
+            // pr($or_response);
+            $office_reports = (isset($or_response->data)) ? $or_response->data : array();
             //echo '<pre>';print_r($amicus_curiae_user_soon_cases);exit();
             $rop_judgment_request_params = [];
             $rop_judgment_request_params['documentType'] = 'rop-judgment';
             $rop_judgment_request_params['diaryIds'] = array_column($amicus_curiae_user_soon_cases, 'diary_id');
             $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDocuments?' . http_build_query($rop_judgment_request_params)));
-            $rop_judgments = $rop_judgment_response->data;
+            $rop_judgments = (isset($rop_judgment_response->data)) ? $rop_judgment_response->data : array();
 
             foreach ($office_reports as $office_report) {
                 foreach ($amicus_curiae_user_soon_cases as &$amicus_curiae_user_soon_case) {
@@ -620,14 +621,174 @@ class ResponsiveVariantRouteController extends BaseController
         return $this->render('responsive_variant.dashboard.index_alt', @compact('open_defects', 'open_defects_grouped_by_days_left_to_due_date', 'draft_applications', 'initially_defective_applications', 'incomplete_applications', 'scheduled_cases', 'recent_documents_by_me', 'recent_documents_by_me_grouped_by_document_type', 'recent_documents_by_others', 'recent_documents_by_others_grouped_by_document_type', 'my_cases_recently_updated', 'final_submitted_applications', 'sr_advocate_soon_cases', 'sr_advocate_data', 'defect_notified', 'pending_scrutiny','online','offline','request','amicus_curiae_user_soon_cases'));
     }
 
-    public function showCases()
+    public function showCases() {
+        log_message('info', 'My cases access on ' . date('d-m-Y') . ' at ' . date("h:i:s A") .getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
+        return $this->render('responsive_variant.cases.index_1');
+    }
 
-    {       
+    public function showMyCases() {
+        $case_status              = $this->request->getGet('case_status', TRUE);
+        $advocate_appearing       = $this->request->getGet('advocate_appearing', TRUE);
+        $case_registration_status = $this->request->getGet('case_registration_status', TRUE);
+        $case_engaged_status      = $this->request->getGet('case_engaged_status', TRUE);
+        $clear_filter_status      = $this->request->getGet('clear_filter_status', TRUE);
+        $searchVal                = $this->request->getGet('search', TRUE);
+        $page                     = !empty($this->request->getGet('page')) ? $this->request->getGet('page'):1;
+        $limit                    = !empty($this->request->getGet('limit')) ? $this->request->getGet('limit'):10;
+        $offset                   = ($page - 1) * $limit;
+        $advocate_id              = $this->session->userdata['login']['adv_sci_bar_id'];
+        $sr_advocate_data         = [];
+        $diaryEngaged             = [];
+        $totalPages               = 0;
+        $totalRecords             = 0;
+        $cases                    = [];
+        $fgc_context=array(
+            'http' => array(
+                'user_agent' => 'Mozilla',
+            ),
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        );
+        if($this->session->userdata['login']['ref_m_usertype_id'] == SR_ADVOCATE){
+            $params                    = [];
+            $params['table_name']      ='efil.tbl_sr_advocate_engage';
+            $params['whereFieldName']  ='sr_advocate_id';
+            $params['whereFieldValue'] = (int)$advocate_id;
+            $params['is_active']       = true;
+            $srAdvocateData            = $this->CommonModel->getData($params);
+            if(isset($srAdvocateData) && !empty($srAdvocateData)) {
+                $diaryEngaged = array_column($srAdvocateData, 'diary_no');
+                $schedule_request_params = [
+                    'responseFormat'          => 'CASE_WISE_FLATTENED_WITH_ALL_INFO',
+                    'diaryNo'                 => $diaryEngaged,
+                    'forDate'                 => 'all',
+                    'search'                  => $searchVal,
+                    'limit'                   => $limit,
+                    'page'                    => $page,
+                    'offset'                  => $offset,
+                    'ifSkipDigitizedCasesStageComputation' => true,
+                ];
+                $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getMyCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                if(isset($sr_advocate_data) && !empty($sr_advocate_data)){
+                    $arr                   = [];
+                    $arr['sr_advocate_id'] = $advocate_id;
+                    $arr['diary_no']       = $diaryEngaged;
+                    $tmpArr                = [];
+                    $srAdvocateEngageData = $this->CommonModel->getSrAdvocateDataByDiaryNo($arr);
+                    if(isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)){
+                        foreach ($srAdvocateEngageData as $k=>$v){
+                            $tmpArr[$v->diary_no] = $v->createdAt.'@'.$v->assignedby;
+                        }
+                    }
+                    foreach ($sr_advocate_data['data'] as $key=>$val){
+                        if(array_key_exists($val->diary_no,$tmpArr)){
+                            $arr        = explode('@',$tmpArr[$val->diary_no]);
+                            $createdAt  = !empty($arr[0]) ? $arr[0] : '';
+                            $assignedby = !empty($arr[1]) ? $arr[1] : '';
+                            $sr_advocate_data['data'][$key]->createdAt  = date('d/m/Y H:i:s',strtotime($createdAt));
+                            $sr_advocate_data['data'][$key]->assignedby = $assignedby;
+                        }
+                    }
+                }
+                foreach($sr_advocate_data['data'] as $k=>$v){
+                    $tmp                       = [];
+                    $userType                  = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                    $tmp['userType']           = $userType;
+                    $tmp['diaryId']            = $v->diary_no;
+                    $tmp['status']             = $v->c_status;
+                    $tmp['registrationNumber'] = $v->reg_no_display;
+                    $tmp['petitionerName']     = $v->pet_name;
+                    $tmp['respondentName']     = $v->res_name;
+                    $tmp['filedOn']            = $v->createdAt;
+                    $tmp['assignedby']         = $v->assignedby;
+                    $cases[]                   = $tmp;
+                }
+                $totalPages   = $sr_advocate_data['total_pages'];
+                $totalRecords = $sr_advocate_data['total_records'];
+            }
+        } elseif($this->session->userdata['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+            $amicus_curiae_request_params = [
+                'mobile' => $this->session->userdata['login']['mobile_number'],
+            ];
+            $amicus_curiae_diary_no = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
+            if (isset($amicus_curiae_diary_no) && !empty($amicus_curiae_diary_no)) {
+                $diaryEngaged = array_column($amicus_curiae_diary_no->data, 'diary_no');
+            }
+            $schedule_request_params = [
+                'responseFormat'          => 'CASE_WISE_FLATTENED_WITH_ALL_INFO',
+                'diaryNo'                 => $diaryEngaged,
+                'forDate'                 => 'all',
+                'ifSkipDigitizedCasesStageComputation' => true,
+                'search'                  => $searchVal,
+                'limit'                   => $limit,
+                'page'                    => $page,
+                'offset'                  => $offset
+            ];
+            $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getMyCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+            foreach($sr_advocate_data['data'] as $k=>$v){
+                $tmp                       = [];
+                $userType                  = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                $tmp['userType']           = $userType;
+                $tmp['diaryId']            = $v->diary_no;
+                $tmp['status']             = $v->c_status;
+                $tmp['registrationNumber'] = $v->reg_no_display;
+                $tmp['petitionerName']     = $v->pet_name;
+                $tmp['respondentName']     = $v->res_name;
+                $tmp['filedOn']            = $v->createdAt;
+                $tmp['assignedby']         = $v->assignedby;
+                $cases[]                   = $tmp;
+            }
+            $totalPages   = $sr_advocate_data['total_pages'];
+            $totalRecords = $sr_advocate_data['total_records'];
+        } else{
+            $engagedDiaryCounselData = $this->CommonModel->getEngagedDiaryIds(['is_active'=>true]);
+            if(!empty($engagedDiaryCounselData)){
+                $diaryEngaged = array_column($engagedDiaryCounselData,'diary_no');
+            }
+            if (!empty($advocate_id) && $advocate_id !=null){
+                $request_params = [
+                    'advocateId'              => $advocate_id,
+                    'case_status'             => $case_status,
+                    'case_registration_status'=> $case_registration_status,
+                    'advocate_appearing'      => $advocate_appearing,
+                    'case_engaged_status'     => $case_engaged_status,
+                    'clear_filter_status'     => $clear_filter_status,
+                    'diaryEngaged'            => implode(',',$diaryEngaged),
+                    'search'                  => $searchVal,
+                    'limit'                   => $limit,
+                    'page'                    => $page,
+                    'offset'                  => $offset
+                ];
+                $advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/findAdvocateMyCases/?'.http_build_query($request_params));
+                $adv_cases_response = json_decode($advocate_cases_response_str);
+                $cases = $adv_cases_response->data->data;
+                if(isset($cases) && !empty($cases)){
+                    foreach ($cases as $k=>$v){
+                        $userType    = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                        $v->userType = $userType;
+                        $cases[$k] = $v;
+                    }
+                }
+                $cases        = $cases;
+                $totalPages   = $adv_cases_response->data->total_pages;
+                $totalRecords = $adv_cases_response->data->total_records;
+            }
+        }
+        echo json_encode([
+            'cases'       => $cases,
+            'diaryEngaged'=> $diaryEngaged,
+            'totalPages'  => $totalPages,
+            'totalRecords'=> $totalRecords,
+        ]);
+    }
+
+    public function showCasesOld() {       
         log_message('info', 'My cases access on ' . date('d-m-Y') . ' at ' . date("h:i:s A") . getClientIP() . '</b>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
         // $advocate_id = $this->session->userdata['login']['adv_sci_bar_id'];
         $advocate_id = !empty(getSessionData('login')) ? getSessionData('login')['adv_sci_bar_id'] : '';
-        if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {            
-
+        if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {
             // $this->load->model('common/CommonModel');
             $params = array();
             $params['table_name'] = 'efil.tbl_sr_advocate_engage';

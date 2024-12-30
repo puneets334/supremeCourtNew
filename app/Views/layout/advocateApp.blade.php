@@ -54,57 +54,40 @@
         </div>
         <footer class="footer-sec">Content Owned by Supreme Court of India</footer>
     </div>
-    @if(isset($_SESSION['login']) && in_array($_SESSION['login']['ref_m_usertype_id'],array(USER_ADVOCATE,USER_IN_PERSON)))
+    <?php // pr($_SESSION['login']['ref_m_usertype_id']); ?>
+    @if(isset($_SESSION['login']) && in_array($_SESSION['login']['ref_m_usertype_id'],array(USER_ADVOCATE, USER_IN_PERSON, AMICUS_CURIAE_USER)))
         
         <div class="add-new-area" tabindex="0" role="button">
             <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
             <div class="add-new-options">
                 <ul>
-                    <?php if(isset($_SESSION['login']['id']) && in_array($_SESSION['login']['id'], AIASSISTED_USER_IN_LIST)) { ?>
+                    <?php if (getSessionData('login')['ref_m_usertype_id'] != AMICUS_CURIAE_USER) { ?>
+                        <?php if(isset($_SESSION['login']['id']) && in_array($_SESSION['login']['id'], AIASSISTED_USER_IN_LIST)) { ?>
+                            <li>
+                                <a style="color: #fff; width: 100%; display: inline-block; padding: 9px 12px; font-size: 14px;" href="{{base_url('casewithAI')}}" class="add-link">AI Assisted Case Filing</a>
+                            </li>
+                        <?php } ?>
                         <li>
-                            <a style="color: #fff; width: 100%; display: inline-block; padding: 9px 12px; font-size: 14px;" href="{{base_url('casewithAI')}}" class="add-link">AI Assisted Case Filing</a>
+                            <a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
                         </li>
                     <?php } ?>
                     <li>
-                        <a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
-                    </li>
-                    <li>
                         <a href="{{base_url('case/interim_application/crud')}}" class="add-lnk">IA</a>
                     </li>
                     <li>
                         <a href="{{base_url('case/document/crud')}}" class="add-lnk">Misc. Docs</a>
                     </li>
-                    <li>
-                        <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
-                    </li>
-                    <li>
-                        <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
-                    </li>
+                    <?php if (getSessionData('login')['ref_m_usertype_id'] != AMICUS_CURIAE_USER) { ?>
+                        <li>
+                            <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
+                        </li>
+                        <li>
+                            <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
+                        </li>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
-        <!-- <div class="add-new-area">
-            <a href="javascript:void(0)" class="add-btn"><span class="mdi mdi-plus-circle-outline"></span> NEW</a>
-            <div class="add-new-options">
-                <ul>
-                    <li>
-                        <a href="{{base_url('case/crud')}}" class="add-lnk">Case</a>
-                    </li>
-                    <li>
-                        <a href="{{base_url('case/interim_application/crud')}}" class="add-lnk">IA</a>
-                    </li>
-                    <li>
-                        <a href="{{base_url('case/document/crud')}}" class="add-lnk">Misc. Docs</a>
-                    </li>
-                    <li>
-                        <a href="{{base_url('case/caveat/crud')}}" class="add-lnk">Caveat</a>
-                    </li>
-                    <li>
-                        <a href="{{base_url('case/refile_old_efiling_cases/crud')}}" class="add-lnk">Refile old e-filing cases</a>
-                    </li>
-                </ul>
-            </div>
-        </div> -->
     @endif
     <!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>

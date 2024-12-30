@@ -51,6 +51,8 @@
                                                         $user_type = 'Filing Admin';
                                                     } elseif ($profile->ref_m_usertype_id == USER_SUPER_ADMIN) {
                                                         $user_type = 'Super Admin';
+                                                    } elseif ($profile->ref_m_usertype_id == AMICUS_CURIAE_USER) {
+                                                        $user_type = 'Super Admin';
                                                     }
                                                     echo htmlentities($user_type, ENT_QUOTES);
                                                 }
