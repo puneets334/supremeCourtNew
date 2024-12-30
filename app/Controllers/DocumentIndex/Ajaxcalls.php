@@ -498,10 +498,16 @@ class Ajaxcalls extends BaseController {
         extract($_GET);
         if (!empty($type) && $type !='All'){
             if(!empty($val) && !empty($objectionId)){
-                $this->db->set('aor_cured', $val);
-                $this->db->WHERE('id', $objectionId);
-                $this->db->WHERE('is_deleted', false);
-                $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+                // $this->db->set('aor_cured', $val);
+                // $this->db->WHERE('id', $objectionId);
+                // $this->db->WHERE('is_deleted', false);
+                // $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections'); 
+
+                $builder = $this->db->table('efil.tbl_icmis_ai_docs_objections');
+                $builder->where('id', $objectionId);
+                $builder->where('is_deleted', false);
+                $builder->set('aor_cured', $val); 
+                $builder->update();
             }
         }else if (!empty($type) && $type=='All'){
             if(!empty($_GET)){
@@ -509,29 +515,50 @@ class Ajaxcalls extends BaseController {
                     foreach ($objectionId as $key => $value) {
                         $id = $value;
                         if (!empty($objectionId)) {
-                            $this->db->SELECT('*');
-                            $this->db->FROM('efil.tbl_icmis_ai_docs_objections');
-                            $this->db->WHERE('id', $id);
-                            $this->db->WHERE('is_deleted', false);
-                            $this->db->WHERE('aor_cured', true);
-                            $query = $this->db->get();
-                            if ($query->num_rows() >= 1) {
+                            // $this->db->SELECT('*');
+                            // $this->db->FROM('efil.tbl_icmis_ai_docs_objections');
+                            // $this->db->WHERE('id', $id);
+                            // $this->db->WHERE('is_deleted', false);
+                            // $this->db->WHERE('aor_cured', true);
+                            // $query = $this->db->get();
+
+
+                            $builder = $this->db->table('efil.tbl_icmis_ai_docs_objections'); 
+                            $builder->select('*');
+                            $builder->where('id', $id);
+                            $builder->where('is_deleted', false);
+                            $builder->where('aor_cured', true);
+                            $query = $builder->get(); 
+
+                            if ($query->getNumRows() >= 1) {
 
                             } else {
-                                $this->db->set('aor_cured', true);
-                                $this->db->WHERE('id', $id);
-                                $this->db->WHERE('is_deleted', false);
-                                $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+                                // $this->db->set('aor_cured', true);
+                                // $this->db->WHERE('id', $id);
+                                // $this->db->WHERE('is_deleted', false);
+                                // $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+
+                                $builder = $this->db->table('efil.tbl_icmis_ai_docs_objections'); 
+                                $builder->where('id', $id);
+                                $builder->where('is_deleted', false);
+                                $builder->set('aor_cured', true);  
+                                $builder->update();
                             }
                         }
                     }
                 }else{
                     $registration_id=$_SESSION['efiling_details']['registration_id'];
                     if (!empty($registration_id)){
-                        $this->db->set('aor_cured', false);
-                        $this->db->WHERE('registration_id', $registration_id);
-                        $this->db->WHERE('is_deleted', false);
-                        $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+                        // $this->db->set('aor_cured', false);
+                        // $this->db->WHERE('registration_id', $registration_id);
+                        // $this->db->WHERE('is_deleted', false);
+                        // $this->db->UPDATE('efil.tbl_icmis_ai_docs_objections');
+
+                        $builder = $this->db->table('efil.tbl_icmis_ai_docs_objections'); 
+                        $builder->where('registration_id', $registration_id);
+                        $builder->where('is_deleted', false);
+                        $builder->set('aor_cured', false);  
+                        $builder->update();
                     }
                 }
             }

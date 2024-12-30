@@ -56,7 +56,9 @@ class CourtFee extends BaseController
                 $stages_array_defected = array(I_B_Defected_Stage);
                 if (in_array($_SESSION['efiling_details']['stage_id'], $stages_array_defected)) {
                     // redirect()->back();exit(0);
-                    redirect('miscellaneous_docs/view');exit(0);
+                    // redirect('miscellaneous_docs/view');exit(0);
+                    return redirect()->to(base_url('miscellaneous_docs/view'));
+
                 }
                 if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
                     $registration_id = $_SESSION['efiling_details']['registration_id'];

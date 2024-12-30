@@ -1,17 +1,34 @@
 <?php
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+namespace App\Controllers\EfilingAction;
+use App\Controllers\BaseController;
+use App\Models\Common\CommonModel; 
+use App\Models\shareDoc\ShareDocsModel; 
+use App\Models\NewCase\ViewModel; 
+use App\Libraries\webservices\Efiling_webservices;
+use stdClass;
 
-class IAMiscDocsRefiledFinalSubmit extends CI_Controller {
+
+class IAMiscDocsRefiledFinalSubmit extends BaseController {
+    protected $Common_model;
+    protected $Share_docs_model;
+    protected $efiling_webservices; 
+    protected $View_model; 
+    protected $encrypt;
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('common/Common_model');
-        $this->load->model('shareDoc/Share_docs_model');
-        $this->load->library('encrypt');
+
+        $this->Common_model = new CommonModel(); 
+        $this->Share_docs_model = new ShareDocsModel(); 
+        $this->View_model = new ViewModel(); 
+        $this->efiling_webservices = new Efiling_webservices();
+        $this->encrypt = \Config\Services::encrypter(); 
+        // $this->load->model('common/Common_model');
+        // $this->load->model('shareDoc/Share_docs_model');
+        // $this->load->library('encrypt');
         //$this->load->library('encryption');
-        $this->load->library('webservices/efiling_webservices');
+        // $this->load->library('webservices/efiling_webservices');
 
     }
 
@@ -36,7 +53,7 @@ class IAMiscDocsRefiledFinalSubmit extends CI_Controller {
                 foreach ($result_icmis as $re) {
                     $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
                     if ($aor_cured == 'f') {
-                        $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit..</div>');
+                        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit..</div>');
                         redirect('documentIndex');exit();
                     }
                 }
@@ -59,7 +76,7 @@ class IAMiscDocsRefiledFinalSubmit extends CI_Controller {
         } elseif ($_SESSION['efiling_details']['stage_id'] == I_B_Rejected_Stage || $_SESSION['efiling_details']['stage_id'] == E_REJECTED_STAGE) {
             $next_stage = Initial_Defects_Cured_Stage;
         } else {
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
+            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Invalid Action.</div>');
             redirect('dashboard');
         }
 
@@ -73,10 +90,10 @@ class IAMiscDocsRefiledFinalSubmit extends CI_Controller {
                     $response = $this->autoTransferToScrutinyIAMiscDocs($registration_id, $_SESSION['efiling_details']['diary_no'], $_SESSION['efiling_details']['diary_year'], $_SESSION['efiling_details']['efiling_no']); //comment this line to disable auto scrutiny - kbp 02082023
                     $response = (array)json_decode($response, true);
                     if ($response['status'] == 'success') {
-                        $this->session->set_flashdata('msg', '<div style="font-size=24px;font-weight: bolder" class="alert alert-success text-center font-weight-bold"> E-filing number ' . $efiling_no . ' has been re-filed successfully.</div>');
+                        $this->session->setFlashdata('msg', '<div style="font-size=24px;font-weight: bolder" class="alert alert-success text-center font-weight-bold"> E-filing number ' . $efiling_no . ' has been re-filed successfully.</div>');
                         $_SESSION['efiling_details']['stage_id'] = Initial_Approaval_Pending_Stage;
                     } else {
-                        $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center text-bg"> ' . $response['message'] . '!!</div>');
+                        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center text-bg"> ' . $response['message'] . '!!</div>');
                     }
                     if($_SESSION['efiling_details']['efiling_type']=='IA'){
                         redirect('IA/view');
@@ -152,7 +169,7 @@ class IAMiscDocsRefiledFinalSubmit extends CI_Controller {
         $result_icmis = $this->Common_model->get_ia_docs_cis_defects_remarks($registration_id, FALSE);
 
         $registration_id = !empty($registration_id) ? $registration_id : NULL;
-        $this->load->model('newcase/View_model');
+        // $this->load->model('newcase/View_model');
         $efiled_docs_list = $this->View_model->get_index_items_list($registration_id,1);
         $docTempArr = array();
         $output= false;
@@ -184,8 +201,10 @@ class IAMiscDocsRefiledFinalSubmit extends CI_Controller {
         $assoc_arr = array('diary_id' => $diary_id, 'efiling_no' => $efiling_no,'pet_adv_id'=>$pet_adv_id,'documents' => $documents,'defect_list_icmis'=>$result_icmis);
         //echo '<pre>';print_r($assoc_arr);exit();
         $assoc_json = json_encode($assoc_arr);
-        $key = $this->config->item('encryption_key');
-        $encrypted_string = $this->encrypt->encode($assoc_json, $key);
+        $key = config('Encryption')->key;
+        $encrypted_string = $this->encrypt->encrypt($assoc_json, $key);
+        // $key = $this->config->item('encryption_key');
+        // $encrypted_string = $this->encrypt->encode($assoc_json, $key);
         $output = $this->efiling_webservices->updateDefectRefiledIAData($encrypted_string);
         return $output;
 

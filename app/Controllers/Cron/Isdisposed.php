@@ -1,22 +1,36 @@
 <?php
+namespace App\Controllers\Cron;
+use App\Controllers\BaseController;
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+use App\Libraries\webservices\Efiling_webservices;
+use App\Models\Cron\DefaultModel;
+use App\Models\GetCISStatus\GetCISStatusModel;
+use App\Models\AdminDashboard\StageListModel;
 
-class Isdisposed extends CI_Controller {
+class Isdisposed extends BaseController {
+
+    protected $Default_model;
+    protected $StageList_model;
+    protected $Get_CIS_Status_model;
+    protected $efiling_webservices; 
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('cron/Default_model');
-        $this->load->model('adminDashboard/StageList_model');
-        $this->load->model('getCIS_status/Get_CIS_Status_model');
-        $this->load->library('webservices/efiling_webservices');
-        $this->load->library('session');
-        $this->load->helper('form');
-        $this->load->helper('url');
-        $this->load->helper('html');
-        $this->load->helper('functions'); // loading custom functions
-        $this->load->database();
+        $this->Default_model = new DefaultModel(); 
+        $this->StageList_model = new StageListModel(); 
+        $this->Get_CIS_Status_model = new GetCISStatusModel(); 
+        $this->efiling_webservices = new Efiling_webservices();
+
+        // $this->load->model('cron/Default_model');
+        // $this->load->model('adminDashboard/StageList_model');
+        // $this->load->model('getCIS_status/Get_CIS_Status_model');
+        // $this->load->library('webservices/efiling_webservices');
+        // $this->load->library('session');
+        // $this->load->helper('form');
+        // $this->load->helper('url');
+        // $this->load->helper('html');
+        // $this->load->helper('functions'); // loading custom functions
+        // $this->load->database();
     }
 
     public function index()

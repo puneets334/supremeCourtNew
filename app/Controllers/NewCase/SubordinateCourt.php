@@ -11,6 +11,7 @@ use App\Models\NewCase\DropdownListModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\NewCase\NewCaseModel;
 use DateTime;
+use CodeIgniter\CLI\CLI;
 
 class SubordinateCourt extends BaseController {
 
@@ -570,7 +571,7 @@ class SubordinateCourt extends BaseController {
         if (isset($registration_id) && !empty($registration_id)) {
             $subordinate_court_details = $this->Get_details_model->get_subordinate_court_details($registration_id);
             if(!empty(getSessionData('efiling_details')['ref_m_efiled_type_id']) && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT){
-                $status = $this->New_case_model->add_subordinate_court_info($registration_id, $case_details, CAVEAT_BREAD_SUBORDINATE_COURT,$fir_details,$subordinate_court_details);
+                $status = $this->New_case_model->add_subordinate_court_info($registration_id, $case_details, CAVEAT_BREAD_SUBORDINATE_COURT,$fir_details,$subordinate_court_details,null);
                 if ($status) {
                     reset_affirmation($registration_id);
                     echo '2@@@' . htmlentities('Details added successfully!', ENT_QUOTES) . '@@@' . base_url('caveat/defaultController/processing' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_CAVEAT . '#' . getSessionData('efiling_details')['stage_id'])));
@@ -639,10 +640,15 @@ class SubordinateCourt extends BaseController {
 
     //This call is once in a while functionality to update HC & Bench master table i.e: m_tbl_high_courts_bench
     function dc_estab_from_api(){
-        if(!$this->input->is_cli_request()){
+        // if(!$this->input->is_cli_request()){
+        //     echo "This script can only be accessed via the command line" . PHP_EOL;
+        //     return;
+        // }
+        if(!$this->request->isCLI()){
             echo "This script can only be accessed via the command line" . PHP_EOL;
             return;
         }
+        
         $states = file_get_contents(DISTRICT_COURT_URL.'states');
         $states = json_decode($states, true);
         if(isset($states['state'])){

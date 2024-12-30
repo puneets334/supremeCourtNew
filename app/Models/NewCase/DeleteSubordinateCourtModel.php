@@ -25,10 +25,15 @@ class DeleteSubordinateCourtModel extends Model {
                     'updated_on' => $curr_dt_time,
                     'updated_by_ip' => getClientIP()
                 );
-                $this->db->WHERE('registration_id', $registration_id);
-                $this->db->WHERE('ref_tbl_lower_court_details_id', $id);
-                $this->db->WHERE('is_deleted', FALSE);
-                $this->db->UPDATE('efil.tbl_certified_copy_details', $data);
+                // $this->db->WHERE('registration_id', $registration_id);
+                // $this->db->WHERE('ref_tbl_lower_court_details_id', $id);
+                // $this->db->WHERE('is_deleted', FALSE);
+                // $this->db->UPDATE('efil.tbl_certified_copy_details', $data);
+                $this->db->table('efil.tbl_certified_copy_details')
+                 ->where('registration_id', $registration_id)
+                 ->where('ref_tbl_lower_court_details_id', $id)
+                 ->where('is_deleted', false)
+                 ->update($data);
             }
             if(isset($firData) && !empty($firData)){
                 $data = array('is_deleted' => TRUE,
