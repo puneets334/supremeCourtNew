@@ -216,14 +216,9 @@ class Search extends BaseController
                         }
                         //end check Mark All Defects Cured
                     } else {
-                        // echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
-                        ?>
-                        <script>
-                            alert('Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.');
-                            window.history.back();
-                        </script>
-                        <?php
-                        // exit(0);
+                        echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
+                         
+                        exit(0);
                     }
                     $data['searched_case_details'] = $web_service_result->case_details[0];
                     if ($diary_type == 'diary') {
