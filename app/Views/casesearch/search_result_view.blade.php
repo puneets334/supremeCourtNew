@@ -14,10 +14,8 @@
 <link rel="stylesheet" href="<?= base_url() ?>assets/css/jquery-ui.css">
 <link href="<?= base_url() . 'assets' ?>/css/select2.min.css" rel="stylesheet">
 <?php
-
 $attribute = array('class' => 'form-horizontal', 'id' => 'save_searched_case', 'name' => 'save_searched_case', 'autocomplete' => 'off');
-//echo form_open('case/search/save_searched_case_result', $attribute);
-
+// echo form_open('case/search/save_searched_case_result', $attribute);
 unset($_SESSION['parties_list']);
 $diary_no = $searched_case_details->diary_no;
 $diary_year = $searched_case_details->diary_year;
@@ -36,7 +34,6 @@ $advocate_allowed = 0;
 $mentioned_for_date = '';
 $current_date = date('Y-m-d');
 if (isset($diary_no) && !empty($diary_no)) {
-
     echo form_open('case/search/save_searched_case_result', $attribute);
     if ($mentioning_request_details != false) {
         if ($mentioning_request_details[0]['is_for_fixed_date'] == 't')
@@ -68,15 +65,43 @@ if (isset($diary_no) && !empty($diary_no)) {
         default:
             $lbl_confirm = '';
     }
-
     if (in_array($_SESSION['login']['aor_code'], explode(',', $advocates))) {
         $advocate_allowed = 1;
     }
     $searched_result_details = $diary_no . '$$$' . $diary_year . '$$$' . $order_date . '$$$' . $cause_title . '$$$' . $reg_no_display . '$$$' . $c_status . '$$$' . $pno . '$$$' . $rno;
-?>
+    ?>
     <hr>
     <input type="hidden" name="searched_details" value="<?php echo_data(url_encryption($searched_result_details)) ?>">
-
+    <?php if(in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])){ ?>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Select AOR <span style="color: red">*</span> :</label>
+                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                <select name="impersonated_aor" id="impersonated_aor" class="form-control input-sm" required>
+                                    <option value="" title="Select">Select AOR</option>
+                                    <?php
+                                    if (!empty($clerk_aor)) {
+                                        foreach ($clerk_aor as $dataRes) {
+                                            $ref_department_id = !empty($dataRes->ref_department_id) && $dataRes->ref_department_id !=0 ? $dataRes->ref_department_id : 0;
+                                            $sel = ($selected_aor[0]->aor_code == (string) $dataRes->aor_code ) ? "selected=selected" : '';
+                                            ?>
+                                            <option <?php echo $sel; ?> value="<?=$dataRes->aor_code; ?>"><?php echo_data($dataRes->name.' ('.$dataRes->aor_code.')'); ?> </option>;
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    <?php } ?>
     <div class="row">
         <div class="col-12">
             <div class="row">
@@ -104,7 +129,6 @@ if (isset($diary_no) && !empty($diary_no)) {
         </div>
     </div>
     <div class="clearfix"></div>
-
     <div class="row mt-2 mb-4">
         <div class="col-12">
             <div class="row">
@@ -131,12 +155,7 @@ if (isset($diary_no) && !empty($diary_no)) {
             </div>
         </div>
     </div>
-
-
-
-
     <div class="row">
-
         <?php if ($lbl_confirm == 'Mentioning') {
             if ($c_status == 'D') {
                 echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is disposed.Please follow the offline procedure of mentioning the case!</font></div></center>";
@@ -188,8 +207,9 @@ if (isset($diary_no) && !empty($diary_no)) {
                 echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is not listed. Hence, you cannot enter Citations!</font></div></center>";
             }
             /*elseif($listing_date>=$current_date){
-        echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is listed on ".date('d-m-Y',strtotime($listing_date)).". Hence, you cannot E-mention the matter!</font></div></center>";
-    }*/ else if ($advocate_allowed == 1) { ?>
+                echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is listed on ".date('d-m-Y',strtotime($listing_date)).". Hence, you cannot E-mention the matter!</font></div></center>";
+            }*/
+            else if ($advocate_allowed == 1) { ?>
                 <center>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <p style="font-size:14px;" class="text-danger"><strong>Is this the case which you want to enter
@@ -211,8 +231,9 @@ if (isset($diary_no) && !empty($diary_no)) {
                 echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is not listed. Hence, you cannot move adjournment letter!</font></div></center>";
             }
             /*elseif($listing_date>=$current_date){
-        echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is listed on ".date('d-m-Y',strtotime($listing_date)).". Hence, you cannot E-mention the matter!</font></div></center>";
-    }*/ else if ($advocate_allowed == 1) { ?>
+                echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is listed on ".date('d-m-Y',strtotime($listing_date)).". Hence, you cannot E-mention the matter!</font></div></center>";
+            }*/
+            else if ($advocate_allowed == 1) { ?>
                 <center>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <p style="font-size:14px;" class="text-danger"><strong>Is this the case which you want to move
@@ -231,7 +252,6 @@ if (isset($diary_no) && !empty($diary_no)) {
             if ($c_status == 'D') {
                 echo  "<center><div class=\"col-lg-12 col-md-12 col-sm-12 col-xs-12\"><font style='font-size:16px;color:red;'>The searched case is disposed!</font></div></center>";
             } else { ?>
-
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="form-response" id="msg">
                         <?php
@@ -251,7 +271,6 @@ if (isset($diary_no) && !empty($diary_no)) {
                         <label class="radio-inlin"><input type="radio" class="clsRadio" id="radio_intervenor" name="radio_appearing_for" value="I"> Intervenor/Other.</label>
                         <hr />
                     <?php } ?>
-
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="divAppearingFor" style="display:none;">
                     <div class="form-group">
@@ -275,17 +294,12 @@ if (isset($diary_no) && !empty($diary_no)) {
                                 <br>
                             </div>
                         </div>
-
                         <!-- end txtIntervenorName -->
                     </div>
                 </div>
-
-
-
                 <center>
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <p style="font-size:14px;" class="text-danger"><strong>Is this the case in which you want to file
-                                <?php echo $lbl_confirm; ?>? </strong></p>
+                        <p style="font-size:14px;" class="text-danger"><strong>Is this the case in which you want to file <?php echo $lbl_confirm; ?>? </strong></p>
                         <label class="radio-inline"><input type="radio" id="confirm_yes" name="confirm_response" required="required" value="yes">YES</label>
                         <label class="radio-inline"><input type="radio" id="confirm_no" name="confirm_response" value="no">NO</label>
                     </div>
@@ -293,8 +307,10 @@ if (isset($diary_no) && !empty($diary_no)) {
                         <input type="submit" name="submit_confirm_response" value="Submit" class="btn btn-success">
                     </div>
                 </center>
-        <?php   }
-        } ?>
+                <?php
+            }
+        }
+        ?>
     </div>
     <hr>
 <?php echo form_close();
@@ -336,27 +352,21 @@ if (isset($diary_no) && !empty($diary_no)) {
                 $("#txtIntervenorName").hide().prop('required', false);
             }
         });
-
-
-
     });
     $('#multi-field-wrapper').each(function() {
         var $wrapper = $('#multi-fields', this);
         var x = 1;
-
         $("#add-field", $(this)).click(function(e) {
             x++;
             $($wrapper).append(
                 '<div id="multi-field"><label class="text-right"><strong></strong></label><input type="text" class="orm-control cus-form-ctrl col-md-10" id="txtIntervenorName" name="txtIntervenorName[]" required style="width: 83% !important;margin-right:2% !important;"><span class="col-md-2" id="remove_field" style="font-size:20px;cursor: pointer;margin-left:3px;color:lightcoral" ><i class="fa fa-minus-circle" aria-hidden="true"></i></span>  </div>'
             );
         });
-
         $($wrapper).on("click", "#remove_field", function(e) { //user click on remove text
             e.preventDefault();
             $(this).parent('div').remove();
             x--;
         })
-
     });
 </script>
 @endpush

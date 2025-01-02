@@ -2249,5 +2249,73 @@ class Efiling_webservices {
         $url     = ICMIS_SERVICE_URL;
         return $result = file_get_contents($url.'/ConsumedData/getObjectionsByDiaryNo', false, $context);
     }
+/*start Refiling IA and MiscDocs.*/
+    public function BulkGetIaMiscScrutinyDefects($efiling_nums_str) {
 
+        $postdata = http_build_query(
+            [
+                'pending_scrutiny' => $efiling_nums_str
+            ]
+        );
+        $opts = ['http' =>
+            [
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            ]
+        ];
+        $context  = stream_context_create($opts);
+        $url     = ICMIS_SERVICE_URL;
+        $data = file_get_contents($url.'/ConsumedData/BulkGetIaMiscScrutinyDefects', false, $context);
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }
+    }
+    public function updateDefectRefiledIAData($encriptedData){
+        $postdata = http_build_query(
+            array(
+                'details' => $encriptedData)
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $url     = ICMIS_SERVICE_URL; 
+        $result = file_get_contents($url.'/PutInICMIS/updateDefectRefiledIAData', false, $context);
+        var_dump($result);
+        return json_decode($result,true);
+    }
+    /*end Refiling IA and MiscDocs.*/
+    
+    /*start function Is_disposed */
+    public function get_new_case_efilingIsDisposed($efiling_nums_str) {
+        // echo $data = curl_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/get_new_case_efilingIsDisposed/?input=$efiling_nums_str");
+        $postdata = http_build_query(
+            array(
+                'pending_scrutiny' => $efiling_nums_str
+            )
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $data = file_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/get_new_case_efilingIsDisposed", false, $context);
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }
+    }
+    /*end function Is_disposed */
+    
 }

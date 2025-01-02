@@ -146,9 +146,9 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                     if (in_array(CAVEAT_BREAD_DOC_INDEX, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                         $action = base_url('efilingAction/Caveat_final_submit');
                                         $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
-                                        echo form_open($action, $attribute);
-                                        $clerk_adv='';                                    
-                                        echo form_close();
+                                        // echo form_open($action, $attribute);
+                                        // $clerk_adv='';                                    
+                                        // echo form_close();
                                     }
                                 }
                             }
@@ -245,7 +245,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
             if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], array(USER_ADVOCATE, USER_IN_PERSON, USER_PDE)) ) {
                     $final_submit_action = TRUE;
                     $final_submit_continue_action = TRUE;                
-                    $url_caveator = base_url('caveat/');
+                    $url_caveator = base_url('caveat');
                     $url_caveatee = base_url('caveat/caveatee');
                     $url_extra_party = base_url('caveat/extra_party');
                     $url_subordinate_court = base_url('caveat/subordinate_court');
@@ -256,7 +256,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                 
             } elseif (!empty(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] ==  USER_CLERK && in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage)))) {			
                 $final_submit_action = False;
-                $url_caveator = base_url('caveat/');
+                $url_caveator = base_url('caveat');
                 $url_caveatee = base_url('caveat/caveatee');
                 $url_extra_party = base_url('caveat/extra_party');
                 $url_subordinate_court = base_url('caveat/subordinate_court');

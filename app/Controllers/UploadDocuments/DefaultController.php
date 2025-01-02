@@ -36,7 +36,7 @@ class DefaultController extends BaseController {
 
     function check_login() {
 
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,JAIL_SUPERINTENDENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,JAIL_SUPERINTENDENT,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             echo '1@@@Invalid attempt.';
             exit(0);
@@ -238,10 +238,15 @@ class DefaultController extends BaseController {
 
             $doc_hash_value = hash_file('sha256', $_FILES['pdfDocFile']['tmp_name']);
             $uploaded_on = date('Y-m-d H:i:s');
-
             $sub_created_by = 0;
             $uploaded_by = $_SESSION['login']['id'];
-
+            if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                $aorData = getAordetails_ifFiledByClerk($registration_id);
+                if (isset($aorData) && !empty($aorData)) {
+                    $uploaded_by=!empty($aorData) ? $aorData[0]->id  : 0;
+                    $sub_created_by = $_SESSION['login']['id'];
+                }
+            }
             $data = array(
                 'registration_id' => $registration_id,
                 'efiled_type_id' => $ref_m_efiled_type_id,

@@ -1,7 +1,8 @@
 @extends('layout.app')
 @section('content')
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css">
+<link href="<?= base_url() ?>assets/css/bootstrap-multiselect.css" rel="stylesheet">
+
 <style>
     .add-new-area {
         display: none !important;
@@ -233,10 +234,14 @@
         width: 100% !important;
     }
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="<?=base_url()?>assets/js/bootstrap.min.js"></script>
+
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script> 
+<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/bootstrap-multiselect.min.js"></script>
+<script src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+ 
+
 @push('script')
 <script>
     $(document).ready(function() {

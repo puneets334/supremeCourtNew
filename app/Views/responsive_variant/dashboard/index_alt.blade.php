@@ -623,7 +623,7 @@ td {
                             <div class="left-content-inner comn-innercontent">
                                 <div class="dashboard-section">
                                     <div class="row">
-                                        @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
+                                        @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE,AMICUS_CURIAE_USER)))
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-4">
                                                 <div class="dash-card" >
                                                     <div class="title-sec">
@@ -640,6 +640,10 @@ td {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                <?php
+                                                                //print_r($scheduled_cases);
+                                                                $IS_AMICUS_CURIAE = null;
+                                                                ?>
                                                                     @if(!empty($scheduled_cases))
                                                                         <?php $i=1; ?>
                                                                         @foreach($scheduled_cases as $scheduled_case)
@@ -648,8 +652,24 @@ td {
                                                                                     <tr>
                                                                                         <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align-items: left;">
                                                                                             <div><span class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span></div>
-                                                                                            <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($scheduled['petitioner_name']))}}</div>
-                                                                                            <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($scheduled['respondent_name']))}}</div>
+
+                                                                                            <?php $IS_AMICUS_CURIAE_P =$IS_AMICUS_CURIAE_R='';?>
+                                                                                            @if (isset($scheduled_case->advocates) && !empty($scheduled_case->advocates))
+                                                                                                @foreach ($scheduled_case->advocates as $advocates)
+                                                                                                    @if (isset($scheduled_case->advocates) && !empty($scheduled_case->advocates))
+                                                                                                        @if ($_SESSION['login']['adv_sci_bar_id'] == $advocates->id && $_SESSION['login']['aor_code'] == $advocates->aor_code && $advocates->is_amicus_curiae == 1)
+                                                                                                            @if (strtoupper($advocates->represents_petitioner_or_respondent) == 'P')
+                                                                                                                <?php $IS_AMICUS_CURIAE_P = '[<span class="text-success"><b>P:A</b>micus <b>C</b>uriae</span>]';?>
+                                                                                                            @endif
+                                                                                                            @if (strtoupper($advocates->represents_petitioner_or_respondent) == 'R')
+                                                                                                                <?php $IS_AMICUS_CURIAE_R = '[<span class="text-success"><b>R:A</b>micus <b>C</b>uriae</span>]';?>
+                                                                                                            @endif
+                                                                                                        @endif
+                                                                                                    @endif
+                                                                                                @endforeach
+                                                                                            @endif
+                                                                                            <div><b style="font-size: 17px;">P: </b>{{ucwords(strtolower($scheduled['petitioner_name']))}} <?=$IS_AMICUS_CURIAE_P;?></div>
+                                                                                            <div><b style="font-size: 17px;">R: </b>{{ucwords(strtolower($scheduled['respondent_name']))}} <?=$IS_AMICUS_CURIAE_R;?></div>
                                                                                         </td>
                                                                                         <td class="uk-table-expand" uk-margin
                                                                                             data-key="Date & Bench" tabindex="0" width=60%>
@@ -744,7 +764,94 @@ td {
                                                 </div>
                                                 <hr class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">
                                             </div>
-                                        @endif 
+                                        @endif
+
+                                        <!-- start amicus_curiae_user soon cases -->
+                                            @if(!empty($amicus_curiae_user_soon_cases))
+                                                <div class="uk-width uk-width-large@l uk-margin-medium-top uk-overflow-auto uktable-responsive">
+                                                    <h4 class="uk-heading-bullet uk-text-bold">My cases <small class="uk-text-muted">soon to be listed</small></h4>
+                                                    <table class="uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" id="soon-to-be-listed-cases-table">
+                                                        <thead>
+                                                        <tr class="uk-text-bold">
+                                                            <th class="uk-text-bold">Case</th>
+                                                            <th class="uk-text-bold">Date & Bench</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        @foreach($amicus_curiae_user_soon_cases as $amicus_curiae_user_soon_case)
+                                                            <tr>
+                                                                <td class="uk-width-small@m">
+                                                                    <div>
+                                                                        <span class="uk-text-muted">{{$amicus_curiae_user_soon_case->registration_number ?: ('D. No.' . $amicus_curiae_user_soon_case->diary_number . '/' . $amicus_curiae_user_soon_case->diary_year)}}</span>
+                                                                    </div>
+
+                                                                    <?php $IS_AMICUS_CURIAE_P=$IS_AMICUS_CURIAE_R='';?>
+                                                                    @if (isset($amicus_curiae_user_soon_case->advocates) && !empty($amicus_curiae_user_soon_case->advocates))
+                                                                        @foreach ($amicus_curiae_user_soon_case->advocates as $advocates)
+                                                                            @if (isset($advocates) && !empty($advocates))
+                                                                                @if ($advocates->is_amicus_curiae)
+                                                                                    @if (strtoupper($advocates->represents_petitioner_or_respondent) == 'P')
+                                                                                        <?php $IS_AMICUS_CURIAE_P = '<br/>[<span class="text-success"><b>P:A</b>micus <b>C</b>uriae</span>]';?>
+                                                                                    @endif
+                                                                                    @if (strtoupper($advocates->represents_petitioner_or_respondent) == 'R')
+                                                                                        <?php $IS_AMICUS_CURIAE_R = '<br/>[<span class="text-success"><b>R:A</b>micus <b>C</b>uriae</span>]';?>
+                                                                                    @endif
+                                                                                @endif
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
+                                                                    <div><b>P: </b>{{ucwords(strtolower($amicus_curiae_user_soon_case->petitioner_name))}} <?=$IS_AMICUS_CURIAE_P;?></div>
+                                                                    <div><b>R: </b>{{ucwords(strtolower($amicus_curiae_user_soon_case->respondent_name))}} <?=$IS_AMICUS_CURIAE_R;?></div>
+                                                                <!--<div>
+                        <span class="uk-label uk-background-muted uk-text-primary" style="text-transform: none;font-size:11px;">{{ucwords(strtolower(str_replace(']','',str_replace('[','',$scheduled_case->meta->listing->court->listing_sub_type))))}}</span>
+                    </div>-->
+                                                                </td>
+                                                                <td class="uk-table-expand" uk-margin>
+                                                                    <div>
+                                                                        <button type="button" class="sc-button uk-button-text">{{date_format(date_create($amicus_curiae_user_soon_case->meta->listing->listed_on), 'D, jS M')}}&nbsp;<i uk-icon="triangle-down"></i></button>
+                                                                        <div class="uk-padding-remove" uk-dropdown="pos:bottom-left;mode:click;">
+                                                                            <ul class="uknav-parent-icon uk-dropdown-nav" uk-nav>
+                                                                                <!--<li><a href="#"><span uk-icon="icon: file-text"></span> View in Causelist</a></li>-->
+
+                                                                                @if(!empty($amicus_curiae_user_soon_case->office_reports->current->uri))
+                                                                                    <li class="uk-nav-divider uk-margin-remove"></li>
+                                                                                    <li><a href="{{$amicus_curiae_user_soon_case->office_reports->current->uri}}" target="_blank"><span uk-icon="icon: file-pdf"></span> Office Report</a></li>
+                                                                                @endif
+                                                                                @if(!empty($amicus_curiae_user_soon_case->rop_judgments->current->uri))
+                                                                                    <li class="uk-nav-divider uk-margin-remove"></li>
+                                                                                    <li><a href="{{$amicus_curiae_user_soon_case->rop_judgments->current->uri}}" target="_blank"><span uk-icon="icon: file-pdf"></span> Previous Order ({{$amicus_curiae_user_soon_case->rop_judgments->current->dated}})</a></li>
+                                                                                @endif
+                                                                                <li class="uk-nav-divider uk-margin-remove"></li>
+                                                                                <li><a href="#" title="Send SMS" onClick="get_message_data(this.id)" id="<?php   echo $amicus_curiae_user_soon_case->diary_number .'#'.$amicus_curiae_user_soon_case->diary_year.'#'.$amicus_curiae_user_soon_case->registration_number.'#'.$amicus_curiae_user_soon_case->petitioner_name.'#'.$amicus_curiae_user_soon_case->respondent_name.'#'.$amicus_curiae_user_soon_case->item_number.'#'.$amicus_curiae_user_soon_case->meta->listing->court->name,'#'.date_format(date_create($amicus_curiae_user_soon_case->meta->listing->listed_on), 'D, jS M Y'); ?>"><span uk-icon="icon: comment"></span> Send SMS</a></li>
+                                                                                <?php if($amicus_curiae_user_soon_case->vc_url!=null){?><li><a href="{{$amicus_curiae_user_soon_case->vc_url}}" target="_blank"><span uk-icon="icon: file-text"></span> Join Virtual Court</a></li>
+                                                                                <?php } ?>
+                                                                                <li>
+                                                                                    <a href="#" onclick="javascript:loadPaperBookViewer(this);" data-paper-book-viewer-url="{{base_url("case/paper_book_viewer")}}/{{$amicus_curiae_user_soon_case->diary_id}}" targe="_blank" data-diary_no="@{{$amicus_curiae_user_soon_case->diary_id}}" data-diary_year="">
+                                                                                        <span uk-icon="icon: bookmark"></span> Paper Book (with Indexing)
+                                                                                    </a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="uk-label md-bg-grey-900" uk-tooltip="{{$amicus_curiae_user_soon_case->meta->listing->court->listing_cum_board_type . str_replace(':','.',$amicus_curiae_user_soon_case->meta->listing->court->scheduled_time)}}">{{'Item '.($amicus_curiae_user_soon_case->item_number_alt ?: $amicus_curiae_user_soon_case->item_number)}} @ {{$amicus_curiae_user_soon_case->meta->listing->court->name}}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <small>
+                                                                            <b>Bench:</b><br>
+                                                                            {{ucwords(strtolower(implode(',<br> ', $amicus_curiae_user_soon_case->meta->listing->court->judges)))}}
+                                                                        </small>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <!--<hr class="uk-divider-vertical uk-margin-small-left uk-margin-small-right uk-visible@m">-->
+                                            @endif
+                                        <!-- end amicus_curiae_user soon cases -->
+
                                         <!-- start sr advocate soon -->
                                         @if(!empty($sr_advocate_soon_cases))
                                         <!-- <div class="uk-width uk-width-large@l uk-margin-medium-top uk-overflow-auto uktable-responsive">
@@ -1628,9 +1735,9 @@ td {
     </div>
     @endsection
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
-    <link href="<?= base_url() ?>assets/css/main.min.css" rel="stylesheet"> 
-    <link href="<?= base_url() ?>assets/js/main.min.js" rel="stylesheet">
-    <link href="<?= base_url() ?>assets/js/locales-all.min.js" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js'></script>
  
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>

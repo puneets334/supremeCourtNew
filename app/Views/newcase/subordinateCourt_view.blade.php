@@ -722,6 +722,77 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <!--start cert Certified Copy-->
+                                <hr style="border: 1px solid #efe8e8;border-radius: 1px;">
+                                <h4 style="text-align: center;color: #31B0D5">Certified Copy</h4>
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="certified_copy">
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Application Number :</label>
+                                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <div class="input-group">
+                                                    <input type="text" id="application_no" name="application_no" maxlength="100" onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" placeholder="Application Number"  class="form-control input-sm">
+                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Application Number "><i class="fa fa-question-circle-o"  ></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Application Date :</label>
+                                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control has-feedback-left" id="application_date" name="application_date" maxlength="10" placeholder="DD/MM/YYYY">
+                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Select Application Date "><i class="fa fa-question-circle-o"  ></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Exemption Applied :</label>
+                                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <select name="exemption_filed" id="exemption_filed" class="form-control input-sm filter_select_dropdown" style="width: 100%" >
+                                                    <option value="">Select Exemption  Applied</option>
+                                                    <option value="Y">Y</option>
+                                                    <option value="N">N</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12" id="certified_copy">
+                                    <div class="col-sm-4 col-xs-12 tentative_date" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Tentative Date for Issuance of Certified Copy :</label>
+                                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control" id="tentative_date" name="tentative_date" maxlength="10" placeholder="DD/MM/YYYY">
+                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Select Tentative Date for Issuance of Certified Copy"><i class="fa fa-question-circle-o"  ></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-12 issuance_date" style="display: none;">
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Date of Issuance :</label>
+                                            <div class="col-md-7 col-sm-12 col-xs-12">
+                                                <div class="input-group">
+                                                    <input type="date" class="form-control has-feedback-left" id="issuance_date" name="issuance_date" maxlength="10" placeholder="DD/MM/YYYY">
+                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Select Issuance Date "><i class="fa fa-question-circle-o"  ></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr style="border: 1px solid #efe8e8;border-radius: 1px;">
+                                <!--end cert Certified Copy-->
+                                <br/>
+
+
                                 <?php if ($criminal_case == 1) { ?>
                                     <div class="row">
                                     <!-- <input class="form-check-input cus-form-check" type="checkbox" id="fircheckbox" name="fircheckbox"   maxlength="2" > -->
@@ -935,6 +1006,23 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
+        //start cert Certified Copy
+        $('#exemption_filed').on('change', function () {
+            var exemption_filed = $(this).val();
+            //var exemption_filed = $("#exemption_filed option:selected").val();
+            //alert('Are you sure select '+exemption_filed);
+            if(exemption_filed=='Y') {
+                $('.issuance_date').hide();
+                $('.tentative_date').show();
+            }else if(exemption_filed=='N'){
+                $('.tentative_date').hide();
+                $('.issuance_date').show();
+            }else {
+                $('.tentative_date').hide();
+                $('.issuance_date').hide();
+            }
+        });
+       //end cert Certified Copy
         //xxxxxxxxxxxxxxxxxxxxxxxx
         var divhide_sccasetype_ID = '<?php echo $sc_case_typeId_div_hide; ?>';
         if (divhide_sccasetype_ID == 7 || divhide_sccasetype_ID == 8) {

@@ -19,10 +19,18 @@ class NewCaseModel extends Model {
             $result['registration_id'] = $this->add_efiling_nums($generated_efil_num, $curr_dt_time);
             
             if (isset($result['registration_id']) && !empty($result['registration_id'])) {
+                $created_by = getSessionData('login')['id'];
+                $adv_sci_bar_id=$_SESSION['login']['adv_sci_bar_id'];
+                if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                    $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+                    $created_by=!empty($aorData) ? $aorData[0]->id  : null;
+                    $adv_sci_bar_id=!empty($aorData) ? $aorData[0]->adv_sci_bar_id  : null;
+                    $_SESSION['login']['adv_sci_bar_id'] = $adv_sci_bar_id;
+                }
                 $case_details_create_data = array(
                     'registration_id' => $result['registration_id'],
                     'created_on' => $curr_dt_time,
-                    'created_by' => getSessionData('login')['id'],
+                    'created_by' => $created_by,
                     'created_by_ip' => getClientIP()
                 );
                 $case_details = array_merge($case_details, $case_details_create_data);
@@ -32,7 +40,7 @@ class NewCaseModel extends Model {
                 
                 $adv_details = array(
                     'registration_id' => $result['registration_id'],
-                    'adv_bar_id' => $_SESSION['login']['adv_sci_bar_id'],
+                    'adv_bar_id' => $adv_sci_bar_id,
                     'm_a_adv_type' => 'M',
                     'for_p_r_a' => 'P',
                     'adv_code' => $_SESSION['login']['aor_code']
@@ -110,7 +118,8 @@ class NewCaseModel extends Model {
         $filing_type = E_FILING_TYPE_NEW_CASE;
         $stage_id = Draft_Stage;
         if ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-            $created_by = 0;
+            $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+            $created_by=!empty($aorData) ? $aorData[0]->id  : 0;
             $sub_created_by = $_SESSION['login']['id'];
         } else {
             $created_by = $_SESSION['login']['id'];
@@ -382,7 +391,7 @@ class NewCaseModel extends Model {
         }
     }
 
-    function add_subordinate_court_info($registration_id, $data, $breadcrumb_step,$fir_data,$subordinate_court_details) {
+    function add_subordinate_court_info($registration_id, $data, $breadcrumb_step,$fir_data,$subordinate_court_details,$add_subordinate_court_info) {
         $this->db->transStart();
         if($subordinate_court_details && $subordinate_court_details[0]['is_hc_exempted']=='t') {
             $curr_dt_time = date('Y-m-d H:i:s');
@@ -407,6 +416,13 @@ class NewCaseModel extends Model {
             $fir_data['ref_tbl_lower_court_details_id']=$insert_id;
             $builder = $this->db->table('efil.tbl_fir_details');
             $builder->insert($fir_data);
+        }
+        if (isset($data) && isset($data['court_type']) && !empty($data['court_type']) && !empty($insert_id)){
+            if (isset($certified_copy_details) && !empty($certified_copy_details) && $certified_copy_details['application_no'] && $certified_copy_details['application_date'] && $certified_copy_details['exemption_filed']){
+                $certified_copy_details_final=array_merge($certified_copy_details,['ref_tbl_lower_court_details_id'=>$insert_id]);
+               $builder_certified_copy = $this->db->table('efil.tbl_certified_copy_details');
+                $builder_certified_copy->insert($certified_copy_details_final);
+            }
         }
         $this->db->transComplete();
         if ($this->db->transStatus() === FALSE) {
@@ -1436,7 +1452,7 @@ class NewCaseModel extends Model {
         $builder = $this->db->table('etrial_lower_court')
             ->WHERE('registration_id', $registration_id)
             ->WHERE('is_deleted', FALSE)
-            ->whereNotIn('id', $ids)
+            // ->whereNotIn('id', $ids)
             ->UPDATE($update_date);
         $builder1 = $this->db->table('etrial_lower_court')->insert($data);
         if ($this->db->insertID()) {

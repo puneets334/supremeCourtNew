@@ -58,7 +58,7 @@ class DefaultController extends BaseController
         }
         if (!empty(getSessionData('efiling_details'))) {
             $stages_array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
-            $allowed_users = array(USER_ADVOCATE, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, USER_IN_PERSON, USER_CLERK);          
+            $allowed_users = array(USER_ADVOCATE, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
             if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN || getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY || getSessionData('login')['ref_m_usertype_id'] == USER_EFILING_ADMIN || !in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) {
                 return redirect()->to(base_url('IA/view'));
             } elseif ((in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users) && in_array(getSessionData('efiling_details')['stage_id'], $stages_array)) || (getSessionData('login')['ref_m_usertype_id'] = USER_DEPARTMENT && getSessionData('efiling_details')['stage_id'] == Draft_Stage)) {

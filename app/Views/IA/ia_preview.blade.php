@@ -187,7 +187,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                                 ) {
                                                     $final_submit_action = TRUE;
                                                     if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
-                                                        echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submitww</button>';
+                                                        echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submit</button>';
                                                     }
                                                 }
                                             }
@@ -243,7 +243,8 @@ if(isset(getSessionData('efiling_details')['stage_id'])){
                                             <?php } ?>
                                             <div class=" text-center">
                                                 <?php
-                                                if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
+                                                // if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
+                                                if ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT) {
                                                     $dept_all_adv_panel_list = $this->DepartmentModel->get_all_advocate_panel(getSessionData('login')['id']);
                                                     $dept_adv_panel_list = $ci->Department_model->get_advocate_panel(getSessionData('login')['id']);
                                                     $advocate = $ci->Department_model->get_alloted_advocate(getSessionData('efiling_details')['registration_id']);

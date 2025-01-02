@@ -57,7 +57,7 @@ class CaseDetails extends BaseController
     {
         $data = array();
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-        if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('adminDashboard'));
             exit(0);
         }
@@ -70,26 +70,26 @@ class CaseDetails extends BaseController
         $data['sc_case_type'] = $this->Dropdown_list_model->get_sci_case_type();
         $data['main_subject_cat'] = $this->Dropdown_list_model->get_main_subject_category();
         $data['special_category'] = $this->Dropdown_list_model->get_special_category();
-        if ($this->session->get('login')['ref_m_usertype_id'] == USER_DEPARTMENT && !is_null($this->session->get('login')['department_id'])) {
-            $data['department_aor'] = $this->DepartmentModel->get_department_aor($this->session->get('login')['department_id']);
+        if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT && !is_null(getSessionData('login')['department_id'])) {
+            $data['department_aor'] = $this->DepartmentModel->get_department_aor(getSessionData('login')['department_id']);
         }
-        if ($this->session->get('login')['ref_m_usertype_id'] == USER_CLERK) {
-            $data['clerk_aor'] = $this->Clerk_model->get_clerk_aor($this->session->get('login')['id']);
+        if (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
+            $data['clerk_aor'] = $this->Clerk_model->get_clerk_aor(getSessionData('login')['id']);
         }
-        if ($this->session->get('login')['ref_m_usertype_id'] == USER_ADVOCATE && !is_null($this->session->get('login')['aor_code'])) {
-            $data['aor_department'] = $this->DepartmentModel->get_aor_department($this->session->get('login')['aor_code']);
+        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE && !is_null(getSessionData('login')['aor_code'])) {
+            $data['aor_department'] = $this->DepartmentModel->get_aor_department(getSessionData('login')['aor_code']);
         }
         $court_type = NULL;
         if (isset(getSessionData('efiling_details')['registration_id']) && !empty(getSessionData('efiling_details')['registration_id'])) {
             $registration_id = getSessionData('efiling_details')['registration_id'];
             $data['new_case_details'] = $this->Get_details_model->get_new_case_details($registration_id);
-            if ($this->session->get('login')['ref_m_usertype_id'] == USER_DEPARTMENT && !is_null($this->session->get('login')['department_id'])) {
+            if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT && !is_null(getSessionData('login')['department_id'])) {
                 $data['selected_aor'] = $this->DepartmentModel->selected_aor_for_case($registration_id);
             }
-            if ($this->session->get('login')['ref_m_usertype_id'] == USER_ADVOCATE && !is_null($this->session->get('login')['aor_code'])) {
+            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE && !is_null(getSessionData('login')['aor_code'])) {
                 $data['selected_department'] = $this->DepartmentModel->selected_aor_for_case($registration_id);
             }
-            if ($this->session->get('login')['ref_m_usertype_id'] == USER_CLERK) {
+            if (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
                 $data['selected_aor'] = $this->Clerk_model->selected_aor_for_case($registration_id);
             }
             $court_type = (!empty($data['new_case_details'][0]->court_type) && isset($data['new_case_details'][0]->court_type)) ? (int)$data['new_case_details'][0]->court_type : NULL;
@@ -144,6 +144,9 @@ class CaseDetails extends BaseController
                 $data['uploaded_docs'] = $uploaded_docs;
             } else{
                 $data['uploaded_docs'] = '';
+            }
+            if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
+                $data['selected_aor'] = $this->Clerk_model->selected_aor_for_case($registration_id);
             }
         } else{
             $high_courts = $this->Dropdown_list_model->high_courts();
@@ -217,19 +220,20 @@ class CaseDetails extends BaseController
             }
             /*end code here json api*/
         }
+        if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK ){
+            $data['clerk_aor'] = $this->Clerk_model->get_clerk_aor($_SESSION['login']['id']);
+        }
         $this->render('newcase.new_case_view', $data);
     }
 
-    public function getSubSubjectCategory()
-    {
+    public function getSubSubjectCategory() {
         $subj_sub_cat_1 = explode('##', url_decryption(escape_data($this->request->getPost("main_category"))));
         var_dump($subj_sub_cat_1);
     }
 
-    public function add_case_details()
-    {
+    public function add_case_details() {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
-        if (!in_array($this->session->get('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('adminDashboard');
             exit(0);
         }
@@ -298,7 +302,7 @@ class CaseDetails extends BaseController
                 "rules" => "trim|validate_encrypted_value"
             ],
         ];      
-        if (in_array($this->session->get('login')['ref_m_usertype_id'], [USER_DEPARTMENT, USER_CLERK])) {
+        if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_DEPARTMENT, USER_CLERK])) {
             $validations += [
                 "impersonated_aor" => [
                     "label" => "AOR",
@@ -473,7 +477,25 @@ class CaseDetails extends BaseController
                     echo '1@@@SCLSC ANR Year field is required.'; exit();
                 }
             }
-            $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
+            $is_govt_filing = !empty(trim($_POST["is_govt_filing"])) ? 1 : 0;
+            if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                if (isset($_POST['impersonated_aor']) && !empty($_POST['impersonated_aor'])){
+                    $impersonated_aor = explode('@@@', escape_data($this->request->getPost("impersonated_aor")));
+                    if (!empty($impersonated_aor)){
+                        $_SESSION['login']['aor_code'] = $impersonated_aor[0];
+                    }
+                } else{
+                    echo '1@@@AOR field is required.'; exit();
+                }
+            }
+            //check Whether filed by Government aor or not
+            if (isset($_SESSION['login']['aor_code']) && !empty($_SESSION['login']['aor_code'])) {
+                if (is_AORGovernment($_SESSION['login']['aor_code'])) {
+                    $is_govt_filing = $is_govt_filing;
+                } else{
+                    $is_govt_filing =0;
+                }
+            }
             $special_category = !empty($_POST["special_category"]) ? url_decryption(escape_data($_POST["special_category"])) : 0;
             if(isset($jailsignDt) && !empty($jailsignDt)){ 
                 $jailsignDt = DateTime::createFromFormat('d/m/Y', $jailsignDt);
@@ -512,21 +534,36 @@ class CaseDetails extends BaseController
                 'sclsc_amr_no'=>$sclsc_amr_no,
                 'sclsc_amr_year'=>$sclsc_amr_year
             );
-            // pr($case_details);
             if (isset($_SESSION['impersonated_department']))
                 unset($_SESSION['impersonated_department']);
-            if (in_array($this->session->get('login')['ref_m_usertype_id'], [USER_DEPARTMENT, USER_CLERK])) {
-                $this->session->get('login')['aor_code'] = $_POST["impersonated_aor"];
-            }
-            if (in_array($this->session->get('login')['ref_m_usertype_id'], [USER_ADVOCATE]) && isset($_POST['impersonated_department']) && !empty($_POST['impersonated_department'])) {
+            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_ADVOCATE]) && isset($_POST['impersonated_department']) && !empty($_POST['impersonated_department'])) {
                 $_SESSION['impersonated_department'] = $_POST['impersonated_department'];
             }
             if (isset($registration_id) && !empty($registration_id) && isset($_SESSION['case_table_ids']->case_details_id) && !empty($_SESSION['case_table_ids']->case_details_id)) {
-                $case_details_update_data = array(
-                    'updated_on' => $curr_dt_time,
-                    'updated_by' => $this->session->get('login')['id'],
-                    'updated_by_ip' => $_SERVER['REMOTE_ADDR']
-                );
+                if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                    $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+                    $created_by=!empty($aorData) ? $aorData[0]->id  : null;
+                    $adv_sci_bar_id=!empty($aorData) ? $aorData[0]->adv_sci_bar_id  : null;
+                    $_SESSION['login']['adv_sci_bar_id'] = $adv_sci_bar_id;
+                    $case_details_update_data = array(
+                        'created_by' => $created_by,
+                        'updated_on' => $curr_dt_time,
+                        'updated_by' => getSessionData('login')['id'],
+                        'updated_by_ip' => $_SERVER['REMOTE_ADDR']
+                    );
+                    $adv_details = array('adv_bar_id' => $adv_sci_bar_id,'adv_code' => $_SESSION['login']['aor_code']);
+                    $this->db->WHERE('registration_id', $registration_id);
+                    $this->db->WHERE('is_active', FALSE);
+                    if($this->db->UPDATE('efil.tbl_case_advocates', $adv_details)){
+                        $this->Common_model->update_efiling_nums($registration_id,$case_details_update_data);
+                    }
+                } else{
+                    $case_details_update_data = array(
+                        'updated_on' => $curr_dt_time,
+                        'updated_by' => getSessionData('login')['id'],
+                        'updated_by_ip' => $_SERVER['REMOTE_ADDR']
+                    );
+                }
                 $case_details = array_merge($case_details, $case_details_update_data);
                 //UPDATE CASE DETAILS
                 $p_r_type_petitioners = 'P';
@@ -546,7 +583,6 @@ class CaseDetails extends BaseController
                         exit();
                     }
                 }
-                // pr($case_details);
                 $status = $this->New_case_model->add_update_case_details($registration_id, $case_details, NEW_CASE_CASE_DETAIL, getSessionData('case_table_ids')->case_details_id);
                 if ($status) {
                     //SESSION efiling_details
@@ -555,7 +591,6 @@ class CaseDetails extends BaseController
                     //$registration_id = getSessionData('efiling_details')['registration_id'];
                     //todo change code when user change case type from criminal to civil
                     $pending_court_fee = getPendingCourtFee();
-                    // pr($pending_court_fee);
                     if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
                         $breadcrumb_to_update = CAVEAT_BREAD_COURT_FEE;
                     } else{
@@ -567,6 +602,9 @@ class CaseDetails extends BaseController
                         // $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, $breadcrumb_to_update);
                         $update_courtfee_breadcrumb_status = $this->Payment_model->update_breadcrumbs($registration_id, 1);
                     }
+                    if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK]) && !is_null($_SESSION['login']['aor_code'])) {
+                        $this->Clerk_model->clerk_filings_update($registration_id,$_SESSION['login']['aor_code']);
+                    }
                     echo '2@@@' . htmlentities('Case details updated successfully!', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . $_SESSION['efiling_details']['stage_id'])));
                 } else{
                     echo '1@@@' . htmlentities('Some error ! Please Try again.', ENT_QUOTES);
@@ -577,12 +615,12 @@ class CaseDetails extends BaseController
                 if ($result['registration_id']) {
                     //SESSION efiling_details
                     $this->Common_model->get_efiling_num_basic_Details($result['registration_id']);
-                    $user_name = $this->session->get('login')['first_name'] . ' ' . $this->session->get('login')['last_name'];
+                    $user_name = getSessionData('login')['first_name'] . ' ' . getSessionData('login')['last_name'];
                     $efiling_num = getSessionData('efiling_details')['efiling_no'];
                     $sentSMS = "Efiling No. " . efile_preview($efiling_num) . " generated from your efiling account & still pending for final submit. - Supreme Court of India";
                     $subject = "Efiling No. " . efile_preview($efiling_num) . " generated from your efiling account";
-                    send_mobile_sms($this->session->get('login')['mobile_number'], $sentSMS, SCISMS_Efiling_No_Generated);
-                    send_mail_msg($this->session->get('login')['emailid'], $subject, $sentSMS, $user_name);
+                    send_mobile_sms(getSessionData('login')['mobile_number'], $sentSMS, SCISMS_Efiling_No_Generated);
+                    send_mail_msg(getSessionData('login')['emailid'], $subject, $sentSMS, $user_name);
                     // send_whatsapp_message($result['registration_id'], $efiling_num, "generated from your efiling account & still pending for final submit.");
                     /*start upload duc data*/
                     $registration_id = $result['registration_id'];
@@ -594,32 +632,26 @@ class CaseDetails extends BaseController
         }
     }
 
-    public function is_upload_pdf()
-    {
-
+    public function is_upload_pdf() {
         if ($msg = isValidPDF('pdfDocFile')) {
             echo '1@@@' . htmlentities($msg, ENT_QUOTES);
             exit(0);
         }
         $breadcrumb_step_no = NEW_CASE_UPLOAD_DOCUMENT;
         $doc_title = 'Draft Petition';
-
         // (A) ERROR - NO FILE UPLOADED
         if (!isset($_FILES["pdfDocFile"])) {
             // exit("No file uploaded");
             echo '1@@@' . htmlentities('Upload Draft Petition file is required', ENT_QUOTES);
             exit(0);
         }
-
         // (B) FLAGS & "SETTINGS"
         // (B1) ACCEPTED & UPLOADED MIME-TYPES
         $accept = ["application/pdf", "image/png"];
         $upmime = strtolower($_FILES["pdfDocFile"]["type"]);
-
         // (B2) SOURCE & DESTINATION
         $source = $_FILES["pdfDocFile"]["tmp_name"];
         $destination = $_FILES["pdfDocFile"]["name"];
-
         // (C) SAVE UPLOAD ONLY IF ACCEPTED FILE TYPE
         if (in_array($upmime, $accept)) {
             echo '2@@@' . htmlentities('Document ready to upload', ENT_QUOTES);
@@ -629,8 +661,8 @@ class CaseDetails extends BaseController
             exit(0);
             // echo "$upmime NOT ACCEPTED";
         }
-
         echo '2@@@' . htmlentities('Document uploaded successfully', ENT_QUOTES);
         exit(0);
     }
+
 }

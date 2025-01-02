@@ -7,6 +7,7 @@ use App\Models\DocumentIndex\DocumentIndexSelectModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\ShcilPayment\PaymentModel;
 use App\Models\UploadDocuments\UploadDocsModel;
+use GuzzleHttp\Exception\GuzzleException;
 
 class DefaultController extends BaseController
 {
@@ -280,7 +281,14 @@ class DefaultController extends BaseController
                     $breadcrumb_to_remove = MISC_BREAD_AFFIRMATION;
                     break;
             }
-
+            $uploaded_by=$_SESSION['login']['id'];
+            if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                $aorData = getAordetails_ifFiledByClerk($registration_id);
+                if (isset($aorData) && !empty($aorData)) {
+                    $uploaded_by=!empty($aorData) ? $aorData[0]->id  : 0;
+                    $sub_created_by = $_SESSION['login']['id'];
+                }
+            }
             if (empty($index_id))
             {
                 if($doc_type==11){
@@ -312,7 +320,7 @@ class DefaultController extends BaseController
                     'st_page' => $page_no_from,
                     'end_page' => $page_no_to,
                     'no_of_copies' => $doc_total_pages,
-                    'uploaded_by' => $_SESSION['login']['id'],
+                    'uploaded_by' => $uploaded_by,
                     'uploaded_on' => date('Y-m-d H:i:s'),
                     'upload_ip_address' => getClientIP(),
                     'doc_hashed_value' => null,
@@ -371,7 +379,7 @@ class DefaultController extends BaseController
                     'st_page' => $page_no_from,
                     'end_page' => $page_no_to,
                     'no_of_copies' => $doc_total_pages,
-                    'updated_by' => $_SESSION['login']['id'],
+                    'updated_by' => $uploaded_by,
                     'updated_on' => date('Y-m-d H:i:s'),
                     'update_ip_address' => getClientIP(),
                     'doc_hashed_value' => null,
@@ -491,7 +499,7 @@ class DefaultController extends BaseController
     private function check_login()
     {
 
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('dashboard');
             exit(0);

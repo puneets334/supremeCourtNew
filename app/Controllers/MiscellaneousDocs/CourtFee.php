@@ -42,7 +42,7 @@ class CourtFee extends BaseController
             $index_pdf_details = $this->DocumentIndex_Select_model->is_index_created($registration_id);
            
             if (!empty($index_pdf_details)) {
-                $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+                $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
                 
                 if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
                     redirect('login');
@@ -52,6 +52,13 @@ class CourtFee extends BaseController
                 if (!in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) {
                     return redirect()->back();
                     exit(0);
+                }
+                $stages_array_defected = array(I_B_Defected_Stage);
+                if (in_array($_SESSION['efiling_details']['stage_id'], $stages_array_defected)) {
+                    // redirect()->back();exit(0);
+                    // redirect('miscellaneous_docs/view');exit(0);
+                    return redirect()->to(base_url('miscellaneous_docs/view'));
+
                 }
                 if (isset($_SESSION['efiling_details']['registration_id']) && !empty($_SESSION['efiling_details']['registration_id'])) {
                     $registration_id = $_SESSION['efiling_details']['registration_id'];
@@ -106,7 +113,7 @@ class CourtFee extends BaseController
     public function add_court_fee_details()
     {
         // echo "<pre>"; print_r($_SESSION); die();
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             $_SESSION['MSG'] = 'Unauthorised Access !';
             return redirect()->to(base_url('/'));

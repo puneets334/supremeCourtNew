@@ -204,5 +204,17 @@ class CommonLoginModel extends Model
     //            return FALSE;
     //        }
     //    }
-
+    public function get_login_multi_account($usr)
+    {
+        $userid = strtoupper($usr);
+        $sql = "SELECT users.*, est.pg_request_function, est.pg_response_function, est.estab_code,tut.user_type
+                    FROM efil.tbl_users users 
+                    JOIN efil.m_tbl_establishments est ON 1 = 1
+                    LEFT JOIN efil.tbl_user_types tut ON tut.id=users.ref_m_usertype_id
+                    WHERE (users.userid = ? OR users.moblie_number = ?  OR users.emailid ilike ?)
+                    AND users.is_deleted = 'false' AND users.is_active = '1' AND tut.is_deleted = false";
+        $query = $this->db->query($sql, array($userid, $usr, $usr));
+        $res_array = $query->getResult();
+        return $res_array;
+    }
 }

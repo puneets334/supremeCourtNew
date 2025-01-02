@@ -267,6 +267,7 @@ define('SR_ADVOCATE', 19);
 define('ARGUING_COUNSEL', 21);
 define('USER_EFILING_ADMIN', 20);
 define('USER_ADMIN_READ_ONLY', 22);
+define('AMICUS_CURIAE_USER',23);
 define('ACCOUNT_STATUS_PENDING_APPROVAL', 1); // When account is to be approved by e-admin or CIS in case of advocate and party in person
 define('ACCOUNT_STATUS_ACTIVE', 2); // when account is activated
 define('ACCOUNT_STATUS_REJECTED', 3); // when account is rejected by e-admin / cis/ bar
@@ -980,4 +981,6 @@ define('DOCUMENT_CASETYPE_URL', 'http://10.25.78.48:81/');
 define('AIASSISTED_USER_IN_LIST',[6282,1975,1378,1537,2563,1600,1619,2309,2465,2121]);
 define('CHANGE_EFILE_STAGE',['3','5','6','8','9','10','11']);
 define('ICMIS_IITM_EFILE_COMPARISON_USERS',['SCI4599','SC-ADMIN']);
-
+define('GVT_AOR_LIMIT',10);
+define('NON_GVT_AOR_LIMIT',3);
+define('CLERK_ASSOCIATIONS',2);

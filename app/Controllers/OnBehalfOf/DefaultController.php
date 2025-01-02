@@ -4,6 +4,7 @@ namespace App\Controllers\OnBehalfOf;
 
 use App\Controllers\BaseController;
 use App\Models\OnBehalfOf\OnBehalfOfModel;
+use App\Models\Clerk\ClerkModel;
 
 class DefaultController extends BaseController
 {
@@ -11,9 +12,9 @@ class DefaultController extends BaseController
     protected $OnBehalfOfModel;
     protected $validation;
     protected $request;
+    protected $Clerk_model;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         if(empty(getSessionData('login'))) {
             return response()->redirect(base_url('/')); 
@@ -25,11 +26,11 @@ class DefaultController extends BaseController
         $this->OnBehalfOfModel = new OnBehalfOfModel();
         $this->validation = \Config\Services::validation();
         $this->request = \Config\Services::request();
+        $this->Clerk_model = new ClerkModel();
     }
 
-    public function index()
-    {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+    public function index() {
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (!empty(getSessionData('login')) && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return redirect()->to(base_url('/'));
         }
@@ -45,15 +46,17 @@ class DefaultController extends BaseController
             $registration_id = getSessionData('efiling_details')['registration_id'];
             $data['parties_details'] = $this->OnBehalfOfModel->get_case_parties_list($registration_id);
             $data['appearing_for_details'] = $this->OnBehalfOfModel->get_appearing_for_details($registration_id, $_SESSION['login']['id']);
+            if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
+                $data['clerk_aor_details'] = $this->Clerk_model->get_clerk_aor_details($registration_id);
+            }
             $this->render('on_behalf_of.on_behalf_of_view', $data);
         } else {
             return redirect()->to(base_url('miscellaneous_docs/view'));
         }
     }
 
-    public function save_filing_for()
-    {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT);
+    public function save_filing_for() {
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             echo '2@@@' . htmlentities('Unauthorised Access!', ENT_QUOTES);
             exit(0);
@@ -68,7 +71,6 @@ class DefaultController extends BaseController
                 "label" => "Select Party",
                 "rules" => "required|trim|validate_encrypted_value"
             ]
-
         ]);
         //    if ($this->validation->withRequest($this->request)->run() === FALSE) {
         //         $data = [
@@ -87,40 +89,45 @@ class DefaultController extends BaseController
         /*if(count($parties_selected)<=0){
             echo "2@@@Some Error ! Select at least one party for whome filing.";
             exit(0);
-        }*/        
-        if (!empty($parties_selected)) {
-            foreach ($parties_selected as $seleced_party) {
-                $selected_parties_details = url_decryption($seleced_party);
-                $selected_parties_details = explode('$$$', $selected_parties_details);
-                if (count($selected_parties_details) != 3) {
-                    exit(0);
-                }
-                $parties_sr_no = $selected_parties_details[1];
-                $filing_for = $parties_sr_no . '$$';
-                $party_type = $selected_parties_details[2];
-                $is_govt_filing = !empty($_POST["is_govt_filing"]) ? 1 : 0;
-                $update_filing_for_detail = array(
-                    'filing_for_parties' => !empty($filing_for) ? rtrim($filing_for, '$$') : '',
-                    'p_r_type' => $party_type,
-                    'updated_by' => getSessionData('login')['id'],
-                    'updated_by_ip' => getClientIP(),
-                    'updated_on' => date('Y-m-d H:i:s', strtotime('+5 hours 30 minutes')),
-                    'is_govt_filing' => $is_govt_filing
-                );
-                $update_status = $this->OnBehalfOfModel->update_filing_for($update_filing_for_detail, $registration_id);         
-                if ($update_status) {
-                    if ($update_filing_for_detail['is_govt_filing'] == 1) {
-                        getSessionData('efiling_details')['doc_govt_filing'] = 1;
-                    } else{
-                        getSessionData('efiling_details')['doc_govt_filing'] = 0;
-                    }
-                    echo "1@@@Filing for updated successfully.";
-                } else{
-                    echo "2@@@Some Error ! Please try after some time.";
-                }
+        }*/
+        $filing_for = NULL;        
+        foreach ($parties_selected as $seleced_party) {
+            $selected_parties_details = url_decryption($seleced_party);
+            $selected_parties_details = explode('$$$', $selected_parties_details);
+            if(count($selected_parties_details) != 3){
+                exit(0);
+            }
+            $parties_sr_no = $selected_parties_details[1];
+            $filing_for .= $parties_sr_no . '$$';            
+            $party_type = $selected_parties_details[2];
+        }
+        $is_govt_filing=!empty(trim($this->request->getPost("is_govt_filing"))) ? 1 : 0;
+        if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK){
+            $clerk_aor_details=$this->Clerk_model->get_clerk_aor_details($registration_id);
+            if(isset($clerk_aor_details) && !empty($clerk_aor_details) && $clerk_aor_details[0]['ref_department_id']==1) {
+                $is_govt_filing=$is_govt_filing;
+            } else{
+                $is_govt_filing=0;
             }
         }
-           
+        $update_filing_for_detail = array(
+            'filing_for_parties' => rtrim($filing_for, '$$'),
+            'p_r_type' => $party_type,
+            'updated_by' => $_SESSION['login']['id'],
+            'updated_by_ip' => getClientIP(),
+            'updated_on' => date('Y-m-d H:i:s'),
+            'is_govt_filing' => $is_govt_filing
+        );
+        $update_status = $this->OnBehalfOfModel->update_filing_for($update_filing_for_detail, $registration_id);
+        if ($update_status) {
+            if($update_filing_for_detail['is_govt_filing']==1)
+                $_SESSION['efiling_details']['doc_govt_filing']=1;
+            else
+                $_SESSION['efiling_details']['doc_govt_filing']=0;
+            echo "1@@@Filing for updated successfully.";
+        } else {
+            echo "2@@@Some Error ! Please try after some time.";
+        }           
     }
 
 }

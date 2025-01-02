@@ -22,7 +22,7 @@ class FinalSubmit extends BaseController {
 
     public function index() {
 
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, AMICUS_CURIAE_USER);
 
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('dashboard');
@@ -35,6 +35,26 @@ class FinalSubmit extends BaseController {
         }
 
         $registration_id = $_SESSION['efiling_details']['registration_id'];
+        $marked_defect_tobe_shown_stages = array(I_B_Defected_Stage, I_B_Rejected_Stage);
+        if (in_array($_SESSION['efiling_details']['stage_id'], $marked_defect_tobe_shown_stages)) {
+            $result_icmis = $this->Common_model->get_ia_docs_cis_defects_remarks($registration_id, FALSE);
+            if (isset($result_icmis) && !empty($result_icmis)) {
+                foreach ($result_icmis as $re) {
+                    $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
+                    if ($aor_cured == 'f') {
+                        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit...</div>');
+                        return redirect()->to(base_url('documentIndex'));
+                    }
+                }
+                //isRefilingCompulsoryIADefect($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);
+                if(!empty($_SESSION['efiling_details']['registration_id']))
+                {
+                    return redirect()->to(base_url('efilingAction/IAMiscDocsRefiledFinalSubmit'));
+
+                    // redirect('efilingAction/IAMiscDocsRefiledFinalSubmit'); exit(0);
+                }
+            }
+        }
         $next_stage = 0;
         if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_DEFICIT_COURT_FEE && (bool) $_SESSION['estab_details']['enable_payment_gateway']) {
             $next_stage = Transfer_to_IB_Stage;
