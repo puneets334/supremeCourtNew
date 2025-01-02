@@ -46,7 +46,7 @@ class FinalSubmit extends BaseController {
                 foreach ($result_icmis as $re) {
                     $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
                     if ($aor_cured == 'f') {
-                        $this->session->set_flashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit...</div>');
+                        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit...</div>');
                         redirect('documentIndex');exit();
                     }
                 }

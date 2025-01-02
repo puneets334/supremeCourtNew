@@ -38,7 +38,24 @@ if ($segment->getSegment(2) != 'view') {
                             </div>
                         </div>
                     </div>
-                <?php } ?>        
+                <?php } ?>   
+                <?php
+                if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK){
+                if(isset($clerk_aor_details) && !empty($clerk_aor_details) && $clerk_aor_details[0]['ref_department_id']==1){ ?>
+                    <div class="row">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">Whether filed by Government? :</label>
+                        <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
+                            <div class="form-group">
+                                <div class="col-md-7 col-sm-12 col-xs-12">
+                                    <label class="switch">
+                                        <input type="checkbox" name="is_govt_filing" id="is_govt_filing" <?php echo (!empty($appearing_for_details[0]['is_govt_filing']) && ($appearing_for_details[0]['is_govt_filing'] ==1)) ? 'checked' : ''  ?>>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } } ?>     
                 <div class="row mt-4 mb-4">
                     <label class="control-label col-md-1 col-sm-6 col-xs-1">Filing For<span style="color: red">*</span> :</label>
                     <div class="col-lg-9 col-md-9 col-sm-12  col-xs-12">
@@ -84,7 +101,12 @@ if ($segment->getSegment(2) != 'view') {
                             if ( is_array($saved_appearing_for) &&  is_array($parties_list) && count($parties_list) > 0) {
                                 $i = 1;
                                 foreach ($parties_list as $key => $value) {
-                                    $appearing = (in_array($key, $saved_appearing_for)) ? TRUE : FALSE;
+                                    //$appearing = (in_array($key, $saved_appearing_for)) ? TRUE : FALSE;
+                                    if (isset($saved_appearing_for) && !empty($saved_appearing_for)){
+                                        $appearing = (in_array($key, $saved_appearing_for)) ? TRUE : FALSE;
+                                    }else{
+                                        $appearing=FALSE;
+                                    }
                                     if (!$appearing) {
                                         continue;
                                     }

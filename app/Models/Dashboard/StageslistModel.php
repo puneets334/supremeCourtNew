@@ -172,7 +172,7 @@ class StageslistModel extends Model
         }
 
         if ($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK && !in_array(4, $stageIds)) {
-            $builder->orWhereIn('en.created_by', [1597]);
+            // $builder->orWhereIn('en.created_by', [1597]);
         }
         $builder->groupEnd();
         if ($limit !== null) {
@@ -258,7 +258,7 @@ class StageslistModel extends Model
             $builder->orWhere('en.registration_id IN (SELECT registration_id FROM efil.department_filings WHERE ref_department_id=' . $this->db->escape($_SESSION['login']['department_id']) . ')');
         }
         if ($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK && !in_array(4, $stageIds)) {
-            $builder->orWhereIn('en.created_by', [1597]);
+            // $builder->orWhereIn('en.created_by', [1597]);
         }
         $builder->groupEnd();
         $builder->orderBy('cs.activated_on', 'DESC');

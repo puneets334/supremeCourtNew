@@ -20,7 +20,7 @@ class CaveatFinalSubmit extends BaseController {
     }
 
     public function index() {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
             redirect('dashboard');
             exit(0);

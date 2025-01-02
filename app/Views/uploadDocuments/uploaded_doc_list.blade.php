@@ -14,7 +14,7 @@
                                 <th style="width: 40% !important;">Uploaded Document(s) </th>
                                 <th style="width: 15% !important;">Uploaded On </th>
                                 <th style="width: 15% !important;">Pages</th>
-                                <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
+                                <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
                                     <th style="width: 20% !important;">Delete</th>
                                 <?php } ?>
                             </tr>
@@ -51,7 +51,7 @@
                                     </td>
                                     <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($doc['uploaded_on']))); ?></td>
                                     <td data-key="Pages"><?= htmlentities($doc['page_no'], ENT_QUOTES); ?></td>
-                                    <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON) and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
+                                    <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
                                         <td data-key="Delete">
                                             <?php
                                             if (isset($result) && strtotime($doc['uploaded_on']) > strtotime($result[0]->max_date) || in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage))) {

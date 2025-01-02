@@ -215,12 +215,14 @@ class DefaultController extends BaseController {
                     }
                 }
                 if (!empty($_FILES["ekyc_zip_file"]['name'])) {
-                    $is_valid_files='';
+                    $is_valid_files = '';
                     $uploaded_file_size=$_FILES["ekyc_zip_file"]['size'];
                     if($uploaded_file_size > OFFLINE_AADHAAR_EKYC_ZIP_ALLOWABLE_FILE_SIZE) // allow  upto 50 kb size
                     {
                         $this->session->setFlashdata('msg', 'File size are beyond allowable limit.');
                         return redirect()->to(base_url('register'));
+                    } else{
+                        $is_valid_files = true;
                     } 
                     // Load the request object
                     $request = \Config\Services::request();
@@ -228,7 +230,7 @@ class DefaultController extends BaseController {
                     $file = $request->getFile('ekyc_zip_file');
                     // Check if the file is valid and not moved
                     if ($file->isValid() && !$file->hasMoved()) {
-                        $uploadPath = 'uploads/ekyc/';
+                        $uploadPath = 'uploaded_docs/ekyc/';
                         // Ensure the upload path exists
                         if (!is_dir($uploadPath)) {
                             mkdir($uploadPath, 0777, true);

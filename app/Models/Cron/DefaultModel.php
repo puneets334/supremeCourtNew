@@ -30,18 +30,16 @@ class DefaultModel extends Model {
         $builder->where('cs.stage_id', $stage_ids);
         #$builder->WHERE('en.registration_id', '3999'); //todo::remove this line
         $builder->orderBy('cs.activated_on', 'DESC');
-        // print_r($builder->getCompiledSelect()); die;
         $query = $builder->get();
         if ($query->getNumRows() >= 1) {
             return $query->getResult();
-        } else {
+        } else{
             return false;
         }
     }
 
     function update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_insert, $objections_update, $efiling_type = null) {
-         $builder = $this->db->table('efil.tbl_case_details'); 
-        
+        $builder = $this->db->table('efil.tbl_case_details');        
         foreach($case_details as $case_detail){ 
             $builder->where('registration_id', $registration_id);
             $builder->update($case_detail); 
@@ -51,22 +49,20 @@ class DefaultModel extends Model {
             foreach($objections_insert as $objection_insert){ 
                 $builder2->insert($objection_insert); 
             } 
-        } 
-      
+        }       
         if (isset($objections_update) && !empty($objections_update)) {
-            // pr($objections_update);
             $builder3 = $this->db->table('efil.tbl_icmis_objections');
             foreach($objections_update as $objections_updates){ 
-            // $builder3->where('id', $objections_updates['id']);
-            $builder3->where('registration_id', $registration_id);
-            $builder3->update($objections_updates); 
-        } 
+                // $builder3->where('id', $objections_updates['id']);
+                $builder3->where('registration_id', $registration_id);
+                $builder3->update($objections_updates); 
+            } 
         } 
         $current_stage = $this->get_current_stage($registration_id);
         if ($current_stage) {
             if ($current_stage[0]['stage_id'] == $next_stage) { 
                 return FALSE;
-            } else { 
+            } else{ 
                 if($next_stage) { 
                     $res = $this->update_next_stage($registration_id, $next_stage, $curr_dt);
                 }
@@ -74,7 +70,7 @@ class DefaultModel extends Model {
         }
         /*if ($this->db->trans_status() === FALSE) {
             return FALSE;
-        } else {
+        } else{
             $this->db->trans_complete();
             return TRUE;
         }*/
@@ -90,7 +86,7 @@ class DefaultModel extends Model {
         if ($query->getNumRows() >= 1) {
             $result = $query->getResultArray();
             return $result;
-        } else {
+        } else{
             return false;
         }
     }
@@ -116,10 +112,9 @@ class DefaultModel extends Model {
         );
         $builder = $this->db->table('efil.tbl_efiling_num_status');
         $builder->INSERT($insert_data);
-
         if ($this->db->insertID()) {
             return TRUE;
-        } else {
+        } else{
             return FALSE;
         }
     }
@@ -128,17 +123,14 @@ class DefaultModel extends Model {
         $builder = $this->db->table($tablename);
         $builder->insert($data);
         $insertId = $this->db->insertID();
-
         return  $insertId;
     }
-
 
     function updateCronDetails($id) {
         $builder = $this->db->table('efil.tbl_cron_details');
         $builder->where('id', $id);
         $builder->update(['completed_at' => date('Y-m-d H:i:s')]);
     }
-
 
     public function pending_court_fee() {
         $sql = "select pay.*, cd.sc_diary_num, cd.sc_diary_year 
@@ -157,7 +149,7 @@ class DefaultModel extends Model {
         if ($query->getNumRows() >= 1) {
             $result = $query->getResultArray();
             return $result;
-        } else {
+        } else{
             return FALSE;
         }
     }
@@ -267,20 +259,16 @@ class DefaultModel extends Model {
                 'is_active' => 1,
                 'pp_a' => $row->pp
             );
-
-            if (!empty($aor_code) && !empty($insert_data)) {
-          
+            if (!empty($aor_code) && !empty($insert_data)) {          
                 $builder = $this->db->table('icmis.bar');
                 $builder->SELECT('*');
                 $builder->where('aor_code', $aor_code);
                 $query = $builder->get();
-                if ($query->getNumRows() >= 1) {
-                
+                if ($query->getNumRows() >= 1) {                
                     $result = $query->getResultArray();
                     $db_bar_id = trim($result[0]['bar_id']);
                     $db_aor_code = trim($result[0]['aor_code']);
                     if (!empty($update_data) && !empty($result) && $db_bar_id == $bar_id && $db_aor_code == $aor_code) { 
-
                         $builder = $this->db->table('icmis.bar');
                         $builder->WHERE('bar_id', $bar_id);
                         $builder->WHERE('aor_code', $aor_code);
@@ -288,10 +276,8 @@ class DefaultModel extends Model {
                         $bar_u++;
                         $icmis_bar_updated .= $aor_code . ',';
                     }
-                } else { 
-
+                } else{ 
                     if (!empty($insert_data) && !empty($aor_code)) { 
-
                         $builder = $this->db->table('icmis.bar');
                         $builder->INSERT($insert_data);
                         $bar_i++;
@@ -302,22 +288,17 @@ class DefaultModel extends Model {
                 $builder->SELECT('aor_code,adv_sci_bar_id,bar_reg_no');
                 $builder->where('aor_code', $aor_code);
                 $query2 = $builder->get();
-                if ($query2->getNumRows() >= 1) {
-               
+                if ($query2->getNumRows() >= 1) {               
                     $builder = $this->db->table('efil.tbl_users');
                     $builder->WHERE('ref_m_usertype_id', 1);
                     $builder->WHERE('aor_code', $aor_code);
                     $builder->UPDATE($update_data_tbl_users);
                     $tbl_u++;
                     $efil_tbl_users_updated .= $aor_code . ',';
-                } else { 
-
+                } else{ 
                     if (!empty(($mobile) && $mobile != null) && (!empty($email) && $email != null) && (!empty($aor_code) && $aor_code != null) && (isset($row->if_aor) && $row->if_aor=='Y')) { 
-
                         $is_efil_tbl_users = $this->efil_tbl_users($aor_code, $mobile, $email);
                         if (empty($is_efil_tbl_users)) {
-               
-
                             $builder = $this->db->table('efil.tbl_users');
                             $builder->INSERT($insert_data_efil_tbl_users);
                             $tbl_i++;
@@ -337,24 +318,46 @@ class DefaultModel extends Model {
     }
 
     public function efil_tbl_users($aor_code, $mobile, $email) {
-
-        // pr($aor_code.$mobile. $email);
         $builder = $this->db->table('efil.tbl_users');
         $builder->SELECT('aor_code,adv_sci_bar_id,bar_reg_no,moblie_number,emailid');
         $builder->where('userid', $aor_code);
         $builder->orwhere('userid', $mobile);
         $builder->orWhere('moblie_number', $mobile);
         $builder->orWhere('emailid', $email);
-        // $compiled_query = $builder->getCompiledSelect(); 
-        //     pr($compiled_query);
-        $query3 = $builder->get();
-     
+        // $compiled_query = $builder->getCompiledSelect();
+        $query3 = $builder->get();     
         if ($query3->getNumRows() >= 1) {
             $result = $query3->getResultArray();
             return $result;
-        } else {
-            // echo $this->db->last_query(); exit();
+        } else{
             return '';
+        }
+    }
+
+    public function get_efiled_nums_stage_wise_list_admin_cronIsDisposed($stage_ids, $admin_for_type_id, $admin_for_id) {
+        $builder = $this->db->table('efil.tbl_efiling_nums as en');
+        $builder->DISTINCT();
+        // $builder->SELECT("en.registration_id,en.ref_m_efiled_type_id, en.efiling_no,cs.activated_on,new_case_cd.sc_diary_num,new_case_cd.sc_diary_year,concat(new_case_cd.sc_diary_num,new_case_cd.sc_diary_year)diary_no");
+        $builder->SELECT(array('en.registration_id', 'en.ref_m_efiled_type_id', 'en.efiling_no','cs.activated_on','en.efiling_for_id','efiling_type','new_case_cd.sc_diary_num','new_case_cd.sc_diary_year','concat(new_case_cd.sc_diary_num,new_case_cd.sc_diary_year)diary_no',
+        ));
+        $builder->JOIN('efil.tbl_efiling_num_status as cs', 'en.registration_id = cs.registration_id');
+        $builder->JOIN('efil.m_tbl_efiling_type as et', 'en.ref_m_efiled_type_id=et.id');
+        $builder->JOIN('efil.tbl_case_details as new_case_cd', 'en.registration_id = new_case_cd.registration_id');
+        $builder->JOIN('efil.tbl_users users', 'users.id=en.created_by', 'left');
+        $builder->WHERE('cs.is_active', 'TRUE');
+        $builder->WHERE('en.is_active', 'TRUE');
+        $builder->WHERE('en.ref_m_efiled_type_id', E_FILING_TYPE_NEW_CASE);
+        $builder->WHERE('new_case_cd.sc_diary_num is not null');
+        $builder->WHERE('new_case_cd.sc_diary_year is not null');
+        $builder->WHERE('en.efiling_for_type_id', $admin_for_type_id);
+        $builder->WHERE('en.efiling_for_id', $admin_for_id);
+        $builder->whereIn('cs.stage_id', $stage_ids);
+        $builder->orderBy('cs.activated_on','DESC');
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            return $query->getResult();
+        } else {
+            return false;
         }
     }
 

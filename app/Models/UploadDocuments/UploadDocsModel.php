@@ -247,86 +247,169 @@ class UploadDocsModel extends Model
         }
     }
 
-    function deletePdfDoc($pdf_id, $reg_id, $breadcrumb_to_remove)
-    {
-
-        if (!isset(getSessionData('efiling_details')['registration_id']) || empty($_SESSION['efiling_details']['registration_id'])) {
+    function deletePdfDoc($pdf_id, $reg_id, $breadcrumb_to_remove) {
+        if (!isset($_SESSION['efiling_details']['registration_id']) || empty($_SESSION['efiling_details']['registration_id'])) {
             return FALSE;
+        }
+        $uploaded_by=$_SESSION['login']['id'];
+        if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+            $aorData = getAordetails_ifFiledByClerk($reg_id);
+            if (isset($aorData) && !empty($aorData)) {
+                $uploaded_by = !empty($aorData) ? $aorData[0]->id : 0;
+            }
         }
         $builder = $this->db->table('efil.tbl_uploaded_pdfs pdfs');
         $builder->SELECT('pdfs.file_path, left_pdfs_count');
         $builder->JOIN('( SELECT registration_id, count(doc_id) left_pdfs_count '
-            . 'FROM efil.tbl_uploaded_pdfs WHERE registration_id = ' . $reg_id . ' AND is_deleted IS FALSE'
+            . 'FROM efil.tbl_uploaded_pdfs WHERE registration_id = '.$reg_id.' AND is_deleted IS FALSE'
             . ' GROUP BY registration_id ) left_pdfs', 'pdfs.registration_id = left_pdfs.registration_id', 'LEFT');
         $builder->WHERE('pdfs.doc_id', $pdf_id);
-        $builder->WHERE('pdfs.registration_id', $reg_id);
-        $builder->WHERE('pdfs.uploaded_by', $_SESSION['login']['id']);
+        $builder->WHERE('pdfs.registration_id', $reg_id);        
+        $builder->WHERE('pdfs.uploaded_by', $uploaded_by);
         $builder->WHERE('pdfs.is_deleted', FALSE);
-        $query = $builder->get();
+        $query = $builder->get(); 
         if ($query->getNumRows()) {
             $result = $query->getResult();
             //TODO code for insert the file uplaod breadcrumb (5) into db table .if not exist.: by k b pujari
-            $breadcrumbs_array = explode(',', getSessionData('efiling_details')['breadcrumb_status']);
+            $breadcrumbs_array = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);
             if (!(in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadcrumbs_array))) {
                 $already_uploaded_document_update_breadcrumb_status = $this->update_breadcrumbs($_SESSION['efiling_details']['registration_id'], CAVEAT_BREAD_UPLOAD_DOC);
             }
-        } else {
+        } else{
             return FALSE;
         }
-
         $this->db->transStart();
-        $data = array('is_deleted' => TRUE, 'deleted_by' => getSessionData('login')['id'], 'deleted_on' => date('Y-m-d H:i:s'), 'delete_ip' => getClientIP());
-        $builder = $this->db->table('efil.tbl_uploaded_pdfs');
-        $builder->WHERE('registration_id', $reg_id);
-        $builder->WHERE('doc_id', $pdf_id);
-        $builder->WHERE('uploaded_by', getSessionData('login')['id']);
-        $builder->UPDATE($data);
-        if ($this->db->affectedRows() == 1) {
-
-            $builder = $this->db->table('efil.tbl_efiled_docs ted');
-            $builder->SELECT('ted.doc_id, ted.registration_id');
-            $builder->WHERE('ted.pdf_id', $pdf_id);
-            $builder->WHERE('ted.registration_id', $reg_id);
-            $builder->WHERE('ted.uploaded_by', getSessionData('login')['id']);
-            $builder->WHERE('ted.is_deleted', FALSE);
-            $query_pdf_indexes = $builder->get();
-            if ($query_pdf_indexes->getNumRows()) {
-                $builder = $this->db->table('efil.tbl_efiled_docs');
-                $builder->WHERE('registration_id', $reg_id);
-                $builder->WHERE('pdf_id', $pdf_id);
-                $builder->WHERE('uploaded_by', getSessionData('login')['id']);
-                $builder->UPDATE($data);
+        $data = array('is_deleted' => TRUE, 'deleted_by' =>$uploaded_by, 'deleted_on' => date('Y-m-d H:i:s'), 'delete_ip' => getClientIP());
+        $builder1 = $this->db->table('efil.tbl_uploaded_pdfs');
+        $builder1->WHERE('registration_id', $reg_id);
+        $builder1->WHERE('doc_id', $pdf_id);
+        $builder1->WHERE('uploaded_by', $uploaded_by);
+        $builder1->UPDATE($data);
+        if($this->db->affectedRows() == 1){
+            $builder2 = $this->db->table('efil.tbl_efiled_docs ted');
+            $builder2->SELECT('ted.doc_id, ted.registration_id');
+            $builder2->WHERE('ted.pdf_id', $pdf_id);
+            $builder2->WHERE('ted.registration_id', $reg_id);
+            $builder2->WHERE('ted.uploaded_by', $uploaded_by);
+            $builder2->WHERE('ted.is_deleted', FALSE);
+            $query_pdf_indexes = $builder2->get();
+             if ($query_pdf_indexes->getNumRows()) {
+                $builder3 = $this->db->table('efil.tbl_efiled_docs');
+                $builder3->WHERE('registration_id', $reg_id);
+                $builder3->WHERE('pdf_id', $pdf_id);
+                $builder3->WHERE('uploaded_by', $uploaded_by);
+                $builder3->UPDATE($data);
             }
-            if (file_exists($result[0]->file_path)) {
-                if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE and in_array($_SESSION['efiling_details']['stage_id'], array(Draft_Stage)))
+            if(file_exists($result[0]->file_path)) {
+                if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE and in_array($_SESSION['efiling_details']['stage_id'], array(Draft_Stage))) {
                     $file_delete_status = unlink($result[0]->file_path);
-                else {
+                } else {
                     $file_delete_status = TRUE; // OTHER THAN DRAFT STAGE CASE USER WILL BE NOT NOT ALLOWED TO DELETE(UNLINK) THE PDF
                 }
-                if (!$file_delete_status) {
+                if(!$file_delete_status) {
                     return FALSE;
                 }
             } /// Changed on 17-09-2020 setting record as deleted either if file not exists.
             /*$file_delete_status = unlink($result[0]->file_path);
-
-            if(!$file_delete_status){
+            if(!$file_delete_status) {
                 return FALSE;
             }*/
-            if (($result[0]->left_pdfs_count - 1) == 0) {
+            if(($result[0]->left_pdfs_count - 1) == 0){
                 $status = $this->remove_breadcrumb($reg_id, $breadcrumb_to_remove);
-                if ($status) {
+                if($status){
                     $this->db->transComplete();
                 }
             } else {
-                $this->db->transComplete();
+               $this->db->transComplete(); 
             }
         }
         if ($this->db->transStatus() === FALSE) {
-            return FALSE;
+            return FALSE;          
         } else {
-            return TRUE;
+            return TRUE;              
         }
     }
+
+    // function deletePdfDoc($pdf_id, $reg_id, $breadcrumb_to_remove)
+    // {
+
+    //     if (!isset(getSessionData('efiling_details')['registration_id']) || empty($_SESSION['efiling_details']['registration_id'])) {
+    //         return FALSE;
+    //     }
+    //     $builder = $this->db->table('efil.tbl_uploaded_pdfs pdfs');
+    //     $builder->SELECT('pdfs.file_path, left_pdfs_count');
+    //     $builder->JOIN('( SELECT registration_id, count(doc_id) left_pdfs_count '
+    //         . 'FROM efil.tbl_uploaded_pdfs WHERE registration_id = ' . $reg_id . ' AND is_deleted IS FALSE'
+    //         . ' GROUP BY registration_id ) left_pdfs', 'pdfs.registration_id = left_pdfs.registration_id', 'LEFT');
+    //     $builder->WHERE('pdfs.doc_id', $pdf_id);
+    //     $builder->WHERE('pdfs.registration_id', $reg_id);
+    //     $builder->WHERE('pdfs.uploaded_by', $_SESSION['login']['id']);
+    //     $builder->WHERE('pdfs.is_deleted', FALSE);
+    //     $query = $builder->get();
+    //     if ($query->getNumRows()) {
+    //         $result = $query->getResult();
+    //         //TODO code for insert the file uplaod breadcrumb (5) into db table .if not exist.: by k b pujari
+    //         $breadcrumbs_array = explode(',', getSessionData('efiling_details')['breadcrumb_status']);
+    //         if (!(in_array(CAVEAT_BREAD_UPLOAD_DOC, $breadcrumbs_array))) {
+    //             $already_uploaded_document_update_breadcrumb_status = $this->update_breadcrumbs($_SESSION['efiling_details']['registration_id'], CAVEAT_BREAD_UPLOAD_DOC);
+    //         }
+    //     } else {
+    //         return FALSE;
+    //     }
+
+    //     $this->db->transStart();
+    //     $data = array('is_deleted' => TRUE, 'deleted_by' => getSessionData('login')['id'], 'deleted_on' => date('Y-m-d H:i:s'), 'delete_ip' => getClientIP());
+    //     $builder = $this->db->table('efil.tbl_uploaded_pdfs');
+    //     $builder->WHERE('registration_id', $reg_id);
+    //     $builder->WHERE('doc_id', $pdf_id);
+    //     $builder->WHERE('uploaded_by', getSessionData('login')['id']);
+    //     $builder->UPDATE($data);
+    //     if ($this->db->affectedRows() == 1) {
+
+    //         $builder = $this->db->table('efil.tbl_efiled_docs ted');
+    //         $builder->SELECT('ted.doc_id, ted.registration_id');
+    //         $builder->WHERE('ted.pdf_id', $pdf_id);
+    //         $builder->WHERE('ted.registration_id', $reg_id);
+    //         $builder->WHERE('ted.uploaded_by', getSessionData('login')['id']);
+    //         $builder->WHERE('ted.is_deleted', FALSE);
+    //         $query_pdf_indexes = $builder->get();
+    //         if ($query_pdf_indexes->getNumRows()) {
+    //             $builder = $this->db->table('efil.tbl_efiled_docs');
+    //             $builder->WHERE('registration_id', $reg_id);
+    //             $builder->WHERE('pdf_id', $pdf_id);
+    //             $builder->WHERE('uploaded_by', getSessionData('login')['id']);
+    //             $builder->UPDATE($data);
+    //         }
+    //         if (file_exists($result[0]->file_path)) {
+    //             if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE and in_array($_SESSION['efiling_details']['stage_id'], array(Draft_Stage)))
+    //                 $file_delete_status = unlink($result[0]->file_path);
+    //             else {
+    //                 $file_delete_status = TRUE; // OTHER THAN DRAFT STAGE CASE USER WILL BE NOT NOT ALLOWED TO DELETE(UNLINK) THE PDF
+    //             }
+    //             if (!$file_delete_status) {
+    //                 return FALSE;
+    //             }
+    //         } /// Changed on 17-09-2020 setting record as deleted either if file not exists.
+    //         /*$file_delete_status = unlink($result[0]->file_path);
+
+    //         if(!$file_delete_status){
+    //             return FALSE;
+    //         }*/
+    //         if (($result[0]->left_pdfs_count - 1) == 0) {
+    //             $status = $this->remove_breadcrumb($reg_id, $breadcrumb_to_remove);
+    //             if ($status) {
+    //                 $this->db->transComplete();
+    //             }
+    //         } else {
+    //             $this->db->transComplete();
+    //         }
+    //     }
+    //     if ($this->db->transStatus() === FALSE) {
+    //         return FALSE;
+    //     } else {
+    //         return TRUE;
+    //     }
+    // }
 
     function update_breadcrumbs($registration_id, $step_no)
     {

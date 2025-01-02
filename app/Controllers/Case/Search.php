@@ -14,12 +14,13 @@ use App\Models\CaseSearch\CaseSearchModel;
 use App\Models\AppearingFor\AppearingForModel;
 use App\Models\OldCaseRefiling\OldEfilingDocsModel;
 use App\Libraries\webservices\Efiling_webservices;
+use App\Models\Clerk\ClerkModel;
 use App\Models\Consume\ConsumeDataModel;
 use App\Models\Cron\DefaultModel;
 use App\Models\FetchIcmisData\FetchDataModel;
 
-class Search extends BaseController
-{
+class Search extends BaseController {
+
     protected $Common_model;
     protected $MiscellaneousDocsModel;
     protected $IAModel;
@@ -40,9 +41,9 @@ class Search extends BaseController
     protected $ConsumeDataModel;
     protected $DefaultModel;
     protected $FetchDataModel;
+    protected $Clerk_model;
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
         $this->Common_model = new CommonModel();
         $this->MiscellaneousDocsModel = new MiscellaneousDocsModel();
@@ -61,6 +62,7 @@ class Search extends BaseController
         $this->ConsumeDataModel = new ConsumeDataModel();
         $this->DefaultModel = new DefaultModel();
         $this->FetchDataModel = new FetchDataModel();
+        $this->Clerk_model = new ClerkModel();
     }
 
     // public function _remap($param = NULL)
@@ -82,17 +84,14 @@ class Search extends BaseController
     //     }
     // }
 
-    public function index($efiling_type = null)
-    {
-        $efiling_type = getSessionData('efiling_type');
+    public function index($efiling_type) {
+        unset($_SESSION['efiling_type']);
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
         }
-        // $_SESSION['efiling_type'] = $efiling_type = url_decryption($efiling_type);
-        // var_dump($efiling_type); die();
+        $_SESSION['efiling_type'] = $efiling_type = url_decryption($efiling_type);
         if ($efiling_type != 'misc' && $efiling_type != "ia" && $efiling_type != 'mentioning' && $efiling_type != 'citation' && $efiling_type != 'certificate' && $efiling_type != 'adjournment_letter' && $efiling_type != 'refile_old_efiling_cases') {
-            // pr('Hi');
             unset($_SESSION['efiling_type']);
             return response()->redirect(base_url('dashboard'));
         } else{
@@ -106,8 +105,7 @@ class Search extends BaseController
         }
     }
 
-    public function search_case_details()
-    {
+    public function search_case_details() {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/')); 
@@ -163,7 +161,6 @@ class Search extends BaseController
                 echo '3@@@ No Record found!';
                 exit(0);
             } elseif (!empty($web_service_result->case_details[0])) {
-                // pr($web_service_result);
                 $diary_no = $web_service_result->case_details[0]->diary_no;
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
@@ -171,7 +168,6 @@ class Search extends BaseController
                         $amicus_curiae_request_params = ['type' => 'D','value' => $diary_no.$diary_year];
                         //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocate?' . http_build_query($amicus_curiae_request_params);
                         $amicus_curiae_advocate = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
-                        // echo 'amicus_curiae_advocate=<pre>';print_r($amicus_curiae_advocate);
                         if (isset($amicus_curiae_advocate->data) && !empty($amicus_curiae_advocate->data[0]->is_ac !='Y')) {
                             echo '3@@@ No Record found!.';
                             exit(0);
@@ -197,24 +193,18 @@ class Search extends BaseController
                         if (!empty($registration_id)) {
                             $current_stage = $this->DefaultModel->get_current_stage($registration_id);
                             $allowed_case_types = array('39', '9', '10', '25', '26', '19', '20');
-                            // pr($current_stage);
-                            // pr($web_service_result->case_details[0]->casetype_id);
-
-                            //var_dump($web_service_result->case_details[0]);exit();
                             if ($current_stage &&  !(in_array($web_service_result->case_details[0]->active_casetype_id, $allowed_case_types) || in_array($web_service_result->case_details[0]->casetype_id, $allowed_case_types))) {
-                                if ($current_stage[0]['stage_id'] != E_Filed_Stage) {
-                                   
-                             /*   <!--    <script>
+                                if ($current_stage[0]['stage_id'] != E_Filed_Stage) {                                   
+                                    /* <!--    <script>
                                         alert('Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.');
                                         window.history.back();
-                                    </script> --> */
-                                    
+                                    </script> --> */                                    
                                     // echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                                     // exit(0);
                                 }
                             }
                         }
-                        //end check Mark All Defects Cured
+                        // end check Mark All Defects Cured
                     } else {
                         // echo '3@@@ Please note, this case is defective. Kindly, cure all defects notified by the Registry through Refiling option.';
                         ?>
@@ -226,6 +216,12 @@ class Search extends BaseController
                         // exit(0);
                     }
                     $data['searched_case_details'] = $web_service_result->case_details[0];
+                    if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
+                        $data['clerk_aor'] = $this->Clerk_model->get_clerk_aor($_SESSION['login']['id']);
+                        if (isset($registration_id) && !empty($registration_id)) {
+                            $data['selected_aor'] = $this->Clerk_model->selected_aor_for_case($registration_id);
+                        }
+                    }
                     if ($diary_type == 'diary') {
                         if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
                             // echo '1@@@';
@@ -250,28 +246,45 @@ class Search extends BaseController
         }
     }
 
-    function save_searched_case_result()
-    {
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
-        
+    function save_searched_case_result() {
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, AMICUS_CURIAE_USER);        
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/')); 
         }
-       
         $this->validation->setRules([
+            'searched_details' => [
+                'label' => 'Searched Details',
+                'rules' => 'required|trim|encrypt_check'
+            ],
             'confirm_response' => [
                 'label' => 'Confirmation',
                 'rules' => 'required|trim|in_list[yes,no]'
             ]
         ]);
+        if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+            $this->validation->setRules([
+                'impersonated_aor' => [
+                    'label' => 'AOR',
+                    'rules' => 'trim|is_required'
+                ]
+            ]);
+        }
         $searched_details = url_decryption(escape_data($_POST['searched_details']));
         $searched_details = explode('$$$', $searched_details);
         if (count($searched_details) != 8) {
             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Data tempered !.</div>');
-            redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
+            return redirect()->to(base_url('case/search/' . url_encryption($_SESSION['efiling_type'])));
             exit(0);
         }
-        
+        if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+            if (isset($_POST['impersonated_aor']) && !empty($_POST['impersonated_aor'])) {
+                $_SESSION['login']['aor_code'] = $this->request->getPost("impersonated_aor");
+            } else{
+                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">AOR field is required.</div>');
+                return redirect()->to(base_url('case/search/' . url_encryption($_SESSION['efiling_type'])));
+                exit(0);
+            }
+        }        
         $parties_list = '';
         $diary_no = $searched_details[0];
         $diary_year = $searched_details[1];
@@ -281,34 +294,23 @@ class Search extends BaseController
         $c_status = $searched_details[5];
         $pno = $searched_details[6];
         $rno = $searched_details[7];
-
         if (isset($_SESSION['parties_list'])) {
             $parties_list = $_SESSION['parties_list'];
         }
-
         // $parties_list = $_SESSION['parties_list'];
         // unset($_SESSION['parties_list']);
         $confirm_response = escape_data($_POST['confirm_response']);
-    
-
         if ($confirm_response == 'yes') {
-            $_SESSION['efiling_details'] = '';
-           
+            $_SESSION['efiling_details'] = '';           
             if (isset($_POST['radio_appearing_for'])) {
                 $intervenorName = "";
                 $radio_appearing_for = $_POST['radio_appearing_for'];
-                
-
                 if ($radio_appearing_for == 'E') {
                     $this->session->set('radio_appearing_for', $radio_appearing_for);
                     $appearance_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
-                    // pr($appearance_exists);
-
                     if (!$appearance_exists) {
                         $diary_number = $diary_no . $diary_year;
-
                         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
-                        // pr($advPartyDetails);
                         foreach ($advPartyDetails as $index => $detail) {
                             $result = $this->FetchDataModel->updateAdvocatePartyDetails($detail);
                         }
@@ -324,11 +326,10 @@ class Search extends BaseController
                     $this->session->setFlashdata('radio_appearing_for', $radio_appearing_for);
                     if ($_SESSION['efiling_type'] == 'ia') {
                         $advocate_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
-
                         if (!$advocate_exists) {
                             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please select intervenor/other.</p></div>');
                             // redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
-                            redirect('case/interim_application/crud');
+                            return redirect()->to(base_url('case/interim_application/crud'));
                         } else {
                             $this->session->set('radio_appearing_for', $radio_appearing_for);
                         }
@@ -348,23 +349,22 @@ class Search extends BaseController
             $res_sr_no_show_array = array();
             $res_party_name_array = array();
             if(isset($parties_list)){
-            foreach ($parties_list as $party_list) {
-                if ($party_list->pet_res == 'P') {
-                    $pet_sr_no_array[] = $party_list->sr_no;
-                    $pet_sr_no_show_array[] = $party_list->sr_no_show;
-                    $pet_party_name_array[] = $party_list->partyname;
-                } elseif ($party_list->pet_res == 'R') {
-                    $res_sr_no_array[] = $party_list->sr_no;
-                    $res_sr_no_show_array[] = $party_list->sr_no_show;
-                    $res_party_name_array[] = $party_list->partyname;
+                foreach ($parties_list as $party_list) {
+                    if ($party_list->pet_res == 'P') {
+                        $pet_sr_no_array[] = $party_list->sr_no;
+                        $pet_sr_no_show_array[] = $party_list->sr_no_show;
+                        $pet_party_name_array[] = $party_list->partyname;
+                    } elseif ($party_list->pet_res == 'R') {
+                        $res_sr_no_array[] = $party_list->sr_no;
+                        $res_sr_no_show_array[] = $party_list->sr_no_show;
+                        $res_party_name_array[] = $party_list->partyname;
+                    }
                 }
             }
-        }
             //--PETITIONER PARTY DETAILS---//
             $pet_sr_no = implode("##", $pet_sr_no_array);
             $pet_sr_no_show = implode("##", $pet_sr_no_show_array);
             $pet_party_name = implode("##", $pet_party_name_array);
-
             //--RESPONDENT PARTY DETAILS---//
             $res_sr_no = implode("##", $res_sr_no_array);
             $res_sr_no_show = implode("##", $res_sr_no_show_array);
@@ -382,7 +382,6 @@ class Search extends BaseController
                 'r_sr_no_show' => $res_sr_no_show,
                 'r_partyname' => $res_party_name
             );
-
             $curr_dt_time = date('Y-m-d H:i:s');
             $diary_saved = FALSE;
             $diary_already_exists = $this->CaseSearchModel->get_diary_details($diary_no, $diary_year);
@@ -413,10 +412,9 @@ class Search extends BaseController
                 $diary_saved = $this->CaseSearchModel->add_update_sci_cases_details($sci_cases_details, NULL);
             }
             // Flow Come to this point 200624
-
             if (!$diary_saved) {
                 $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Some error ! Please try after some time.</div>');
-                redirect('dashboard');
+                return redirect()->to(base_url('dashboard'));
                 exit(0);
             } else {
                 $diary_details = array('diary_no' => $diary_no, 'diary_year' => $diary_year);
@@ -424,11 +422,21 @@ class Search extends BaseController
                     $registration_id = $this->MiscellaneousDocsModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time, $radio_appearing_for);
                     $redirectURL = 'miscellaneous_docs/defaultController/' . url_encryption($registration_id . '#' . E_FILING_TYPE_MISC_DOCS . '#' . Draft_Stage);
                     $type = 'Efiled Misc. docs No. ';
-
+                    $aor_id=$_SESSION['login']['id'];
+                    if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                        if (isset($registration_id) && isset($_SESSION['login']['aor_code'])){
+                            $this->Clerk_model->clerk_filings_insert($registration_id,$_SESSION['login']['aor_code']);
+                            $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+                            $aor_id=!empty($aorData) ? $aorData[0]->id:0;
+                            if (empty($aor_id)){
+                                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">*Please AOR field is required</p></div>');
+                                $_SESSION['MSG']='<div class="alert alert-danger text-center">*Please AOR field is required</p></div>';
+                                return redirect()->to(base_url('case/search/' . url_encryption($_SESSION['efiling_type']))); exit(0);
+                            }
+                        }
+                    }
                     if (isset($_POST['radio_appearing_for']) && ($_POST['radio_appearing_for'] == 'E') && !empty($registration_id) && !empty(session()->get('login')['id'])) {
-                        $data['appearing_for_details'] = $this->AppearingForModel->get_appearing_for_details($registration_id, session()->get('login')['id']);
-
-
+                        $data['appearing_for_details'] = $this->AppearingForModel->get_appearing_for_details($registration_id, $aor_id);
                         if(isset($data['appearing_for_details'])){
                             if (!empty($data['appearing_for_details'][0]['partytype']) && ($data['appearing_for_details'][0]['partytype'] == 'P') || ($data['appearing_for_details'][0]['partytype'] == 'R') || ($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N')) {
                                 if (($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N')) {
@@ -439,16 +447,14 @@ class Search extends BaseController
                                 $_SESSION['MSG'] = '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>';
                                 //echo '<pre>';print_r($data['appearing_for_details']);exit();
                                 //echo $_SESSION['MSG'];exit();
-                                redirect()->to(base_url('case/document/crud/' . $diary_no . $diary_year));
-
-
+                                return redirect()->to(base_url('case/document/crud/' . $diary_no . $diary_year));
                             }
-                        }else {
+                        } else {
                             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>');
                             $_SESSION['MSG'] = '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>';
                             //echo '<pre>';print_r($data['appearing_for_details']);exit();
                             //echo $_SESSION['MSG'];exit();
-                            redirect()->to(base_url('case/document/crud/' . $diary_no . $diary_year));
+                            return redirect()->to(base_url('case/document/crud/' . $diary_no . $diary_year));
                         }
                         
                     }
@@ -459,59 +465,65 @@ class Search extends BaseController
                         $intervenorNameString = implode(',', $intervenorName);
                     }
                     $registration_id = $this->IAModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time, $radio_appearing_for, '');
-
                     $redirectURL = 'IA/defaultController/' . url_encryption($registration_id . '#' . E_FILING_TYPE_IA . '#' . Draft_Stage);
                     $type = 'Efiled IA No. ';
+                    $aor_id=$_SESSION['login']['id'];
+                    if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                        if (isset($registration_id) && isset($_SESSION['login']['aor_code'])){
+                            $this->Clerk_model->clerk_filings_insert($registration_id,$_SESSION['login']['aor_code']);
+                            $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+                            $aor_id=!empty($aorData) ? $aorData[0]->id:0;
+                            if (empty($aor_id)){
+                                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">*Please AOR field is required</p></div>');
+                                $_SESSION['MSG']='<div class="alert alert-danger text-center">*Please AOR field is required</p></div>';
+                                return redirect()->to(base_url('case/search/' . url_encryption($_SESSION['efiling_type']))); exit(0);
+                            }
+                        }
+                    }
                     if (isset($_POST['radio_appearing_for']) && ($_POST['radio_appearing_for'] == 'E') && !empty($registration_id) && !empty(getSessionData('login')['id'])) {
-
-
-                        $data['appearing_for_details'] = $this->AppearingForModel->get_appearing_for_details($registration_id, getSessionData('login')['id']);
-
-                        //  echo $registration_id;  echo '<pre>';print_r($data);exit();
-                        /*  if (!empty($data['appearing_for_details'][0]['partytype']) && ($data['appearing_for_details'][0]['partytype'] == 'P') || ($data['appearing_for_details'][0]['partytype'] == 'R') || ($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N'))
-                        {
-
-                            // echo $_POST['radio_appearing_for'];
-                            // echo "<br>";
-                            //  pr("Debugging 3");
-
+                        $data['appearing_for_details'] = $this->AppearingForModel->get_appearing_for_details($registration_id, $aor_id);
+                        /*  if (!empty($data['appearing_for_details'][0]['partytype']) && ($data['appearing_for_details'][0]['partytype'] == 'P') || ($data['appearing_for_details'][0]['partytype'] == 'R') || ($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N')) {
                             if (($data['appearing_for_details'][0]['partytype'] == 'I') || ($data['appearing_for_details'][0]['partytype'] == 'N')) {
-
                                 $redirectURL = 'uploadDocuments';
                             }
-
                         } else {
-                            // pr("Debugging 4");
                             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>');
                             $_SESSION['MSG'] = '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>';
                             redirect()->to(base_url('case/interim_application/crud/' . $diary_no . $diary_year));
                         } */
                     }
                 } elseif (isset($_SESSION['efiling_type']) && $_SESSION['efiling_type'] == 'mentioning') {
-
                     $registration_id = $this->MentioningModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time);
                     $redirectURL = 'mentioning/defaultController/' . url_encryption($registration_id . '#' . E_FILING_TYPE_MENTIONING . '#' . Draft_Stage);
                     $type = 'Efiled Mentioning request No. ';
                 } elseif (isset($_SESSION['efiling_type']) && $_SESSION['efiling_type'] == 'certificate') {
-
                     $registration_id = $this->CertificateModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time);
                     $redirectURL = 'certificate/DefaultController/' . url_encryption($registration_id . '#' . E_FILING_TYPE_CERTIFICATE_REQUEST . '#' . Draft_Stage);
                     $type = 'Efiled certificate request No. ';
                 } elseif (isset($_SESSION['efiling_type']) && $_SESSION['efiling_type'] == 'citation') {
-
                     $registration_id = $this->CitationModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time);
                     $redirectURL = 'citation/defaultController/' . url_encryption($registration_id . '#' . E_FILING_TYPE_CITATION . '#' . Draft_Stage);
                     $type = 'Efiled citation No. ';
                 } elseif (isset($_SESSION['efiling_type']) && $_SESSION['efiling_type'] == 'refile_old_efiling_cases') {
-                    // pr('refile');
                     $registration_id = $this->OldEfilingDocsModel->generate_efil_num_n_add_case_details($diary_details, $curr_dt_time);
-
                     $redirectURL = 'oldCaseRefiling/defaultController/' . url_encryption($registration_id . '#' . OLD_CASES_REFILING . '#' . Draft_Stage);
-                    //$redirectURL = 'case/refile_old_efiling_cases/crud_registration/' . url_encryption($registration_id . '#' . OLD_CASES_REFILING . '#' . Draft_Stage);
+                    // $redirectURL = 'case/refile_old_efiling_cases/crud_registration/' . url_encryption($registration_id . '#' . OLD_CASES_REFILING . '#' . Draft_Stage);
                     $type = 'E-filing No. ';
                 }
-                // pr("Come Here");
+                unset($_SESSION['efiling_type']);
                 if (isset($registration_id)  && !empty($registration_id)) {
+                    $aor_id=$_SESSION['login']['id'];
+                    if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                        if (isset($registration_id) && isset($_SESSION['login']['aor_code'])){
+                            $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+                            $aor_id=!empty($aorData) ? $aorData[0]->id:0;
+                            if (empty($aor_id)){
+                                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">*Please AOR field is required</p></div>');
+                                $_SESSION['MSG']='<div class="alert alert-danger text-center">*Please AOR field is required</p></div>';
+                                return redirect()->to(base_url('case/search/')); exit(0);
+                            }
+                        }
+                    }
                     //add intervenor data
                     if (isset($intervenorName) && !empty($intervenorName) && count($intervenorName) > 0) {
                         for ($i = 0; $i < count($intervenorName); $i++) {
@@ -519,7 +531,7 @@ class Search extends BaseController
                             $interVentionArr['registration_id'] = !empty($registration_id) ? $registration_id : NULL;
                             $interVentionArr['p_r_type'] = 'I';
                             $interVentionArr['party_name'] = !empty($intervenorName[$i]) ?  $intervenorName[$i] : NULL;
-                            $interVentionArr['created_by'] = !empty(getSessionData('login')['id']) ? getSessionData('login')['id'] : NULL;
+                            $interVentionArr['created_by'] = !empty($aor_id) ? $aor_id : NULL;
                             $interVentionArr['created_on'] = date('Y-m-d H:i:s');
                             $interVentionArr['created_by_ip'] = getClientIP();
                             $interVentionArr['updated_by'] = NULL;
@@ -543,15 +555,10 @@ class Search extends BaseController
                     $subject = $type . efile_preview($efiling_num) . " generated from your efiling account";
                     send_mobile_sms($_SESSION['login']['mobile_number'], $sentSMS, SCISMS_Submit_Pending);
                     send_mail_msg($_SESSION['login']['emailid'], $subject, $sentSMS, $user_name);
-                    // echo $redirectURL; 
                     return response()->redirect(base_url($redirectURL));
-
-                    // return redirect()->to(base_url($redirectURL));
-
                 } else {
-
                     $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">There are Some  Error ! Please try after some time.</div>');
-                    return response()->redirect('dashboard');
+                    return response()->redirect(base_url('dashboard'));
                 }
             }
         } else {
@@ -577,19 +584,17 @@ class Search extends BaseController
         }
     }
 
-    function get_direct_access_page()
-    {
+    function get_direct_access_page() {
         $this->load->view('templates/header');
         $this->load->view('casesearch/direct_access_view');
         $this->load->view('templates/footer');
     }
 
     /* code written for old efiling cases : start */
-    public function search_old_efiling_case_details()
-    {
+    public function search_old_efiling_case_details() {
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK,AMICUS_CURIAE_USER);
         if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users_array)) {
-            redirect('login');
+            return redirect()->to(base_url('login'));
             exit(0);
         }
         // $diary_type = $_POST['search_filing_type'];
@@ -638,15 +643,11 @@ class Search extends BaseController
         } else {
             // $this->form_validation->set_error_delimiters('<br/>', '');
             if ($diary_type == 'diary') {
-
                 // $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($_POST['diaryno']), escape_data($_POST['diary_year']));
-
                 $web_service_result = $this->efiling_webservices->get_case_diary_details_from_SCIS(escape_data($this->request->getGet('diaryno')), escape_data($this->request->getGet('diary_year')));
             } else if ($diary_type == 'register') {
-                // pr($_GET);
                 $web_service_result = $this->efiling_webservices->get_case_details_from_SCIS(url_decryption(escape_data($_GET['sc_case_type'])), escape_data($_GET['case_number']), escape_data($_GET['case_year']));
             }
-            // pr($web_service_result);
             if (!empty($web_service_result->message)) {
                 echo '3@@@ No Record found!';
                 exit(0);
@@ -654,25 +655,20 @@ class Search extends BaseController
                 $diary_no = $web_service_result->case_details[0]->diary_no;
                 $diary_year = $web_service_result->case_details[0]->diary_year;
                 if (!empty($diary_no) && !empty($diary_year)) {
-                    $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);
-                    
+                    $listing_data = $this->efiling_webservices->get_last_listed_details($diary_no, $diary_year);                    
                     $data['listing_details'] = !empty($listing_data->listed) ? $listing_data->listed[0] : '';
                     $_SESSION['listing_details'] = $data['listing_details'];
-                    $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);
-                    
+                    $data['old_efiling_cases'] = $this->Common_model->get_old_efiling_cases($diary_no . $diary_year, $_SESSION['login']['aor_code']);                    
                     if (empty($data['old_efiling_cases'])) {
                         echo '3@@@ Cases which are filed by you through old e-filing, Such cases can be re-filed with this option.';
                         exit(0);
                     } else {
                         // logic written for aor can only refile the already file old efilinf case after 3 days
                         $data['case_last_refiled_details'] = $this->efiling_webservices->checkInTheOldEfilingCasesList($diary_no, $diary_year);
-                        // pr($data['case_last_refiled_details']);
                         if (!empty($data['case_last_refiled_details'])) {
-                            // pr($data['case_last_refiled_details']->case_refiling_status);
                             $last_refiled_on = !empty($data['case_last_refiled_details']->case_refiling_status) ? $data['case_last_refiled_details']->case_refiling_status[0]->created_at : NULL;
                             $last_refiled_on = date('d-m-Y', strtotime($last_refiled_on));
                             $curDate = date('d-m-Y');
-
                             $datediff = strtotime($curDate) - strtotime($last_refiled_on);
                             $date_diff_in_no_of_days = round($datediff / (60 * 60 * 24));
                             if ($date_diff_in_no_of_days <= 3) {
@@ -682,17 +678,13 @@ class Search extends BaseController
                         }
                     }
                     $data['case_uncured_defects_details'] = $this->efiling_webservices->getCaseDefectDetails($diary_no, $diary_year); // add by kbpujari : To restrict AOR to file Misc.Document(s)/IA(s) in any of the defective matters, whether the case is filed  through efiling, new filing or filed physically
-                    // pr($data['case_uncured_defects_details']);
                     if (empty($data['case_uncured_defects_details']->defects)) {
                         echo '3@@@ Please note, All the notified defects of this case,filed through old -efiling application has been already cured.';
                         exit(0);
                     }
-                    //print_r($data['mentioning_request_details']);
                     $data['searched_case_details'] = $web_service_result->case_details[0];
                     // $result = $this->load->view('casesearchForOldEfilingCases/search_result_view', $data, TRUE);
                     $result = $this->render('casesearchForOldEfilingCases.search_result_view', $data);
-
-
                     if ($diary_type == 'diary') {
                         if ((isset($_POST['is_direct_access']) && $_POST['is_direct_access'])) {
                             // $this->load->view('templates/header');
@@ -702,7 +694,6 @@ class Search extends BaseController
                             // $this->load->view('templates/footer');
                         } else {
                             echo '1@@@' . $result;
-
                             echo $this->render('casesearchForOldEfilingCases.search_result_view', $data);
                         }
                     } else if ($diary_type == 'register') {

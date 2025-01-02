@@ -127,7 +127,6 @@ $routes->match(['GET', 'POST'], 'case/caveat/crud', 'ResponsiveVariantRouteContr
 $routes->match(['GET', 'POST'], 'search', 'ResponsiveVariantRouteController::showSearch');
 // $routes->match(['GET', 'POST'],'support/(:any)','ResponsiveVariantRouteController::showSupport/$1');
 // $routes->match(['GET', 'POST'],'support','ResponsiveVariantRouteController::showSupport');
-$routes->match(['GET', 'POST'], 'clerk/crud', 'ResponsiveVariantRouteController::showClerkCrud');
 $routes->match(['GET', 'POST'], 'case/interim_application/crud_registration', 'ResponsiveVariantRouteController::showCaseInterimApplicationCrudByRegistrationId');
 $routes->match(['GET', 'POST'], 'utilities', 'ResponsiveVariantRouteController::showUtilities');
 $routes->match(['GET', 'POST'], 'utilities/pspdfkit-playground', 'ResponsiveVariantRouteController::storePspdfkitPlaygroundUtilities');
@@ -468,3 +467,10 @@ $routes->match(['GET', 'POST'], 'adminReport/UploadedPdfJsonComparison/compare',
 $routes->match(['GET', 'POST'], 'adminReport/EfileStages', 'AdminReport\EfileStages::index');
 $routes->match(['GET', 'POST'], 'adminReport/EfileStages/search', 'AdminReport\EfileStages::search');
 $routes->match(['GET', 'POST'], 'adminReport/EfileStages/updateStage', 'AdminReport\EfileStages::updateStage');
+
+// Clerk Related Routing
+$routes->match(['GET', 'POST'], 'clerk/crud', 'ResponsiveVariantRouteController::showClerkCrud');
+$routes->match(['GET', 'POST'], 'add/clerk', 'Clerks\ClerkController::add_clerk');
+$routes->match(['GET', 'POST'], 'clerks/Clerk_Controller/add_clerk', 'Clerks\ClerkController::add_clerk');
+$routes->match(['GET', 'POST'], 'add/clerk/add_Clerk', 'Clerks\ClerkController::add_clerk');
+$routes->match(['GET', 'POST'], 'add/clerk/update_clerk', 'Clerks\ClerkController::engaged_disengaged_clerk');
