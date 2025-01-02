@@ -2265,7 +2265,8 @@ class Efiling_webservices {
             ]
         ];
         $context  = stream_context_create($opts);
-        $data = file_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/BulkGetIaMiscScrutinyDefects", false, $context);
+        $url     = ICMIS_SERVICE_URL;
+        $data = file_get_contents($url.'/ConsumedData/BulkGetIaMiscScrutinyDefects', false, $context);
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -2285,7 +2286,7 @@ class Efiling_webservices {
             )
         );
         $context  = stream_context_create($opts);
-        $url = env('ICMIS_SERVICE_URL');
+        $url     = ICMIS_SERVICE_URL; 
         $result = file_get_contents($url.'/PutInICMIS/updateDefectRefiledIAData', false, $context);
         var_dump($result);
         return json_decode($result,true);

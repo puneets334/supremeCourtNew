@@ -5,6 +5,7 @@ use App\Models\AppearingFor\AppearingForModel;
 use \App\Models\Common\CommonModel;
 use App\Models\NewCase\GetDetailsModel;
 use App\Models\Caveat\ViewModel;
+use App\Models\Login\LoginModel;
 use App\Models\Supplements\SupplementModel;
 use App\Models\Vacation\VacationAdvanceModel;
 use GuzzleHttp\Client;
@@ -4522,7 +4523,8 @@ if (!function_exists('isJSON')) {
     }
 }
 
-function remark_preview_ia_docs($reg_id, $current_stage_id) {
+function remark_preview_ia_docs($reg_id, $current_stage_id)
+{
     // echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
     // $ci = &get_instance();
     // $ci->load->model('common/Common_model');
@@ -4636,7 +4638,7 @@ function remark_preview_ia_docs($reg_id, $current_stage_id) {
         $msg .= '</style>';
         return $msg;
     } elseif (isset($result_initial) && !empty($result_initial)) {
-        $msg .= '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
+        $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date('d-m-Y H:i:s', strtotime($result_initial->defect_date)) . '<p>';
         $msg .= '<p><strong>Defects :</strong><p>';
         $msg .= '<p>' . script_remove($result_initial->defect_remark) . '<p>';
@@ -4656,6 +4658,8 @@ function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration
     if (isset($ref_tbl_lower_court_details_id) && !empty($ref_tbl_lower_court_details_id) && isset($registration_id) && !empty($registration_id)){
         // $ci = &get_instance();
         // $ci->load->model('login/Login_model');
+        $loginModel = new LoginModel();  
+        $db = Database::connect('efiling_near');
         $builder = $db->table('efil.tbl_certified_copy_details');
         $builder->SELECT("*");
         $builder->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);

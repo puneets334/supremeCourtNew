@@ -1438,7 +1438,7 @@ class NewCaseModel extends Model {
         $builder = $this->db->table('etrial_lower_court')
             ->WHERE('registration_id', $registration_id)
             ->WHERE('is_deleted', FALSE)
-            ->whereNotIn('id', $ids)
+            // ->whereNotIn('id', $ids)
             ->UPDATE($update_date);
         $builder1 = $this->db->table('etrial_lower_court')->insert($data);
         if ($this->db->insertID()) {

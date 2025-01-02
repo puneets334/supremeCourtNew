@@ -474,3 +474,6 @@ $routes->match(['GET', 'POST'], 'add/clerk', 'Clerks\ClerkController::add_clerk'
 $routes->match(['GET', 'POST'], 'clerks/Clerk_Controller/add_clerk', 'Clerks\ClerkController::add_clerk');
 $routes->match(['GET', 'POST'], 'add/clerk/add_Clerk', 'Clerks\ClerkController::add_clerk');
 $routes->match(['GET', 'POST'], 'add/clerk/update_clerk', 'Clerks\ClerkController::engaged_disengaged_clerk');
+
+//new implemented code route
+$routes->match(['GET', 'POST'], 'efilingAction/IAMiscDocsRefiledFinalSubmit', 'efilingAction\IAMiscDocsRefiledFinalSubmit::index');

@@ -1,19 +1,34 @@
 <?php
+namespace App\Controllers\Cron;
+use App\Controllers\BaseController;
 
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+use App\Libraries\webservices\Efiling_webservices;
+use App\Models\Cron\AiMiscDeftectsCronModel;
+use App\Models\getAiMiscDefectsCisStatus\GetAiMiscDefectsCisStatusModel; 
+use App\Models\AdminDashboard\StageListModel;
 
-class IAMiscDocsDefectsCron extends CI_Controller {
+class IAMiscDocsDefectsCron extends BaseController {
+
+    protected $AiMiscDeftectsCron_model;
+    protected $StageList_model;
+    protected $Get_AiMiscDefects_CIS_Status_model;
+    protected $efiling_webservices; 
+
 
     public function __construct() {
 
         parent::__construct();
-        $this->load->model('cron/AiMiscDeftectsCron_model');
-        $this->load->model('adminDashboard/StageList_model');
-        $this->load->model('getAiMiscDefectsCIS_status/Get_AiMiscDefects_CIS_Status_model');
-        $this->load->library(['session','webservices/efiling_webservices']);
-        $this->load->helper(['form','url','html','functions']);
-        $this->load->database();
+
+        $this->AiMiscDeftectsCron_model = new AiMiscDeftectsCronModel(); 
+        $this->Get_AiMiscDefects_CIS_Status_model = new GetAiMiscDefectsCisStatusModel();
+        $this->StageList_model = new StageListModel();
+        $this->efiling_webservices = new Efiling_webservices();
+        // $this->load->model('cron/AiMiscDeftectsCron_model');
+        // $this->load->model('adminDashboard/StageList_model');
+        // $this->load->model('getAiMiscDefectsCIS_status/Get_AiMiscDefects_CIS_Status_model');
+        // $this->load->library(['session','webservices/efiling_webservices']);
+        // $this->load->helper(['form','url','html','functions']);
+        // $this->load->database();
     }
     public function index($efiling_no=null,$date=null)
     {

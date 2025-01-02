@@ -2169,30 +2169,47 @@ class CommonModel extends Model
         }
         return $output;
     }
+
+
     /*start new add Refiling IA MiscDocs 28Dec24*/
     function check_efiling_sms_log($mobileNo,$sms_datetime)
     {
         $from_sms_datetime=$_SESSION['from_sms_datetime'];
         $end_sms_datetime=$_SESSION['last_sms_datetime'];
-        $this->db->SELECT("*");
-        $this->db->FROM('efil.tbl_efiling_sms_log');
-        $this->db->WHERE('mobile_no', $mobileNo);
-        //$this->db->WHERE('sent_on', $start_sms_datetime);
-        $this->db->where('sent_on between \'' . $from_sms_datetime . '\' and \'' . $end_sms_datetime . '\'');
-        $this->db->ORDER_BY('sent_on','DESC');
-        // $this->db->ORDER_BY(' id', 'DESC');
-        $queryCD = $this->db->get();
-        //echo $this->db->last_query();exit();
-        if ($queryCD->num_rows() >= 1) {
-            return $queryCD->result_array();
+        // $this->db->SELECT("*");
+        // $this->db->FROM('efil.tbl_efiling_sms_log');
+        // $this->db->WHERE('mobile_no', $mobileNo);
+        // //$this->db->WHERE('sent_on', $start_sms_datetime);
+        // $this->db->where('sent_on between \'' . $from_sms_datetime . '\' and \'' . $end_sms_datetime . '\'');
+        // $this->db->ORDER_BY('sent_on','DESC');
+        // // $this->db->ORDER_BY(' id', 'DESC');
+        // $queryCD = $this->db->get();
+        // //echo $this->db->last_query();exit();
+
+        $builder = $this->db->table('efil.tbl_efiling_sms_log');
+        $builder->select('*');
+        $builder->where('mobile_no', $mobileNo);
+        $builder->where('sent_on >=', $from_sms_datetime);
+        $builder->where('sent_on <=', $end_sms_datetime);
+        $builder->orderBy('sent_on', 'DESC');
+        $queryCD = $builder->get();
+
+        // return $builder->findAll(); 
+
+        if ($queryCD->getNumRows() >= 1) {
+            return $queryCD->getResultArray();
         } else {
             return FALSE;
         }
     }
     function insert_efiling_sms_email_dtl($sms_details)
     {
-        $this->db->INSERT('efil.otp_requests', $sms_details);
-        if ($this->db->insert_id()) {
+        $builder = $this->db->table('efil.otp_requests');
+
+        $builder->insert($sms_details);
+        $insertID = $this->db->insertID(); 
+        // $this->db->INSERT('efil.otp_requests', $sms_details);
+        if ($insertID()) {
             return true;
         } else{
             return false;
@@ -2200,48 +2217,103 @@ class CommonModel extends Model
     }
     function check_efiling_sms_email_log($to_email,$request_time_time_period,$ip_address)
     {
-        $this->db->where('ip_address', $ip_address);
-        $this->db->where('email', $to_email);
-        $this->db->where('request_time >', $request_time_time_period);
-        $request_count = $this->db->count_all_results('efil.otp_requests');
+        // $this->db->where('ip_address', $ip_address);
+        // $this->db->where('email', $to_email);
+        // $this->db->where('request_time >', $request_time_time_period);
+        // $request_count = $this->db->count_all_results('efil.otp_requests');
+        // return $request_count;
+        $builder = $this->db->table('efil.otp_requests');
+
+        $builder->where('ip_address', $ip_address)
+                ->where('email', $to_email)
+                ->where('request_time >', $request_time_time_period);
+    
+        $request_count = $builder->countAllResults();
         return $request_count;
     }
     function check_efiling_sms_mobile_no_log($mobile_no,$request_time_time_period,$ip_address)
     {
-        $this->db->where('ip_address', $ip_address);
-        $this->db->where('mobile_no', $mobile_no);
-        $this->db->where('request_time >', $request_time_time_period);
-        $request_count = $this->db->count_all_results('efil.otp_requests');
+        // $this->db->where('ip_address', $ip_address);
+        // $this->db->where('mobile_no', $mobile_no);
+        // $this->db->where('request_time >', $request_time_time_period);
+        // $request_count = $this->db->count_all_results('efil.otp_requests');
+        $builder = $this->db->table('efil.otp_requests');
+
+        $builder->where('ip_address', $ip_address)
+                ->where('mobile_no', $mobile_no)
+                ->where('request_time >', $request_time_time_period);
+    
+        $request_count = $builder->countAllResults();
         return $request_count;
     }
     public function update_efiling_nums($registration_id,$case_details_update_data)
     {
-        $this->db->WHERE('registration_id', $registration_id);
-        $this->db->WHERE('is_active', TRUE);
-        $this->db->UPDATE('efil.tbl_efiling_nums', $case_details_update_data);
-    }
+        // $this->db->WHERE('registration_id', $registration_id);
+        // $this->db->WHERE('is_active', TRUE);
+        // $this->db->UPDATE('efil.tbl_efiling_nums', $case_details_update_data);
+        $builder = $this->db->table('efil.tbl_efiling_nums');
+
+        $builder->where('registration_id', $registration_id)
+                ->where('is_active', TRUE)
+                ->update($case_details_update_data);
+        }
 
     function get_ia_docs_intials_defects_remarks($registration_id, $current_stage_id)
     {
         if (empty($registration_id)) {
             return FALSE;
         }
-        $this->db->SELECT('*');
-        $this->db->FROM('efil.tbl_initial_defects');
-        $this->db->WHERE('is_approved', FALSE);
-        if (in_array($current_stage_id, array(Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE, LODGING_STAGE, DELETE_AND_LODGING_STAGE))) {
-            $this->db->WHERE('is_defect_cured', FALSE);
-        } elseif (in_array($current_stage_id, array(Initial_Approaval_Pending_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID,
-            I_B_Approval_Pending_Stage, I_B_Approval_Pending_Admin_Stage, I_B_Defects_Cured_Stage))) {
-            $this->db->WHERE('is_defect_cured', TRUE);
+        // $this->db->SELECT('*');
+        // $this->db->FROM('efil.tbl_initial_defects');
+        // $this->db->WHERE('is_approved', FALSE);
+        // if (in_array($current_stage_id, array(Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Defected_Stage, I_B_Rejected_Stage, E_REJECTED_STAGE, LODGING_STAGE, DELETE_AND_LODGING_STAGE))) {
+        //     $this->db->WHERE('is_defect_cured', FALSE);
+        // } elseif (in_array($current_stage_id, array(Initial_Approaval_Pending_Stage, Initial_Defects_Cured_Stage, DEFICIT_COURT_FEE_PAID,
+        //     I_B_Approval_Pending_Stage, I_B_Approval_Pending_Admin_Stage, I_B_Defects_Cured_Stage))) {
+        //     $this->db->WHERE('is_defect_cured', TRUE);
+        // }
+        // $this->db->WHERE('registration_id', $registration_id);
+        // $this->db->ORDER_BY('initial_defects_id', 'DESC');
+
+        // $query = $this->db->get(); //echo $this->db->last_query(); die;
+        $builder = $this->db->table('efil.tbl_initial_defects');
+
+        $builder->select('*')
+                ->where('is_approved', false);
+    
+        if (in_array(
+            $current_stage_id,
+            [
+                Initial_Defected_Stage,
+                DEFICIT_COURT_FEE,
+                I_B_Defected_Stage,
+                I_B_Rejected_Stage,
+                E_REJECTED_STAGE,
+                LODGING_STAGE,
+                DELETE_AND_LODGING_STAGE,
+            ]
+        )) {
+            $builder->where('is_defect_cured', false);
+        } elseif (in_array(
+            $current_stage_id,
+            [
+                Initial_Approaval_Pending_Stage,
+                Initial_Defects_Cured_Stage,
+                DEFICIT_COURT_FEE_PAID,
+                I_B_Approval_Pending_Stage,
+                I_B_Approval_Pending_Admin_Stage,
+                I_B_Defects_Cured_Stage,
+            ]
+        )) {
+            $builder->where('is_defect_cured', true);
         }
-        $this->db->WHERE('registration_id', $registration_id);
-        $this->db->ORDER_BY('initial_defects_id', 'DESC');
-
-        $query = $this->db->get(); //echo $this->db->last_query(); die;
-
-        if ($query->num_rows() >= 1) {
-            $arr = $query->result();
+    
+        $builder->where('registration_id', $registration_id)
+                ->orderBy('initial_defects_id', 'DESC');
+    
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $arr = $query->getResultObject();
             return $arr[0];
         } else {
             return false;
@@ -2254,31 +2326,67 @@ class CommonModel extends Model
             return FALSE;
         }
 
-        if (!$show_always) {
-            $this->db->SELECT('count(id) obj_count');
-            $this->db->FROM('efil.tbl_icmis_ai_docs_objections');
-            $this->db->WHERE('registration_id', $registration_id);
-            $this->db->WHERE('is_deleted', FALSE);
-            $this->db->WHERE('obj_removed_date', NULL);
+        // if (!$show_always) {
+        //     $this->db->SELECT('count(id) obj_count');
+        //     $this->db->FROM('efil.tbl_icmis_ai_docs_objections');
+        //     $this->db->WHERE('registration_id', $registration_id);
+        //     $this->db->WHERE('is_deleted', FALSE);
+        //     $this->db->WHERE('obj_removed_date', NULL);
 
-            $query = $this->db->get();
-            $obj_exists = $query->result();
+        //     $query = $this->db->get();
+        //     $obj_exists = $query->result();
 
+        //     if ($obj_exists[0]->obj_count == 0) {}elseif (in_array($_SESSION['efiling_details']['stage_id'], $refiling_stages_array))
+        //         return FALSE;
+        //     }
+        // }
+        if (!$show_always) { 
+            $builder = $this->db->table('efil.tbl_icmis_ai_docs_objections');
+    
+            $builder->select('count(id) as obj_count')
+                    ->where('registration_id', $registration_id)
+                    ->where('is_deleted', false)
+                    ->where('obj_removed_date', null);
+    
+            $query = $builder->get();
+            $obj_exists = $query->getResult();
+    
             if ($obj_exists[0]->obj_count == 0) {
-                return FALSE;
+                return false;
             }
         }
 
-        $this->db->SELECT('obj.obj_id,obj.id, icmis_obj.objdesc, obj.remarks, obj.obj_prepare_date, obj.obj_removed_date, obj.pspdfkit_document_id, obj.to_be_modified_pspdfkit_document_pages_raw, obj.to_be_modified_pspdfkit_document_pages_parsed, obj.aor_cured');
-        $this->db->FROM('efil.tbl_icmis_ai_docs_objections obj');
-        $this->db->JOIN('icmis.objection icmis_obj', 'obj.obj_id = icmis_obj.objcode','left');
-        $this->db->WHERE('registration_id', $registration_id);
-        $this->db->WHERE('obj.is_deleted', FALSE);
-        $this->db->ORDER_BY('obj.id', 'asc');
+        // $this->db->SELECT('obj.obj_id,obj.id, icmis_obj.objdesc, obj.remarks, obj.obj_prepare_date, obj.obj_removed_date, obj.pspdfkit_document_id, obj.to_be_modified_pspdfkit_document_pages_raw, obj.to_be_modified_pspdfkit_document_pages_parsed, obj.aor_cured');
+        // $this->db->FROM('efil.tbl_icmis_ai_docs_objections obj');
+        // $this->db->JOIN('icmis.objection icmis_obj', 'obj.obj_id = icmis_obj.objcode','left');
+        // $this->db->WHERE('registration_id', $registration_id);
+        // $this->db->WHERE('obj.is_deleted', FALSE);
+        // $this->db->ORDER_BY('obj.id', 'asc');
 
-        $query = $this->db->get();
-        if ($query->num_rows() >= 1) {
-            $arr = $query->result();
+        // $query = $this->db->get(); 
+                $builder = $this->db->table('efil.tbl_icmis_ai_docs_objections AS obj');
+
+                $builder->select([
+                    'obj.obj_id',
+                    'obj.id',
+                    'icmis_obj.objdesc',
+                    'obj.remarks',
+                    'obj.obj_prepare_date',
+                    'obj.obj_removed_date',
+                    'obj.pspdfkit_document_id',
+                    'obj.to_be_modified_pspdfkit_document_pages_raw',
+                    'obj.to_be_modified_pspdfkit_document_pages_parsed',
+                    'obj.aor_cured',
+                ])
+                        ->join('icmis.objection AS icmis_obj', 'obj.obj_id = icmis_obj.objcode', 'left')
+                        ->where('registration_id', $registration_id)
+                        ->where('obj.is_deleted', false)
+                        ->orderBy('obj.id', 'asc');
+
+                $query = $builder->get();
+
+        if ($query->getNumRows() >= 1) {
+            $arr = $query->getResult();
             return $arr;
         } else {
             return false;
@@ -2314,33 +2422,68 @@ class CommonModel extends Model
 
     function get_certified_copy_details($registration_id)
     {
-        $this->db->SELECT("tccd.*,tlcd.court_type,
-            (case when tlcd.court_type = '1' then 'High Court'   
-            else case when tlcd.court_type = '3' then 'District Court'
-            else case when tlcd.court_type = '5' then 'State Agency or Tribunal'
-            else case when tlcd.court_type = '4' then 'Supreme Court'
-            else case when tlcd.court_type is null  then 'Unknown Court'
-            end end end end end )as court_type_name  
-             ");
-        $this->db->FROM('efil.tbl_certified_copy_details tccd');
-        $this->db->JOIN('efil.tbl_lower_court_details tlcd', 'tccd.ref_tbl_lower_court_details_id=tlcd.id and tccd.registration_id=tlcd.registration_id');
-        $this->db->WHERE('tccd.registration_id', $registration_id);
-        $this->db->WHERE('tccd.is_deleted', FALSE);
-        $this->db->WHERE('tlcd.is_deleted', FALSE);
-        $query = $this->db->get();
-        return $query->result_array();
+        // $this->db->SELECT("tccd.*,tlcd.court_type,
+        //     (case when tlcd.court_type = '1' then 'High Court'   
+        //     else case when tlcd.court_type = '3' then 'District Court'
+        //     else case when tlcd.court_type = '5' then 'State Agency or Tribunal'
+        //     else case when tlcd.court_type = '4' then 'Supreme Court'
+        //     else case when tlcd.court_type is null  then 'Unknown Court'
+        //     end end end end end )as court_type_name
+        //     ");
+        // $this->db->FROM('efil.tbl_certified_copy_details tccd');
+        // $this->db->JOIN('efil.tbl_lower_court_details tlcd', 'tccd.ref_tbl_lower_court_details_id=tlcd.id and tccd.registration_id=tlcd.registration_id');
+        // $this->db->WHERE('tccd.registration_id', $registration_id);
+        // $this->db->WHERE('tccd.is_deleted', FALSE);
+        // $this->db->WHERE('tlcd.is_deleted', FALSE);
+        // $query = $this->db->get();
+        // return $query->result_array();
+        $builder = $this->db->table('efil.tbl_certified_copy_details tccd');
+
+        $builder->select([
+            'tccd.*',
+            'tlcd.court_type',
+            "CASE
+                WHEN tlcd.court_type = '1' THEN 'High Court'
+                WHEN tlcd.court_type = '3' THEN 'District Court'
+                WHEN tlcd.court_type = '5' THEN 'State Agency or Tribunal'
+                WHEN tlcd.court_type = '4' THEN 'Supreme Court'
+                ELSE 'Unknown Court'
+            END AS court_type_name",
+        ]);
+
+        $builder->join('efil.tbl_lower_court_details tlcd', 'tccd.ref_tbl_lower_court_details_id = tlcd.id AND tccd.registration_id = tlcd.registration_id');
+        $builder->where('tccd.registration_id', $registration_id);
+        $builder->where('tccd.is_deleted', false);
+        $builder->where('tlcd.is_deleted', false);
+
+        $query = $builder->get();
+
+        return $query->getResultArray();
     }
     function getIaDocsPspdfkitDocId($reg)
     {
-        $this->db->SELECT('ed.pspdfkit_document_id');
-        $this->db->FROM('efil.tbl_efiled_docs ed');
-        $this->db->WHERE('ed.registration_id', $reg);
-        $this->db->WHERE('ed.is_deleted', FALSE);
+        // $this->db->SELECT('ed.pspdfkit_document_id');
+        // $this->db->FROM('efil.tbl_efiled_docs ed');
+        // $this->db->WHERE('ed.registration_id', $reg);
+        // $this->db->WHERE('ed.is_deleted', FALSE);
 
-        $query = $this->db->get();
-        if ($query->num_rows() >= 1) {
-            $result = $query->result_array();
-            return $result;
+        // $query = $this->db->get();
+        // if ($query->num_rows() >= 1) {
+        //     $result = $query->result_array();
+        //     return $result;
+        // } else {
+        //     return false;
+        // }
+        $builder = $this->db->table('efil.tbl_efiled_docs AS ed');
+
+        $builder->select('ed.pspdfkit_document_id')
+                ->where('ed.registration_id', $reg)
+                ->where('ed.is_deleted', false);
+
+        $query = $builder->get();
+
+        if ($query->getNumRows() >= 1) {
+            return $query->getResultArray();
         } else {
             return false;
         }
