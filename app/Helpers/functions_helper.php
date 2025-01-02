@@ -2831,7 +2831,7 @@ function logged_in_check_user_type($user_type)
 {
     //$allowed_users_array = array(USER_ADMIN, USER_EFILING_ADMIN,USER_SUPER_ADMIN, USER_ADMIN_READ_ONLY); //For Admin Portal
     //$allowed_users_array = array(USER_ADVOCATE,USER_IN_PERSON,ARGUING_COUNSEL,SR_ADVOCATE); //For Advocate Portal
-    $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, ARGUING_COUNSEL, SR_ADVOCATE, USER_ADMIN, USER_EFILING_ADMIN, USER_SUPER_ADMIN, USER_DEPARTMENT, USER_CLERK, USER_ADMIN_READ_ONLY,AMICUS_CURIAE_USER); //For Advocate Portal and Admin Portal
+    $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, ARGUING_COUNSEL, SR_ADVOCATE, USER_ADMIN, USER_EFILING_ADMIN, USER_SUPER_ADMIN, USER_DEPARTMENT, USER_CLERK, USER_ADMIN_READ_ONLY, AMICUS_CURIAE_USER); //For Advocate Portal and Admin Portal
     if (!in_array($user_type, $allowed_users_array)) {
         return true;
     }
@@ -2840,6 +2840,9 @@ function logged_in_check_user_type($user_type)
 
 function is_user_status($loginid = null)
 {
+    if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+        is_clerk_aor($_SESSION['login']['id'],$_SESSION['login']['ref_m_usertype_id'],'Y');
+    }
     $time1 = date("H:i");
     /*   $ci = &get_instance();
     $ci->load->model('login/Login_model');
@@ -4243,41 +4246,34 @@ function insert_copying_application_online($dataArray){
     return json_encode(array("Status" => $status, "last_application_id" => $last_application_id));
 }
 
-function insert_copying_application_documents_online($dataArray){
+function insert_copying_application_documents_online($dataArray) {
     $status = '';
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     $builder = $db2->table('copying_application_documents_online');
     if ($builder->insert($dataArray)) {
         $status = 'success';
-    } else {
+    } else{
         $status = 'Error:Unable to Insert Records';
     }
     return json_encode(['Status' => $status]);
 }
 
-function sci_send_sms($mobile,$cnt,$from_adr,$template_id){
+function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
     $status = '';
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    if(empty($mobile)){
+    if(empty($mobile)) {
         $status = " Mobile No. Empty.";
-    }
-    else if(empty($cnt)){
+    } else if(empty($cnt)) {
         $status = " Message content Empty.";
-    }
-    else if(strlen($cnt) > 320){
+    } else if(strlen($cnt) > 320) {
         $status = " Message length should be less than 320 characters.";
-    }
-    else if(empty($from_adr)){
+    } else if(empty($from_adr)) {
         $status = " Sender Information Empty";
-    }
-    else if(strlen($mobile) != '10'){
+    } else if(strlen($mobile) != '10') {
         $status = " Not a Proper Mobile No.";
-    }
-    else if(!is_numeric($mobile)){
+    } else if(!is_numeric($mobile)) {
         $status = "Mobile number contains invalid value.";
-    }
-    else{
-
+    } else{
         $url = SCISMS_URL;
         $post_fields = [
             "providerCode" => "sms",
@@ -4295,36 +4291,27 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id){
                 "name" => "Abhishek",
                 "employeeCode" => "564863",
                 "organizationName" => "SSK Infotech"
-            ],
-            
+            ],            
             "module" => "listing",
             "project" => "icmis"
         ];
-
-
         $fields_string = http_build_query($post_fields);
-
         //open connection
         $ch = curl_init();
         curl_setopt($ch,CURLOPT_URL, $url);
         curl_setopt($ch,CURLOPT_POST, true);
         curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-
         //So that curl_exec returns the contents of the cURL; rather than echoing it
         curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-
         $headers = [
             'Content-Type: application/x-www-form-urlencoded',
             'Accept: application/json',
             'Authorization: Bearer sdfmsdbfjh327654t3ufb58'
         ];
-
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers); 
-
         //execute post
         $result = curl_exec($ch);
         $json = json_decode($result);
-
         if(empty($json->errors)){
             $dataArr = array(
                 "mobile" => $mobile,
@@ -4338,19 +4325,17 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id){
             $builder = $db2->table('sms_pool');
             if ($builder->insert($dataArr)) {
                 $status = 'success';
-            } else {
+            } else{
                 $status = 'Error:Unable to Insert Records';
             }
-
-        }
-        else{
+        } else{
             $status = "Error:Try again later";
         }
     }
     return json_encode(array("Status" => $status));
 }
 
-function eCopyingGetCasetoryById($id){
+function eCopyingGetCasetoryById($id) {
     $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
     $builder = $db2->table('master.copy_category');
     $builder->select('id, urgent_fee, per_certification_fee, per_page');
@@ -4360,102 +4345,87 @@ function eCopyingGetCasetoryById($id){
     return $query->getRow();
 }
 
-function insert_user_assets($dataArray){
+function insert_user_assets($dataArray) {
     $status = '';
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     $builder = $db2->table('user_assets');
     $result = $builder->insert($dataArray);
     if ($result) {
         $status = 'success';
-    } else {
+    } else{
         $status = 'Error:Unable to Insert Records';
     }
-
     return json_encode(array("Status" => $status));
 }
 
-function bharatKoshRequest($reqeust)
-{
+function bharatKoshRequest($reqeust) {
     //$xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="22" Version="1.0"/>'); //uat server
     $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="022" Version="1.0"/>');//production server
-
     $submit = $xml->addChild('Submit');
     $order_batch = $submit->addChild('OrderBatch');
     $order_batch->addAttribute('TotalAmount', "$reqeust[OrderBatchTotalAmount]");
     $order_batch->addAttribute('Transactions', "$reqeust[OrderBatchTransactions]");
     //$order_batch->addAttribute('Transactions', "2");
     $order_batch->addAttribute('merchantBatchCode', "$reqeust[OrderBatchMerchantBatchCode]");
-
     if($reqeust['OrderBatchTransactions'] == 1){
-    $order = $order_batch->addChild('Order');
-    $order->addAttribute('InstallationId', "$reqeust[InstallationId]");//given by pfms is unique for sci
-    //$order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
-    $order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
-
-    $cart = $order->addChild('CartDetails');
-    $cart->addChild('Description', "$reqeust[CartDescription]");
-    //$cart->addChild('Description');
-    //$cart->addChild('Amount CurrencyCode="INR" exponent="0" value="1"');
-    $cart->addChild('Amount CurrencyCode="INR" exponent="2" value="' . $reqeust['OrderBatchTotalAmount'] . '"');
-    $cart->addChild('OrderContent', "$reqeust[OrderContent]"); //also knows purposeId //OrderContent different for each head
-    $cart->addChild('PaymentTypeId', "$reqeust[PaymentTypeId]");
-    $cart->addChild('PAOCode', "$reqeust[PAOCode]");
-    $cart->addChild('DDOCode', "$reqeust[DDOCode]");
-
-    //repeating code
-    $pay_method_mask = $order->addChild('PaymentMethodMask');
-    $pay_method_mask->addChild('Include Code="'.$reqeust['PaymentMethodMode'].'"');
-
-    $shopper = $order->addChild('Shopper');
-    $shopper->addChild('ShopperEmailAddress', "$reqeust[ShopperEmailAddress]");
-    $shopper->addChild('ShopperEmailAddress');
-
-    $shipping = $order->addChild('ShippingAddress');
-    $shipping_address = $shipping->addChild('Address');
-    $shipping_address->addChild('FirstName', "$reqeust[ShippingFirstName]");
-    $shipping_address->addChild('LastName', "$reqeust[ShippingLastName]");
-    $shipping_address->addChild('Address1', "$reqeust[ShippingAddress1]");
-    $shipping_address->addChild('Address2', "$reqeust[ShippingAddress2]");
-
-    $shipping_address->addChild('PostalCode', "$reqeust[ShippingPostalCode]");
-    $shipping_address->addChild('City', "$reqeust[ShippingCity]");
-    $shipping_address->addChild('StateRegion', "$reqeust[ShippingStateRegion]");
-    $shipping_address->addChild('State', "$reqeust[ShippingState]");
-    $shipping_address->addChild('CountryCode', "$reqeust[ShippingCountryCode]");
-    $shipping_address->addChild('MobileNumber', "$reqeust[ShippingMobileNumber]");
-
-    $billing = $order->addChild('BillingAddress');
-    $billing_address = $billing->addChild('Address');
-    $billing_address->addChild('FirstName', "$reqeust[BillingFirstName]");
-    $billing_address->addChild('LastName', "$reqeust[BillingLastName]");
-    $billing_address->addChild('Address1', "$reqeust[BillingAddress1]");
-    $billing_address->addChild('Address2', "$reqeust[BillingAddress2]");
-    $billing_address->addChild('PostalCode', "$reqeust[BillingPostalCode]");
-    $billing_address->addChild('City', "$reqeust[BillingCity]");
-    $billing_address->addChild('StateRegion', "$reqeust[BillingStateRegion]");
-    $billing_address->addChild('State', "$reqeust[BillingState]");
-    $billing_address->addChild('CountryCode', "$reqeust[BillingCountryCode]");
-    $billing_address->addChild('MobileNumber', "$reqeust[BillingMobileNumber]");
-
-    $order->addChild('StatementNarrative');
-    }
-    else{
+        $order = $order_batch->addChild('Order');
+        $order->addAttribute('InstallationId', "$reqeust[InstallationId]");//given by pfms is unique for sci
+        //$order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
+        $order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
+        $cart = $order->addChild('CartDetails');
+        $cart->addChild('Description', "$reqeust[CartDescription]");
+        //$cart->addChild('Description');
+        //$cart->addChild('Amount CurrencyCode="INR" exponent="0" value="1"');
+        $cart->addChild('Amount CurrencyCode="INR" exponent="2" value="' . $reqeust['OrderBatchTotalAmount'] . '"');
+        $cart->addChild('OrderContent', "$reqeust[OrderContent]"); //also knows purposeId //OrderContent different for each head
+        $cart->addChild('PaymentTypeId', "$reqeust[PaymentTypeId]");
+        $cart->addChild('PAOCode', "$reqeust[PAOCode]");
+        $cart->addChild('DDOCode', "$reqeust[DDOCode]");
+        //repeating code
+        $pay_method_mask = $order->addChild('PaymentMethodMask');
+        $pay_method_mask->addChild('Include Code="'.$reqeust['PaymentMethodMode'].'"');
+        $shopper = $order->addChild('Shopper');
+        $shopper->addChild('ShopperEmailAddress', "$reqeust[ShopperEmailAddress]");
+        $shopper->addChild('ShopperEmailAddress');
+        $shipping = $order->addChild('ShippingAddress');
+        $shipping_address = $shipping->addChild('Address');
+        $shipping_address->addChild('FirstName', "$reqeust[ShippingFirstName]");
+        $shipping_address->addChild('LastName', "$reqeust[ShippingLastName]");
+        $shipping_address->addChild('Address1', "$reqeust[ShippingAddress1]");
+        $shipping_address->addChild('Address2', "$reqeust[ShippingAddress2]");
+        $shipping_address->addChild('PostalCode', "$reqeust[ShippingPostalCode]");
+        $shipping_address->addChild('City', "$reqeust[ShippingCity]");
+        $shipping_address->addChild('StateRegion', "$reqeust[ShippingStateRegion]");
+        $shipping_address->addChild('State', "$reqeust[ShippingState]");
+        $shipping_address->addChild('CountryCode', "$reqeust[ShippingCountryCode]");
+        $shipping_address->addChild('MobileNumber', "$reqeust[ShippingMobileNumber]");
+        $billing = $order->addChild('BillingAddress');
+        $billing_address = $billing->addChild('Address');
+        $billing_address->addChild('FirstName', "$reqeust[BillingFirstName]");
+        $billing_address->addChild('LastName', "$reqeust[BillingLastName]");
+        $billing_address->addChild('Address1', "$reqeust[BillingAddress1]");
+        $billing_address->addChild('Address2', "$reqeust[BillingAddress2]");
+        $billing_address->addChild('PostalCode', "$reqeust[BillingPostalCode]");
+        $billing_address->addChild('City', "$reqeust[BillingCity]");
+        $billing_address->addChild('StateRegion', "$reqeust[BillingStateRegion]");
+        $billing_address->addChild('State', "$reqeust[BillingState]");
+        $billing_address->addChild('CountryCode', "$reqeust[BillingCountryCode]");
+        $billing_address->addChild('MobileNumber', "$reqeust[BillingMobileNumber]");
+        $order->addChild('StatementNarrative');
+    } else{
         $multiHeadArray = $reqeust['MultiHeadArray'];
-       // var_dump($reqeust[MultiHeadArray]);
+        // var_dump($reqeust[MultiHeadArray]);
         for($k=0;$k<$reqeust['OrderBatchTransactions'];$k++){
             $ChildAmount = $multiHeadArray[$k]['ChildAmount'];
             $ChildOrderCode = $multiHeadArray[$k]['ChildOrderCode'];
             $ChildCartDescription = $multiHeadArray[$k]['ChildCartDescription'];
             $ChildOrderContent = $multiHeadArray[$k]['ChildOrderContent'];
             $ChildPaymentTypeId = $multiHeadArray[$k]['ChildPaymentTypeId'];
-
             $order = $order_batch->addChild('Order');
-
             $order->addAttribute('InstallationId', "$reqeust[InstallationId]");//given by loba to pfms
             if($k==0){
-            $order->addAttribute('OrderCode', $reqeust['OrderBatchMerchantBatchCode']);
-            }
-            else{
+                $order->addAttribute('OrderCode', $reqeust['OrderBatchMerchantBatchCode']);
+            } else{
                 $order->addAttribute('OrderCode', $ChildOrderCode);
             }
             $cart = $order->addChild('CartDetails');
@@ -4464,34 +4434,25 @@ function bharatKoshRequest($reqeust)
             $cart->addChild('Amount CurrencyCode="INR" exponent="2" value="' . $ChildAmount . '"');
             $cart->addChild('OrderContent', "$ChildOrderContent"); //also knows purposeId //OrderContent different for each head
             $cart->addChild('PaymentTypeId', "$ChildPaymentTypeId");
-
-
-
             $cart->addChild('PAOCode', "$reqeust[PAOCode]");
             $cart->addChild('DDOCode', "$reqeust[DDOCode]");
-
-
             $pay_method_mask = $order->addChild('PaymentMethodMask');
             $pay_method_mask->addChild('Include Code="'.$reqeust['PaymentMethodMode'].'"');
-
             $shopper = $order->addChild('Shopper');
             $shopper->addChild('ShopperEmailAddress', "$reqeust[ShopperEmailAddress]");
             $shopper->addChild('ShopperEmailAddress');
-
             $shipping = $order->addChild('ShippingAddress');
             $shipping_address = $shipping->addChild('Address');
             $shipping_address->addChild('FirstName', "$reqeust[ShippingFirstName]");
             $shipping_address->addChild('LastName', "$reqeust[ShippingLastName]");
             $shipping_address->addChild('Address1', "$reqeust[ShippingAddress1]");
             $shipping_address->addChild('Address2', "$reqeust[ShippingAddress2]");
-
             $shipping_address->addChild('PostalCode', "$reqeust[ShippingPostalCode]");
             $shipping_address->addChild('City', "$reqeust[ShippingCity]");
             $shipping_address->addChild('StateRegion', "$reqeust[ShippingStateRegion]");
             $shipping_address->addChild('State', "$reqeust[ShippingState]");
             $shipping_address->addChild('CountryCode', "$reqeust[ShippingCountryCode]");
             $shipping_address->addChild('MobileNumber', "$reqeust[ShippingMobileNumber]");
-
             $billing = $order->addChild('BillingAddress');
             $billing_address = $billing->addChild('Address');
             $billing_address->addChild('FirstName', "$reqeust[BillingFirstName]");
@@ -4504,12 +4465,10 @@ function bharatKoshRequest($reqeust)
             $billing_address->addChild('State', "$reqeust[BillingState]");
             $billing_address->addChild('CountryCode', "$reqeust[BillingCountryCode]");
             $billing_address->addChild('MobileNumber', "$reqeust[BillingMobileNumber]");
-
             $order->addChild('StatementNarrative');
         }
     }
     $xmlString = $xml->asXML();
-
     // Load the XML to be signed
     $doc = new DOMDocument('1.0', 'utf-8');
     $doc->encoding = 'utf-8';
@@ -4534,7 +4493,6 @@ function bharatKoshRequest($reqeust)
     // Load the private key
     //$objKey->loadKey('privatekey_10082020.pem', TRUE);
     $objKey->loadKey('private_key_capricon.pem', TRUE);
-
     // Sign the XML file
     $objDSig->sign($objKey);
     // Add the associated public key to the signature
@@ -4548,9 +4506,7 @@ function bharatKoshRequest($reqeust)
 }
 
 function encrypt_doc_id($doc_id) {
-
     $doc_parameter = $doc_id . '|1';
-
     $aes = new Crypt_AES();
     $secret = base64_decode(env('SBI_PAYMENT_DOUBLE_VARIFICATION_SECRET_KEY'));
     $aes->setKey($secret);
@@ -4558,43 +4514,37 @@ function encrypt_doc_id($doc_id) {
     $encrypted_doc_id = str_replace('/', '-', $encrypted_doc_id);
     $encrypted_doc_id = str_replace('=', ':', $encrypted_doc_id);
     $encrypted_doc_id = str_replace('+', '.', $encrypted_doc_id);
-
     return $encrypted_doc_id;
 }
-
 
 if (!function_exists('isJSON')) {
     function isJSON($string){
         return (is_string($string) && is_array(json_decode($string, true)) && (json_last_error() == JSON_ERROR_NONE)) ? true : false;
     }
 }
+
 function remark_preview_ia_docs($reg_id, $current_stage_id)
 {
-    //echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
+    // echo "Registration: ".$reg_id. 'and current stage:'. $current_stage_id;
     // $ci = &get_instance();
     // $ci->load->model('common/Common_model');
-
-    $Common_model = new CommonModel();
-
     // $ci->load->library('session');
+    $msg = '';
+    $Common_model = new \App\Models\Common\CommonModel;
     $result_initial = $Common_model->get_ia_docs_intials_defects_remarks($reg_id, $current_stage_id);
     $result_icmis = $Common_model->get_ia_docs_cis_defects_remarks($reg_id, FALSE);
     $defects['pdfdefects'] = $Common_model->get_ia_docs_pdf_defects_remarks($reg_id);
-
     if (isset($result_icmis) && !empty($result_icmis)) {
-
         $total_aor_cured=sizeof($result_icmis); $acr=0;$checkedAll='';
         foreach ($result_icmis as $row) { $is_aor_cured = (isset($row->aor_cured) && !empty($row->aor_cured)) ? $row->aor_cured : "f";
             if ($is_aor_cured == "t") {  $acr++;  }
         }
         if ($total_aor_cured == $acr) { $checkedAll = "checked"; }
-
         $msg = '<div class="alert table-responsive-sm">';
         $msg .= '<table id="datatable-defects" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%" >'
             . '<thead class="success"><th>Mark Cured<br/><input type="checkbox" id="checkAll" '.$checkedAll.'></th><th>#</th><th>Defect Description</th><th>Defect Remark</th><th>Prepare Dt.</th><th>Remove Dt.</th><th>Index Title</th><th>Defective Page No.</th></thead>'
             . '<tbody style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $i = 1;
-
         foreach ($result_icmis as $re) {
             $prep_dt = (isset($re->obj_prepare_date) && !empty($re->obj_prepare_date)) ? date('d-M-Y H:i:s', strtotime($re->obj_prepare_date)) : null;
             $remove_dt = (isset($re->obj_removed_date) && !empty($re->obj_removed_date)) ? date('d-M-Y H:i:s', strtotime($re->obj_removed_date)) : null;
@@ -4606,12 +4556,10 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
                 $checked = "checked";
                 $markdefectclass = "curemarked";
             }
-
             $link_url = base_url('documentIndex?pspdfkitdocumentid=' . $pspdfdocumentid . '&tobemodifiedpagesraw=');
             $tobemodifiedpagesdisplay = (isset($re->to_be_modified_pspdfkit_document_pages_raw) && !empty($re->to_be_modified_pspdfkit_document_pages_raw)) ? $re->to_be_modified_pspdfkit_document_pages_raw : null;
             $pdf_title = '';
             $pdf_pages_total = '';
-
             if ($pspdfdocumentid != null) {
                 $pdf_info = $Common_model->getPdfInfo($pspdfdocumentid);
                 if (!empty($pdf_info)) {
@@ -4621,7 +4569,6 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
             }
             $tobemodifiedpagesdisplaytext = '<span title="sequence no.s of (Total Pages)">' . $tobemodifiedpagesdisplay . ' of (' . $pdf_pages_total . '-pages)' . '</span>';
             $tobemodifiedpagesdisplaytextdisplay = (!empty($tobemodifiedpagesdisplay)) ? $tobemodifiedpagesdisplaytext : "";
-
             $msg .= '<tr id="row' . $re->id . '" class="' . $markdefectclass . '  setCuredDefectAllToggle">';
             $msg .= '<td>' . '<input type="checkbox" ' . $checked . ' id="' . $re->id . '" onchange="setCuredDefect(this.id)"  name="setCuredDefectAll[]" class="setCuredDefectAll" value="'.$re->id.'">' . '</td>';
             $msg .= '<td>' . $i++ . '</td>';
@@ -4635,7 +4582,6 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
         }
         $msg .= '</tbody></table>';
         $msg .= '</div>';
-
         if (!empty($defects['pdfdefects'])) {
             $connecter = '';
             $msg .= '<div>';
@@ -4668,7 +4614,6 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
         $msg .= '}';
         $msg .= '}';
         $msg .= '});';
-
         $msg .= '});';
         $msg .= '});';
         $msg .= 'function setCuredDefect(id) {';
@@ -4691,53 +4636,213 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
         $msg .= ' font-weight: bold; text-decoration: line-through;';
         $msg .= '}';
         $msg .= '</style>';
-
         return $msg;
-
     } elseif (isset($result_initial) && !empty($result_initial)) {
-
         $msg = '<div class="alert" style="border-color: #ebccd1;background-color: #f2dede;color: #a94442;">';
         $msg .= '<p><strong>Defect Raised On : </strong>' . date('d-m-Y H:i:s', strtotime($result_initial->defect_date)) . '<p>';
         $msg .= '<p><strong>Defects :</strong><p>';
         $msg .= '<p>' . script_remove($result_initial->defect_remark) . '<p>';
-
         if ($result_initial->defect_cured_date != NULL) {
             $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result_initial->defect_cured_date)), ENT_QUOTES) . '<p>';
         }
         $msg .= '</div>';
-
         return $msg;
-    } else {
+    } else{
         return false;
     }
 }
-function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id)
-{
-    $response=array();
+
+function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id) {
+    $db = \Config\Database::connect();
+    $response = array();
     if (isset($ref_tbl_lower_court_details_id) && !empty($ref_tbl_lower_court_details_id) && isset($registration_id) && !empty($registration_id)){
         // $ci = &get_instance();
         // $ci->load->model('login/Login_model');
-        // //$loginModel = 
-        // $ci->db->SELECT("*");
-        // $ci->db->FROM('efil.tbl_certified_copy_details');
-        // $ci->db->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
-        // $ci->db->WHERE('registration_id', $registration_id);
-        // $ci->db->WHERE('is_deleted',false);
-        // $query = $ci->db->get();
-        // $response= $query->result_array();
-
-
         $loginModel = new LoginModel();  
         $db = Database::connect('efiling_near');
-
         $builder = $db->table('efil.tbl_certified_copy_details');
-        $builder->select('*');
-        $builder->where('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
-        $builder->where('registration_id', $registration_id);
-        $builder->where('is_deleted', false);
+        $builder->SELECT("*");
+        $builder->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
+        $builder->WHERE('registration_id', $registration_id);
+        $builder->WHERE('is_deleted',false);
         $query = $builder->get();
         $response = $query->getResultArray();
     }
     return $response;
+}
+
+function getAordetailsByAORCODE($aor_code) {
+    $db = \Config\Database::connect();
+    $response = array();
+    if (isset($aor_code) && !empty($aor_code)) {
+        // $ci = &get_instance();
+        // $ci->load->model('common/Common_model');
+        $builder = $db->table('efil.tbl_users');
+        $builder->select("*");
+        $builder->WHERE('is_deleted',false);
+        $builder->WHERE('is_active','1');
+        $builder->WHERE('cast(aor_code as int)=',$aor_code);
+        $query = $builder->get();
+        $response = $query->getResult();
+    }
+    return $response;
+}
+
+function is_AORGovernment($aor_code) {
+    $db = \Config\Database::connect();
+    $response = array();
+    if (isset($aor_code) && !empty($aor_code)) {
+        // $ci = &get_instance();
+        // $ci->load->model('login/Login_model');
+        $builder = $db->table('efil.tbl_users');
+        $builder->SELECT("*");
+        $builder->WHERE('cast(aor_code as int)=', $aor_code);
+        $builder->WHERE('is_deleted',false);
+        $builder->WHERE('is_active','1');
+        $builder->WHERE('ref_department_id',1);
+        $query = $builder->get();
+        $response = $query->getResult();
+    }
+    return $response;
+}
+
+function is_clerk_aor($clerk_id,$ref_m_usertype_id,$is_user_status='N') {
+    $db = \Config\Database::connect();
+    $session = \Config\Services::session();
+    $response = array();
+    if ($ref_m_usertype_id==USER_CLERK) {
+        if (isset($clerk_id) && !empty($clerk_id)) {
+            // $ci = &get_instance();
+            // $ci->load->model('login/Login_model');
+            // $ci->load->library('session');
+            $builder = $db->table('efil.aor_clerk ac');
+            $builder->select('ac.*,users.first_name,users.ref_department_id,users.is_active');
+            $builder->join('efil.tbl_users users', 'ac.ref_user_id=users.id');
+            $builder->WHERE('ac.ref_user_id', $clerk_id);
+            $builder->WHERE('ac.to_date is null');
+            $builder->WHERE('users.is_deleted', false);
+            $builder->WHERE('users.is_active', '1');
+            $query = $builder->get();
+            if ($query->getNumRows() >= 1) {
+                $response = $query->getResult();
+            } else{
+                $session->setFlashdata('msg', '<span class="text-danger">You are not authorized !!</span>');
+                if ($is_user_status=='N') {
+                    return redirect()->to(base_url('login'));
+                } else{
+                    return redirect()->to(base_url('login/logout'));
+                }
+                exit(0);
+            }
+        }
+    }
+    return $response;
+}
+
+function getAordetails_ifFiledByClerk($efiling_no_or_registration_id,$type='R') {
+    $db = \Config\Database::connect();
+    $response = array();
+    if (isset($efiling_no_or_registration_id) && !empty($efiling_no_or_registration_id) && isset($type) && !empty($type)) {
+        // $ci = &get_instance();
+        // $ci->load->model('common/Common_model');
+        $builder = $db->table('efil.tbl_efiling_nums ten');
+        $builder->SELECT("ten.*,cf.ref_user_id,cf.aor_code as aor_code_aorclerk,users.*, aorclerk.ref_m_usertype_id as ref_m_usertype_id_aorclerk");
+        $builder->join('efil.clerk_filings cf', 'cf.registration_id=ten.registration_id');
+        $builder->join('efil.tbl_users users', 'cf.aor_code=cast(users.aor_code as int)');
+        $builder->join('efil.tbl_users aorclerk', 'cf.ref_user_id=aorclerk.id');
+        if ($type=='R') {
+            $builder->WHERE('ten.registration_id', $efiling_no_or_registration_id);
+        } else if ($type=='A') {
+            $builder->WHERE('cf.aor_code', $efiling_no_or_registration_id);
+        } else{
+            $builder->WHERE('ten.efiling_no', $efiling_no_or_registration_id);
+        }
+        $builder->WHERE('ten.is_deleted',false);
+        $builder->WHERE('users.is_deleted',false);
+        $builder->WHERE('users.is_active','1');
+        $query = $builder->get();
+        $response= $query->getResult();
+        // if (isset($response) && !empty($response)) { $response = $response[0]; }
+    }
+    return $response;
+}
+
+if ( ! function_exists('force_download')) {
+	/**
+	 * Force Download
+	 *
+	 * Generates headers that force a download to happen
+	 *
+	 * @param	string	filename
+	 * @param	mixed	the data to be downloaded
+	 * @param	bool	whether to try and send the actual file MIME type
+	 * @return	void
+	 */
+	function force_download($filename = '', $data = '', $set_mime = FALSE) {
+		if ($filename === '' OR $data === '') {
+			return;
+		} elseif ($data === NULL) {
+			if ( ! @is_file($filename) OR ($filesize = @filesize($filename)) === FALSE) {
+				return;
+			}
+			$filepath = $filename;
+			$filename = explode('/', str_replace(DIRECTORY_SEPARATOR, '/', $filename));
+			$filename = end($filename);
+		} else{
+			$filesize = strlen($data);
+		}
+		// Set the default MIME type to send
+		$mime = 'application/octet-stream';
+		$x = explode('.', $filename);
+		$extension = end($x);
+		if ($set_mime === TRUE) {
+			if (count($x) === 1 OR $extension === '') {
+				/* If we're going to detect the MIME type,
+				 * we'll need a file extension.
+				 */
+				return;
+			}
+			// Load the mime types
+			$mimes =& get_mimes();
+			// Only change the default MIME if we can find one
+			if (isset($mimes[$extension])) {
+				$mime = is_array($mimes[$extension]) ? $mimes[$extension][0] : $mimes[$extension];
+			}
+		}
+		/* It was reported that browsers on Android 2.1 (and possibly older as well)
+		 * need to have the filename extension upper-cased in order to be able to
+		 * download it.
+		 *
+		 * Reference: http://digiblog.de/2011/04/19/android-and-the-download-file-headers/
+		 */
+		if (count($x) !== 1 && isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/Android\s(1|2\.[01])/', $_SERVER['HTTP_USER_AGENT'])) {
+			$x[count($x) - 1] = strtoupper($extension);
+			$filename = implode('.', $x);
+		}
+		if ($data === NULL && ($fp = @fopen($filepath, 'rb')) === FALSE) {
+			return;
+		}
+		// Clean output buffer
+		if (ob_get_level() !== 0 && @ob_end_clean() === FALSE) {
+			@ob_clean();
+		}
+		// Generate the server headers
+		header('Content-Type: '.$mime);
+		header('Content-Disposition: attachment; filename="'.$filename.'"');
+		header('Expires: 0');
+		header('Content-Transfer-Encoding: binary');
+		header('Content-Length: '.$filesize);
+		header('Cache-Control: private, no-transform, no-store, must-revalidate');
+		// If we have raw data - just dump it
+		if ($data !== NULL) {
+			exit($data);
+		}
+		// Flush 1MB chunks of data
+		while ( ! feof($fp) && ($data = fread($fp, 1048576)) !== FALSE) {
+			echo $data;
+		}
+		fclose($fp);
+		exit;
+	}
 
 }

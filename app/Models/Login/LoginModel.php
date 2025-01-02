@@ -16,46 +16,43 @@ class LoginModel extends Model
         $this->session = \Config\Services::session();
     }
 
-    function get_user($usr, $pwd, $if_loggable = true, $if_match_password = true)
-    {
+    function get_user($usr, $pwd, $if_loggable = true, $if_match_password = true) {
         $userid = strtoupper($usr);
-
-        $builder = $this->db->table('efil.tbl_users as users');
-        $builder->select('users.*, est.pg_request_function, est.pg_response_function, est.estab_code');
-        $builder->join('efil.m_tbl_establishments est', '1 = 1');
-        $builder->where('users.userid', $userid);
-        $builder->orWhere('users.moblie_number', $usr);
-        $builder->orWhere('users.emailid', $usr);
-        $builder->orWhere('users.emailid', strtoupper($usr));
-        //     $sql = $builder->getCompiledSelect();
-        // pr($sql);
-        $query = $builder->get();
-        $result = $query->getRow();
-
+        $sql="SELECT users.*, est.pg_request_function, est.pg_response_function, est.estab_code,tut.user_type
+            FROM efil.tbl_users users 
+            JOIN efil.m_tbl_establishments est ON 1 = 1
+            LEFT JOIN efil.tbl_user_types tut ON tut.id=users.ref_m_usertype_id
+            WHERE (upper(users.userid) = ? OR users.moblie_number = ?  OR users.emailid ilike ?)
+            AND users.is_deleted = 'false' AND users.is_active = '1' AND tut.is_deleted = false ORDER by users.ref_m_usertype_id";
+        $query =$this->db->query($sql, array($userid, $usr, $usr));
+        // $res_array = $query->result(); echo "<pre>"; print_r($res_array);die;
         if ($query->getNumRows() == 1) {
-            $res_array = $query->getFirstRow();
-
-            if (!$if_match_password || $res_array->password . $_SESSION['login_salt'] == $pwd) {
-                if ($if_loggable) { //for efiling_assistant
-                    $builder = $this->db->table('efil.tbl_users as users');
-                    $builder->where('id', $res_array->id);
-                    $builder->update(array('login_ip' => getClientIP()));
+            $res_array = $query->getResult();
+            //dd($res_array[0]->password.'<br>'.$_SESSION['login_salt'].'<br>'.$pwd);
+            if (!$if_match_password || $res_array[0]->password.$_SESSION['login_salt'] == $pwd) {//$if_match_password for efiling_assistant
+                if($if_loggable) {//for efiling_assistant
+                    if ($res_array[0]->ref_m_usertype_id==USER_CLERK){
+                        is_clerk_aor($res_array[0]->id,$res_array[0]->ref_m_usertype_id);
+                        // $this->check_clerk_aor($res_array[0]->id);
+                    }
+                    $builder = $this->db->table('efil.tbl_users');
+                    $builder->WHERE('id', $res_array[0]->id);
+                    $builder->UPDATE(array('login_ip' => getClientIP()));
                 }
                 return $res_array;
-            } else {
+            } else { 
                 return false;
             }
-        }else if ($query->getNumRows() > 1) {
-            $res_array = $query->getFirstRow();
-
-            if (!$if_match_password || $res_array->password . $_SESSION['login_salt'] == $pwd) {
-                if ($if_loggable) { //for efiling_assistant
+        } else if ($query->getNumRows() > 1) {
+            $res_array = $query->getResult();
+            if (!$if_match_password || $res_array[0]->password.$_SESSION['login_salt'] == $pwd) {//$if_match_password for efiling_assistant
+                if($if_loggable) {//for efiling_assistant
                     if ($res_array[0]->ref_m_usertype_id==USER_CLERK){
-                        //is_clerk_aor($res_array[0]->id,$res_array[0]->ref_m_usertype_id);
+                        is_clerk_aor($res_array[0]->id,$res_array[0]->ref_m_usertype_id);
                     }
-                    $builder = $this->db->table('efil.tbl_users as users');
-                    $builder->where('id', $res_array->id);
-                    $builder->update(array('login_ip' => getClientIP()));
+                    $builder = $this->db->table('efil.tbl_users');
+                    $builder->WHERE('id', $res_array[0]->id);
+                    $builder->UPDATE(array('login_ip' => getClientIP()));
                 }
                 return $res_array;
             } else {
@@ -66,10 +63,8 @@ class LoginModel extends Model
         }
     }
 
-    function check_otp($usr, $pwd, $otp)
-    {
+    function check_otp($usr, $pwd, $otp) {
         $userid = strtoupper($usr);
-
         $builder = $this->db->table('efil.tbl_users as users');
         $builder->select('users.*, est.pg_request_function, est.pg_response_function, est.estab_code');
         $builder->join('efil.m_tbl_establishments est', '1 = 1');
@@ -79,7 +74,6 @@ class LoginModel extends Model
         $builder->where('users.mobile_otp', $otp);
         $query = $builder->get();
         $result = $query->getRow();
-
         if ($query->getNumRows() == 1) {
             $res_array = $query->getFirstRow();
             if ($res_array->password . $_SESSION['login_salt'] == $pwd) {
@@ -92,8 +86,7 @@ class LoginModel extends Model
         }
     }
 
-    public function storeOtp($usr, $pwd, $otp)
-    {
+    public function storeOtp($usr, $pwd, $otp) {
         $userid = strtoupper($usr);
         $builder = $this->db->table('efil.tbl_users as users');
         $builder->select('users.*, est.pg_request_function, est.pg_response_function, est.estab_code');
@@ -104,7 +97,6 @@ class LoginModel extends Model
         $builder->where('users.mobile_otp', $otp);
         $query = $builder->get();
         $result = $query->getRow();
-
         if ($query->getNumRows() == 1) {
             $res_array = $query->getFirstRow();
             if ($res_array->password . $_SESSION['login_salt'] == $pwd) {

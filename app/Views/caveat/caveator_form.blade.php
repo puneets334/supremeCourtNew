@@ -67,7 +67,38 @@ textarea {
             <div class="row">
                     <h6 class="text-center fw-bold">Caveator Information</h6>
             </div>
-                <?= ASTERISK_RED_MANDATORY ?>
+            <?php if(in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])){ ?>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+
+                        <div class="row">
+                            <div class="col-sm-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Select AOR <span style="color: red">*</span> :</label>
+                                    <div class="col-md-7 col-sm-12 col-xs-12">
+                                        <select name="impersonated_aor" id="impersonated_aor" onchange="user_clerk_aor_is_gov(this.value)" class="form-control input-sm" required>
+                                            <option value="" title="Select">Select AOR</option>
+                                            <?php
+                                            if (!empty($clerk_aor)) {
+                                                foreach ($clerk_aor as $dataRes) {
+                                                    $ref_department_id = !empty($dataRes->ref_department_id) && $dataRes->ref_department_id !=0 ? $dataRes->ref_department_id : 0;
+                                                    $sel = ($selected_aor[0]->aor_code == (string) $dataRes->aor_code ) ? "selected=selected" : '';
+                                                    ?>
+                                                    <option <?php echo $sel; ?> value="<?=$dataRes->aor_code.'@@@'.$ref_department_id; ?>"><?php echo_data($dataRes->name.' ('.$dataRes->aor_code.')'); ?> </option>;
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/> <br/>
+            <?php } ?>
+            <?= ASTERISK_RED_MANDATORY ?>
                
                 <div class="row">
                     <!-- I Field Start-->
@@ -392,6 +423,36 @@ textarea {
                             </div>
                             <?php
                         } ?>
+                        <?php if(!is_null($_SESSION['login']['department_id'])){ ?>
+                            <div class="row">
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Whether filed by Government? </label>
+                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                            <label class="switch">
+                                                <input type="checkbox" name="is_govt_filing" id="is_govt_filing" <?php echo (!empty($caveator_details[0]['is_govt_filing']) && ($caveator_details[0]['is_govt_filing'] ==1)) ? 'checked' : ''  ?>>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
+                        <?php if(in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])){  ?>
+                            <div class="row" id="CLERK_AOR_is_govt_filing" style="display: none;">
+                                <div class="col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Whether filed by Government? </label>
+                                        <div class="col-md-7 col-sm-12 col-xs-12">
+                                            <label class="switch">
+                                                <input type="checkbox" name="is_govt_filing" id="is_govt_filing" <?php echo (!empty($caveator_details[0]['is_govt_filing']) && ($caveator_details[0]['is_govt_filing'] ==1)) ? 'checked' : ''  ?>>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Email <span style="color: red" class="astriks">*</span></label>
@@ -560,8 +621,20 @@ textarea {
 <!--<script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 @push('script') 
-
-
+<?php if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) { ?>
+    <script>
+        user_clerk_aor_is_gov('<?=isset($caveator_details[0]['is_govt_filing']) ? $caveator_details[0]['is_govt_filing'] : null;?>');
+        function user_clerk_aor_is_gov(id) {
+            var string_selected = $.trim($("#impersonated_aor option:selected").val());
+            var resArr = string_selected.split('@@@');
+            if (resArr[1] == 1) {
+                $('#CLERK_AOR_is_govt_filing').show();
+            } else {
+                $('#CLERK_AOR_is_govt_filing').hide();
+            }
+        }
+    </script>
+<?php } ?>
 <script>
     function isNumber(value) {
         return typeof value === 'number';

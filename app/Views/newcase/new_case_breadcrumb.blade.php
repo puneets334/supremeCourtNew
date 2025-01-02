@@ -115,7 +115,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
                         ?>
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm efilaor" id='efilaor'> SUBMIT FOR EFILING </button>
-                                        <?php } else {
+                                        <?php } else if (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) { } else {
                                         ?>
                                             <button class="quick-btn gradient-btn btn btn-success btn-sm" id='efilpip'> SUBMIT FOR EFILING </button>
                                         <?php
@@ -359,7 +359,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
             }
             $final_submit_action = false;
             $final_submit_continue_action = false;
-            if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], [USER_ADVOCATE, USER_IN_PERSON, USER_PDE])) {
+            if (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], [USER_ADVOCATE, USER_IN_PERSON, USER_PDE, USER_CLERK])) {
                 $url_case_detail = base_url('newcase/caseDetails');
                 $url_petitioner = base_url('newcase/petitioner');
                 $url_respondent = base_url('newcase/respondent');

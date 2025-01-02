@@ -18,10 +18,18 @@ class NewCaseModel extends Model {
             // Saving data to efiling nums
             $result['registration_id'] = $this->add_efiling_nums($generated_efil_num, $curr_dt_time);
             if (isset($result['registration_id']) && !empty($result['registration_id'])) {
+                $created_by = getSessionData('login')['id'];
+                $adv_sci_bar_id=$_SESSION['login']['adv_sci_bar_id'];
+                if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+                    $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+                    $created_by=!empty($aorData) ? $aorData[0]->id  : null;
+                    $adv_sci_bar_id=!empty($aorData) ? $aorData[0]->adv_sci_bar_id  : null;
+                    $_SESSION['login']['adv_sci_bar_id'] = $adv_sci_bar_id;
+                }
                 $case_details_create_data = array(
                     'registration_id' => $result['registration_id'],
                     'created_on' => $curr_dt_time,
-                    'created_by' => getSessionData('login')['id'],
+                    'created_by' => $created_by,
                     'created_by_ip' => getClientIP()
                 );
                 $case_details = array_merge($case_details, $case_details_create_data);
@@ -29,7 +37,7 @@ class NewCaseModel extends Model {
                 $this->add_update_case_details($result['registration_id'], $case_details, NEW_CASE_CASE_DETAIL);
                 $adv_details = array(
                     'registration_id' => $result['registration_id'],
-                    'adv_bar_id' => $_SESSION['login']['adv_sci_bar_id'],
+                    'adv_bar_id' => $adv_sci_bar_id,
                     'm_a_adv_type' => 'M',
                     'for_p_r_a' => 'P',
                     'adv_code' => $_SESSION['login']['aor_code']
@@ -107,7 +115,8 @@ class NewCaseModel extends Model {
         $filing_type = E_FILING_TYPE_NEW_CASE;
         $stage_id = Draft_Stage;
         if ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
-            $created_by = 0;
+            $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
+            $created_by=!empty($aorData) ? $aorData[0]->id  : 0;
             $sub_created_by = $_SESSION['login']['id'];
         } else {
             $created_by = $_SESSION['login']['id'];

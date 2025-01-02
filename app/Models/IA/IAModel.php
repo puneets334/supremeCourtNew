@@ -134,9 +134,11 @@ class IAModel extends Model
         if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
             $created_by = 0;
             $sub_created_by = getSessionData('login')['id'];
+            $sub_created_on = $curr_dt_time;
         } else {
             $created_by = getSessionData('login')['id'];
             $sub_created_by = 0;
+            $sub_created_on = null;
         }
 
         $efiling = sprintf("%'.05d\n", $generated_efil_num['efiling_num']);
@@ -158,7 +160,8 @@ class IAModel extends Model
             'created_by' => $created_by,
             'create_on' => $curr_dt_time,
             'create_by_ip' => getClientIP(),
-            'sub_created_by' => $sub_created_by
+            'sub_created_by' => $sub_created_by,
+            'sub_created_on' => $sub_created_on
         );
 
         if ($query->getNumRows() >= 1) {

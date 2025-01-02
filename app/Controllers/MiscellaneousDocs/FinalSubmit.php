@@ -47,9 +47,7 @@ class FinalSubmit extends BaseController {
                     $aor_cured = (isset($re->aor_cured) && !empty($re->aor_cured)) ? $re->aor_cured : "f";
                     if ($aor_cured == 'f') {
                         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center"> Please Mark All Defects Cured Before Final Submit...</div>');
-                        // redirect('documentIndex');exit();
                         return redirect()->to(base_url('documentIndex'));
-
                     }
                 }
                 //isRefilingCompulsoryIADefect($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['stage_id']);

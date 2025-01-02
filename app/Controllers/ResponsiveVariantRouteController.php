@@ -1138,7 +1138,7 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function showClerkCrud()
     {
-        $this->render('responsive_variant.clerk.crud.index', compact('tab'));
+        $this->render('responsive_variant.clerk.crud.index');
     }
 
     /*public function showUtilities(){

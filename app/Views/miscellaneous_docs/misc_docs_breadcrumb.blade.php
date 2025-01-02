@@ -181,7 +181,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
             <?php
             $StageArray = explode(',', $_SESSION['efiling_details']['breadcrumb_status']);
             $disabled_status = 'pointer-events: none; cursor: default;';
-            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+            if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
                 $cnr_url = base_url('case_details');
                 $appearing_url = base_url('appearing_for');
                 $onbehlaf_url = base_url('on_behalf_of');

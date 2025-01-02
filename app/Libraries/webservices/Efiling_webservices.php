@@ -2291,5 +2291,31 @@ class Efiling_webservices {
         var_dump($result);
         return json_decode($result,true);
     }
-/*end Refiling IA and MiscDocs.*/
+    /*end Refiling IA and MiscDocs.*/
+    
+    /*start function Is_disposed */
+    public function get_new_case_efilingIsDisposed($efiling_nums_str) {
+        // echo $data = curl_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/get_new_case_efilingIsDisposed/?input=$efiling_nums_str");
+        $postdata = http_build_query(
+            array(
+                'pending_scrutiny' => $efiling_nums_str
+            )
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $data = file_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/get_new_case_efilingIsDisposed", false, $context);
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }
+    }
+    /*end function Is_disposed */
+    
 }

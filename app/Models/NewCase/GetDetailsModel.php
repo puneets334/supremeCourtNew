@@ -27,7 +27,7 @@ class GetDetailsModel extends Model
                         cp.party_type, cp.org_state_id, cp.org_state_name, cp.org_state_not_in_list,
                         cp.org_dept_id, cp.org_dept_name, cp.org_dept_not_in_list,
                         cp.org_post_id, cp.org_post_name, cp.org_post_not_in_list,
-                        cp.address, cp.city, cp.district_id, cp.state_id, cp.pincode,cp.country_id,
+                        cp.address, cp.city, cp.district_id, cp.state_id, st.agency_state state_name, cp.pincode,cp.country_id,
                         cp.mobile_num, cp.email_id,cp.lrs_remarks_id ,lrs.lrs_remark,dist.name addr_dist_name, a.authdesc,cp.is_dead_minor,
                         d.deptname ,st.agency_state addr_state_name,vst.deptname fetch_org_state_name" . $lr_params);
         $builder->JOIN('icmis.ref_agency_state st', 'cp.state_id = st.cmis_state_id', 'left');

@@ -1,12 +1,9 @@
 <?php
-
 use App\Models\Department\DepartmentModel;
-
 $segment = service('uri');
 $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : [];
 ?>
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-<!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
@@ -28,7 +25,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
     div#disapproveModal form#disapp_case .editor-wrapper {text-align: left;border: 1px solid #ccc;}
     div#disapproveModal form#disapp_case .btn-toolbar.editor {border: 1px solid #ccc;border-bottom: none;}
 </style>
-
 <?php echo remark_preview_ia_docs(getSessionData('efiling_details')['registration_id'], getSessionData('efiling_details')['stage_id']); ?>
 <div class="dash-card dashboard-section">
     <div class="row">
@@ -64,14 +60,13 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         </ul>
                     </div>
                 </div>
-
                 <div class="ryt-dash-breadcrumb">
                     <div class="btns-sec">
                         <?php
                         $final_submit_continue_action = '';
                         $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Rejected_Stage, E_REJECTED_STAGE);
                         $refiling_stages_array = array(I_B_Defected_Stage);
-                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+                        if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
 
@@ -90,7 +85,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
                                     <?php
                                 }
-                            }elseif (in_array(getSessionData('efiling_details')['stage_id'], $refiling_stages_array)) {
+                            } elseif (in_array(getSessionData('efiling_details')['stage_id'], $refiling_stages_array)) {
                                 echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                                 if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
 
@@ -106,7 +101,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     }
                                 }
                             }
-                            } 
+                        }
                         if (getSessionData('login')['ref_m_usertype_id'] == USER_DEPARTMENT) {
                             if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
@@ -117,13 +112,13 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     ) {
                                         $final_submit_action = TRUE;
                                         if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
-                                            echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submitww</button>';
+                                            echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">Submit</button>';
                                         }
                                     }
                                 }
                                 if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                                     $final_submit_continue_action = TRUE;
-                                ?>
+                                    ?>
                                     <a class="btn btn-danger btn-sm" onclick="ActionToTrash('SLT')">Trash</a>
                                     <?php
                                 }
@@ -178,11 +173,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     </div>
                 </div>
             </div>
-
             <div style="clear:both"></div>
-
-            
-
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="crnt-page-head">
@@ -252,7 +243,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
             <?php
             $StageArray = explode(',', getSessionData('efiling_details')['breadcrumb_status']);
             $disabled_status = 'pointer-events: none; cursor: default;';
-            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+            if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
 
                 $case_details_url = base_url('case_details');
                 $appearing_url = base_url('appearing_for');
@@ -351,33 +342,29 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
             if (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
                 if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                     if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
-            ?>
-
+                        ?>
                         <div class="col-md-12">
                             <div class="col-md-6"></div>
                             <div class="col-md-6 " style="float: right;">
                                 <div class="col-md-10">
                                     <?php
-                                    if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-
-                                        if ((getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
-                                            (getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
-                                                (getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
-                                            )
-                                        ) {
-                                            $action = base_url('stage_list/final_submit');
-                                            $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
-                                            echo form_open($action, $attribute);
-
-                                            // $ci = & get_instance();
-                                            $ci->load->model('Clerk_model');
-                                            $clerk_adv = $ci->Clerk_model->get_advocate(getSessionData('login')['id']);
-
-                                            echo '<input type="hidden" class="btn btn-primary btn-sm" name="advocate_id" value="' . htmlentities(url_encryption($clerk_adv[0]['id']), ENT_QUOTES) . '" >';
-                                            echo '<input type="submit" class="btn btn-primary btn-sm" name="submit" value="Submit" >';
-                                            echo form_close();
-                                        }
-                                    }
+                                    // if (in_array(IA_BREAD_UPLOAD_DOC, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
+                                    //     if ((getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
+                                    //         (getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
+                                    //             (getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
+                                    //         )
+                                    //     ) {
+                                    //         $action = base_url('stage_list/final_submit');
+                                    //         $attribute = array('name' => 'submit_adv_id', 'id' => 'submit_adv_id', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data');
+                                    //         echo form_open($action, $attribute);
+                                    //         // $ci = & get_instance();
+                                    //         $ci->load->model('Clerk_model');
+                                    //         $clerk_adv = $ci->Clerk_model->get_advocate(getSessionData('login')['id']);
+                                    //         echo '<input type="hidden" class="btn btn-primary btn-sm" name="advocate_id" value="' . htmlentities(url_encryption($clerk_adv[0]['id']), ENT_QUOTES) . '" >';
+                                    //         echo '<input type="submit" class="btn btn-primary btn-sm" name="submit" value="Submit" >';
+                                    //         echo form_close();
+                                    //     }
+                                    // }
                                     ?>
                                 </div>
                                 <div class="col-md-2 offset-md-4">
