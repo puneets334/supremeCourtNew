@@ -1,9 +1,4 @@
 <?php declare(strict_types=1); ?>
-@extends('responsive_variant.layouts.master.uikit_scutum_2.index')
-@section('title', 'My Cases')
-@section('heading', 'My Cases')
-@section('pinned-main-offcanvas') @endsection
-@section('content-container-ribbon')@endsection
 @extends('layout.advocateApp')
 @section('content')
 <style>
@@ -13,214 +8,319 @@
     .loader {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: rgba(255, 255, 255, 0.7);display: flex;justify-content: center;align-items: center;z-index: 9999;}
     .loader img {width: 50px;height: 50px;}
     .norecords {display: flex;justify-content: center;align-items: center;}
+    .uk-table.uk-table-hover tbody tr:hover, .uk-table.uk-table-hover > tr:hover {
+        background: #ffffff !important;
+    }
+    .scif:hover {
+        background: #ffffff !important;
+        color: black !important;
+    }
+    .scif {
+        visibility: hidden;
+        color: black;
+    }
+    tr.hide-table-padding td {
+        padding: 0;
+    }
+    .expand-button {
+        position: relative;
+    }
+    .accordion-toggle .expand-button:after {
+        position: absolute;
+        left:.75rem;
+        top: 50%;
+        transform: translate(0, -50%);
+        content: '-';
+    }
+    .accordion-toggle.collapsed .expand-button:after {
+        content: '+';
+    }
+    .custom-ul {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 10px; /* Adjust gap as needed */
+    }
+    .custom-ul li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .custom-ul li a {
+        display: block;
+        padding: 8px 16px;
+        text-decoration: none;
+    }
+    /*.customFilterBtnDiv:not(:last-child) {
+        border-right: 1px solid #ddd;
+    }*/
+    #example_filter {
+        max-width:100%;
+        text-align: right;
+        display: -webkit-inline-box;
+        text-align: center;
+    }
+    #example_filter label input {
+        max-width: 100% !important;
+        height: 36px;
+    }
+    .dataTables_wrapper {
+        margin-top: 25px !important;
+    }
+    .row.uk-grid.uk-flex-middle.uk-grid-small.dt-uikit-header {
+        display: none !important;
+    }
+    div .dataTables_wrapper ~ .dataTables_info {
+        display: none !important;
+    }
+    .mdi:before {
+        font-size: 16px !important;
+    }
+    a.quick-btn.pull-right:hover {
+        text-decoration: none;
+    }
+    #example_filter:nth-child(1) {
+        display: none;
+    }
 </style>
+<link rel="stylesheet" href="{{base_url('assets/responsive_variant/templates/uikit_scutum_2/assets/css/main.min.css')}}" />
+<link type="text/css" rel="stylesheet" href="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/css/uikit.min.css')}}" />
 <!--start datatable-->
 <div class="container-fluid">
-    <?php render('case_status.case_status_view'); ?>
-    <section>
-        <?php if (getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) { ?>
-          <h3>Cases in Which You Were Appointed as <b>Amicus Curiae</b> by the Hon'ble Court</h3> 
-        <?php } ?>
-        <div id="myFilter">
-            <?php if(!in_array($_SESSION['login']['ref_m_usertype_id'],[AMICUS_CURIAE_USER,SR_ADVOCATE])) { ?>
-                <div class="uk-grid-small uk-grid-divider uk-child-width-auto" uk-grid>
-                    <div>
-                        <ul  class="uk-subnav uk-subnav-pill" uk-margin>
-                            <li uk-filter-control id="clear_filter_status_all">
-                                <a class="filter-control" data-filter-type="clear_filter_status" data-filter-value="all">Clear Filters</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="uk-subnav uk-subnav-pill" uk-margin>
-                            <li class="uk-active case_status" id="case_status_all" >
-                                <a class="filter-control" data-filter-type="case_status" data-filter-value="all">All</a>
-                            </li>
-                            <li class="case_status" id="case_status_P">
-                                <a class="filter-control" data-filter-type="case_status" data-filter-value="P">Pending</a>
-                            </li>
-                            <li class="case_status" id="case_status_D">
-                                <a class="filter-control" data-filter-type="case_status" data-filter-value="D">Disposed</a>
-                            </li>
-                        </ul> 
-                    </div>
-                    <div>
-                        <ul class="uk-subnav uk-subnav-pill" uk-margin>
-                            <li class="uk-active advocate_appearing" id="advocate_appearing_all">
-                                <a href="#" class="filter-control" data-filter-type="advocate_appearing" data-filter-value="all">All</a>
-                            </li>
-                            <li class="advocate_appearing" id="advocate_appearing_P">
-                                <a class="filter-control" data-filter-type="advocate_appearing" data-filter-value="P">Appearing for Petitioner</a>
-                            </li>
-                            <li class="advocate_appearing" id="advocate_appearing_R">
-                                <a class="filter-control" data-filter-type="advocate_appearing" data-filter-value="R">Appearing for Respondent</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="uk-subnav uk-subnav-pill" uk-margin>
-                            <li class="uk-active case_registration_status" id="case_registration_status_all">
-                                <a href="#" class="filter-control" data-filter-type="case_registration_status" data-filter-value="all">All</a>
-                            </li>
-                            <li class="case_registration_status" id="case_registration_status_R">
-                                <a class="filter-control" data-filter-type="case_registration_status" data-filter-value="R">Registered Cases</a>
-                            </li>
-                            <li class="case_registration_status" id="case_registration_status_U">
-                                <a class="filter-control" data-filter-type="case_registration_status" data-filter-value="U">Unregistered Cases</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="uk-subnav uk-subnav-pill" uk-margin>
-                            <li class="uk-active case_engaged_status" id="case_engaged_status_all">
-                                <a href="#" class="filter-control" data-filter-type="case_engaged_status" data-filter-value="all">All</a>
-                            </li>
-                            <li class="case_engaged_status" id="case_engaged_status_EC">
-                                <a class="filter-control" data-filter-type="case_engaged_status" data-filter-value="EC">Engaged Counsel</a>
-                            </li>
-                            <li class="case_engaged_status" id="case_engaged_status_AC">
-                                <a class="filter-control" data-filter-type="case_engaged_status" data-filter-value="AC">Amicus Curiae</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            <?php } ?>
-            <!-- <div ng-show="loader.isLoading()" class="loader">
-                <img id="loader_img" src="{{base_url('assets/images/loading-data.gif')}}">
-            </div> -->
-            <div class="uk-grid uk-flex-middle uk-grid-small dt-uikit-header uk-margin">
-                <div class="uk-width-1-2@m">
-                    <div>
-                    Show 
-                    <select ng-model="countperpage" ng-change="chnagePerPage()" ng-options="x for x in countperpageArray" class="uk-form-small">
-                    </select> entries
-                    </div>
-                </div>
-                <div class="uk-width-1-2@m uk-text-right@m">
-                    <div id="efiled-cases-table_filter" class="dataTables_filter">
-                        <input type="text" class="uk-input" ng-model="searchQuery"  placeholder="Diary / Reg. No..." ng-change="fetchData()" />
+    <?php // render('case_status.case_status_view'); ?>
+    <?php
+    $adv_cases_response_data = array();
+    // $adv_cases_response_data = $adv_cases_response->data;
+    if(isset($meta_data['adv_cases_response']['data']) && count($meta_data['adv_cases_response']['data']) > 0) {
+        $adv_cases_response_data = $meta_data['adv_cases_response']['data'];
+    } else {
+        $adv_cases_response_data = [];
+    }
+    $fgc_context=array(
+        'http' => array(
+            'user_agent' => 'Mozilla',
+        ),
+        "ssl"=>array(
+            "verify_peer"=>false,
+            "verify_peer_name"=>false,
+        ),
+    );
+    if(isset($adv_cases_response_data) && is_array($adv_cases_response_data) && count($adv_cases_response_data) > 0) {
+        foreach ($adv_cases_response_data as $k=>$v) {
+            $userType = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+            $v['userType'] = $userType;
+            $adv_cases_response_data[$k] = $v;
+        }
+    } else {
+        if(isset($meta_data['sr_advocate_data']) && is_array($meta_data['sr_advocate_data']) && count($meta_data['sr_advocate_data']) > 0) {
+            foreach ($meta_data['sr_advocate_data'] as $k=>$v) {
+                $tmp = array();
+                $userType = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                $tmp['userType'] = $userType;
+                $tmp['diaryId'] = $v->diary_no;
+                $tmp['status'] = $v->c_status;
+                $tmp['registrationNumber'] = $v->reg_no_display;
+                $tmp['petitionerName'] = $v->pet_name;
+                $tmp['respondentName'] = $v->res_name;
+                $tmp['filedOn'] = $v->createdAt;
+                $tmp['assignedby'] = $v->assignedby;
+                $adv_cases_response_data[] = $tmp;
+            }
+        }
+    }
+    ?>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="dashboard-section dashboard-tiles-area"></div>
+            <div class="dashboard-section">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="dash-card">
+                            <div class="title-sec">
+                                <h5 class="unerline-title">My Cases</h5>
+                                <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                            </div>
+                            <section>
+                                <?php if (getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) { ?>
+                                <h3>Cases in Which You Were Appointed as <b>Amicus Curiae</b> by the Hon'ble Court</h3> 
+                                <?php } ?>
+                                <div id="myFilter">
+                                    <?php if(!in_array($_SESSION['login']['ref_m_usertype_id'],[AMICUS_CURIAE_USER,SR_ADVOCATE])) { ?>
+                                        <div class="uk-grid-small uk-grid-divider uk-child-width-auto" uk-grid>
+                                            <div class="customFilterBtnDiv">
+                                                <ul  class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
+                                                    <li onclick="AllcasesShowAlert('allcases')" uk-filter-control><a>Clear Filters</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="customFilterBtnDiv">
+                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
+                                                    <li class="uk-active" uk-filter-control="filter: [data-case-status]; group: case-status"><a href="#">All</a></li>
+                                                    <li uk-filter-control="filter: [data-case-status='P']; group: case-status" onclick="caseStatusPShowAlert('Pending')"><a>Pending</a></li>
+                                                    <li uk-filter-control="filter: [data-case-status='D']; group: case-status" onclick="caseStatusDShowAlert('Disposed')"><a>Disposed</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="customFilterBtnDiv">
+                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
+                                                    <li class="uk-active" uk-filter-control="filter: [data-advocate-appearing-for]; group: advocate-appearing-for"><a href="#">All</a></li>
+                                                    <li uk-filter-control="filter: [data-advocate-appearing-for='P']; group: advocate-appearing-for" onclick="ADVStatusPShowAlert('Appearing for Petitioner')" id="CheckADVStatusP" value="Appearing for Petitioner"><a>Appearing for Petitioner</a></li>
+                                                    <li uk-filter-control="filter: [data-advocate-appearing-for='R']; group: advocate-appearing-for" onclick="ADVStatusRShowAlert('Appearing for Respondent')" id="CheckADVStatusR" value="Appearing for Respondent"><a>Appearing for Respondent</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="customFilterBtnDiv">
+                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
+                                                    <li class="uk-active" uk-filter-control="filter: [data-case-registration-status]; group: case-registration-status"><a href="#">All</a></li>
+                                                    <li uk-filter-control="filter: [data-case-registration-status='R']; group: case-registration-status" onclick="RegStatusRShowAlert('Registered Cases')" id="CheckRegStatusR" value="Registered Cases"><a>Registered Cases</a></li>
+                                                    <li uk-filter-control="filter: [data-case-registration-status='U']; group: case-registration-status" onclick="RegStatusUShowAlert('Unregistered Cases')" id="CheckRegStatusU" value="Unregistered Cases"><a>Unregistered Cases</a></li>
+                                                    <!--<li uk-filter-control="filter: [listed-g='L']; group: g" onclick="ListedCasesShowAlert('Listed Cases')"><a>Listed Cases</a></li>-->
+                                                </ul>
+                                            </div>
+                                            <div class="customFilterBtnDiv">
+                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
+                                                    <li class="" uk-filter-control="filter: [data-case-status]; group: case-status"><a href="#">All</a></li>
+                                                    <li uk-filter-control="filter: [data-diaryEngaged='E']; group: diaryEngaged" onclick="showEngagedCounsel('EngagedCounsel')"><a>Engaged Counsel</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="uk-grid uk-flex-middle uk-grid-small dt-uikit-header uk-margin">
+                                        <div class="uk-width-1-2@m">
+                                            <div>
+                                            Show 
+                                            <select ng-model="countperpage" ng-change="chnagePerPage()" ng-options="x for x in countperpageArray" class="form-control cus-form-ctrl">
+                                            </select> entries
+                                            </div>
+                                        </div>
+                                        <div class="uk-width-1-2@m uk-text-right@m">
+                                            <div id="efiled-cases-table_filter" class="dataTables_filter">
+                                                <input type="text" class="form-control cus-form-ctrl" ng-model="searchQuery"  placeholder="Diary / Reg. No..." ng-change="fetchData()" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="uk-margin uk-card uk-card-default uk-card-body">
+                                        <input type="text" class="form-control cus-form-ctrl" ng-model="searchQuery" ng-focus="searchQuery=''" placeholder="Diary / Reg. No..." ng-blur="fetchData()" />
+                                    </div>
+                                    <table ng-show="!loader.isLoading() && cases.length>0" id='example' class="display dataTable uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" ukfilter="target: .js-filter">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="5" scope="row">Total Records (@{{totalRecords}})</th>
+                                            </tr>
+                                            <tr role="row">
+                                                <th class="sorting_asc" tabindex="0" aria-controls="example">S.N</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example">Diary / Reg. No.</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example"  aria-label="Cause Title: activate to sort column ascending" style="width: 212px;">Cause Title</th>
+                                                <th class="sorting" tabindex="0" aria-controls="example"  aria-label="Status: activate to sort column ascending" style="width: 213px;">Status</th>
+                                                @if(!empty($sr_advocate_data) && $this->session->userdata['login']['ref_m_usertype_id'] == SR_ADVOCATE)
+                                                <th class="sorting" tabindex="0" aria-controls="example"  aria-label="" style="width: 213px;">Engaged By/Date</th>
+                                                @endif
+                                                <th class="sorting" tabindex="0" aria-controls="example"  aria-label="ADV Status date: activate to sort column ascending" style="width: 213px;"></th>
+                                                <th class="sorting" tabindex="0" aria-controls="example"  aria-label="Reg. Cases: activate to sort column ascending" style="width: 213px;">...</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="js-filter">
+                                            <tr ng-repeat="case in cases">
+                                                <td ng-bind="$index + 1"></td>
+                                                <td>
+                                                    <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryId}}" data-diary_year="">
+                                                        <span class="uk-text-muted" ng-bind="case.diaryId"></span>
+                                                        <br>
+                                                        <span class="uk-text-emphasis" ng-bind="case.registrationNumber"></span>
+                                                    </a>
+                                                    <b class="scif" ng-if="case.advocateType=='P'" >AfP</b><b class="scif" ng-if="case.advocateType=='R' || case.advocateType=='I'" >AfR</b>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <div>
+                                                            <b ng-if="case.advocateType!='P'">P:</b>
+                                                            <b ng-if="case.advocateType=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionerName}}">P:</b>
+                                                            &nbsp;<span ng-bind="case.petitionerName"></span>
+                                                            <br/>
+                                                            <b ng-bind="((case.advocateType!='R' || case.advocateType!='I') && case.advocateType=='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
+                                                        </div>
+                                                        <div>
+                                                            <b ng-if="case.advocateType!='R' && case.advocateType!=='I'">R:</b>
+                                                            <b ng-if="case.advocateType=='R' || case.advocateType=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentName}}">R:</b>
+                                                            &nbsp;<span ng-bind="case.respondentName"></span>
+                                                            <br/>
+                                                            <b ng-bind="((case.advocateType=='R' || case.advocateType=='I') && case.advocateType!='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td ng-bind="case.status=='P' ? 'Pending' : 'Disposed'"></td>
+                                                <td ng-if="case.assignedby">
+                                                    <span class="uk-text-muted" ng-bind="case.assignedby"></span>
+                                                    <br>
+                                                    <span class="uk-text-emphasis" ng-bind="case.filedOn"></span>
+                                                </td>
+                                                <td ng-if="case.userType!=19">
+                                                    @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
+                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
+                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
+                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
+                                                    <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="uk-icon-button" uk-icon="more-vertical" ng-if="case.status=='P'"></button>
+                                                    <div class="uk-padding-small md-bg-grey-700" uk-dropdown="pos:left-center;mode:click;" ng-if="case.status=='P'">
+                                                        <ul class="uknav-parent-icon uk-dropdown-nav"  uk-nav>
+                                                            @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
+                                                            <li ng-if="case.userType!=19" class="uk-nav-header uk-padding-remove-left text-white">File a new</li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            <li ng-if="case.userType =='1' && case.is_ac!='Y'"><a href="{{base_url('case/advocate')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
+                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
+                                                            <li class="uk-nav-divider uk-margin-remove"></li>
+                                                            <li class="uk-nav-header uk-padding-remove-left uk-margin-remove-top text-white">View</li>
+                                                            @endif
+                                                            @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            @endif
+                                                            <li>
+                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryId}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
+                                                                    <span uk-icon="icon: bookmark"></span> Paper Book (with Indexing)
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <b class="scif" ng-if="case.registrationNumber==''" >Unr</b><b class="scif" ng-if="case.registrationNumber!=''" >Reg</b>
+                                                </td>
+                                            </tr>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="5" scope="row">Total Records (@{{totalRecords}})</th>
+                                                </tr>
+                                                <tr>
+                                                    <th colspan="5"> 
+                                                        <ul class="uk-pagination uk-flex-center" ng-show="!loader.isLoading()">
+                                                            <li ng-class="{ 'uk-disabled': page === 1 }">
+                                                                <a href="javascript:void(0)" ng-click="changePage(page-1)" ng-disabled="page === 1">&laquo; Previous</a>
+                                                            </li>
+                                                            <li ng-repeat="pageno in getPages()" ng-class="{active: page === pageno, disabled: pageno === '...'}"
+                                                            ng-click="pageno !== '...' && changePage(pageno)">
+                                                                <a href="javascript:void(0)" ng-if="pageno !== '...'">@{{ pageno }}</a>
+                                                                <span ng-if="pageno === '...'">...</span>
+                                                            </li>
+                                                            <li ng-class="{ 'uk-disabled': page === totalPages }">
+                                                                <a href="javascript:void(0)" ng-click="changePage(page+1)" ng-disabled="page === totalPages">Next &raquo;</a>
+                                                            </li>
+                                                        </ul>
+                                                    </th>
+                                                </tr>
+                                            </tfoot>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="uk-margin-large uk-card uk-card-default uk-card-body" ng-show="!loader.isLoading() && cases.length === 0">
+                                    No results found...
+                                </div>
+                            </section>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="uk-margin uk-card uk-card-default uk-card-body">
-                <input type="text" class="uk-input" ng-model="searchQuery" ng-focus="searchQuery=''" placeholder="Diary / Reg. No..." ng-blur="fetchData()" />
-            </div>
-            <table ng-show="!loader.isLoading() && cases.length>0" id='example' class="display dataTable uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" ukfilter="target: .js-filter">
-                <thead>
-                    <tr>
-                        <th colspan="5" scope="row">Total Records (@{{totalRecords}})</th>
-                    </tr>
-                    <tr role="row">
-                        <th class="sorting_asc" tabindex="0" aria-controls="example">S.N</th>
-                        <th class="sorting" tabindex="0" aria-controls="example">Diary / Reg. No.</th>
-                        <th class="sorting" tabindex="0" aria-controls="example"  aria-label="Cause Title: activate to sort column ascending" style="width: 212px;">Cause Title</th>
-                        <th class="sorting" tabindex="0" aria-controls="example"  aria-label="Status: activate to sort column ascending" style="width: 213px;">Status</th>
-                        @if(!empty($sr_advocate_data) && $this->session->userdata['login']['ref_m_usertype_id'] == SR_ADVOCATE)
-                        <th class="sorting" tabindex="0" aria-controls="example"  aria-label="" style="width: 213px;">Engaged By/Date</th>
-                        @endif
-                        <th class="sorting" tabindex="0" aria-controls="example"  aria-label="ADV Status date: activate to sort column ascending" style="width: 213px;"></th>
-                        <th class="sorting" tabindex="0" aria-controls="example"  aria-label="Reg. Cases: activate to sort column ascending" style="width: 213px;">...</th>
-                    </tr>
-                </thead>
-                <tbody class="js-filter">
-                    <tr ng-repeat="case in cases">
-                        <td ng-bind="$index + 1"></td>
-                        <td>
-                            <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryId}}" data-diary_year="">
-                                <span class="uk-text-muted" ng-bind="case.diaryId"></span>
-                                <br>
-                                <span class="uk-text-emphasis" ng-bind="case.registrationNumber"></span>
-                            </a>
-                            <b class="scif" ng-if="case.advocateType=='P'" >AfP</b><b class="scif" ng-if="case.advocateType=='R' || case.advocateType=='I'" >AfR</b>
-                        </td>
-                        <td>
-                            <div>
-                                <div>
-                                    <b ng-if="case.advocateType!='P'">P:</b>
-                                    <b ng-if="case.advocateType=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionerName}}">P:</b>
-                                    &nbsp;<span ng-bind="case.petitionerName"></span>
-                                    <br/>
-                                    <b ng-bind="((case.advocateType!='R' || case.advocateType!='I') && case.advocateType=='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
-                                </div>
-                                <div>
-                                    <b ng-if="case.advocateType!='R' && case.advocateType!=='I'">R:</b>
-                                    <b ng-if="case.advocateType=='R' || case.advocateType=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentName}}">R:</b>
-                                    &nbsp;<span ng-bind="case.respondentName"></span>
-                                    <br/>
-                                    <b ng-bind="((case.advocateType=='R' || case.advocateType=='I') && case.advocateType!='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
-                                </div>
-                            </div>
-                        </td>
-                        <td ng-bind="case.status=='P' ? 'Pending' : 'Disposed'"></td>
-                        <td ng-if="case.assignedby">
-                            <span class="uk-text-muted" ng-bind="case.assignedby"></span>
-                            <br>
-                            <span class="uk-text-emphasis" ng-bind="case.filedOn"></span>
-                        </td>
-                        <td ng-if="case.userType!=19">
-                            @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                            <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
-                            <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
-                            <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
-                            <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b>
-                            @endif
-                        </td>
-                        <td>
-                            <button type="button" class="uk-icon-button" uk-icon="more-vertical" ng-if="case.status=='P'"></button>
-                            <div class="uk-padding-small md-bg-grey-700" uk-dropdown="pos:left-center;mode:click;" ng-if="case.status=='P'">
-                                <ul class="uknav-parent-icon uk-dropdown-nav"  uk-nav>
-                                    @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                                    <li ng-if="case.userType!=19" class="uk-nav-header uk-padding-remove-left text-white">File a new</li>
-                                    <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                    <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
-                                    <li ng-if="case.userType =='1' && case.is_ac!='Y'"><a href="{{base_url('case/advocate')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
-                                    <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
-                                    <li class="uk-nav-divider uk-margin-remove"></li>
-                                    <li class="uk-nav-header uk-padding-remove-left uk-margin-remove-top text-white">View</li>
-                                    @endif
-                                    @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                                    <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                    <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
-                                    @endif
-                                    <li>
-                                        <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryId}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
-                                            <span uk-icon="icon: bookmark"></span> Paper Book (with Indexing)
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <b class="scif" ng-if="case.registrationNumber==''" >Unr</b><b class="scif" ng-if="case.registrationNumber!=''" >Reg</b>
-                        </td>
-                    </tr>
-                    <tfoot>
-                        <tr>
-                            <th colspan="5" scope="row">Total Records (@{{totalRecords}})</th>
-                        </tr>
-                        <tr>
-                            <th colspan="5"> 
-                                <ul class="uk-pagination uk-flex-center" ng-show="!loader.isLoading()">
-                                    <li ng-class="{ 'uk-disabled': page === 1 }">
-                                        <a href="javascript:void(0)" ng-click="changePage(page-1)" ng-disabled="page === 1">&laquo; Previous</a>
-                                    </li>
-                                    <li ng-repeat="pageno in getPages()" ng-class="{active: page === pageno, disabled: pageno === '...'}"
-                                    ng-click="pageno !== '...' && changePage(pageno)">
-                                        <a href="javascript:void(0)" ng-if="pageno !== '...'">@{{ pageno }}</a>
-                                        <span ng-if="pageno === '...'">...</span>
-                                    </li>
-                                    <li ng-class="{ 'uk-disabled': page === totalPages }">
-                                        <a href="javascript:void(0)" ng-click="changePage(page+1)" ng-disabled="page === totalPages">Next &raquo;</a>
-                                    </li>
-                                </ul>
-                            </th>
-                        </tr>
-                    </tfoot>
-                </tbody>
-            </table>
         </div>
-        <div class="uk-margin-large uk-card uk-card-default uk-card-body" ng-show="!loader.isLoading() && cases.length === 0">
-            No results found...
-        </div>
-    </section>
+    </div>
 </div>
 <!--end datatable-->
 <!-- code for notes-->
@@ -264,18 +364,18 @@
             <div id="aor_contact" style="display:none;">
                 <div>
                     <div>
-                        <select name="aor_name" id="aor_name"  style="width: 50%">
+                        <select name="aor_name" id="aor_name" class="form-control cus-form-ctrl" style="width: 50%">
                             <option>Select Contact</option>
                         </select>
                     </div>
                 </div>
             </div>
             <div  align="center" id="new_contact">
-                <br> <div><input type="text" placeholder="NAME" title="NAME" maxlength="30" id="name" size="50"></div>
-                <br> <div><input type="text" size="50" placeholder="EMAIL ID" maxlength="30" title="EMAIL ID" id="email"></div>
-                <br> <div><input type="text" size="50" placeholder="MOBILE"  maxlength="10" title="mobile" maxlength="30" id="mobile"></div>
-                <br> <div><input type="text" size="50" placeholder="OTHER CONTACT" maxlength="30" title="OTHER CONTACT" id="other"></div>
-                <br>  <div><input type="text" size="50" maxlength="30" placeholder="PETITONER RESPONDENT WITNESS OTHER" title="PETITONER RESPONDENT WITNESS OTHER" id="remark"></div>
+                <br> <div><input type="text" class="form-control cus-form-ctrl" placeholder="NAME" title="NAME" maxlength="30" id="name" size="50"></div>
+                <br> <div><input type="text" class="form-control cus-form-ctrl" size="50" placeholder="EMAIL ID" maxlength="30" title="EMAIL ID" id="email"></div>
+                <br> <div><input type="text" class="form-control cus-form-ctrl" size="50" placeholder="MOBILE"  maxlength="10" title="mobile" maxlength="30" id="mobile"></div>
+                <br> <div><input type="text" class="form-control cus-form-ctrl" size="50" placeholder="OTHER CONTACT" maxlength="30" title="OTHER CONTACT" id="other"></div>
+                <br>  <div><input type="text" class="form-control cus-form-ctrl" size="50" maxlength="30" placeholder="PETITONER RESPONDENT WITNESS OTHER" title="PETITONER RESPONDENT WITNESS OTHER" id="remark"></div>
             </div>
         </div><!-- end of new contact div-->
         <div id="edit_contact"></div>
@@ -300,9 +400,9 @@
             <div class="mail-response" id="mail_msg" ></div>
             <div id="emailids" style="display: none;"></div>
             <div  id="recipient_mail1"></div>
-            SMS To: <input type="text" size="60" id="recipient_mail" name="recipient_mail"  maxlength="250" placeholder="Select Contacts or Enter Mobile No. e.g 9999999999,8888888888">
+            SMS To: <input type="text" class="form-control cus-form-ctrl" size="60" id="recipient_mail" name="recipient_mail"  maxlength="250" placeholder="Select Contacts or Enter Mobile No. e.g 9999999999,8888888888">
             <div>
-                SMS Message: <input type="text"  size =50 id="mail_subject" name="mail_subject" class="form-control" maxlength="100" placeholder="SMS Message">
+                SMS Message: <input type="text" class="form-control cus-form-ctrl" size =50 id="mail_subject" name="mail_subject" class="form-control" maxlength="100" placeholder="SMS Message">
             </div>
             <br>
             Body:<div id ='caseinfomsg'></div>
@@ -344,6 +444,53 @@
 <!-- end of code for writing citation -->
 @endsection
 @push('script')
+<script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
+<script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
+<script>
+    function AllcasesShowAlert(id) {
+        $( "#AllcaseStatusKeypressP" ).keypress();
+        $( "#AllcaseStatusKeypressD" ).keypress();
+        $( "#AllADVStatusKeypressP" ).keypress();
+        $( "#AllADVStatusKeypressR" ).keypress();
+        $( "#AllRegStatusKeypressR" ).keypress();
+        $( "#AllRegStatusKeypressU" ).keypress();
+        $( "#AllListedCasesKeypressL" ).keypress();
+    }
+    function ListedCasesShowAlert(id) { $( "#ListedCasesKeypressL" ).keypress();}
+    function caseStatusPShowAlert(id) { $( "#caseStatusKeypressP" ).keypress();}
+    function caseStatusDShowAlert(id) { $( "#caseStatusKeypressD" ).keypress();}
+    function showEngagedCounsel(id) {
+        $('#CheckADVStatusR').removeClass('ADVStatusActive');
+        $('#CheckADVStatusP').addClass('ADVStatusActive');
+        $("#engagedCounsel" ).keypress();
+    }
+    function ADVStatusPShowAlert(id) {
+        $('#CheckADVStatusR').removeClass('ADVStatusActive');
+        $('#CheckADVStatusP').addClass('ADVStatusActive');
+        //alert($(".RegStatusActive").attr('value'));
+        $( "#ADVStatusKeypressP" ).keypress();
+    }
+    function ADVStatusRShowAlert(id) {
+        $('#CheckADVStatusP').removeClass('ADVStatusActive');
+        $('#CheckADVStatusR').addClass('ADVStatusActive');
+        // alert($(".RegStatusActive").attr('value'));
+        $( "#ADVStatusKeypressR" ).keypress();
+    }
+    function RegStatusRShowAlert(id) {
+        $('#CheckRegStatusU').removeClass('RegStatusActive');
+        $('#CheckRegStatusR').addClass('RegStatusActive');
+        /* var court_type = $("li[class='uk-active']").val();
+         alert(court_type);*/
+        //alert($(".ADVStatusActive").attr('value'));
+        $( "#RegStatusKeypressR" ).keypress();
+    }
+    function RegStatusUShowAlert(id) {
+        $('#CheckRegStatusR').removeClass('RegStatusActive');
+        $('#CheckRegStatusU').addClass('RegStatusActive');
+        //alert($(".ADVStatusActive").attr('value'));
+        $( "#RegStatusKeypressU" ).keypress();
+    }
+</script>
 <script type="text/javascript">
     var mainApp = angular.module("casesApp", []);
     mainApp.directive('onFinishRender', function ($timeout) {
@@ -397,6 +544,14 @@
         };
     });
     mainApp.controller('casesController', function ($scope, $http, $filter, $interval, $compile, LoaderService) {
+        $(document).ready(function() {
+            var table = $('#example').DataTable();
+            table.columns().eq( 0 ).each( function ( colIdx ) {
+                $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
+                    table.column( colIdx ).search( this.value ).draw();
+                } );
+            } );
+        } );
         $scope.page = 1;
         $scope.totalPages = 0;
         $scope.totalRecords = 0;
