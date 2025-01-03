@@ -477,7 +477,7 @@ class CaseDetails extends BaseController
                     echo '1@@@SCLSC ANR Year field is required.'; exit();
                 }
             }
-            $is_govt_filing = !empty(trim($_POST["is_govt_filing"])) ? 1 : 0;
+            $is_govt_filing = (isset($_POST["is_govt_filing"]) && trim($_POST["is_govt_filing"]) != '') ? 1 : 0;
             if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
                 if (isset($_POST['impersonated_aor']) && !empty($_POST['impersonated_aor'])){
                     $impersonated_aor = explode('@@@', escape_data($this->request->getPost("impersonated_aor")));

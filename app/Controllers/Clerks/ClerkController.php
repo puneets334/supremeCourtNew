@@ -12,6 +12,7 @@ class ClerkController extends BaseController {
     protected $Clerk_model;
     protected $encrypt;
     protected $validation;
+    protected $request;
 
     public function __construct() {
         parent::__construct();
@@ -19,6 +20,7 @@ class ClerkController extends BaseController {
         $this->Clerk_model = new ClerkModel();
         $this->encrypt = \Config\Services::encrypter();
         $this->validation = \Config\Services::validation();
+        $this->request = \Config\Services::request();
         // $this->load->model('register/Register_model');
         // $this->load->library('slice');
         // $this->load->helper(array('form', 'url'));
@@ -53,19 +55,20 @@ class ClerkController extends BaseController {
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
             if($limit_records >= $this->add_clerk_limit) {
                 $data['can_add_clerk'] = false;
-                $this->session->setFlashdata('success',"You can't add more clerk, limit has been reached.");
+                $this->session->setFlashdata('success', "You can't add more clerk, limit has been reached.");
                 return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
                 exit(0);
             }
-            $first_name  = $this->request->getPost('first_name', TRUE);
-            $last_name   = $this->request->getPost('last_name', TRUE);
-            $mobile_no   = $this->request->getPost('mobile_no', TRUE);
-            $email_id    = strtoupper($this->request->getPost('email_id', TRUE));
-            $gender      = $this->request->getPost('gender', TRUE);
+            // pr('Hello');
+            $first_name  = $this->request->getPost('first_name');
+            $last_name   = $this->request->getPost('last_name');
+            $mobile_no   = $this->request->getPost('mobile_no');
+            $email_id    = strtoupper($this->request->getPost('email_id'));
+            $gender      = $this->request->getPost('gender');
             $total_associations = $this->Clerk_model->total_clerk_associations($mobile_no,$email_id); //find the no of assications with aor
             if(isset($total_associations) && (count($total_associations) >= CLERK_ASSOCIATIONS)) {
                 $association_message = 'Clerk is already associated with ';
-                foreach($total_associations as $key=> $association){
+                foreach($total_associations as $key=> $association) {
                     $name = ucwords(strtolower($association->aor_first_name.' '.$association->aor_last_name));
                     if($key>0) {
                         $association_message .= ' and '.$name.' ('.$association->aor_code.').';
@@ -73,7 +76,7 @@ class ClerkController extends BaseController {
                         $association_message .= $name.' ('.$association->aor_code.') ';
                     }
                 }
-                $this->session->setFlashdata('error',"<h3 class='uk-align-center text-danger uk-position-center'>".$association_message."</h3>");
+                $this->session->setFlashdata('error', $association_message);
                 return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
                 exit(0);
             }
@@ -88,11 +91,11 @@ class ClerkController extends BaseController {
             $validations += [
                 "first_name" => [
                     "label" => "First Name",
-                    "rules" => "required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                    "rules" => "required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                 ],
                 "last_name" => [
                     "label" => "Last Name",
-                    "rules" => "trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters"
+                    "rules" => "trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters"
                 ],
                 "email_id" => [
                     "label" => "Email",
@@ -100,7 +103,7 @@ class ClerkController extends BaseController {
                 ],
                 "mobile_no" => [
                     "label" => "Mobile number",
-                    "rules" => "trim|required|xss_clean|exact_length[10]|is_natural_no_zero"
+                    "rules" => "trim|required|exact_length[10]|is_natural_no_zero"
                 ],
                 "gender" => [
                     "label" => "Gender",
@@ -124,7 +127,7 @@ class ClerkController extends BaseController {
             $user_already_exist = $this->Clerk_model->check_user_already_exists($mobile_no,$email_id);
             if (isset($user_already_exist)) {
                 if($user_already_exist->ref_m_usertype_id != USER_CLERK){
-                    $this->session->setFlashdata('error', '<h3 class="uk-align-center text-danger uk-position-center">This user is not a clerk, you can associate only clerk.</h3>');
+                    $this->session->setFlashdata('error', 'This user is not a clerk, you can associate only clerk.');
                     return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
                     exit(0);
                 }
@@ -136,7 +139,7 @@ class ClerkController extends BaseController {
                     } elseif($user_already_exist->moblie_number==$mobile_no || $user_already_exist->userid==$mobile_no){
                         $already_associated_msg = "Clerk is already associated with the mobile number $mobile_no.";
                     }
-                    $this->session->setFlashdata('error', '<h3 class="uk-align-center text-danger uk-position-center">'.$already_associated_msg.'</h3>');
+                    $this->session->setFlashdata('error', $already_associated_msg);
                     return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
                     exit(0);
                 } else{
@@ -179,11 +182,11 @@ class ClerkController extends BaseController {
                 // $sms_message  = 'Dear '.$name.', Your registration code for clerk is "'.$registration_code.'" Please go to mail and verify registration code.';
                 // send_mail_msg($email_id, $subject, $email_message);
                 // send_mobile_sms($mobile_no, $sms_message,SCISMS_Registration_OTP);
-                // $this->session->setFlashdata('success',"<h3 style='color:green;'>Registration code has been sent successfully on clerk's email and sms..</h3>");
-                $this->session->setFlashdata('success',"<h3 class='text-success uk-position-center'>Clerk added successfully.</h3>");
+                // $this->session->setFlashdata('success',"Registration code has been sent successfully on clerk's email and sms..");
+                $this->session->setFlashdata('success', "Clerk added successfully.");
                 return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
             } else{
-                $this->session->setFlashdata('error',"<h3 class='text-danger uk-position-center'>Something went wrong.</h3>");
+                $this->session->setFlashdata('error', "Something went wrong.");
                 return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
             }
         }
@@ -199,7 +202,7 @@ class ClerkController extends BaseController {
         $data['is_engaged']  = $is_engaged;
         if(!$is_engaged) {
             if($limit_records >= $this->add_clerk_limit){
-                $this->session->setFlashdata('success',"<h3 class='text-danger uk-position-center'>You can't engage more clerk, limit has been reached.</h3>");
+                $this->session->setFlashdata('success', "You can't engage more clerk, limit has been reached.");
                 return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
                 exit(0);
             }
@@ -214,7 +217,7 @@ class ClerkController extends BaseController {
                         $association_message .= $name.' ('.$association->aor_code.') ';
                     }
                 }
-                $this->session->setFlashdata('error',"<h3 class='uk-align-center text-danger uk-position-center'>".$association_message."</h3>");
+                $this->session->setFlashdata('error', $association_message);
                 return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
                 exit(0);
             }
@@ -222,13 +225,13 @@ class ClerkController extends BaseController {
         $response = $this->Clerk_model->engaged_disengaged_clerk($data);
         if($response){
             if($is_engaged) {
-                $this->session->setFlashdata('success',"<h3 class='text-success uk-position-center'>Clerk disengaged successfully.</h3>");
+                $this->session->setFlashdata('success', "Clerk disengaged successfully.");
             } else{
-                $this->session->setFlashdata('success',"<h3 class='text-success uk-position-center'>Clerk engaged successfully.</h3>");
+                $this->session->setFlashdata('success', "Clerk engaged successfully.");
             }
             return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
         } else{
-            $this->session->setFlashdata('error',"<h3 class='text-danger uk-position-center'>Something went wrong.</h3>");
+            $this->session->setFlashdata('error', "Something went wrong.");
             return redirect()->to(base_url('clerks/Clerk_Controller/add_clerk'));
         }
     }

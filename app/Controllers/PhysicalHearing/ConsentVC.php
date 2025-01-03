@@ -207,4 +207,47 @@ class ConsentVC extends BaseController
         send_sms(SMS_TO_CONCERN, "Final List response: ".$mail_response);
     }
 
+    private function getTomorrowRegularDailyListCases($next_date) {
+        $schedule_request_params = array(
+            'forDate' => $next_date, 
+            'fromDate' => $next_date, 
+            'toDate' => $next_date, 
+            'hearingType' => array('F'), 
+            'responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 
+            'ifSkipDigitizedCasesStageComputation' => true
+        );
+        $scheduled_cases = (array)json_decode(file_get_contents('https://10.0.0.0:4443/api/schedule/cases?'.http_build_query($schedule_request_params), false, stream_context_create(array('http' => array('user_agent' => 'Mozilla'), "ssl"=>array("verify_peer"=>false, "verify_peer_name"=>false)))));
+        $tomorrow_daily_list_cases=array();
+        foreach ($scheduled_cases[0] as $key => $value) {
+            array_push($tomorrow_daily_list_cases,$value->diary_id);
+        }
+        return $tomorrow_daily_list_cases;
+    }
+
+    public function update_next_date_in_attendee_list_and_consent() {
+        $today = date("Y-m-d");
+        $weekly_list = $this->hearing_model->weekly_list_number();
+        $list_number = $weekly_list[0]['weekly_no'];
+        $list_year = $weekly_list[0]['weekly_year'];
+        $all_advocate_consent_distinct_main_cases_of_current_daily_with_blank_next_dt=$this->hearing_model->get_consent_received_from_advocate_main_cases($list_number,$list_year,$today);
+        foreach ($all_advocate_consent_distinct_main_cases_of_current_daily_with_blank_next_dt as $case) {
+            $diary_no_which_next_need_to_updated=($case['diary_no']);
+            $case_published_daily_listed_details=$this->hearing_model->get_case_listed_in_daily_list($diary_no_which_next_need_to_updated);
+            $case_next_date=$case_published_daily_listed_details[0]['next_dt'];
+            if(!empty($case_next_date)) {
+                $case_blank_next_date_attendees=$this->hearing_model->get_case_all_attendee_added_by_advocate_with_blank_next_dt($list_number,$list_year,$today);
+                if(!empty($case_blank_next_date_attendees)) {
+                    $attendee_table_update_where_condition=array('diary_no' => $diary_no_which_next_need_to_updated,'list_number' =>$list_number, 'list_year' => $list_year,'created_by_advocate_id' => $case_blank_next_date_attendees[0]['created_by_advocate_id']);
+                    $update_data=array('next_dt' => $case_next_date);
+                    $update_case_attendee_next_date_result=$this->consent_model->update('attendee_details',$update_data,$attendee_table_update_where_condition);
+                }
+                $consent_table_update_where_condition=array('diary_no' => $diary_no_which_next_need_to_updated,'list_number' => $list_number, 'list_year' => $list_year,'court_no'=>$case['court_no'],'advocate_id'=>$case['advocate_id']);
+                $update_data=array('next_dt' => $case_next_date);
+                $update_case_consent_next_date_result=$this->consent_model->update('physical_hearing_advocate_consent',$update_data,$consent_table_update_where_condition);
+            } else{
+                continue;
+            }
+        }
+    }
+
 }
