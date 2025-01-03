@@ -331,4 +331,14 @@ class StageList extends BaseController {
         }
     }
 
+    public function get_tentaive_date_data($tentaive_date_data,$diary_no_db) {
+        if (isset($tentaive_date_data) && !empty($tentaive_date_data)) {
+            foreach ($tentaive_date_data as $key => $object) {
+                if ($object->diary_no === $diary_no_db) {
+                    return $object->next_dt;
+                }
+            }
+        }
+    }
+
 }

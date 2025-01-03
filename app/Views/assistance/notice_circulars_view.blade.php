@@ -140,7 +140,7 @@
                                                                 <tr class="success input-sm" role="row" >
                                                                     <th>#</th>
                                                                     <th>Item</th>
-                                                                    <th>Notice / Circualr &nbsp;&nbsp;(Dated) </th>
+                                                                    <th>Notice / Circular (Dated)</th>
                                                                     <?php if (getSessionData('login') != '' && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>
                                                                         <th>Will Deactivate On</th>
                                                                         <th>Action</th>
@@ -157,7 +157,7 @@
                                                                     <tr>
                                                                         <td width="5%" data-key="#"> <?php echo htmlentities($i++, ENT_QUOTES); ?></td>
                                                                         <td width="15%" data-key="Item"><?php echo $lbl_is_notice_circular; ?></td>
-                                                                        <td data-key="Notice / Circualr &nbsp;&nbsp;(Dated) "><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>
+                                                                        <td data-key="Notice / Circular (Dated)"><a href="<?php echo base_url('assistance/notice_circulars/view/' . url_encryption($itm['id'])); ?>" target="blank"><i class="fa fa-file-pdf-o danger" aria-hidden="true"  style="color:red"></i>
                                                                                 &nbsp;<?php echo htmlentities($itm['news_title'], ENT_QUOTES); ?><br>
                                                                                 (<?php echo htmlentities(date('d-m-Y', strtotime($itm['create_date'])), ENT_QUOTES); ?>)
                                                                             </a>
