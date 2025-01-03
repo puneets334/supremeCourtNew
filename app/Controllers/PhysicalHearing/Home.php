@@ -53,7 +53,7 @@ class Home extends BaseController {
             unset($this->session->loginData);
             return redirect()->to(base_url('auth'));
         } else {
-			$type = !empty($this->session->userdata('loginData')['dec_type']) ? (int)$this->session->userdata('loginData')['dec_type']  : NULL;
+			$type = !empty(getSessionData('login')['dec_type']) ? (int)getSessionData('login')['dec_type']  : NULL;
 			if(!empty($type)) {
 				switch ($type) {
 					case 1:
@@ -68,10 +68,10 @@ class Home extends BaseController {
 
 					break;
 					case 2:
-						if(!empty($this->session->userdata('loginData')['post_mobile'])){
+						if(!empty(getSessionData('login')['post_mobile'])){
 							$params = array();
 							$params['current_date'] = date('Y-m-d');
-							$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
+							$params['mobile'] = (int)getSessionData('login')['post_mobile'];
 							// $this->load->model('auth_model');
 							//today exist data
 							$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
@@ -93,16 +93,16 @@ class Home extends BaseController {
     public function selfDeclarationForm()
 	{
 		if(!isset($this->session->loginData)){
-			$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
+			$this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
 			unset($this->session->loginData);
 			return redirect()->to(base_url('auth'));
 		}
 		else {
 			//echo '<pre>'; print_r($this->session->loginData); exit;
-			if(!empty($this->session->userdata('loginData')['mobile'])){
+			if(!empty(getSessionData('login')['mobile'])){
 				$params = array();
 				$params['current_date'] = date('Y-m-d');
-				$params['mobile'] = (int)$this->session->userdata('loginData')['mobile'];
+				$params['mobile'] = (int)getSessionData('login')['mobile'];
 				// $this->load->model('auth_model');
 				//today exist data
 				$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
@@ -135,7 +135,7 @@ class Home extends BaseController {
 		$this->load->view('physical_hearing/emp_self_details_data', $data);
 
 //		if(!isset($this->session->loginData)){
-//		$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
+//		$this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
 //		unset($this->session->loginData);
 //		return redirect()->to(base_url('auth'));
 //	}
@@ -181,19 +181,19 @@ class Home extends BaseController {
 		}
 	}
 	public function getTodayData(){
-		if(!empty($this->session->userdata('loginData')['post_mobile'])){
+		if(!empty(getSessionData('login')['post_mobile'])){
 			$params = array();
 			$params['current_date'] = date('Y-m-d');
-			$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
+			$params['mobile'] = (int)getSessionData('login')['post_mobile'];
 			// $this->load->model('auth_model');
 			$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
 			$todayUserData = !empty($todayData) ? $todayData[0] : null;
 			echo json_encode(array('success'=>true,'todayData'=>$todayUserData));
 		}
-		else if(!empty($this->session->userdata('loginData')['mobile'])){
+		else if(!empty(getSessionData('login')['mobile'])){
 			$params = array();
 			$params['current_date'] = date('Y-m-d');
-			$params['mobile'] = (int)$this->session->userdata('loginData')['mobile'];
+			$params['mobile'] = (int)getSessionData('login')['mobile'];
 			// $this->load->model('auth_model');
 			$todayData = $this->auth_model->getSelfDeclarationTodayData($params);
 			$todayUserData = !empty($todayData) ? $todayData[0] : null;
@@ -203,16 +203,16 @@ class Home extends BaseController {
 
     public function welcomePage() {
 		if(!isset($this->session->loginData)){
-			$this->session->set_flashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
+			$this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
 			unset($this->session->loginData);
 			return redirect()->to(base_url('auth'));
 		} else {
 			$data = array();
 			$data['page_title'] = "Dashboard";
-			if (!empty($this->session->userdata('loginData')['post_mobile'])) {
+			if (!empty(getSessionData('login')['post_mobile'])) {
 				$params = array();
 				$params['current_date'] = date('Y-m-d');
-				$params['mobile'] = (int)$this->session->userdata('loginData')['post_mobile'];
+				$params['mobile'] = (int)getSessionData('login')['post_mobile'];
 				// $this->load->model('auth_model');
 				$res = $this->auth_model->getSelfDeclarationTodayData($params);
 				$data['empData'] = !empty($res) ? $res[0] : NULL;
