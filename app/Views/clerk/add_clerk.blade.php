@@ -71,25 +71,13 @@
                                             </div>
                                             <div class="col-sm-12 col-md-6">
                                                 <label class="form-label" for="form-stacked-text">Last Name : </label>
-                                                <input class="form-control cus-form-ctrl" type="text" name="last_name" id="last_name" maxlength="100" tabindex="2"/>
+                                                <input class="form-control cus-form-ctrl" type="text" name="last_name" id="last_name" placeholder="Last Name" maxlength="100" tabindex="2"/>
                                                 <div id="error_last_name"></div>
                                                 <?php if (isset($validation) && $validation->hasError('last_name')): ?>
                                                     <div class="text-danger">
                                                         <?= $validation->getError('last_name'); ?>
                                                     </div>
                                                 <?php endif; ?>   
-                                            </div>                                        
-                                            <div class="col-sm-12 col-md-6">
-                                                <label class="form-label" for="form-stacked-text">Gender <span style="color: red">*</span> :</label>
-                                                <label class="radio-inline"><input type="radio" id="gender" name="gender" value="M">Male</label>
-                                                <label class="radio-inline"><input type="radio" id="gender" name="gender" value="F">Female</label>
-                                                <label class="radio-inline"><input type="radio" id="gender" name="gender" value="O">Other</label>
-                                                <div id="error_gender"></div>
-                                                <?php if (isset($validation) && $validation->hasError('gender')): ?>
-                                                    <div class="text-danger">
-                                                        <?= $validation->getError('gender'); ?>
-                                                    </div>
-                                                <?php endif; ?>                                            
                                             </div>
                                             <div class="col-sm-12 col-md-6">
                                                 <label class="form-label" for="form-stacked-text">Email <span style="color: red">*</span> :</label>
@@ -110,6 +98,18 @@
                                                         <?= $validation->getError('mobile_no'); ?>
                                                     </div>
                                                 <?php endif; ?>   
+                                            </div>                                        
+                                            <div class="col-sm-12 col-md-12">
+                                                <label class="form-label" for="form-stacked-text">Gender <span style="color: red">*</span> :</label>
+                                                <label class="radio-inline"><input type="radio" id="gender" name="gender" value="M">Male</label>
+                                                <label class="radio-inline"><input type="radio" id="gender" name="gender" value="F">Female</label>
+                                                <label class="radio-inline"><input type="radio" id="gender" name="gender" value="O">Other</label>
+                                                <div id="error_gender"></div>
+                                                <?php if (isset($validation) && $validation->hasError('gender')): ?>
+                                                    <div class="text-danger">
+                                                        <?= $validation->getError('gender'); ?>
+                                                    </div>
+                                                <?php endif; ?>                                            
                                             </div>
                                         </div>
                                         <div style="text-align: center;">
