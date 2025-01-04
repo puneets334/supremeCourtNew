@@ -8750,3 +8750,7 @@ a.edit-pen-btn:hover {
 .mngmntHeader .userImgWrap:hover .user-action-sec{ right: 0;padding-top: 45px;}
 .mngmntHeader .userImgWrap:hover .user-action-sec {display: block;}
 .mngmntHeader .userImgWrap .user-action-sec:before {right: 14px !important;left: auto;top: 35px;}
+
+.dataTables_paginate{
+    padding-bottom: .5em !important;
+}
