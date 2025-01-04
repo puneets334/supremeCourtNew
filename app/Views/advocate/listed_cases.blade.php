@@ -126,6 +126,7 @@
     $(document).on("click", ".btn_click", function () {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        $("#modal-lg").modal('show');
         $(".myModal_content").html("");
         var diary_no = $(this).data('diary_no');
         var next_dt = $(this).data('next_dt');
