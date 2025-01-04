@@ -245,13 +245,13 @@
 </div>
 
 <script>
-    $(function() {
-        $(".display_master_list").hide();
+    // $(function() {
+    //     $(".display_master_list").hide();
 
-        $('.table-sortable tbody').sortable({
-            handle: 'span'
-        });
-    });
+    //     $('.table-sortable tbody').sortable({
+    //         handle: 'span'
+    //     });
+    // });
     //$(document).ready(function(){
     //$(function() {
 
