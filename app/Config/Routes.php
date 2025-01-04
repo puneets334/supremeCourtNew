@@ -106,6 +106,7 @@ $routes->post('vacation/advance/declineVacationListCasesAOR', 'Vacation\Advance:
 $routes->match(['GET', 'POST'], 'dashboard', 'ResponsiveVariantRouteController::showDashboard');
 $routes->match(['GET', 'POST'], 'dashboard_alt', 'ResponsiveVariantRouteController::showDashboardAlt');
 $routes->match(['GET', 'POST'], 'cases', 'ResponsiveVariantRouteController::showCases');
+$routes->match(['GET', 'POST'], 'showMyCases', 'ResponsiveVariantRouteController::showMyCases');
 $routes->match(['GET', 'POST'], 'causelist', 'ResponsiveVariantRouteController::showCauselist');
 $routes->match(['GET', 'POST'], 'case/crud/(:any)', 'ResponsiveVariantRouteController::showCaseCrud/$1');
 $routes->match(['GET', 'POST'], 'case/crud', 'ResponsiveVariantRouteController::showCaseCrud');
@@ -477,3 +478,4 @@ $routes->match(['GET', 'POST'], 'add/clerk/update_clerk', 'Clerks\ClerkControlle
 
 //new implemented code route
 $routes->match(['GET', 'POST'], 'efilingAction/IAMiscDocsRefiledFinalSubmit', 'efilingAction\IAMiscDocsRefiledFinalSubmit::index');
+$routes->match(['GET', 'POST'], 'Api/Cases/get_list_doc_cases_efiled', 'Api\Cases::get_list_doc_cases_efiled');
