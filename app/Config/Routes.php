@@ -106,6 +106,7 @@ $routes->post('vacation/advance/declineVacationListCasesAOR', 'Vacation\Advance:
 $routes->match(['GET', 'POST'], 'dashboard', 'ResponsiveVariantRouteController::showDashboard');
 $routes->match(['GET', 'POST'], 'dashboard_alt', 'ResponsiveVariantRouteController::showDashboardAlt');
 $routes->match(['GET', 'POST'], 'cases', 'ResponsiveVariantRouteController::showCases');
+$routes->match(['GET', 'POST'], 'showMyCases', 'ResponsiveVariantRouteController::showMyCases');
 $routes->match(['GET', 'POST'], 'causelist', 'ResponsiveVariantRouteController::showCauselist');
 $routes->match(['GET', 'POST'], 'case/crud/(:any)', 'ResponsiveVariantRouteController::showCaseCrud/$1');
 $routes->match(['GET', 'POST'], 'case/crud', 'ResponsiveVariantRouteController::showCaseCrud');

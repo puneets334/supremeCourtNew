@@ -1,4 +1,4 @@
-<?php declare(strict_types=1); ?>
+<?php //declare(strict_types=1); ?>
 @extends('layout.advocateApp')
 @section('content')
 <style>
@@ -183,26 +183,28 @@
                                         </div>
                                     <?php } ?>
                                     <div class="uk-grid uk-flex-middle uk-grid-small dt-uikit-header uk-margin">
-                                        <div class="uk-width-1-2@m">
+                                        <!-- <div class="uk-width-1-2@m">
                                             <div>
                                             Show 
                                             <select ng-model="countperpage" ng-change="chnagePerPage()" ng-options="x for x in countperpageArray" class="form-control cus-form-ctrl">
                                             </select> entries
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="uk-width-1-2@m uk-text-right@m">
                                             <div id="efiled-cases-table_filter" class="dataTables_filter">
                                                 <input type="text" class="form-control cus-form-ctrl" ng-model="searchQuery"  placeholder="Diary / Reg. No..." ng-change="fetchData()" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="uk-margin uk-card uk-card-default uk-card-body">
+                                    <!-- <div class="uk-margin uk-card uk-card-default uk-card-body">
                                         <input type="text" class="form-control cus-form-ctrl" ng-model="searchQuery" ng-focus="searchQuery=''" placeholder="Diary / Reg. No..." ng-blur="fetchData()" />
-                                    </div>
-                                    <table ng-show="!loader.isLoading() && cases.length>0" id='example' class="display dataTable uk-table uktable-justify uktable-striped uk-table-hover uk-table-divider" ukfilter="target: .js-filter">
+                                    </div> -->
+                                    <div class="row">
+                                    <div class="col-12">
+                                    <table ng-show="!loader.isLoading() && cases.length>0" id='' class="table table-striped custom-table" ukfilter="target: .js-filter">
                                         <thead>
                                             <tr>
-                                                <th colspan="5" scope="row">Total Records (@{{totalRecords}})</th>
+                                                <td colspan="7" scope="row" class="text-left">Total Records (@{{totalRecords}})</td>
                                             </tr>
                                             <tr role="row">
                                                 <th class="sorting_asc" tabindex="0" aria-controls="example">S.N</th>
@@ -220,28 +222,28 @@
                                             <tr ng-repeat="case in cases">
                                                 <td ng-bind="$index + 1"></td>
                                                 <td>
-                                                    <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryId}}" data-diary_year="">
-                                                        <span class="uk-text-muted" ng-bind="case.diaryId"></span>
+                                                    <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryid}}" data-diary_year="">
+                                                        <span class="uk-text-muted" ng-bind="case.diaryid"></span>
                                                         <br>
-                                                        <span class="uk-text-emphasis" ng-bind="case.registrationNumber"></span>
+                                                        <span class="uk-text-emphasis" ng-bind="case.registrationnumber"></span>
                                                     </a>
-                                                    <b class="scif" ng-if="case.advocateType=='P'" >AfP</b><b class="scif" ng-if="case.advocateType=='R' || case.advocateType=='I'" >AfR</b>
+                                                    <b class="scif" ng-if="case.advocatetype=='P'" >AfP</b><b class="scif" ng-if="case.advocatetype=='R' || case.advocatetype=='I'" >AfR</b>
                                                 </td>
                                                 <td>
                                                     <div>
                                                         <div>
-                                                            <b ng-if="case.advocateType!='P'">P:</b>
-                                                            <b ng-if="case.advocateType=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionerName}}">P:</b>
-                                                            &nbsp;<span ng-bind="case.petitionerName"></span>
+                                                            <b ng-if="case.advocatetype!='P'">P:</b>
+                                                            <b ng-if="case.advocatetype=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionername}}">P:</b>
+                                                            &nbsp;<span ng-bind="case.petitionername"></span>
                                                             <br/>
-                                                            <b ng-bind="((case.advocateType!='R' || case.advocateType!='I') && case.advocateType=='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
+                                                            <b ng-bind="((case.advocatetype!='R' || case.advocatetype!='I') && case.advocatetype=='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
                                                         </div>
                                                         <div>
-                                                            <b ng-if="case.advocateType!='R' && case.advocateType!=='I'">R:</b>
-                                                            <b ng-if="case.advocateType=='R' || case.advocateType=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentName}}">R:</b>
-                                                            &nbsp;<span ng-bind="case.respondentName"></span>
+                                                            <b ng-if="case.advocatetype!='R' && case.advocatetype!=='I'">R:</b>
+                                                            <b ng-if="case.advocatetype=='R' || case.advocatetype=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentname}}">R:</b>
+                                                            &nbsp;<span ng-bind="case.respondentname"></span>
                                                             <br/>
-                                                            <b ng-bind="((case.advocateType=='R' || case.advocateType=='I') && case.advocateType!='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
+                                                            <b ng-bind="((case.advocatetype=='R' || case.advocatetype=='I') && case.advocatetype!='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -253,9 +255,9 @@
                                                 </td>
                                                 <td ng-if="case.userType!=19">
                                                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
-                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
-                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
+                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryid}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
+                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryid+'-'+case.registrationnumber+'-'+case.petitionername+'-'+case.respondentname+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
+                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryid) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryid}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
                                                     <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b>
                                                     @endif
                                                 </td>
@@ -265,51 +267,54 @@
                                                         <ul class="uknav-parent-icon uk-dropdown-nav"  uk-nav>
                                                             @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                             <li ng-if="case.userType!=19" class="uk-nav-header uk-padding-remove-left text-white">File a new</li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
-                                                            <li ng-if="case.userType =='1' && case.is_ac!='Y'"><a href="{{base_url('case/advocate')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
-                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            <li ng-if="case.userType =='1' && case.is_ac!='Y'"><a href="{{base_url('case/advocate')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
+                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
                                                             <li class="uk-nav-divider uk-margin-remove"></li>
                                                             <li class="uk-nav-header uk-padding-remove-left uk-margin-remove-top text-white">View</li>
                                                             @endif
                                                             @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
                                                             @endif
                                                             <li>
-                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryId}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
+                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryid}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
                                                                     <span uk-icon="icon: bookmark"></span> Paper Book (with Indexing)
                                                                 </a>
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <b class="scif" ng-if="case.registrationNumber==''" >Unr</b><b class="scif" ng-if="case.registrationNumber!=''" >Reg</b>
+                                                    <b class="scif" ng-if="case.registrationnumber==''" >Unr</b><b class="scif" ng-if="case.registrationnumber!=''" >Reg</b>
                                                 </td>
                                             </tr>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="5" scope="row">Total Records (@{{totalRecords}})</th>
-                                                </tr>
-                                                <tr>
-                                                    <th colspan="5"> 
-                                                        <ul class="uk-pagination uk-flex-center" ng-show="!loader.isLoading()">
-                                                            <li ng-class="{ 'uk-disabled': page === 1 }">
-                                                                <a href="javascript:void(0)" ng-click="changePage(page-1)" ng-disabled="page === 1">&laquo; Previous</a>
-                                                            </li>
-                                                            <li ng-repeat="pageno in getPages()" ng-class="{active: page === pageno, disabled: pageno === '...'}"
-                                                            ng-click="pageno !== '...' && changePage(pageno)">
-                                                                <a href="javascript:void(0)" ng-if="pageno !== '...'">@{{ pageno }}</a>
-                                                                <span ng-if="pageno === '...'">...</span>
-                                                            </li>
-                                                            <li ng-class="{ 'uk-disabled': page === totalPages }">
-                                                                <a href="javascript:void(0)" ng-click="changePage(page+1)" ng-disabled="page === totalPages">Next &raquo;</a>
-                                                            </li>
-                                                        </ul>
-                                                    </th>
-                                                </tr>
-                                            </tfoot>
                                         </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="6" scope="row">Total Records (@{{totalRecords}})</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="6"> 
+                                                    <ul class="uk-pagination uk-flex-center" ng-show="!loader.isLoading()">
+                                                        <li ng-class="{ 'uk-disabled': page === 1 }">
+                                                            <a href="javascript:void(0)" ng-click="changePage(page-1)" ng-disabled="page === 1">&laquo; Previous</a>
+                                                        </li>
+                                                        <li ng-repeat="pageno in getPages()" ng-class="{active: page === pageno, disabled: pageno === '...'}"
+                                                        ng-click="pageno !== '...' && changePage(pageno)">
+                                                            <a href="javascript:void(0)" ng-if="pageno !== '...'">@{{ pageno }}</a>
+                                                            <span ng-if="pageno === '...'">...</span>
+                                                        </li>
+                                                        <li ng-class="{ 'uk-disabled': page === totalPages }">
+                                                            <a href="javascript:void(0)" ng-click="changePage(page+1)" ng-disabled="page === totalPages">Next &raquo;</a>
+                                                        </li>
+                                                    </ul>
+                                                </th>
+                                            </tr>
+                                        </tfoot>
+                                        
                                     </table>
+                                </div>
+                                </div>
                                 </div>
                                 <div class="uk-margin-large uk-card uk-card-default uk-card-body" ng-show="!loader.isLoading() && cases.length === 0">
                                     No results found...
@@ -446,7 +451,16 @@
 @push('script')
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script>
+    $(document).ready(function() {
+        var table = $('#example').DataTable();
+        table.columns().eq( 0 ).each( function ( colIdx ) {
+            $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
+                table.column( colIdx ).search( this.value ).draw();
+            } );
+        } );
+    } );
     function AllcasesShowAlert(id) {
         $( "#AllcaseStatusKeypressP" ).keypress();
         $( "#AllcaseStatusKeypressD" ).keypress();
@@ -492,6 +506,11 @@
     }
 </script>
 <script type="text/javascript">
+    var app = angular.module('myApp', []);
+    app.controller('myCtrl', function($scope) {
+        $scope.count = 0;
+    });
+    $('body').attr('ng-app','casesApp').attr('ng-controller','casesController');
     var mainApp = angular.module("casesApp", []);
     mainApp.directive('onFinishRender', function ($timeout) {
         return {
@@ -544,14 +563,6 @@
         };
     });
     mainApp.controller('casesController', function ($scope, $http, $filter, $interval, $compile, LoaderService) {
-        $(document).ready(function() {
-            var table = $('#example').DataTable();
-            table.columns().eq( 0 ).each( function ( colIdx ) {
-                $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
-                    table.column( colIdx ).search( this.value ).draw();
-                } );
-            } );
-        } );
         $scope.page = 1;
         $scope.totalPages = 0;
         $scope.totalRecords = 0;
@@ -585,7 +596,7 @@
                 page: $scope.page,
                 limit: $scope.limit,
             };
-            $http.get("{{base_url('responsiveVariantRouteController/showMyCases')}}", { params: $scope.params })
+            $http.get("<?php echo base_url('showMyCases'); ?>", { params: $scope.params })
             .then(function(response) {
                 $scope.populateDataTable(response.data);
             }).catch(function(error) {
