@@ -15,7 +15,7 @@
 </style>
 <div class="modal-header">
     <h4 class="modal-title"><b>Appearance Slip</b></h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
@@ -215,7 +215,7 @@
 
     {{-- <h3 class="card-title">Add - Name of Advocates</h3>--}}
 
-    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 
     @if(count($data['is_submitted'])==0)
         <button type="button" class="quick-btn gray-btn final-submit"
@@ -238,7 +238,7 @@
         For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
     </div>
     <div class="row">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary final-submit" data-next_dt="{{$posted_data['next_dt']}}" >Submit</button>
     </div>--}}
 
