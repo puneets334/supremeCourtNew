@@ -556,7 +556,7 @@ class ResponsiveVariantRouteController extends BaseController
             $amicus_curiae_request_params = [
                 'mobile' => getSessionData('login')['mobile_number'],
             ];
-            //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params);exit();
+            //echo ICMIS_SERVICE_URL . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params);exit();
             $amicus_curiae_diary_no = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
             //echo '<pre>';print_r($amicus_curiae_diary_no);
             $diaryIdsArr = [];
@@ -579,7 +579,7 @@ class ResponsiveVariantRouteController extends BaseController
             $amicus_curiae_user_soon_cases = array();
             if(!empty($diaryIdsArr)) {
                 $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryIds' => $diaryIdsArr, 'fromDate' => date('Y-m-d'), 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true, 'conditions' => ['ifOnlyAor' => 'false']];
-                //echo env('API_CAUSELIST_URI').'?' . http_build_query($schedule_request_params); exit();
+                //echo API_CAUSELIST_URI.'?' . http_build_query($schedule_request_params); exit();
                 list($amicus_curiae_user_soon_cases) = (array)@json_decode(@file_get_contents(API_CAUSELIST_URI . '?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
             }
 
@@ -622,21 +622,21 @@ class ResponsiveVariantRouteController extends BaseController
     }
 
     public function showCases() {
-        log_message('info', 'My cases access on ' . date('d-m-Y') . ' at ' . date("h:i:s A") .getClientIP() . '</b><br>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
         return $this->render('responsive_variant.cases.index_1');
     }
 
     public function showMyCases() {
-        $case_status              = $this->request->getGet('case_status', TRUE);
-        $advocate_appearing       = $this->request->getGet('advocate_appearing', TRUE);
-        $case_registration_status = $this->request->getGet('case_registration_status', TRUE);
-        $case_engaged_status      = $this->request->getGet('case_engaged_status', TRUE);
-        $clear_filter_status      = $this->request->getGet('clear_filter_status', TRUE);
-        $searchVal                = $this->request->getGet('search', TRUE);
+        log_message('info', 'My cases access on test by new showMyCases' . date('d-m-Y') . ' at ' . date("h:i:s A") . getClientIP() . '</b>User Agent: <b>' . $_SERVER['HTTP_USER_AGENT']);
+        $case_status              = $this->request->getGet('case_status');
+        $advocate_appearing       = $this->request->getGet('advocate_appearing');
+        $case_registration_status = $this->request->getGet('case_registration_status');
+        $case_engaged_status      = $this->request->getGet('case_engaged_status');
+        $clear_filter_status      = $this->request->getGet('clear_filter_status');
+        $searchVal                = $this->request->getGet('search');
         $page                     = !empty($this->request->getGet('page')) ? $this->request->getGet('page'):1;
         $limit                    = !empty($this->request->getGet('limit')) ? $this->request->getGet('limit'):10;
         $offset                   = ($page - 1) * $limit;
-        $advocate_id              = $this->session->userdata['login']['adv_sci_bar_id'];
+        $advocate_id              = getSessionData('login')['adv_sci_bar_id'];
         $sr_advocate_data         = [];
         $diaryEngaged             = [];
         $totalPages               = 0;
@@ -651,7 +651,7 @@ class ResponsiveVariantRouteController extends BaseController
                 "verify_peer_name"=>false,
             ),
         );
-        if($this->session->userdata['login']['ref_m_usertype_id'] == SR_ADVOCATE){
+        if(getSessionData('login')['ref_m_usertype_id'] == SR_ADVOCATE) {
             $params                    = [];
             $params['table_name']      ='efil.tbl_sr_advocate_engage';
             $params['whereFieldName']  ='sr_advocate_id';
@@ -670,19 +670,19 @@ class ResponsiveVariantRouteController extends BaseController
                     'offset'                  => $offset,
                     'ifSkipDigitizedCasesStageComputation' => true,
                 ];
-                $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getMyCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
-                if(isset($sr_advocate_data) && !empty($sr_advocate_data)){
+                $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getMyCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                if(isset($sr_advocate_data) && !empty($sr_advocate_data)) {
                     $arr                   = [];
                     $arr['sr_advocate_id'] = $advocate_id;
                     $arr['diary_no']       = $diaryEngaged;
                     $tmpArr                = [];
                     $srAdvocateEngageData = $this->CommonModel->getSrAdvocateDataByDiaryNo($arr);
-                    if(isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)){
-                        foreach ($srAdvocateEngageData as $k=>$v){
+                    if(isset($srAdvocateEngageData) && !empty($srAdvocateEngageData)) {
+                        foreach ($srAdvocateEngageData as $k=>$v) {
                             $tmpArr[$v->diary_no] = $v->createdAt.'@'.$v->assignedby;
                         }
                     }
-                    foreach ($sr_advocate_data['data'] as $key=>$val){
+                    foreach ($sr_advocate_data['data'] as $key=>$val) {
                         if(array_key_exists($val->diary_no,$tmpArr)){
                             $arr        = explode('@',$tmpArr[$val->diary_no]);
                             $createdAt  = !empty($arr[0]) ? $arr[0] : '';
@@ -692,9 +692,9 @@ class ResponsiveVariantRouteController extends BaseController
                         }
                     }
                 }
-                foreach($sr_advocate_data['data'] as $k=>$v){
+                foreach($sr_advocate_data['data'] as $k=>$v) {
                     $tmp                       = [];
-                    $userType                  = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                    $userType                  = !empty(getSessionData('login')['ref_m_usertype_id']) ? getSessionData('login')['ref_m_usertype_id'] : NULL;
                     $tmp['userType']           = $userType;
                     $tmp['diaryId']            = $v->diary_no;
                     $tmp['status']             = $v->c_status;
@@ -708,11 +708,11 @@ class ResponsiveVariantRouteController extends BaseController
                 $totalPages   = $sr_advocate_data['total_pages'];
                 $totalRecords = $sr_advocate_data['total_records'];
             }
-        } elseif($this->session->userdata['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
+        } elseif(getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
             $amicus_curiae_request_params = [
-                'mobile' => $this->session->userdata['login']['mobile_number'],
+                'mobile' => getSessionData('login')['mobile_number'],
             ];
-            $amicus_curiae_diary_no = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
+            $amicus_curiae_diary_no = json_decode(curl_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAllAmicusCurieUserDiaryNo?' . http_build_query($amicus_curiae_request_params)));
             if (isset($amicus_curiae_diary_no) && !empty($amicus_curiae_diary_no)) {
                 $diaryEngaged = array_column($amicus_curiae_diary_no->data, 'diary_no');
             }
@@ -726,10 +726,10 @@ class ResponsiveVariantRouteController extends BaseController
                 'page'                    => $page,
                 'offset'                  => $offset
             ];
-            $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getMyCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+            $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getMyCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
             foreach($sr_advocate_data['data'] as $k=>$v){
                 $tmp                       = [];
-                $userType                  = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                $userType                  = !empty(getSessionData('login')['ref_m_usertype_id']) ? getSessionData('login')['ref_m_usertype_id'] : NULL;
                 $tmp['userType']           = $userType;
                 $tmp['diaryId']            = $v->diary_no;
                 $tmp['status']             = $v->c_status;
@@ -761,12 +761,31 @@ class ResponsiveVariantRouteController extends BaseController
                     'page'                    => $page,
                     'offset'                  => $offset
                 ];
-                $advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/findAdvocateMyCases/?'.http_build_query($request_params));
+                // $advocate_cases_response_str = @file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset);
+                // pr(ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset);
+                $curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => 'http://10.40.186.78:83/public/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset,
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+));
+
+$advocate_cases_response_str = curl_exec($curl);
+
+curl_close($curl);
+// pr($advocate_cases_response_str);
                 $adv_cases_response = json_decode($advocate_cases_response_str);
+                // pr($adv_cases_response);
                 $cases = $adv_cases_response->data->data;
                 if(isset($cases) && !empty($cases)){
                     foreach ($cases as $k=>$v){
-                        $userType    = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                        $userType    = !empty(getSessionData('login')['ref_m_usertype_id']) ? getSessionData('login')['ref_m_usertype_id'] : NULL;
                         $v->userType = $userType;
                         $cases[$k] = $v;
                     }
@@ -776,7 +795,7 @@ class ResponsiveVariantRouteController extends BaseController
                 $totalRecords = $adv_cases_response->data->total_records;
             }
         }
-        echo json_encode([
+        return $this->response->setJSON([
             'cases'       => $cases,
             'diaryEngaged'=> $diaryEngaged,
             'totalPages'  => $totalPages,
@@ -818,7 +837,7 @@ class ResponsiveVariantRouteController extends BaseController
                     $diaryIdsArr = array_column($srAdvocateData, 'diary_no');
                 }
                 $schedule_request_params = ['responseFormat' => 'CASE_WISE_FLATTENED_WITH_ALL_INFO', 'diaryNo' => $diaryIdsArr, 'forDate' => 'all', 'ifSkipDigitizedCasesStageComputation' => true];
-                // $sr_advocate_data = (array)@json_decode(@file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
+                // $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getCaseDetails/?'.http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
                 $sr_advocate_data = (array)@json_decode(@file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getCaseDetails/?' . http_build_query($schedule_request_params), false, stream_context_create($fgc_context)));
                 if (isset($sr_advocate_data) && !empty($sr_advocate_data)) {
                     $arr = array();
@@ -845,8 +864,8 @@ class ResponsiveVariantRouteController extends BaseController
             }
 
         } else {            
-            // $advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]=50&diaryIds[]=43532020');
-            // $advocate_cases_response_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id);
+            // $advocate_cases_response_str = file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getAdvocateCases/?advocateIds[]=50&diaryIds[]=43532020');
+            // $advocate_cases_response_str = file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id);
 
             $adv_Cases = array();
             if (!empty($advocate_id) && $advocate_id != null) {
@@ -858,13 +877,13 @@ class ResponsiveVariantRouteController extends BaseController
             /*if(!empty($advocate_id)){
                 $from_date=date("Y-m-d", strtotime("-3 months"));
                 $to_date=date('Y-m-d');
-                $my_cases_recently_updated_str = file_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id.'&status=P&filingDateRange='.$from_date.'%20to%20'.$to_date.'');
+                $my_cases_recently_updated_str = file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getAdvocateCases/?advocateIds[]='.$advocate_id.'&status=P&filingDateRange='.$from_date.'%20to%20'.$to_date.'');
                 $my_cases_recently_response = json_decode($my_cases_recently_updated_str);
                 $my_cases_recently_updated = $my_cases_recently_response->data;
                 $rop_judgment_request_params = [];
                 $rop_judgment_request_params['documentType'] = 'rop-judgment';
                 $rop_judgment_reques0t_params['diaryIds'] = array_column($my_cases_recently_updated, 'diaryId');
-                $rop_judgment_response = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL').'/ConsumedData/getCaseDocuments?'.http_build_query($rop_judgment_request_params)));
+                $rop_judgment_response = json_decode(curl_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/getCaseDocuments?'.http_build_query($rop_judgment_request_params)));
                 $rop_judgments = $rop_judgment_response->data;
                 $previousOrder = array();
                 if(isset($rop_judgments) && !empty($rop_judgments)){
@@ -1317,7 +1336,7 @@ class ResponsiveVariantRouteController extends BaseController
         $file_name = "Casefile_of_DNo_" . $diary_id . "_" . date('d-m-Y_H:i:s') . ".zip";
         // list($case_file_paper_books, $response_code) = (curl_get_contents(env(API_SCI_INTERACT_PAPERBOOK_PDF).$diary_id."/get/paper_book/categorized",array(),true));
         // parameter added in the exiting API on 02042023 as per API given by SCI-Interact team
-        list($case_file_paper_books, $response_code) = (curl_get_contents(env('API_SCI_INTERACT_PAPERBOOK_PDF') . $diary_id . "/get/paper_book/categorized?taskStage=live", array(), true));
+        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live", array(), true));
         if ($response_code == 417) {
             echo $case_file_paper_books;
         } else {
@@ -1377,7 +1396,7 @@ class ResponsiveVariantRouteController extends BaseController
         // https://10.25.78.69:44434/api/digitization/case_file/{{$scheduled_case->diary_id}}/get/paper_book/categorized
         // $case_file_paper_books = (curl_get_contents(env(API_SCI_INTERACT_PAPERBOOK_PDF).$diary_id."/get/paper_book/categorized"));
         // parameter added in the exiting API on 02042023 as per API given by SCI-Interact team
-        $case_file_paper_books = (curl_get_contents(env('API_SCI_INTERACT_PAPERBOOK_PDF') . $diary_id . "/get/paper_book/categorized?taskStage=live"));
+        $case_file_paper_books = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live"));
         header('Access-Control-Allow-Origin: *');
         header('Content-type: application/zip');
         header("Cache-Control: no-cache");
@@ -1732,7 +1751,7 @@ class ResponsiveVariantRouteController extends BaseController
                                     $recheck_url = 'case/caveat/crud';
                                     $redirect_url = base_url('case/caveat/crud');
                                 } elseif ($re->ref_m_efiled_type_id == E_FILING_TYPE_CERTIFICATE_REQUEST) {
-                                    $api_certificate_str = file_get_contents(env('API_PRISON') . '/certificate_status_efile/' . $re->efiling_no);
+                                    $api_certificate_str = file_get_contents(API_PRISON . '/certificate_status_efile/' . $re->efiling_no);
                                     $api_certificate = json_decode($api_certificate_str);
                                     $api_certificateData = $api_certificate->result;
                                     $api_certificate_efiling_no = $api_certificateData->efiling_no;
