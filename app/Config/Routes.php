@@ -477,3 +477,4 @@ $routes->match(['GET', 'POST'], 'add/clerk/update_clerk', 'Clerks\ClerkControlle
 
 //new implemented code route
 $routes->match(['GET', 'POST'], 'efilingAction/IAMiscDocsRefiledFinalSubmit', 'efilingAction\IAMiscDocsRefiledFinalSubmit::index');
+$routes->match(['GET', 'POST'], 'Api/Cases/get_list_doc_cases_efiled', 'Api\Cases::get_list_doc_cases_efiled');
