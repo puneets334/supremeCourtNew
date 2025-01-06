@@ -91,7 +91,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                             if (in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
                                 if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {    
                                     if ((isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] != 'P') || (isset($_SESSION['efiling_details']['gras_payment_status']) && $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL && (isset($_SESSION['efiling_details']['is_payment_defecit']) && $_SESSION['efiling_details']['is_payment_defecit'] == 't' || isset($_SESSION['efiling_details']['is_payment_defective']) && $_SESSION['efiling_details']['is_payment_defective'] == 't'))) {
-                                        echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="quick-btn">Final Submit</a>';
+                                        ?>
+                                        <a href="<?php echo base_url('miscellaneous_docs/FinalSubmit'); ?>" class="quick-btn">Final Submit</a>
+                                        <?php
                                         // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                     } else {
                                         
