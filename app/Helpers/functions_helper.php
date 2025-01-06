@@ -4659,7 +4659,7 @@ function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration
         // $ci = &get_instance();
         // $ci->load->model('login/Login_model');
         $loginModel = new LoginModel();  
-        $db = Database::connect('efiling_near');
+        $db = Database::connect();
         $builder = $db->table('efil.tbl_certified_copy_details');
         $builder->SELECT("*");
         $builder->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
