@@ -2397,23 +2397,25 @@ class CommonModel extends Model
     {
         $pdfdefectsarr = array();
         $result2 = $this->getIaDocsPspdfkitDocId($reg);
-        foreach ($result2 as $res) {
-            $pspdfkit_document_id = $res['pspdfkit_document_id'];
-            if ($pspdfkit_document_id != '') {
-                $pages = array();
-                $notedpages = array();
-                $response = $this->getIaDocsPdfAnnotations($pspdfkit_document_id);
-                $data = json_decode($response, true);
-                foreach ($data['data']['annotations'] as $obj) {
-                    $pageIndex = (int)$obj['content']['pageIndex'];
-                    $pageNo = $pageIndex + 1;
-                    if (!in_array($pageNo, $notedpages)) {
-                        array_push($pages, $pageNo);
-                        array_push($notedpages, $pageNo);
+        if($result2){
+            foreach ($result2 as $res) {
+                $pspdfkit_document_id = $res['pspdfkit_document_id'];
+                if ($pspdfkit_document_id != '') {
+                    $pages = array();
+                    $notedpages = array();
+                    $response = $this->getIaDocsPdfAnnotations($pspdfkit_document_id);
+                    $data = json_decode($response, true);
+                    foreach ($data['data']['annotations'] as $obj) {
+                        $pageIndex = (int)$obj['content']['pageIndex'];
+                        $pageNo = $pageIndex + 1;
+                        if (!in_array($pageNo, $notedpages)) {
+                            array_push($pages, $pageNo);
+                            array_push($notedpages, $pageNo);
+                        }
                     }
-                }
-                if (!empty($pages)) {
-                    $pdfdefectsarr[$pspdfkit_document_id] = $pages;
+                    if (!empty($pages)) {
+                        $pdfdefectsarr[$pspdfkit_document_id] = $pages;
+                    }
                 }
             }
         }
@@ -2455,7 +2457,6 @@ class CommonModel extends Model
         $builder->where('tccd.registration_id', $registration_id);
         $builder->where('tccd.is_deleted', false);
         $builder->where('tlcd.is_deleted', false);
-
         $query = $builder->get();
 
         return $query->getResultArray();
@@ -2479,7 +2480,6 @@ class CommonModel extends Model
         $builder->select('ed.pspdfkit_document_id')
                 ->where('ed.registration_id', $reg)
                 ->where('ed.is_deleted', false);
-
         $query = $builder->get();
 
         if ($query->getNumRows() >= 1) {
