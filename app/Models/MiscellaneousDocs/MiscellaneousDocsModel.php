@@ -66,7 +66,6 @@ class MiscellaneousDocsModel extends Model
 
     function gen_efiling_number()
     {
-
         $builder = $this->db->table('efil.m_tbl_efiling_no');
         $builder->SELECT('doc_efiling_no,doc_efiling_year');
         $builder->WHERE('entry_for_type', getSessionData('estab_details')['efiling_for_type_id']);
@@ -79,10 +78,9 @@ class MiscellaneousDocsModel extends Model
         if ($year < date('Y')) {
             $newYear = date('Y');
             $update_data = array(
-                'doc_efiling_year' => 1,
-                'doc_updated_by' => $newYear,
-                'doc_updated_on' => getSessionData('login')['id'],
-                'doc_update_ip' => date('Y-m-d H:i:s'),
+                'doc_efiling_year' => $newYear,
+                'doc_updated_by' => getSessionData('login')['id'],
+                'doc_updated_on' => date('Y-m-d H:i:s'),
                 'doc_update_ip' => getClientIP()
             );
             $builder = $this->db->table('efil.m_tbl_efiling_no');
@@ -90,7 +88,8 @@ class MiscellaneousDocsModel extends Model
             $builder->WHERE('doc_efiling_year', $year);
             $builder->WHERE('entry_for_type', getSessionData('estab_details')['efiling_for_type_id']);
             $builder->WHERE('ref_m_establishment_id', getSessionData('estab_details')['efiling_for_id']);
-            $builder->UPDATE($update_data);
+            $builder->set($update_data);
+            $builder->UPDATE();
             if ($this->db->affectedRows() > 0) {
                 $data['efiling_num'] = 1;
                 $data['efiling_year'] = $newYear;
@@ -170,7 +169,6 @@ class MiscellaneousDocsModel extends Model
 
         if ($query->getNumRows() >= 1) {
             $insertResult =  true;
-            $x = $query->getResult();
             $x = $query->getResult();
             $insertID = $x[0]->registration_id;
         }else{
