@@ -1,31 +1,15 @@
-<link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-<!-- <link rel="shortcut icon"
-    href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css"
-    rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css"
-    rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css"
-    rel="stylesheet">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/material.css"
-    rel="stylesheet" />
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/style.css"
-    rel="stylesheet">
-<link rel="stylesheet"
-    type="text/css"
-    href="<?= base_url() . 'assets/newAdmin/' ?>css/jquery.dataTables.min.css">
-<link href="<?= base_url() . 'assets/newAdmin/' ?>css/fullcalendar.css"
-    rel="stylesheet">
-<!-- <link rel="stylesheet"
-    href="<?= base_url() ?>assets/css/bootstrap-datepicker.css"> -->
-<link rel="stylesheet"
-    href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css">
-<!-- <link rel="stylesheet"
-    href="<?= base_url() ?>assets/css/jquery-ui.css"> -->
-<link href="<?= base_url() . 'assets' ?>/css/select2.min.css"
-    rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/black-theme.css" rel="stylesheet">
-    <link href="<?= base_url() . 'assets/newAdmin/' ?>css/responsive.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newDesign/images/logo.png" rel="shortcut icon" type="image/png" />
+<link href="<?= base_url(); ?>assets/newAdmin/css/bootstrap.min.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newAdmin/css/font-awesome.min.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newAdmin/css/animate.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newAdmin/css/material.css" rel="stylesheet" />
+<link href="<?= base_url(); ?>assets/newAdmin/css/style.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newAdmin/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+<link href="<?= base_url(); ?>assets/newAdmin/css/fullcalendar.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/css/select2.min.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newAdmin/css/black-theme.css" rel="stylesheet">
+<link href="<?= base_url(); ?>assets/newAdmin/css/responsive.css" rel="stylesheet">
 @stack('style')
 <style>
     .datepicker-days {
@@ -727,34 +711,25 @@
                                 <hr style="border: 1px solid #efe8e8;border-radius: 1px;">
                                 <h4 style="text-align: center;color: #31B0D5">Certified Copy</h4>
                                 <div class="col-md-12 col-sm-12 col-xs-12" id="certified_copy">
-                                    <div class="col-sm-4 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Application Number :</label>
-                                            <div class="col-md-7 col-sm-12 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="text" id="application_no" name="application_no" maxlength="100" onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" placeholder="Application Number"  class="form-control input-sm">
-                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Application Number "><i class="fa fa-question-circle-o"  ></i></span>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Application Number :</label>                                                
+                                                <input type="text" id="application_no" name="application_no" maxlength="100" onkeyup="this.value = this.value.replace(/[^a-zA-Z0-9]/g, '')" placeholder="Application Number" class="form-control cus-form-ctrl">
+                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Enter Application Number"><i class="fa fa-question-circle-o"></i></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Application Date :</label>
-                                            <div class="col-md-7 col-sm-12 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="date" class="form-control has-feedback-left" id="application_date" name="application_date" maxlength="10" placeholder="DD/MM/YYYY">
-                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Select Application Date "><i class="fa fa-question-circle-o"  ></i></span>
-                                                </div>
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Application Date :</label>
+                                                <input type="text" class="form-control cus-form-ctrl" id="application_date" name="application_date" maxlength="10" placeholder="DD/MM/YYYY">
+                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Select Application Date"><i class="fa fa-question-circle-o"></i></span>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="col-sm-4 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Exemption Applied :</label>
-                                            <div class="col-md-7 col-sm-12 col-xs-12">
-                                                <select name="exemption_filed" id="exemption_filed" class="form-control input-sm filter_select_dropdown" style="width: 100%" >
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="mb-3">
+                                                <label class="form-label">Exemption Applied :</label>
+                                                <select name="exemption_filed" id="exemption_filed" class="form-control cus-form-ctrl input-sm filter_select_dropdown" style="width: 100%" >
                                                     <option value="">Select Exemption  Applied</option>
                                                     <option value="Y">Y</option>
                                                     <option value="N">N</option>
@@ -762,28 +737,21 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12" id="certified_copy">
-                                    <div class="col-sm-4 col-xs-12 tentative_date" style="display: none;">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Tentative Date for Issuance of Certified Copy :</label>
-                                            <div class="col-md-7 col-sm-12 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="date" class="form-control" id="tentative_date" name="tentative_date" maxlength="10" placeholder="DD/MM/YYYY">
-                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Select Tentative Date for Issuance of Certified Copy"><i class="fa fa-question-circle-o"  ></i></span>
-                                                </div>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 tentative_date" style="display: none;">
+                                            <div class="mb-3">
+                                                <label class="form-label">Tentative Date for Issuance of Certified Copy :</label>
+                                                <input type="text" class="form-control cus-form-ctrl" id="tentative_date" name="tentative_date" maxlength="10" placeholder="DD/MM/YYYY">
+                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Select Tentative Date for Issuance of Certified Copy"><i class="fa fa-question-circle-o"  ></i></span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-sm-4 col-xs-12 issuance_date" style="display: none;">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4 col-sm-12 col-xs-12 input-sm">Date of Issuance :</label>
-                                            <div class="col-md-7 col-sm-12 col-xs-12">
-                                                <div class="input-group">
-                                                    <input type="date" class="form-control has-feedback-left" id="issuance_date" name="issuance_date" maxlength="10" placeholder="DD/MM/YYYY">
-                                                    <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Select Issuance Date "><i class="fa fa-question-circle-o"  ></i></span>
-                                                </div>
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 issuance_date" style="display: none;">
+                                            <div class="mb-3">
+                                                <label class="form-label">Date of Issuance :</label>
+                                                <input type="text" class="form-control cus-form-ctrl" id="issuance_date" name="issuance_date" maxlength="10" placeholder="DD/MM/YYYY">
+                                                <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Select Issuance Date "><i class="fa fa-question-circle-o"  ></i></span>
                                             </div>
                                         </div>
                                     </div>
@@ -972,23 +940,16 @@
         <?php render('newcase.subordinate_court_list', ['subordinate_court_details' => @$subordinate_court_details]); ?>
     </div>
 </div>
-<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script> -->
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
-
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
-<script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
-<script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
-<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script>
-    <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
-<script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
-<script src="<?= base_url() ?>assets/js/sha256.js"></script>
-<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
-<script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
-<script type="text/javascript"
-    src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+@push('script')
+<script src="<?= base_url(); ?>assets/newAdmin/js/jquery-3.5.1.min.js"></script>
+<script src="<?= base_url(); ?>assets/newAdmin/js/bootstrap.bundle.min.js"></script>
+<script src="<?= base_url(); ?>assets/newAdmin/js/general.js"></script>
+<script src="<?= base_url(); ?>assets/vendors/jquery/dist/jquery.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/bootstrap-datepicker.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/sha256.js"></script>
+<script src="<?= base_url(); ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/select2.min.js"></script>
+<script src="<?= base_url(); ?>assets/js/jquery.validate.js" type="text/javascript"></script>
 <script>
     $(document).ready(function() {
         $('#order_date').datepicker({
@@ -1001,10 +962,17 @@
             "autoclose": true
         });
     });
-</script>
-
-
-<script type="text/javascript">
+    $(document).ready(function() {
+        $('#application_date, #tentative_date, #issuance_date').datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-100:-1",
+            format: "dd/mm/yyyy",
+            // endDate: '+0d',
+            defaultDate: new Date(new Date().setFullYear(new Date().getFullYear() - 40)),
+            "autoclose": true
+        });
+    });
     $(document).ready(function() {
         //start cert Certified Copy
         $('#exemption_filed').on('change', function () {
@@ -1858,3 +1826,4 @@
         }
     }
 </script>
+@endscript
