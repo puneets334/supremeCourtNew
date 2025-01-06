@@ -76,7 +76,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                         )
                                     ) {
                                         $final_submit_action = TRUE;
-                                        echo '<button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>';
+                                        ?>
+                                        <button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>
+                                        <?php
                                     }
                                 }
                                 if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
