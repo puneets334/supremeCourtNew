@@ -84,13 +84,13 @@ class Search extends BaseController {
     //     }
     // }
 
-    public function index($efiling_type) {
-        unset($_SESSION['efiling_type']);
+    public function index($efiling_type = null) {
+        $efiling_type = getSessionData('efiling_type');
         $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, SR_ADVOCATE,AMICUS_CURIAE_USER);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
         }
-        $_SESSION['efiling_type'] = $efiling_type = url_decryption($efiling_type);
+        // $_SESSION['efiling_type'] = $efiling_type = url_decryption($efiling_type);
         if ($efiling_type != 'misc' && $efiling_type != "ia" && $efiling_type != 'mentioning' && $efiling_type != 'citation' && $efiling_type != 'certificate' && $efiling_type != 'adjournment_letter' && $efiling_type != 'refile_old_efiling_cases') {
             unset($_SESSION['efiling_type']);
             return response()->redirect(base_url('dashboard'));
