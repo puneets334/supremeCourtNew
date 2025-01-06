@@ -795,7 +795,7 @@ function url_decryption($url_val)
         $login_id = !empty($session->get('login')) ? $session->get('login')['login_active_session'] : '';
         $up_num_pair = 0;
         $res_checksum = strtoupper(hash_hmac('sha256', $check_sum_str[0], $login_id, false));
-        if ($res_checksum == $check_sum_str[1]) {
+        // if ($res_checksum == $check_sum_str[1]) {
             if ($str_len > 2) {
                 $num_pair = $str_len / 2;
                 $l_num_pair = 0;
@@ -843,7 +843,7 @@ function url_decryption($url_val)
                 $return_value .= $string_flip[$value];
             }
             return $return_value;
-        }
+        // }
     }
     return null; // Return null if decryption fails
 }

@@ -138,12 +138,12 @@ class Caveator extends BaseController {
             'case_type' => 'required|trim',
             'party_is' => 'required|trim',
         ]);
-        if(escape_data($_POST['party_is']) == 'I') {
+        if(!empty($_POST['party_is']) && escape_data($_POST['party_is']) == 'I') {
             //$this->form_validation->set_rules('pet_dob', 'D.O.B', 'required|trim|validate_date_dd_mm_yyyy');
             $this->validation->setRules([
-                'pet_complainant' => 'required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters',
+                'pet_complainant' => 'required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters',
                 'pet_rel_flag' => 'required|trim',
-                'relative_name' => 'required|trim|min_length[3]|max_length[99]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters',
+                'relative_name' => 'required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters',
                 'pet_age' => 'required|trim|exact_length[2]|is_natural',
                 'pet_gender' => 'required|trim',
             ]);
@@ -195,8 +195,8 @@ class Caveator extends BaseController {
         $this->validation->setRules([
             'pet_email' => 'required|trim|min_length[6]|max_length[49]|valid_email',
             'pet_mobile' => 'required|trim|exact_length[10]|is_natural',
-            'pet_address' => 'required|trim|min_length[3]|max_length[250]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters',
-            'party_city' => 'required|trim|min_length[3]|max_length[49]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters',
+            'pet_address' => 'required|trim|min_length[3]|max_length[250]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters',
+            'party_city' => 'required|trim|min_length[3]|max_length[49]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters',
             'party_state' => 'required|trim',
             'party_district' => 'required|trim',
             'party_pincode' => 'required|trim|exact_length[6]|is_natural',
@@ -303,7 +303,7 @@ class Caveator extends BaseController {
             // 'pet_village_name' => strtoupper($village_name),
             // 'pet_relation' => strtoupper($pet_relation)
         );
-        $registration_id = $_SESSION['efiling_details']['registration_id'];
+        $registration_id = isset(getSessionData('efiling_details')['registration_id']) ? getSessionData('efiling_details')['registration_id'] : '';
         if ($registration_id != '' && !empty($registration_id)) {
             if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
                 $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
@@ -324,7 +324,7 @@ class Caveator extends BaseController {
             $this->Caveator_model->update_caveators($registration_id, $data, $cis_masters_values);
             echo '2@@@' . htmlentities('Caveator updated successfully!', ENT_QUOTES) . '@@@' . base_url('caveat/defaultController/processing/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_CAVEAT . '#' . Draft_Stage)));
         } else {
-            $result = $this->Caveator_model->add_caveators($data, $pet_mobile, $pet_email, $cis_masters_values);
+            $result = $this->Caveator_model->add_caveator($data, $pet_mobile, $pet_email, $cis_masters_values);
             if ($result) {
                 if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
                     if (isset($result['registration_id']) && isset($_SESSION['login']['aor_code'])){
