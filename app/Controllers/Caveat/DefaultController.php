@@ -87,21 +87,25 @@ class DefaultController extends BaseController {
     }
 
     public function processing($id = NULL) {
-        if ($id != NULL) {
-            unset($_SESSION['estab_details']);
+        if ($id !== NULL) {
+            session()->remove('estab_details');
             $id = url_decryption($id);
-            $InputArrray = explode('#', $id);   // 0 => registration_id, 1 => type, 2 => stage
-            if (empty($InputArrray[0]) && empty($InputArrray[1]) && empty($InputArrray[2])) {
-                return redirect()->to(base_url('login'));
-                exit(0);
+            $InputArray = explode('#', $id); // 0=>registration_id, 1=>type, 2=>stage
+            if (empty($InputArray[0]) && empty($InputArray[1]) && empty($InputArray[2])) {
+                return redirect()->to('login');
             }
-            $_SESSION['efiling_details']['registration_id'] = $registration_id = $InputArrray[0];
-            $this->Common_model->get_efiling_num_basic_details(trim($InputArrray[0]));
+            $registration_id = $InputArray[0];
+            $efiling_details = getSessionData('efiling_details') ?? [];
+            $efiling_details['registration_id'] = $registration_id;
+            $session = session();
+            // $session ->set('efiling_details', $result);
+            setSessionData('efiling_details', $efiling_details);
+            // session()->set('efiling_details.registration_id', $registration_id = $InputArray[0]);
+            $this->Common_model->get_efiling_num_basic_details(trim($InputArray[0]));
             $this->Common_model->get_establishment_details();
-            $allowed_stages = array(Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE);
-            if (!empty($_SESSION['efiling_details']['stage_id']) && !in_array($_SESSION['efiling_details']['stage_id'], $allowed_stages)) {
-                return redirect()->to(base_url('caveat/view'));
-                exit(0);
+            $allowed_stages = [Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE];
+            if (isset(getSessionData('efiling_details')['stage_id']) && !empty(getSessionData('efiling_details')['stage_id']) && !in_array(getSessionData('efiling_details')['stage_id'], $allowed_stages)) {
+                return redirect()->to('caveat/view');
             }
         } else {
             if (isset($_SESSION['efiling_for_details']) && !empty($_SESSION['efiling_for_details'])) {
