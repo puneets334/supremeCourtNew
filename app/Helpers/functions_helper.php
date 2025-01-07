@@ -3692,13 +3692,19 @@ function eCopyingStatementCheck($mobile, $email){
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     $builder = $db2->table('user_assets u');
 
-    $results = $builder->select('id')
+    $builder->select('id')
         ->where('mobile', $mobile)
         ->where('email', $email)
         ->where('diary_no !=', 0)
-        ->where('DATE(ent_time) = CURDATE()', null, false)
-        ->get()
-        ->getResult();
+        ->where('DATE(ent_time) = CURDATE()', null, false);
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            // echo "<pre>Error: " . $error['message'] . "</pre>";
+            $results = [];
+        } else {
+            $results = $query->getResult();
+        }
         return $results;
 }
 
@@ -3707,13 +3713,19 @@ function eCopyingCheckMaxDigitalRequest($mobile, $email){
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     $builder = $db2->table('copying_application_online');
 
-    $results = $builder->select('id')
+    $builder->select('id')
         ->where('allowed_request', 'digital_copy')
         ->where('mobile', $mobile)
         ->where('email', $email)
-        ->where('DATE(application_receipt) = CURDATE()', null, false)
-        ->get()
-        ->getResult();
+        ->where('DATE(application_receipt) = CURDATE()', null, false);
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            // echo "<pre>Error: " . $error['message'] . "</pre>";
+            $results = [];
+        } else {
+            $results = $query->getResult();
+        }
         return $results;
 }
 
@@ -3727,9 +3739,15 @@ function eCopyingCopyStatus($diary_no, $check_asset_type, $mobile, $email){
         ->where('mobile', $mobile)
         ->where('email', $email)
         ->orderBy('ent_time', 'DESC')
-        ->limit(1)
-        ->get()
-        ->getRow();
+        ->limit(1);
+        $query = $builder->get();
+        if ($query === false) {
+            $error = $db2->error();
+            // echo "<pre>Error: " . $error['message'] . "</pre>";
+            $results = [];
+        } else {
+            $results = $query->getRow();
+        }
         return $results;
 }
 
@@ -3969,7 +3987,7 @@ function eCopyingOtpVerification($email){
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     $builder = $db2->table('verify_email');
     $builder->where('email', $email);
-    $builder->where('ent_dt', date('Y-m-d'), null, false); // Direct comparison to current date
+    // $builder->where('ent_dt', date('Y-m-d'), null, false); // Direct comparison to current date
     $builder->orderBy('id', 'DESC');
     $query = $builder->get();
     if ($query === false) {

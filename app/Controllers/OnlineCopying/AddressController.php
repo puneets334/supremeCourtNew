@@ -177,7 +177,6 @@ class AddressController extends BaseController
         $pincode= $request->getPost('pincode');
         // pr($pincode);
         $pincodeDetails= $this->AddressModel->getPincode($pincode);
-        // pr($pincodeDetails);
         if ($pincodeDetails) {
             return $this->response->setJSON([
                 'status' => 'success',

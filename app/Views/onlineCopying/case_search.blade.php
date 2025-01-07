@@ -632,7 +632,50 @@
             },function(willDelete){
                 if (willDelete) {
                     //alert("ok"+is_affidavit_uploaded);          
-                    $.redirect(redirect_url, {address_id:address_id, app_type:app_type, num_copy:num_copy, cop_mode:cop_mode, copy_detail: copy_detail, service_charges: service_charges, fee_in_stamp:fee_in_stamp, amount_to_pay:amount_to_pay, postage:postage});          
+                    // $.redirect(redirect_url, {address_id:address_id, app_type:app_type, num_copy:num_copy, cop_mode:cop_mode, copy_detail: copy_detail, service_charges: service_charges, fee_in_stamp:fee_in_stamp, amount_to_pay:amount_to_pay, postage:postage}); 
+                    var form = $('<form>', {
+                        'action': redirect_url,
+                        'method': 'POST'
+                    }).append($('<input>', {
+                        'name': 'address_id',
+                        'value': address_id,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'app_type',
+                        'value': app_type,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'num_copy',
+                        'value': num_copy,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'cop_mode',
+                        'value': cop_mode,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'copy_detail',
+                        'value': copy_detail,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'service_charges',
+                        'value': service_charges,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'fee_in_stamp',
+                        'value': fee_in_stamp,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'amount_to_pay',
+                        'value': amount_to_pay,
+                        'type': 'hidden'
+                    })).append($('<input>', {
+                        'name': 'postage',
+                        'value': postage,
+                        'type': 'hidden'
+                    }));
+
+                    $(document.body).append(form);
+                    form.submit();         
                 }
                 else {
                     //swal("Record is safe!");

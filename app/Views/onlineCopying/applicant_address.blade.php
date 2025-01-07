@@ -224,8 +224,8 @@
                                                                                 </div>
                                                                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                                                                     <div class="mb-3">
-                                                                                        <label for="" class="form-label">Pincode <span style="color: red" class="astriks">*</span></label>
-                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verifed_pin)?$data_verifed_pin:''; ?>" id="pincode" aria-labelledby="pincode_addon" maxlength='6' onkeypress="return isNumber(event)" required>
+                                                                                        <label for="pincode" class="form-label">Pincode <span style="color: red" class="astriks">*</span></label>
+                                                                                        <input type="text" class="form-control cus-form-ctrl" value="<?= isset($data_verifed_pin)?$data_verifed_pin:''; ?>" id="pincode" maxlength='6' required>
                                                                                     </div>
                                                                                     <div class="form-group">
                                                                                         <span id="subcatLoadData"></span>
