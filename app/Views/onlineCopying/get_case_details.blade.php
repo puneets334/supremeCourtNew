@@ -83,11 +83,11 @@ if(count($res_fil_det) > 0){
                 <strong><?= $case_no; ?> (<?= $res_fil_det[0]->c_status=='P' ? '<span style="color: #0554DB;">Pending</span>' : '<span class="text-danger">Disposed</span>'; ?>)</strong>
                 <p class="text-left">
                     Applying as :<b> 
-                    <?php   if($_SESSION["session_filed"] == 1){ echo "AOR";}
-                            else if($_SESSION["session_filed"] == 2){ echo "Party of the case"; }
-                            else if($_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
-                            else if($_SESSION["session_filed"] == 4){ echo "Third Party"; }
-                            else if($_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
+                    <?php   if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1){ echo "AOR";}
+                            else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2){ echo "Party of the case"; }
+                            else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
+                            else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){ echo "Third Party"; }
+                            else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
                             ?>
                     </b>
                     <i class="fa fa-user text-info ml-5 " aria-hidden="true"></i> <?=$_SESSION['user_address'][0]['second_name'].' '.$_SESSION['user_address'][0]['first_name'];?> <i class="fa fa-phone-square text-info" aria-hidden="true"></i> <?=$_SESSION["applicant_mobile"];?> <i class="fa fa-envelope text-info" aria-hidden="true"></i> : <?=$_SESSION["applicant_email"];?></b>
@@ -96,19 +96,19 @@ if(count($res_fil_det) > 0){
         </div>
     </div>        
     <?php 
-    if($_SESSION["session_filed"] == 2){
+    if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2){
         $check_asset_type = 5; //for party
     }
-    if($_SESSION["session_filed"] == 3){
+    if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){
         $check_asset_type = 6; //for appearing counsel
     }
-    if($_SESSION["session_filed"] == 4){
+    if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){
         $check_asset_type = 4; //for affidaivt filed by third party
     }
 
-    if($_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4){
+    if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
         $stmt_video = getStatementVideo($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
-        if (count($stmt_video) == 0) {
+        if (is_array($stmt_video) && count($stmt_video) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
                 Please <a class='btn btn-danger' href='user_video.php'>Click here</a> to record your 10 seconds video. (It's mandatory)
@@ -118,7 +118,7 @@ if(count($res_fil_det) > 0){
         }
 
         $stmt_image = getStatementImage($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
-        if (count($stmt_image) == 0) {
+        if (is_array($stmt_image) && count($stmt_image) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
                 Please <a class='btn btn-danger' href='user_image.php'>Click here</a> to capture your photo. (It's mandatory)
@@ -128,7 +128,7 @@ if(count($res_fil_det) > 0){
         }
         
         $stmt_id_proof = getStatementIdProof($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
-        if (count($stmt_id_proof) == 0) {
+        if (is_array($stmt_id_proof) && count($stmt_id_proof) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
                 Please <a class='btn btn-danger' href='user_id_proof.php'>Click here</a> to upload you ID Proof. (It's mandatory)
@@ -139,7 +139,7 @@ if(count($res_fil_det) > 0){
 
         //VERIFICATION OF CASES VALIDATE, MAX 10 REQUEST per day ALLOWED
     $stmt_check = eCopyingStatementCheck($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
-    if (count($stmt_check) > 0) {
+    if (is_array($stmt_check) && count($stmt_check) > 0) {
         $_SESSION['max_cases_verify_per_day'] = count($stmt_check);
         if($_SESSION['max_cases_verify_per_day'] >=10){
             ?>
@@ -174,7 +174,7 @@ if(count($res_fil_det) > 0){
 
         
     $data_sqlv = eCopyingCopyStatus($diary_no, $check_asset_type, $_SESSION["applicant_mobile"], trim($_SESSION["applicant_email"]));
-    if (count($data_sqlv) > 0) {
+    if (is_array($data_sqlv) && count($data_sqlv) > 0) {
             if($data_sqlv['verify_status'] == 1){
                 //pending
                 $_SESSION['diary_filed_user_verify_status'] = 'pending';
@@ -205,7 +205,7 @@ if(count($res_fil_det) > 0){
     
 }
 
-    if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+    if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6)){
         if($_SESSION["session_filed"] == 1){
             $applicant_aor_mobile = $_SESSION["applicant_mobile"];
         }
@@ -227,7 +227,7 @@ if(count($res_fil_det) > 0){
         }        
     }    
         
-    if($_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification'){
+    if(isset($_SESSION["diary_filed_user_verify_status"]) && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification'){
         ?>
         <div class="ml-2"><div class="alert alert-info alert-dismissible p-1 m-1"><strong>Verification Required :</strong></div>
         </div>
@@ -238,7 +238,7 @@ if(count($res_fil_det) > 0){
     ?>
     
         <!-- REQUEST DETAILS -->
-        <div class="form-row note_unavailable_doc_request <?= $_SESSION["session_filed"] == 2 && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification' ? 'd-none' : ''; ?>">
+        <div class="form-row note_unavailable_doc_request <?= (isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2) && (isset($_SESSION["diary_filed_user_verify_status"]) && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification') ? 'd-none' : ''; ?>">
             <div class="col-md-12 ">
                 <p class="font-weight-bolder text-right">Note : Click to request for unavailable documents in software
                     <a class="unavailable_doc_request btn btn-warning" href="<?php echo base_url('online_copying/unavailable_request'); ?>">Request Add</a>
@@ -311,7 +311,7 @@ if(count($res_fil_det) > 0){
     ?>
 
     <?php
-        if($_SESSION["session_filed"] == 4){
+        if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){
     ?>
     <div class="card col-md-12 mt-2 attach_documents">
 
@@ -351,7 +351,7 @@ if(count($res_fil_det) > 0){
     
     
     <?php
-    if($_SESSION["session_filed"] == 2 && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification') {
+    if((isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2) && (isset($_SESSION["diary_filed_user_verify_status"]) && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification')) {
     }
     else{
     ?>
@@ -365,7 +365,7 @@ if(count($res_fil_det) > 0){
  -->
 
 <?php
-if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6)){
     $is_bail_applied = getBailApplied($diary_no, $_SESSION['applicant_mobile'], $_SESSION['applicant_email']);
     if($is_bail_applied == 'NO'){
     ?>
@@ -449,7 +449,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
                         <?php
                         $currently_selected = date('Y');
                         $earliest_year = 1;
-                        if($_SESSION["session_filed"] == 4){
+                        if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){
                             //third party
                             $latest_year = 1;//third party allow only one copy
                         }
@@ -523,7 +523,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
         }
 
         //third party and appearing council allowed only judgemnet orders proceedings
-        if($_SESSION["applicant_mobile"] != '9630100950' && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
+        if($_SESSION["applicant_mobile"] != '9630100950' && (isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4))){
             $third_party_sub_qry = " and ot.id in (36,8,3,20,1,2,4) ";    
         }
         else{
@@ -700,7 +700,7 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
     <?php } ?>
         
     <?php
-    if(($_SESSION['diary_filed_user_verify_status'] == 'success' && $_SESSION["session_filed"] == 2) || $_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
+    if(((isset($_SESSION['diary_filed_user_verify_status']) && $_SESSION['diary_filed_user_verify_status'] == 'success') && (isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6))){
     ?>    
     <div class="row col-md-12">
             <div class="col-md-6">
@@ -723,8 +723,10 @@ if($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6){
     <?php } 
     else{
 ?>
-            <div class="row col-md-12">            
-               <input type="button" name="btn_case_verify" id="btn_case_verify" value="Submit for Verification" class="btn btn-primary" />
+            <div class="row pt-2">            
+            <div class="col-md-12 text-center">            
+               <input type="button" name="btn_case_verify" id="btn_case_verify" value="Submit for Verification" class="btn btn-primary btn-sm col-2" />
+            </div>
             </div>
 <?php        
     }

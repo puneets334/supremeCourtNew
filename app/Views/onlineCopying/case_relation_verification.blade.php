@@ -4,19 +4,19 @@
 extract($_POST);
 $clientIP = getClientIP();
 
-if($_SESSION["session_filed"] == '2'){ //party
+if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == '2'){ //party
     $scipay = 10005;
     $requision_title = "Verification of Party";
     $asset_type = 5;
     $allowed_request = 'party';
 }
-else if($_SESSION["session_filed"] == '4'){ //third_party
+else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == '4'){ //third_party
     $scipay = 10006;
     $requision_title = "Verification of Third Party";
     $asset_type = 4; //affidavit
     $allowed_request = 'third_party';
 }
-else if($_SESSION["session_filed"] == '3'){ //appearing_counsel
+else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == '3'){ //appearing_counsel
     $scipay = 10004;
     $requision_title = "Verification of Appearing Counsel";
     $asset_type = 6;
@@ -55,7 +55,7 @@ if(isset($_SESSION['user_address'])) {
     if ($scipay > 0) {
   
         //user case verification 
-if($_SESSION["session_filed"] == '2' || $_SESSION["session_filed"] == '3' || $_SESSION["session_filed"] == '4') {
+if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_SESSION["session_filed"] == '3' || $_SESSION["session_filed"] == '4')) {
     
 
 
