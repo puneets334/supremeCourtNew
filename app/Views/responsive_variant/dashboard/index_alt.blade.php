@@ -972,8 +972,13 @@ td {
                                         @endif
                                         <!-- end sr advocate soon -->
                                         <!-- start sr advocate data -->
-                                        @if(!empty($sr_advocate_soon_cases))
-                                        <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                                        @if(!empty($sr_advocate_data))
+                                        <!-- <div class="col-12 col-sm-12 col-md-12 col-lg-9"> -->
+                                            @if(!empty($sr_advocate_data))
+                                            <div class="col-12 col-sm-12 col-md-3 col-lg-12">
+                                                @else
+                                                <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                                                    @endif
                                             <div class="dash-card">
                                                 <div class="title-sec">
                                                     <h5 class="unerline-title">My Cases <small class="uk-text-muted">assigned by AOR</small></h5>
