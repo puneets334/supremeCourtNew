@@ -177,7 +177,7 @@ class DefaultController extends BaseController
         {
             $app_rule=$app_rule.$r_sql->per_certification_fee.'/- per certification + ';
         }
-        if($_SESSION["session_filed"] == 4 && $_REQUEST['idd'] != 5){
+        if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4 && $_REQUEST['idd'] != 5){
             $app_rule=$app_rule.'5/- (third party charges) + ';
         }
         $app_rule=$app_rule.$r_sql->per_page.'/- per page';

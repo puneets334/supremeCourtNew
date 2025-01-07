@@ -1,6 +1,6 @@
 <?php
 $o_array=$_REQUEST['o_array'];
-if($_POST['bail_order'] == 'Y') {
+if(isset($_POST['bail_order']) && $_POST['bail_order'] == 'Y') {
     $add_class_hide = "d-none";
 } else{
     $add_class_hide = "";
@@ -54,7 +54,7 @@ if(count($o_array)>0) {
                                     <?php
                                     $r_sql = eCopyingGetCasetoryById($_REQUEST['app_type']);
                                     $urgent_fee = $r_sql->urgent_fee;
-                                    if($_SESSION["session_filed"] == 4) {
+                                    if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4) {
                                         $third_party_charges=5;
                                     } else{
                                         $third_party_charges=0;
