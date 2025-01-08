@@ -328,6 +328,21 @@
     </div>
 </div>
 <!--end datatable-->
+<div id="case_status" uk-modal class="uk-modal-full" style="display: none;">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title"><div id="case_status_diary">CASE STATUS</div></h2>
+        </div>
+        <div class="uk-modal-body">
+            <div id="view_case_status_data"></div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
+        </div>
+    </div>
+</div>
+<!-- Case Status modal-end-->
 <!-- code for notes-->
 <div id="notes" uk-modal>
     <div class="uk-modal-dialog">
@@ -503,6 +518,34 @@
         $('#CheckRegStatusU').addClass('RegStatusActive');
         //alert($(".ADVStatusActive").attr('value'));
         $( "#RegStatusKeypressU" ).keypress();
+    }
+    function open_case_status() {
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var diary_no = $("a:focus").attr('data-diary_no');
+        var diary_year = $("a:focus").attr('data-diary_year');
+        //alert(diary_no+'#'+diary_year);
+        $.ajax({
+            type: "POST",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE,diary_no:diary_no, diary_year:diary_year},
+            beforeSend: function (xhr) {
+                $("#view_case_status_data").html("<div style='margin:0 auto;margin-top:20px;width:100%;text-align: center;'><img src='<?=base_url()?>/assets/images/loading-data1.gif'></div>");
+            },
+            url: "<?php echo base_url('case_status/defaultController/showCaseStatus'); ?>",
+            success: function (data) {
+                // $('#view_case_status_data').innerHTML=data;
+                document.getElementById('view_case_status_data').innerHTML=data;
+                $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            },
+            error: function (result) {
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            }
+        });
+        UIkit.modal('#case_status').toggle();
     }
 </script>
 <script type="text/javascript">
