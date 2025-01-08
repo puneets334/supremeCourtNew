@@ -764,24 +764,19 @@ class ResponsiveVariantRouteController extends BaseController
                 // $advocate_cases_response_str = @file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset);
                 // pr(ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset);
                 $curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://10.40.186.78:83/public/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset,
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-));
-
-$advocate_cases_response_str = curl_exec($curl);
-
-curl_close($curl);
-// pr($advocate_cases_response_str);
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                ));
+                $advocate_cases_response_str = curl_exec($curl);
+                curl_close($curl);
                 $adv_cases_response = json_decode($advocate_cases_response_str);
-                // pr($adv_cases_response);
                 $cases = $adv_cases_response->data->data;
                 if(isset($cases) && !empty($cases)){
                     foreach ($cases as $k=>$v){
