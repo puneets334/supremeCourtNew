@@ -15,73 +15,57 @@
             <!-- </fieldset> -->
         </div>
     </div>
-    <div class="form-row">
+    <div class="row">
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="applicant_first_name_addon">First Name <span style="color: red;">*</span></label>
-                </div>
+                <label class="input-group-text" id="applicant_first_name_addon">First Name <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $first_name ?>" id="modal_applicant_first_name" aria-labelledby="applicant_first_name_addon" readonly>
                 <p id="p1"></p> <!--This Segment Displays The Validation Rule For Name-->
             </div>
         </div>
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="applicant_second_name_addon">Second Name <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="applicant_second_name_addon">Second Name <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $second_name ?>" id="modal_applicant_second_name" aria-labelledby="applicant_second_name" readonly>
             </div>
         </div>
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="pincode_addon">Pincode <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="pincode_addon">Pincode <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $pincode ?>" id="modal_pincode" aria-labelledby="pincode_addon" maxlength='6' onkeypress="return isNumber(event)" required>
             </div>
         </div>
     </div>
-    <div class="form-row">
+    <div class="row">
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="postal_add_addon">Address <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="postal_add_addon">Address <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $address ?>" id="modal_postal_add" aria-labelledby="postal_add_addon"  required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="applicant_city_addon">City <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="applicant_city_addon">City <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $city ?>" id="modal_applicant_city" aria-labelledby="applicant_city_addon"  required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="applicant_district_addon">District <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="applicant_district_addon">District <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $district ?>" id="modal_applicant_district" aria-labelledby="applicant_district_addon"  required>
             </div>
         </div>
     </div>
-    <div class="form-row">
+    <div class="row">
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="applicant_state_addon">State <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="applicant_state_addon">State <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" value="<?= $state ?>" id="modal_applicant_state" aria-labelledby="applicant_state_addon" required>
             </div>
         </div>
         <div class="col-md-4">
             <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" id="applicant_country_addon">Country <span style="color: red;">*</span></label>
-                </div>
+            <label class="input-group-text" id="applicant_country_addon">Country <span style="color: red;">*</span></label>
                 <input type="text" class="form-control cus-form-ctrl" id="modal_applicant_country" aria-labelledby="applicant_country_addon" value="<?= $country ?>"  required>
             </div>
         </div>
