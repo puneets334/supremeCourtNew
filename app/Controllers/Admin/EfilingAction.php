@@ -515,7 +515,7 @@ class EfilingAction extends BaseController {
         }
         $amicus_curiae_request_params = ['type' => 'D','value' => $diary_no];
         //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocate?' . http_build_query($amicus_curiae_request_params);
-        $amicus_curiae_advocate = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
+        $amicus_curiae_advocate = json_decode(curl_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
         $advocate_id=0;
         if (isset($amicus_curiae_advocate->data) && !empty($amicus_curiae_advocate->data[0])){
             $advocate_id=$amicus_curiae_advocate->data[0]->advocate_id;

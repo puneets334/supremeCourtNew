@@ -32,7 +32,7 @@
         <div class="col-md-4">
             <div class="input-group mb-3">
             <label class="input-group-text" id="pincode_addon">Pincode <span style="color: red;">*</span></label>
-                <input type="text" class="form-control cus-form-ctrl" value="<?= $pincode ?>" id="modal_pincode" aria-labelledby="pincode_addon" maxlength='6' onkeypress="return isNumber(event)" required>
+                <input type="text" class="form-control cus-form-ctrl" value="<?= $pincode ?>" id="modal_pincode" aria-labelledby="pincode_addon" maxlength='6' required>
             </div>
         </div>
     </div>
