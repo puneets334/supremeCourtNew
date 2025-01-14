@@ -26,7 +26,7 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => '10.25.78.48',
+        'hostname'     => '10.25.78.68',
         'username'     => 'postgres',
         'password'     => 'postgres',
         'database'     => 'efiling_near',
@@ -54,7 +54,7 @@ class Database extends Config
 
     public array $sci_cmis_final = [
         'DSN'          => '',
-        'hostname'     => '10.25.78.48',
+        'hostname'     => '10.25.78.68',
         'username'     => 'postgres',
         'password'     => 'postgres',
         'database'     => 'sci_cmis_final_09_08_june',
@@ -82,7 +82,7 @@ class Database extends Config
 
     public array $e_services = [
         'DSN'          => '',
-        'hostname'     => '10.25.78.48',
+        'hostname'     => '10.25.78.68',
         'username'     => 'postgres',
         'password'     => 'postgres',
         'database'     => 'e_services',
@@ -110,7 +110,7 @@ class Database extends Config
 
     public array $physical_hearing = [
         'DSN'          => '',
-        'hostname'     => '10.25.78.48',
+        'hostname'     => '10.25.78.68',
         'username'     => 'postgres',
         'password'     => 'postgres',
         'database'     => 'physical_hearing',
