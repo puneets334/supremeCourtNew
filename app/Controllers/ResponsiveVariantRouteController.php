@@ -266,17 +266,17 @@ class ResponsiveVariantRouteController extends BaseController
             if (!empty($recent_documents) && count($recent_documents) > 0 && is_array($recent_documents)) {
                 if (is_array($recent_documents['data'])) {
                     foreach ($recent_documents['data'] as $index => $data) {
-                        //echo $index." Record<br/>";
-                        if ($data['advocatecode'] == $advocate_id) {
+                        // echo $index." Record<br/>";
+                        if ($data['advocateCode'] == $advocate_id) {
                             //$recent_documents_by_me[] = $data; //old comments by anshu
-                            if ($data['isia'] && $data['status'] == 'PENDING') {
+                            if ($data['isIA'] && $data['status'] == 'PENDING') {
                                 //echo $index." its IA<br/>";
                                 $recent_documents_by_me[] = $data;
                                 $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
                             } else {
                                 if ($data['status'] == 'PENDING') {
                                     //echo $index." its non-IA<br/>";
-                                    switch ($data['typename']) {
+                                    switch ($data['typeName']) {
                                         case 'REPLY':
                                             $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
                                             $recent_documents_by_me[] = $data;
@@ -301,7 +301,7 @@ class ResponsiveVariantRouteController extends BaseController
                             } else {
                                 if ($data['status'] == 'PENDING') {
                                     //echo $index." its non-IA<br/>";
-                                    switch ($data['typename']) {
+                                    switch ($data['typeName']) {
                                         case 'REPLY':
                                             $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
                                             $recent_documents_by_others[] = $data;
@@ -322,8 +322,20 @@ class ResponsiveVariantRouteController extends BaseController
                 }
             }
             //Adjournment Request Started
-            $recent_documents_str_advocate_others = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true');
-            
+            // $recent_documents_str_advocate_others = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true');
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
+            $recent_documents_str_advocate_others = curl_exec($curl);
+            curl_close($curl);
             $recent_documents_advocate_others = json_decode($recent_documents_str_advocate_others);
             $adjournment_by_others_data = (isset($recent_documents_advocate_others)) ? $recent_documents_advocate_others->data : '';
             $others_all_diaryId_data = array();
@@ -343,7 +355,21 @@ class ResponsiveVariantRouteController extends BaseController
             $recent_documents_by_others_grouped_by_document_type = json_decode(json_encode($recent_documents_by_others_grouped_by_document_type));
             //echo "Recent Document End:".date('H:i:s').'<br/>';
             //echo "Defect Start:".date('H:i:s').'<br/>';
-            $open_defects_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false');
+            // $open_defects_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false');
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
+            $open_defects_response_str = curl_exec($curl);
+            curl_close($curl);
+            // pr($open_defects_response_str);
             $open_defects_response = json_decode($open_defects_response_str);
             $open_defects = !empty($open_defects_response) ? $open_defects_response->data : '';
             $open_defects_diary_ids_csv_defult = "";
@@ -764,24 +790,19 @@ class ResponsiveVariantRouteController extends BaseController
                 // $advocate_cases_response_str = @file_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset);
                 // pr(ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset);
                 $curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => 'http://10.40.186.78:83/public/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset,
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-));
-
-$advocate_cases_response_str = curl_exec($curl);
-
-curl_close($curl);
-// pr($advocate_cases_response_str);
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => ICMIS_SERVICE_URL.'/ConsumedData/findAdvocateMyCases/?advocateId='.$advocate_id.'&case_status='.$case_status.'&case_registration_status='.$case_registration_status.'&advocate_appearing='.$advocate_appearing.'&case_engaged_status='.$case_engaged_status.'&clear_filter_status='.$clear_filter_status.'&diaryEngaged='.implode(',',$diaryEngaged).'&search='.$searchVal.'&limit='.$limit.'&page='.$page.'&offset='.$offset,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
+                ));
+                $advocate_cases_response_str = curl_exec($curl);
+                curl_close($curl);
                 $adv_cases_response = json_decode($advocate_cases_response_str);
-                // pr($adv_cases_response);
                 $cases = $adv_cases_response->data->data;
                 if(isset($cases) && !empty($cases)){
                     foreach ($cases as $k=>$v){

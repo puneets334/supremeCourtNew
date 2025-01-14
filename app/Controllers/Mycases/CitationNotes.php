@@ -730,7 +730,7 @@ class CitationNotes extends BaseController
                 'created_on' => date('Y-m-d H:i:s'),
                 'create_ip' => getClientIP()
             );
-            $result = $this->CitationNotesModel->update_case_contact_data($data, $dno);
+            $result = $this->Citation_notes_model->update_case_contact_data($data, $dno);
             if ($result) {
                 echo '2@@@' . htmlentities('Contact Updated successfully !', ENT_QUOTES);
             } else {
@@ -748,7 +748,7 @@ class CitationNotes extends BaseController
                 'updated_on' => date('Y-m-d H:i:s'),
                 'update_ip' => getClientIP()
             );
-            $result = $this->CitationNotesModel->update_case_contact_data($data, $contact_id);
+            $result = $this->Citation_notes_model->update_case_contact_data($data, $contact_id);
             if ($result) {
                 echo '2@@@' . htmlentities('Contact Updated successfully !', ENT_QUOTES);
             } else {

@@ -38,7 +38,7 @@ date_default_timezone_set('Asia/Kolkata');
                 <div class="profile-info">
                     <?php //echo '<pre>'; pr($_SESSION); ?>
                     <h6>
-                    <?php if(getSessionData('login')['aor_code'] == 10017){ ?>
+                    <?php if(!empty(getSessionData('login')) && getSessionData('login')['aor_code'] == 10017){ ?>
                         <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?>
                         <?php  } else { ?>
                             <?= !empty(getSessionData('login')) ? strtoupper(getSessionData('login')['first_name']) : '' ?>
@@ -139,6 +139,19 @@ date_default_timezone_set('Asia/Kolkata');
                         <li class="premium"><a href="<?php echo base_url('cases') ?>" class="btn-link">Cases</a> </li>
                         <li class="premium"><a href="<?php echo base_url('assistance/notice_circulars') ?>" class="btn-link">Support</a> </li>
                         <li class="premium"><a href="<?php echo base_url('resources/hand_book') ?>" class="btn-link">Resources</a> </li>
+                        <li class="premium">
+                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">eCopying<span><i class="fas fa-chevron-down"></i></span></a>
+                            <ul id="collapse7" class="submenu accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/track_consignment'); ?>">Track</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/case_search'); ?>">Application</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/applicant_address'); ?>">Address</a></li> 
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader</a></li>
+                                <li><a class="btn-link" href="https://registry.sci.gov.in/api/callback/bharat_kosh/eCopyingPublic_manual.pdf" target="_blank">Manual</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
+                            </ul>
+                        </li>
                     <?php } else { ?>
                         <?php if ($segment->getSegment(1) == 'registrarActionDashboard') { ?>
                             <li class="health "><a href="<?= base_url('adminDashboard') ?>">Home</a></li>
@@ -187,7 +200,7 @@ date_default_timezone_set('Asia/Kolkata');
                         <?php if(!empty(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY && !empty(getSessionData('login')['userid']) && (getSessionData('login')['userid'] == 'SCI4599' || getSessionData('login')['userid'] == 'SCI4578' || getSessionData('login')['userid'] == 'SCI4581')) { ?>
                             <li class="health "><a href="<?= base_url('adminReport/search') ?>" class="btn-link">Download Files Casewise</a></li>
                         <?php } ?>
-                        <?php  if (in_array(getSessionData('login')['userid'], ICMIS_IITM_EFILE_COMPARISON_USERS)) { ?>
+                        <?php  if (!empty(getSessionData('login')) && in_array(getSessionData('login')['userid'], ICMIS_IITM_EFILE_COMPARISON_USERS)) { ?>
                             <li class="health "><a href="<?= base_url('adminReport/UploadedPdfJsonComparison'); ?>" class="btn-link">Metadata Comparison Report</a> </li>
                         <?php } ?>
                         <?php  if(!empty(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>

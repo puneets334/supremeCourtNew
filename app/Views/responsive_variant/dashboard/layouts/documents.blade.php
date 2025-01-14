@@ -57,19 +57,19 @@
                                     <?php // echo 'hello'; print_r($index); echo '<br>'; pr($document); ?>
                                     <td data-key="Sr. No."><?php echo ($index+1); ?></td>
                                     <td data-key="Diary/Case No.">
-                                        <?php if(isset($document->diaryid) && !empty($document->diaryid)) {
-                                            echo (substr($document->diaryid,0,-4)."/".substr($document->diaryid,-4));
+                                        <?php if(isset($document->diaryId) && !empty($document->diaryId)) {
+                                            echo (substr($document->diaryId,0,-4)."/".substr($document->diaryId,-4));
                                         }
                                         ?>
                                     </td>
                                     <td data-key="Document" class="uk-table-link">
                                         <!--<a href="https://main.sci.gov.in/supremecourt/2018/27951/27951_2018_Order_05-Oct-2018.pdf" target="_blank">-->
-                                            <span class="uk-text-uppercase md-bg-grey-700 md-color-grey-50 uk-text-small" style="padding:0.2rem;"><?php if(isset($document->typename) && !empty($document->typename)) { echo $document->typename; } ?></span>
+                                            <span class="uk-text-uppercase md-bg-grey-700 md-color-grey-50 uk-text-small" style="padding:0.2rem;"><?php if(isset($document->typeName) && !empty($document->typeName)) { echo $document->typeName; } ?></span>
                                             <div><?php if(isset($document->title) && !empty($document->title)) { echo $document->title; } ?></div>
                                         <!--</a>-->
                                     </td>
                                     <td data-key="Filed By/On">
-                                        <?php if(isset($document->filedby) && !empty($document->filedby)) { echo $document->filedby; }?><br><?php if(isset($document->filedat) && !empty($document->filedat)) { echo $document->filedat; } ?>
+                                        <?php if(isset($document->filedBy) && !empty($document->filedBy)) { echo $document->filedBy; }?><br><?php if(isset($document->filedAt) && !empty($document->filedAt)) { echo $document->filedAt; } ?>
                                     </td>
                                 </tr>
                             @endif
