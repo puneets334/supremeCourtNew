@@ -266,17 +266,17 @@ class ResponsiveVariantRouteController extends BaseController
             if (!empty($recent_documents) && count($recent_documents) > 0 && is_array($recent_documents)) {
                 if (is_array($recent_documents['data'])) {
                     foreach ($recent_documents['data'] as $index => $data) {
-                        //echo $index." Record<br/>";
-                        if ($data['advocatecode'] == $advocate_id) {
+                        // echo $index." Record<br/>";
+                        if ($data['advocateCode'] == $advocate_id) {
                             //$recent_documents_by_me[] = $data; //old comments by anshu
-                            if ($data['isia'] && $data['status'] == 'PENDING') {
+                            if ($data['isIA'] && $data['status'] == 'PENDING') {
                                 //echo $index." its IA<br/>";
                                 $recent_documents_by_me[] = $data;
                                 $recent_documents_by_me_grouped_by_document_type['ia'][] = $data;
                             } else {
                                 if ($data['status'] == 'PENDING') {
                                     //echo $index." its non-IA<br/>";
-                                    switch ($data['typename']) {
+                                    switch ($data['typeName']) {
                                         case 'REPLY':
                                             $recent_documents_by_me_grouped_by_document_type['reply'][] = $data;
                                             $recent_documents_by_me[] = $data;
@@ -301,7 +301,7 @@ class ResponsiveVariantRouteController extends BaseController
                             } else {
                                 if ($data['status'] == 'PENDING') {
                                     //echo $index." its non-IA<br/>";
-                                    switch ($data['typename']) {
+                                    switch ($data['typeName']) {
                                         case 'REPLY':
                                             $recent_documents_by_others_grouped_by_document_type['reply'][] = $data;
                                             $recent_documents_by_others[] = $data;
@@ -324,21 +324,18 @@ class ResponsiveVariantRouteController extends BaseController
             //Adjournment Request Started
             // $recent_documents_str_advocate_others = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true');
             $curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-));
-
-$recent_documents_str_advocate_others = curl_exec($curl);
-
-curl_close($curl);
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => ICMIS_SERVICE_URL . '/ConsumedData/getAdvocateAllCases/?advocateId=' . $advocate_id . '&onlyDiary=true',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
+            $recent_documents_str_advocate_others = curl_exec($curl);
+            curl_close($curl);
             $recent_documents_advocate_others = json_decode($recent_documents_str_advocate_others);
             $adjournment_by_others_data = (isset($recent_documents_advocate_others)) ? $recent_documents_advocate_others->data : '';
             $others_all_diaryId_data = array();
@@ -360,21 +357,18 @@ curl_close($curl);
             //echo "Defect Start:".date('H:i:s').'<br/>';
             // $open_defects_response_str = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false');
             $curl = curl_init();
-
-curl_setopt_array($curl, array(
-  CURLOPT_URL => ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false',
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_ENCODING => '',
-  CURLOPT_MAXREDIRS => 10,
-  CURLOPT_TIMEOUT => 0,
-  CURLOPT_FOLLOWLOCATION => true,
-  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-  CURLOPT_CUSTOMREQUEST => 'GET',
-));
-
-$open_defects_response_str = curl_exec($curl);
-
-curl_close($curl);
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => ICMIS_SERVICE_URL . '/ConsumedData/get_defect_details/?advocateIds[]=' . $advocate_id . '&isCured=false',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+            ));
+            $open_defects_response_str = curl_exec($curl);
+            curl_close($curl);
             // pr($open_defects_response_str);
             $open_defects_response = json_decode($open_defects_response_str);
             $open_defects = !empty($open_defects_response) ? $open_defects_response->data : '';
