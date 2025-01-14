@@ -88,7 +88,7 @@
                     <!--userDetail-->
                     <div class="userDetail" id="usr-action-btn" tabindex="0" role="button">
 
-                        <?php if(getSessionData('login')['aor_code'] == 10017){ ?>
+                        <?php if(!empty(getSessionData('login')) && getSessionData('login')['aor_code'] == 10017){ ?>
                             <div class="userName"> <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : ''; ?> <i class="fas fa-chevron-down"></i>
                         <?php  } else { ?>
                             <div class="userName"> <?= !empty(getSessionData('login')) ? strtoupper(getSessionData('login')['first_name']) : ''; ?> <i class="fas fa-chevron-down"></i>

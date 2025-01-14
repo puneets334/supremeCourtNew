@@ -38,7 +38,7 @@ date_default_timezone_set('Asia/Kolkata');
                 <div class="profile-info">
                     <?php //echo '<pre>'; pr($_SESSION); ?>
                     <h6>
-                    <?php if(getSessionData('login')['aor_code'] == 10017){ ?>
+                    <?php if(!empty(getSessionData('login')) && getSessionData('login')['aor_code'] == 10017){ ?>
                         <?= !empty(getSessionData('login')) ? getSessionData('login')['first_name'] : '' ?>
                         <?php  } else { ?>
                             <?= !empty(getSessionData('login')) ? strtoupper(getSessionData('login')['first_name']) : '' ?>
@@ -200,7 +200,7 @@ date_default_timezone_set('Asia/Kolkata');
                         <?php if(!empty(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN_READ_ONLY && !empty(getSessionData('login')['userid']) && (getSessionData('login')['userid'] == 'SCI4599' || getSessionData('login')['userid'] == 'SCI4578' || getSessionData('login')['userid'] == 'SCI4581')) { ?>
                             <li class="health "><a href="<?= base_url('adminReport/search') ?>" class="btn-link">Download Files Casewise</a></li>
                         <?php } ?>
-                        <?php  if (in_array(getSessionData('login')['userid'], ICMIS_IITM_EFILE_COMPARISON_USERS)) { ?>
+                        <?php  if (!empty(getSessionData('login')) && in_array(getSessionData('login')['userid'], ICMIS_IITM_EFILE_COMPARISON_USERS)) { ?>
                             <li class="health "><a href="<?= base_url('adminReport/UploadedPdfJsonComparison'); ?>" class="btn-link">Metadata Comparison Report</a> </li>
                         <?php } ?>
                         <?php  if(!empty(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>

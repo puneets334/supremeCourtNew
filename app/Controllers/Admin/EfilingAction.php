@@ -520,9 +520,9 @@ class EfilingAction extends BaseController {
         if (isset($amicus_curiae_advocate->data) && !empty($amicus_curiae_advocate->data[0])){
             $advocate_id=$amicus_curiae_advocate->data[0]->advocate_id;
         }else{
-            $advocate_id=$efiling_data[0]->aor_code;
+            $advocate_id=$efiling_data[0]['aor_code'];
         }
-        $advocate_id=empty($advocate_id) ? $efiling_data[0]->aor_code  : $advocate_id;
+        $advocate_id=empty($advocate_id) ? $efiling_data[0]['aor_code']  : $advocate_id;
         $doc_details_data=array(
             'efiling_no'=>$efiling_data[0]['efiling_no'],
             'doc_id'=>$doc_id,
