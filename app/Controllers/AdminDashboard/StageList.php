@@ -95,7 +95,7 @@ class StageList extends BaseController {
                     $diaryIds="";
                     $diaryIds = implode(",",array_diff(array_column($diaryIdsArr, 'diaryid'),['']));
                     //echo (env('ICMIS_SERVICE_URL')."/ConsumedData/future_tentaive_date_cases?diaryIds[]=$diaryIds");exit();
-                    $tentaive_date_data= json_decode(file_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/future_tentaive_date_cases?diaryIds[]=$diaryIds"));
+                    $tentaive_date_data= json_decode(file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/future_tentaive_date_cases?diaryIds[]=$diaryIds"));
                     if (isset($tentaive_date_data->data) && !empty($tentaive_date_data->data)) {
                         foreach ($diaryIdsArr as $row) {
                             if (!empty($row->icmis_diary_no) && $row->icmis_diary_year) {

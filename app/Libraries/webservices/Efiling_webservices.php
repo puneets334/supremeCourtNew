@@ -2309,7 +2309,7 @@ class Efiling_webservices {
             )
         );
         $context  = stream_context_create($opts);
-        $data = file_get_contents(env('ICMIS_SERVICE_URL')."/ConsumedData/get_new_case_efilingIsDisposed", false, $context);
+        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/get_new_case_efilingIsDisposed", false, $context);
         if ($data != false) {
             return json_decode($data);
         } else {

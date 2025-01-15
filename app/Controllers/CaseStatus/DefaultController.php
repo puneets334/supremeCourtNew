@@ -57,35 +57,30 @@ class DefaultController extends BaseController {
         }
     }
 
-    public function showCaseStatus()
-    {
+    public function showCaseStatus() {
         $users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_PDE);
-        $diary_no='';
-        $diary_year='';
+        $diary_no = '';
+        $diary_year = '';
         if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_array)) {
-            if(!empty($_POST["diary_no"]) ) {
+            if(!empty($_POST["diary_no"])) {
                 if(!empty($_POST["diary_year"])) {
-                    $diary_no=escape_data($this->request->getPost("diary_no"));
-                    $diary_year=escape_data($this->request->getPost("diary_year"));
-                } else {
+                    $diary_no = escape_data($this->request->getPost("diary_no"));
+                    $diary_year = escape_data($this->request->getPost("diary_year"));
+                } else{
                     // $diary_no=escape_data(SUBSTR($this->request->getPost("diary_no"), 0, LENGTH($this->request->getPost("diary_no")) - 4));
                     $diary_no = escape_data(SUBSTR($this->request->getPost("diary_no"), 0, strlen($this->request->getPost("diary_no")) - 4));
-                    $diary_year=escape_data(SUBSTR($this->request->getPost("diary_no"), - 4));
+                    $diary_year = escape_data(SUBSTR($this->request->getPost("diary_no"), - 4));
                 }
-                $view_path=CASE_STATUS_API.'?d_no='.$diary_no.'&d_yr='.$diary_year;
-                $case_status_content= file_get_contents($view_path);
+                $view_path = CASE_STATUS_API.'?d_no='.$diary_no.'&d_yr='.$diary_year;
+                $case_status_content = file_get_contents($view_path);
                 if(empty($case_status_content))
                     $case_status_content='Data Not Found';
-                /* $this->load->view('templates/header');
-                $this->load->view('dashboard/case_status_view', $data);
-                $this->load->view('templates/footer'); */
-            } else {
+            } else{
                 $case_status_content='<p>Data Not Found</p>';
             }
-            pr($case_status_content);
             echo $case_status_content;
         } else {
-            redirect('login');
+            return redirect()->to(base_url('/'));
             exit(0);
         }
     }

@@ -85,13 +85,13 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
     
         
         $dataArray = array(
-            "diary" => $_SESSION['session_d_no'].$_SESSION['session_d_year'],
+            "diary" => (isset($_SESSION['session_d_no']) && isset($_SESSION['session_d_year'])) ? $_SESSION['session_d_no'].$_SESSION['session_d_year'] : 0,
             "copy_category" => $app_type,
             "application_reg_number" => '0',
             "application_reg_year" => '0',
             "application_receipt" => date('Y-m-d H:i:s'),
             "advocate_or_party" => '0',
-            "court_fee" => $_SESSION['session_total_amount_to_pay'],
+            "court_fee" => isset($_SESSION['session_total_amount_to_pay']) ? $_SESSION['session_total_amount_to_pay'] : 0,
             "delivery_mode" => $cop_mode,
             "postal_fee" => $postal_fee,
             "ready_date" => '',
@@ -174,6 +174,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
     else{
         $array = array('status' => 'Permission Denied');
     }
+    pr($json_insert_application);
     if ($json_insert_application->{'Status'} == "success" && $json_insert_user_asset->{'Status'} == "success") {
         $random_string=time();
     ?>

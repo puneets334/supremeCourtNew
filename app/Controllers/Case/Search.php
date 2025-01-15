@@ -167,7 +167,7 @@ class Search extends BaseController {
                     if ($_SESSION['login']['ref_m_usertype_id']==AMICUS_CURIAE_USER) {
                         $amicus_curiae_request_params = ['type' => 'D','value' => $diary_no.$diary_year];
                         //echo env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocate?' . http_build_query($amicus_curiae_request_params);
-                        $amicus_curiae_advocate = json_decode(curl_get_contents(env('ICMIS_SERVICE_URL') . '/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
+                        $amicus_curiae_advocate = json_decode(curl_get_contents(ICMIS_SERVICE_URL.'/ConsumedData/get_advocateDetails?' . http_build_query($amicus_curiae_request_params)));
                         if (isset($amicus_curiae_advocate->data) && !empty($amicus_curiae_advocate->data[0]->is_ac !='Y')) {
                             echo '3@@@ No Record found!.';
                             exit(0);

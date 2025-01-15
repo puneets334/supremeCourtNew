@@ -222,42 +222,42 @@
                                             <tr ng-repeat="case in cases">
                                                 <td ng-bind="$index + 1"></td>
                                                 <td>
-                                                    <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryid}}" data-diary_year="">
-                                                        <span class="uk-text-muted" ng-bind="case.diaryid"></span>
+                                                    <a onClick="open_case_status()"  href=""  title="show CaseStatus"  data-diary_no="@{{case.diaryId}}" data-diary_year="">
+                                                        <span class="uk-text-muted" ng-bind="case.diaryId"></span>
                                                         <br>
-                                                        <span class="uk-text-emphasis" ng-bind="case.registrationnumber"></span>
+                                                        <span class="uk-text-emphasis" ng-bind="case.registrationNumber"></span>
                                                     </a>
-                                                    <b class="scif" ng-if="case.advocatetype=='P'" >AfP</b><b class="scif" ng-if="case.advocatetype=='R' || case.advocatetype=='I'" >AfR</b>
+                                                    <b class="scif" ng-if="case.advocateType=='P'" >AfP</b><b class="scif" ng-if="case.advocateType=='R' || case.advocateType=='I'" >AfR</b>
                                                 </td>
                                                 <td>
                                                     <div>
                                                         <div>
-                                                            <b ng-if="case.advocatetype!='P'">P:</b>
-                                                            <b ng-if="case.advocatetype=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionername}}">P:</b>
-                                                            &nbsp;<span ng-bind="case.petitionername"></span>
+                                                            <b ng-if="case.advocateType!='P'">P:</b>
+                                                            <b ng-if="case.advocateType=='P'" class="uk-background-secondary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.petitionerName}}">P:</b>
+                                                            &nbsp;<span ng-bind="case.petitionerName"></span>
                                                             <br/>
-                                                            <b ng-bind="((case.advocatetype!='R' || case.advocatetype!='I') && case.advocatetype=='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
+                                                            <b ng-bind="((case.advocateType!='R' || case.advocateType!='I') && case.advocateType=='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
                                                         </div>
                                                         <div>
-                                                            <b ng-if="case.advocatetype!='R' && case.advocatetype!=='I'">R:</b>
-                                                            <b ng-if="case.advocatetype=='R' || case.advocatetype=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentname}}">R:</b>
-                                                            &nbsp;<span ng-bind="case.respondentname"></span>
+                                                            <b ng-if="case.advocateType!='R' && case.advocateType!=='I'">R:</b>
+                                                            <b ng-if="case.advocateType=='R' || case.advocateType=='I'" class="uk-background-primary md-color-grey-50" style="padding:0.05rem 0.2rem 0.2rem 0.2rem;" uktooltip="@{{case.respondentName}}">R:</b>
+                                                            &nbsp;<span ng-bind="case.respondentName"></span>
                                                             <br/>
-                                                            <b ng-bind="((case.advocatetype=='R' || case.advocatetype=='I') && case.advocatetype!='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
+                                                            <b ng-bind="((case.advocateType=='R' || case.advocateType=='I') && case.advocateType!='P' && (case.is_ac=='Y')) ? '[Amicus Curiae]' : '' " ></b>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td ng-bind="case.status=='P' ? 'Pending' : 'Disposed'"></td>
-                                                <td ng-if="case.assignedby">
-                                                    <span class="uk-text-muted" ng-bind="case.assignedby"></span>
+                                                <td ng-if="case.assignedBy">
+                                                    <span class="uk-text-muted" ng-bind="case.assignedBy"></span>
                                                     <br>
                                                     <span class="uk-text-emphasis" ng-bind="case.filedOn"></span>
                                                 </td>
                                                 <td ng-if="case.userType!=19">
                                                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryid}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
-                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryid+'-'+case.registrationnumber+'-'+case.petitionername+'-'+case.respondentname+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
-                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryid) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryid}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
+                                                    <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
+                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
+                                                    <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
                                                     <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b>
                                                     @endif
                                                 </td>
@@ -267,25 +267,25 @@
                                                         <ul class="uknav-parent-icon uk-dropdown-nav"  uk-nav>
                                                             @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                             <li ng-if="case.userType!=19" class="uk-nav-header uk-padding-remove-left text-white">File a new</li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
-                                                            <li ng-if="case.userType =='1' && case.is_ac!='Y'"><a href="{{base_url('case/advocate')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
-                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            <li ng-if="case.userType =='1' && case.is_ac!='Y'"><a href="{{base_url('case/advocate')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove">Engage Counsel</a></li>
+                                                            <li ng-if="case.case_grp=='R'"><a href="{{base_url('case/certificate/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Certificate Request</a></li>
                                                             <li class="uk-nav-divider uk-margin-remove"></li>
                                                             <li class="uk-nav-header uk-padding-remove-left uk-margin-remove-top text-white">View</li>
                                                             @endif
                                                             @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
-                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryid}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
+                                                            <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
                                                             @endif
                                                             <li>
-                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryid}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
+                                                                <a href="{{base_url('case/paper_book_viewer')}}/@{{case.diaryId}}" target="_blank" rel="noopener" class="text-white uknav-divider ukmargin-remove">
                                                                     <span uk-icon="icon: bookmark"></span> Paper Book (with Indexing)
                                                                 </a>
                                                             </li>
                                                         </ul>
                                                     </div>
-                                                    <b class="scif" ng-if="case.registrationnumber==''" >Unr</b><b class="scif" ng-if="case.registrationnumber!=''" >Reg</b>
+                                                    <b class="scif" ng-if="case.registrationNumber==''" >Unr</b><b class="scif" ng-if="case.registrationNumber!=''" >Reg</b>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -328,6 +328,21 @@
     </div>
 </div>
 <!--end datatable-->
+<div id="case_status" uk-modal class="uk-modal-full" style="display: none;">
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title"><div id="case_status_diary">CASE STATUS</div></h2>
+        </div>
+        <div class="uk-modal-body">
+            <div id="view_case_status_data"></div>
+        </div>
+        <div class="uk-modal-footer uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
+        </div>
+    </div>
+</div>
+<!-- Case Status modal-end-->
 <!-- code for notes-->
 <div id="notes" uk-modal>
     <div class="uk-modal-dialog">
@@ -503,6 +518,34 @@
         $('#CheckRegStatusU').addClass('RegStatusActive');
         //alert($(".ADVStatusActive").attr('value'));
         $( "#RegStatusKeypressU" ).keypress();
+    }
+    function open_case_status() {
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var diary_no = $("a:focus").attr('data-diary_no');
+        var diary_year = $("a:focus").attr('data-diary_year');
+        //alert(diary_no+'#'+diary_year);
+        $.ajax({
+            type: "POST",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE,diary_no:diary_no, diary_year:diary_year},
+            beforeSend: function (xhr) {
+                $("#view_case_status_data").html("<div style='margin:0 auto;margin-top:20px;width:100%;text-align: center;'><img src='<?=base_url()?>/assets/images/loading-data1.gif'></div>");
+            },
+            url: "<?php echo base_url('case_status/defaultController/showCaseStatus'); ?>",
+            success: function (data) {
+                // $('#view_case_status_data').innerHTML=data;
+                document.getElementById('view_case_status_data').innerHTML=data;
+                $.getJSON("<?php echo base_url() . 'csrftoken'; ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            },
+            error: function (result) {
+                $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            }
+        });
+        UIkit.modal('#case_status').toggle();
     }
 </script>
 <script type="text/javascript">
