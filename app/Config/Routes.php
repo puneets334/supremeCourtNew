@@ -285,7 +285,7 @@ $routes->match(['GET', 'POST'], 'mycases/update_case_contacts', 'Mycases\Citatio
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/aor_contact_list', 'Mycases\CitationNotes::aor_contact_list');
 $routes->match(['GET', 'POST'], 'mycases/case_contact', 'Mycases\CitationNotes::case_contact');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/get_contact_list', 'Mycases\CitationNotes::get_contact_list');
-$routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'Mycases\CitationNotes::add_case_contact');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/add_case_contact', 'Mycases\CitationNotes::add_case_contact');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/send_sms_and_mail', 'Mycases\CitationNotes::send_sms_and_mail');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/add_notes_mycases', 'Mycases\CitationNotes::add_notes_mycases');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/update_notes_mycases', 'Mycases\CitationNotes::update_notes_mycases');
