@@ -727,8 +727,8 @@ class ResponsiveVariantRouteController extends BaseController
                     $tmp['registrationNumber'] = $v->reg_no_display;
                     $tmp['petitionerName']     = $v->pet_name;
                     $tmp['respondentName']     = $v->res_name;
-                    $tmp['filedOn']            = $v->createdAt;
-                    $tmp['assignedby']         = $v->assignedby;
+                    $tmp['filedOn']            = !empty($v->createdAt) ? $v->createdAt : NULL;
+                    $tmp['assignedby']         = !empty($v->assignedby) ? $v->assignedby : NULL;
                     $cases[]                   = $tmp;
                 }
                 $totalPages   = $sr_advocate_data['total_pages'];
