@@ -312,8 +312,11 @@ class DefaultController extends BaseController {
                     $first_name = (!empty($email_exist)) ? $email_exist[0]['first_name'] : 'Abc';
                     $last_name = (!empty($email_exist)) ? $email_exist[0]['last_name'] : 'Xyz';
                     $name_array = array('first_name'=> $first_name, 'last_name'=> $last_name);
+                $o = '123456';
                 $mobile_otp_is = $this->generateNumericOTP();
                 $email_otp_is = $this->generateNumericOTP();
+                // $mobile_otp_is = $this->generateNumericOTP();
+                // $email_otp_is = $this->generateNumericOTP();
                 /* Code Added on 13-03-2023 by Amit Tripathi for OTP expiration */
                 date_default_timezone_set('Asia/Kolkata');
                 $startTime=date("H:i");

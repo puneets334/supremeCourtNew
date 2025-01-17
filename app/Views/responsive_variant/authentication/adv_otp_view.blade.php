@@ -69,8 +69,7 @@
                                     <?= session()->getFlashdata('msg') ?>
                                 </div>
                             </div>
-                        <?php endif;  echo 'Mobile OTP '; print_r($_SESSION['adv_details']['mobile_otp']); ?><br>
-                        <?php   echo 'EMAIL OTP '; print_r($_SESSION['adv_details']['email_otp']); ?>
+                        <?php endif; ?><br>
                         @if(isset($validation) && !empty($validation->getError('adv_email')))
                         <div class="uk-text-danger">
                             <b>{{ $validation->getError('adv_email')}}</b>
