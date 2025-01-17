@@ -148,36 +148,62 @@
                                     <?php if(!in_array($_SESSION['login']['ref_m_usertype_id'],[AMICUS_CURIAE_USER,SR_ADVOCATE])) { ?>
                                         <div class="uk-grid-small uk-grid-divider uk-child-width-auto" uk-grid>
                                             <div class="customFilterBtnDiv">
-                                                <ul  class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
-                                                    <li onclick="AllcasesShowAlert('allcases')" uk-filter-control><a>Clear Filters</a></li>
+                                                <ul  class="uk-subnav uk-subnav-pill" uk-margin>
+                                                    <li uk-filter-control id="clear_filter_status_all">
+                                                        <a class="filter-control" data-filter-type="clear_filter_status" data-filter-value="all">Clear Filters</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div class="customFilterBtnDiv">
-                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
-                                                    <li class="uk-active" uk-filter-control="filter: [data-case-status]; group: case-status"><a href="#">All</a></li>
-                                                    <li uk-filter-control="filter: [data-case-status='P']; group: case-status" onclick="caseStatusPShowAlert('Pending')"><a>Pending</a></li>
-                                                    <li uk-filter-control="filter: [data-case-status='D']; group: case-status" onclick="caseStatusDShowAlert('Disposed')"><a>Disposed</a></li>
+                                                <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                                                    <li class="uk-active case_status" id="case_status_all" >
+                                                        <a class="filter-control" data-filter-type="case_status" data-filter-value="all">All</a>
+                                                    </li>
+                                                    <li class="case_status" id="case_status_P">
+                                                        <a class="filter-control" data-filter-type="case_status" data-filter-value="P">Pending</a>
+                                                    </li>
+                                                    <li class="case_status" id="case_status_D">
+                                                        <a class="filter-control" data-filter-type="case_status" data-filter-value="D">Disposed</a>
+                                                    </li>
+                                                </ul> 
+                                            </div>
+                                            <div class="customFilterBtnDiv">
+                                                <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                                                    <li class="uk-active advocate_appearing" id="advocate_appearing_all">
+                                                        <a href="#" class="filter-control" data-filter-type="advocate_appearing" data-filter-value="all">All</a>
+                                                    </li>
+                                                    <li class="advocate_appearing" id="advocate_appearing_P">
+                                                        <a class="filter-control" data-filter-type="advocate_appearing" data-filter-value="P">Appearing for Petitioner</a>
+                                                    </li>
+                                                    <li class="advocate_appearing" id="advocate_appearing_R">
+                                                        <a class="filter-control" data-filter-type="advocate_appearing" data-filter-value="R">Appearing for Respondent</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div class="customFilterBtnDiv">
-                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
-                                                    <li class="uk-active" uk-filter-control="filter: [data-advocate-appearing-for]; group: advocate-appearing-for"><a href="#">All</a></li>
-                                                    <li uk-filter-control="filter: [data-advocate-appearing-for='P']; group: advocate-appearing-for" onclick="ADVStatusPShowAlert('Appearing for Petitioner')" id="CheckADVStatusP" value="Appearing for Petitioner"><a>Appearing for Petitioner</a></li>
-                                                    <li uk-filter-control="filter: [data-advocate-appearing-for='R']; group: advocate-appearing-for" onclick="ADVStatusRShowAlert('Appearing for Respondent')" id="CheckADVStatusR" value="Appearing for Respondent"><a>Appearing for Respondent</a></li>
+                                                <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                                                    <li class="uk-active case_registration_status" id="case_registration_status_all">
+                                                        <a href="#" class="filter-control" data-filter-type="case_registration_status" data-filter-value="all">All</a>
+                                                    </li>
+                                                    <li class="case_registration_status" id="case_registration_status_R">
+                                                        <a class="filter-control" data-filter-type="case_registration_status" data-filter-value="R">Registered Cases</a>
+                                                    </li>
+                                                    <li class="case_registration_status" id="case_registration_status_U">
+                                                        <a class="filter-control" data-filter-type="case_registration_status" data-filter-value="U">Unregistered Cases</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div class="customFilterBtnDiv">
-                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
-                                                    <li class="uk-active" uk-filter-control="filter: [data-case-registration-status]; group: case-registration-status"><a href="#">All</a></li>
-                                                    <li uk-filter-control="filter: [data-case-registration-status='R']; group: case-registration-status" onclick="RegStatusRShowAlert('Registered Cases')" id="CheckRegStatusR" value="Registered Cases"><a>Registered Cases</a></li>
-                                                    <li uk-filter-control="filter: [data-case-registration-status='U']; group: case-registration-status" onclick="RegStatusUShowAlert('Unregistered Cases')" id="CheckRegStatusU" value="Unregistered Cases"><a>Unregistered Cases</a></li>
-                                                    <!--<li uk-filter-control="filter: [listed-g='L']; group: g" onclick="ListedCasesShowAlert('Listed Cases')"><a>Listed Cases</a></li>-->
-                                                </ul>
-                                            </div>
-                                            <div class="customFilterBtnDiv">
-                                                <ul class="uk-subnav uk-subnav-pill custom-ul" uk-margin>
-                                                    <li class="" uk-filter-control="filter: [data-case-status]; group: case-status"><a href="#">All</a></li>
-                                                    <li uk-filter-control="filter: [data-diaryEngaged='E']; group: diaryEngaged" onclick="showEngagedCounsel('EngagedCounsel')"><a>Engaged Counsel</a></li>
+                                                <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                                                    <li class="uk-active case_engaged_status" id="case_engaged_status_all">
+                                                        <a href="#" class="filter-control" data-filter-type="case_engaged_status" data-filter-value="all">All</a>
+                                                    </li>
+                                                    <li class="case_engaged_status" id="case_engaged_status_EC">
+                                                        <a class="filter-control" data-filter-type="case_engaged_status" data-filter-value="EC">Engaged Counsel</a>
+                                                    </li>
+                                                    <li class="case_engaged_status" id="case_engaged_status_AC">
+                                                        <a class="filter-control" data-filter-type="case_engaged_status" data-filter-value="AC">Amicus Curiae</a>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -256,7 +282,10 @@
                                                 <td ng-if="case.userType!=19">
                                                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                     <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
-                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
+                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" >
+                                                        <!-- <i class="mdi mdi-android-messages sc-icon-20"></i> -->
+                                                        <i class="fas fa-envelope sc-icon-22"></i>
+                                                    </a>&nbsp;&nbsp;
                                                     <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
                                                     <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b>
                                                     @endif
@@ -295,7 +324,7 @@
                                             </tr>
                                             <tr>
                                                 <th colspan="6"> 
-                                                    <ul class="uk-pagination uk-flex-center" ng-show="!loader.isLoading()">
+                                                    <ul class="uk-pagination uk-flex-right" ng-show="!loader.isLoading()">
                                                         <li ng-class="{ 'uk-disabled': page === 1 }">
                                                             <a href="javascript:void(0)" ng-click="changePage(page-1)" ng-disabled="page === 1">&laquo; Previous</a>
                                                         </li>
@@ -419,7 +448,7 @@
             <div id="mail_msg" ></div>
             <div class="mail-response" id="mail_msg" ></div>
             <div id="emailids" style="display: none;"></div>
-            <div  id="recipient_mail1"></div>
+            <div  id="recipient_mail1" style="display: none;"></div>
             SMS To: <input type="text" class="form-control cus-form-ctrl" size="60" id="recipient_mail" name="recipient_mail"  maxlength="250" placeholder="Select Contacts or Enter Mobile No. e.g 9999999999,8888888888">
             <div>
                 SMS Message: <input type="text" class="form-control cus-form-ctrl" size =50 id="mail_subject" name="mail_subject" class="form-control" maxlength="100" placeholder="SMS Message">
@@ -461,64 +490,72 @@
         <div id="view_citation_data"></div>
     </div>
 </div>
+<input type="hidden" value="" id="AllcaseStatusKeypressP">
+<input type="hidden" value="" id="AllcaseStatusKeypressD">
+<input type="hidden" value="" id="AllADVStatusKeypressP">
+<input type="hidden" value="" id="AllADVStatusKeypressR">
+<input type="hidden" value="" id="AllRegStatusKeypressR">
+<input type="hidden" value="" id="AllRegStatusKeypressU">
+<input type="hidden" value="" id="AllListedCasesKeypressL">
+<!--end when click tab all-cases-->
+<!--start when click individual tab all-cases-->
+<input type="hidden" value="Pending" id="caseStatusKeypressP">
+<input type="hidden" value="Disposed" id="caseStatusKeypressD">
+<input type="hidden" value="AfP" id="ADVStatusKeypressP">
+<input type="hidden" value="AfR" id="ADVStatusKeypressR">
+<input type="hidden" value="Reg" id="RegStatusKeypressR">
+<input type="hidden" value="Unr" id="RegStatusKeypressU">
+<input type="hidden" value="L-C" id="ListedCasesKeypressL">
+<input type="hidden" value="engagedCounsel" id="engagedCounsel">
 <!-- end of code for writing citation -->
 @endsection
 @push('script')
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
 <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script>
-    $(document).ready(function() {
-        var table = $('#example').DataTable();
-        table.columns().eq( 0 ).each( function ( colIdx ) {
-            $( 'input', table.column( colIdx ).footer() ).on( 'keyup change', function () {
-                table.column( colIdx ).search( this.value ).draw();
-            } );
-        } );
-    } );
-    function AllcasesShowAlert(id) {
-        $( "#AllcaseStatusKeypressP" ).keypress();
-        $( "#AllcaseStatusKeypressD" ).keypress();
-        $( "#AllADVStatusKeypressP" ).keypress();
-        $( "#AllADVStatusKeypressR" ).keypress();
-        $( "#AllRegStatusKeypressR" ).keypress();
-        $( "#AllRegStatusKeypressU" ).keypress();
-        $( "#AllListedCasesKeypressL" ).keypress();
-    }
-    function ListedCasesShowAlert(id) { $( "#ListedCasesKeypressL" ).keypress();}
-    function caseStatusPShowAlert(id) { $( "#caseStatusKeypressP" ).keypress();}
-    function caseStatusDShowAlert(id) { $( "#caseStatusKeypressD" ).keypress();}
-    function showEngagedCounsel(id) {
-        $('#CheckADVStatusR').removeClass('ADVStatusActive');
-        $('#CheckADVStatusP').addClass('ADVStatusActive');
-        $("#engagedCounsel" ).keypress();
-    }
-    function ADVStatusPShowAlert(id) {
-        $('#CheckADVStatusR').removeClass('ADVStatusActive');
-        $('#CheckADVStatusP').addClass('ADVStatusActive');
-        //alert($(".RegStatusActive").attr('value'));
-        $( "#ADVStatusKeypressP" ).keypress();
-    }
-    function ADVStatusRShowAlert(id) {
-        $('#CheckADVStatusP').removeClass('ADVStatusActive');
-        $('#CheckADVStatusR').addClass('ADVStatusActive');
-        // alert($(".RegStatusActive").attr('value'));
-        $( "#ADVStatusKeypressR" ).keypress();
-    }
-    function RegStatusRShowAlert(id) {
-        $('#CheckRegStatusU').removeClass('RegStatusActive');
-        $('#CheckRegStatusR').addClass('RegStatusActive');
-        /* var court_type = $("li[class='uk-active']").val();
-         alert(court_type);*/
-        //alert($(".ADVStatusActive").attr('value'));
-        $( "#RegStatusKeypressR" ).keypress();
-    }
-    function RegStatusUShowAlert(id) {
-        $('#CheckRegStatusR').removeClass('RegStatusActive');
-        $('#CheckRegStatusU').addClass('RegStatusActive');
-        //alert($(".ADVStatusActive").attr('value'));
-        $( "#RegStatusKeypressU" ).keypress();
-    }
+    // function AllcasesShowAlert(id) {
+    //     $( "#AllcaseStatusKeypressP" ).keypress();
+    //     $( "#AllcaseStatusKeypressD" ).keypress();
+    //     $( "#AllADVStatusKeypressP" ).keypress();
+    //     $( "#AllADVStatusKeypressR" ).keypress();
+    //     $( "#AllRegStatusKeypressR" ).keypress();
+    //     $( "#AllRegStatusKeypressU" ).keypress();
+    //     $( "#AllListedCasesKeypressL" ).keypress();
+    // }
+    // function ListedCasesShowAlert(id) { $( "#ListedCasesKeypressL" ).keypress();}
+    // function caseStatusPShowAlert(id) { $( "#caseStatusKeypressP" ).keypress();}
+    // function caseStatusDShowAlert(id) { $( "#caseStatusKeypressD" ).keypress();}
+    // function showEngagedCounsel(id) {
+    //     $('#CheckADVStatusR').removeClass('ADVStatusActive');
+    //     $('#CheckADVStatusP').addClass('ADVStatusActive');
+    //     $("#engagedCounsel" ).keypress();
+    // }
+    // function ADVStatusPShowAlert(id) {
+    //     $('#CheckADVStatusR').removeClass('ADVStatusActive');
+    //     $('#CheckADVStatusP').addClass('ADVStatusActive');
+    //     //alert($(".RegStatusActive").attr('value'));
+    //     $( "#ADVStatusKeypressP" ).keypress();
+    // }
+    // function ADVStatusRShowAlert(id) {
+    //     $('#CheckADVStatusP').removeClass('ADVStatusActive');
+    //     $('#CheckADVStatusR').addClass('ADVStatusActive');
+    //     // alert($(".RegStatusActive").attr('value'));
+    //     $( "#ADVStatusKeypressR" ).keypress();
+    // }
+    // function RegStatusRShowAlert(id) {
+    //     $('#CheckRegStatusU').removeClass('RegStatusActive');
+    //     $('#CheckRegStatusR').addClass('RegStatusActive');
+    //     /* var court_type = $("li[class='uk-active']").val();
+    //      alert(court_type);*/
+    //     //alert($(".ADVStatusActive").attr('value'));
+    //     $( "#RegStatusKeypressR" ).keypress();
+    // }
+    // function RegStatusUShowAlert(id) {
+    //     $('#CheckRegStatusR').removeClass('RegStatusActive');
+    //     $('#CheckRegStatusU').addClass('RegStatusActive');
+    //     //alert($(".ADVStatusActive").attr('value'));
+    //     $( "#RegStatusKeypressU" ).keypress();
+    // }
     function open_case_status() {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
