@@ -231,10 +231,7 @@
 
 <script>
     $(document).ready(function () {
-        @php
-            $_SESSION['efiling_type'] = 'ia';
-        @endphp
-
+        <?php $_SESSION['efiling_type'] = 'ia'; ?>
         var inputValue = $('input[type="radio"]:checked').val();
         if (inputValue == 'register') {
             $('#diaryno').val('');

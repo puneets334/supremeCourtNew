@@ -9,13 +9,13 @@ use Config\Database;
 
 class AdvocateController extends BaseController
 {
-    // protected $AdminReportModel;
+    // protected $AdminReportModel;    
     protected $AdvocateModel;
     protected $db;
     protected $session;
     protected $request;
     protected $validation;
-    protected $e_services;
+    protected $e_services;    
     public function __construct()
     {
         parent::__construct();
@@ -55,7 +55,7 @@ class AdvocateController extends BaseController
             $data['heading'] = 'CAUSE LIST';
             return $this->render('advocate.listed_cases', @compact('data','list'));
         } else {
-            return redirect()->to(base_url('login'));
+            return redirect()->to(base_url('/'));
             exit(0);
         }
     }
@@ -77,7 +77,7 @@ class AdvocateController extends BaseController
 
 
 
-    public function modal_appearance_save()
+    public function modal_appearance_save() 
     {
         $postData = $this->request->getPost();
         $request = service('request');
@@ -89,7 +89,7 @@ class AdvocateController extends BaseController
         }
         $rules = [
             'advocate_type' => [
-                'rules' => 'required|in_list[Adv.,Sr. Adv.,AOR,Attorney General for India,Solicitor General,A.S.G.,Sr. A.A.G.,A.A.G.,D.A.G.,Amicus Curiae]',
+                'rules' => 'required|in_list[Adv., Sr. Adv., AOR, Attorney General for India, Solicitor General, A.S.G., Advocate General, Sr. A.A.G., A.A.G., D.A.G., Amicus Curiae]',
                 'errors' => [
                     'in_list' => 'The selected advocate type is invalid.'
                 ]
@@ -145,7 +145,7 @@ class AdvocateController extends BaseController
         // $builder->set($data);
         // $sql = $builder->getCompiledInsert();
         $builder->insert($data);
-        $insertID = $this->e_services->insertID(); // Get the ID of the inserted row            
+        $insertID = $this->e_services->insertID(); // Get the ID of the inserted row             
         $data['entry_time'] = date('d-m-Y h:i:s A');
         $data['id'] = $insertID;
         if ($insertID) {
@@ -255,16 +255,13 @@ class AdvocateController extends BaseController
             }
         }
         if ($total_updated > 0) {
-            // if(session('mobile'))
-            // {
-            //     $case_no_exploded_in = explode("IN", strtoupper($box['case_no']));
-            //     $sms_data['sms_content'] = "The appearance slip for case no. ".$case_no_exploded_in[0]." submitted by you on ".date('d-m-Y')." time ".date('h:i:s a')." is forwarded to court master of court room no. ".$box['courtno'].". -Supreme Court of India.";
-            //     $sms_data['mobile_no'] = session('mobile');
-            //     $sms_data['template_id'] = config("constants.SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED");
-            //     //var_dump($sms_data);
-			//     $newUserAuth = new UserAuth();
-			//     $newUserAuth->sendSMS($sms_data);
-            // }
+            if(session('mobile')) {
+                $case_no_exploded_in = explode("IN", strtoupper($box['case_no']));
+                $sms_data['sms_content'] = "The appearance slip for case no. ".$case_no_exploded_in[0]." submitted by you on ".date('d-m-Y')." time ".date('h:i:s a')." is forwarded to court master of court room no. ".$box['courtno'].". -Supreme Court of India.";
+                $sms_data['mobile_no'] = session('mobile');
+                $sms_data['template_id'] = config("constants.SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED");
+			    sendSMS(38, $sms_data['mobile_no'], $sms_data['sms_content'], $sms_data['template_id']);
+            }
             return $this->response->setJSON([
                 'status' => 'success',
                 'case_no' => $box['case_no'],
@@ -293,7 +290,7 @@ class AdvocateController extends BaseController
         return $this->render('advocate.master_advocates_page', @compact('data','previous_list_advocates'));
     }
 
-    public function master_list_submit()
+    public function master_list_submit() 
     {
         $request = service('request');
 
@@ -354,7 +351,7 @@ class AdvocateController extends BaseController
         return $this->response->setJSON($display);
     }  
 
-    public function timeout_validation($list_date)
+    public function timeout_validation($list_date) 
     {
         // Directly use the constants
         if ($list_date == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME) {
@@ -366,7 +363,7 @@ class AdvocateController extends BaseController
 
 
 
-    public function timeoutValidation($listDate)
+    public function timeoutValidation($listDate) 
     {
         $currentDate = CURRENT_DATE;
         $appearanceAllowTime = APPEARANCE_ALLOW_TIME;
