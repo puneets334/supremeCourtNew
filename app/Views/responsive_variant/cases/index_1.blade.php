@@ -256,7 +256,10 @@
                                                 <td ng-if="case.userType!=19">
                                                     @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                     <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
-                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" ><i class="mdi mdi-android-messages sc-icon-20"></i></a>&nbsp;&nbsp;
+                                                    <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" >
+                                                        <!-- <i class="mdi mdi-android-messages sc-icon-20"></i> -->
+                                                        <i class="fas fa-envelope sc-icon-22"></i>
+                                                    </a>&nbsp;&nbsp;
                                                     <a style="color:green;font-weight: bold; font-size: 21px;" ng-if="diaryEngaged.indexOf(case.diaryId) !== -1" href="{{base_url('case/advocate')}}/@{{case.diaryId}}" title="Engaged Counsel"><i class="mdi mdi-account-multiple-plus"></i></a>
                                                     <b class="scif" ng-bind="case.lastListed==null ? 'UL' : 'L-C'" ></b>
                                                     @endif
@@ -419,7 +422,7 @@
             <div id="mail_msg" ></div>
             <div class="mail-response" id="mail_msg" ></div>
             <div id="emailids" style="display: none;"></div>
-            <div  id="recipient_mail1"></div>
+            <div  id="recipient_mail1" style="display: none;"></div>
             SMS To: <input type="text" class="form-control cus-form-ctrl" size="60" id="recipient_mail" name="recipient_mail"  maxlength="250" placeholder="Select Contacts or Enter Mobile No. e.g 9999999999,8888888888">
             <div>
                 SMS Message: <input type="text" class="form-control cus-form-ctrl" size =50 id="mail_subject" name="mail_subject" class="form-control" maxlength="100" placeholder="SMS Message">
