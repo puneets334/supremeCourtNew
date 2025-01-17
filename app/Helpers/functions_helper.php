@@ -700,7 +700,8 @@ function relay_doc_mail_api($to_email, $subject, $message)
 function send_mobile_sms($mobile_no, $sentSMS, $templateId = SCISMS_GENERIC_TEMPLATE)
 {
     $result = sendSMS(SMS_EMAIL_API_USER, $mobile_no, $sentSMS, $templateId);
-    return json_decode($result);
+    // return json_decode($result);
+    return $result;
 }
 
 function send_petitioner_mobile_sms($mobile_no, $sentSMS)
