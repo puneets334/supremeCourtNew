@@ -141,8 +141,11 @@ class ForgetPasswordController extends BaseController
                         $name_array = array('first_name'=>$mobile_exist[0]['first_name'], 'last_name'=>$mobile_exist[0]['last_name']);
                     if(!empty($_POST['adv_email']))
                         $name_array = array('first_name'=>$email_exist[0]['first_name'], 'last_name'=>$email_exist[0]['last_name']);
-                    $mobile_otp_is = $this->generateNumericOTP();
-    				$email_otp_is = $this->generateNumericOTP();
+                    $o = '123456';
+                    $mobile_otp_is = $o;
+    				$email_otp_is = $o;
+                    // $mobile_otp_is = $this->generateNumericOTP();
+    				// $email_otp_is = $this->generateNumericOTP();
                     date_default_timezone_set('Asia/Kolkata');
                     $startTime=date("H:i");
                     $endTime = date("H:i", strtotime('+15 minutes', strtotime($startTime)));

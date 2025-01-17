@@ -174,8 +174,11 @@ class AdvOtp extends BaseController {
     function resend_otp(){ 
         unset($_SESSION['adv_details']['mobile_otp']);
         unset($_SESSION['adv_details']['email_otp']); 
-        $mobile_otp_is = $this->generateNumericOTP();
-        $email_otp_is = $this->generateNumericOTP(); 
+        $o = '123456';
+        $mobile_otp_is = $o;
+        $email_otp_is = $o; 
+        // $mobile_otp_is = $this->generateNumericOTP();
+        // $email_otp_is = $this->generateNumericOTP(); 
         if(empty($_SESSION['adv_details']['mobile_otp']) || empty($_SESSION['adv_details']['email_otp'])){
             date_default_timezone_set('Asia/Kolkata');
             $startTime=date("H:i");

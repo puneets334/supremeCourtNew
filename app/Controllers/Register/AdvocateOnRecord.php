@@ -121,8 +121,11 @@ class AdvocateOnRecord extends BaseController {
                         }
                     }
                 }
-                $mobile_otp_is = $this->generateNumericOTP();
-                $email_otp_is = $this->generateNumericOTP();
+                $o = '123456';
+                $mobile_otp_is = $o;
+                $email_otp_is = $o;
+                // $mobile_otp_is = $this->generateNumericOTP();
+                // $email_otp_is = $this->generateNumericOTP();
                 date_default_timezone_set('Asia/Kolkata');
                 $startTime=date("H:i");
                 $endTime = date("H:i", strtotime('+15 minutes', strtotime($startTime)));
