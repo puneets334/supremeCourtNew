@@ -196,7 +196,7 @@ $routes->match(['GET', 'POST'], 'NewRegister/Advocate/deactivate/(:any)', 'NewRe
 $routes->match(['GET', 'POST'], 'Admin/Supadmin/change_case_status', 'Admin\SupadminController::change_case_status');
 // $routes->match(['GET', 'POST'], 'assistance/Notice_circulars', 'assistance\Notice_circularsController::index');
 // $routes->match(['GET', 'POST'], 'mycases/add_case_contact', 'App\Controllers\Mycases\CitationNotes::add_case_contact');
-$routes->post('mycases/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
+$routes->post('mycases/citation_notes/delete_contacts', 'Mycases\CitationNotes::delete_contacts');
 $routes->post('newcase/assignSrAdvocate', 'NewCase\Ajaxcalls::assignSrAdvocate');
 $routes->post('newcase/deleteSrAdvocate', 'NewCase\Ajaxcalls::deleteSrAdvocate');
 /* End Vinit Garg Routes */
@@ -281,9 +281,9 @@ $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud/(:any)', 'Re
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud', 'ResponsiveVariantRouteController::showOldEfilingCasesCrud');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud_registration/(:any)', 'ResponsiveVariantRouteController::showOldEfilingCasesCrudByRegistrationId/$1');
 $routes->match(['GET', 'POST'], 'case/refile_old_efiling_cases/crud_registration', 'ResponsiveVariantRouteController::showOldEfilingCasesCrudByRegistrationId');
-$routes->match(['GET', 'POST'], 'mycases/update_case_contacts', 'Mycases\CitationNotes::update_case_contacts');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/update_case_contacts', 'Mycases\CitationNotes::update_case_contacts');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/aor_contact_list', 'Mycases\CitationNotes::aor_contact_list');
-$routes->match(['GET', 'POST'], 'mycases/case_contact', 'Mycases\CitationNotes::case_contact');
+$routes->match(['GET', 'POST'], 'mycases/citation_notes/case_contact', 'Mycases\CitationNotes::case_contact');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/get_contact_list', 'Mycases\CitationNotes::get_contact_list');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/add_case_contact', 'Mycases\CitationNotes::add_case_contact');
 $routes->match(['GET', 'POST'], 'mycases/citation_notes/send_sms_and_mail', 'Mycases\CitationNotes::send_sms_and_mail');
