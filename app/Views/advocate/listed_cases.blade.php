@@ -45,7 +45,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $sno = 1;
+                                            // $sno = 1;
                                             foreach($list as $key => $advocate) {
                                                 if($advocate['pno'] == 2) {
                                                     $pet_name = $advocate['pet_name']." AND ANR.";
@@ -63,7 +63,7 @@
                                                 }
                                                 ?>
                                                 <tr>
-                                                    <td data-key="SNo."><?php  echo $sno; ?></td>
+                                                    <td data-key="SNo."><?php  echo $key+1; ?></td>
                                                     <td data-key="Listed On">{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
                                                     <td data-key="Court No.">{{ $advocate['courtno'] }}</td>
                                                     <td data-key="Item No.">{{ $advocate['brd_slno'] }}</td>
@@ -72,8 +72,8 @@
                                                     <td data-key="For Appearance">
                                                         <?php if($advocate['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME) { ?>
                                                             <span data-courtno="{{$advocate['courtno']}}" data-toggle="modal" data-target="#modal-lg" class="badge badge-danger time_out_msg" style="padding:10px;">{{ MSG_TIME_OUT }}</span>
-                                                        <?php } else{ ?>
-                                                            <button data-toggle="modal" data-target="#modal-lg" type="button" data-diary_no="{{$advocate['diary_no']}}" data-next_dt="{{$advocate['next_dt']}}" data-appearing_for="{{$advocate['pet_res']}}" data-pet_name="{{$advocate['pet_name']}}" data-res_name="{{$advocate['res_name']}}" data-courtno="{{$advocate['courtno']}}" data-brd_slno="{{$advocate['brd_slno']}}" data-reg_no_display="{{$advocate['reg_no_display']}}" name="btn_click" class="btn_click quick-btn">Click</button>
+                                                        <?php } else { ?>
+                                                            <button type="button" name="btn_click" class="btn_click quick-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-diary_no="{{$advocate['diary_no']}}" data-next_dt="{{$advocate['next_dt']}}" data-appearing_for="{{$advocate['pet_res']}}" data-pet_name="{{$advocate['pet_name']}}" data-res_name="{{$advocate['res_name']}}" data-courtno="{{$advocate['courtno']}}" data-brd_slno="{{$advocate['brd_slno']}}" data-reg_no_display="{{$advocate['reg_no_display']}}">Click</button>
                                                         <?php } ?>
                                                     </td> 
                                                 </tr>
@@ -82,8 +82,8 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="modal fade" id="modal-lg">
-                                <div class="modal-dialog modal-lg">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
                                     <div class="modal-content myModal_content"></div>
                                 </div>
                             </div>
@@ -450,7 +450,7 @@
         html += '<div class="modal-header">'+
             '<h4 class="modal-title">Appearance Slip - Time Out</h4>'+
             '<button type="button" class="close" data-dismiss="modal" aria-label="Close">'+
-            '<span aria-hidden="true">&times;</span>'+
+            '<span>&times;</span>'+
             '</button>'+
             '</div>'+
             '<div class="modal-body">Please contact court master of court room no. '+courtno+'.</div>' +

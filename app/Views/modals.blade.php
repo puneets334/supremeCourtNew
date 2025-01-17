@@ -206,7 +206,7 @@ $filing_type = '';
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="checkAllSections"></div>
-            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style=""></div>
+            <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div"></div>
             <div class="modal-footer">
                 <a data-efilingType="<?php echo strtolower($filing_type); ?>" class="btn quick-btn btn-primary" id="createDiaryNo" type="button" style="margin-left: 224px;margin-bottom: 23px;">Generate Diary No.</a>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
