@@ -1604,7 +1604,7 @@ class Efiling_webservices {
     }
 
     public function get_last_listed_details($diary_no,$diary_year){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/ConsumedData/getLastListedDetail/?diary_no=$diary_no&diary_year=$diary_year");
         //$data = file_get_contents("/home/praveen/Desktop/sci-json/diary_reg_search_json_data.txt"
         if ($data != false) {
             return json_decode($data);
