@@ -83,9 +83,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                 }
                                 if (getSessionData('efiling_details')['stage_id'] == Draft_Stage) {
                                     $final_submit_continue_action = TRUE;
-                                    ?>
-                                    <!-- <a class="btn btn-danger btn-sm" onclick="ActionToTrash('UAT')">Trash</a> -->
-                                    <?php
                                 }
                             } elseif (in_array(getSessionData('efiling_details')['stage_id'], $refiling_stages_array)) {
                                 echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
