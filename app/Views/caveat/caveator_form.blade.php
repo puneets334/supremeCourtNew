@@ -181,7 +181,7 @@ textarea {
                                 <div class="mb-3">
                                     <label for="" class="form-label">Caveator Name <span style="color: red" class="astriks">*</span></label>
                                     <input id="pet_complainant"  oninput="validateInput(event)"  name="pet_complainant" placeholder="First Name Middle Name Last Name" tabindex='3'  class="form-control cus-form-ctrl sci_validation" 
-                                        minlength="3" maxlength="250" value="<?php if(isset($caveator_details)){ echo $caveator_details[0]['pet_name']; }?>" >
+                                        minlength="3" maxlength="250" value="<?php if(isset($caveator_details[0])){ echo $caveator_details[0]['pet_name']; }?>" >
                                     <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Caveator name should be in characters (<?php echo VALIDATION_PREG_MATCH_MSG; ?>).">
                                         <i class="fa fa-question-circle-o"></i>
                                     </span>                                           
