@@ -1,14 +1,18 @@
 <?php
 $track_horizonal_timeline = array();
 $disposed_flag = array('F', 'R', 'D', 'C', 'W');
+    
     if (is_array($results) && count($results) > 0) {
         $row = $results;
         $case_no = "";
         $request_received_f = '<strong class="text-success">Received</strong>';
         array_push($track_horizonal_timeline, array("flag_type" => 'Request', "flag_description" => $request_received_f . ' ' . date("d-m-Y H:i:s", strtotime($row['application_receipt']))));
-
+        //var_dump($row['application_request'] == 'request');
+        //die;
         if ($row['application_request'] == 'request') {
+                
                 $sqRes = getCopySearchResult($row);
+                
                 $data_asset_string = '';
                 if (count($sqRes) > 0) {
                     foreach ($sqRes as $data_asset) {
