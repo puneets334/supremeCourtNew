@@ -131,27 +131,27 @@ textarea {
                         <div class="mb-3">
                             <label for="" class="form-label">Caveator is <span style="color: red" class="astriks">*</span></label>
                             <?php
-                                $showHideIndividual =$showHideOtherIndividual=$stateDiv=$selectIndividual=$selectStateDept=$selectCentralDept=$selectOtherDept= '';
-                                $showHideOtherIndividual = 'display:none';
-                                if (isset($caveator_details) && !empty($caveator_details)) {
-                                    $selectIndividual = $caveator_details[0]['orgid'] == 'I' ? 'selected=selected' : '';
-                                    $selectStateDept = $caveator_details[0]['orgid'] == 'D1' ? 'selected=selected' : '';
-                                    $selectCentralDept = $caveator_details[0]['orgid'] == 'D2' ? 'selected=selected' : '';
-                                    $selectOtherDept = $caveator_details[0]['orgid'] == 'D3' ? 'selected=selected' : '';
-                                    $stateDiv = 'display:block';
-                                    $showHideOtherIndividual = 'display:none';
-                                    if (isset($selectIndividual) && !empty($selectIndividual)) {
-                                        $showHideIndividual = 'display:block';
-                                    } elseif (!empty($selectStateDept) || !empty($selectCentralDept)) {
-                                        $showHideOtherIndividual = 'display:block';
-                                        $showHideIndividual = 'display:none';
-                                        $stateDiv = 'display:block';
-                                    } elseif (!empty($selectOtherDept)) {
-                                        $stateDiv = 'display:none';
-                                        $showHideOtherIndividual = 'display:block';
-                                        $showHideIndividual = 'display:none';
-                                    }
+                            $showHideIndividual = $showHideOtherIndividual = $stateDiv = $selectIndividual = $selectStateDept = $selectCentralDept = $selectOtherDept = '';
+                            $showHideOtherIndividual = ' dNone';
+                            if (isset($caveator_details) && !empty($caveator_details)) {
+                                $selectIndividual = $caveator_details[0]['orgid'] == 'I' ? 'selected=selected' : '';
+                                $selectStateDept = $caveator_details[0]['orgid'] == 'D1' ? 'selected=selected' : '';
+                                $selectCentralDept = $caveator_details[0]['orgid'] == 'D2' ? 'selected=selected' : '';
+                                $selectOtherDept = $caveator_details[0]['orgid'] == 'D3' ? 'selected=selected' : '';
+                                $stateDiv = ' dBlock';
+                                $showHideOtherIndividual = ' dNone';
+                                if (isset($selectIndividual) && !empty($selectIndividual)) {
+                                    $showHideIndividual = ' dBlock';
+                                } elseif (!empty($selectStateDept) || !empty($selectCentralDept)) {
+                                    $showHideOtherIndividual = ' dBlock';
+                                    $showHideIndividual = ' dNone';
+                                    $stateDiv = ' dBlock';
+                                } elseif (!empty($selectOtherDept)) {
+                                    $stateDiv = ' dNone';
+                                    $showHideOtherIndividual = ' dBlock';
+                                    $showHideIndividual = ' dNone';
                                 }
+                            }
                             ?>
                             <select tabindex='2' name="party_is" id="party_is" onchange="get_caveator_as(this.value)" class="form-select cus-form-ctrl" required>
                                 <option value="I" <?php echo isset($selectIndividual) ? $selectIndividual : ''; ?>>Individual
@@ -293,10 +293,10 @@ textarea {
                             </div>
                         </div>
                     </div>
-                    <div class="row" id="org_form" style="<?php echo $showHideOtherIndividual; ?>">                    
+                    <div class="row<?php echo $showHideOtherIndividual; ?>" id="org_form">                    
                         <div class="container">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row" style="<?php echo $stateDiv;?>">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo $stateDiv;?>" id="org_state_row">
                                     <div class="row" >
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" >
                                             <div class="mb-3">
@@ -323,7 +323,7 @@ textarea {
                                     
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone" id="otherOrgState">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span
                                             style="color: red">*</span> </label>
@@ -363,7 +363,7 @@ textarea {
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone" id="otherOrgDept">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span
                                                 style="color: red">*</span> </label>
@@ -397,7 +397,7 @@ textarea {
                                             </select>
                                         </div>                    
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
+                                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone" id="otherOrgPost">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Post
                                                 <span style="color: red">*</span> 
@@ -439,7 +439,7 @@ textarea {
                             </div>
                         <?php } ?>
                         <?php if(in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])){  ?>
-                            <div class="row" id="CLERK_AOR_is_govt_filing" style="display: none;">
+                            <div class="row dNone" id="CLERK_AOR_is_govt_filing">
                                 <div class="col-sm-12 col-xs-12">
                                     <div class="form-group">
                                         <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Whether filed by Government? </label>
@@ -573,7 +573,7 @@ textarea {
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">                    
                         <div class="row">
-                            <div class="progress" style="display: none">
+                            <div class="progress dNone">
                                 <div class="progress-bar progress-bar-success myprogress" role="progressbar"  value="0" max="100" style="width:0%">0%</div>
                             </div>
                         </div>

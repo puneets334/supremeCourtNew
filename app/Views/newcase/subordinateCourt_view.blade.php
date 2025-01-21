@@ -19,7 +19,7 @@
         background-color: #ffffff;
     }
 </style>
-<div id="loader-wrapper" style="display: none;">
+<div id="loader-wrapper" class="dNone">
     <div id="loader"></div>
 </div>
 <div class="center-content-inner comn-innercontent">
@@ -43,44 +43,28 @@
                         <div class="form-group">
                             <?php
                             $noHcEntry = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'checked="checked"' : '';
-                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'style="display:none;' : '';
+                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? ' dNone' : '';
                             $scchecked = @$party_details[0]['selected_court'] == '4' ? 'checked="checked"' : '';
                             $hcchecked = @$party_details[0]['selected_court'] == '1' ? 'checked="checked"' : '';
                             $dcchecked = @$party_details[0]['selected_court'] == '3' ? 'checked="checked"' : '';
                             $dcchecked = @$party_details[0]['selected_court'] == '5' ? 'checked="checked"' : '';
                             if ($sc_casetypearr != 39 && $sc_casetypearr != 9 && $sc_casetypearr != 10 && $sc_casetypearr != 19 && $sc_casetypearr != 25 && $sc_casetypearr != 26 && $sc_casetypearr != 7) { ?>
-                                <div align="center"
-                                    id="nohc">
-                                    <input type="checkbox"
-                                        <?php echo $noHcEntry; 
-                                        ?>
-                                        value="1"
-                                        name="chk_nohc"
-                                        id="chk_nohc"
-                                        onchange="toggle_entry_div()"> I hereby confirm that
-                                    there is no earlier courts details pertaining to this
-                                    matter. &nbsp; &nbsp; <input type="button"
-                                        class="btn btn-success"
-                                        <?php echo $noHCButton; ?>id="nohc_save"
-                                        value="Proceed with Next Stage">
+                                <div align="center" id="nohc">
+                                    <input type="checkbox" <?php echo $noHcEntry; ?> value="1" name="chk_nohc" id="chk_nohc" onchange="toggle_entry_div()">
+                                    I hereby confirm that there is no earlier courts details pertaining to this matter. &nbsp; &nbsp;
+                                    <input type="button" class="btn btn-success <?php echo $noHCButton; ?>" id="nohc_save" value="Proceed with Next Stage">
                                 </div>
                             <?php } else { ?>
-                                <div align="center"
-                                    id="nohc">
-                                    <input type="hidden"
-                                        name="chk_nohc"
-                                        id="chk_nohc">
+                                <div align="center" id="nohc">
+                                    <input type="hidden" name="chk_nohc" id="chk_nohc">
                                 </div>
                             <?php } ?>
                         </div>
                     </div>
                 </div>
-                <div class="row"
-                    id="all_div">
-                    <div class="row"
-                        id="hc_entry_div">
+                <div class="row" id="all_div">
+                    <div class="row" id="hc_entry_div">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            
                             <div class="mb-3">
                                 <?php
                                 $court_type = !empty($caseData['court_type']) ? $caseData['court_type'] : null;
@@ -131,7 +115,7 @@
                                                         placeholder=""> --}}
                             </div>
                         </div>
-                        <div class="" id="supreme_court_info" style="display: block;">
+                        <div class="dBlock" id="supreme_court_info">
                             <div class="col-12">
                             <div class="row">
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
@@ -183,9 +167,7 @@
                             </div>
                             </div>
                         </div>
-                        <div class="row"
-                            id="high_court_info"
-                            style="display: none;">
+                        <div class="row dNone" id="high_court_info">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div class="mb-3">
                                     <div class="row justify-content-center">
@@ -275,7 +257,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name" style="display:none;">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name dNone">
                                 <div class="mb-3">
                                     <label for=""
                                         class="form-label">Case Type Name <span
@@ -329,9 +311,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row"
-                            id="district_court_info"
-                            style="display: none;">
+                        <div class="row dNone" id="district_court_info">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                 <div class="row justify-content-center">
@@ -434,7 +414,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dc_case_type_name" style="display:none;">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dc_case_type_name dNone">
                                 <div class="mb-3">
                                     <label class="form-label">Case Type Name <span
                                             style="color: red"
@@ -489,9 +469,7 @@
 
 
                     </div>
-                    <div class="row"
-                        id="state_agency_info"
-                        style="display: none;">
+                    <div class="row dNone" id="state_agency_info">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">State <span style="color: red"
@@ -533,7 +511,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 agency_case_type_name" style="display:none;">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 agency_case_type_name dNone">
                             <div class="mb-3">
                                 <label class="form-label">Case Type Name <span style="color: red"
                                         class="astriks">*</span></label>
@@ -601,9 +579,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12"
-                        id="loader_div"
-                        style="display: none;">
+                    <div class="col-md-12 col-sm-12 col-xs-12 dNone" id="loader_div">
                         <img id="loader_img"
                             style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;"
                             src="<?php echo base_url(); ?>assets/images/loading-data.gif" />
@@ -740,14 +716,14 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12" id="certified_copy">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 tentative_date" style="display: none;">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 tentative_date dNone">
                                             <div class="mb-3">
                                                 <label class="form-label">Tentative Date for Issuance of Certified Copy :</label>
                                                 <input type="text" class="form-control cus-form-ctrl" id="tentative_date" name="tentative_date" maxlength="10" placeholder="DD/MM/YYYY">
                                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Select Tentative Date for Issuance of Certified Copy"><i class="fa fa-question-circle-o"  ></i></span>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 issuance_date" style="display: none;">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 issuance_date dNone">
                                             <div class="mb-3">
                                                 <label class="form-label">Date of Issuance :</label>
                                                 <input type="text" class="form-control cus-form-ctrl" id="issuance_date" name="issuance_date" maxlength="10" placeholder="DD/MM/YYYY">
