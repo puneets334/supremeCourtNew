@@ -4,6 +4,7 @@ namespace App\Controllers\OnlineCopying;
 use App\Controllers\BaseController;
 use App\Models\OnlineCopying\CommonModel;
 use Config\Database;
+use App\Libraries\webservices\Ecoping_webservices;
 class DefaultController extends BaseController
 {
 
@@ -11,7 +12,7 @@ class DefaultController extends BaseController
     protected $Common_model;
     protected $db2;
     protected $db3;
-
+    protected $ecoping_webservices;
     public function __construct()
     {
         parent::__construct();
@@ -21,13 +22,14 @@ class DefaultController extends BaseController
         } else {
             is_user_status();
         }
+        $this->ecoping_webservices=new Ecoping_webservices();
         $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
         $this->db3 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
         $this->Common_model = new CommonModel();
         $_SESSION['is_token_matched'] = 'Yes';
         $_SESSION['applicant_email'] = getSessionData('login')['emailid'];
         $_SESSION['applicant_mobile'] = getSessionData('login')['mobile_number'];
-        $checkUserAddress = getUserAddress(getSessionData('login')['mobile_number'], getSessionData('login')['emailid']);
+        $checkUserAddress = $this->ecoping_webservices->getUserAddress(getSessionData('login')['mobile_number'], getSessionData('login')['emailid']);
         if (count($checkUserAddress) > 0){
             $address_array = array();
             $_SESSION['is_user_address_found'] = 'YES';
@@ -40,7 +42,7 @@ class DefaultController extends BaseController
         else{
             $_SESSION['is_user_address_found'] = 'NO';
         }
-        $dOtp = eCopyingOtpVerification($_SESSION['applicant_email']);
+        $dOtp = $this->ecoping_webservices->eCopyingOtpVerification($_SESSION['applicant_email']);
         if($dOtp){
             $_SESSION['session_verify_otp'] = '000000';
             $_SESSION['session_otp_id'] = '999999';
@@ -54,7 +56,7 @@ class DefaultController extends BaseController
             $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;
             if($dOtp->filed_by == 6){
                 // $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;            
-                $aor_data = eCopyingGetBarDetails($dOtp->authorized_bar_id);
+                $aor_data = $this->ecoping_webservices->eCopyingGetBarDetails($dOtp->authorized_bar_id);
                 if (count($aor_data) == 1){
                     $aor_mobile = $aor_data->mobile;
                     $_SESSION["aor_mobile"] = $aor_data->mobile; 
@@ -72,7 +74,7 @@ class DefaultController extends BaseController
         } else{
             is_user_status();
         }
-        $category = $this->Common_model->getCategory();
+        $category=$this->ecoping_webservices->getCategory();
         return $this->render('onlineCopying.copy_search', compact('category'));
     }
     
@@ -83,48 +85,13 @@ class DefaultController extends BaseController
         $disposed_flag = array('F', 'R', 'D', 'C', 'W');
         $preparedArray = [];
         $flag = $this->request->getVar('flag');
-        $builder = $this->db2->table('public.copying_order_issuing_application_new a')
-            ->select("'application' application_request, m.reg_no_display, m.c_status, a.id, a.application_number_display, a.diary, a.crn, a.application_receipt, a.updated_on, 
-                      a.name, a.mobile, a.email, a.allowed_request, a.dispatch_delivery_date, a.application_status, a.filed_by, a.court_fee, a.postal_fee, a.delivery_mode, 
-                      r.description, s.status_description")
-            ->join('public.main m', 'CAST(m.diary_no AS BIGINT) = CAST(a.diary AS BIGINT)', 'left')
-            ->join('master.ref_copying_source r', 'r.id = a.source', 'left')
-            ->join('master.ref_copying_status s', 's.status_code = a.application_status', 'left');
-
-        if ($flag == 'ano') {
-            $builder->where('copy_category', $this->request->getVar('application_type'))
-                          ->where('application_reg_number', $this->request->getVar('application_no'))
-                          ->where('application_reg_year', $this->request->getVar('application_year'))
-                          ->limit(1);
-            $preparedArray = [
-                'application_type' => $this->request->getVar('application_type'),
-                'application_no' => $this->request->getVar('application_no'),
-                'application_year' => $this->request->getVar('application_year')
-            ];
-        } else {
-            $builder->where('crn', $this->request->getVar('crn'))
-                          ->where('crn !=', '0')
-                          ->unionAll(function($builder) {
-                              $builder->select("'request' application_request, m.reg_no_display, m.c_status, a.id, a.application_number_display, a.diary, a.crn, a.application_receipt, a.updated_on, 
-                                                a.name, a.mobile, a.email, a.allowed_request, a.dispatch_delivery_date, a.application_status, a.filed_by, a.court_fee, a.postal_fee, a.delivery_mode, 
-                                                r.description, s.status_description")
-                                      ->from('public.copying_request_verify a')
-                                      ->join('public.main m', 'CAST(m.diary_no AS BIGINT) = CAST(a.diary AS BIGINT)', 'left')
-                                      ->join('master.ref_copying_source r', 'r.id = a.source', 'left')
-                                      ->join('master.ref_copying_status s', 's.status_code = a.application_status', 'left')
-                                      ->where('crn', $this->request->getVar('crn'))
-                                      ->where('crn !=', '0')
-                                      ->limit(1);
-                          });
-            $preparedArray = ['crn' => $this->request->getVar('crn')];
-        }
-
-        $query = $builder->getCompiledSelect();
-        // Execute the query
-        $results = $this->db2->query($query, $preparedArray)->getRowArray();
+        $results=$this->ecoping_webservices->geteCopySearch($this->request->getVar('flag'),$this->request->getVar('crn'),$this->request->getVar('application_type'),$this->request->getVar('application_no'),$this->request->getVar('application_year'));
+        
         return $this->render('onlineCopying.get_copy_search', compact('results'));
     }
-
+    public function getCopyStatusResult(){
+        
+    }
     public function trackConsignment()
     {
         return $this->render('onlineCopying.track');
@@ -140,7 +107,7 @@ class DefaultController extends BaseController
         } else{
             is_user_status();
         }
-        $faqs = $this->Common_model->copyFaq();
+        $faqs =$this->ecoping_webservices->copyFaq();
         return $this->render('onlineCopying.faq', compact('faqs'));
     }
     public function screenReader()
@@ -158,7 +125,7 @@ class DefaultController extends BaseController
         } else{
             is_user_status();
         }
-        $caseType = $this->Common_model->getCaseType();
+        $caseType = $this->ecoping_webservices->getCaseType();
         return $this->render('onlineCopying.case_search', compact('caseType'));
     }
     public function getCaseDetails()
@@ -167,7 +134,7 @@ class DefaultController extends BaseController
     }
     public function getAppCharge()
     {
-        $r_sql = $this->Common_model->getCatogoryForApplication($_REQUEST['idd']);
+        $r_sql = $this->ecoping_webservices->getCatogoryForApplication($_REQUEST['idd']);
         $app_rule='';
         if($r_sql->urgent_fee!=0)
         {
@@ -232,15 +199,7 @@ class DefaultController extends BaseController
         if (!empty($_POST) && $_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"])) {
             $diary_no=$_SESSION['session_d_no'].$_SESSION['session_d_year'];
             //VERIFICATION OF CASE ALREADY APPLIED
-            $builder = $this->db2->table('copying_request_verify');
-            $builder->select('diary');
-            $builder->where('allowed_request', 'request_to_available');
-            $builder->where('mobile', $_SESSION["applicant_mobile"]);
-            $builder->where('diary', $diary_no);
-            $builder->where('application_status', 'P');
-
-            $query = $builder->get();
-            $result = $query->getResult();
+            $result=$this->ecoping_webservices->getCopyingRequestVerify($diary_no,$_SESSION["applicant_mobile"]);
             if (count($result) > 0 || $_SESSION['unavailable_copy_requested_diary_no'] == $diary_no) {
                 $array = array('status' => 'Please wait till completion of your previous request.');
             }
@@ -262,8 +221,8 @@ class DefaultController extends BaseController
 
                 $allowed_request = "request_to_available";
                 $scipay = 10002;
-                $create_crn = createCRN($scipay);//for unavailable document request
-                $json_crn = json_decode($create_crn);
+                $create_crn =$this->ecoping_webservices->createCRN($scipay);//for unavailable document request
+                $json_crn = $create_crn;
                 if ($json_crn->{'Status'} == "success") {
                     $crn = $json_crn->{'CRN'};
 
@@ -309,8 +268,8 @@ class DefaultController extends BaseController
                         "address_id" => $address_id
                     );
 
-                    $insert_application = insert_copying_application_online($dataArray); //insert application
-                    $json_insert_application = json_decode($insert_application);
+                    $insert_application =$this->ecoping_webservices->insert_copying_application_online($dataArray); //insert application
+                    $json_insert_application = $insert_application;
                     if ($json_insert_application->{'Status'} == "success") {
                         $last_application_id = $json_insert_application->{'last_application_id'};
                         for ($var = 0; $var < count($doc_array); $var++) {
@@ -330,8 +289,8 @@ class DefaultController extends BaseController
                                 'order_type_remark' => $doc_details,
                                 'is_bail_order' => 'N'
                             );
-                            $insert_application_documents = insert_copying_application_documents_online($document_array); //insert user assets
-                            $json_insert_application_documents = json_decode($insert_application_documents);
+                            $insert_application_documents = $this->ecoping_webservices->insert_copying_application_documents_online($document_array); //insert user assets
+                            $json_insert_application_documents =$insert_application_documents;
                             if ($json_insert_application_documents->{'Status'} == "success") {
 
                             } else {
