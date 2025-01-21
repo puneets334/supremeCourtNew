@@ -3449,7 +3449,7 @@ function getCopyRequest($row){
 
 }
 
-function copyFormSentOn($row1){
+function copyFormSentOn($row){
     $ecoping_webservices=new Ecoping_webservices();
     $result=$ecoping_webservices->copyFormSentOn($row['id']);
     return $result;
