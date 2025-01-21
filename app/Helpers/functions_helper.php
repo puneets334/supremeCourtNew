@@ -3433,7 +3433,7 @@ function getCopyBarcode($row){
     $ecoping_webservices=new Ecoping_webservices();
     $result=$ecoping_webservices->getCopyStatusResult($row['id']);
 
-    return $result 
+    return $result;
 }
 
 function getCopyApplication($row){
