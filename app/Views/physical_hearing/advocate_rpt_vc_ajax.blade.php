@@ -1,37 +1,10 @@
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-<!-- <link rel="shortcut icon" href="<?= base_url() ?>assets/newAdmin/images/favicon.gif">
-<link href="<?= base_url() ?>assets/newAdmin/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/font-awesome.min.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/animate.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/material.css" rel="stylesheet" />
-<link href="<?= base_url() ?>assets/newAdmin/css/style.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/responsive.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/black-theme.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/newAdmin/css/fullcalendar.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/jquery-ui.css" rel="stylesheet">
-<link href="<?= base_url() ?>assets/css/select2.min.css" rel="stylesheet"> -->
 <link href="<?= base_url() ?>assets/css/bootstrap-datepicker.css" rel="stylesheet">
 <link href="<?= base_url() ?>assets/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <style>
-    /* .dataTables_wrapper {
-        margin-top: .5rem !important;
-    }
-    div .dataTables_wrapper ~ .dataTables_info {
-        display: none !important;
-    }
-    .title-sec {
-        display: none !important;
-    }
-    .mngmntHeader {
-        display: none !important;
-    } */
     .dataTables_wrapper {
         margin-top: .5rem !important;
     }
-    /* div .dataTables_wrapper ~ .dataTables_info, .dataTables_length, .dataTables_filter {
-        display: none !important;
-    } */
     @media (max-width: 767px){
         table#reportTable1 td:nth-child(7) {min-height: 67px;}
         table#reportTable1 td:nth-child(6) {min-height: 82px;}
@@ -60,7 +33,7 @@
                                     <?php if(!empty($list)) { ?>
                                         <p class="table_heading"><u>Consent for Dated : <?= $date_of_hearing; ?>,  Total Entries : <?= $case_count; ?></u></p>
                                     <?php } ?>
-                                    <table id="head" class="table table-striped custom-table" style="display: none !important;">
+                                    <table id="head" class="table table-striped custom-table dNone">
                                         <caption> </caption>
                                         <thead>
                                             <tr>
@@ -91,10 +64,9 @@
                                         <tbody>
                                             <?php
                                             if (isset($list) && !empty($list)) {
-                                                // pr($list);
                                                 $i = 1;
                                                 foreach($list as $value) {
-                                                    // pr($value); ?>
+                                                    ?>
                                                     <tr>
                                                         <td data-key="#" style="width:5%;"><?php echo $i; ?></td>
                                                         <td data-key="List Date" class="lead text-center" ><?=  date("d-m-Y", strtotime($value['next_dt'])); ?> </td>
@@ -124,7 +96,7 @@
                                         </tbody>
                                     </table>
                                     <br>
-                                </div><!--END OF DIV id="show_result"-->
+                                </div>
                                 <?php
                             } else {
                                 echo "Data Not Found! ";
@@ -204,5 +176,4 @@
         }).draw();
     });
 </script>
-<!-- form--end  -->
 @endpush

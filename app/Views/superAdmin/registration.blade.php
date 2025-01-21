@@ -49,12 +49,12 @@
                                         </div>
                                     </div>
                                 <?php echo form_close(); ?>
-                                <div class="row" id="norecordDiv" style="display: none;">
+                                <div class="row dNone" id="norecordDiv">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div id="norecord" class="text-center mt-3"></div>
                                     </div>
                                 </div>
-                                <div class="panel-body" id="addUserDiv" style="display: none;">
+                                <div class="panel-body dNone" id="addUserDiv">
                                     <?php
                                     $attribute = ['class' => 'form_horizontal', 'name' => 'addsciuser', 'id' => 'addsciuser', 'accept-charset' => 'utf-8', 'autocomplete' => 'off'];
                                     echo form_open(base_url(), $attribute);

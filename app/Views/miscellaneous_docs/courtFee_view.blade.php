@@ -10,7 +10,7 @@
         //$total_court_fee = $court_fee_details[0]['orders_challendged'] * $court_fee_details[0]['court_fee'];
         ?>
         <div>
-            <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
+            <div class="col-md-12 col-sm-12 col-xs-12 dNone">
 
                 <div class="table-responsive">
                 <table id="datatable-responsive" class="table table-striped custom-table dataTable no-footer" cellspacing="0" width="100%">

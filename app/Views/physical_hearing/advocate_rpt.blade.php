@@ -131,7 +131,7 @@ $crnt_dt=date("d-m-Y");
             <button class="btn btn-primary" onclick="Get_resultfunction()">Get Data</button>
         </div>-->
 
-        <table id="head" style="display:none;">
+        <table id="head" class="dNone">
             <thead>
             <tr>
                 <th>#</th>

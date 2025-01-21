@@ -74,7 +74,7 @@
                                     <b>{{ $validation->getError('adv_mobile')}}</b>
                                 </div>
                                 @endif
-                                <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+                                <input type="text" class="dNone" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
