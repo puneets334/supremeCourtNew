@@ -53,7 +53,7 @@
                     <h6 class="text-center fw-bold">Case Details</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
-                <div class="row" id="errDiv" style="display: none;">
+                <div class="row dNone" id="errDiv">
                     <div class="alert alert-danger" role="alert" id="alertMsg"></div>
                 </div>
                 <div class="row">
@@ -273,7 +273,7 @@
                         
                     </div>
                     <?php if(in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])){  ?>
-                        <div class="row" id="CLERK_AOR_is_govt_filing" style="display: none;">
+                        <div class="row dNone" id="CLERK_AOR_is_govt_filing">
                             <div class="col-sm-12 col-xs-12">
                                 <div class="form-group">
                                     <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Whether filed by Government? </label>
@@ -347,7 +347,7 @@
                             </div>
                         </div>
                     <?php } ?>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="supreme_court1" <?php echo !empty($supreme_court_bench) && isset($supreme_court_bench) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo !empty($supreme_court_bench) && isset($supreme_court_bench) ? ' dBlock' : ' dNone'; ?>" id="supreme_court1">
                         <div class="mb-3">
                             <label class="form-label">State Name <span style="color: red" class="astriks">*</span></label>
                             <select id="supreme_state_name" name="supreme_state_name" class="form-control cus-form-ctrl filter_select_dropdown" readonly="readonly">
@@ -366,7 +366,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="supreme_court2" <?php echo !empty($supreme_court_bench) && isset($supreme_court_bench) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo !empty($supreme_court_bench) && isset($supreme_court_bench) ? ' dBlock' : ' dNone'; ?>" id="supreme_court2">
                         <div class="mb-3">
                             <label class="form-label">Bench
                                 Name <span style="color: red" class="astriks">*</span></label>
@@ -386,7 +386,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="high_court_div1" <?php echo (!empty($high_court_bench) && isset($high_court_bench)) || $high_court_drop_down ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo (!empty($high_court_bench) && isset($high_court_bench)) || $high_court_drop_down ? ' dBlock' : ' dNone'; ?>" id="high_court_div1">
                         <div class="mb-3">
                             <label class="form-label">High Court Name <span style="color: red" class="astriks">*</span></label>
                             <select id="high_courtname" name="high_courtname" class="form-control cus-form-ctrl filter_select_dropdown">
@@ -405,7 +405,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="high_court_div2" <?php echo (!empty($high_court_bench) && isset($high_court_bench)) || $high_court_drop_down ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo (!empty($high_court_bench) && isset($high_court_bench)) || $high_court_drop_down ? ' dBlock' : ' dNone'; ?>" id="high_court_div2">
                         <div class="mb-3">
                             
                             <label class="form-label">Bench Name
@@ -427,7 +427,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="district_court1" <?php echo !empty($state_list) && isset($state_list) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo !empty($state_list) && isset($state_list) ? ' dBlock' : ' dNone'; ?>" id="district_court1">
                         <div class="mb-3">
                             <label class="form-label">State
                                 Name
@@ -448,7 +448,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="district_court2" <?php echo !empty($state_list) && isset($state_list) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo !empty($state_list) && isset($state_list) ? ' dBlock' : ' dNone'; ?>" id="district_court2">
                         <div class="mb-3">
                             <label class="form-label">District
                                 <span style="color: red" class="astriks">*</span></label>
@@ -468,7 +468,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="state_agency_div1" <?php echo !empty($state_agency_list) && isset($state_agency_list) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo !empty($state_agency_list) && isset($state_agency_list) ? ' dBlock' : ' dNone'; ?>" id="state_agency_div1">
                         <div class="mb-3">
                             <label class="form-label">State
                                 Name
@@ -489,7 +489,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="state_agency_div2" <?php echo !empty($state_agency_list) && isset($state_agency_list) ? 'style="display:block"' : 'style="display:none"'; ?>>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4<?php echo !empty($state_agency_list) && isset($state_agency_list) ? ' dBlock' : ' dNone'; ?>" id="state_agency_div2">
                         <div class="mb-3">
                             <label class="form-label">Agency
                                 Name
@@ -512,7 +512,7 @@
                     </div>
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                         <div class="row">
-                            <div class="progress" style="display: none">
+                            <div class="progress dNone">
                                 <div class="progress-bar progress-bar-success myprogress" role="progressbar" value="0" max="100" style="width:0%">0%</div>
                             </div>
                         </div>

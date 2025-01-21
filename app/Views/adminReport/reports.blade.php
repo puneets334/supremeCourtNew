@@ -20,7 +20,7 @@
         }
     </style>
     <div class="container-fluid">
-        <div id="loader-wrapper" style="display: none;">
+        <div id="loader-wrapper" class="dNone">
             <div id="loader"></div>
         </div>
         <div class="row" id="printData">
@@ -69,12 +69,12 @@
                 <div class="dashboard-section" >
                     <div class="row">
                         <div class="col-12">
-                            <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
+                            <button class="pull-right quick-btn mb-2 dNone" id="printButton" type="button" onclick="PrintDiv();">Print</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="dash-card" id="tableData" style="display: none;"></div>
+                            <div class="dash-card dNone" id="tableData"></div>
                         </div>
                     </div>
                 </div>

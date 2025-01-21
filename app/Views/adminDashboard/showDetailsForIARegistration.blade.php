@@ -248,20 +248,17 @@
                          if(empty($doc['attached_with_doc_id'])){
                         ?>
                         <div class="center-buttons">
-                        <div id="divRegister_"<?=$doc['doc_id']?> sstyle="<?=$registerDisplay?>">
+                        <div id="divRegister_"<?=$doc['doc_id']?> class="<?= $registerDisplay; ?>">
                         <button type="button"  id="<?php echo $doc['doc_id'];?>"  onClick="register_doc(this.id)" class="quick-btn">Transfer to ICMIS</button>
                         <!-- <input type="button"  id="<?php echo $doc['doc_id'];?>" value="Transfer to ICMIS" onClick="register_doc(this.id)"> -->
                         </div>
-                        <div id="divAttach_"<?=$doc['doc_id']?> sstyle="<?=$attachDisplay?>">
+                        <div id="divAttach_"<?=$doc['doc_id']?> class="<?= $attachDisplay; ?>">
                             <button type="button"  id="btnAttach_<?php echo $doc['doc_id'];?>" value="" onClick="no_action(<?=$doc['doc_id']?>)" class="quick-btn">No Action</button>
                             <!-- <input type="button"  id="btnAttach_<?php echo $doc['doc_id'];?>" value="No Action" onClick="no_action(<?=$doc['doc_id']?>)"> -->
                         </div>
                         </div>
                         
                         <?php } else {echo "No Action";}?>
-                        <!--<div id="divAttach_"<?/*=$doc->doc_id*/?> sstyle="<?/*=$attachDisplay*/?>">
-                            <input type="button"  id="btnAttach_<?php /*echo $doc->doc_id;*/?>" value="Attach" onClick="attach_doc(<?/*=$doc->doc_id*/?>)">
-                        </div>-->
                     </td>
                 <?php
                 }

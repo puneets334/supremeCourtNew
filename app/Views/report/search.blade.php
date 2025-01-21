@@ -22,13 +22,6 @@
         font-size: 13px;
         color: #000;
     }
-    div.box {
-        /* height: 109px; */
-        /* padding: 10px; */
-        /*overflow: auto;*/
-        /* border: 1px solid #8080FF; */
-        /*background-color: #E5E5FF;*/
-    }
     @media (max-width: 767px){
         .custom-table td:nth-child(10), .custom-table td:nth-child(11), .custom-table td:nth-child(12), .custom-table td:nth-child(13) {    min-height: 30px;}
     }
@@ -291,7 +284,7 @@
                                                                     <div class="form-group  mb-3">
                                                                         <label class="control-label col-sm-4">
                                                                             <center>Date Range</center>
-                                                                            <div class="checkbox" style="display: none; margin-top: 6px;">
+                                                                            <div class="checkbox dNone" style="margin-top: 6px;">
                                                                                 &nbsp;<label><input type="radio" value="All" name="ActionFiledOn">All</label><label><input type="radio" value="Action" name="ActionFiledOn">Action</label><label><input type="radio" value="FiledOn" name="ActionFiledOn" checked>Filed On</label>
                                                                             </div>
                                                                         </label>
@@ -341,16 +334,15 @@
                                                             <hr />
                                                             <div class="row">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style="display:none;">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12 dNone" id="loader_div">
                                                                         <img id="loader_img" style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;" src="<?php echo base_url(); ?>/assets/images/loading-data.gif">
                                                                     </div>
                                                                     <div class="form-group" id="status_refresh">
                                                                         <div class="start-buttons my-0">
- <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
- <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
-                                                                        <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
-                                                                        </div>
-                                                                       
+                                                                            <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
+                                                                            <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
+                                                                            <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
+                                                                        </div>                                                                       
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -422,7 +414,7 @@
                                                         </div>
                                                     </div>                                                    
                                                     <!--</center><br><hr>-->
-                                                    <div class="card-body diary box" style="display:none; background-color: #ffffff; border-color: #ffffff;">
+                                                    <div class="card-body diary box dNone" style="background-color: #ffffff; border-color: #ffffff;">
                                                         <div class="row mt-3">
                                                             <div class="col-md-2 col-sm-2 col-xs-12">
                                                                 <div class="form-group">
@@ -465,7 +457,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class=" col-md-4 col-sm-6 col-xs-12 ">
-                                                                <div class="col-md-offset-5" id="submitBtn_dynamicalayDiary" style="display: none;margin-top: 25px;">
+                                                                <div class="col-md-offset-5 dNone" id="submitBtn_dynamicalayDiary" style="margin-top: 25px;">
                                                                     <input type="submit" id="SearchDiaryNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchDiaryNumbersubmit">
                                                                 </div>
                                                             </div>

@@ -542,3 +542,11 @@ ul.innpg-ul {
 .video-crd h5.card-title {font-size: 16px;text-align: center;padding: 15px;margin: 0;line-height: 24px;color: #000;}
 
 .alert.flashmessage {margin-bottom: 10px;padding: 10px;color: red;border: 1px dotted red;}
+
+.dNone {
+    display: none;
+}
+
+.dBlock {
+    display: block;
+}

@@ -778,7 +778,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                 </div>
 
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr"  style="display:none;"></textarea>
+                <textarea name="remark" id="descr" class="dNone"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>
@@ -829,7 +829,7 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                     </div>
                 </div>
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr"  style="display:none;"></textarea>
+                <textarea name="remark" id="descr" class="dNone"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>

@@ -58,7 +58,7 @@ if(isset(getSessionData('efiling_details')['stage_id'])) {
                                             <b><?php  echo_data('-- Pending for Approval');?></b>
                                             <?php
                                             $getData_Act=$del_act_id.'@@@'.$act_id.'@@@'.@$act_list->act_name.'@@@'.$actYear.'@@@'.$act_section_all;
-                                            if($_SESSION['login']['ref_m_usertype_id']==USER_ADMIN){?>
+                                            if(isset($_SESSION['login']) && $_SESSION['login']['ref_m_usertype_id']==USER_ADMIN){?>
                                                 <button class="efiling_search btn btn-success btn-sm" data-toggle="modal" href="#act_sections_approveModal" onclick="getDataApprovalModal(<?php echo $getData_Act; ?>)">Action Approve</button>
                                             <?php } ?>
                                         </td>

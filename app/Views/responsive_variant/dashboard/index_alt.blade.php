@@ -224,15 +224,6 @@ td {
 #calendar-cases {
     text-align: center;
 }
-
-/* .no-paginations div#datatable-responsive_length {
-        display: none;
-    } */
-
-   
-/* .pagination-area-new { 
-    position: relative;
-} */
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -246,7 +237,7 @@ td {
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                     <div class="dashbord-tile pink-tile" tabindex="0">
                                         <!-- Start 1st Grid -->
-                                        <div style="display: block;" id="showByMe">
+                                        <div class="dBlock" id="showByMe">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By other Parties</p>
                                             <button id="byMe" class="btn btn-info pull-right">#By me</button>
@@ -331,7 +322,7 @@ td {
                                         <!-- End 1st Grid -->
 
                                         <!--Start 2nd grid-->
-                                        <div style="display: none;" id="showByOthers">
+                                        <div class="dNone" id="showByOthers">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By Me</p>
                                             <button id="byOthers" class="btn btn-info pull-right" tabindex="0">#By

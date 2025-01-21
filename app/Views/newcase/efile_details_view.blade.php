@@ -68,10 +68,7 @@
       
       ?>
    <body>
-      <!-- <div id="loader" style="display: none;">
-         <div class="spinner"></div>
-         </div> -->
-      <div id="loader-wrapper" style="display: none;">
+      <div id="loader-wrapper" class="dNone">
          <div id="loader"></div>
       </div>
       <div class="mainPanel ">
@@ -120,18 +117,6 @@
                                              }
                                              ?>
                                           <button id="collapseAll" onclick="toggleAllAccordions()" class="btn btn-primary pull-right mb-3"> Collapse All </button>
-                                          <!-- <a title="Click Here To View All Information"
-                                             href="javascript:void(0);"
-                                             class="btn btn-outline btn-primary btn-sm openall"
-                                             style="float: right">
-                                             <span class="fa fa-eye"></span>&nbsp;&nbsp; View All
-                                             </a>
-                                             <a title="Click Here To Close All Information"
-                                             href="javascript:void(0);"
-                                             class="btn btn-outline btn-info btn-sm closeall"
-                                             style="float: right; display:none;">
-                                             <span class="fa fa-eye-slash"></span> Close All 
-                                             </a> -->
                                        </div>
                                        <div class="col-md-12 col-sm-12 col-xs-12">
                                           <div class="accordion view-accordion acrdion-with-edit"
@@ -388,8 +373,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item"
-                                                style="display: none">
+                                             <div class="accordion-item dNone">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -436,8 +420,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item"
-                                                style="display: none">
+                                             <div class="accordion-item dNone">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -490,8 +473,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item"
-                                                style="display: none">
+                                             <div class="accordion-item dNone">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -679,8 +661,7 @@
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3 text-center">
                                        <div class="row">
-                                          <div class="progress"
-                                             style="display: none">
+                                          <div class="progress dNone">
                                              <div class="progress-bar progress-bar-success myprogress"
                                                 role="progressbar"
                                                 value="0"
@@ -705,12 +686,7 @@
                                           <!--<a href="<?= $prev_url ?>"
                                              class="btn btn-primary btnPrevious"
                                              type="button">Previous</a>-->
-                                          <input type="submit"
-                                             class="btn btn-success pay_fee"
-                                             id="pay_fee"
-                                             name="submit"
-                                             value="PAY"
-                                             style="display: none;">
+                                          <input type="submit" class="btn btn-success pay_fee dNone" id="pay_fee" name="submit" value="PAY">
                                           <?php
                                              if ((isset($payment_details['0']->payment_status) && !empty($payment_details['0']->payment_status) && $payment_details['0']->payment_status == 'Y') || ($pending_court_fee == 0)) { ?>
                                           <!--<a href="<?= $next_url ?>"
@@ -880,7 +856,7 @@
                      </div>
                   </div>
                   <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                  <textarea name="remark" id="descr" style="display:none;"></textarea>
+                  <textarea name="remark" id="descr" class="dNone"></textarea>
                   <span id="disapprove_count_word" style="float:right"></span>
                   <div class="clearfix"><br></div>
                </div>
@@ -930,7 +906,7 @@
                      </div>
                   </div>
                   <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                  <textarea name="remark" id="descr" style="display:none;"></textarea>
+                  <textarea name="remark" id="descr" class="dNone"></textarea>
                   <span id="disapprove_count_word" style="float:right"></span>
                   <div class="clearfix"><br></div>
                </div>
@@ -1567,48 +1543,6 @@
          max-height: 250px;
          }
       </style>
-      <!-- <style>
-         #loader {
-             position: fixed;
-             left: 0;
-             top: 0;
-             width: 100%;
-             height: 100%;
-             background: rgba(255, 255, 255, 0.8);
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             z-index: 1000;
-         }
-         
-         .spinner {
-             border: 8px solid #f3f3f3;
-             border-top: 8px solid #3498db;
-             border-radius: 50%;
-             width: 50px;
-             height: 50px;
-             animation: spin 1s linear infinite;
-         }
-         
-         @keyframes spin {
-             0% { transform: rotate(0deg); }
-             100% { transform: rotate(360deg); }
-         }
-         </style> -->
-      <!-- <script>
-         $(document).ready(function() {
-             $('.closeall').click(function() {
-                 $('.collapse.in').collapse('hide');
-                 $('.closeall').hide();
-                 $('.openall').show();
-             });
-             $('.openall').click(function() {
-                 $('.collapse:not(".in")').collapse('show');
-                 $('.closeall').show();
-                 $('.openall').hide();
-             });
-         });
-         </script> -->
       <script>
          function toggleAllAccordions() {
              var button = document.getElementById("collapseAll");
