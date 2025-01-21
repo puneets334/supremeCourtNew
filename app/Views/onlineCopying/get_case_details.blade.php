@@ -619,7 +619,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
 
                            </td>
                            <td data-key="Document Details">
-                                <span style="display:none;" id="spjudgementordercode_<?php echo $sno; ?>"><?=$row1['judgement_order_code'];?></span>                               
+                                <span class="dNone" id="spjudgementordercode_<?php echo $sno; ?>"><?=$row1['judgement_order_code'];?></span>                               
                                 <span id="spjudgementorder_<?php echo $sno; ?>"><?php
                                     if($row1['judgement_order'] == "Record of Proceedings" || $row1['judgement_order'] == "Judgement"){
                                         ?>
@@ -644,22 +644,18 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                                }
                                ?>
                                <span <?=$hide_order_dt?> id="sporderdate_<?php echo $sno; ?>"><?php echo date('d-m-Y',strtotime($row1['orderdate'])); ?></span>
-                           </td>
-                           <td data-key="No. of Pages">
-                               <?php
-                               //vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages
-
+                            </td>
+                            <td data-key="No. of Pages">
+                                <?php
+                                // vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages
                                ?>
-                           <span id="sptotalpages_<?php echo $sno; ?>"><?=$NumberOfPages?></span>
-                           <span id="spfilepath_<?php echo $sno; ?>" style="display:none;"><?php echo $path_to_save; ?></span>
-
-
-
-                               <span id="sp_certi_number_of_docs_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_certification_no_doc']; ?></span>
-                               <span id="sp_certi_number_of_pages_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_certification_pages']; ?></span>
-                               <span id="sp_uncerti_number_of_docs_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_uncertification_no_doc']; ?></span>
-                               <span id="sp_uncerti_number_of_pages_<?php echo $sno; ?>" style="display:none;"><?php echo $row1['fee_clc_for_uncertification_pages']; ?></span>
-                           </td>
+                                <span id="sptotalpages_<?php echo $sno; ?>"><?=$NumberOfPages?></span>
+                                <span id="spfilepath_<?php echo $sno; ?>" class="dNone"><?php echo $path_to_save; ?></span>
+                                <span id="sp_certi_number_of_docs_<?php echo $sno; ?>" class="dNone"><?php echo $row1['fee_clc_for_certification_no_doc']; ?></span>
+                                <span id="sp_certi_number_of_pages_<?php echo $sno; ?>" class="dNone"><?php echo $row1['fee_clc_for_certification_pages']; ?></span>
+                                <span id="sp_uncerti_number_of_docs_<?php echo $sno; ?>" class="dNone"><?php echo $row1['fee_clc_for_uncertification_no_doc']; ?></span>
+                                <span id="sp_uncerti_number_of_pages_<?php echo $sno; ?>" class="dNone"><?php echo $row1['fee_clc_for_uncertification_pages']; ?></span>
+                            </td>
 
                        </tr>   
                        <?php

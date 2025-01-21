@@ -161,7 +161,7 @@
 					$users_array = array(USER_ADMIN);
 					if (in_array(getSessionData('login')['ref_m_usertype_id'], $users_array)) {
 						?>
-						<div class="row" style="display: none;">
+						<div class="row dNone">
 							<div class="col-sm-12 col-xs-12">
 								<div class="form-group">
 									<label class="control-label col-md-1 col-sm-1 input-sm"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">View All users</button></label>

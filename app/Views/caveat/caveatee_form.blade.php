@@ -65,20 +65,20 @@ span.select2.select2-container.select2-container--default {
                                 $selectCentralDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid']  == 'D2') ? 'selected=selected' : '';
                                 $selectOtherDept = (isset($caveatee_details[0]['resorgid']) && $caveatee_details[0]['resorgid'] == 'D3') ? 'selected=selected' : '';
                                 $showHideIndividual = '';
-                                $stateDiv ='display:block';
-                                $showHideOtherIndividual = 'display:none';
+                                $stateDiv =' dBlock';
+                                $showHideOtherIndividual = ' dNone';
                                 if(isset($selectIndividual) && !empty($selectIndividual)){
-                                    $showHideIndividual = 'display:block';
+                                    $showHideIndividual = ' dBlock';
                                 }
                                 else if(!empty($selectStateDept) || !empty($selectCentralDept)){
-                                    $showHideOtherIndividual = 'display:block';
-                                    $showHideIndividual = 'display:none';
-                                    $stateDiv ='display:block';
+                                    $showHideOtherIndividual = ' dBlock';
+                                    $showHideIndividual = ' dNone';
+                                    $stateDiv =' dBlock';
                                 }
                                 else if(!empty($selectOtherDept)){
-                                    $stateDiv = 'display:none';
-                                    $showHideOtherIndividual = 'display:block';
-                                    $showHideIndividual = 'display:none';
+                                    $stateDiv = ' dNone';
+                                    $showHideOtherIndividual = ' dBlock';
+                                    $showHideIndividual = ' dNone';
                                 }
                                 ?>
                                     <select class="form-select cus-form-ctrl filter_select_dropdown"
@@ -199,11 +199,11 @@ span.select2.select2-container.select2-container--default {
                         </div>
                     </div>
                     
-                        <div id="org_form" style="<?php echo $showHideOtherIndividual;?>">
+                        <div id="org_form" class="<?php echo $showHideOtherIndividual; ?>">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row">
 
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 <?php echo $stateDiv; ?>" id="stateDivBox">
                                     <div class="mb-3">
                                         <label for="" class="form-label">State Name 
                                             <span style="color: red">*</span>
@@ -232,7 +232,7 @@ span.select2.select2-container.select2-container--default {
 
 
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="display: none">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone" id="otherOrgState">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Other State Name<span style="color: red">*</span></label>
                                         <textarea  rows="1" tabindex = '9' id="org_state_name" name="org_state_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other State Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?></textarea>
@@ -266,10 +266,9 @@ span.select2.select2-container.select2-container--default {
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgDept" style="display: none">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone" id="otherOrgDept">
                                     <div class="row" id="org_state_row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 <?php echo $stateDiv; ?>" id="stateDivBox">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Department<span style="color: red">*</span></label>
                                             <textarea  rows="1" id="org_dept_name"  tabindex = '11' name="org_dept_name" minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Department Name"  type="text"><?php echo isset($caveatee_details[0]['res_org_dept_name'])?$caveatee_details[0]['res_org_dept_name']:''; ?></textarea>
@@ -280,8 +279,7 @@ span.select2.select2-container.select2-container--default {
                                     </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 <?php echo $stateDiv; ?>" id="stateDivBox">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
                                         <select name="org_post" id="org_post" tabindex = '12' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
@@ -304,10 +302,9 @@ span.select2.select2-container.select2-container--default {
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgPost" style="display: none">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone" id="otherOrgPost">
                                     <div class="row" id="org_state_row">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="stateDivBox" style="<?php echo $stateDiv;?>">
-
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 <?php echo $stateDiv; ?>" id="stateDivBox">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Other Post<span style="color: red">*</span></label>
                                             <textarea  rows="1" id="org_post_name" name="org_post_name" tabindex = '13' minlength="3" maxlength="250" class="form-control cus-form-ctrl" placeholder="Other Post Name" ><?php echo isset($caveatee_details[0]['res_org_post_name'])?$caveatee_details[0]['res_org_post_name']:''; ?></textarea>
