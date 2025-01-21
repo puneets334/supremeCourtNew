@@ -14,7 +14,7 @@ helper('view');
 
 use eftec\bladeone\BladeOne;
 use GuzzleHttp\Exception\GuzzleException;
-
+use App\Libraries\webservices\Ecoping_webservices;
 if (!function_exists('pr')) {
     function pr($request)
     {
@@ -3416,167 +3416,42 @@ function article_tracking_offline($articlenumber){
 }
 
 function getCopySearchResult($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets');
-
-    $subQuery1 = $builder
-        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-        ->join('user_asset_type_master a', 'a.id = u.asset_type')
-        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-        ->where('u.mobile', $row['mobile'])
-        ->where('u.email', $row['email'])
-        ->where('u.asset_type', 1)
-        ->where('u.diary_no', 0)
-        ->orderBy('u.ent_time', 'desc')
-        ->limit(1)
-        ->getCompiledSelect(); 
-
-    $subQuery2 = $builder
-        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-        ->join('user_asset_type_master a', 'a.id = u.asset_type')
-        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-        ->where('u.mobile', $row['mobile'])
-        ->where('u.email', $row['email'])
-        ->where('u.asset_type', 2)
-        ->where('u.diary_no', 0)
-        ->orderBy('u.ent_time', 'desc')
-        ->limit(1)
-        ->getCompiledSelect(); 
-
-    $subQuery3 = $builder
-        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-        ->join('user_asset_type_master a', 'a.id = u.asset_type')
-        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-        ->where('u.mobile', $row['mobile'])
-        ->where('u.email', $row['email'])
-        ->where('u.asset_type', 3)
-        ->where('u.diary_no', 0)
-        ->orderBy('u.ent_time', 'desc')
-        ->limit(1)
-        ->getCompiledSelect(); 
-
-    $finalQuery = $db2->query("
-        ($subQuery1)
-        UNION
-        ($subQuery2)
-        UNION
-        ($subQuery3)
-    ");
-
-    try {
-        $query = $db2->query($finalQuery);
-        if ($query) {
-            $result = $query->getResultArray();
-        } else {
-            throw new \Exception('Query failed to execute.');
-        }
-    } catch (\Exception $e) {
-        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
-        $result = [];
-    }
-
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopySearchResult($row);
     return $result;
 }
 
-function getCopyStatusResult($row, $asset_type_flag){
-    $db2 = \Config\Database::connect('e_services'); 
-    $builder = $db2->table('user_assets u');
-    try {
-        $builder->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-                ->join('user_asset_type_master a', 'a.id = u.asset_type', 'inner')
-                ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-                ->where('u.mobile', $row['mobile'])
-                ->where('u.email', $row['email'])
-                ->where('u.asset_type', $asset_type_flag)
-                ->where('u.diary_no', $row['diary'])
-                ->orderBy('u.ent_time', 'desc')
-                ->limit(1);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            throw new \Exception('Database query error: ' . $error['message']);
-        }
-        $result = $query->getRowArray();
-    } catch (\Exception $e) {
-        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
-        $result = [];
-    }
-
+function getCopyStatusResult($row,$asset_type_flag){
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyStatusResult($row,$asset_type_flag);
     return $result;
 }
 
 function getCopyBarcode($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('post_bar_code_mapping');
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyStatusResult($row['id']);
 
-    $builder->select('GROUP_CONCAT(barcode) as barcode')
-            ->where('copying_application_id', $row['id'])
-            ->groupBy('copying_application_id')
-            ->having('barcode IS NOT NULL');
-
-    $query = $builder->get();
-
-    return $result = $query->getRowArray();
+    return $result 
 }
 
 function getCopyApplication($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_documents b');
-
-    try {
-        $builder->select('b.sent_to_applicant_on, b.pdf_embed_on, b.pdf_digital_signature_on, r.order_type AS order_name, "" AS reject_cause, b.*')
-                ->join('ref_order_type r', 'b.order_type = r.id', 'left')
-                ->where('b.copying_order_issuing_application_id', $row['id']);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            throw new \Exception('Database query error: ' . $error['message']);
-        }
-        $result = $query->getResultArray();
-    } catch (\Exception $e) {
-        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
-        $result = [];
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyApplication($row['id']);
     return $result;
 }
 
 function getCopyRequest($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_request_verify_documents b');
-
-    $builder->select('b.path, r.order_type AS order_name, b.reject_cause, b.*')
-            ->join('ref_order_type r', 'b.order_type = r.id', 'left')
-            ->where('b.copying_order_issuing_application_id', $row['id']);
-    $query = $builder->get();
-    if ($query === false) {
-        $error = $db2->error();
-        // echo "<pre>Error: " . $error['message'] . "</pre>";
-        $result = [];
-    } else {
-        $result = $query->getResultArray();
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyRequest($row['id']);
     return $result;
 
 }
 
 function copyFormSentOn($row1){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_request_movement c');
-    $builder->select('c.from_section_sent_on, us.section_name AS from_section1, us2.section_name AS to_section1')
-            ->join('usersection us', 'us.id = c.from_section', 'left')
-            ->join('usersection us2', 'us2.id = c.to_section', 'left')
-            ->where('c.copying_request_verify_documents_id', $row1['id']) // Ensure $row['id'] contains a valid ID
-            ->where('c.display', 'Y')
-            ->where('c.from_section_sent_by !=', 0)
-            ->orderBy('c.from_section_sent_on');
-    $query = $builder->get();
-    if ($query === false) {
-        $error = $db2->error();
-        // echo "<pre>Error: " . $error['message'] . "</pre>";
-        $result = [];
-    } else {
-        $result = $query->getResultArray();
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->copyFormSentOn($row['id']);
     return $result;
 }
 
@@ -4279,6 +4154,7 @@ function insert_copying_application_documents_online($dataArray) {
 
 function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
     $status = '';
+    $ecoping_webservices=new Ecoping_webservices();
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     if(empty($mobile)) {
         $status = " Mobile No. Empty.";
@@ -4341,8 +4217,9 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
                 "update_time" => date('Y-m-d H:i:s'),
                 "templateId" => trim($template_id)
             );
-            $builder = $db2->table('sms_pool');
-            if ($builder->insert($dataArr)) {
+            $result=$ecoping_webservices->saveSMSData($dataArr);
+            //$builder = $db2->table('sms_pool');
+            if ($result) {
                 $status = 'success';
             } else{
                 $status = 'Error:Unable to Insert Records';
