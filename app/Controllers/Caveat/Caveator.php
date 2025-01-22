@@ -44,7 +44,7 @@ class Caveator extends BaseController {
     public function index() {
         $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         if (!in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
-            redirect('login');
+            return redirect()->to(base_url('/'));
             exit(0);
         }        
         if (!empty(getSessionData('estab_details'))) {
@@ -55,12 +55,12 @@ class Caveator extends BaseController {
         } else {
             $msg = getSessionData('MSG');
             $msg = message_show("fail", 'Invalid request !');
-            redirect('whereToFile/caveat');
+            return redirect()->to(base_url('whereToFile/caveat'));
             exit(0);
         }
         $allowed_stages = array('', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE);
         if (!in_array(getSessionData('efiling_details')['stage_id'], $allowed_stages)) { echo 1; exit;
-            redirect('caveat/view');
+            return redirect()->to(base_url('caveat/view'));
             exit(0);
         }
         if (isset(getSessionData('efiling_details')['registration_id']) && !empty(getSessionData('efiling_details')['registration_id'])) {
@@ -98,7 +98,7 @@ class Caveator extends BaseController {
             $data['org_list'] = $this->efiling_webservices->getOrgname($estab_code, $efiling_for_type_id, $state_code, $state_code);
             $data['state_list'] = $this->efiling_webservices->getState($estab_code, $efiling_for_type_id, $state_code);
         } else {
-            redirect('dashboard');
+            return redirect()->to(base_url('dashboard'));
             exit(0);
         }
         if($_SESSION['login']['ref_m_usertype_id'] == USER_CLERK){
@@ -111,35 +111,42 @@ class Caveator extends BaseController {
 
 
     public function add_caveators() {
-        $this->Common_model->get_establishment_details(); // add establishment in session
-        $allowedUsers = [USER_ADVOCATE, USER_IN_PERSON, USER_CLERK];
-        if (!empty(getSessionData('login')['ref_m_usertype_id']) && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowedUsers)) {
-            return redirect()->to('login');
+        $this->Common_model->get_establishment_details(); //add establishment in session
+        $allowedUsers = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
+        if (!in_array($_SESSION['login']['ref_m_usertype_id'], $allowedUsers)) {
+            return redirect()->to(base_url('/'));
+            exit(0);
         }
-        $allowed_stages = ['', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE];
-        if (!in_array(isset(getSessionData('efiling_details')['stage_id'])?getSessionData('efiling_details')['stage_id']:'', $allowed_stages)) {
+        // pr($_SESSION['efiling_details']);
+        $allowed_stages = array('', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE);
+        if (isset($_SESSION['efiling_details']) && !in_array($_SESSION['efiling_details']['stage_id'], $allowed_stages)) {
             echo '1@@@' . htmlentities("Update in Caveator details can be done only at 'Draft' and 'For Compliance' stages.", ENT_QUOTES);
-            log_message('CUSTOM', "Update in Caveator details can be done only at 'Draft' and 'For Compliance' stages.");
-            return redirect()->to('caveat/view');
+            log_message('info', "Update in Caveator details can be done only at 'Draft' and 'For Compliance' stages.");
+            exit(0);
+            return redirect()->to(base_url('caveat/view'));
+            exit(0);
         }
         $draft_data = $this->caveat_common_model->count_efilied_nums_on_draft();
-        $userTypeId = getSessionData('login')['ref_m_usertype_id'];
-        if ($userTypeId == USER_ADVOCATE && $draft_data[0]->total_drafts > ADVOCATE_DRAFT_NO) {
-            session()->setFlashdata('msg', '<div class="alert alert-danger text-center">Only ' . ADVOCATE_DRAFT_NO . ' cases are maintained in Draft Stage. For filing this case, please proceed with available case in draft, then file the case.</div>');
-            log_message('CUSTOM', "Only " . ADVOCATE_DRAFT_NO . " cases are maintained in Draft Stage. For filing this case, please proceed with available case in draft, then file the case.");
-            return redirect()->to('dashboard');
-        } elseif ($userTypeId == USER_IN_PERSON && $draft_data[0]->total_drafts > PARTY_IN_PERSON_DRAFT_SIZE) {
-            session()->setFlashdata('msg', '<div class="alert alert-danger text-center">Only ' . PARTY_IN_PERSON_DRAFT_SIZE . ' cases are maintained in Draft Stage. For filing this case, please proceed with available case in draft, then file the case.</div>');
-            log_message('CUSTOM', "Only " . PARTY_IN_PERSON_DRAFT_SIZE . " cases are maintained in Draft Stage. For filing this case, please proceed with available case in draft, then file the case.");
-            return redirect()->to('dashboard');
+        if($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE) {
+            if ($draft_data[0]->total_drafts > ADVOCATE_DRAFT_NO) {
+                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Only' . ADVOCATE_DRAFT_NO . ' cases are maintain in Draft Stage. For filing this case please proceed available case in draft than file the case. </div>');
+                log_message('info', "Only". ADVOCATE_DRAFT_NO . " cases are maintain in Draft Stage. For filing this case please proceed available case in draft than file the case.");
+                return redirect()->to(base_url('dashboard'));
+                exit(0);
+            }
+        } else if ($_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON) {
+            if ($draft_data[0]->total_drafts > PARTY_IN_PERSON_DRAFT_SIZE) {
+                $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Only' . PARTY_IN_PERSON_DRAFT_SIZE . ' cases are maintain in Draft Stage. For filing this case please proceed available case in draft than file the case. </div>');
+                log_message('info', "Only". PARTY_IN_PERSON_DRAFT_SIZE . "cases are maintain in Draft Stage. For filing this case please proceed available case in draft than file the case. ");
+                return redirect()->to(base_url('dashboard'));
+                exit(0);
+            }
         }
-        // $validation = \Config\Services::validation();
         $this->validation->setRules([
             'case_type' => 'required|trim',
             'party_is' => 'required|trim',
         ]);
         if(!empty($_POST['party_is']) && escape_data($_POST['party_is']) == 'I') {
-            //$this->form_validation->set_rules('pet_dob', 'D.O.B', 'required|trim|validate_date_dd_mm_yyyy');
             $this->validation->setRules([
                 'pet_complainant' => 'required|trim|min_length[3]|max_length[99]|validateAlphaNumericSingleDoubleQuotesBracketWithSpecialCharacters',
                 'pet_rel_flag' => 'required|trim',
@@ -148,7 +155,6 @@ class Caveator extends BaseController {
                 'pet_gender' => 'required|trim',
             ]);
         } else if (escape_data($_POST['party_is']) == 'D1' || escape_data($_POST['party_is']) == 'D2'){
-            //36.8C81BFDC == 'NOT IN LIST'
             if(isset($_POST['org_state']) && !empty($_POST['org_state'])){
                 $otherstatename_valid=url_decryption($_POST['org_state']);
                 if($otherstatename_valid == 0)
@@ -183,15 +189,10 @@ class Caveator extends BaseController {
                     ]);
             }
         } else if (escape_data($_POST['party_is']) == 'D3'){
-            // $this->form_validation->set_rules('org_state', 'Organisation state', 'required|trim');
             $this->validation->setRules([
                 'org_dept' => 'required|trim',
             ]);
         }
-        // $email_required = $_SESSION['estab_details']['is_pet_email_required'] == 't' ? 'required|' : '';
-        // $mobile_required = $_SESSION['estab_details']['is_pet_mobile_required'] == 't' ? 'required|' : '';
-        //  $state_required = $_SESSION['estab_details']['is_pet_state_required'] == 't' ? 'required' : '';
-        //  $district_required = $_SESSION['estab_details']['is_pet_district_required'] == 't' ? 'required' : '';
         $this->validation->setRules([
             'pet_email' => 'required|trim|min_length[6]|max_length[49]|valid_email',
             'pet_mobile' => 'required|trim|exact_length[10]|is_natural',
@@ -219,7 +220,7 @@ class Caveator extends BaseController {
         $pet_gender = !empty($_POST["pet_gender"]) ?  escape_data($_POST["pet_gender"]) : NULL;
         $pet_age = !empty($_POST["pet_age"]) ? escape_data($_POST["pet_age"]) : NULL;
         $pet_dob = !empty($_POST["pet_dob"]) ? escape_data($_POST["pet_dob"]) : NULL;
-        if($pet_dob != '') {
+        if($pet_dob != ''){
             $date = explode('/', $pet_dob);
             $pet_dob = $date[2] . '-' . $date[1] . '-' . $date[0];
         } else {
@@ -245,23 +246,20 @@ class Caveator extends BaseController {
         $is_govt_filing=trim($this->request->getPost("is_govt_filing"));
         $is_govt_filing =  !empty($is_govt_filing) ? 1 : 0;
         if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
-            if (isset($_POST['impersonated_aor']) && !empty($_POST['impersonated_aor'])) {
+            if (isset($_POST['impersonated_aor']) && !empty($_POST['impersonated_aor'])){
                 $impersonated_aor = explode('@@@', escape_data($this->request->getPost("impersonated_aor")));
-                if (!empty($impersonated_aor)) {
+                if (!empty($impersonated_aor)){
                     $_SESSION['login']['aor_code'] = $impersonated_aor[0];
                 }
-            } else{
+            } else {
                 echo '1@@@AOR field is required.'; exit();
             }
             $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
             $id=!empty($aorData) ? $aorData[0]->id:0;
-            if (empty($id)) {
-                echo '1@@@' . htmlentities("*Please AOR field is required $id", ENT_QUOTES);
-            }
+            if (empty($id)){ echo '1@@@' . htmlentities("*Please AOR field is required $id", ENT_QUOTES);}
         }
-        //check Whether filed by Government aor or not
-        if (isset($_SESSION['login']['aor_code']) && !empty($_SESSION['login']['aor_code'])) {
-            if (is_AORGovernment($_SESSION['login']['aor_code'])) {
+        if (isset($_SESSION['login']['aor_code']) && !empty($_SESSION['login']['aor_code'])){
+            if (is_AORGovernment($_SESSION['login']['aor_code'])){
                 $is_govt_filing =$is_govt_filing;
             } else{
                 $is_govt_filing =0;
@@ -294,18 +292,19 @@ class Caveator extends BaseController {
             'is_govt_filing' => $is_govt_filing,
         );
         $cis_masters_values = array(
-            // 'pet_org_name' => strtoupper($organisation_name),
-            // 'pet_state_name' => strtoupper($state_name),
-            // 'pet_distt_name' => strtoupper($district_name),
-            // 'pet_taluka_name' => strtoupper($taluka_name),
-            // 'pet_town_name' => strtoupper($town_name),
-            // 'pet_ward_name' => strtoupper($ward_name),
-            // 'pet_village_name' => strtoupper($village_name),
-            // 'pet_relation' => strtoupper($pet_relation)
+        //    'pet_org_name' => strtoupper($organisation_name),
+        //    'pet_state_name' => strtoupper($state_name),
+        //    'pet_distt_name' => strtoupper($district_name),
+        //    'pet_taluka_name' => strtoupper($taluka_name),
+        //    'pet_town_name' => strtoupper($town_name),
+        //    'pet_ward_name' => strtoupper($ward_name),
+        //    'pet_village_name' => strtoupper($village_name),
+        //    'pet_relation' => strtoupper($pet_relation)
         );
-        $registration_id = isset(getSessionData('efiling_details')['registration_id']) ? getSessionData('efiling_details')['registration_id'] : '';
+        $registration_id = isset($_SESSION['efiling_details']) && !empty($_SESSION['efiling_details']['registration_id']) ? $_SESSION['efiling_details']['registration_id'] : '';
         if ($registration_id != '' && !empty($registration_id)) {
             if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
+
                 $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
                 $created_by=!empty($aorData) ? $aorData[0]->id  : 0;
                 $case_details_update_data = array(
@@ -322,6 +321,7 @@ class Caveator extends BaseController {
                 $data = array_merge($data, array('createdby'=>$created_by,'updated_by' => $this->session->userdata['login']['id'],'updated_by_ip' => $_SERVER['REMOTE_ADDR']));
             }
             $this->Caveator_model->update_caveators($registration_id, $data, $cis_masters_values);
+
             echo '2@@@' . htmlentities('Caveator updated successfully!', ENT_QUOTES) . '@@@' . base_url('caveat/defaultController/processing/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_CAVEAT . '#' . Draft_Stage)));
         } else {
             $result = $this->Caveator_model->add_caveator($data, $pet_mobile, $pet_email, $cis_masters_values);
@@ -331,150 +331,6 @@ class Caveator extends BaseController {
                         $this->Clerk_model->clerk_filings_insert($result['registration_id'],$_SESSION['login']['aor_code']);
                     }
                 }
-                echo '2@@@' . htmlentities('Caveator added successfully', ENT_QUOTES) . '@@@' . base_url('caveat/defaultController/processing/' . url_encryption(trim($result['registration_id'] . '#' . E_FILING_TYPE_CAVEAT . '#' . Draft_Stage)));
-            } else {
-                echo '1@@@' . htmlentities('eFiling Failed. Please Try again', ENT_QUOTES);
-            }
-        }
-        $pet_gender = $pet_age = NULL;
-        $pet_complainant = ((string) ($this->request->getPost("pet_complainant"))) ?? NULL;
-        if (empty($pet_complainant)) {
-            $pet_complainant = NULL;
-        }
-        $pet_relation = ((string) ($this->request->getPost('pet_rel_flag'))) ?? NULL;
-        if (empty($pet_relation)) {
-            $pet_relation = NULL;
-        }
-        $relative_name = ((string) ($this->request->getPost("relative_name"))) ?? NULL;
-        if (empty($relative_name)) {
-            $relative_name = NULL;
-        }    
-        $pet_gender = ((string) ($this->request->getPost("pet_gender"))) ?? NULL;
-        if (empty($pet_gender)) {
-            $pet_gender = NULL;
-        }
-        $pet_age = ($this->request->getPost("pet_age")) ?? NULL;
-        if (empty($pet_age)) {
-            $pet_age = NULL;
-        }
-        $pet_dob = $this->request->getPost("pet_dob");
-        if (!empty($pet_dob)) {
-            $date = explode('/', $pet_dob);
-            $pet_dob = $date[2] . '-' . $date[1] . '-' . $date[0];
-        } else {
-            $pet_dob = NULL;
-        }
-        $organisation_id = !empty((string) ($this->request->getPost('party_is')))?$this->request->getPost('party_is'): NULL;
-        if (empty($organisation_id)) {
-            $organisation_id = NULL;
-        }
-        // if(($this->request->getPost("pet_gender"))=='undefined') {
-        //     $pet_gender = NULL;
-        // }
-        if ($organisation_id != 'I') {
-            $is_org = TRUE;
-            if ($organisation_id != 'D3') {
-                $org_state = url_decryption($_POST["org_state"]);
-                if ($org_state == '0') {
-                    $org_state_name = $_POST["org_state_name"];
-                    $org_state_not_in_list = TRUE;
-                } else {
-                    $org_state_name = NULL;
-                    $org_state_not_in_list = FALSE;
-                }
-            } else {
-                $org_state = 00;
-                $org_state_name = NULL;
-                $org_state_not_in_list = FALSE;
-            }
-            $org_dept = url_decryption($_POST["org_dept"]);
-            if ($org_dept == '0') {
-                $org_dept_name = $_POST["org_dept_name"];
-                $org_dept_not_in_list = TRUE;
-            } else {
-                $org_dept_name = NULL;
-                $org_dept_not_in_list = FALSE;
-            }
-            $org_post = url_decryption($_POST["org_post"]);
-            if ($org_post == '0') {
-                $org_post_name = $_POST["org_post_name"];
-                $org_post_not_in_list = TRUE;
-            } else {
-                $org_post_name = NULL;
-                $org_post_not_in_list = FALSE;
-            }
-        } else {
-            $org_state = 00;
-            $org_state_name = NULL;
-            $org_state_not_in_list = FALSE;
-            $org_dept = 0;
-            $org_dept_name = NULL;
-            $org_dept_not_in_list = FALSE;
-            $org_post = 0;
-            $org_post_name = NULL;
-            $org_post_not_in_list = FALSE;
-        }    
-        // $org_state = !empty($this->request->getPost('org_state')) ? url_decryption($this->request->getPost('org_state')) : NULL;
-        // $org_state_name = !empty(($this->request->getPost('org_state_name')))?$this->request->getPost('org_state_name'): NULL;
-        // $org_dept = !empty($this->request->getPost('org_dept')) ? url_decryption($this->request->getPost('org_dept')) : NULL;
-        // $org_dept_name = !empty((string) ($this->request->getPost('org_dept_name')))?$this->request->getPost('org_dept_name'):NULL;
-        // $org_post = !empty((string) $this->request->getPost('org_post')) ? url_decryption(escape_data($this->request->getPost('org_post'))) : NULL;
-        // $org_post_name = !empty((string) ($this->request->getPost('org_post_name')))? $this->request->getPost('org_post_name'): NULL;
-        $pet_email = !empty((string) ($this->request->getPost("pet_email"))) ? $this->request->getPost("pet_email"): NULL;
-        $pet_mobile = !empty($this->request->getPost("pet_mobile"))? $this->request->getPost("pet_mobile"): NULL;
-        $pet_address = !empty($this->request->getPost("pet_address"))? $this->request->getPost("pet_address"): NULL;
-        $state_id = !empty($this->request->getPost('party_state')) ? url_decryption(escape_data($this->request->getPost('party_state'))) : NULL;
-        $district_id = !empty($this->request->getPost('party_district')) ? url_decryption($this->request->getPost('party_district')) : NULL;
-        $pet_pincode =  !empty($this->request->getPost('party_pincode')) ? $this->request->getPost('party_pincode'): NULL;
-        $pet_city = !empty((string) ($this->request->getPost('party_city')))? $this->request->getPost('party_city'): NULL;
-        // if(empty($org_state)){$org_state=NULL;}
-        // if(empty($org_post_name)){$org_post_name=NULL;}
-        // if(empty($org_dept_name)){$org_dept_name=NULL;}
-        // if(empty($org_post)){$org_post=NULL;}
-        // if(empty($org_dept)){$org_dept=NULL;}
-        if(empty($state_id)){$state_id=NULL;}
-        if(empty($pet_email)){$pet_email=NULL;}
-        if(empty($pet_pincode)){$pet_pincode=NULL;}
-        // $id = isset(getSessionData('login')['id'])?? NULL;
-        $id = getSessionData('login')['id'];
-        $case_type = !empty($this->request->getPost('case_type')) ? url_decryption($this->request->getPost('case_type')) : NULL;
-        $pet_extracount = (string) ($this->request->getPost('pet_extracount') ?? 1);
-        $is_govt_filing =!empty($this->request->getPost("is_govt_filing"))? trim($this->request->getPost("is_govt_filing")):'';
-        $is_govt_filing = !empty($is_govt_filing) ? 1 : 0;
-        $data = [
-            'pet_name' => isset($pet_complainant) ? strtoupper($pet_complainant) : NULL,
-            'orgid' => $organisation_id,
-            'pet_sex' => $pet_gender,
-            'pet_gender' => $pet_gender,
-            'pet_father_flag' => $pet_relation,
-            'pet_father_name' => isset($relative_name) ? strtoupper($relative_name) : NULL,
-            'pet_age' => $pet_age,
-            'pet_dob' => $pet_dob,
-            'pet_email' => isset($pet_email) ? strtoupper($pet_email) : NULL,
-            'pet_mobile' => $pet_mobile,
-            'petadd' => isset($pet_address) ? strtoupper($pet_address) : NULL,
-            'pet_pincode' => $pet_pincode,
-            'state_id' => $state_id,
-            'dist_code' => $district_id,
-            'org_state' => $org_state,
-            'org_state_name' => $org_state_name,
-            'org_dept' => $org_dept,
-            'org_dept_name' => $org_dept_name,
-            'org_post' => $org_post,
-            'org_post_name' => $org_post_name,
-            'pet_city' => $pet_city,
-            'createdby' => $id,
-            'case_type_id' => $case_type,
-            'is_govt_filing' => $is_govt_filing,
-        ];
-        $cis_masters_values = [];
-        $registration_id = isset(getSessionData('efiling_details')['registration_id'])?getSessionData('efiling_details')['registration_id']:'';
-        if (!empty($registration_id)) {
-            $this->Caveator_model->update_caveators($registration_id, $data, $cis_masters_values);
-            echo '2@@@' . htmlentities('Caveator updated successfully!', ENT_QUOTES) . '@@@' . base_url('caveat/defaultController/processing/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_CAVEAT . '#' . Draft_Stage)));
-        } else {
-            $result = $this->Caveator_model->add_caveator($data, $pet_mobile, $pet_email, $cis_masters_values);
-            if ($result) {
                 echo '2@@@' . htmlentities('Caveator added successfully', ENT_QUOTES) . '@@@' . base_url('caveat/defaultController/processing/' . url_encryption(trim($result['registration_id'] . '#' . E_FILING_TYPE_CAVEAT . '#' . Draft_Stage)));
             } else {
                 echo '1@@@' . htmlentities('eFiling Failed. Please Try again', ENT_QUOTES);

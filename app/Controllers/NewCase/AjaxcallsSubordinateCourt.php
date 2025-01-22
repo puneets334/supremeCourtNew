@@ -175,7 +175,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 $validation_rules = [
                     "cnr" => [
                         "label" => "CNR Number",
-                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Z]{4}[0-9]{12}$/]"
+                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Za-z]{4}[0-9]{12}$/]"
                     ],
                 ];
             }
@@ -232,7 +232,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 $validation_rules = [
                     "cnr" => [
                         "label" => "CNR Number",
-                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Z]{4}[0-9]{12}$/]"
+                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Za-z]{4}[0-9]{12}$/]"
                     ],
                 ];
             }
@@ -278,7 +278,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
                 if(!empty(trim($_POST['cnr']))) 
 
-                    $cino = trim($_POST['cnr']);
+                    $cino = trim(strtoupper($_POST['cnr']));
 
 
                 if ((!empty($high_court_id) && !empty($est_code) && !empty($case_type_id) && !empty($case_number) && !empty($case_year) ) || !empty($cino)) {
@@ -356,7 +356,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 }
 
                 if(!empty(trim($_POST['cnr'])))
-                    $cino = trim($_POST['cnr']);
+                    $cino = trim(strtoupper($_POST['cnr']));
 
                 if (isset($cino) && !empty($cino) && strlen($cino)==16) {
                     $case_data = $this->efiling_webservices->getOpenAPICNRSearch($cino);

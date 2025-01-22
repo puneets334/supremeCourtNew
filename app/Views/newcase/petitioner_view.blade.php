@@ -48,7 +48,7 @@
                     <h6 class="text-center fw-bold">Petitioner Information</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
-                <div class="row dNone" id="errDiv">
+                <div class="row" id="errDiv" style="display: none;">
                     <div class="alert alert-danger" role="alert" id="alertMsg"></div>
                 </div>
                 <div class="row">

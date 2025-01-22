@@ -124,9 +124,11 @@ class Ajaxcalls extends BaseController {
         $dropDownOptionsDept = '<option value="">Select Department</option>';
         $sely = ($selected_org_st_id == url_encryption(0)) ? "selected=selected" : '';
         $dropDownOptionsDept .= '<option '.$selDept_not_in_list.' value="' . url_encryption(0) . '">NOT IN LIST</option>';
-        foreach ($dept_list as $dept) {
-            $sel = ($selected_dept_id == url_encryption($dept->deptcode)) ? "selected=selected" : '';
-            $dropDownOptionsDept .= '<option ' . $sel . ' value="' . escape_data(url_encryption($dept->deptcode)) . '">' . escape_data(strtoupper($dept->deptname)) . '</option>';
+        if(is_array($dept_list)){
+            foreach ($dept_list as $dept) {
+                $sel = ($selected_dept_id == url_encryption($dept->deptcode)) ? "selected=selected" : '';
+                $dropDownOptionsDept .= '<option ' . $sel . ' value="' . escape_data(url_encryption($dept->deptcode)) . '">' . escape_data(strtoupper($dept->deptname)) . '</option>';
+            }
         }
         echo $dropDownOptions = $dropDownOptionsState . '$$$$$' . $dropDownOptionsDept;
     }

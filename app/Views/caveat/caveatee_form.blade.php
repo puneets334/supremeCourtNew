@@ -179,9 +179,9 @@ span.select2.select2-container.select2-container--default {
                             </div>
                             <?php $gmchecked ='';
                             // pr($caveatee_details[0]);
-                                $gmchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender'] == 'M') ? 'checked="checked"' : '';
-                                $gfchecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'F' )? 'checked="checked"' : '';
-                                $gochecked = (isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
+                                $gmchecked = (is_array($caveatee_details) && isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender'] == 'M') ? 'checked="checked"' : '';
+                                $gfchecked = (is_array($caveatee_details) && isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'F' )? 'checked="checked"' : '';
+                                $gochecked = (is_array($caveatee_details) && isset($caveatee_details[0]['res_gender']) && $caveatee_details[0]['res_gender']== 'O')? 'checked="checked"' : '';
                                 ?>
                                 <div class="form-check form-check-inline m-0">
                                     <input class="form-check-input cus-form-check" type="radio" name="pet_gender" id="pet_gender1"  tabindex='7'  value="M" <?php echo $gmchecked; ?>>
