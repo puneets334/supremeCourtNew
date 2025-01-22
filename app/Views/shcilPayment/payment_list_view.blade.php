@@ -354,8 +354,10 @@
             url: base_url + "shcilPayment/paymentCheckStatus",
             success: function (data) {
                 $('.status_refresh').remove();
-               // location.reload();
-               alert(data);
+                if (data=='SUCCESS|Status Successfully Updated.'){
+                    alert(data);
+                }
+                window.location.reload();
                 $.getJSON(base_url + "csrftoken", function (result) {
                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                 });

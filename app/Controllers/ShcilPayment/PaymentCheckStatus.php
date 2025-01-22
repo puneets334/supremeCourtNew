@@ -82,7 +82,10 @@ class PaymentCheckStatus extends BaseController {
                 if (strtolower($shciltxnstatus) == 'success') {
                     $payment_status = 'Y';
                     $sentSMS = "Fee received successfully for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with Receipt No. " . $transaction_num . ", of amount Rs. " . $received_amount . "/-. - Supreme Court of India ";
-                    send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
+                    $is_already_paid_court_fee=$this->Payment_model->is_already_paid_court_fee($order_details[0], $order_details[1]);
+                    if (empty($is_already_paid_court_fee)){
+                        send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
+                    }
                     $smsTemplate=SCISMS_Payment_Success;
                     $subject = "Payment Success : Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
                 } elseif (strtolower($shciltxnstatus) == 'pending') {
