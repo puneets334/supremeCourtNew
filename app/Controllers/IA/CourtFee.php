@@ -93,7 +93,7 @@ class CourtFee extends BaseController {
                  
                     
                     $data['court_fee'] = $total_court_fee;
-                    // pr($data['court_fee'] );
+                    //  pr($data);
                 }
                 return $this->render('IA.ia_view', $data);
 
