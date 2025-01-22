@@ -97,7 +97,7 @@ class Efiling_webservices {
         //$json = json_encode($web_response);
         //$configData = json_decode($json, true);
         $response = json_decode($web_response);
-        $response_str = !empty($response->response_str) ? $response->response_str : $response->status;
+        $response_str = !empty($response->response_str) ? $response->response_str : (isset($response->status) ? $response->status : '');
         $result_data = !empty($response_str) ? base64_decode($response_str) : '';
         $decrypt = openssl_decrypt($result_data, 'AES-128-CBC', $authentication_key, OPENSSL_RAW_DATA, $iv);
         return json_decode($decrypt);
