@@ -1151,9 +1151,8 @@ class CommonModel extends Model
     {
         $sql = "select cd.sc_case_type_id,cd.subject_cat,mcf.court_fee,mcf.flag,s.subcode1,s.subcode2,s.subcode3,s.subcode4,s.sub_name1,s.sub_name2,s.sub_name3, s.sub_name4,s.category_sc_old,c.casename,c.nature, cd.court_fee_calculation_helper_flag, (select count(1) from  efil.tbl_lower_court_details lcd where lcd.registration_id=cd.registration_id and lcd.is_deleted='false' and lcd.is_judgment_challenged ='true') as order_challanged, sum(case when cp.p_r_type='P' and cp.is_deleted='false' then 1 else 0 end) as total_petitioners from efil.tbl_case_details cd inner join icmis.m_court_fee mcf on cd.subject_cat =mcf.submaster_id left join efil.tbl_case_parties cp on cd.registration_id =cp.registration_id left join icmis.submaster s on cd.subject_cat =s.id left join icmis.casetype c on cd.sc_case_type_id =c.casecode where cd.registration_id=$registration_id and mcf.is_active='T' and mcf.display='Y' group by cd.sc_case_type_id,cd.subject_cat,mcf.court_fee,mcf.flag,s.subcode1,s.subcode2,s.subcode3,s.subcode4,s.sub_name1, s.sub_name2,s.sub_name3,s.sub_name4,s.category_sc_old,c.casename,c.nature,cd.court_fee_calculation_helper_flag,cd.registration_id";
         $query = $this->db->query($sql);
-
+        $result = $query->getResultArray();
         if ($query->getNumRows() >= 1) {
-
             $result = $query->getResultArray();
             return $result;
         } else {
