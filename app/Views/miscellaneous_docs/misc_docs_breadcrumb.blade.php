@@ -1,12 +1,9 @@
 <?php
-
 use App\Models\Department\DepartmentModel;
-
 $segment = service('uri');
 $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : [];
 ?>
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
-<!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/font-awesome.min.css" rel="stylesheet">
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/animate.css" rel="stylesheet">
@@ -41,19 +38,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         ?>
                         <h5><i class="fa fa-file"></i> {{$commonHeading}}</h5>
                     </div>
-                    <!-- <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="form-response" id="msg">
-                                    
-                                    // if (!empty(getSessionData('msg'))) {
-                                    //     echo getSessionData('msg');
-                                    // }
-                                     
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="page-breifs">
                         <ul>
                             <li><a class="blue-dot"><span class="mdi mdi-record"></span> Active </a></li>
@@ -69,20 +53,18 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     $ArrayHOLD = array(HOLD);
                     $ArrayDISPOSED = array(DISPOSED);
                     if (($_SESSION['login']['ref_m_usertype_id'] == USER_ADMIN || $_SESSION['login']['ref_m_usertype_id'] == USER_ACTION_ADMIN) && in_array($_SESSION['efiling_details']['stage_id'], $Array)) {
-                        
                         if (isset($details['details'][0]['c_status']) && $details['details'][0]['c_status'] != 'D') {
                             if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
-                                echo '<a data-bs-toggle="modal" href="#approveModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Approve</a>
-                                      <a data-bs-toggle="modal" href="#disapproveModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Disapprove</a>';
-                                if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayHOLD))) {
-                                    echo '<a data-bs-toggle="modal" href="#holdModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Hold</a>';
-                                }
-                                echo '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>';
+                                ?>
+                                <a data-bs-toggle="modal" href="#approveModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85; color:#ffffff;">Approve</a>
+                                <a data-bs-toggle="modal" href="#disapproveModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Disapprove</a>
+                                <?php if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayHOLD))) { ?>
+                                    <a data-bs-toggle="modal" href="#holdModal" class="quick-btn btn btn-danger btn-sm" style="background-color: #C11900;color:#ffffff;">Hold</a>
+                                <?php } ?>
+                                <a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>
+                                <?php
                             }
                         }
-                        // if ((!in_array($_SESSION['efiling_details']['stage_id'], $ArrayDISPOSED))) {
-                        //     echo $details['details'][0]['c_status'] ?? $details['details'][0]['c_status'] == 'D' ? '<a data-bs-toggle="modal" href="#disposedModal" class="quick-btn btn btn-success btn-sm" style="background-color: #169F85;color:#ffffff;">Disposed</a>' : '';
-                        // }
                     }
                     $Array = array(Draft_Stage, Initial_Defected_Stage, DEFICIT_COURT_FEE, I_B_Rejected_Stage, E_REJECTED_STAGE);
                     $refiling_stages_array = array(I_B_Defected_Stage);
@@ -94,7 +76,6 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                         ?>
                                         <a href="<?php echo base_url('miscellaneous_docs/FinalSubmit'); ?>" class="quick-btn">Final Submit</a>
                                         <?php
-                                        // $finalButton = '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">Final Submit</a>';
                                     } else {
                                         
                                     }
@@ -104,20 +85,17 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     <!-- <a href="javascript:void(0)" class="quick-btn gradient-btn" onclick="ActionToTrash('UAT')">Trash</a> -->
                                     <?php
                                 }
-                            }elseif (in_array($_SESSION['efiling_details']['stage_id'], $refiling_stages_array)) {
-                            echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
-                            if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
-
-                                if (($_SESSION['efiling_details']['gras_payment_status'] != 'P') ||
-                                    ( $_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL &&
-                                        ($_SESSION['efiling_details']['is_payment_defecit'] == 't' || $_SESSION['efiling_details']['is_payment_defective'] == 't')
-                                    )) {
-
-                                    //echo '<a href="' . base_url('miscellaneous_docs/FinalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>';
-                                    echo '<a href="' . base_url('efilingAction/IAMiscDocsRefiledFinalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>';
+                            } elseif (in_array($_SESSION['efiling_details']['stage_id'], $refiling_stages_array)) { ?>
+                                <div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>
+                                <?php
+                                if (in_array(MISC_BREAD_COURT_FEE, explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
+                                    if (($_SESSION['efiling_details']['gras_payment_status'] != 'P') || ($_SESSION['efiling_details']['gras_payment_status'] == 'Y' && $_SESSION['efiling_details']['payment_verified_by'] != NULL && ($_SESSION['efiling_details']['is_payment_defecit'] == 't' || $_SESSION['efiling_details']['is_payment_defective'] == 't'))) {
+                                        ?>
+                                        <a href="<?php echo base_url('efilingAction/IAMiscDocsRefiledFinalSubmit'); ?>" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>
+                                        <?php
+                                    }
                                 }
                             }
-                        }
                         }
                     }
                     if ($_SESSION['login']['ref_m_usertype_id'] == USER_ADVOCATE || $_SESSION['login']['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
@@ -132,12 +110,10 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                     }
                     ?>
                     <div class="btns-sec">
-                        <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
                         <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                     </div>
                 </div>
-            </div>
-           
+            </div>           
             <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                     <div class="crnt-page-head">
