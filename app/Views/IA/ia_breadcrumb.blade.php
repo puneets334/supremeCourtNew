@@ -69,12 +69,7 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         if (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_CLERK || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
                             if (in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                                 if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-
-                                    if ((isset(getSessionData('efiling_details')['gras_payment_status']) &&    getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
-                                        (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
-                                            (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
-                                        )
-                                    ) {
+                                    if ((isset(getSessionData('efiling_details')['gras_payment_status']) && getSessionData('efiling_details')['gras_payment_status'] != 'P') || (isset(getSessionData('efiling_details')['gras_payment_status']) && getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL && (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't'))) {
                                         $final_submit_action = TRUE;
                                         ?>
                                         <button type="button" class="quick-btn btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#FinalSubmitModal">Submit</button>
@@ -85,18 +80,15 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                                     $final_submit_continue_action = TRUE;
                                 }
                             } elseif (in_array(getSessionData('efiling_details')['stage_id'], $refiling_stages_array)) {
-                                echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
+                                ?>
+                                <div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>
+                                <?php
                                 if (in_array(IA_BREAD_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
-
-                                    if ((isset(getSessionData('efiling_details')['gras_payment_status']) &&    getSessionData('efiling_details')['gras_payment_status'] != 'P') ||
-                                        (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL &&
-                                            (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't')
-                                        )
-                                    ) {
+                                    if ((isset(getSessionData('efiling_details')['gras_payment_status']) && getSessionData('efiling_details')['gras_payment_status'] != 'P') || (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['gras_payment_status'] == 'Y' && getSessionData('efiling_details')['payment_verified_by'] != NULL && (isset(getSessionData('efiling_details')['gras_payment_status']) &&   getSessionData('efiling_details')['is_payment_defecit'] == 't' || getSessionData('efiling_details')['is_payment_defective'] == 't'))) {
                                         $final_submit_action = TRUE;
-                                        /*echo '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#FinalSubmitModal">SUBMIT FOR RE-FILING</button>';*/
-                                        echo '<a href="' . base_url('efilingAction/IAMiscDocsRefiledFinalSubmit') . '" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>';
-
+                                        ?>
+                                        <a href="<?php echo base_url('efilingAction/IAMiscDocsRefiledFinalSubmit'); ?>" class="btn btn-success btn-sm">SUBMIT FOR RE-FILING</a>
+                                        <?php
                                     }
                                 }
                             }
