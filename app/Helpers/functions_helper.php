@@ -3080,6 +3080,7 @@ function addPrefixIfAbsent($number)
 
 function send_whatsapp_message($registration_id = null, $efiling_number = null, $sms_text = null)
 {
+    return TRUE;
     // $ci = &get_instance();
     // $ci->load->model('common/Common_model');
     $cause_title='';

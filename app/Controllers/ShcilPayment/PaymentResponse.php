@@ -141,10 +141,12 @@ class PaymentResponse extends BaseController {
                     $save_payment_response = array_merge($save_payment_response_1, $save_payment_response_2, $save_payment_response_3);
                     $this->session->setFlashdata('success', 'Fee payment received successfully !');
                     //$_SESSION['MSG'] = message_show("success", 'Fee payment received successfully !');
-                    $sentSMS = "Fee received successfully for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with 
-                                Receipt No. " . $transaction_num . ", of amount Rs. " . $received_amount . "/-. - Supreme Court of India";
+                    $sentSMS = "Fee received successfully for Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']) . " with Receipt No. " . $transaction_num . ", of amount Rs. " . $received_amount . "/-. - Supreme Court of India";
                     // send_whatsapp_message($_SESSION['efiling_details']['registration_id'],$_SESSION['efiling_details']['efiling_no']," Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
-
+                    $is_already_paid_court_fee=$this->Payment_model->is_already_paid_court_fee($registration_id,$order_num);
+                    if (empty($is_already_paid_court_fee)) {
+                        send_whatsapp_message($_SESSION['efiling_details']['registration_id'], $_SESSION['efiling_details']['efiling_no'], " Transaction Number: " . $transaction_num . ", Amount Rs. " . $received_amount . "/-. SUCCESSFULLY RECEIVED");
+                    }
                     $smsTemplate=SCISMS_Payment_Success;
                     $subject = "Payment Success : Efiling No. " . efile_preview($_SESSION['efiling_details']['efiling_no']);
                 } elseif ($shciltxnstatus == 'pending') {
