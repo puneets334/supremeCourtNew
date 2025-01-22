@@ -690,7 +690,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                     if(isset($result['policeStation'])){
                         foreach($result['policeStation'] as $dataRes)
                         {
-                            echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.isset($dataRes['police_district']) ? $dataRes['police_district'] : ''), ENT_QUOTES) . '</option>';
+                            echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.(isset($dataRes['police_district']) ? $dataRes['police_district'] : '')), ENT_QUOTES) . '</option>';
                         }
                     }
                     echo '<option value="" > Not in List </option>';
