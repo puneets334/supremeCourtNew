@@ -17,7 +17,7 @@ COPY sysconf/docker/apache2/ports.conf /etc/apache2/
 COPY . /var/www/html/
 #RUN  mkdir -p /var/www/html/uploaded_documents && chown -R www-data:www-data /var/www/html && chmod -R 500 /var/www/html && chmod -R 777 /var/www/html/writable && chmod -R 777 /var/www/html/public/index.php  && chmod -R 777 /var/www/html/writable/ && chmod -R 777 /var/www/html/uploaded_documents && chmod -R 777 /mnt/icmis_doc/uploaded_documents
 
-#RUN  chown -R www-data:www-data /var/www/html && chmod -R 500 /var/www/html && chmod -R 777 /var/www/html/writable && chmod -R 777 /var/www/html/public/index.php  && chmod -R 777 /var/www/html/writable/
+RUN  chown -R www-data:www-data /var/www/html && chmod -R 500 /var/www/html && chmod -R 777 /var/www/html/writable && chmod -R 777 /var/www/html/public/index.php  && chmod -R 777 /var/www/html/writable/
 RUN rm -rf /var/www/html/.git/
 RUN a2enmod rewrite headers proxy
 ENV APACHE_RUN_USER www-data
@@ -27,10 +27,12 @@ RUN service apache2 restart
 
 # Judge Appointment System '
 #Step 1:
-# sudo docker build -t icmis_api_ci4 . 
-#sudo docker run --name=icmis_api_ci4 -dit --restart unless-stopped -p 88:80 -v $(pwd):/var/www/html/  icmis_api_ci4:latest
+# sudo docker build -t scefm30_velocis .
+#sudo docker run --name=scefm30_velocis -dit --restart unless-stopped -p 82:80 -v $(pwd):/var/www/html/  scefm30_velocis:latest
+#sudo docker run --name=scefm30_velocis -dit --restart unless-stopped -p 90:80 -v $(pwd):/var/www/html/  scefm30_velocis:latest
+#Docker run command (Only dev/local env) -> sudo docker run --name=scefm30_velocis -dit --restart unless-stopped -p 82:80 -v $(pwd):/var/www/html -v /mnt/sc_efm_velocis/uploaded_docs:/var/www/html/uploaded_docs scefm30_velocis:latest
 #Step 3:
-# sudo docker exec -it icmis_api_ci4 /bin/bash
+# sudo docker exec -it scefm30_velocis /bin/bash
 #Step 4:
 #root@aedf3a0e087d:/var/www/html# chmod -R 777 ./writable
 #root@aedf3a0e087d:/var/www/html# chmod -R 777 ./writable/session/

@@ -44,6 +44,16 @@ Options -Indexes
 	ErrorDocument 404 index.php
 </IfModule>
 
+# X-Frame-Options
+<IfModule mod_headers.c>
+	Header always append X-Frame-Options SAMEORIGIN
+	Header set X-Content-Type-Options nosniff
+	Header set X-XSS-Protection "1; mode=block" 
+	Header set Content-Security-Policy "policy-definition"
+	#Header set Content-Security-Policy "default-src 'self'; script-src 'self' *.mycdn.com 'unsafe-inline';"
+        Header set Strict-Transport-Security "max-age=16070400; includeSubdomains;"
+</IfModule>
+
 # Disable server signature start
 ServerSignature Off
 # Disable server signature end
