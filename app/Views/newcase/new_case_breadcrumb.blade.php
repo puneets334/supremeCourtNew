@@ -756,6 +756,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 </div>
             </div>
         </div>
+        <script src="<?= base_url(); ?>assets/newAdmin/js/jquery-3.5.1.min.js"></script>
 
         <script>
             document.getElementById("copyButton").addEventListener("click", function() {

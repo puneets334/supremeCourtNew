@@ -58,7 +58,8 @@ class DefaultController extends BaseController {
             $arr['registration_id'] = $registration_id;
             $arr['step']= 1;
             $response = $this->Common_model->getCaveatDataByRegistrationId($arr);
-            $state_id = NULL;
+            $state_id = isset($response[0]['state_id']) ? (int)$response[0]['state_id'] : null;
+
             if(isset($response) && !empty($response)){
                 $state_id = !empty($response[0]['state_id']) ? (int)$response[0]['state_id'] : NULL;
                 $data['district_list'] = $this->Dropdown_list_model->get_districts_list($state_id);
@@ -88,7 +89,7 @@ class DefaultController extends BaseController {
 
     public function processing($id = NULL) {
         if ($id !== NULL) {
-            session()->remove('estab_details');
+            unset($_SESSION['estab_details']);
             $id = url_decryption($id);
             $InputArray = explode('#', $id); // 0=>registration_id, 1=>type, 2=>stage
             if (empty($InputArray[0]) && empty($InputArray[1]) && empty($InputArray[2])) {
@@ -116,7 +117,7 @@ class DefaultController extends BaseController {
                 return redirect()->to(base_url('whereToFile/caveat'));
                 exit(0);
             }
-        }
+        }        
         $allowed_admin_users = array(USER_ADMIN, USER_ACTION_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
         $allowed_users = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK);
         if ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_admin_users) || (!empty($_SESSION['efiling_details']['stage_id']))) && (!in_array($_SESSION['efiling_details']['stage_id'], $allowed_stages))) {
