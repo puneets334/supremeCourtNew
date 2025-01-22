@@ -33,7 +33,7 @@ body.loading .overlay{
     display: block;
 }
 #loader-wrapper {
-			display: flex;
+			/* display: flex; */
 			justify-content: center;
 			align-items: center;
 			z-index: 1000; /* Ensure it's on top of other content */
@@ -141,10 +141,8 @@ body.loading .overlay{
                                             <label for="" class="form-label text-ryt ">CNR <span style="color: red">*</span></label>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
-                                        type="text"  maxlength="16" > 
-                                       <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
-
+                                            <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" type="text"  maxlength="16" style="text-transform: uppercase;"> 
+                                            <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
                                         </div>    
                                             <?php
                                             // pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
@@ -265,8 +263,7 @@ body.loading .overlay{
                                     //  pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     ?>
                                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                    <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16"
-                                    type="text"  maxlength="16" > 
+                                    <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" type="text"  maxlength="16" style="text-transform: uppercase;"> 
                                     <p class="pt-2"><strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
                                      </div>
                                      <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">

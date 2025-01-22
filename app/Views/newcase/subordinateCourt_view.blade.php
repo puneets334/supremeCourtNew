@@ -19,7 +19,7 @@
         background-color: #ffffff;
     }
 </style>
-<div id="loader-wrapper" class="dNone">
+<div id="loader-wrapper" style="display: none;">
     <div id="loader"></div>
 </div>
 <div class="center-content-inner comn-innercontent">
@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <?php
                             $noHcEntry = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'checked="checked"' : '';
-                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? ' dNone' : '';
+                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? ' display: none;' : '';
                             $scchecked = @$party_details[0]['selected_court'] == '4' ? 'checked="checked"' : '';
                             $hcchecked = @$party_details[0]['selected_court'] == '1' ? 'checked="checked"' : '';
                             $dcchecked = @$party_details[0]['selected_court'] == '3' ? 'checked="checked"' : '';
@@ -52,7 +52,7 @@
                                 <div align="center" id="nohc">
                                     <input type="checkbox" <?php echo $noHcEntry; ?> value="1" name="chk_nohc" id="chk_nohc" onchange="toggle_entry_div()">
                                     I hereby confirm that there is no earlier courts details pertaining to this matter. &nbsp; &nbsp;
-                                    <input type="button" class="btn btn-success <?php echo $noHCButton; ?>" id="nohc_save" value="Proceed with Next Stage">
+                                    <input type="button" class="btn btn-success" id="nohc_save" value="Proceed with Next Stage" style="<?php echo $noHCButton; ?>">
                                 </div>
                             <?php } else { ?>
                                 <div align="center" id="nohc">
@@ -115,7 +115,7 @@
                                                         placeholder=""> --}}
                             </div>
                         </div>
-                        <div class="dBlock" id="supreme_court_info">
+                        <div id="supreme_court_info" style="display: block;">
                             <div class="col-12">
                             <div class="row">
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
@@ -167,7 +167,7 @@
                             </div>
                             </div>
                         </div>
-                        <div class="row dNone" id="high_court_info">
+                        <div class="row" id="high_court_info" style="display: none;">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div class="mb-3">
                                     <div class="row justify-content-center">
@@ -181,7 +181,7 @@
                                                 id="cnr"
                                                 name="cnr"
                                                 maxlength="16"
-                                                pattern="^[A-Z]{4}[0-9]{12}$"
+                                                pattern="^[A-Z]{4}[0-9]{12}$" style="text-transform: uppercase;"
                                                 placeholder="CNR"
                                                 class="form-control cus-form-ctrl age_calculate"
                                                 type="text" value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>" >
@@ -257,7 +257,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name dNone">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name" style="display: none;">
                                 <div class="mb-3">
                                     <label for=""
                                         class="form-label">Case Type Name <span
@@ -311,7 +311,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row dNone" id="district_court_info">
+                        <div class="row" id="district_court_info" style="display: none;">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                 <div class="row justify-content-center">
@@ -325,7 +325,7 @@
                                         id="dc_cnr"
                                         name="dc_cnr"
                                         maxlength="16"
-                                        pattern="^[A-Z]{4}[0-9]{12}$"
+                                        pattern="^[A-Z]{4}[0-9]{12}$" style="text-transform: uppercase;"
                                         placeholder="CNR"
                                         class="form-control cus-form-ctrl age_calculate"
                                         type="text"  value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>">
@@ -414,7 +414,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dc_case_type_name dNone">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dc_case_type_name" style="display: none;">
                                 <div class="mb-3">
                                     <label class="form-label">Case Type Name <span
                                             style="color: red"
@@ -469,7 +469,7 @@
 
 
                     </div>
-                    <div class="row dNone" id="state_agency_info">
+                    <div class="row" id="state_agency_info" style="display: none;">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">State <span style="color: red"
@@ -511,7 +511,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 agency_case_type_name dNone">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 agency_case_type_name" style="display: none;">
                             <div class="mb-3">
                                 <label class="form-label">Case Type Name <span style="color: red"
                                         class="astriks">*</span></label>
@@ -579,7 +579,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12 dNone" id="loader_div">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style="display: none;">
                         <img id="loader_img"
                             style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;"
                             src="<?php echo base_url(); ?>assets/images/loading-data.gif" />
@@ -716,14 +716,14 @@
                                 </div>
                                 <div class="col-md-12 col-sm-12 col-xs-12" id="certified_copy">
                                     <div class="row">
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 tentative_date dNone">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 tentative_date" style="display: none;">
                                             <div class="mb-3">
                                                 <label class="form-label">Tentative Date for Issuance of Certified Copy :</label>
                                                 <input type="text" class="form-control cus-form-ctrl" id="tentative_date" name="tentative_date" maxlength="10" placeholder="DD/MM/YYYY">
                                                 <span class="input-group-addon" data-placement="bottom" data-toggle="popover" title="Please Select Tentative Date for Issuance of Certified Copy"><i class="fa fa-question-circle-o"  ></i></span>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 issuance_date dNone">
+                                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 issuance_date" style="display: none;">
                                             <div class="mb-3">
                                                 <label class="form-label">Date of Issuance :</label>
                                                 <input type="text" class="form-control cus-form-ctrl" id="issuance_date" name="issuance_date" maxlength="10" placeholder="DD/MM/YYYY">
@@ -752,7 +752,7 @@
                                                     name="fir_state"
                                                     id="fir_state"
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value=""
                                                         title="Select">Select State</option>
                                                 </select>
@@ -766,7 +766,7 @@
                                                     name="fir_district"
                                                     id="fir_district"
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value=""
                                                         title="Select">Select District</option>
                                                 </select>
@@ -781,7 +781,7 @@
                                                     name="fir_policeStation"
                                                     id="fir_policeStation"
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value=""
                                                         title="Select">Select Police Station
                                                     </option>
@@ -800,7 +800,7 @@
                                                     onkeyup="return isNumber(event)"
                                                     placeholder="FIR Number"
                                                     class="form-control cus-form-ctrl age_calculate"
-                                                    type="text">
+                                                    type="text" required>
                                                 <span class="input-group-addon"
                                                     data-placement="bottom"
                                                     data-toggle="popover"
@@ -817,7 +817,7 @@
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
                                                     id="fir_year"
                                                     name="fir_year"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value="">Year</option>
                                                     <?php
                                                     $end_year = 48;
@@ -850,7 +850,7 @@
                                                     name="police_station_name"
                                                     placeholder="Police Station Name"
                                                     class="form-control cus-form-ctrl"
-                                                    type="text">
+                                                    type="text" required>
                                                 <span class="input-group-addon"
                                                     data-placement="bottom"
                                                     data-toggle="popover"
@@ -871,7 +871,7 @@
                                                     onkeyup="return isNumber(event)"
                                                     placeholder="FIR Number"
                                                     class="form-control cus-form-ctrl age_calculate"
-                                                    type="text">
+                                                    type="text" required>
                                                 <span class="input-group-addon"
                                                     data-placement="bottom"
                                                     data-toggle="popover"
@@ -916,7 +916,6 @@
         <?php render('newcase.subordinate_court_list', ['subordinate_court_details' => @$subordinate_court_details]); ?>
     </div>
 </div>
-@push('script')
 <script src="<?= base_url(); ?>assets/newAdmin/js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url(); ?>assets/newAdmin/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url(); ?>assets/newAdmin/js/general.js"></script>
