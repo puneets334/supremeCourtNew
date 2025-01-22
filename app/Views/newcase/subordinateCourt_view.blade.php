@@ -181,7 +181,7 @@
                                                 id="cnr"
                                                 name="cnr"
                                                 maxlength="16"
-                                                pattern="^[A-Z]{4}[0-9]{12}$" style="text-transform: uppercase;"
+                                                pattern="^[A-Za-z]{4}[0-9]{12}$" style="text-transform: uppercase;"
                                                 placeholder="CNR"
                                                 class="form-control cus-form-ctrl age_calculate"
                                                 type="text" value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>" >
@@ -192,7 +192,7 @@
                                                 <i class="fa fa-question-circle-o"></i>
                                             </span>
                                             <div class="input-note-pos"><p class="pt-2"> <strong style="font-size:13px;">Kindly
-                                                        search lower court details using CNR
+                                                        search lower case details using CNR
                                                         preferably for swift data
                                                         retrieval</strong></p>
                                             </div>
@@ -325,7 +325,7 @@
                                         id="dc_cnr"
                                         name="dc_cnr"
                                         maxlength="16"
-                                        pattern="^[A-Z]{4}[0-9]{12}$" style="text-transform: uppercase;"
+                                        pattern="^[A-Za-z]{4}[0-9]{12}$" style="text-transform: uppercase;"
                                         placeholder="CNR"
                                         class="form-control cus-form-ctrl age_calculate"
                                         type="text"  value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>">
