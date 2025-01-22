@@ -549,3 +549,10 @@ function check_session_timeout()
 		return redirect()->to(base_url('index.php/auth/logout'));
 	}
 }
+
+function getAdvocateConsentDetails($date = null)
+{
+	$Consent_model = new App\Models\PhysicalHearing\ConsentModel;
+    $session = \Config\Services::session();
+	return $Consent_model->getAdvocateConsentDetails($date);
+}

@@ -189,4 +189,23 @@ class ConsentModel extends Model
         return $query->getResultArray();
     }
 
+    public function getAdvocateConsentDetails($date)
+	{
+		if (!empty($date)) {
+			$date = date('Y-m-d', strtotime($date));
+		} else {
+			$date = date("Y-m-d");
+		}
+		$builder = $this->db->table('physical_hearing.physical_hearing_advocate_vc_consent as p');
+		$builder->where('p.is_deleted','f');
+		$builder->where('p.consent','V');
+		$builder->where('p.next_dt', $date);
+		$query = $builder->get();
+        if ($query === false) {
+            log_message('error', 'Query failed: ' . $builder->getCompiledSelect());
+            return [];  // Or return an appropriate error message
+        }
+        return $query->getResultArray();
+	}
+
 }
