@@ -134,7 +134,7 @@ class AdvocateModel extends Model {
         $builder->select('appearing_for, diary_no, item_no, court_no, list_date'); // Use a single string or array
         $builder->where('is_active', '1');
         $builder->where('is_submitted', '1');
-        // $builder->where('list_date', $cause_list_date);
+        $builder->where('list_date', $cause_list_date);
         $builder->where('aor_code', $aor_code); // Use the retrieved session data
         $builder->distinct();
 
