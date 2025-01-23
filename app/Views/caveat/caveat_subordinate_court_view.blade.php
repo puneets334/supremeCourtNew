@@ -516,7 +516,7 @@ body.loading .overlay{
                             </div>
                         </div>
                     </div>
-                    <div class="row dNone" id="firDiv">                        
+                    <div class="row" id="firDiv" style="display: none;">                        
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for="" class="form-label">State <span style="color: red">*</span></label>

@@ -136,7 +136,9 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                             if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                 // if ($segment->getSegment(2) == 'view') {
-                                    echo '<a href="' . base_url('newcase/finalSubmit') . '" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
+                                ?>
+                                <a href="<?php echo base_url('newcase/finalSubmit'); ?>" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>
+                                <?php
                                 // }
                             }
                         }
