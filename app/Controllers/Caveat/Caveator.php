@@ -59,7 +59,7 @@ class Caveator extends BaseController {
             exit(0);
         }
         $allowed_stages = array('', Draft_Stage, Initial_Defected_Stage, E_REJECTED_STAGE);
-        if (!in_array(getSessionData('efiling_details')['stage_id'], $allowed_stages)) { echo 1; exit;
+        if (!in_array(getSessionData('efiling_details')['stage_id'], $allowed_stages)) { // echo 1; exit;
             return redirect()->to(base_url('caveat/view'));
             exit(0);
         }

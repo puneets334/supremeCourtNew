@@ -564,7 +564,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                         <!--<a href="<?= $prev_url ?>"
                             class="btn btn-primary btnPrevious"
                             type="button">Previous</a>-->
-                        <input type="submit" class="btn btn-success pay_fee dNone" id="pay_fee" name="submit" value="PAY">
+                        <input type="submit" class="btn btn-success pay_fee" id="pay_fee" name="submit" value="PAY" style="display: none;">
                         <?php
                             if((isset($payment_details['0']->payment_status) && !empty($payment_details['0']->payment_status) && $payment_details['0']->payment_status == 'Y') || ($pending_court_fee==0)) { ?>
                         <!--<a href="<?= $next_url ?>"
