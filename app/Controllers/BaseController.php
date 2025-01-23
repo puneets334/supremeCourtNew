@@ -55,6 +55,8 @@ abstract class BaseController extends Controller
         $dbs = \Config\Database::connect();
         $this->db = $dbs->connect();
         $this->session = \Config\Services::session();
+        ini_set('MAX_EXECUTION_TIME', -1);
+        ini_set('memory_limit', '-1');  
     }
     /**
      * @return void
