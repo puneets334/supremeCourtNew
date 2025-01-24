@@ -556,3 +556,14 @@ function getAdvocateConsentDetails($date = null)
     $session = \Config\Services::session();
 	return $Consent_model->getAdvocateConsentDetails($date);
 }
+
+function objectToArraySelective($data) {
+    if (is_object($data)) {
+        return (array) $data;
+    } elseif (is_array($data)) {
+        foreach ($data as $key => $value) {
+            $data[$key] = objectToArraySelective($value);
+        }
+    }
+    return $data;
+}
