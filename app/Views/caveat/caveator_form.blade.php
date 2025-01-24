@@ -757,6 +757,72 @@
             $('#otherOrgPost').hide();
         }
     });
+    $('#party_pincode').blur(function() {
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var pincode = $("#party_pincode").val();
+        if(pincode) {
+            var stateObj = JSON.parse(state_Arr);
+            var options = '';
+            options +='<option value="">Select State</option>';
+            stateObj.forEach((response)=>
+            options +='<option value="'+response.id+'">'+response.state_name+'</option>');
+            $('#party_state').html(options).select2().trigger("change");
+            $.ajax({
+                type: "POST",
+                data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, pincode : pincode},
+                url: "<?php echo base_url('newcase/Ajaxcalls/getAddressByPincode'); ?>",
+                success: function (response)
+                {
+                    var taluk_name;
+                    var district_name;
+                    var state;
+                    if(response){
+                        var resData = JSON.parse(response);
+                        if(resData){
+                            taluk_name = resData[0]['taluk_name'].trim().toUpperCase();
+                            district_name = resData[0]['district_name'].trim().toUpperCase();
+                            state = resData[0]['state'].trim().toUpperCase();
+                        }
+                        if(taluk_name) {
+                            $("#party_city").val('');
+                            $("#party_city").val(taluk_name);
+                        } else {
+                            $("#party_city").val('');
+                        }
+                        if(state) {
+                            var stateObj = JSON.parse(state_Arr);
+                            if(stateObj){
+                                var singleObj = stateObj.find(
+                                    item => item['state_name'] === state
+                                );
+                            }
+                            if(singleObj) {
+                                $('#party_state').val('');
+                                $('#party_state').val(singleObj.id).select2().trigger("change");
+                            } else {
+                                $('#party_state').val('');
+                            }
+                            if(district_name){
+                                var stateId = $('#party_state').val();
+                                setSelectedDistrict(stateId,district_name);
+                            }
+                        } else {
+                            $('#party_state').val('');
+                        }
+                    }
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                },
+                error: function () {
+                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+    });
     function get_departments(party_is) {
         var CSRF_TOKEN = 'CSRF_TOKEN';
         var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
