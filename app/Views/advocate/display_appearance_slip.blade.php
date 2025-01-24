@@ -1,6 +1,6 @@
 <div class="modal-header">
-    <h4 class="modal-title">Appearance Slip</h4>
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <h4 class="modal-title"><b>Appearance Slip</b></h4>
+    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
@@ -47,26 +47,17 @@
                     No Records Found
                 @endif
                 <div class="row">
-                    <div class="col-lg-4 col-sm-5 ml-auto">
-                        <table class="table table-clear">
-                            <tbody>
-                            <tr>
-                                <td class="right">
-                                    <strong>{{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}}
-                                        <br>
-                                        For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}</strong>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                    <div class="col-12 text-right" style="text-align: right!important;">
+                        <!-- {{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}} -->
+                        <?php echo getSessionData('login.first_name').' '.getSessionData('login.last_name'); ?>
+                        <br>
+                        For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal-footer justify-content-between ">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<div class="modal-footer justify-content-between" style="float:right !important;">
+    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 </div>
-
-

@@ -7,6 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\PhysicalHearing\ConsentVCModel;
 use App\Models\PhysicalHearing\ConsentModel;
 use App\Models\PhysicalHearing\HearingModel;
+use Config\Database;
 // use App\Models\PutModel;
 
 class ConsentVC extends BaseController
@@ -14,78 +15,71 @@ class ConsentVC extends BaseController
     protected $consent_VC_model;
     protected $consent_model;
     protected $hearing_model;
+    protected $physical_hearing;
 
     public function __construct()
     {
-        // $this->session = Services::session();
-        // if (!$this->session->has('loginData') || empty($this->session->get('loginData'))) {
-        //     return redirect()->to('/auth');
-        // } else { 
-        //     is_user_status(); 
-        // }
         helper(['common', 'encryptdecrypt', 'myarray', 'curl', 'url', 'form', 'session']); 
         $this->consent_VC_model = new ConsentVCModel(); 
         $this->consent_model = new ConsentModel(); 
-        $this->hearing_model = new HearingModel(); 
+        $this->hearing_model = new HearingModel();
+        $this->physical_hearing = Database::connect('physical_hearing'); 
         $session = session();
-        if(empty(getSessionData('login'))){
+        if(empty(getSessionData('login'))) {
             return response()->redirect(base_url('/')); 
-        }else{
+        } else {
             is_user_status();
         }
     }
 
     public function index($court=null)
     {
-        if(empty(getSessionData('login'))){
+        if(empty(getSessionData('login'))) {
             return response()->redirect(base_url('/')); 
-        }else{
+        } else {
             is_user_status();
         }
-        $next_misc_working_date=getNextMiscDayOfHearing();
-        // $listing_date=array("'$next_misc_working_date'");
-        // pr($listing_date); 
-        $listing_date = (array)$next_misc_working_date;
-        $isEntryAllowed=checkEntryWithinAllowDateAndTime($next_misc_working_date); 
-        // if(!isset($this->session->loginData)){
-        //     $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">Session Expired. Please login again.</div>');
-        //     unset($this->session->loginData);
-        //     redirect('auth');
-        // }
-        // $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL);
-        // if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
-        //     return response()->redirect(base_url('adminDashboard'));
-        //     exit(0);
-        // }
-        $data['page_title']='Choose mode of Hearing';
-        $unfreezed_court = $this->consent_VC_model->available_court_list($listing_date);
-        $freezed_court = $this->consent_VC_model->freezed_court_list($listing_date);
-        $list = array();
-        foreach ($unfreezed_court as $key => $value) {
-            $list[] = $value['court_no'];
+        $aor_code = getSessionData('login.aor_code');
+		$physical_hearing_data=array();
+		$physical_hearing_data = json_decode(file_get_contents('http://10.40.186.150:88/Physicalhearing/get_case_details?aor_code='.$aor_code.'&court='.$court));
+		// $physical_hearing_data = json_decode(file_get_contents(ICMIS_SERVICE_URL.'/Physicalhearing/get_case_details/?aor_code='.$aor_code.'&court='.$court));
+		if (isset($physical_hearing_data) && !empty($physical_hearing_data)) {
+            if (isset($physical_hearing_data) && !empty($physical_hearing_data) && isset($physical_hearing_data->physical_hearing) && !empty($physical_hearing_data->physical_hearing) && $physical_hearing_data->physical_hearing->status=='Y') {
+                $data = array();
+                $data['display_message'] = (array)$physical_hearing_data->physical_hearing->display_message;
+                $data['display_message1'] = $physical_hearing_data->physical_hearing->display_message1;
+                $data['freezed_court'] = array_map('objectToArraySelective', (array)$physical_hearing_data->physical_hearing->freezed_court);
+                $data['listing_date'] = (array)$physical_hearing_data->physical_hearing->listing_date;
+                $data['advocate_cases_summary'] = array_map('objectToArraySelective', (array)$physical_hearing_data->physical_hearing->advocate_cases_summary);
+                $data['cases'] = array_map('objectToArraySelective', (array)$physical_hearing_data->physical_hearing->cases);
+            }
+		} else {
+            $next_misc_working_date=getNextMiscDayOfHearing();
+            $listing_date = (array)$next_misc_working_date;
+            $isEntryAllowed=checkEntryWithinAllowDateAndTime($next_misc_working_date); 
+            $data['page_title']='Choose mode of Hearing';
+            $unfreezed_court = $this->consent_VC_model->available_court_list($listing_date);
+            $freezed_court = $this->consent_VC_model->freezed_court_list($listing_date);
+            $list = array();
+            foreach ($unfreezed_court as $key => $value) {
+                $list[] = $value['court_no'];
+            }
+            $list1 = array();
+            foreach ($freezed_court as $key => $value) {
+                $list1[] = $value['court_no'];
+            }
+            $unfreezed_court_list=array_diff($list,$list1);
+            $data['display_message'] = 'List awaiting for Court Numbers : '.implode(', ',$unfreezed_court_list);
+            $data['display_message1'] = 'List available for Court Numbers : '.implode(', ',$list1);
+            $data['freezed_court']=isset($freezed_court)?$freezed_court:null;
+            $data['listing_date']=$listing_date;
+            $data['advocate_cases_summary'] = $this->consent_VC_model->getListedAdvocateMatters(getSessionData('login.adv_sci_bar_id'),$listing_date);
+            if(!empty($court)) {
+                $data['cases'] = $this->consent_VC_model->getFutureListedMatters(getSessionData('login.adv_sci_bar_id'), $listing_date, $court);
+            } else {
+                $data['cases']=null;
+            }
         }
-        $list1 = array();
-        foreach ($freezed_court as $key => $value) {
-            $list1[] = $value['court_no'];
-        }
-        $unfreezed_court_list=array_diff($list,$list1);
-        $data['display_message'] = 'List awaiting for Court Numbers : '.implode(', ',$unfreezed_court_list);
-        $data['display_message1'] = 'List available for Court Numbers : '.implode(', ',$list1);
-        $data['freezed_court']=isset($freezed_court)?$freezed_court:null;
-        $data['listing_date']=$listing_date;
-        // $data['weekly_list'] = $this->hearing_model->weekly_list_number();
-        // $data['advocate_cases_summary'] = $this->consent_VC_model->getListedAdvocateMatters($this->session->loginData['bar_id'],$listing_date);
-        $data['advocate_cases_summary'] = $this->consent_VC_model->getListedAdvocateMatters(getSessionData('login.adv_sci_bar_id'),$listing_date);
-        // $is_valid_consent_date_and_time=$this->checkEntryWithinAllowDateAndTime($listing_date,$nextMonday);
-        // if(!empty($court) && !empty($is_valid_consent_date_and_time))
-        if(!empty($court)) {
-            // $data['cases'] = $this->consent_VC_model->getFutureListedMatters($this->session->loginData['bar_id'], $listing_date, $court);
-            $data['cases'] = $this->consent_VC_model->getFutureListedMatters(getSessionData('login.adv_sci_bar_id'), $listing_date, $court);
-        } else {
-            $data['cases']=null;
-        }
-        // pr($data);
-        // $this->render('physical_hearing.menu');
         return $this->render('physical_hearing.v3.consent_VC', $data);
     }
 
@@ -100,48 +94,30 @@ class ConsentVC extends BaseController
         foreach($hearingModeConsent as $diary_no=>$aor_consent) {
             $aud_consent_status=case_listed_in_daily_list_status($diary_no);
             if($aud_consent_status==1 || 1) {
-                // $already_updated_data=$this->consent_VC_model->getAORConsentDetails($diary_no,$next_date[$diary_no],$roster_id[$diary_no],$this->session->loginData['bar_id'], $court_no);
                 $already_updated_data=$this->consent_VC_model->getAORConsentDetails($diary_no,$next_date[$diary_no],$roster_id[$diary_no],getSessionData('login.adv_sci_bar_id'), $court_no);
-                // $condition=array('diary_no' => $diary_no,'next_dt' => $next_date[$diary_no], 'roster_id' => $roster_id[$diary_no], 'court_no'=>$court_no, 'advocate_id'=>$this->session->loginData['bar_id']);
                 $condition=array('diary_no' => $diary_no,'next_dt' => $next_date[$diary_no], 'roster_id' => $roster_id[$diary_no], 'court_no'=>$court_no, 'advocate_id'=>getSessionData('login.adv_sci_bar_id'));
                 if(count($already_updated_data)>0) {
-                    // move current log into log tbale
-                    $this->db->transBegin();
-                    // var_dump($already_updated_data);
+                    $this->physical_hearing->transBegin();
                     if(!empty($already_updated_data)) {
-                        // pr($this->consent_VC_model->InsertLog("physical_hearing_advocate_vc_consent","physical_hearing_advocate_vc_consent_log",$diary_no,$next_date[$diary_no],$roster_id[$diary_no], $court_no, getSessionData('login.adv_sci_bar_id'))); 
-
-                        // $insert_result=$this->consent_VC_model->InsertLog("physical_hearing_advocate_vc_consent","physical_hearing_advocate_vc_consent_log",$diary_no,$next_date[$diary_no],$roster_id[$diary_no], $court_no, $this->session->loginData['bar_id']);
                         $insert_result=$this->consent_VC_model->InsertLog("physical_hearing_advocate_vc_consent","physical_hearing_advocate_vc_consent_log",$diary_no,$next_date[$diary_no],$roster_id[$diary_no], $court_no, getSessionData('login.adv_sci_bar_id'));
-                        // pr($insert_result); 
                     }
-                    /*if($aor_consent=='V' && $already_updated_data[0]['consent']=='P'){
-                        //Send SMS & Email only if consent was changed from P to V. If consent was previously V and again updated as V in that case SMS/Email will not be sent.
-                        $this->status_change_info_to_nominees($already_updated_data);
-                    }*/
-                    //Update
                     $data=array(
-                        // 'updated_by' => $this->session->loginData['bar_id'],
                         'updated_by' => getSessionData('login.adv_sci_bar_id'),
                         'consent' => $aor_consent,
                         'updated_from_ip' => get_client_ip(),
                         'updated_on' => date('Y-m-d H:i:s'),
-                        // 'advocate_id' => $this->session->loginData['bar_id'],
                         'advocate_id' => getSessionData('login.adv_sci_bar_id'),
                         'consent_for_diary_nos' => $consent_for_diary_nos[$diary_no],
                         'case_count' => $case_count[$diary_no]
                     );
                     $update_result=$this->consent_VC_model->update('physical_hearing_advocate_vc_consent',$data,$condition);
-                    // echo 'Velocis'; pr($update_result);
-                    if($this->db->transStatus() === FALSE || !isset($insert_result) || !isset($update_result)){
-                        $this->db->transRollback();
+                    if($this->physical_hearing->transStatus() === FALSE || !isset($insert_result) || !isset($update_result)){
+                        $this->physical_hearing->transRollback();
                     } else {
-                        $this->db->transCommit();
+                        $this->physical_hearing->transCommit();
                     }
                 } else {
-                    //Insert
                     $data=array(
-                        // 'updated_by' => $this->session->loginData['bar_id'],
                         'updated_by' => getSessionData('login.adv_sci_bar_id'),
                         'diary_no' => $diary_no,
                         'next_dt' => $next_date[$diary_no],
@@ -149,7 +125,6 @@ class ConsentVC extends BaseController
                         'consent' => $aor_consent,
                         'updated_from_ip' => get_client_ip(),
                         'updated_on' => date('Y-m-d H:i:s'),
-                        // 'advocate_id' => $this->session->loginData['bar_id'],
                         'advocate_id' => getSessionData('login.adv_sci_bar_id'),
                         'court_no' => $court_no,
                         'consent_for_diary_nos' => $consent_for_diary_nos[$diary_no],
@@ -157,8 +132,8 @@ class ConsentVC extends BaseController
                         'item_no'=>$item_no[$diary_no]
                     );
                     $this->consent_VC_model->save('physical_hearing_advocate_vc_consent',$data);
-                    /* if($aor_consent=='V'){
-                        //Send SMS & Email only if consent was changed from P to V.
+                    /* if($aor_consent=='V') {
+                        // Send SMS & Email only if consent was changed from P to V.
                         $this->status_change_info_to_nominees(array('diary_no'=>$diary_no,'list_number'=>$list_number,'list_year'=>$list_year,'court_no'=>$court_no));
                     }*/
                 }
@@ -167,8 +142,8 @@ class ConsentVC extends BaseController
                 return redirect()->to(base_url("Consent"));
             }
         }
-        $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center text-bold">Consent Updated Successfully</div>');
-        return redirect()->to(base_url("Consent_VC"));
+        session()->setFlashdata('msg', '<div class="alert alert-success text-center text-bold">Consent Updated Successfully</div>');
+        return redirect()->to(base_url('physical_hearing'));
     }
 
     function send_final_opt_vc_list_email() {
@@ -176,7 +151,7 @@ class ConsentVC extends BaseController
         $next_date_regular_hearing_listed_case=$this->getTomorrowRegularDailyListCases($today);
         $mail_response='';
         if(!empty($next_date_regular_hearing_listed_case)) {
-            $this->update_next_date_in_attendee_list_and_consent(); // update the next date if blank
+            $this->update_next_date_in_attendee_list_and_consent();
             $weekly_list = $this->hearing_model->weekly_list_number();
             $list_number = $weekly_list[0]['weekly_no'];
             $list_year = $weekly_list[0]['weekly_year'];
@@ -244,7 +219,7 @@ class ConsentVC extends BaseController
                 $consent_table_update_where_condition=array('diary_no' => $diary_no_which_next_need_to_updated,'list_number' => $list_number, 'list_year' => $list_year,'court_no'=>$case['court_no'],'advocate_id'=>$case['advocate_id']);
                 $update_data=array('next_dt' => $case_next_date);
                 $update_case_consent_next_date_result=$this->consent_model->update('physical_hearing_advocate_consent',$update_data,$consent_table_update_where_condition);
-            } else{
+            } else {
                 continue;
             }
         }
