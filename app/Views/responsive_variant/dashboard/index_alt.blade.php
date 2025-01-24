@@ -1664,6 +1664,7 @@ td {
                                                     <!-- <h5 class="unerline-title">My e-Filed Cases</h5> -->
                                                     <div class="end-buttons mt-0">
                                                        <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button>
+                                                       <!-- <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button> -->
                                                     </div>
                                                 <!-- </div> -->
                                                 <div class="calender-sec">
@@ -1845,36 +1846,39 @@ td {
     });
 
     function showAllCases(){
-        $.ajax({
-            url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
-            method: "POST",
-            data: {
-                start: ''
-            },
-            // dataType: 'json',
-            beforeSend: function() {
-                $('#loader-wrapper').show();
-                var loaderTimeout = setTimeout(function() {
-                    $('#loader-wrapper').fadeOut('slow', function() {
-                        $('#content').fadeIn('slow');
-                    });
-                }, 1000);
-            },
-            success: function(res) {
-                // $('#datatable-responsive').DataTable();
-                // var table = $('#datatable-responsive').DataTable().destroy();
-                $('#datatable-responsive').html('');
-                $('#datatable-responsive').html(res);
-                // $('#datatable-responsive').DataTable().reload();
-
-            },
-            error: function(xhr, status, error) {
-                var Table = document.getElementById("datatable-responsive");
-                Table.innerHTML = "";
-                $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
-            }
-        });
+        window.location.reload();
     }
+    // function showAllCases(){
+    //     $.ajax({
+    //         url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
+    //         method: "POST",
+    //         data: {
+    //             start: ''
+    //         },
+    //         // dataType: 'json',
+    //         beforeSend: function() {
+    //             $('#loader-wrapper').show();
+    //             var loaderTimeout = setTimeout(function() {
+    //                 $('#loader-wrapper').fadeOut('slow', function() {
+    //                     $('#content').fadeIn('slow');
+    //                 });
+    //             }, 1000);
+    //         },
+    //         success: function(res) {
+    //             // $('#datatable-responsive').DataTable();
+    //             // var table = $('#datatable-responsive').DataTable().destroy();
+    //             $('#datatable-responsive').html('');
+    //             $('#datatable-responsive').html(res);
+    //             // $('#datatable-responsive').DataTable().reload();
+
+    //         },
+    //         error: function(xhr, status, error) {
+    //             var Table = document.getElementById("datatable-responsive");
+    //             Table.innerHTML = "";
+    //             $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
+    //         }
+    //     });
+    // }
 
     function get_message_data(id) {
         UIkit.modal('#mail').toggle();
