@@ -140,7 +140,6 @@
             $.ajax({
                 url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
                 success: function (data) {
-                    console.log(data);
                     var dataas = data.split('?');
                     var ct = dataas[0];
                     var dataarr = dataas[1].slice(1).split(',');
@@ -181,7 +180,6 @@
             $.ajax({
                 url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
                 success: function (data) {
-                    console.log(data);
                     var dataas = data.split('?');
                     var ct = dataas[0];
                     var dataarr = dataas[1].slice(1).split(',');

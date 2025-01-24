@@ -277,10 +277,8 @@
 
                         if (RPSTATUS=='SUCCESS' && status==true  && RCPTNO==receiptNumber){
                             var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         }else {
                             var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         }
 
                     }else{

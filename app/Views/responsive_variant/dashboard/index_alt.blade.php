@@ -1997,7 +1997,6 @@ td {
                             columnIndex[0] = 1;
                             columnIndex[1] = 3;
                         }
-                        //console.log(this.context[0].aoColumns[this.selector.cols].sTitle);
                         if ($.inArray(this.selector.cols, columnIndex) !== -1) {
                             var column = this;
                             var select = $(

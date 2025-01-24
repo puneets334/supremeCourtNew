@@ -1145,7 +1145,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                     if(typeof data == 'string'){
                         data = JSON.parse(data);
                     }
-                    // console.log(data);
                     // return false;
                     if(data){
                         $("#exampleModal").modal('show');
@@ -1235,7 +1234,6 @@ $pending_court_fee=empty(getPendingCourtFee())?0:getPendingCourtFee();
                                             $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                         },
                                         success: function(updateData){
-                                            // console.log(updateData);
                                             // return false;
                                             $("#loader_div").html('');
                                             if(updateData.success == 'success'){
