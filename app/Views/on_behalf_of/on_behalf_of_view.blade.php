@@ -165,7 +165,6 @@ if ($segment->getSegment(2) != 'view') {
                 return false;
             }         
             var form_data = $(this).serialize();
-            console.log(form_data);
             $('#modal_loader').show();            
             $.ajax({
                 type: "POST",

@@ -703,7 +703,6 @@
         $.ajax({
             url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
             success: function(data) {
-                console.log(data);
                 var dataas = data.split('?');
                 var ct = dataas[0];
                 var dataarr = dataas[1].slice(1).split(',');
@@ -747,7 +746,6 @@
         $.ajax({
             url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
             success: function(data) {
-                console.log(data);
                 var dataas = data.split('?');
                 var ct = dataas[0];
                 var dataarr = dataas[1].slice(1).split(',');
@@ -1240,7 +1238,6 @@
                 },
                 url: "<?php echo base_url('newcase/Ajaxcalls_subordinate_court/get_hc_bench_list'); ?>",
                 success: function(data) {
-                console.log(data);
                     $('#high_court_bench_name').html(data);
                     $('#high_court_bench_name').select2();
                     $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
@@ -1378,7 +1375,6 @@
                                 $('#errDiv').show();
                                 $('#alertMsg').html(resArr[1]);
                                 var te = resArr[1];
-                                // console.log(te);
                                 if(te.includes("cause_pet")){                                 
                                     $('#cause_pet').val('');
                                     return false;
@@ -1416,7 +1412,6 @@
         $('#pet_save').hide();
         $('#browser').on('change', function(e) {
             myFile = $("#browser").val();
-            console.log(myFile);
             var upld = myFile.split('.').pop();
             if (upld == 'pdf') {
                 var draft_petition_file_browser = $.trim($("#browser").val());

@@ -1228,7 +1228,6 @@
                              if (typeof data == 'string') {
                                  data = JSON.parse(data);
                              }
-                            console.log(data);
          
                              // return false;
                              if (data) {
@@ -1325,7 +1324,6 @@
                                          },
                                          success: function(updateData) {
                                          
-                                            console.log(updateData);
                                              // return false;
                                              $("#loader_div").html('');
          
@@ -1611,7 +1609,6 @@
              $.ajax({
                  url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
                  success: function(data) {
-                     console.log(data);
                      var dataas = data.split('?');
                      var ct = dataas[0];
                      var dataarr = dataas[1].slice(1).split(',');
@@ -1668,7 +1665,6 @@
              $.ajax({
                  url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
                  success: function(data) {
-                     console.log(data);
                      var dataas = data.split('?');
                      var ct = dataas[0];
                      var dataarr = dataas[1].slice(1).split(',');
@@ -1813,10 +1809,8 @@
          
                              if (RPSTATUS == 'SUCCESS' && status == true && RCPTNO == receiptNumber) {
                                  var result = ('type ' + type + '  RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber);
-                                 console.log(result);
                              } else {
                                  var result = ('type ' + type + ' verify Failed  ' + 'RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber);
-                                 console.log(result);
                              }
          
                          } else {
@@ -1865,10 +1859,8 @@
          
                              if (status == true && RCPTNO == receiptNumber) {
                                  var result = ('type ' + type + '  RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber + '  Diary Number=' + diary_No + '/' + diary_Year + '  CFLNAME=' + CFLNAME);
-                                 console.log(result);
                              } else {
                                  var result = ('type ' + type + ' verify Failed  ' + 'RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber);
-                                 console.log(result);
                              }
                          }
          

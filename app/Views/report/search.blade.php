@@ -872,12 +872,10 @@
 
                     success: function (resultData) { 
                     //    alert(resultData);
-                        console.log(resultData);
                         /* return;*/
                         var rdata = JSON.parse(resultData);
                     //    alert(rdata);
 
-                        //console.log(rdata[0]['diary_no']);return;
                         if(rdata[0]['diary_no']===''){
                        alert('record not found'); 
                        return false;
@@ -965,8 +963,6 @@
                         populateDataTable(myJsonData);
                     },
                     error: function (e) {
-                        console.log("There was an error with your request...");
-                        console.log("error: " + JSON.stringify(e));
                         $('#divTitle').html('There was an error with your request...');
                     }
                 });
@@ -1093,7 +1089,6 @@
                         report.portal,
                     ]);
                     if(sn==length) {
-                        console.log('Done data Table');
                         $('#loader_div').hide();
                         $('#status_refresh').show();
                     }

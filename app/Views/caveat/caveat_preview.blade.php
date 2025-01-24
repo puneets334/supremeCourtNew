@@ -31,7 +31,7 @@ if(isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id
     $collapse_class = 'collapse in';
     $area_extended = true;
 //        $diary_generate_button = '<div class="row"><a  data-toggle="modal" href="#generateDiaryNo" data-target="#generateDiaryNoDiv" class="btn btn-primary" id="generateDiaryNoPop" type="button" style="float: right;margin-right: 12px;">Generate Caveat No.</a></div>';
-    $diary_generate_button = '<div class="center-buttons"><a href="javascript:void(0)"class="quick-btn"  data-efilingtype="caveat" id="generateDiaryNoPop" type="button" >Generate Caveat No.</a></div>';
+    // $diary_generate_button = '<div class="center-buttons"><a href="javascript:void(0)"class="quick-btn"  data-efilingtype="caveat" id="generateDiaryNoPop" type="button" >Generate Caveat No.</a></div>';
 }
     //echo '<pre>'; print_r($_SESSION); exit;
 
@@ -171,9 +171,9 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                             ?>
                         </div>
                         <?php //$diary = false;
-                        if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($caveat_no)) {
-                            echo $diary_generate_button;
-                        }
+                        // if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($caveat_no)) {
+                        //     echo $diary_generate_button;
+                        // }
                         if (isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && isset($stage_id) && !empty($stage_id) && $stage_id == I_B_Defects_Cured_Stage) {
                             if (!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efiling_details')['stage_id'] == I_B_Defects_Cured_Stage) {
                                 echo '<a  href="javaScript:void(0)" class="btn btn-primary" data-efilingtype="new_case" data-registration_id="' . getSessionData('efiling_details')['registration_id'] . '" id="transferToScrutiny" type="button" style="float: left;margin-right: 92px;">Transfer To Scrutiny</a>';
@@ -737,7 +737,6 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
         $.ajax({
             url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
             success: function (data) {
-                console.log(data);
                 var dataas = data.split('?');
                 var ct = dataas[0];
                 var dataarr = dataas[1].slice(1).split(',');
@@ -778,7 +777,6 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
         $.ajax({
             url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
             success: function (data) {
-                console.log(data);
                 var dataas = data.split('?');
                 var ct = dataas[0];
                 var dataarr = dataas[1].slice(1).split(',');
@@ -967,7 +965,6 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                     if(typeof data == 'string'){
                         data = JSON.parse(data);
                     }
-                    // console.log(data);
                     // return false;
                     if(data){
                         $("#exampleModal").modal('show');

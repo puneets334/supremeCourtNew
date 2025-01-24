@@ -254,7 +254,6 @@
                         icon: 'success',
                         title: data.msg
                     })
-                    console.log(data.fas);
                     // $('.advocate_remove_'+data.id).html('<a href="#" data-next_dt="'+data.next_dt+'" data-id="'+data.id+'" data-is_active="'+data.is_active+'" class="btn '+data.btn_color+' advocate_remove" title="Click to Restore"><i class="fas '+data.fas+'"></i></a>');
                     $('.advocate_remove_'+data.id).closest("tr").remove();
                 } else{
@@ -320,7 +319,6 @@
                     $(".myModal_content").html("");
                     display_appearance_slip(data.case_no,data.cause_title,data.diary_no,data.next_dt,data.appearing_for,data.brd_slno,data.courtno);
                 } else if(data.status == 'checkbox') {
-                    console.log(data.data);
                     printErrorMsg(data.data);
                 } else{
                     Swal.fire({

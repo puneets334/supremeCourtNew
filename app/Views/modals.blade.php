@@ -499,7 +499,6 @@ $filing_type = '';
                         if (typeof data == 'string') {
                             data = JSON.parse(data);
                         }
-                        // console.log(data);
                         // return false;
                         if (data) {
                             $("#exampleModal").modal('show');
@@ -591,7 +590,6 @@ $filing_type = '';
                                         $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                     },
                                     success: function(updateData) {
-                                        // console.log(updateData);
                                         // return false;
                                         $("#loader_div").html('');
                                         if (updateData.success == 'success') {
