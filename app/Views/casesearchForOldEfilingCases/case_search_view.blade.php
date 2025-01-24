@@ -369,7 +369,6 @@
                     // if ($('#search_case_details').valid()) {
                 //     var diary_no = $(this).val();
                 //     var form_data = $(this).serialize();
-                //     // console.log(form_data); exit;
                 //     var CSRF_TOKEN = 'CSRF_TOKEN';
                 //     var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
                 //     $('#show_search_result_diary').html('');
@@ -389,7 +388,6 @@
                 //             $('#search_sc_case').val('SEARCH');
                 //             $('#search_sc_case').prop('disabled', false);
                 //             var resArr = data.split('@@@');
-                //             console.log(resArr[1]);
                 //             $('#show_search_result_diary').html(resArr[1]);
 
                 //             if (resArr[0] == 1) {
@@ -463,7 +461,6 @@
                                 $('#search_sc_case').val('SEARCH');
                                 $('#search_sc_case').prop('disabled', false);
                                 var resArr = data.split('@@@');
-                                console.log(resArr[1]);
 
                                 if (resArr[0] == 1) {
                                     $('#show_search_result_diary').html(resArr[1]);
@@ -527,7 +524,6 @@
                                 $('#search_sc_case').val('SEARCH');
                                 $('#search_sc_case').prop('disabled', false);
                                 var resArr = data.split('@@@');
-                                console.log(resArr[1]);
 
                                 if (resArr[0] == 1) {
                                     $('#show_search_result_diary').html(resArr[1]);
@@ -551,7 +547,6 @@
                     //     return false;
                     // }
 
-                    // console.log(form_data); exit;
                     
                     return false;
                     // } else {

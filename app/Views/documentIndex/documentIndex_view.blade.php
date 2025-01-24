@@ -461,7 +461,6 @@
                         success: function(data) {
                             $('#index_sub_item').show();
                             $('#sub_doc_type_load').html(data);
-                            console.log(data);
                             $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                                 $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                             });

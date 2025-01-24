@@ -170,7 +170,6 @@
             $('#browser').on('change',function(e){
                 $("#loader_div").html('');
                 myFile = $("#browser").val();
-                console.log(myFile);
                 var upld = myFile.split('.').pop();
                 if(upld=='pdf'){
                     var draft_petition_file_browser = $.trim($("#browser").val());

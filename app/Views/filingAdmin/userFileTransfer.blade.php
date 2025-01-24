@@ -179,7 +179,6 @@
                             var result = '';
                             if (res.caseData && typeof res.caseData == 'string') {
                                 result = JSON.parse(res.caseData);
-                                // console.log('k');
                             } else {
                                 result = res.caseData;
                             }
@@ -300,7 +299,6 @@
                     dataType: 'json',
                     ContentType: 'application/json',
                     success: function(res) {
-                        //console.log(res);
                         // return false;
                         if (res && typeof res == 'string') {
                             res = JSON.parse(res);

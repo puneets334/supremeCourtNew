@@ -282,10 +282,8 @@
                         $('.CFLNAME').hide();
                         if (RPSTATUS=='SUCCESS' && status==true  && RCPTNO==receiptNumber) {
                             var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         } else{
                             var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         }
                     } else{
                         var RPSTATUS = (data.res.LOCKTXN.LOCKRPDTL.RPSTATUS);
@@ -324,10 +322,8 @@
                         $('.STATUS').hide();
                         if (status==true  && RCPTNO==receiptNumber) {
                             var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber+ '  Diary Number='+ diary_No+'/'+diary_Year+ '  CFLNAME='+ CFLNAME);
-                            console.log(result);
                         } else{
                             var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         }
                     }
                     // alert(result);

@@ -423,7 +423,6 @@
                      result = JSON.parse(result);
                 }
 
-                // console.log(result);
                 // return false;
                 $("#exampleModal").modal('show');
                 var today = new Date();
@@ -445,7 +444,6 @@
                         success: function(updateData){
                             if(typeof updateData == 'string'){
                                 updateData = JSON.parse(updateData);
-                                // console.log(updateData);
                                 var message = updateData.message;
                                 if(updateData.status=='SUCCESS'){
                                     $("#customErrorMessage").html('');
@@ -456,7 +454,6 @@
                                 }
                             }
 
-                            // console.log(updateData);
                             // return false;
                              setTimeout(function(){
                                 //window.location.reload();

@@ -219,7 +219,6 @@
             $("input:checkbox[name=vacationList]:checked").each(function() {
                 allVals.push($(this).val());
             });
-            console.log(allVals);
             noOfCases = allVals.length;
             if (noOfCases < 1) {
                 alert('Please select atleast one Case which need to be Decline');

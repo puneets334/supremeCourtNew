@@ -659,7 +659,6 @@
             var txtpass = pass + 'hgtsd12@_hjytr' + salt;
             for (var i = 0; i < 10; i++) {
                 txtpass = dataEncrypt(txtpass, salt);
-                //console.log(txtpass);
             }
             $('#txt_password').val(txtpass);
             $('[name="currentpass"]').val(sha256($('[name="currentpass"]').val()) + '<?= $_SESSION['login_salt'] ?>');

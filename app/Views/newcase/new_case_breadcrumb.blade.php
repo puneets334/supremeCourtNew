@@ -1273,7 +1273,6 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                     if(typeof data == 'string'){
                         data = JSON.parse(data);
                     }
-                    // console.log(data);
                     // return false;
                     if(data){
                         $("#exampleModal").modal('show');
@@ -1363,7 +1362,6 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                             $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                         },
                                         success: function(updateData){
-                                            // console.log(updateData);
                                             // return false;
                                             $("#loader_div").html('');
                                             if(updateData.success == 'success'){
