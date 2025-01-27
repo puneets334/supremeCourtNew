@@ -42,7 +42,7 @@
                                         <label>&nbsp;</label>
                                         <div class="form-group">
                                             <button type="submit" class="quick-btn Download1">Search</button>
-                                            <div id="loader_div" class="loader_div dNone"></div>
+                                            <div id="loader_div" class="loader_div" style="display: none;"></div>
                                         </div>
                                     </div>
                                 </form>

@@ -12,7 +12,7 @@
     }
 </style>
 <div class="container-fluid">
-    <div id="loader-wrapper" class="dNone">
+    <div id="loader-wrapper" style="display: none;">
         <div id="loader"></div>
     </div>
     <div class="row">

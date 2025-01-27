@@ -237,7 +237,7 @@ td {
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                     <div class="dashbord-tile pink-tile" tabindex="0">
                                         <!-- Start 1st Grid -->
-                                        <div class="dBlock" id="showByMe">
+                                        <div id="showByMe" style="display: block;">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By other Parties</p>
                                             <button id="byMe" class="btn btn-info pull-right">#By me</button>
@@ -322,7 +322,7 @@ td {
                                         <!-- End 1st Grid -->
 
                                         <!--Start 2nd grid-->
-                                        <div class="dNone" id="showByOthers">
+                                        <div style="display: none;"id="showByOthers">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By Me</p>
                                             <button id="byOthers" class="btn btn-info pull-right" tabindex="0">#By
@@ -1664,6 +1664,7 @@ td {
                                                     <!-- <h5 class="unerline-title">My e-Filed Cases</h5> -->
                                                     <div class="end-buttons mt-0">
                                                        <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button>
+                                                       <!-- <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button> -->
                                                     </div>
                                                 <!-- </div> -->
                                                 <div class="calender-sec">
@@ -1845,36 +1846,39 @@ td {
     });
 
     function showAllCases(){
-        $.ajax({
-            url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
-            method: "POST",
-            data: {
-                start: ''
-            },
-            // dataType: 'json',
-            beforeSend: function() {
-                $('#loader-wrapper').show();
-                var loaderTimeout = setTimeout(function() {
-                    $('#loader-wrapper').fadeOut('slow', function() {
-                        $('#content').fadeIn('slow');
-                    });
-                }, 1000);
-            },
-            success: function(res) {
-                // $('#datatable-responsive').DataTable();
-                // var table = $('#datatable-responsive').DataTable().destroy();
-                $('#datatable-responsive').html('');
-                $('#datatable-responsive').html(res);
-                // $('#datatable-responsive').DataTable().reload();
-
-            },
-            error: function(xhr, status, error) {
-                var Table = document.getElementById("datatable-responsive");
-                Table.innerHTML = "";
-                $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
-            }
-        });
+        window.location.reload();
     }
+    // function showAllCases(){
+    //     $.ajax({
+    //         url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
+    //         method: "POST",
+    //         data: {
+    //             start: ''
+    //         },
+    //         // dataType: 'json',
+    //         beforeSend: function() {
+    //             $('#loader-wrapper').show();
+    //             var loaderTimeout = setTimeout(function() {
+    //                 $('#loader-wrapper').fadeOut('slow', function() {
+    //                     $('#content').fadeIn('slow');
+    //                 });
+    //             }, 1000);
+    //         },
+    //         success: function(res) {
+    //             // $('#datatable-responsive').DataTable();
+    //             // var table = $('#datatable-responsive').DataTable().destroy();
+    //             $('#datatable-responsive').html('');
+    //             $('#datatable-responsive').html(res);
+    //             // $('#datatable-responsive').DataTable().reload();
+
+    //         },
+    //         error: function(xhr, status, error) {
+    //             var Table = document.getElementById("datatable-responsive");
+    //             Table.innerHTML = "";
+    //             $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
+    //         }
+    //     });
+    // }
 
     function get_message_data(id) {
         UIkit.modal('#mail').toggle();
