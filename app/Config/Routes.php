@@ -481,3 +481,4 @@ $routes->match(['GET', 'POST'], 'efilingAction/IAMiscDocsRefiledFinalSubmit', 'e
 $routes->match(['GET', 'POST'], 'Api/Cases/get_list_doc_cases_efiled', 'Api\Cases::get_list_doc_cases_efiled');
 
 $routes->match(['GET', 'POST'], 'Api/getAdvocateConsent', 'Api::getAdvocateConsent');
+$routes->match(['GET', 'POST'], 'admin/EfilingAction/newcase/FeeVerifyLock_Controller/feeVeryLock', 'NewCase\FeeVerifyLock_Controller::feeVeryLock');

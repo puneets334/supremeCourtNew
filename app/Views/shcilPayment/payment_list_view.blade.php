@@ -22,12 +22,13 @@
                 $stage_id = !empty(getSessionData('efiling_details')['stage_id']) ? getSessionData('efiling_details')['stage_id'] : NULL;
                 if(is_array($payment_details)){
                     foreach ($payment_details as $resData) {
-                        $transaction_date = !empty($resData['transaction_date']) ? date('d-m-Y H:i:s A', strtotime($resData['transaction_date'])) : '';
+                        $transaction_date = !empty($resData['transaction_date']) ? htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($resData['transaction_date'], ENT_QUOTES)))) : '';
                         $transaction_num = !empty($resData['transaction_num']) ? $resData['transaction_num'] : NULL;
                         $is_verified = !empty($resData['is_verified']) ? $resData['is_verified'] : NULL;
                         $is_locked = !empty($resData['is_locked']) ? $resData['is_locked'] : NULL;
                         $diaryNo = !empty($resData['sc_diary_num']) ? $resData['sc_diary_num'] : NULL;
                         $diaryYear = !empty($resData['sc_diary_year']) ? $resData['sc_diary_year'] : NULL;
+                        $orderDate = !empty($resData['order_date']) ? htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($resData['order_date'], ENT_QUOTES)))) : NULL;
                         // $is_verified = 't';
                         // $is_locked='t';
                         if ($resData['bank_name'] != '-' || $resData['bank_name'] != 'NA') {
@@ -35,8 +36,8 @@
                         } else{
                             $bank_name = 'NA';
                         }
-                        $order_no_with_date = '<b>' . htmlentities($resData['order_no'], ENT_QUOTES) . '</b><br>' . htmlentities(date('d-m-Y H:i:s A', strtotime($resData['order_date'])), ENT_QUOTES);
-                        $grn_no_with_date = '<b>' . htmlentities($resData['transaction_num'], ENT_QUOTES) . '</b><br>' . htmlentities($transaction_date, ENT_QUOTES);
+                        $order_no_with_date = '<b>' . htmlentities($resData['order_no'], ENT_QUOTES) . '</b><br>' . $orderDate;
+                        $grn_no_with_date = '<b>' . htmlentities($resData['transaction_num'], ENT_QUOTES) . '</b><br>' . $transaction_date;
                         $bank_name_with_cin = $bank_name;
                         ?>
                         <tr>
@@ -129,8 +130,8 @@
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><span class="fa fa-pencil"></span>Court Fee <span id="fee_type"</span></h4>
+                <h4 class="modal-title"><span class="fa fa-pencil"></span>Court Fee <span id="fee_type"></span></h4>
+                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -144,16 +145,16 @@
                         </div>
                     </div>
                     <br/> <br/>-->
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2">
-                        <div class="form-group">
-                            <label class="control-label col-md-4 col-sm-4 col-xs-6 input-sm uk-form-label">Response Status:</label>
-                            <div class="col-md-8 col-sm-8 col-xs-6">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="row">
+                            <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Response Status:</label>
+                            <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="RPSTATUS"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2">
-                        <div class="form-group">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="row">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Receipt number:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="receiptNumber"></div>
@@ -161,16 +162,20 @@
                         </div>
                     </div>
                     <!--start for lock-->
+
                     <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 diaryNumberYear" style="display: none;">
                         <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Diary number:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="diaryNumberYear"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFLNAME" style="display: none;">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 CFLNAME" style="display: none;">
                         <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">CFL Name:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="CFLNAME"></div>
@@ -179,24 +184,30 @@
                     </div>
                     <!--end for lock-->
                     <!--start for verify-->
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 DTISSUE" style="display: none;">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 DTISSUE" style="display: none;">
                         <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Date of Issue:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="DTISSUE"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFAMT" style="display: none;">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 CFAMT" style="display: none;">
                         <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Court Fee:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <span id="CFAMT"></span> <i class="fa fa-rupee"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 STATUS" style="display: none;">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 STATUS" style="display: none;">
                         <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label"><span id="STATUS_text"></span> Status:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6 text-success">
                                 <div id="STATUS"></div>
