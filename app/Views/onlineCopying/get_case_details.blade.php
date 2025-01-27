@@ -15,10 +15,10 @@ if(isset($_REQUEST['chk_status']) && $_REQUEST['chk_status']==1)
     $ct = $_REQUEST['ct']; 
     $cn = $_REQUEST['cn']; 
     $cy = $_REQUEST['cy'];
-    
+    $sql_dno=array();
     $sql_dno = eCopyingGetDiaryNo($ct, $cn, $cy);
-// pr($sql_dno);
-    if(count($sql_dno) > 0){
+   
+    if(!empty($sql_dno) && count($sql_dno) > 0){
         if(isset($sql_dno['diary_no'])){
             $diary_no = $sql_dno['diary_no'].substr($sql_dno['diary_no'], -4);
             $_SESSION['session_d_no'] = $sql_dno['diary_no'];
@@ -28,6 +28,7 @@ if(isset($_REQUEST['chk_status']) && $_REQUEST['chk_status']==1)
         }
     }
     else{
+        
         $sql_dno = eCopyingCheckDiaryNo($ct, $cn, $cy);
         if(count($sql_dno) > 0){
             $diary_no = $sql_dno['diary_no'].substr($sql_dno['diary_no'], -4);
@@ -43,7 +44,9 @@ else{
 }
 
 $res_fil_det = eCopyingGetFileDetails($diary_no);
+
 $pno="";
+$case_no='';
 if(count($res_fil_det) > 0){
    if($res_fil_det[0]->pno!=0)
     {
@@ -52,6 +55,7 @@ if(count($res_fil_det) > 0){
         else if($res_fil_det[0]->pno>2)
             $pno=" AND OTHERS";
     }
+    
     $rno="";
     if($res_fil_det[0]->rno!=0)
     {
@@ -64,12 +68,14 @@ if(count($res_fil_det) > 0){
     {
         $case_no = $res_fil_det[0]->reg_no_display;
     }
+    
     $case_no .= '  Diary No. '.substr($diary_no,0,-4).' - '.substr($diary_no,-4);
 
     $_SESSION['session_case_no'] = $case_no;
     $_SESSION['session_cause_title'] = $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;
     $_SESSION['session_c_status'] = $res_fil_det[0]->c_status ;
     $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
+    
 ?>
 
 <!--    <div id="show_error"></div>  This Segment Displays The Validation Rule -->
@@ -81,6 +87,7 @@ if(count($res_fil_det) > 0){
             <div class="text-center diary_no_class" data-diary-no="<?=$diary_no;?>" data-case-no="<?=$case_no;?>" data-cause_title="<?=$res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;?>" >
                 <p><?= $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno; ?></p>
                 <strong><?= $case_no; ?> (<?= $res_fil_det[0]->c_status=='P' ? '<span style="color: #0554DB;">Pending</span>' : '<span class="text-danger">Disposed</span>'; ?>)</strong>
+               
                 <p class="text-left">
                     Applying as :<b> 
                     <?php   if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1){ echo "AOR";}
@@ -88,14 +95,19 @@ if(count($res_fil_det) > 0){
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){ echo "Third Party"; }
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
+                            
                             ?>
                     </b>
+                    
                     <i class="fa fa-user text-info ml-5 " aria-hidden="true"></i> <?=$_SESSION['user_address'][0]['second_name'].' '.$_SESSION['user_address'][0]['first_name'];?> <i class="fa fa-phone-square text-info" aria-hidden="true"></i> <?=$_SESSION["applicant_mobile"];?> <i class="fa fa-envelope text-info" aria-hidden="true"></i> : <?=$_SESSION["applicant_email"];?></b>
+                    
                 </p>
+                
             </div>
         </div>
     </div>        
     <?php 
+    
     if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2){
         $check_asset_type = 5; //for party
     }
@@ -105,7 +117,7 @@ if(count($res_fil_det) > 0){
     if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){
         $check_asset_type = 4; //for affidaivt filed by third party
     }
-
+    
     if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
         $stmt_video = getStatementVideo($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
         if (is_array($stmt_video) && count($stmt_video) == 0) {
@@ -116,7 +128,9 @@ if(count($res_fil_det) > 0){
             <?php
             exit();
         }
-
+        
+                    
+                    
         $stmt_image = getStatementImage($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
         if (is_array($stmt_image) && count($stmt_image) == 0) {
             ?>
@@ -154,7 +168,7 @@ if(count($res_fil_det) > 0){
         $_SESSION['max_cases_verify_per_day'] = 0;
     }
 
-
+    
        //DIGITAL COPY, MAX 10 REQUEST ALLOWED
     $stmt_check2 = eCopyingCheckMaxDigitalRequest($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
     if (count($stmt_check2) > 0) {
@@ -235,6 +249,7 @@ if(count($res_fil_det) > 0){
         <?php
        // exit();
     }
+    
     ?>
     
         <!-- REQUEST DETAILS -->
@@ -247,7 +262,7 @@ if(count($res_fil_det) > 0){
         </div>
 
 <?php
-
+     
     //APPLICANT DETAILS
     if(isset($_SESSION['user_address'])){
         ?>
@@ -307,7 +322,7 @@ if(count($res_fil_det) > 0){
         </div>
 <?php
     }
-
+    
     ?>
 
     <?php
@@ -351,6 +366,7 @@ if(count($res_fil_det) > 0){
     
     
     <?php
+    
     if((isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2) && (isset($_SESSION["diary_filed_user_verify_status"]) && $_SESSION["diary_filed_user_verify_status"] == 'apply_for_verification')) {
     }
     else{
@@ -410,6 +426,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                     <div class="col-7 pe-0">
                         <?php
                             $app_category = eCopyingGetCopyCategory();
+                            
                         ?>
                         <select class="form-control cus-form-ctrl" id="app_type" name="app_type" aria-labelledby="app_type_addon" required>
                             <option value="">-Select-</option>
@@ -421,6 +438,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                 </div>
             </div>
         </div>
+        
         <div class="col-md-4 col-sm-4 col-xs-12">
             <div class="row">
                 <div class="row w-100 align-items-center">
@@ -448,6 +466,9 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                     <select class="form-control cus-form-ctrl" id="num_copy" name="num_copy" aria-labelledby="num_copy_addon" required>
                         <?php
                         $currently_selected = date('Y');
+                        
+        
+        
                         $earliest_year = 1;
                         if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){
                             //third party
@@ -467,8 +488,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
             </div>
         </div>
     </div>
-
-
+   
     <div class="form-row" style="color:#186329;">
         <div class="col-md-12">
             <span id="sp_app_charge"></span>
@@ -508,8 +528,11 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                 <div class="table-sec">
                 <div class="table-responsive form-radio ml-2 applied_check_boxes" aria-labelledby="applied_for_addon" style="max-height:200px; overflow:auto;">
     <?php
-        if(isset($res_fil_det['main_case']) && ($res_fil_det['main_case'] !='' && $res_fil_det['main_case'] != null && $res_fil_det['main_case'] != '0')){
-            $sql_conn_list = eCopyingGetGroupConcat($res_fil_det['main_case']);
+        
+        if(isset($res_fil_det[0]->main_case) && ($res_fil_det[0]->main_case !='' && $res_fil_det[0]->main_case != null && $res_fil_det[0]->main_case != '0')){
+            $sql_conn_list = eCopyingGetGroupConcat($res_fil_det[0]->main_case);
+            print_r($sql_conn_list);
+            die;
             if(count($sql_conn_list) > 0){
                 $res_diary_data = $sql_conn_list;
                 $condition = $res_diary_data['conn_list'];
@@ -529,8 +552,9 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
         else{
             $third_party_sub_qry = "";    
         }
-        $jud_order = eCopyingGetCopyDetails($condition, $third_party_sub_qry, $OLD_ROP);
-
+        
+        $jud_order = eCopyingGetCopyDetails($condition,$third_party_sub_qry,$OLD_ROP);
+        
     if(count($jud_order) > 0){
 
       ?>
