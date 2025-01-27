@@ -39,43 +39,65 @@
                                                 <th>Court No.</th>
                                                 <th>Item No.</th>
                                                 <th>Case No.</th>
+                                                <th>Case Status</th>
                                                 <th>Cause Title</th>
                                                 <th>For Appearance</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            // $sno = 1;
                                             foreach($list as $key => $advocate) {
                                                 if($advocate['pno'] == 2) {
                                                     $pet_name = $advocate['pet_name']." AND ANR.";
                                                 } elseif($advocate['pno'] > 2) {
                                                     $pet_name = $advocate['pet_name']." AND ORS.";
-                                                } else{
+                                                } else {
                                                     $pet_name = $advocate['pet_name'];
                                                 }
                                                 if($advocate['rno'] == 2) {
                                                     $res_name = $advocate['res_name']." AND ANR.";
                                                 } elseif($advocate['rno'] > 2) {
                                                     $res_name = $advocate['res_name']." AND ORS.";
-                                                } else{
+                                                } else {
                                                     $res_name = $advocate['res_name'];
                                                 }
                                                 ?>
                                                 <tr>
-                                                    <td data-key="SNo."><?php  echo $key+1; ?></td>
-                                                    <td data-key="Listed On">{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
-                                                    <td data-key="Court No.">{{ $advocate['courtno'] }}</td>
-                                                    <td data-key="Item No.">{{ $advocate['brd_slno'] }}</td>
-                                                    <td data-key="Case No.">{{ $advocate['reg_no_display'] ? $advocate['diary_no']:'' }}</td>
-                                                    <td data-key="Cause Title"> {{ $pet_name }}<br> Vs.<br> {{ $res_name }}</td>
-                                                    <td data-key="For Appearance">
-                                                        <?php if($advocate['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME) { ?>
-                                                            <span data-courtno="{{$advocate['courtno']}}" data-toggle="modal" data-target="#modal-lg" class="badge badge-danger time_out_msg" style="padding:10px;">{{ MSG_TIME_OUT }}</span>
-                                                        <?php } else { ?>
-                                                            <button type="button" name="btn_click" class="btn_click quick-btn" data-bs-toggle="modal" data-bs-target="#exampleModal" data-diary_no="{{$advocate['diary_no']}}" data-next_dt="{{$advocate['next_dt']}}" data-appearing_for="{{$advocate['pet_res']}}" data-pet_name="{{$advocate['pet_name']}}" data-res_name="{{$advocate['res_name']}}" data-courtno="{{$advocate['courtno']}}" data-brd_slno="{{$advocate['brd_slno']}}" data-reg_no_display="{{$advocate['reg_no_display']}}">Click</button>
-                                                        <?php } ?>
-                                                    </td> 
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td>{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
+                                                    <td>{{ $advocate['courtno'] == '21' ? 'Registrar Court' : $advocate['courtno'] }}</td>
+                                                    <td>{{ $advocate['brd_slno'] }}</td>
+                                                    <td>{{ $advocate['reg_no_display'] ? '' : $advocate['diary_no'] }}</td>
+                                                    <td>
+                                                        <p class="{{ isset($advocate['c_status']) && $advocate['c_status'] == 'P' ? 'text-success': 'text-danger' }}">{{ isset($advocate['c_status']) && $advocate['c_status'] == 'P' ? 'Pending' : 'Disposed' }}</p>
+                                                    </td>
+                                                    <td><p> {{ $pet_name }}<br>
+                                                        Vs.
+                                                        <br>
+                                                        {{ $res_name }}</p>
+                                                    </td>
+                                                    <td>
+                                                        @if(isset($advocate['c_status']) && $advocate['c_status'] == 'P')
+                                                            @if($advocate['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME)
+                                                                <span data-courtno="{{ $advocate['courtno'] }}" data-toggle="modal" data-target="#modal-lg" class="badge badge-danger time_out_msg">{{ MSG_TIME_OUT }}</span>
+                                                            @else
+                                                                <button data-toggle="modal" data-target="#modal-lg" type="button"
+                                                                    data-diary_no="{{ $advocate['diary_no'] }}"
+                                                                    data-next_dt="{{ $advocate['next_dt'] }}"
+                                                                    data-appearing_for="{{ $advocate['pet_res'] }}"
+                                                                    data-pet_name="{{ $advocate['pet_name'] }}"
+                                                                    data-res_name="{{ $advocate['res_name'] }}"
+                                                                    data-courtno="{{ $advocate['courtno'] }}"
+                                                                    data-brd_slno="{{ $advocate['brd_slno'] }}"
+                                                                    data-reg_no_display="{{ $advocate['reg_no_display'] }}"
+                                                                    data-c_status="{{ $advocate['c_status'] }}"
+                                                                    name="btn_click" class="btn_click btn btn-success">Click
+                                                                </button>
+                                                            @endif
+                                                        @else
+                                                        <p class="text-danger">Case has been Disposed, you can't submit appearance slip now.</p>
+                                                        @endif
+                                                    </td>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>                                   
@@ -254,7 +276,6 @@
                         icon: 'success',
                         title: data.msg
                     })
-                    console.log(data.fas);
                     // $('.advocate_remove_'+data.id).html('<a href="#" data-next_dt="'+data.next_dt+'" data-id="'+data.id+'" data-is_active="'+data.is_active+'" class="btn '+data.btn_color+' advocate_remove" title="Click to Restore"><i class="fas '+data.fas+'"></i></a>');
                     $('.advocate_remove_'+data.id).closest("tr").remove();
                 } else{
@@ -320,7 +341,6 @@
                     $(".myModal_content").html("");
                     display_appearance_slip(data.case_no,data.cause_title,data.diary_no,data.next_dt,data.appearing_for,data.brd_slno,data.courtno);
                 } else if(data.status == 'checkbox') {
-                    console.log(data.data);
                     printErrorMsg(data.data);
                 } else{
                     Swal.fire({

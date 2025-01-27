@@ -291,6 +291,7 @@
 </div>
       <!--end IA and MISCDUC PaymentFee-->
 @endsection
+<script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <style>
     fieldset {
         background-color: #eeeeee;
@@ -423,7 +424,6 @@
                      result = JSON.parse(result);
                 }
 
-                // console.log(result);
                 // return false;
                 $("#exampleModal").modal('show');
                 var today = new Date();
@@ -445,7 +445,6 @@
                         success: function(updateData){
                             if(typeof updateData == 'string'){
                                 updateData = JSON.parse(updateData);
-                                // console.log(updateData);
                                 var message = updateData.message;
                                 if(updateData.status=='SUCCESS'){
                                     $("#customErrorMessage").html('');
@@ -456,7 +455,6 @@
                                 }
                             }
 
-                            // console.log(updateData);
                             // return false;
                              setTimeout(function(){
                                 //window.location.reload();
@@ -483,5 +481,153 @@
 
         });
     }
-
+    var base_url = '<?php base_url(); ?>';
+    $(".check_stock_holding_payment_status").click(function () {
+        var CSRF_TOKEN = 'CSRF_TOKEN';
+        var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+        var order_id = $(this).attr('data-order-id');
+        $('.form-responce').remove();
+        $(this).append(' <i class="status_refresh fa fa-refresh fa-spin"></i>');
+        $.ajax({
+            type: "POST",
+            data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, order_id: order_id},
+            url: '<?php echo base_url('shcilPayment/paymentCheckStatus'); ?>',
+            // url: base_url + "shcilPayment/paymentCheckStatus",
+            success: function (data) {
+                $('.status_refresh').remove();
+                if (data=='SUCCESS|Status Successfully Updated.'){
+                    alert(data);
+                }
+                window.location.reload();
+                $.getJSON(base_url + "csrftoken", function (result) {
+                    $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                });
+            }
+        });
+    });
+    $(document).on('click','.verifyFeeData',function(){
+        var type = $.trim($(this).attr('data-actionType'));
+        var receiptNumber = $.trim($(this).attr('data-transaction_num'));
+        //alert(receiptNumber);return false;
+        //var receiptNumber ='DLCT0801D2121P';
+        var diaryNo = $.trim($(this).attr('data-diaryNo'));
+        var diaryYear = $.trim($(this).attr('data-diaryYear'));
+        //alert('type='+ type + '  receiptNumber=' + receiptNumber + '  diaryNo='+ diaryNo + '  diaryYear='+ diaryYear);
+        if(type=='lock') {
+            if (diaryNo ==='' && diaryYear ===''){
+             alert('Please generate diary number first then try to lock court fee.');
+                return false;
+            }
+        }
+        if(type && receiptNumber){
+            var CSRF_TOKEN = 'CSRF_TOKEN';
+            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            $('.form-responce').remove();
+            $('.status_refresh').html('');
+            $(this).append(' <i class="status_refresh fa fa-refresh fa-spin"></i>');
+            var postData = {CSRF_TOKEN: CSRF_TOKEN_VALUE, type: type,receiptNumber:receiptNumber,diaryNo:diaryNo,diaryYear:diaryYear};
+            $.ajax({
+                type: "POST",
+                url: base_url + "newcase/FeeVerifyLock_Controller/feeVeryLock",
+                data: JSON.stringify(postData),
+                cache:false,
+                async:false,
+                dataType: 'json' ,
+                contentType: 'application/json',
+                success: function (data) {
+                    var status =(data.status);
+                    if (type=='verify') {
+                        var RPSTATUS = (data.res.CERTRPDTL.RPSTATUS);
+                        var RCPTNO = (data.res.CERTRPDTL.RCPTNO);
+                        var DTISSUE = (data.res.CERTRPDTL.DTISSUE);
+                        var CFAMT = (data.res.CERTRPDTL.CFAMT);
+                        var STATUS = (data.res.CERTRPDTL.STATUS);
+                        $('#Verify'+receiptNumber).hide();
+                        $('#Verified'+receiptNumber).show();
+                        $('#Verifiedlock'+receiptNumber).show();
+                        $('#VerifiedLocked'+receiptNumber).hide();
+                        //alert(data.res.CERTRPDTL.RPSTATUS);
+                        if (RPSTATUS=='FAIL') {
+                            $('#RPSTATUS').css('color', 'red');
+                            $('#STATUS').css('color', 'red');
+                            $('.STATUS').css('color', 'red');
+                            $('#fee_type').css('color', 'red');
+                            $('#STATUS_text').html('Reason');
+                        } else{
+                            $('#RPSTATUS').css('color', 'green');
+                            $('#fee_type').css('color', 'green');
+                            $('.STATUS').css('color', 'green');
+                            $('#STATUS_text').html('');
+                        }
+                        $('.DTISSUE').show();
+                        $('.CFAMT').show();
+                        $('.STATUS').show();
+                        $('#fee_type').html('Verify');
+                        $('#RPSTATUS').html(RPSTATUS);
+                        $('#receiptNumber').html(RCPTNO);
+                        $('#DTISSUE').html(DTISSUE);
+                        $('#CFAMT').html(CFAMT);
+                        $('#STATUS').html(STATUS);
+                        $('#diaryNumberYear').html('');
+                        $('#CFLNAME').html('');
+                        $('.diaryNumberYear').hide();
+                        $('.CFLNAME').hide();
+                        if (RPSTATUS=='SUCCESS' && status==true  && RCPTNO==receiptNumber) {
+                            var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
+                        } else{
+                            var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
+                        }
+                    } else{
+                        var RPSTATUS = (data.res.LOCKTXN.LOCKRPDTL.RPSTATUS);
+                        var RCPTNO = (data.res.LOCKTXN.LOCKRPDTL.RCPTNO);
+                        var CFLNAME = (data.res.LOCKTXN.LOCKRPDTL.CFLNAME);
+                        var diary_Year = (data.res.LOCKTXN.LOCKRPDTL.DIRYEAR);
+                        var diary_No = (data.res.TXNHDR.DIRNO);
+                        var slash='/';
+                        var diaryNumberYear=diary_No+slash+diary_Year;
+                        //var RPSTATUS = (data.res.RPSTATUS);
+                        // var RCPTNO = (data.res.RCPTNO);
+                        $('#Verify'+receiptNumber).hide();
+                        $('#Verified'+receiptNumber).show();
+                        $('#Verifiedlock'+receiptNumber).hide();
+                        $('#VerifiedLocked'+receiptNumber).show();
+                        // alert(data.res.RPSTATUS);
+                        if (RPSTATUS !='SUCCESS') {
+                            $('#RPSTATUS').css('color', 'red');
+                            $('#fee_type').css('color', 'red');
+                        } else{
+                            $('#RPSTATUS').css('color', 'green');
+                            $('#fee_type').css('color', 'green');
+                        }
+                        $('.diaryNumberYear').show();
+                        $('.CFLNAME').show();
+                        $('#fee_type').html('Locking');
+                        $('#RPSTATUS').html(RPSTATUS);
+                        $('#receiptNumber').html(RCPTNO);
+                        $('#diaryNumberYear').html(diaryNumberYear);
+                        $('#CFLNAME').html(CFLNAME);
+                        $('#DTISSUE').html('');
+                        $('#CFAMT').html('');
+                        $('#STATUS').html('');
+                        $('.DTISSUE').hide();
+                        $('.CFAMT').hide();
+                        $('.STATUS').hide();
+                        if (status==true  && RCPTNO==receiptNumber) {
+                            var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber+ '  Diary Number='+ diary_No+'/'+diary_Year+ '  CFLNAME='+ CFLNAME);
+                        } else{
+                            var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
+                        }
+                    }
+                    // alert(result);
+                    // $("#VerifyModalResult").html(result);
+                    $("#VerifyModal").modal('show');
+                    $('.status_refresh').remove();
+                    $.getJSON(base_url + "csrftoken", function (result) {
+                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+                    });
+                }
+            });
+        }
+        //location.reload();
+    });
 </script>

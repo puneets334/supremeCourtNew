@@ -383,7 +383,7 @@ class SubordinateCourt extends BaseController {
             $case_type_name= !empty($_POST['hc_case_type_name']) ? $_POST['hc_case_type_name'] : '';
             $case_number= !empty($_POST['hc_case_number']) ? $_POST['hc_case_number'] : '';
             $case_year= !empty($_POST['hc_case_year']) ? url_decryption($_POST['hc_case_year']) : '';
-            $cnr_number= !empty($_POST['cnr']) ? $_POST['cnr'] : '';
+            $cnr_number= !empty($_POST['cnr']) ? strtoupper($_POST['cnr']) : '';
             $hc = !empty($_POST['hc_court']) ? explode('##', url_decryption($_POST['hc_court'])) : '';
             $bench = !empty($_POST['hc_court_bench']) ? explode('##', url_decryption($_POST['hc_court_bench'])) : '';
             $estabid = !empty($hc) ? $hc[0] : '';
@@ -399,7 +399,7 @@ class SubordinateCourt extends BaseController {
             $case_type_array = !empty($_POST['dc_case_type_id']) ? url_decryption($_POST['dc_case_type_id']) : '';
             $case_type_ids = !empty($case_type_array) ? explode('##', $case_type_array) : '';
             $case_type_name= !empty($_POST['hc_case_type_name']) ? $_POST['hc_case_type_name'] : '';
-            $cnr_number= !empty($_POST['cnr']) ? $_POST['cnr'] : '';
+            $cnr_number= !empty($_POST['cnr']) ? strtoupper($_POST['cnr']) : '';
             $state = !empty($_POST['state']) ? explode('#$', url_decryption($_POST['state'])) : '';
             $case_number= !empty($_POST['dc_case_number']) ? $_POST['dc_case_number'] : '';
             $case_year= !empty($_POST['dc_case_year']) ? url_decryption($_POST['dc_case_year']) : '';

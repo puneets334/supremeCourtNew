@@ -212,15 +212,6 @@ a{
     word-wrap: break-word;
 }
 
-.dNone {
-    display: none;
-}
-
-.dBlock {
-    display: block;
-}
-
-
 @media screen and  (min-width: 200px)and  (max-width: 360px) {
     .navbar-toggle {
         position: relative;

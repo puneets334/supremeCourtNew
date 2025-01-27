@@ -30,6 +30,7 @@ class DefaultController extends BaseController
         $_SESSION['applicant_email'] = getSessionData('login')['emailid'];
         $_SESSION['applicant_mobile'] = getSessionData('login')['mobile_number'];
         $checkUserAddress = $this->ecoping_webservices->getUserAddress(getSessionData('login')['mobile_number'], getSessionData('login')['emailid']);
+        
         if (count($checkUserAddress) > 0){
             $address_array = array();
             $_SESSION['is_user_address_found'] = 'YES';
@@ -38,6 +39,7 @@ class DefaultController extends BaseController
                 $address_array[] = $r;   
             }
             $_SESSION['user_address'] = $address_array;
+            
         }
         else{
             $_SESSION['is_user_address_found'] = 'NO';
@@ -89,9 +91,7 @@ class DefaultController extends BaseController
         
         return $this->render('onlineCopying.get_copy_search', compact('results'));
     }
-    public function getCopyStatusResult(){
-        
-    }
+    
     public function trackConsignment()
     {
         return $this->render('onlineCopying.track');
@@ -108,6 +108,7 @@ class DefaultController extends BaseController
             is_user_status();
         }
         $faqs =$this->ecoping_webservices->copyFaq();
+        
         return $this->render('onlineCopying.faq', compact('faqs'));
     }
     public function screenReader()
@@ -130,11 +131,14 @@ class DefaultController extends BaseController
     }
     public function getCaseDetails()
     {
+        
         return $this->render('onlineCopying.get_case_details');
     }
     public function getAppCharge()
     {
+        
         $r_sql = $this->ecoping_webservices->getCatogoryForApplication($_REQUEST['idd']);
+        
         $app_rule='';
         if($r_sql->urgent_fee!=0)
         {

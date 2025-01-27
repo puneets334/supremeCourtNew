@@ -414,7 +414,6 @@
                 $('.myModal_content').html('<table width="100%" align="center"><tr><td>Loading...</td></tr></table>');
             },
             success: function(data) {
-               console.log(data);
                 $(".myModal_content").html(data);
                 
             },

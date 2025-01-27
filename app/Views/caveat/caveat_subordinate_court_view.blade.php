@@ -33,7 +33,7 @@ body.loading .overlay{
     display: block;
 }
 #loader-wrapper {
-			display: flex;
+			/* display: flex; */
 			justify-content: center;
 			align-items: center;
 			z-index: 1000; /* Ensure it's on top of other content */
@@ -53,7 +53,7 @@ body.loading .overlay{
       100% { transform: rotate(360deg); }
     } */
 </style>
-<div id="loader-wrapper" class="dNone">
+<div id="loader-wrapper" style="display: none;">
     <div id="loader"></div>
 </div>
 <div class="center-content-inner comn-innercontent">
@@ -102,7 +102,7 @@ body.loading .overlay{
                         </div>
                     </div>
                     <hr>
-                    <div id="supreme_court_info" class="dNone">                                               
+                    <div id="supreme_court_info" style="display: none;">                                               
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
@@ -132,7 +132,7 @@ body.loading .overlay{
                         </div>                        
                     </div>         
 
-                    <div id="high_court_info" class="dNone">
+                    <div id="high_court_info" style="display: none;">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
@@ -141,10 +141,8 @@ body.loading .overlay{
                                             <label for="" class="form-label text-ryt ">CNR <span style="color: red">*</span></label>
                                         </div>
                                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                            <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" 
-                                        type="text"  maxlength="16" > 
-                                       <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
-
+                                            <input id="cnr" name="cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" type="text"  maxlength="16" style="text-transform: uppercase;"> 
+                                            <p class="pt-2">  <strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
                                         </div>    
                                             <?php
                                             // pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
@@ -204,7 +202,7 @@ body.loading .overlay{
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name dNone">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name" style="display: none;">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Case Type Name <span style="color: red">*</span></label>
                                     <input class="form-control cus-form-ctrl"  type="text" name="hc_case_type_name" id="hc_case_type_name" placeholder="Enter Case Type Name." tabindex='20' minlength="6" maxlength="6">
@@ -253,7 +251,7 @@ body.loading .overlay{
                         
                     </div>
                     
-                    <div class="row dNone" id="district_court_info">
+                    <div class="row" id="district_court_info" style="display: none;">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
@@ -265,8 +263,7 @@ body.loading .overlay{
                                     //  pattern="^[A-Z]{4}[0-9]{12}$" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');"
                                     ?>
                                      <div class="col-12 col-sm-12 col-md-4 col-lg-4">
-                                    <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16"
-                                    type="text"  maxlength="16" > 
+                                    <input id="dc_cnr" name="dc_cnr" placeholder="CNR" value="" class="form-control cus-form-ctrl sci_validation" maxlength="16" type="text"  maxlength="16" style="text-transform: uppercase;"> 
                                     <p class="pt-2"><strong style="font-size:13px;">Kindly search lower court details using CNR preferably for swift data retrieval</strong></p>
                                      </div>
                                      <!-- <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -326,7 +323,7 @@ body.loading .overlay{
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dNone">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4" style="display: none;">
                                 <div class="mb-3">
                                     <label for="" class="form-label">Case Type Name <span style="color: red">*</span></label>
                                     <input class="form-select cus-form-ctrl" type="text"
@@ -374,7 +371,7 @@ body.loading .overlay{
                     </div>        
                     
                 
-                    <div class="row dNone" id="state_agency_info">
+                    <div class="row" id="state_agency_info" style="display: none;">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">State <span style="color: red">*</span></label>
@@ -408,7 +405,7 @@ body.loading .overlay{
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-xs-12 agency_case_type_name dNone">
+                        <div class="col-sm-4 col-xs-12 agency_case_type_name" style="display: none;">
                             <div class="form-group">
                                 <label class="control-label col-md-5 col-sm-12 col-xs-12 input-sm">Case Type Name: <span style="color: red">*</span>:</label>
                                 <div class="col-md-7 col-sm-12 col-xs-12">
@@ -519,7 +516,7 @@ body.loading .overlay{
                             </div>
                         </div>
                     </div>
-                    <div class="row dNone" id="firDiv">                        
+                    <div class="row" id="firDiv" style="display: none;">                        
                             <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                 <div class="mb-3">
                                     <label for="" class="form-label">State <span style="color: red">*</span></label>

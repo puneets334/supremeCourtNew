@@ -1,14 +1,10 @@
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
-
 <style>
     .callout-danger{border-left-color:#bd2130}
-
     .callout{border-radius:.25rem;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);background-color:#fff;border-left:5px solid #e9ecef;margin-bottom:1rem;padding:1rem}.callout a{color:#495057;text-decoration:underline}.callout a:hover{color:#e9ecef}.callout p:last-child{margin-bottom:0}.callout.callout-danger{border-left-color:#bd2130}.callout.callout-warning{border-left-color:#d39e00}.callout.callout-info{border-left-color:#117a8b}.callout.callout-success{border-left-color:#1e7e34}.dark-mode .callout{background-color:#3f474e}.dark-mode .callout.callout-danger{border-left-color:#ed7669}.dark-mode .callout.callout-warning{border-left-color:#f5b043}.dark-mode .callout.callout-info{border-left-color:#5faee3}.dark-mode .callout.callout-success{border-left-color:#00efb2}
     a {text-decoration: none;color: #393939;}
-    .badge-light{color:#1f2d3d;background-color:#f8f9fa}a.badge-light:focus,a.badge-light:hover{color:#1f2d3d;background-color:#dae0e5}a.badge-light.focus,a.badge-light:focus{outline:0;box-shadow:0 0 0 .2rem rgba(248,249,250,.5)}.badge-dark{color:#fff;background-color:#343a40}a.badge-dark:focus,a.badge-dark:hover{color:#fff;background-color:#1d2124}a.badge-dark.focus,a.badge-dark:focus{outline:0;box-shadow:0 0 0 .2rem rgba(52,58,64,.5)}.jumbotron{padding:2rem 1rem;margin-bottom:2rem;background-color:#e9ecef;border-radius:.3rem}@media (min-width:576px){.jumbotron{padding:4rem 2rem}}.jumbotron-fluid{padding-right:0;padding-left:0;border-radius:0}.alert{position:relative;padding:.75rem 1.25rem;margin-bottom:1rem;border:1px solid transparent;border-radius:.25rem}.alert-heading{color:inherit}
-    
+    .badge-light{color:#1f2d3d;background-color:#f8f9fa}a.badge-light:focus,a.badge-light:hover{color:#1f2d3d;background-color:#dae0e5}a.badge-light.focus,a.badge-light:focus{outline:0;box-shadow:0 0 0 .2rem rgba(248,249,250,.5)}.badge-dark{color:#fff;background-color:#343a40}a.badge-dark:focus,a.badge-dark:hover{color:#fff;background-color:#1d2124}a.badge-dark.focus,a.badge-dark:focus{outline:0;box-shadow:0 0 0 .2rem rgba(52,58,64,.5)}.jumbotron{padding:2rem 1rem;margin-bottom:2rem;background-color:#e9ecef;border-radius:.3rem}@media (min-width:576px){.jumbotron{padding:4rem 2rem}}.jumbotron-fluid{padding-right:0;padding-left:0;border-radius:0}.alert{position:relative;padding:.75rem 1.25rem;margin-bottom:1rem;border:1px solid transparent;border-radius:.25rem}.alert-heading{color:inherit}    
     .fontIcon {
         float: right; color: #393939 !important; font-size: 25px; position: relative; bottom: 30px;
     }
@@ -29,23 +25,17 @@
             </div>
         </div>
     @else
-        <?PHP  
-        // pr($postedData['next_dt']);
-        // pr($data['added_data']);    
-        ?>
         <div class="row">
             <div class="col-12">
                 <div class="callout callout-danger">
-                    The appearance should be updated by {{config("constants.APPEARANCE_ALLOW_TIME_STRING")}} on the day when the matter is listed.
+                    The appearance should be updated by <?php echo APPEARANCE_ALLOW_TIME_STRING; ?> on the day when the matter is listed.
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-primary">
                     <div class="card-body box-profile">
-
                         <ul class="list-group mb-3">
                             <li class="list-group-item">
                                 <b>List Date</b> <a class="float-right">{{date('d-m-Y', strtotime($posted_data['next_dt']))}}</a>
@@ -67,13 +57,11 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
         </div>
-
-        @if($posted_data['next_dt'] == config("constants.CURRENT_DATE") && date('H:i:s') > config("constants.APPEARANCE_ALLOW_TIME"))
-            <span class="badge badge-danger">{{config("constants.MSG_TIME_OUT")}}</span>
+        @if($posted_data['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME)
+            <span class="badge badge-danger"><?= MSG_TIME_OUT; ?></span>
         @else
             <div class="row">
                 <div class="col-md-12">
@@ -109,7 +97,6 @@
                                         <option value='D.A.G.'>D.A.G.</option>
                                         <option value='Amicus Curiae'>Amicus Curiae</option>
                                     </select>
-
                                     <select class="form-control cus-form-ctrl mb-2" id="advocate_title" name="advocate_title" aria-labelledby="advocate_title_addon" required>
                                         <option value=''>-Title-</option>
                                         <option value='Mr.'>Mr.</option>
@@ -119,7 +106,6 @@
                                         <option value='Dr.'>Dr.</option>
                                         <option value='None'>None</option>
                                     </select>
-
                                     <input type="text" name="advocate_name" id="advocate_name" placeholder="Type Name ..." class="form-control cus-form-ctrl">
                                     <span class="input-group-append">
                                         <button type="button"
@@ -144,17 +130,16 @@
                         <div class="card-header">
                             <h3 class="card-title">List of Advocates Addded</h3>
                         </div>
-                        <div class="card-body p-0">
-                            
-                                <table class="table_added_advocates table table-sortable" >
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Advocate Name</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="sortable">
+                        <div class="card-body p-0">                            
+                            <table class="table_added_advocates table table-sortable" >
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Advocate Name</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sortable">
                                     @if($data['added_data'])
                                         @foreach($data['added_data'] as $added_data)
                                             <tr>
@@ -171,7 +156,7 @@
                                                                 <i class="fa fa-trash"></i></a>
                                                         @else
                                                             <i class="fa fa-repeat"></i></a>
-                                                        @endif                                                      
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -179,9 +164,8 @@
                                     @else
                                         <!-- No Records Found -->
                                     @endif
-                                    </tbody>
-                                </table>
-                            
+                                </tbody>
+                            </table>                            
                         </div>
                     </div>
                 </div>
@@ -199,39 +183,27 @@
         </div>
         <div class="row">
             <div class="col-12 text-right" style="text-align: right!important;">
-                {{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}}
+                <!-- {{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}} -->
+                <?php echo getSessionData('login.first_name').' '.getSessionData('login.last_name'); ?>
                 <br>
                 For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
             </div>
         </div>
-
     </div>
-
-
 @endif
-
-
 <div class="modal-footer justify-content-between" style="float:right !important;">
-
     {{-- <h3 class="card-title">Add - Name of Advocates</h3>--}}
-
     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-
     @if(count($data['is_submitted'])==0)
         <button type="button" class="quick-btn gray-btn final-submit"
-                data-diary_no="{{$posted_data['diary_no']}}"
-                data-next_dt="{{$posted_data['next_dt']}}"
-                data-appearing_for="{{$posted_data['appearing_for']}}"
-                data-courtno="{{$posted_data['courtno']}}"
-                data-brd_slno="{{$posted_data['brd_slno']}}"
-                data-case_no="{{$posted_data['reg_no_display'] ?: 'Diary No. '.$posted_data['diary_no']}}"
-                data-cause_title="{{$posted_data['pet_name'].' Vs. '.$posted_data['res_name']}}"
-        >Submit</button>
+        data-diary_no="{{$posted_data['diary_no']}}"
+        data-next_dt="{{$posted_data['next_dt']}}"
+        data-appearing_for="{{$posted_data['appearing_for']}}"
+        data-courtno="{{$posted_data['courtno']}}"
+        data-brd_slno="{{$posted_data['brd_slno']}}"
+        data-case_no="{{$posted_data['reg_no_display'] ?: 'Diary No. '.$posted_data['diary_no']}}"
+        data-cause_title="{{$posted_data['pet_name'].' Vs. '.$posted_data['res_name']}}">Submit</button>
     @endif
-
-
-
-
     {{--<div class="row text-right">
         <br>{{ucwords(strtolower(session('user_title'))).' '.ucwords(strtolower(session('user_name')))}}
         <br>
@@ -241,20 +213,4 @@
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary final-submit" data-next_dt="{{$posted_data['next_dt']}}" >Submit</button>
     </div>--}}
-
 </div>
-
-<script>
-    // $(function() {
-    //     $(".display_master_list").hide();
-
-    //     $('.table-sortable tbody').sortable({
-    //         handle: 'span'
-    //     });
-    // });
-    //$(document).ready(function(){
-    //$(function() {
-
-
-    // });
-</script>

@@ -1,6 +1,8 @@
 <?php
-require_once APPPATH.'controllers/Shilclient_Controller.php';
-class FeeVerifyLock_Controller extends Shilclient_Controller
+namespace App\Controllers\Newcase;
+
+use App\Controllers\ShilclientController;
+class FeeVerifyLock_Controller extends ShilclientController
 {
     public function __construct()
     {

@@ -46,7 +46,7 @@ if(!empty(getSessionData('login'))){
                                 @endif
                                 @if(!empty(getSessionData('success')))
                                     <div class="alert alert-dismissible text-center flashmessage">
-                                        <b style="color: green;">{{ getSessionData('success') }}</b> <a href="<?=base_url(); ?>">Back</a>
+                                        <b style="color: green;">{{ getSessionData('success') }}</b>
                                     </div>
                                 @endif
                                 @if(!empty(getSessionData('error')))

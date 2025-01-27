@@ -67,13 +67,13 @@ $hearing_model = new HearingModel();
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="dash-card">
-                                <div class="row bg-info">
+                                <div class="row">
                                     <?= getSessionData('msg'); ?>
                                 </div>
                                 <div class="title-sec">
                                     <h5 class="unerline-title"> Physical Hearing </h5>
                                     <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
-                                    <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                    <a href="<?php echo base_url('physical_hearing'); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 <div class="row g-3 align-items-center">
                                     <div class="col-auto">
@@ -122,7 +122,8 @@ $hearing_model = new HearingModel();
                                 /*<input type="checkbox" name="hearingModeConsent['.$case['diary_no'].']" class="hearingMode"  data-toggle="toggle" data-on="Virtual" data-off="Physical">*/                                                
                                 // $this->load->helper('url');
                                 // $court_from_uri = $this->uri->segment(3, 0);
-                                $court_from_uri = $segment->getSegment(2);
+                                $court_from_uri = $segment->getSegment(1);
+                                // pr($court_from_uri);
                                 if(isset($cases) && sizeof($cases)>0) {
                                     echo '<div class="box-body no-padding">
                                         <table id="datatable-responsive" class="table table-striped">
@@ -234,14 +235,14 @@ $hearing_model = new HearingModel();
                                     }
                                     echo '</tbody></table>';
                                     if($aud_nomination_status==1) {
-                                        echo '<button type="submit"  class="btn bg-gray  btn-block "><strong>UPDATE CHOICE</strong></input>';
+                                        echo '<center><button type="submit" class="btn quick-btn mt-2"><strong>UPDATE CHOICE</strong></button></center>';
                                     }
                                     echo ' </div>';
                                 }
                                 else if($court_from_uri!=0)
                                     echo "<div class='row mt-3' style='margin: 0% 45%;'> No case found! </div>";
                                 echo form_close();
-                                if($court_from_uri=='index') {
+                                if($court_from_uri=='physical_hearing') {
                                     ?>
                                     <br/>
                                     <div class="box">
@@ -254,27 +255,30 @@ $hearing_model = new HearingModel();
                                             </div>
                                         </div>
                                         <div class="box-body no-padding">
-                                            <table id="datatable-responsive" class="table table-striped">
-                                                <tbody>
+                                            <table id="datatable-responsive" class="table table-striped table-border custom-table" cellspacing="0" width="100%">
+                                                <thead>
                                                     <tr style="text-align: center">
                                                         <th style="width: 10%">List Date</th>
                                                         <th style="width: 10%">Court No#</th>
                                                         <th style="width: 20%">Total Cases</th>
-                                                        <th style="width: 23%">VC Mode of Hearing</th>
+                                                        <th style="width: 60%">VC Mode of Hearing</th>
                                                     </tr>
-                                                    <tr style="text-align: center">
-                                                        <?php
-                                                        // $CI =&get_instance();
-                                                        // $CI->load->model('Consent_VC_model');
-                                                        foreach ($advocate_cases_summary as $court) {
-                                                            $consent_result = $Consent_VC_model->getAdvocateVCConsentSummary(getSessionData('login.adv_sci_bar_id'),$listing_date[0], $court['courtno']);
-                                                            ?>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    // $CI =&get_instance();
+                                                    // $CI->load->model('Consent_VC_model');
+                                                    // pr($advocate_cases_summary);
+                                                    foreach ($advocate_cases_summary as $court) {
+                                                        $consent_result = $Consent_VC_model->getAdvocateVCConsentSummary(getSessionData('login.adv_sci_bar_id'),$listing_date[0], $court['courtno']);
+                                                        ?>
+                                                        <tr style="text-align: center">
                                                             <td data-key="List Date"><?=date('d-m-Y', strtotime($court['next_dt']))?></td>
                                                             <td data-key="Court No#"><?=$court['court_no_display']?></td>
                                                             <td data-key="Total Cases"><?=$court['total_cases']?></td>
                                                             <td data-key="VC Mode of Hearing"><?=empty($consent_result[0]['vc_count'])?0:$consent_result[0]['vc_count'] ?> </td>
-                                                        <?php } ?>
-                                                    </tr>
+                                                        </tr>
+                                                    <?php } ?>
                                                 </tbody>
                                             </table>
                                         </div>

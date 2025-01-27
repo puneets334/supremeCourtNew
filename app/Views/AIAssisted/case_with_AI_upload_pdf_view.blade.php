@@ -128,7 +128,7 @@
                                                 <button type="button" class=" quick-btn gray-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                             </div>
                                             <div class="row">
-                                                <div class="progress dNone">
+                                                <div class="progress" style="display: none;">
                                                     <div class="progress-bar progress-bar-success myprogress" role="progressbar"  value="0" max="100" style="width:0%">0%</div>
                                                 </div>
                                             </div>
@@ -170,7 +170,6 @@
             $('#browser').on('change',function(e){
                 $("#loader_div").html('');
                 myFile = $("#browser").val();
-                console.log(myFile);
                 var upld = myFile.split('.').pop();
                 if(upld=='pdf'){
                     var draft_petition_file_browser = $.trim($("#browser").val());

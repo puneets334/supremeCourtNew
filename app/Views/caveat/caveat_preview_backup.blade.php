@@ -542,7 +542,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                                                 <div class="row">
-                                                    <div class="progress dNone">
+                                                    <div class="progress" style="display: none;">
                                                         <div class="progress-bar progress-bar-success myprogress"
                                                             role="progressbar"
                                                             value="0"
@@ -567,7 +567,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
                                                     <!--<a href="<?= $prev_url ?>"
                                                         class="btn btn-primary btnPrevious"
                                                         type="button">Previous</a>-->
-                                                    <input type="submit" class="btn btn-success pay_fee dNone" id="pay_fee" name="submit" value="PAY">
+                                                    <input type="submit" class="btn btn-success pay_fee" style="display: none;" id="pay_fee" name="submit" value="PAY">
                                                     <?php
                                                         if((isset($payment_details['0']->payment_status) && !empty($payment_details['0']->payment_status) && $payment_details['0']->payment_status == 'Y') || ($pending_court_fee==0)) { ?>
                                                     <!--<a href="<?= $next_url ?>"
@@ -662,7 +662,6 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
         $.ajax({
             url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
             success: function (data) {
-                console.log(data);
                 var dataas = data.split('?');
                 var ct = dataas[0];
                 var dataarr = dataas[1].slice(1).split(',');
@@ -703,7 +702,6 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
         $.ajax({
             url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
             success: function (data) {
-                console.log(data);
                 var dataas = data.split('?');
                 var ct = dataas[0];
                 var dataarr = dataas[1].slice(1).split(',');

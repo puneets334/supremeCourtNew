@@ -48,7 +48,7 @@
                     <h6 class="text-center fw-bold">Petitioner Information</h6>
                 </div>
                 <?= ASTERISK_RED_MANDATORY ?>
-                <div class="row dNone" id="errDiv">
+                <div class="row" id="errDiv" style="display: none;">
                     <div class="alert alert-danger" role="alert" id="alertMsg"></div>
                 </div>
                 <div class="row">
@@ -191,7 +191,7 @@
                     </div>
                     
                 </div>
-                <div class="row dNone" id="org_form">
+                <div class="row" id="org_form" style="display: none;">
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="org_state_row">
                         <div class="mb-3">
                             <label for=""
@@ -200,8 +200,8 @@
                             </select>
                         </div>
                     </div>
-                    <?php if(isset($party_details[0]) && $party_details[0]['org_state_id'] == 0) { $styleState = ' dBlock'; } else { $styleState = ' dNone'; } ?>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 <?php echo $styleState ?>" id="otherOrgState">
+                    <?php if(isset($party_details[0]) && $party_details[0]['org_state_id'] == 0) { $styleState = ' display: block'; } else { $styleState = ' display: none'; } ?>
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" style="<?php echo $styleState ?>">
                         <div class="mb-3">
                             <label class="form-label">Other State Name <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" tabindex='11' id="org_state_name" name="org_state_name" minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other State Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_state_name']); ?></textarea>
@@ -218,7 +218,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 <?php echo (isset($party_details[0]) && $party_details[0]['org_dept_id'] == 0) ? ' dBlock' : ' dNone'; ?>" id="otherOrgDept">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" style="<?php echo (isset($party_details[0]) && $party_details[0]['org_dept_id'] == 0) ? ' display: block' : ' display: none'; ?>" id="otherOrgDept">
                         <div class="mb-3">
                             <label for=""
                                 class="form-label">Other Department <span style="color: red" class="astriks">*</span></label>
@@ -235,7 +235,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 <?php echo (isset($party_details[0]) && @$party_details[0]['org_post_id'] == 0) ? ' dBlock' : ' dNone'; ?>" id="otherOrgPost">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4 <?php echo (isset($party_details[0]) && @$party_details[0]['org_post_id'] == 0) ? ' display: block' : ' display: none'; ?>" id="otherOrgPost">
                         <div class="mb-3">
                             <label class="form-label">Other Post <span style="color: red" class="astriks">*</span></label>
                             <textarea rows="1" id="org_post_name" name="org_post_name" tabindex='15' minlength="5" maxlength="99" class="form-control cus-form-ctrl" placeholder="Other Post Name" type="text" style="text-transform: uppercase"><?php echo (@$party_details[0]['org_post_name']); ?></textarea>
@@ -359,7 +359,7 @@
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                         <div class="row">
-                            <div class="progress dNone">
+                            <div class="progress" style="display : none;">
                                 <div class="progress-bar progress-bar-success myprogress" role="progressbar" value="0" max="100" style="width:0%">0%</div>
                             </div>
                         </div>

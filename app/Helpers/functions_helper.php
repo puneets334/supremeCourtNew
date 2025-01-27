@@ -2221,7 +2221,8 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
             }
 
             if ($request_type == '2') // IA & Misc. doc fees
-            {
+            { 
+                //pr('IA & Misc. doc fees');
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
                 $diary_no = !empty($court_fee_calculation_param3) ? (int)$court_fee_calculation_param3[0]['diary_no'] . (int)$court_fee_calculation_param3[0]['diary_year'] : '';
                 //uncheck the following line:when we further check the case nature based on ICMIS -main table case:case_group
@@ -2235,7 +2236,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                 if (empty($case_nature) && !empty($diary_no)) {
                     $case_nature = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 }
-
+ //echo 'case_nature='.$case_nature;exit;
                 //uncheck the following line:when we require to further check the case nature based on ICMIS -main table case:case_group
                 /*$case_nature_from_icmis = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 echo 'For Diary : ' . $diary_no . ', From efiling' . $case_nature . ' from ICMIS:' . $case_nature_from_icmis;
@@ -2262,6 +2263,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                         }
                     }
                 }
+                
                 if ($sc_case_type_id == 19) {
                     $case_nature = 'R'; //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
                 }
@@ -2278,12 +2280,13 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                         if (!empty($caveat_details[0]))
                             $case_nature = $caveat_details[0]['nature'];
                     }
-
+                    
                     if ((rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) && $sc_case_type_id != '19') // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
                     //if($case_nature == 'C' || getSessionData('efiling_details')['ref_m_efiled_type_id']==4 || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT && $sc_case_type_id!='19') // court fee only applicable for civil matters and 0 for criminal matter based on its casetype
                     {
+
                         $no_of_lower_court_order_challanged_for_caveat = !empty($court_fee_calculation_param3) ? $court_fee_calculation_param3[0]['trial_court_order_challanged_for_caveat'] : '';
-                        //var_dump($court_fee_calculation_param3);
+                        // var_dump($court_fee_calculation_param3);
                         if (is_array($court_fee_calculation_param3)) {
                             foreach ($court_fee_calculation_param3 as $row) {
                                 $doc = (int)$row['doccode'] . (int)$row['doccode1'];
@@ -2386,7 +2389,6 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
             }
         }
     }
-
 
     return $total_court_fee;
 }
@@ -2914,10 +2916,9 @@ function getPendingCourtFee()
                 if (!empty($caveat_details[0]))
                     $case_nature = $caveat_details[0]['nature'];
                 // pr($case_nature);
-                 } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)
+            } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)
                  {
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
-                // pr($court_fee_calculation_param3);
                 $case_nature = (!empty($court_fee_calculation_param3)) ? $court_fee_calculation_param3[0]['nature'] : null;
                 if (isset($case_nature)&& empty($case_nature)) {
                     // pr($case_nature);
@@ -2928,8 +2929,6 @@ function getPendingCourtFee()
                 $court_fee_calculation_param1 = $Common_model->get_subject_category_casetype_court_fee($registration_id);
                 $case_nature = !empty($court_fee_calculation_param1) ? $court_fee_calculation_param1[0]['nature'] : '';
             }
-            // echo "Case Nature is ";
-            // pr($case_nature);
           
             if (( isset($case_nature)  &&  $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || ( isset($case_nature)  &&    $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || ( isset($case_nature)  &&      $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || ( isset($case_nature)  &&  $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)) // CHNAGE BY KBPUJARI ON 10072023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
             {
@@ -3081,6 +3080,7 @@ function addPrefixIfAbsent($number)
 
 function send_whatsapp_message($registration_id = null, $efiling_number = null, $sms_text = null)
 {
+    return TRUE;
     // $ci = &get_instance();
     // $ci->load->model('common/Common_model');
     $cause_title='';
@@ -3431,7 +3431,7 @@ function getCopyRequest($row){
 
 }
 
-function copyFormSentOn($row1){
+function copyFormSentOn($row){
     $ecoping_webservices=new Ecoping_webservices();
     $result=$ecoping_webservices->copyFormSentOn($row1['id']);
     return $result;

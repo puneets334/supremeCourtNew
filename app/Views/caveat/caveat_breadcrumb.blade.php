@@ -89,6 +89,20 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                             echo '<a href="javascript::void(0); " class="btn '.$efiling_num_button_background_class.' btn-sm"  style="color: #ffffff"><strong id="copyTarget_EfilingNumber">' . $filing_num_label .$efiling_num_label_for_display. htmlentities(efile_preview(getSessionData('efiling_details')['efiling_no']), ENT_QUOTES) . '</strong></a> &nbsp;<strong id="copyButton" class="btn btn-danger btn-sm"  style="font-size: 14px;color:greenyellow;"><span class="glyphicon glyphicon-copy" style="font-size:14px;color:#ffffff;"></span></strong>';
                             echo '&nbsp; <a class="btn btn-default btn-sm" href="' . base_url('history/efiled_case/view') . '">' . $lbl_history . ' </a>';
                         }*/
+                        $ref_m_usertype_id = !empty($_SESSION['login']['ref_m_usertype_id']) ? $_SESSION['login']['ref_m_usertype_id'] : NULL;
+                        $stage_id = !empty($_SESSION['efiling_details']['stage_id']) ? $_SESSION['efiling_details']['stage_id'] : NULL;
+                        $diary_generate_button ='';
+                        if(isset($ref_m_usertype_id) && !empty($ref_m_usertype_id) && $ref_m_usertype_id == USER_ADMIN && isset($stage_id) && !empty($stage_id) && $stage_id == Transfer_to_IB_Stage){
+                            $diary_generate_button = '<a href="javascript:void(0)"class="quick-btn"  data-efilingtype="caveat" id="generateDiaryNoPop" type="button" >Generate Caveat No.</a>';
+                        }
+                        $caveat_no ='';
+                        if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0]['caveat_num'])
+                            && isset($efiling_civil_data[0]['caveat_year']) && !empty($efiling_civil_data[0]['caveat_year'])){
+                            $caveat_no = $efiling_civil_data[0]['caveat_num']. ' / '.$efiling_civil_data[0]['caveat_year'];
+                        }
+                        if (isset($diary_generate_button) && !empty($diary_generate_button) && empty($caveat_no)) {
+                            echo $diary_generate_button;
+                        }
                         $Array = array(New_Filing_Stage, Initial_Defects_Cured_Stage);
                         if (((getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) || (getSessionData('login')['ref_m_usertype_id'] == USER_ACTION_ADMIN)) && in_array(getSessionData('efiling_details')['stage_id'], $Array)) {
                             if (isset($efiling_civil_data[0]['orgid']) && $efiling_civil_data[0]['orgid'] == '0' && $efiling_civil_data[0]['not_in_list_org'] == 't' || isset($efiling_civil_data[0]['resorgid']) && $efiling_civil_data[0]['resorgid'] == '0' && $efiling_civil_data[0]['res_not_in_list_org'] == 't') { ?>
@@ -531,7 +545,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                 </div>
                             </div>
                             <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                            <textarea name="remark" id="descr"  class="dNone"></textarea>
+                            <textarea name="remark" id="descr" style="display: none;"></textarea>
                             <span id="disapprove_count_word" style="float:right"></span>
                             <div class="clearfix"><br></div>
                         </div>
@@ -581,7 +595,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                 </div>
                             </div>
                             <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                            <textarea name="remark" id="descr" class="dNone"></textarea>
+                            <textarea name="remark" id="descr" style="display: none;"></textarea>
                             <span id="disapprove_count_word" style="float:right"></span>
                             <div class="clearfix"><br></div>
                         </div>
@@ -955,7 +969,6 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                         if(typeof data == 'string'){
                             data = JSON.parse(data);
                         }
-                        // console.log(data);
                         // return false;
                         if(data){
                             $("#exampleModal").modal('show');
@@ -1041,7 +1054,6 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                         $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                     },
                                     success: function(updateData){
-                                    console.log(updateData);
                                         // return false;
                                         $("#loader_div").html('');
                                         if(updateData.success == 'success'){

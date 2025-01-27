@@ -284,7 +284,7 @@
                                                                     <div class="form-group  mb-3">
                                                                         <label class="control-label col-sm-4">
                                                                             <center>Date Range</center>
-                                                                            <div class="checkbox dNone" style="margin-top: 6px;">
+                                                                            <div class="checkbox" style="display: none; margin-top: 6px;">
                                                                                 &nbsp;<label><input type="radio" value="All" name="ActionFiledOn">All</label><label><input type="radio" value="Action" name="ActionFiledOn">Action</label><label><input type="radio" value="FiledOn" name="ActionFiledOn" checked>Filed On</label>
                                                                             </div>
                                                                         </label>
@@ -334,7 +334,7 @@
                                                             <hr />
                                                             <div class="row">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12 dNone" id="loader_div">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;" id="loader_div">
                                                                         <img id="loader_img" style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;" src="<?php echo base_url(); ?>/assets/images/loading-data.gif">
                                                                     </div>
                                                                     <div class="form-group" id="status_refresh">
@@ -414,7 +414,7 @@
                                                         </div>
                                                     </div>                                                    
                                                     <!--</center><br><hr>-->
-                                                    <div class="card-body diary box dNone" style="background-color: #ffffff; border-color: #ffffff;">
+                                                    <div class="card-body diary box" style="display: none; background-color: #ffffff; border-color: #ffffff;">
                                                         <div class="row mt-3">
                                                             <div class="col-md-2 col-sm-2 col-xs-12">
                                                                 <div class="form-group">
@@ -457,7 +457,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class=" col-md-4 col-sm-6 col-xs-12 ">
-                                                                <div class="col-md-offset-5 dNone" id="submitBtn_dynamicalayDiary" style="margin-top: 25px;">
+                                                                <div class="col-md-offset-5" style="display: none;" id="submitBtn_dynamicalayDiary" style="margin-top: 25px;">
                                                                     <input type="submit" id="SearchDiaryNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchDiaryNumbersubmit">
                                                                 </div>
                                                             </div>
@@ -872,12 +872,10 @@
 
                     success: function (resultData) { 
                     //    alert(resultData);
-                        console.log(resultData);
                         /* return;*/
                         var rdata = JSON.parse(resultData);
                     //    alert(rdata);
 
-                        //console.log(rdata[0]['diary_no']);return;
                         if(rdata[0]['diary_no']===''){
                        alert('record not found'); 
                        return false;
@@ -965,8 +963,6 @@
                         populateDataTable(myJsonData);
                     },
                     error: function (e) {
-                        console.log("There was an error with your request...");
-                        console.log("error: " + JSON.stringify(e));
                         $('#divTitle').html('There was an error with your request...');
                     }
                 });
@@ -1093,7 +1089,6 @@
                         report.portal,
                     ]);
                     if(sn==length) {
-                        console.log('Done data Table');
                         $('#loader_div').hide();
                         $('#status_refresh').show();
                     }

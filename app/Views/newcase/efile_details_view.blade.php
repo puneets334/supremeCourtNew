@@ -68,7 +68,7 @@
       
       ?>
    <body>
-      <div id="loader-wrapper" class="dNone">
+      <div id="loader-wrapper" style="display: none;">
          <div id="loader"></div>
       </div>
       <div class="mainPanel ">
@@ -373,7 +373,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item dNone">
+                                             <div class="accordion-item" style="display: none;">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -420,7 +420,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item dNone">
+                                             <div class="accordion-item" style="display: none;">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -473,7 +473,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item dNone">
+                                             <div class="accordion-item" style="display: none;">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -661,7 +661,7 @@
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3 text-center">
                                        <div class="row">
-                                          <div class="progress dNone">
+                                          <div class="progress" style="display: none;">
                                              <div class="progress-bar progress-bar-success myprogress"
                                                 role="progressbar"
                                                 value="0"
@@ -686,7 +686,7 @@
                                           <!--<a href="<?= $prev_url ?>"
                                              class="btn btn-primary btnPrevious"
                                              type="button">Previous</a>-->
-                                          <input type="submit" class="btn btn-success pay_fee dNone" id="pay_fee" name="submit" value="PAY">
+                                          <input type="submit" class="btn btn-success pay_fee" id="pay_fee" name="submit" value="PAY" style="display: none;">
                                           <?php
                                              if ((isset($payment_details['0']->payment_status) && !empty($payment_details['0']->payment_status) && $payment_details['0']->payment_status == 'Y') || ($pending_court_fee == 0)) { ?>
                                           <!--<a href="<?= $next_url ?>"
@@ -856,7 +856,7 @@
                      </div>
                   </div>
                   <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                  <textarea name="remark" id="descr" class="dNone"></textarea>
+                  <textarea name="remark" id="descr" style="display: none;"></textarea>
                   <span id="disapprove_count_word" style="float:right"></span>
                   <div class="clearfix"><br></div>
                </div>
@@ -906,7 +906,7 @@
                      </div>
                   </div>
                   <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                  <textarea name="remark" id="descr" class="dNone"></textarea>
+                  <textarea name="remark" id="descr" style="display: none;"></textarea>
                   <span id="disapprove_count_word" style="float:right"></span>
                   <div class="clearfix"><br></div>
                </div>
@@ -1228,7 +1228,6 @@
                              if (typeof data == 'string') {
                                  data = JSON.parse(data);
                              }
-                            console.log(data);
          
                              // return false;
                              if (data) {
@@ -1325,7 +1324,6 @@
                                          },
                                          success: function(updateData) {
                                          
-                                            console.log(updateData);
                                              // return false;
                                              $("#loader_div").html('');
          
@@ -1611,7 +1609,6 @@
              $.ajax({
                  url: "<?php echo base_url('newcase/AutoDiary/valid_efil'); ?>", // enabled this for auto diary generation
                  success: function(data) {
-                     console.log(data);
                      var dataas = data.split('?');
                      var ct = dataas[0];
                      var dataarr = dataas[1].slice(1).split(',');
@@ -1668,7 +1665,6 @@
              $.ajax({
                  url: "<?php echo base_url('newcase/finalSubmit/valid_efil'); ?>",
                  success: function(data) {
-                     console.log(data);
                      var dataas = data.split('?');
                      var ct = dataas[0];
                      var dataarr = dataas[1].slice(1).split(',');
@@ -1813,10 +1809,8 @@
          
                              if (RPSTATUS == 'SUCCESS' && status == true && RCPTNO == receiptNumber) {
                                  var result = ('type ' + type + '  RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber);
-                                 console.log(result);
                              } else {
                                  var result = ('type ' + type + ' verify Failed  ' + 'RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber);
-                                 console.log(result);
                              }
          
                          } else {
@@ -1865,10 +1859,8 @@
          
                              if (status == true && RCPTNO == receiptNumber) {
                                  var result = ('type ' + type + '  RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber + '  Diary Number=' + diary_No + '/' + diary_Year + '  CFLNAME=' + CFLNAME);
-                                 console.log(result);
                              } else {
                                  var result = ('type ' + type + ' verify Failed  ' + 'RPSTATUS=' + RPSTATUS + '  status=' + status + '  RCPTNO=' + RCPTNO + '  receiptNumber=' + receiptNumber);
-                                 console.log(result);
                              }
                          }
          

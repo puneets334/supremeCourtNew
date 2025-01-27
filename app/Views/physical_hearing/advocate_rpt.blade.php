@@ -56,8 +56,6 @@ $crnt_dt=date("d-m-Y");
                     data:{CSRF_TOKEN: CSRF_TOKEN_VALUE , srch_date_data: date_chk },
                     //dataType: "json",
                     success: function(resultData) {
-                         /*alert(resultData);
-                         console.log(resultData);*/
                          //return;
                         $('#show_result').html(resultData);
 
@@ -113,8 +111,6 @@ $crnt_dt=date("d-m-Y");
                             }*/
                             /*showdata = showdata + "</tbody>";*/
                         //}
-                        /*console.log(showdata);
-                        $('#reportTable1').html(showdata);*/
                     }//End of function success ..
                 });
         }
@@ -131,7 +127,7 @@ $crnt_dt=date("d-m-Y");
             <button class="btn btn-primary" onclick="Get_resultfunction()">Get Data</button>
         </div>-->
 
-        <table id="head" class="dNone">
+        <table id="head" style="display: none;">
             <thead>
             <tr>
                 <th>#</th>
