@@ -116,7 +116,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                         $attribute = array('id' => 'uploadForm', 'enctype' => "multipart/form-data");
                         echo form_open(base_url(), $attribute);
                         ?>
-                            <input type="text" class="dNone" name="_token" value="{{ csrf_token() }}">
+                            <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-2 col-lg-1">
                                     <div class="mb-3" id="targetLayer">
@@ -166,7 +166,7 @@ $user_addar_img = 'data:image/png;base64,' . htmlentities($uid_data_photo, ENT_Q
                         $attribute = array('class' => 'uk-form-horizontal uk-margin-large', 'name' => 'advocate_reg_info', 'id' => 'advocate_reg_info', 'autocomplete' => 'off');
                         echo form_open('register/AdvSignUp/add_advocate', $attribute);
                         ?>
-                            <input type="text" class="dNone" name="_token" value="{{ csrf_token() }}">
+                            <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="mb-3">

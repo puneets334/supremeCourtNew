@@ -33,7 +33,7 @@
                                     <?php if(!empty($list)) { ?>
                                         <p class="table_heading"><u>Consent for Dated : <?= $date_of_hearing; ?>,  Total Entries : <?= $case_count; ?></u></p>
                                     <?php } ?>
-                                    <table id="head" class="table table-striped custom-table dNone">
+                                    <table id="head" class="table table-striped custom-table" style="display: none;">
                                         <caption> </caption>
                                         <thead>
                                             <tr>

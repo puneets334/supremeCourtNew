@@ -539,7 +539,7 @@ if(isset($efiling_civil_data[0]['caveat_num']) && !empty($efiling_civil_data[0][
 
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <div class="row">
-                        <div class="progress dNone">
+                        <div class="progress" style="display: none;">
                             <div class="progress-bar progress-bar-success myprogress"
                                 role="progressbar"
                                 value="0"
