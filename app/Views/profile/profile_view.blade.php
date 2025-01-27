@@ -264,7 +264,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="profile_pic" class="dNone">
+                            <div id="profile_pic" style="display: none;">
                                 <hr>
                                 <div class="row">
                                     <div class="col-12">

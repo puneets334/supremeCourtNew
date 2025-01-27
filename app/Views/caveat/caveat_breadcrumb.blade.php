@@ -545,7 +545,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                 </div>
                             </div>
                             <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                            <textarea name="remark" id="descr"  class="dNone"></textarea>
+                            <textarea name="remark" id="descr" style="display: none;"></textarea>
                             <span id="disapprove_count_word" style="float:right"></span>
                             <div class="clearfix"><br></div>
                         </div>
@@ -595,7 +595,7 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
                                 </div>
                             </div>
                             <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                            <textarea name="remark" id="descr" class="dNone"></textarea>
+                            <textarea name="remark" id="descr" style="display: none;"></textarea>
                             <span id="disapprove_count_word" style="float:right"></span>
                             <div class="clearfix"><br></div>
                         </div>

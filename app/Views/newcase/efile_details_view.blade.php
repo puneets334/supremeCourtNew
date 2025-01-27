@@ -68,7 +68,7 @@
       
       ?>
    <body>
-      <div id="loader-wrapper" class="dNone">
+      <div id="loader-wrapper" style="display: none;">
          <div id="loader"></div>
       </div>
       <div class="mainPanel ">
@@ -373,7 +373,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item dNone">
+                                             <div class="accordion-item" style="display: none;">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -420,7 +420,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item dNone">
+                                             <div class="accordion-item" style="display: none;">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -473,7 +473,7 @@
                                                    </div>
                                                 </div>
                                              </div>
-                                             <div class="accordion-item dNone">
+                                             <div class="accordion-item" style="display: none;">
                                                 <div class="row">
                                                    <h2 class="accordion-header <?php
                                                       if(isset($hidepencilbtn)){
@@ -661,7 +661,7 @@
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3 text-center">
                                        <div class="row">
-                                          <div class="progress dNone">
+                                          <div class="progress" style="display: none;">
                                              <div class="progress-bar progress-bar-success myprogress"
                                                 role="progressbar"
                                                 value="0"
@@ -856,7 +856,7 @@
                      </div>
                   </div>
                   <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                  <textarea name="remark" id="descr" class="dNone"></textarea>
+                  <textarea name="remark" id="descr" style="display: none;"></textarea>
                   <span id="disapprove_count_word" style="float:right"></span>
                   <div class="clearfix"><br></div>
                </div>
@@ -906,7 +906,7 @@
                      </div>
                   </div>
                   <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                  <textarea name="remark" id="descr" class="dNone"></textarea>
+                  <textarea name="remark" id="descr" style="display: none;"></textarea>
                   <span id="disapprove_count_word" style="float:right"></span>
                   <div class="clearfix"><br></div>
                </div>

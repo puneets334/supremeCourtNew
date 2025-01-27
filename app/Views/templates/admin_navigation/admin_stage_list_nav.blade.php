@@ -32,7 +32,7 @@ if ($segment->getSegment(2) == 'stageList') {
             <li class="health "><a href="<?php echo ($count_efiling_data->total_lodged_cases == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(LODGING_STAGE, ENT_QUOTES))); ?>" class="btn-link">Idle/Unprocess e-Filed No. (<?php echo htmlentities($count_efiling_data->total_lodged_cases, ENT_QUOTES); ?>)</a></li>
         </div> 
     </div>
-    <div class="show_md_div visible-lg visible-md dNone">
+    <div class="show_md_div visible-lg visible-md" style="display: none;">
         <ul class="nav side-menu">        
             <li class="highlight"><a href="<?php echo ($count_efiling_data->total_new_efiling == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(New_Filing_Stage, ENT_QUOTES))); ?>"><span class="text_color">New Filing <i class="number_css badge"> <?php echo htmlentities($count_efiling_data->total_new_efiling, ENT_QUOTES); ?></i></span></a></li><div class="clearfix"></div>
             <li class="highlight"><a href="<?php echo ($count_efiling_data->total_not_accepted == '0' ) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption(Initial_Defected_Stage, ENT_QUOTES))); ?>"><span class="text_color">For Compliance<i class="number_css badge"><?php echo htmlentities($count_efiling_data->total_not_accepted, ENT_QUOTES); ?></i></span></a>  </li><div class="clearfix"></div>

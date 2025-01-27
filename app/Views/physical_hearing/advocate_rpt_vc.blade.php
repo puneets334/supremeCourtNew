@@ -31,7 +31,7 @@
                                 {{-- Page Title End --}}
                                 {{-- Main Start --}}
                                 <div id="show_result">
-                                    <!-- <div id="search-listing" class="dBlock"> -->
+                                    <!-- <div id="search-listing" style="display: block;"> -->
                                         <div class="col-sm-3"></div>
                                         <div class="col-sm-3" >
                                             <label for="tdate">Listing Date:</label>&nbsp
@@ -42,7 +42,7 @@
                                         </div>
                                     <!-- </div> -->
                                     <section class="col-sm-12">
-                                        <div id="divConsentEntries" class="dBlock"></div>
+                                        <div id="divConsentEntries" style="display: block;"></div>
                                     </section>
                                 </div>
                                 <!--END OF DIV id="show_result"-->

@@ -8754,11 +8754,3 @@ a.edit-pen-btn:hover {
 .dataTables_paginate{
     padding-bottom: .5em !important;
 }
-
-.dNone {
-    display: none;
-}
-
-.dBlock {
-    display: block;
-}

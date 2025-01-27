@@ -324,8 +324,8 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
     }
     ?>
 </div>
-<div class="alert alert-success text-center dNone" role="alert" id="successAlert" data-auto-dismiss="5000"></div>
-<div class="alert alert-danger text-center dNone" role="alert" id="dangerAlert" data-auto-dismiss="5000"></div>
+<div class="alert alert-success text-center" style="display: none;" role="alert" id="successAlert" data-auto-dismiss="5000"></div>
+<div class="alert alert-danger text-center" style="display: none;" role="alert" id="dangerAlert" data-auto-dismiss="5000"></div>
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
@@ -948,7 +948,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 </div>
 
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr" class="dNone"></textarea>
+                <textarea name="remark" id="descr" style="display: none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>
@@ -999,7 +999,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                     </div>
                 </div>
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr" class="dNone"></textarea>
+                <textarea name="remark" id="descr" style="display: none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>

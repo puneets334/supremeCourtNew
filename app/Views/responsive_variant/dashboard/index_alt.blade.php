@@ -237,7 +237,7 @@ td {
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                     <div class="dashbord-tile pink-tile" tabindex="0">
                                         <!-- Start 1st Grid -->
-                                        <div class="dBlock" id="showByMe">
+                                        <div id="showByMe" style="display: block;">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By other Parties</p>
                                             <button id="byMe" class="btn btn-info pull-right">#By me</button>
@@ -322,7 +322,7 @@ td {
                                         <!-- End 1st Grid -->
 
                                         <!--Start 2nd grid-->
-                                        <div class="dNone" id="showByOthers">
+                                        <div style="display: none;"id="showByOthers">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By Me</p>
                                             <button id="byOthers" class="btn btn-info pull-right" tabindex="0">#By

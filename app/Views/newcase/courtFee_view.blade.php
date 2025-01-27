@@ -49,7 +49,7 @@
                 <?= ASTERISK_RED_MANDATORY ?>
                
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12 dNone">
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
                         <!-- <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%"> -->
                         <table id="datatable-responsive" class="table table-striped custom-table first-th-left" cellspacing="0" width="100%">
 
@@ -684,7 +684,7 @@
                 <label style="margin-top: 2px; font-weight: bold; color: red;"><i class="fa fa-disclaimer"></i>"THE COURT FEE CALCULATED AND SHOWN IN THIS PAGE IS AS PER THE CASE TYPE, EARLIER COURT AND CASE CATEGORY. ANY DEFICIT COURT FEES DEFECT MAY BE RAISED AT THE SCRUTINY STAGE AND DEFICIT PAYMENT TO BE PAID ACCORDINGLY."</label>
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 my-3">
                     <div class="row">
-                        <div class="progress dNone">
+                        <div class="progress" style="display: none;">
                             <div class="progress-bar progress-bar-success myprogress" role="progressbar" value="0" max="100" style="width:0%">0%</div>
                         </div>
                     </div>
@@ -703,7 +703,7 @@
                         }
                         ?>
                         <a href="<?= $prev_url ?>" class="btn quick-btn gray-btn" type="button">PREVIOUS</a>
-                        <input type="submit" class="btn btn-success pay_fee dNone" id="pay_fee" name="submit" value="PAY">
+                        <input type="submit" class="btn btn-success pay_fee" style="display: none;" id="pay_fee" name="submit" value="PAY">
                         <?php
                         if ((isset($payment_details['0']['payment_status']) && !empty($payment_details['0']['payment_status']) && $payment_details['0']['payment_status'] == 'Y') || ($pending_court_fee == 0)) { ?>
                             <a href="<?= $next_url ?>" class="btn quick-btn pay_fee_next" type="button">NEXT</a>
