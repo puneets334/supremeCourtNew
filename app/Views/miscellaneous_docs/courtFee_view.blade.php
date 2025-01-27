@@ -9,7 +9,7 @@
         echo form_open('miscellaneous_docs/courtFee/add_court_fee_details', $attribute);
         ?>
         <div>
-            <div class="col-md-12 col-sm-12 col-xs-12 dNone">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;">
 
                 <div class="table-responsive">
                     <table id="datatable-responsive" class="table table-striped custom-table dataTable no-footer" cellspacing="0" width="100%">

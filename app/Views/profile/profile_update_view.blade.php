@@ -104,7 +104,7 @@
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
-                                                        <div id="msgforce" class="dNone">
+                                                        <div id="msgforce" style="display: none;">
                                                             <div class="alert alert-danger text-center flashmessage" data-auto-dismiss="9000">
                                                                 The New Password must contain at least 1 Special Character, 1 Digit, 1 lower case Character, 1 Upper Case Character, and at least 8 digit length
                                                             </div>

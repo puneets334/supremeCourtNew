@@ -68,9 +68,9 @@
                                         } elseif(isset($transaction_num) && !empty($transaction_num) && !empty($is_locked) && isset($is_locked) && $is_locked == 't'){
                                             echo '<a class="verifiedFeeData"><b>Locked</b></a>';
                                         }
-                                        echo '<a id="Verified'.$transaction_num.'" class="verifiedFeeData dNone"><b>Verified</b></a>';
-                                        echo '<a id="Verifiedlock'.$transaction_num.'" href="javaScript:void(0);"  data-actionType="lock" class="verifyFeeData dNone" data-diaryNo="'.$diaryNo.'" data-diaryYear="'.$diaryYear.'" data-transaction_num="'.$transaction_num.'"><b>Lock</b></a>';
-                                        echo '<a id="VerifiedLocked'.$transaction_num.'" class="verifiedFeeData dNone"><b>Locked</b></a>';
+                                        echo '<a id="Verified'.$transaction_num.'" class="verifiedFeeData" style="display: none;"><b>Verified</b></a>';
+                                        echo '<a id="Verifiedlock'.$transaction_num.'" href="javaScript:void(0);"  data-actionType="lock" class="verifyFeeData" style="display: none;" data-diaryNo="'.$diaryNo.'" data-diaryYear="'.$diaryYear.'" data-transaction_num="'.$transaction_num.'"><b>Lock</b></a>';
+                                        echo '<a id="VerifiedLocked'.$transaction_num.'" class="verifiedFeeData" style="display: none;"><b>Locked</b></a>';
                                     }
                                 } elseif ($resData['payment_status'] == 'F') {
                                     echo 'Failed';
@@ -162,16 +162,20 @@
                         </div>
                     </div>
                     <!--start for lock-->
-                    <div class="col-md-8 col-sm-8 col-xs-12 diaryNumberYear dNone">
-                        <div class="row">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 diaryNumberYear" style="display: none;">
+                        <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Diary number:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="diaryNumberYear"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 CFLNAME dNone">
-                        <div class="row">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 CFLNAME" style="display: none;">
+                        <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">CFL Name:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="CFLNAME"></div>
@@ -180,24 +184,30 @@
                     </div>
                     <!--end for lock-->
                     <!--start for verify-->
-                    <div class="col-md-8 col-sm-8 col-xs-12 DTISSUE dNone">
-                        <div class="row">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 DTISSUE" style="display: none;">
+                        <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Date of Issue:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <div id="DTISSUE"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 CFAMT dNone">
-                        <div class="row">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 CFAMT" style="display: none;">
+                        <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Court Fee:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
                                 <span id="CFAMT"></span> <i class="fa fa-rupee"></i>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 STATUS dNone">
-                        <div class="row">
+
+                    <div class="col-md-8 col-sm-8 col-xs-12 STATUS" style="display: none;">
+                        <div class="form-group">
+
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label"><span id="STATUS_text"></span> Status:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6 text-success">
                                 <div id="STATUS"></div>

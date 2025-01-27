@@ -55,7 +55,7 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                         $attribute = array('class' => 'uk-form-horizontal uk-margin-large', 'name' => 'advocate_reg_info', 'id' => 'advocate_reg_info', 'autocomplete' => 'off', 'enctype' => "multipart/form-data");
                         echo form_open('register/AdvSignUp/upload_id_proof', $attribute);
                         ?>
-                            <input type="text" class="dNone" name="_token" value="{{ csrf_token() }}">
+                            <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">

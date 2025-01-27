@@ -74,7 +74,7 @@ $session = service('session');
                         echo form_open(base_url("register/DefaultController/adv_get_otp"), $attributes);
                         ?>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="text" name="adv_type_select" class="dNone" id="adv_type_select" value="<?php echo url_encryption($adv_type_select); ?>">
+                        <input type="text" name="adv_type_select" style="display: none;" id="adv_type_select" value="<?php echo url_encryption($adv_type_select); ?>">
                         <div class="row">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
@@ -93,7 +93,7 @@ $session = service('session');
                         <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                         <input type="hidden" name="ctvrg">
                         <?php echo $session->setFlashdata('msg'); ?>
-                        <div id="ekyc_upload_share" class="dNone">
+                        <div id="ekyc_upload_share" style="display: none;">
 
                             <input hidden id="user_login_type" name="adv_search1" value="<?php echo idEncryptionCustom('new_advocate_register'); ?>">
                             <!--<input hidden id="user_login_type" name="adv_type1" value="<?php /*echo htmlentities(stringEncreption('1'), ENT_QUOTES); */ ?>">-->

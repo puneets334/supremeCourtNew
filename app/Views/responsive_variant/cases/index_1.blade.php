@@ -357,7 +357,7 @@
     </div>
 </div>
 <!--end datatable-->
-<div id="case_status" uk-modal class="uk-modal-full dNone">
+<div id="case_status" uk-modal class="uk-modal-full" style="display: none;">
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-full uk-close-large" type="button" uk-close></button>
         <div class="uk-modal-header">
@@ -390,7 +390,7 @@
             <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
             <!-- <button class="uk-button uk-button-primary" type="button" id="save_citation">Save Citation</button>-->
             <input type="button " id="save_notes"  value="Save Notes " class="uk-button uk-button-primary" onclick="save_notes()" readonly>
-            <input type="button " id="update_notes"  value="Update Notes " class="uk-button uk-button-primary dNone" onclick="update_notes()" readonly>
+            <input type="button " id="update_notes"  value="Update Notes " class="uk-button uk-button-primary" style="display: none;" onclick="update_notes()" readonly>
         </div>
         <div id="view_notes_text"></div>
         <div id="view_notes_data"></div>
@@ -410,7 +410,7 @@
             <div id="add_contacts_alert"></div>
             <label class="radio-inline"><input type="radio" name="contact" id="new" value="1" onclick="show_contact_list(1)" checked="">New</label>
             <label class="radio-inline"><input type="radio" name="contact" id="aor" value="3" onclick="show_contact_list(2)">AOR</label>
-            <div id="aor_contact" class="dNone">
+            <div id="aor_contact" style="display: none;">
                 <div>
                     <div>
                         <select name="aor_name" id="aor_name" class="form-control cus-form-ctrl" style="width: 50%">
@@ -447,8 +447,8 @@
         <div class="uk-modal-body">
             <div id="mail_msg" ></div>
             <div class="mail-response" id="mail_msg" ></div>
-            <div id="emailids" class="dNone"></div>
-            <div  id="recipient_mail1" class="dNone"></div>
+            <div id="emailids" style="display: none;"></div>
+            <div  id="recipient_mail1" style="display: none;"></div>
             SMS To: <input type="text" class="form-control cus-form-ctrl" size="60" id="recipient_mail" name="recipient_mail"  maxlength="250" placeholder="Select Contacts or Enter Mobile No. e.g 9999999999,8888888888">
             <div>
                 SMS Message: <input type="text" class="form-control cus-form-ctrl" size =50 id="mail_subject" name="mail_subject" class="form-control" maxlength="100" placeholder="SMS Message">
@@ -484,7 +484,7 @@
             <input type="hidden" id="citation_id" name="citation_id" value="">
             <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
             <input type="button " id="save_citation"  value="Save Citation " class="uk-button uk-button-primary" onclick="save_citation()" readonly>
-            <input type="button " id="update_citation"  value="Update Citation " class="uk-button uk-button-primary dNone" onclick="update_citation()" readonly>
+            <input type="button " id="update_citation"  value="Update Citation " class="uk-button uk-button-primary" style="display: none;" onclick="update_citation()" readonly>
         </div>
         <div id="view_citation_text"></div>
         <div id="view_citation_data"></div>

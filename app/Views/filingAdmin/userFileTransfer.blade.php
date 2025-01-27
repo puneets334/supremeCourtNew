@@ -12,7 +12,7 @@
         }
     </style>
     <div class="container-fluid">
-        <div id="loader-wrapper" class="dNone">
+        <div id="loader-wrapper" style="display: none;">
             <div id="loader"></div>
         </div>
         <div class="row">
@@ -32,7 +32,7 @@
                                 {{-- Main Start --}}                               
                                 <?php echo form_open(); ?>
                                     <div class="row">
-                                        <input type="text" class="dNone" name="CSRF_TOKEN" value="{{ csrf_hash() }}">
+                                        <input type="text" style="display: none;" name="CSRF_TOKEN" value="{{ csrf_hash() }}">
                                         <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12">
                                             <div class="row">
                                                 <div class="row mb-3 w-100 align-items-center">
@@ -76,7 +76,7 @@
                                         </div>
                                     </div>
                                 <?php echo form_close(); ?>
-                                <div class="row mt-5 dNone" id="fileTransferDiv">
+                                <div class="row mt-5" style="display: none;" id="fileTransferDiv">
                                     <div class="table-sec mob-view-selectall-tbl">
                                         <div class="mobile-view-selectall">
                                             <label for="selectAll">
