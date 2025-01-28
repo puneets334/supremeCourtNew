@@ -224,15 +224,6 @@ td {
 #calendar-cases {
     text-align: center;
 }
-
-/* .no-paginations div#datatable-responsive_length {
-        display: none;
-    } */
-
-   
-/* .pagination-area-new { 
-    position: relative;
-} */
 </style>
 <div class="mainPanel ">
     <div class="panelInner">
@@ -246,7 +237,7 @@ td {
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                     <div class="dashbord-tile pink-tile" tabindex="0">
                                         <!-- Start 1st Grid -->
-                                        <div style="display: block;" id="showByMe">
+                                        <div id="showByMe" style="display: block;">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By other Parties</p>
                                             <button id="byMe" class="btn btn-info pull-right">#By me</button>
@@ -331,7 +322,7 @@ td {
                                         <!-- End 1st Grid -->
 
                                         <!--Start 2nd grid-->
-                                        <div style="display: none;" id="showByOthers">
+                                        <div style="display: none;"id="showByOthers">
                                             <h6 class="tile-title" tabindex="0">Recent Documents</h6>
                                             <p class="tile-subtitle" tabindex="0">By Me</p>
                                             <button id="byOthers" class="btn btn-info pull-right" tabindex="0">#By
@@ -640,29 +631,25 @@ td {
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                <?php
-                                                                //print_r($scheduled_cases);
-                                                                $IS_AMICUS_CURIAE = null;
-                                                                ?>
+                                                                    <?php $IS_AMICUS_CURIAE = null; ?>
                                                                     @if(!empty($scheduled_cases))
-                                                                        <?php $i=1; ?>
+                                                                        <?php $i = 1; ?>
                                                                         @foreach($scheduled_cases as $scheduled_case)
                                                                             @if(is_array($scheduled_case) || is_object($scheduled_case))
-                                                                                @foreach($scheduled_case as $scheduled)
+                                                                                @foreach($scheduled_case as $key => $scheduled)
                                                                                     <tr>
                                                                                         <td class="uk-width-small@m" data-key="Case" tabindex="0" style="width: 40%; text-align: left; align-items: left;">
                                                                                             <div><span class="uk-text-muted">{{$scheduled['registration_number'] ?: ('D. No.' . $scheduled['diary_number'] . '/' . $scheduled['diary_year'])}}</span></div>
-
-                                                                                            <?php $IS_AMICUS_CURIAE_P =$IS_AMICUS_CURIAE_R='';?>
-                                                                                            @if (isset($scheduled_case->advocates) && !empty($scheduled_case->advocates))
-                                                                                                @foreach ($scheduled_case->advocates as $advocates)
-                                                                                                    @if (isset($scheduled_case->advocates) && !empty($scheduled_case->advocates))
-                                                                                                        @if ($_SESSION['login']['adv_sci_bar_id'] == $advocates->id && $_SESSION['login']['aor_code'] == $advocates->aor_code && $advocates->is_amicus_curiae == 1)
-                                                                                                            @if (strtoupper($advocates->represents_petitioner_or_respondent) == 'P')
-                                                                                                                <?php $IS_AMICUS_CURIAE_P = '[<span class="text-success"><b>P:A</b>micus <b>C</b>uriae</span>]';?>
+                                                                                            <?php $IS_AMICUS_CURIAE_P = $IS_AMICUS_CURIAE_R = ''; ?>
+                                                                                            @if (isset($scheduled_case[$key]['advocates']) && !empty($scheduled_case[$key]['advocates']))
+                                                                                                @foreach ($scheduled_case[$key]['advocates'] as $advocates)
+                                                                                                    @if (isset($scheduled_case[$key]['advocates']) && !empty($scheduled_case[$key]['advocates']))
+                                                                                                        @if ($_SESSION['login']['adv_sci_bar_id'] == $advocates['id'] && $_SESSION['login']['aor_code'] == $advocates['aor_code'] && $advocates['is_amicus_curiae'] == 1)
+                                                                                                            @if (strtoupper($advocates['represents_petitioner_or_respondent']) == 'P')
+                                                                                                                <?php $IS_AMICUS_CURIAE_P = '[<span class="text-success"><b>P: A</b>micus <b>C</b>uriae</span>]';?>
                                                                                                             @endif
-                                                                                                            @if (strtoupper($advocates->represents_petitioner_or_respondent) == 'R')
-                                                                                                                <?php $IS_AMICUS_CURIAE_R = '[<span class="text-success"><b>R:A</b>micus <b>C</b>uriae</span>]';?>
+                                                                                                            @if (strtoupper($advocates['represents_petitioner_or_respondent']) == 'R')
+                                                                                                                <?php $IS_AMICUS_CURIAE_R = '[<span class="text-success"><b>R: A</b>micus <b>C</b>uriae</span>]';?>
                                                                                                             @endif
                                                                                                         @endif
                                                                                                     @endif
@@ -1677,6 +1664,7 @@ td {
                                                     <!-- <h5 class="unerline-title">My e-Filed Cases</h5> -->
                                                     <div class="end-buttons mt-0">
                                                        <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button>
+                                                       <!-- <button class="btn btn-secondary" onclick="showAllCases();" id="showAllCases">Show All e-Filed Cases</button> -->
                                                     </div>
                                                 <!-- </div> -->
                                                 <div class="calender-sec">
@@ -1858,36 +1846,39 @@ td {
     });
 
     function showAllCases(){
-        $.ajax({
-            url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
-            method: "POST",
-            data: {
-                start: ''
-            },
-            // dataType: 'json',
-            beforeSend: function() {
-                $('#loader-wrapper').show();
-                var loaderTimeout = setTimeout(function() {
-                    $('#loader-wrapper').fadeOut('slow', function() {
-                        $('#content').fadeIn('slow');
-                    });
-                }, 1000);
-            },
-            success: function(res) {
-                // $('#datatable-responsive').DataTable();
-                // var table = $('#datatable-responsive').DataTable().destroy();
-                $('#datatable-responsive').html('');
-                $('#datatable-responsive').html(res);
-                // $('#datatable-responsive').DataTable().reload();
-
-            },
-            error: function(xhr, status, error) {
-                var Table = document.getElementById("datatable-responsive");
-                Table.innerHTML = "";
-                $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
-            }
-        });
+        window.location.reload();
     }
+    // function showAllCases(){
+    //     $.ajax({
+    //         url: '<?php echo base_url(); ?>dashboard_alt/getDayCaseDetails',
+    //         method: "POST",
+    //         data: {
+    //             start: ''
+    //         },
+    //         // dataType: 'json',
+    //         beforeSend: function() {
+    //             $('#loader-wrapper').show();
+    //             var loaderTimeout = setTimeout(function() {
+    //                 $('#loader-wrapper').fadeOut('slow', function() {
+    //                     $('#content').fadeIn('slow');
+    //                 });
+    //             }, 1000);
+    //         },
+    //         success: function(res) {
+    //             // $('#datatable-responsive').DataTable();
+    //             // var table = $('#datatable-responsive').DataTable().destroy();
+    //             $('#datatable-responsive').html('');
+    //             $('#datatable-responsive').html(res);
+    //             // $('#datatable-responsive').DataTable().reload();
+
+    //         },
+    //         error: function(xhr, status, error) {
+    //             var Table = document.getElementById("datatable-responsive");
+    //             Table.innerHTML = "";
+    //             $('#datatable-responsive').append('<tr><td colspan="8">No Records Found!</td></tr>');
+    //         }
+    //     });
+    // }
 
     function get_message_data(id) {
         UIkit.modal('#mail').toggle();
@@ -2010,7 +2001,6 @@ td {
                             columnIndex[0] = 1;
                             columnIndex[1] = 3;
                         }
-                        //console.log(this.context[0].aoColumns[this.selector.cols].sTitle);
                         if ($.inArray(this.selector.cols, columnIndex) !== -1) {
                             var column = this;
                             var select = $(

@@ -76,9 +76,9 @@
                                     else  if(isset($transaction_num) && !empty($transaction_num) && !empty($is_locked) && isset($is_locked) && $is_locked == 't'){
                                         echo '<a class="verifiedFeeData"><b>Locked</b></a>';
                                     }
-                                    echo '<a style="display:none;" id="Verified'.$transaction_num.'" class="verifiedFeeData"><b>Verified</b></a>';
-                                    echo '<a style="display:none;" id="Verifiedlock'.$transaction_num.'" href="javaScript:void(0);"  data-actionType="lock" class="verifyFeeData" data-diaryNo="'.$diaryNo.'" data-diaryYear="'.$diaryYear.'" data-transaction_num="'.$transaction_num.'"><b>Lock</b></a>';
-                                    echo '<a style="display:none;" id="VerifiedLocked'.$transaction_num.'" class="verifiedFeeData"><b>Locked</b></a>';
+                                    echo '<a id="Verified'.$transaction_num.'" class="verifiedFeeData" style="display: none;"><b>Verified</b></a>';
+                                    echo '<a id="Verifiedlock'.$transaction_num.'" href="javaScript:void(0);"  data-actionType="lock" class="verifyFeeData" style="display: none;" data-diaryNo="'.$diaryNo.'" data-diaryYear="'.$diaryYear.'" data-transaction_num="'.$transaction_num.'"><b>Lock</b></a>';
+                                    echo '<a id="VerifiedLocked'.$transaction_num.'" class="verifiedFeeData" style="display: none;"><b>Locked</b></a>';
                                 }
 
                             ?>
@@ -142,7 +142,7 @@
                         </div>
                     </div>
                     <!--start for lock-->
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 diaryNumberYear" style="display:none;">
+                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 diaryNumberYear" style="display: none;">
                         <div class="form-group">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Diary number:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -151,7 +151,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFLNAME" style="display:none;">
+                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFLNAME" style="display: none;">
                         <div class="form-group">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">CFL Name:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -163,7 +163,7 @@
                     <!--end for lock-->
 
                     <!--start for verify-->
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 DTISSUE" style="display:none;">
+                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 DTISSUE" style="display: none;">
                         <div class="form-group">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Date of Issue:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -171,7 +171,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFAMT" style="display:none;">
+                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 CFAMT" style="display: none;">
                         <div class="form-group">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label">Court Fee:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6">
@@ -179,7 +179,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 STATUS" style="display:none;">
+                    <div class="col-md-8 col-sm-8 col-xs-12 col-sm-offset-2 STATUS" style="display: none;">
                         <div class="form-group">
                             <label class="control-label col-md-6 col-sm-6 col-xs-6 input-sm uk-form-label"><span id="STATUS_text"></span> Status:</label>
                             <div class="col-md-6 col-sm-6 col-xs-6 text-success">
@@ -277,10 +277,8 @@
 
                         if (RPSTATUS=='SUCCESS' && status==true  && RCPTNO==receiptNumber){
                             var result=('type '+ type +'  RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         }else {
                             var result=('type '+ type +' verify Failed  '+'RPSTATUS='+ RPSTATUS + '  status=' + status + '  RCPTNO='+ RCPTNO + '  receiptNumber='+ receiptNumber);
-                            console.log(result);
                         }
 
                     }else{
@@ -344,8 +342,11 @@
             data: {CSRF_TOKEN: CSRF_TOKEN_VALUE, order_id: order_id},
             url: base_url + "shcilPayment/paymentCheckStatus",
             success: function (data) {
+                if (data=='SUCCESS|Status Successfully Updated.'){
+                    alert(data);
+                }
                 $('.status_refresh').remove();
-               window.location.reload();
+                window.location.reload();
                 $.getJSON(base_url + "csrftoken", function (result) {
                     $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
                 });

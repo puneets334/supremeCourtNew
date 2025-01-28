@@ -104,7 +104,7 @@
                                                         </h5>
                                                     </div>
                                                     <div class="x_content">
-                                                        <div id="msgforce" style="display:none;">
+                                                        <div id="msgforce" style="display: none;">
                                                             <div class="alert alert-danger text-center flashmessage" data-auto-dismiss="9000">
                                                                 The New Password must contain at least 1 Special Character, 1 Digit, 1 lower case Character, 1 Upper Case Character, and at least 8 digit length
                                                             </div>
@@ -659,7 +659,6 @@
             var txtpass = pass + 'hgtsd12@_hjytr' + salt;
             for (var i = 0; i < 10; i++) {
                 txtpass = dataEncrypt(txtpass, salt);
-                //console.log(txtpass);
             }
             $('#txt_password').val(txtpass);
             $('[name="currentpass"]').val(sha256($('[name="currentpass"]').val()) + '<?= $_SESSION['login_salt'] ?>');

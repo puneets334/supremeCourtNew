@@ -272,7 +272,7 @@ if (isset($diary_no) && !empty($diary_no)) {
                         <hr />
                     <?php } ?>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="divAppearingFor" style="display:none;">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" style="display: none;" id="divAppearingFor">
                     <div class="form-group">
                         <label class="text-left"><strong>Appearing For :</strong></label>
                         <!--<input type="text" class="col-md-8" id="txtIntervenorName" name="txtIntervenorName">-->

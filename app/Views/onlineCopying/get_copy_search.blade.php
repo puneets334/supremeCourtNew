@@ -1,60 +1,56 @@
 <?php
 $track_horizonal_timeline = array();
 $disposed_flag = array('F', 'R', 'D', 'C', 'W');
-    if (is_array($results) && count($results) > 0) {
-        $row = $results;
-        $case_no = "";
-        $request_received_f = '<strong class="text-success">Received</strong>';
-        array_push($track_horizonal_timeline, array("flag_type" => 'Request', "flag_description" => $request_received_f . ' ' . date("d-m-Y H:i:s", strtotime($row['application_receipt']))));
-
-        if ($row['application_request'] == 'request') {
-                $sqRes = getCopySearchResult($row);
-                $data_asset_string = '';
-                if (count($sqRes) > 0) {
-                    foreach ($sqRes as $data_asset) {
-                        if ($data_asset['verify_status'] == 1) {
-                            $data_asset_status = ' <strong class="text-primary">Pending</strong>';
-                        }
-                        if ($data_asset['verify_status'] == 2) {
-                            $data_asset_status = ' <strong class="text-success">Accepted</strong>';
-                        }
-                        if ($data_asset['verify_status'] == 3) {
-                            $data_asset_status = ' <strong class="text-danger">Rejected</strong>';
-                        }
-                        $data_asset_string .= $data_asset['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])) . ')<br>';
-                    }
+if (is_array($results) && count($results) > 0) {
+    $row = $results;
+    $case_no = "";
+    $request_received_f = '<strong class="text-success">Received</strong>';
+    array_push($track_horizonal_timeline, array("flag_type" => 'Request', "flag_description" => $request_received_f . ' ' . date("d-m-Y H:i:s", strtotime($row['application_receipt']))));
+    if ($row['application_request'] == 'request') {
+        $sqRes = getCopySearchResult($row);
+        $data_asset_string = '';
+        if (count($sqRes) > 0) {
+            foreach ($sqRes as $data_asset) {
+                if ($data_asset['verify_status'] == 1) {
+                    $data_asset_status = ' <strong class="text-primary">Pending</strong>';
                 }
-                $asset_type_flag = '';
-                if ($row['filed_by'] == 2) {
-                    $asset_type_flag = 5;
-                } //party
-                if ($row['filed_by'] == 3) {
-                    $asset_type_flag = 6;
-                } //appearing counsel
-                if ($row['filed_by'] == 4) {
-                    $asset_type_flag = 4;
-                } //affidavit
-
-
-                $statusResult = getCopyStatusResult($row, $asset_type_flag);
-
-                if (count($statusResult) > 0) {
-                    foreach ($statusResult as $data) {
-                        if ($data['verify_status'] == 1) {
-                            $data_asset_status = ' <strong class="text-primary">Pending</strong>';
-                        }
-                        if ($data['verify_status'] == 2) {
-                            $data_asset_status = ' <strong class="text-success">Accepted</strong>';
-                        }
-                        if ($data['verify_status'] == 3) {
-                            $data_asset_status = ' <strong class="text-danger">Rejected</strong>';
-                        }
-                        //array_push($track_horizonal_timeline, array("flag_type"=> 'Verify '.$data_asset['asset_name'] ,"flag_description"=>$data_asset_status.' ('.date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])).')'));
-                        $data_asset_string .= $data['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data['verify_on'])) . ')';
-                    }
+                if ($data_asset['verify_status'] == 2) {
+                    $data_asset_status = ' <strong class="text-success">Accepted</strong>';
                 }
-                array_push($track_horizonal_timeline, array("flag_type" => 'Verification', "flag_description" => $data_asset_string));
+                if ($data_asset['verify_status'] == 3) {
+                    $data_asset_status = ' <strong class="text-danger">Rejected</strong>';
+                }
+                $data_asset_string .= $data_asset['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])) . ')<br>';
+            }
         }
+        $asset_type_flag = '';
+        if ($row['filed_by'] == 2) {
+            $asset_type_flag = 5;
+        } //party
+        if ($row['filed_by'] == 3) {
+            $asset_type_flag = 6;
+        } //appearing counsel
+        if ($row['filed_by'] == 4) {
+            $asset_type_flag = 4;
+        }
+        $statusResult = getCopyStatusResult($row, $asset_type_flag);
+        if (count($statusResult) > 0) {
+            foreach ($statusResult as $data) {
+                if ($data['verify_status'] == 1) {
+                    $data_asset_status = ' <strong class="text-primary">Pending</strong>';
+                }
+                if ($data['verify_status'] == 2) {
+                    $data_asset_status = ' <strong class="text-success">Accepted</strong>';
+                }
+                if ($data['verify_status'] == 3) {
+                    $data_asset_status = ' <strong class="text-danger">Rejected</strong>';
+                }
+                //array_push($track_horizonal_timeline, array("flag_type"=> 'Verify '.$data_asset['asset_name'] ,"flag_description"=>$data_asset_status.' ('.date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])).')'));
+                $data_asset_string .= $data['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data['verify_on'])) . ')';
+            }
+        }
+        array_push($track_horizonal_timeline, array("flag_type" => 'Verification', "flag_description" => $data_asset_string));
+    }
 
 
         if ($row['reg_no_display'] != '') {
@@ -430,12 +426,6 @@ $disposed_flag = array('F', 'R', 'D', 'C', 'W');
         width: 300px;
         text-align: center;
         font-size: 14px;
-    }
-    .swiper-slide:nth-child(2n) {
-        /*width: 40%;*/
-    }
-    .swiper-slide:nth-child(3n) {
-        /*width: 20%;*/
     }
 </style>
 

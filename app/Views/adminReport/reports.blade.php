@@ -69,12 +69,12 @@
                 <div class="dashboard-section" >
                     <div class="row">
                         <div class="col-12">
-                            <button class="pull-right quick-btn mb-2" style="display: none; " id="printButton" type="button" onclick="PrintDiv();">Print</button>
+                            <button class="pull-right quick-btn mb-2" style="display: none;" id="printButton" type="button" onclick="PrintDiv();">Print</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="dash-card" id="tableData" style="display: none;"></div>
+                            <div class="dash-card" style="display: none;" id="tableData"></div>
                         </div>
                     </div>
                 </div>

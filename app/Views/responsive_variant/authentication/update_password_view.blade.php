@@ -141,7 +141,7 @@
                                 <input type="hidden" name="salt" id="salt" value="<?= base64_encode(random_bytes(32)) ?>">
                                 <input type="hidden" name="register_type" value="<?php echo $title; ?>">
                                
-                                <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+                                <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">

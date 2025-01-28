@@ -1,6 +1,6 @@
 <!--start Captcha Resource-->
 <div class="row">
-<input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
+<input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
     <div class="col-4 col-sm-4 col-md-4 col-lg-4">
         <img src="<?=base_url('captcha/index');?>" id='captcha_image' style="height: 45px !important;">
     </div>

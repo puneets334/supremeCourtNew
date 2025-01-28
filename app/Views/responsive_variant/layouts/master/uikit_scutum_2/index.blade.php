@@ -303,7 +303,6 @@
             var diary_no = $(this).val();
 
             var form_data = $(this).serialize();
-            console.log(form_data);
             var CSRF_TOKEN = 'CSRF_TOKEN';
             var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
             $('#show_search_result_diary').html('');

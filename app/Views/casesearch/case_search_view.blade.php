@@ -428,7 +428,6 @@
                                 $('#search_sc_case').val('SEARCH');
                                 $('#search_sc_case').prop('disabled', false);
                                 var resArr = data.split('@@@');
-                                console.log(resArr[1]);
                                 
                                 if (resArr[0] == 1) {
                                     $('#show_search_result_diary').html(resArr[1]);
@@ -492,7 +491,6 @@
                                 $('#search_sc_case').val('SEARCH');
                                 $('#search_sc_case').prop('disabled', false);
                                 var resArr = data.split('@@@');
-                                console.log(resArr[1]);
 
                                 if (resArr[0] == 1) {
                                     $('#show_search_result_diary').html(resArr[1]);
@@ -516,7 +514,6 @@
                     //     return false;
                     // }
 
-                    // console.log(form_data); exit;
                     
                     return false;
                     // } else {

@@ -104,7 +104,7 @@ $filing_type = '';
                 </div>
 
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr" style="display:none;"></textarea>
+                <textarea name="remark" id="descr" style="display: none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>
@@ -153,7 +153,7 @@ $filing_type = '';
                     </div>
                 </div>
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr" style="display:none;"></textarea>
+                <textarea name="remark" id="descr" style="display: none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>
@@ -499,7 +499,6 @@ $filing_type = '';
                         if (typeof data == 'string') {
                             data = JSON.parse(data);
                         }
-                        // console.log(data);
                         // return false;
                         if (data) {
                             $("#exampleModal").modal('show');
@@ -591,7 +590,6 @@ $filing_type = '';
                                         $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                     },
                                     success: function(updateData) {
-                                        // console.log(updateData);
                                         // return false;
                                         $("#loader_div").html('');
                                         if (updateData.success == 'success') {

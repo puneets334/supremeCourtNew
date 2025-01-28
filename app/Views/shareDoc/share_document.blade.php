@@ -44,7 +44,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                 </div>
             </div>
 
-            <div class="row" id="new_contact" style="display:none;">
+            <div class="row" style="display: none;" id="new_contact">
                 <div class="form-group">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dynamic_field">
@@ -85,7 +85,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                 </div>
             </div>
             <!--END-->
-            <div class="row" id="contact_id" style="display:none;">
+            <div class="row" style="display: none;" id="contact_id">
                 <div class="form-group">
                     <div class="col-sm-12 col-xs-12">
                         <div class="form-group">
@@ -112,7 +112,7 @@ if (empty($_SESSION['cnr_details']['is_pet_def'])) {
                     </div>
                 </div>
             </div>
-            <div class="row" id="aor_con" style="display:none;">
+            <div class="row" style="display: none;" id="aor_con">
                 <div class="form-group">
                     <div class="col-sm-12 col-xs-12">
                         <div class="form-group">

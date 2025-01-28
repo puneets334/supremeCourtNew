@@ -141,11 +141,11 @@
                                 <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                             </div>
                             <section>
-                                <?php if (getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) { ?>
-                                <h3>Cases in Which You Were Appointed as <b>Amicus Curiae</b> by the Hon'ble Court</h3> 
+                                <?php if (!empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) { ?>
+                                    <h3>Cases in Which You Were Appointed as <b>Amicus Curiae</b> by the Hon'ble Court</h3> 
                                 <?php } ?>
                                 <div id="myFilter">
-                                    <?php if(!in_array($_SESSION['login']['ref_m_usertype_id'],[AMICUS_CURIAE_USER,SR_ADVOCATE])) { ?>
+                                    <?php if(isset($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'],[AMICUS_CURIAE_USER,SR_ADVOCATE])) { ?>
                                         <div class="uk-grid-small uk-grid-divider uk-child-width-auto" uk-grid>
                                             <div class="customFilterBtnDiv">
                                                 <ul  class="uk-subnav uk-subnav-pill" uk-margin>
@@ -280,7 +280,7 @@
                                                     <span class="uk-text-emphasis" ng-bind="case.filedOn"></span>
                                                 </td>
                                                 <td ng-if="case.userType!=19">
-                                                    @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
+                                                    @if(isset($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                     <a onclick="open_contact_box(this.id)" ng-click="open_contact_box(this.id)" ukicon = "icon:receiver"    title="Add contact"  id="@{{case.diaryId}}"><i class="mdi mdi-account-plus sc-icon-22"></i></a>&nbsp;&nbsp;
                                                     <a onclick="get_message_data(this.id,'mail')" ng-click="get_message_data(this.id,'mail')" ukicon = "icon:mail"   title="Send SMS"  id="@{{case.diaryId+'-'+case.registrationNumber+'-'+case.petitionerName+'-'+case.respondentName+'-'+case.status}}" >
                                                         <!-- <i class="mdi mdi-android-messages sc-icon-20"></i> -->
@@ -294,7 +294,7 @@
                                                     <button type="button" class="uk-icon-button" uk-icon="more-vertical" ng-if="case.status=='P'"></button>
                                                     <div class="uk-padding-small md-bg-grey-700" uk-dropdown="pos:left-center;mode:click;" ng-if="case.status=='P'">
                                                         <ul class="uknav-parent-icon uk-dropdown-nav"  uk-nav>
-                                                            @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
+                                                            @if(isset($_SESSION['login']) && !in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                             <li ng-if="case.userType!=19" class="uk-nav-header uk-padding-remove-left text-white">File a new</li>
                                                             <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
                                                             <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
@@ -303,7 +303,7 @@
                                                             <li class="uk-nav-divider uk-margin-remove"></li>
                                                             <li class="uk-nav-header uk-padding-remove-left uk-margin-remove-top text-white">View</li>
                                                             @endif
-                                                            @if(in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
+                                                            @if(isset($_SESSION['login']) && in_array($_SESSION['login']['ref_m_usertype_id'],array(AMICUS_CURIAE_USER)))
                                                             <li ng-if="case.userType!=19"><a href="{{base_url('case/interim_application/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> IA</a></li>
                                                             <li ng-if="case.userType!=19"><a href="{{base_url('case/document/crud')}}/@{{case.diaryId}}" class="text-white uknav-divider ukmargin-remove"> Misc. Docs</a></li>
                                                             @endif
@@ -390,7 +390,7 @@
             <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
             <!-- <button class="uk-button uk-button-primary" type="button" id="save_citation">Save Citation</button>-->
             <input type="button " id="save_notes"  value="Save Notes " class="uk-button uk-button-primary" onclick="save_notes()" readonly>
-            <input type="button " id="update_notes"  value="Update Notes " class="uk-button uk-button-primary" onclick="update_notes()" style="display: none;" readonly>
+            <input type="button " id="update_notes"  value="Update Notes " class="uk-button uk-button-primary" style="display: none;" onclick="update_notes()" readonly>
         </div>
         <div id="view_notes_text"></div>
         <div id="view_notes_data"></div>
@@ -410,7 +410,7 @@
             <div id="add_contacts_alert"></div>
             <label class="radio-inline"><input type="radio" name="contact" id="new" value="1" onclick="show_contact_list(1)" checked="">New</label>
             <label class="radio-inline"><input type="radio" name="contact" id="aor" value="3" onclick="show_contact_list(2)">AOR</label>
-            <div id="aor_contact" style="display:none;">
+            <div id="aor_contact" style="display: none;">
                 <div>
                     <div>
                         <select name="aor_name" id="aor_name" class="form-control cus-form-ctrl" style="width: 50%">
@@ -484,7 +484,7 @@
             <input type="hidden" id="citation_id" name="citation_id" value="">
             <button class="uk-button uk-button-default uk-modal-close" type="button" >Cancel</button>
             <input type="button " id="save_citation"  value="Save Citation " class="uk-button uk-button-primary" onclick="save_citation()" readonly>
-            <input type="button " id="update_citation"  value="Update Citation " class="uk-button uk-button-primary" onclick="update_citation()" style="display:none;" readonly>
+            <input type="button " id="update_citation"  value="Update Citation " class="uk-button uk-button-primary" style="display: none;" onclick="update_citation()" readonly>
         </div>
         <div id="view_citation_text"></div>
         <div id="view_citation_data"></div>

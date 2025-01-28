@@ -22,13 +22,6 @@
         font-size: 13px;
         color: #000;
     }
-    div.box {
-        /* height: 109px; */
-        /* padding: 10px; */
-        /*overflow: auto;*/
-        /* border: 1px solid #8080FF; */
-        /*background-color: #E5E5FF;*/
-    }
     @media (max-width: 767px){
         .custom-table td:nth-child(10), .custom-table td:nth-child(11), .custom-table td:nth-child(12), .custom-table td:nth-child(13) {    min-height: 30px;}
     }
@@ -341,16 +334,15 @@
                                                             <hr />
                                                             <div class="row">
                                                                 <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-5">
-                                                                    <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style="display:none;">
+                                                                    <div class="col-md-12 col-sm-12 col-xs-12" style="display: none;" id="loader_div">
                                                                         <img id="loader_img" style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;" src="<?php echo base_url(); ?>/assets/images/loading-data.gif">
                                                                     </div>
                                                                     <div class="form-group" id="status_refresh">
                                                                         <div class="start-buttons my-0">
- <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
- <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
-                                                                        <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
-                                                                        </div>
-                                                                       
+                                                                            <!-- <input type="submit" id="Reportsubmit" name="add_notice" value="Search" class="quick-btn btn-primary loadDataReport"> -->
+                                                                            <button type="submit" id="Reportsubmit" name="add_notice" class="quick-btn loadDataReport">Search</button>
+                                                                            <button onclick="location.href = '<?php echo base_url('report/search'); ?>'" class="gray-btn quick-btn" type="reset">Reset</button>
+                                                                        </div>                                                                       
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -422,7 +414,7 @@
                                                         </div>
                                                     </div>                                                    
                                                     <!--</center><br><hr>-->
-                                                    <div class="card-body diary box" style="display:none; background-color: #ffffff; border-color: #ffffff;">
+                                                    <div class="card-body diary box" style="display: none; background-color: #ffffff; border-color: #ffffff;">
                                                         <div class="row mt-3">
                                                             <div class="col-md-2 col-sm-2 col-xs-12">
                                                                 <div class="form-group">
@@ -465,7 +457,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class=" col-md-4 col-sm-6 col-xs-12 ">
-                                                                <div class="col-md-offset-5" id="submitBtn_dynamicalayDiary" style="display: none;margin-top: 25px;">
+                                                                <div class="col-md-offset-5" style="display: none;" id="submitBtn_dynamicalayDiary" style="margin-top: 25px;">
                                                                     <input type="submit" id="SearchDiaryNumbersubmit" name="add_notice" value="Search" class="quick-btn gray-btn SearchDiaryNumbersubmit">
                                                                 </div>
                                                             </div>
@@ -880,12 +872,10 @@
 
                     success: function (resultData) { 
                     //    alert(resultData);
-                        console.log(resultData);
                         /* return;*/
                         var rdata = JSON.parse(resultData);
                     //    alert(rdata);
 
-                        //console.log(rdata[0]['diary_no']);return;
                         if(rdata[0]['diary_no']===''){
                        alert('record not found'); 
                        return false;
@@ -973,8 +963,6 @@
                         populateDataTable(myJsonData);
                     },
                     error: function (e) {
-                        console.log("There was an error with your request...");
-                        console.log("error: " + JSON.stringify(e));
                         $('#divTitle').html('There was an error with your request...');
                     }
                 });
@@ -1101,7 +1089,6 @@
                         report.portal,
                     ]);
                     if(sn==length) {
-                        console.log('Done data Table');
                         $('#loader_div').hide();
                         $('#status_refresh').show();
                     }

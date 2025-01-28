@@ -344,7 +344,6 @@
                             $("#loader_div").html('<img id="loader_img" style="position: fixed;left: 45%;margin-top: 2px;margin-left: -151px;"  src="<?php echo base_url('assets/images/loading-data.gif');?>">');
                         },
                         success: function (res) {
-                            // console.log(res);
                             if(res.success == 'success') {
                                 $("#loader_div").html('');
                                 $(".form-response").html("<p class='message invalid' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + res.message + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");

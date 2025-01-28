@@ -43,44 +43,28 @@
                         <div class="form-group">
                             <?php
                             $noHcEntry = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'checked="checked"' : '';
-                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? 'style="display:none;' : '';
+                            $noHCButton = (!empty($subordinate_court_details) && $subordinate_court_details[0]['is_hc_exempted'] == 't') ? ' display: none;' : '';
                             $scchecked = @$party_details[0]['selected_court'] == '4' ? 'checked="checked"' : '';
                             $hcchecked = @$party_details[0]['selected_court'] == '1' ? 'checked="checked"' : '';
                             $dcchecked = @$party_details[0]['selected_court'] == '3' ? 'checked="checked"' : '';
                             $dcchecked = @$party_details[0]['selected_court'] == '5' ? 'checked="checked"' : '';
                             if ($sc_casetypearr != 39 && $sc_casetypearr != 9 && $sc_casetypearr != 10 && $sc_casetypearr != 19 && $sc_casetypearr != 25 && $sc_casetypearr != 26 && $sc_casetypearr != 7) { ?>
-                                <div align="center"
-                                    id="nohc">
-                                    <input type="checkbox"
-                                        <?php echo $noHcEntry; 
-                                        ?>
-                                        value="1"
-                                        name="chk_nohc"
-                                        id="chk_nohc"
-                                        onchange="toggle_entry_div()"> I hereby confirm that
-                                    there is no earlier courts details pertaining to this
-                                    matter. &nbsp; &nbsp; <input type="button"
-                                        class="btn btn-success"
-                                        <?php echo $noHCButton; ?>id="nohc_save"
-                                        value="Proceed with Next Stage">
+                                <div align="center" id="nohc">
+                                    <input type="checkbox" <?php echo $noHcEntry; ?> value="1" name="chk_nohc" id="chk_nohc" onchange="toggle_entry_div()">
+                                    I hereby confirm that there is no earlier courts details pertaining to this matter. &nbsp; &nbsp;
+                                    <input type="button" class="btn btn-success" id="nohc_save" value="Proceed with Next Stage" style="<?php echo $noHCButton; ?>">
                                 </div>
                             <?php } else { ?>
-                                <div align="center"
-                                    id="nohc">
-                                    <input type="hidden"
-                                        name="chk_nohc"
-                                        id="chk_nohc">
+                                <div align="center" id="nohc">
+                                    <input type="hidden" name="chk_nohc" id="chk_nohc">
                                 </div>
                             <?php } ?>
                         </div>
                     </div>
                 </div>
-                <div class="row"
-                    id="all_div">
-                    <div class="row"
-                        id="hc_entry_div">
+                <div class="row" id="all_div">
+                    <div class="row" id="hc_entry_div">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
-                            
                             <div class="mb-3">
                                 <?php
                                 $court_type = !empty($caseData['court_type']) ? $caseData['court_type'] : null;
@@ -131,7 +115,7 @@
                                                         placeholder=""> --}}
                             </div>
                         </div>
-                        <div class="" id="supreme_court_info" style="display: block;">
+                        <div id="supreme_court_info" style="display: block;">
                             <div class="col-12">
                             <div class="row">
                             <div class="col-12 col-sm-4 col-md-4 col-lg-4">
@@ -183,9 +167,7 @@
                             </div>
                             </div>
                         </div>
-                        <div class="row"
-                            id="high_court_info"
-                            style="display: none;">
+                        <div class="row" id="high_court_info" style="display: none;">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
                                 <div class="mb-3">
                                     <div class="row justify-content-center">
@@ -199,7 +181,7 @@
                                                 id="cnr"
                                                 name="cnr"
                                                 maxlength="16"
-                                                pattern="^[A-Z]{4}[0-9]{12}$"
+                                                pattern="^[A-Za-z]{4}[0-9]{12}$" style="text-transform: uppercase;"
                                                 placeholder="CNR"
                                                 class="form-control cus-form-ctrl age_calculate"
                                                 type="text" value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>" >
@@ -210,7 +192,7 @@
                                                 <i class="fa fa-question-circle-o"></i>
                                             </span>
                                             <div class="input-note-pos"><p class="pt-2"> <strong style="font-size:13px;">Kindly
-                                                        search lower court details using CNR
+                                                        search lower case details using CNR
                                                         preferably for swift data
                                                         retrieval</strong></p>
                                             </div>
@@ -275,7 +257,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name" style="display:none;">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 hc_case_type_name" style="display: none;">
                                 <div class="mb-3">
                                     <label for=""
                                         class="form-label">Case Type Name <span
@@ -329,9 +311,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row"
-                            id="district_court_info"
-                            style="display: none;">
+                        <div class="row" id="district_court_info" style="display: none;">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="mb-3">
                                 <div class="row justify-content-center">
@@ -345,7 +325,7 @@
                                         id="dc_cnr"
                                         name="dc_cnr"
                                         maxlength="16"
-                                        pattern="^[A-Z]{4}[0-9]{12}$"
+                                        pattern="^[A-Za-z]{4}[0-9]{12}$" style="text-transform: uppercase;"
                                         placeholder="CNR"
                                         class="form-control cus-form-ctrl age_calculate"
                                         type="text"  value="<?=isset($_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']) ? $_SESSION['casewithAI'][0]['earlier_courts']['cnr_num']:'';?>">
@@ -434,7 +414,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dc_case_type_name" style="display:none;">
+                            <div class="col-12 col-sm-12 col-md-4 col-lg-4 dc_case_type_name" style="display: none;">
                                 <div class="mb-3">
                                     <label class="form-label">Case Type Name <span
                                             style="color: red"
@@ -489,9 +469,7 @@
 
 
                     </div>
-                    <div class="row"
-                        id="state_agency_info"
-                        style="display: none;">
+                    <div class="row" id="state_agency_info" style="display: none;">
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">State <span style="color: red"
@@ -533,7 +511,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 agency_case_type_name" style="display:none;">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 agency_case_type_name" style="display: none;">
                             <div class="mb-3">
                                 <label class="form-label">Case Type Name <span style="color: red"
                                         class="astriks">*</span></label>
@@ -601,9 +579,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12"
-                        id="loader_div"
-                        style="display: none;">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="loader_div" style="display: none;">
                         <img id="loader_img"
                             style="position: fixed;left: 50%;margin-top: -50px;margin-left: -100px;"
                             src="<?php echo base_url(); ?>assets/images/loading-data.gif" />
@@ -776,7 +752,7 @@
                                                     name="fir_state"
                                                     id="fir_state"
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value=""
                                                         title="Select">Select State</option>
                                                 </select>
@@ -790,7 +766,7 @@
                                                     name="fir_district"
                                                     id="fir_district"
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value=""
                                                         title="Select">Select District</option>
                                                 </select>
@@ -805,7 +781,7 @@
                                                     name="fir_policeStation"
                                                     id="fir_policeStation"
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value=""
                                                         title="Select">Select Police Station
                                                     </option>
@@ -824,7 +800,7 @@
                                                     onkeyup="return isNumber(event)"
                                                     placeholder="FIR Number"
                                                     class="form-control cus-form-ctrl age_calculate"
-                                                    type="text">
+                                                    type="text" required>
                                                 <span class="input-group-addon"
                                                     data-placement="bottom"
                                                     data-toggle="popover"
@@ -841,7 +817,7 @@
                                                     class="form-control cus-form-ctrl filter_select_dropdown"
                                                     id="fir_year"
                                                     name="fir_year"
-                                                    style="width: 100%">
+                                                    style="width: 100%" required>
                                                     <option value="">Year</option>
                                                     <?php
                                                     $end_year = 48;
@@ -874,7 +850,7 @@
                                                     name="police_station_name"
                                                     placeholder="Police Station Name"
                                                     class="form-control cus-form-ctrl"
-                                                    type="text">
+                                                    type="text" required>
                                                 <span class="input-group-addon"
                                                     data-placement="bottom"
                                                     data-toggle="popover"
@@ -895,7 +871,7 @@
                                                     onkeyup="return isNumber(event)"
                                                     placeholder="FIR Number"
                                                     class="form-control cus-form-ctrl age_calculate"
-                                                    type="text">
+                                                    type="text" required>
                                                 <span class="input-group-addon"
                                                     data-placement="bottom"
                                                     data-toggle="popover"
@@ -940,7 +916,6 @@
         <?php render('newcase.subordinate_court_list', ['subordinate_court_details' => @$subordinate_court_details]); ?>
     </div>
 </div>
-@push('script')
 <script src="<?= base_url(); ?>assets/newAdmin/js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url(); ?>assets/newAdmin/js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url(); ?>assets/newAdmin/js/general.js"></script>

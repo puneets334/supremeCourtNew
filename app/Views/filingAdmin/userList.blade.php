@@ -292,7 +292,6 @@
                                 var text = $('#filing_type option[value="' + id + '"]').text();
                                 roleText += text.replace(/_/g, ' ').toUpperCase() + '<br>';
                             });
-                            console.log(roleText);
                         }
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
@@ -389,7 +388,6 @@
                             alert(res.message);
                             window.location.reload();
                         }
-                        // console.log(res);
                         // return false;
                         $.getJSON("<?php echo base_url('csrftoken'); ?>", function(result) {
                             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);

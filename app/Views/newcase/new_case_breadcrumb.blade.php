@@ -136,7 +136,9 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                             // echo '<div class="col-md-8"><h5>Please ensure that you have cured the defects notified by admin. Then only proceed with final submit.</h5></div>';
                             if (in_array(NEW_CASE_COURT_FEE, explode(',', getSessionData('efiling_details')['breadcrumb_status']))) {
                                 // if ($segment->getSegment(2) == 'view') {
-                                    echo '<a href="' . base_url('newcase/finalSubmit') . '" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>';
+                                ?>
+                                <a href="<?php echo base_url('newcase/finalSubmit'); ?>" class="quick-btn gradient-btn btn btn-success btn-sm">SUBMIT FOR RE-FILING </a>
+                                <?php
                                 // }
                             }
                         }
@@ -322,17 +324,8 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
     }
     ?>
 </div>
-
-<div class="alert alert-success text-center"
-    role="alert" id="successAlert" style="display: none;"
-    data-auto-dismiss="5000">
-</div>
-
-<div class="alert alert-danger text-center"
-    role="alert" id="dangerAlert" style="display: none;"
-    data-auto-dismiss="5000">
-</div>
-
+<div class="alert alert-success text-center" style="display: none;" role="alert" id="successAlert" data-auto-dismiss="5000"></div>
+<div class="alert alert-danger text-center" style="display: none;" role="alert" id="dangerAlert" data-auto-dismiss="5000"></div>
 <!-- tabs-section -start  -->
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
@@ -765,6 +758,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 </div>
             </div>
         </div>
+        <script src="<?= base_url(); ?>assets/newAdmin/js/jquery-3.5.1.min.js"></script>
 
         <script>
             document.getElementById("copyButton").addEventListener("click", function() {
@@ -954,7 +948,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                 </div>
 
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr"  style="display:none;"></textarea>
+                <textarea name="remark" id="descr" style="display: none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>
@@ -1005,7 +999,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                     </div>
                 </div>
                 <div id="editor-one" class="editor-wrapper placeholderText disapprovedText" contenteditable="true"></div>
-                <textarea name="remark" id="descr"  style="display:none;"></textarea>
+                <textarea name="remark" id="descr" style="display: none;"></textarea>
                 <span id="disapprove_count_word" style="float:right"></span>
                 <div class="clearfix"><br></div>
             </div>
@@ -1279,7 +1273,6 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                     if(typeof data == 'string'){
                         data = JSON.parse(data);
                     }
-                    // console.log(data);
                     // return false;
                     if(data){
                         $("#exampleModal").modal('show');
@@ -1369,7 +1362,6 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
                                             $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
                                         },
                                         success: function(updateData){
-                                            // console.log(updateData);
                                             // return false;
                                             $("#loader_div").html('');
                                             if(updateData.success == 'success'){

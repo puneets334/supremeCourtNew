@@ -14,7 +14,7 @@ helper('view');
 
 use eftec\bladeone\BladeOne;
 use GuzzleHttp\Exception\GuzzleException;
-
+use App\Libraries\webservices\Ecoping_webservices;
 if (!function_exists('pr')) {
     function pr($request)
     {
@@ -2221,7 +2221,8 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
             }
 
             if ($request_type == '2') // IA & Misc. doc fees
-            {
+            { 
+                //pr('IA & Misc. doc fees');
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
                 $diary_no = !empty($court_fee_calculation_param3) ? (int)$court_fee_calculation_param3[0]['diary_no'] . (int)$court_fee_calculation_param3[0]['diary_year'] : '';
                 //uncheck the following line:when we further check the case nature based on ICMIS -main table case:case_group
@@ -2235,7 +2236,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                 if (empty($case_nature) && !empty($diary_no)) {
                     $case_nature = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 }
-
+ //echo 'case_nature='.$case_nature;exit;
                 //uncheck the following line:when we require to further check the case nature based on ICMIS -main table case:case_group
                 /*$case_nature_from_icmis = file_get_contents(ICMIS_SERVICE_URL . '/ConsumedData/caseNature?diaryNo=' . $diary_no);
                 echo 'For Diary : ' . $diary_no . ', From efiling' . $case_nature . ' from ICMIS:' . $case_nature_from_icmis;
@@ -2262,6 +2263,7 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                         }
                     }
                 }
+                
                 if ($sc_case_type_id == 19) {
                     $case_nature = 'R'; //if the contempt petition casetype is selected then it can be treated as criminal matters thus no doc fees will be applicable
                 }
@@ -2278,12 +2280,13 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
                         if (!empty($caveat_details[0]))
                             $case_nature = $caveat_details[0]['nature'];
                     }
-
+                    
                     if ((rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || (rtrim($case_nature) == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING) && $sc_case_type_id != '19') // CHNAGE BY KBPUJARI ON 28062023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
                     //if($case_nature == 'C' || getSessionData('efiling_details')['ref_m_efiled_type_id']==4 || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT && $sc_case_type_id!='19') // court fee only applicable for civil matters and 0 for criminal matter based on its casetype
                     {
+
                         $no_of_lower_court_order_challanged_for_caveat = !empty($court_fee_calculation_param3) ? $court_fee_calculation_param3[0]['trial_court_order_challanged_for_caveat'] : '';
-                        //var_dump($court_fee_calculation_param3);
+                        // var_dump($court_fee_calculation_param3);
                         if (is_array($court_fee_calculation_param3)) {
                             foreach ($court_fee_calculation_param3 as $row) {
                                 $doc = (int)$row['doccode'] . (int)$row['doccode1'];
@@ -2386,7 +2389,6 @@ function calculate_court_fee($registration_id = null, $request_type = null, $wit
             }
         }
     }
-
 
     return $total_court_fee;
 }
@@ -2914,10 +2916,9 @@ function getPendingCourtFee()
                 if (!empty($caveat_details[0]))
                     $case_nature = $caveat_details[0]['nature'];
                 // pr($case_nature);
-                 } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)
+            } else if (getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_MISC_DOCS || getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)
                  {
                 $court_fee_calculation_param3 = $Common_model->get_ia_or_misc_doc_court_fee($registration_id, null, null); // retrieve the court fee
-                // pr($court_fee_calculation_param3);
                 $case_nature = (!empty($court_fee_calculation_param3)) ? $court_fee_calculation_param3[0]['nature'] : null;
                 if (isset($case_nature)&& empty($case_nature)) {
                     // pr($case_nature);
@@ -2928,8 +2929,6 @@ function getPendingCourtFee()
                 $court_fee_calculation_param1 = $Common_model->get_subject_category_casetype_court_fee($registration_id);
                 $case_nature = !empty($court_fee_calculation_param1) ? $court_fee_calculation_param1[0]['nature'] : '';
             }
-            // echo "Case Nature is ";
-            // pr($case_nature);
           
             if (( isset($case_nature)  &&  $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_CAVEAT && getSessionData('efiling_details')['ref_m_efiled_type_id'] != E_FILING_TYPE_IA) || ( isset($case_nature)  &&    $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_IA) || ( isset($case_nature)  &&      $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) || ( isset($case_nature)  &&  $case_nature == 'C' && getSessionData('efiling_details')['ref_m_efiled_type_id'] == OLD_CASES_REFILING)) // CHNAGE BY KBPUJARI ON 10072023 TO MAKE 0 COURT FEE FOR THE CAVEAT FILING IF THE CASE TYPE IS SELECTED AS CRIMINAL
             {
@@ -3081,6 +3080,7 @@ function addPrefixIfAbsent($number)
 
 function send_whatsapp_message($registration_id = null, $efiling_number = null, $sms_text = null)
 {
+    return TRUE;
     // $ci = &get_instance();
     // $ci->load->model('common/Common_model');
     $cause_title='';
@@ -3416,167 +3416,42 @@ function article_tracking_offline($articlenumber){
 }
 
 function getCopySearchResult($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets');
-
-    $subQuery1 = $builder
-        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-        ->join('user_asset_type_master a', 'a.id = u.asset_type')
-        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-        ->where('u.mobile', $row['mobile'])
-        ->where('u.email', $row['email'])
-        ->where('u.asset_type', 1)
-        ->where('u.diary_no', 0)
-        ->orderBy('u.ent_time', 'desc')
-        ->limit(1)
-        ->getCompiledSelect(); 
-
-    $subQuery2 = $builder
-        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-        ->join('user_asset_type_master a', 'a.id = u.asset_type')
-        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-        ->where('u.mobile', $row['mobile'])
-        ->where('u.email', $row['email'])
-        ->where('u.asset_type', 2)
-        ->where('u.diary_no', 0)
-        ->orderBy('u.ent_time', 'desc')
-        ->limit(1)
-        ->getCompiledSelect(); 
-
-    $subQuery3 = $builder
-        ->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-        ->join('user_asset_type_master a', 'a.id = u.asset_type')
-        ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-        ->where('u.mobile', $row['mobile'])
-        ->where('u.email', $row['email'])
-        ->where('u.asset_type', 3)
-        ->where('u.diary_no', 0)
-        ->orderBy('u.ent_time', 'desc')
-        ->limit(1)
-        ->getCompiledSelect(); 
-
-    $finalQuery = $db2->query("
-        ($subQuery1)
-        UNION
-        ($subQuery2)
-        UNION
-        ($subQuery3)
-    ");
-
-    try {
-        $query = $db2->query($finalQuery);
-        if ($query) {
-            $result = $query->getResultArray();
-        } else {
-            throw new \Exception('Query failed to execute.');
-        }
-    } catch (\Exception $e) {
-        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
-        $result = [];
-    }
-
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopySearchResult($row);
     return $result;
 }
 
-function getCopyStatusResult($row, $asset_type_flag){
-    $db2 = \Config\Database::connect('e_services'); 
-    $builder = $db2->table('user_assets u');
-    try {
-        $builder->select('u.verify_remark, u.id, u.asset_type, a.asset_name, u.id_proof_type, i.id_name, u.file_path, u.verify_status, u.verify_on, u.video_random_text')
-                ->join('user_asset_type_master a', 'a.id = u.asset_type', 'inner')
-                ->join('id_proof_master i', 'i.id = u.id_proof_type AND i.display = "Y"', 'left')
-                ->where('u.mobile', $row['mobile'])
-                ->where('u.email', $row['email'])
-                ->where('u.asset_type', $asset_type_flag)
-                ->where('u.diary_no', $row['diary'])
-                ->orderBy('u.ent_time', 'desc')
-                ->limit(1);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            throw new \Exception('Database query error: ' . $error['message']);
-        }
-        $result = $query->getRowArray();
-    } catch (\Exception $e) {
-        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
-        $result = [];
-    }
-
+function getCopyStatusResult($row,$asset_type_flag){
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyStatusResult($row,$asset_type_flag);
     return $result;
 }
 
 function getCopyBarcode($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('post_bar_code_mapping');
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyStatusResult($row['id']);
 
-    $builder->select('GROUP_CONCAT(barcode) as barcode')
-            ->where('copying_application_id', $row['id'])
-            ->groupBy('copying_application_id')
-            ->having('barcode IS NOT NULL');
-
-    $query = $builder->get();
-
-    return $result = $query->getRowArray();
+    return $result;
 }
 
 function getCopyApplication($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_documents b');
-
-    try {
-        $builder->select('b.sent_to_applicant_on, b.pdf_embed_on, b.pdf_digital_signature_on, r.order_type AS order_name, "" AS reject_cause, b.*')
-                ->join('ref_order_type r', 'b.order_type = r.id', 'left')
-                ->where('b.copying_order_issuing_application_id', $row['id']);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            throw new \Exception('Database query error: ' . $error['message']);
-        }
-        $result = $query->getResultArray();
-    } catch (\Exception $e) {
-        // echo "<pre>Error: " . $e->getMessage() . "</pre>";
-        $result = [];
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyApplication($row['id']);
     return $result;
 }
 
 function getCopyRequest($row){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_request_verify_documents b');
-
-    $builder->select('b.path, r.order_type AS order_name, b.reject_cause, b.*')
-            ->join('ref_order_type r', 'b.order_type = r.id', 'left')
-            ->where('b.copying_order_issuing_application_id', $row['id']);
-    $query = $builder->get();
-    if ($query === false) {
-        $error = $db2->error();
-        // echo "<pre>Error: " . $error['message'] . "</pre>";
-        $result = [];
-    } else {
-        $result = $query->getResultArray();
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyRequest($row['id']);
     return $result;
 
 }
 
-function copyFormSentOn($row1){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_request_movement c');
-    $builder->select('c.from_section_sent_on, us.section_name AS from_section1, us2.section_name AS to_section1')
-            ->join('usersection us', 'us.id = c.from_section', 'left')
-            ->join('usersection us2', 'us2.id = c.to_section', 'left')
-            ->where('c.copying_request_verify_documents_id', $row1['id']) // Ensure $row['id'] contains a valid ID
-            ->where('c.display', 'Y')
-            ->where('c.from_section_sent_by !=', 0)
-            ->orderBy('c.from_section_sent_on');
-    $query = $builder->get();
-    if ($query === false) {
-        $error = $db2->error();
-        // echo "<pre>Error: " . $error['message'] . "</pre>";
-        $result = [];
-    } else {
-        $result = $query->getResultArray();
-    }
+function copyFormSentOn($row){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->copyFormSentOn($row['id']);
     return $result;
 }
 
@@ -4279,6 +4154,7 @@ function insert_copying_application_documents_online($dataArray) {
 
 function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
     $status = '';
+    $ecoping_webservices=new Ecoping_webservices();
     $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
     if(empty($mobile)) {
         $status = " Mobile No. Empty.";
@@ -4341,8 +4217,9 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
                 "update_time" => date('Y-m-d H:i:s'),
                 "templateId" => trim($template_id)
             );
-            $builder = $db2->table('sms_pool');
-            if ($builder->insert($dataArr)) {
+            $result=$ecoping_webservices->saveSMSData($dataArr);
+            //$builder = $db2->table('sms_pool');
+            if ($result) {
                 $status = 'success';
             } else{
                 $status = 'Error:Unable to Insert Records';
@@ -4864,4 +4741,65 @@ if ( ! function_exists('force_download')) {
 		exit;
 	}
 
+}
+
+if (! function_exists('sendMailJioCron')) {
+    function sendMailJioCron($to,$subject,$message,$files=[]) {
+        $payload = json_encode([
+            "providerCode"  => "email",
+            "recipients"    => [
+                "emailAddresses" => 
+                [
+                    "to" => $to
+                ]
+            ],
+            "body"          => $message,
+            "scheduledAt"   => null,
+            "purpose"       => $subject,
+            "subject"       => $subject, 
+            "sender"        => [
+                "name" => "AAP",
+                "emailAddress" => "icmis@sci.nic.in"
+            ],
+            "createdByUser" => [
+                "id"               => env('LIVE_EMAIL_KEY'),
+                "name"             => "AAP",
+                "employeeCode"     => env('LIVE_EMAIL_KEY'),
+                "organizationName" => "AAP"
+            ],
+            "module"        => "AAP",
+            "project"       => "AAP",
+            "files"         => $files
+        ]); 
+        $ch = curl_init();
+        curl_setopt_array($ch,[
+            CURLOPT_URL => env('APP_ENV') == 'production' ? env('NEW_MAIL_SERVER_HOST_JIO_IP'):env('NEW_MAIL_SERVER_HOST_JIO_URL'),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HEADER => 0,
+            CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>"$payload",
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json','Accept: application/json','Authorization: Bearer '.env('LIVE_EMAIL_KEY_JIO_CLOUD')
+            ],
+        ]);
+        $response = curl_exec($ch);
+        if($response === false) {
+            return [
+                'status' =>false,
+                'message'=>curl_error($ch)
+            ];
+        } else {
+            return [
+                'status' =>true,
+                'message'=>$response
+            ];
+        }
+        curl_close($ch);
+    }
 }

@@ -110,9 +110,8 @@
                                                                                                     echo "<a class='btn btn-sm quick-btn text-center'   title=\"List\"  onclick=\"javascript:confirmBeforeList($diary_no);\">Restore</a><br/>";
 
                                                                                                     ?>
-                                                                                                                                <span
-                                                                                                                                    style="color: red; text-align:center; display:block; margin-top:5px;font-weight:bold;">Declined</span>
-                                                                                                                                <?php
+                                                                                                    <span style="display: block; color: red; text-align: center; margin-top: 5px; font-weight: bold;">Declined</span>
+                                                                                                    <?php
                                                                                                 } else {
                                                                                                     if($r->is_fixed!='Y') {
                                                                                                         echo "<input type='checkbox' class='vacationList' name='vacationList' id='vacationList' value='".$r->diary_no. "'>";
@@ -220,7 +219,6 @@
             $("input:checkbox[name=vacationList]:checked").each(function() {
                 allVals.push($(this).val());
             });
-            console.log(allVals);
             noOfCases = allVals.length;
             if (noOfCases < 1) {
                 alert('Please select atleast one Case which need to be Decline');

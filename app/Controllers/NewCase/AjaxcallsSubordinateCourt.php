@@ -175,7 +175,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 $validation_rules = [
                     "cnr" => [
                         "label" => "CNR Number",
-                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Z]{4}[0-9]{12}$/]"
+                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Za-z]{4}[0-9]{12}$/]"
                     ],
                 ];
             }
@@ -232,7 +232,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 $validation_rules = [
                     "cnr" => [
                         "label" => "CNR Number",
-                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Z]{4}[0-9]{12}$/]"
+                        "rules" => "required|trim|exact_length[16]|alpha_numeric|regex_match[/^[A-Za-z]{4}[0-9]{12}$/]"
                     ],
                 ];
             }
@@ -278,7 +278,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
 
                 if(!empty(trim($_POST['cnr']))) 
 
-                    $cino = trim($_POST['cnr']);
+                    $cino = trim(strtoupper($_POST['cnr']));
 
 
                 if ((!empty($high_court_id) && !empty($est_code) && !empty($case_type_id) && !empty($case_number) && !empty($case_year) ) || !empty($cino)) {
@@ -356,7 +356,7 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 }
 
                 if(!empty(trim($_POST['cnr'])))
-                    $cino = trim($_POST['cnr']);
+                    $cino = trim(strtoupper($_POST['cnr']));
 
                 if (isset($cino) && !empty($cino) && strlen($cino)==16) {
                     $case_data = $this->efiling_webservices->getOpenAPICNRSearch($cino);
@@ -687,9 +687,11 @@ class AjaxcallsSubordinateCourt extends BaseController {
                 // pr($$result['policeStation']);
                 if (!empty($result['policeStation']) && count($result['policeStation'])>0 ) {
                     echo '<option value="" selected="true" disabled="disabled"> Select Police Station </option>';
-                    foreach($result['policeStation'] as $dataRes)
-                    {
-                        echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.$dataRes['police_district']), ENT_QUOTES) . '</option>';
+                    if(isset($result['policeStation'])){
+                        foreach($result['policeStation'] as $dataRes)
+                        {
+                            echo '<option  value="' . htmlentities(url_encryption($dataRes['police_station_code'] . '#$' . $dataRes['police_station_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($dataRes['police_station_name'].'-----'.(isset($dataRes['police_district']) ? $dataRes['police_district'] : '')), ENT_QUOTES) . '</option>';
+                        }
                     }
                     echo '<option value="" > Not in List </option>';
 

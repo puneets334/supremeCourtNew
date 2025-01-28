@@ -386,17 +386,19 @@ $routes->match(['GET', 'POST'], 'shcilPayment/paymentCheckStatus', 'ShcilPayment
 
 
 // Appearance Routes  
-$routes->match(['GET', 'POST'], 'advocate/listed_cases', 'Advocate\AdvocateController::listed_cases');
-$routes->match(['GET', 'POST'], 'advocate/modal_appearance', 'Advocate\AdvocateController::modal_appearance');
-$routes->match(['GET', 'POST'], 'advocate/modal_appearance_save', 'Advocate\AdvocateController::modal_appearance_save');
-$routes->match(['GET', 'POST'], 'advocate/confirm_final_submit', 'Advocate\AdvocateController::confirm_final_submit');
-$routes->match(['GET', 'POST'], 'advocate/add_from_case_advocate_master_list', 'Advocate\AdvocateController::add_from_case_advocate_master_list');
-$routes->match(['GET', 'POST'], 'advocate/master_list_submit', 'Advocate\AdvocateController::master_list_submit');
-$routes->match(['GET', 'POST'], 'advocate/remove_advocate', 'Advocate\AdvocateController::remove_advocate');
-$routes->match(['GET', 'POST'], 'advocate/display_appearance_slip', 'Advocate\AdvocateController::display_appearance_slip');
-$routes->match(['GET', 'POST'], 'advocate', 'Advocate\AdvocateController::index');
-$routes->get('advocate/report', 'Advocate\AdvocateController::reportIndex');
-$routes->post('advocate/report', 'Advocate\AdvocateController::appearingReport');
+$routes->match(['GET', 'POST'], 'advocate/listed_cases', 'Appearance\AdvocateController::listed_cases');
+$routes->match(['GET', 'POST'], 'advocate/modal_appearance', 'Appearance\AdvocateController::modal_appearance');
+$routes->match(['GET', 'POST'], 'advocate/modal_appearance_save', 'Appearance\AdvocateController::modal_appearance_save');
+$routes->match(['GET', 'POST'], 'advocate/confirm_final_submit', 'Appearance\AdvocateController::confirm_final_submit');
+$routes->match(['GET', 'POST'], 'advocate/add_from_case_advocate_master_list', 'Appearance\AdvocateController::add_from_case_advocate_master_list');
+$routes->match(['GET', 'POST'], 'advocate/master_list_submit', 'Appearance\AdvocateController::master_list_submit');
+$routes->match(['GET', 'POST'], 'advocate/remove_advocate', 'Appearance\AdvocateController::remove_advocate');
+$routes->match(['GET', 'POST'], 'advocate/display_appearance_slip', 'Appearance\AdvocateController::display_appearance_slip');
+$routes->match(['GET', 'POST'], 'advocate', 'Appearance\AdvocateController::index');
+$routes->get('advocate/report', 'Appearance\AdvocateController::reportIndex');
+$routes->post('advocate/report', 'Appearance\AdvocateController::appearingReport');
+$routes->match(['GET', 'POST'], 'appearance_report', 'Appearance\AppearanceController::appearance_report');
+$routes->get('appearance_report_mail', 'Appearance\AppearanceController::send_report_mail');
 
 // cron routes
 $routes->match(['GET', 'POST'], 'cron/bar/', 'Cron\Bar::index');  
@@ -479,3 +481,6 @@ $routes->match(['GET', 'POST'], 'add/clerk/update_clerk', 'Clerks\ClerkControlle
 //new implemented code route
 $routes->match(['GET', 'POST'], 'efilingAction/IAMiscDocsRefiledFinalSubmit', 'efilingAction\IAMiscDocsRefiledFinalSubmit::index');
 $routes->match(['GET', 'POST'], 'Api/Cases/get_list_doc_cases_efiled', 'Api\Cases::get_list_doc_cases_efiled');
+
+$routes->match(['GET', 'POST'], 'Api/getAdvocateConsent', 'Api::getAdvocateConsent');
+$routes->match(['GET', 'POST'], 'admin/EfilingAction/newcase/FeeVerifyLock_Controller/feeVeryLock', 'NewCase\FeeVerifyLock_Controller::feeVeryLock');

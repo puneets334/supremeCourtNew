@@ -42,21 +42,20 @@ $star_requered = '<span style="color: red">*</span>'; ?>
                         <?php echo "<div style='color:green; border: 2px solid green; background-color: #d4edda; padding: 10px; margin: 10px 0; font-weight: bold;'>" . $session->getFlashData('msg') . "</div>";
  ?> 
                     </div>
-                    <?php }else{ ?>
-                    <div class="text-danger">
-                        <b><?php echo $session->getFlashData('msg'); ?></b>
-                    </div>
+                    <?php } else { ?>
+                        <div class="text-danger">
+                            <b><?php echo $session->getFlashData('msg'); ?></b>
+                        </div>
                     <?php } ?>
                     <div class="httxt">
                         <h4>Verify Your Self</h4>
                     </div>
                     <div class="loin-form">
                         <?php
-                            $attribute = array('class' => 'uk-form-horizontal uk-margin-large', 'name' => 'advocate_reg_info', 'id' => 'advocate_reg_info', 'autocomplete' => 'off', 'enctype' => "multipart/form-data");
-                            echo form_open('register/AdvSignUp/upload_id_proof', $attribute);
+                        $attribute = array('class' => 'uk-form-horizontal uk-margin-large', 'name' => 'advocate_reg_info', 'id' => 'advocate_reg_info', 'autocomplete' => 'off', 'enctype' => "multipart/form-data");
+                        echo form_open('register/AdvSignUp/upload_id_proof', $attribute);
                         ?>
-                            <input type="text" style="display: none" name="_token" value="{{ csrf_token() }}">
-
+                            <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
                             <div class="row">
                                 <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">
