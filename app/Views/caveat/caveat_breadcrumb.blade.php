@@ -688,7 +688,6 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
         </div>
     <!-- </div>
 </div> -->
-@push('script')
 <!-- getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN -->        
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
@@ -1220,4 +1219,3 @@ if((!empty(getSessionData('efiling_details')['stage_id']) && getSessionData('efi
         }
     }
 </script>
-@endpush
