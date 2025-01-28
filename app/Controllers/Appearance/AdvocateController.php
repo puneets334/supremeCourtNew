@@ -1,84 +1,80 @@
 <?php
 
-namespace App\Controllers\Advocate;
+namespace App\Controllers\Appearance;
+
 use App\Controllers\BaseController;
 use CodeIgniter\Database\Query;
-use App\Models\Advocate\AdvocateModel;
+use App\Models\Appearance\AdvocateModel;
 use Config\Database;
-// use App\Models\AdminDashboard\AdminDashboardModel;
 
 class AdvocateController extends BaseController
 {
-    // protected $AdminReportModel;    
+    
     protected $AdvocateModel;
+    protected $advocateModel;
     protected $db;
     protected $session;
     protected $request;
     protected $validation;
-    protected $e_services;    
+    protected $e_services;
+
     public function __construct()
     {
         parent::__construct();
-        $this->AdvocateModel = new AdvocateModel();            
+        $this->AdvocateModel = new AdvocateModel();
+        $this->advocateModel = new AdvocateModel();            
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
         $this->e_services = \Config\Database::connect('e_services');
-        if(empty(getSessionData('login'))){
+        if(empty(getSessionData('login'))) {
             return response()->redirect(base_url('/')); 
-        }else{
+        } else {
             is_user_status();
         }
     }
 
-    public function index()
-    {
-        if(empty(getSessionData('login'))){
+    public function index() {
+        if(empty(getSessionData('login'))) {
             return response()->redirect(base_url('/')); 
-        }else{
+        } else {
             is_user_status();
         }
-        // $model = new AdvocateModel();
     }
 
     public function listed_cases() {
         if(empty(getSessionData('login'))){
             return response()->redirect(base_url('/')); 
-        }else{
+        } else {
             is_user_status();
         }
         $pager = \Config\Services::pager();
         $aor_code='';
-        if(!empty(getSessionData('login')['aor_code'])){
+        if(!empty(getSessionData('login')['aor_code'])) {
             $aor_code=getSessionData('login')['aor_code'];
             $list= $this->AdvocateModel->getListedCases($aor_code);
             $data['heading'] = 'CAUSE LIST';
-            return $this->render('advocate.listed_cases', @compact('data','list'));
+            return $this->render('appearance.listed_cases', @compact('data','list'));
         } else {
             return redirect()->to(base_url('/'));
             exit(0);
         }
     }
 
-    public function modal_appearance()
-    {
+    public function modal_appearance() {
         $posted_data = $this->request->getPost();
         $data['added_data'] = $this->AdvocateModel->getAddedAdvocatesInDiary($posted_data);
         $data['is_submitted'] = $this->AdvocateModel->getSubmittedAdvocatesInDiary($posted_data);
-        return $this->render('advocate.modal_appearance', @compact('data','posted_data','added_data'));        
+        return $this->render('appearance.modal_appearance', @compact('data','posted_data','added_data'));        
     }
 
-    public function display_appearance_slip() 
-    {
+    public function display_appearance_slip() {
         $posted_data = $this->request->getPost();     
         $data['slip_data'] = $this->AdvocateModel->getSubmittedAdvocatesInDiary($posted_data);
-        return $this->render('advocate.display_appearance_slip', @compact('data','posted_data','slip_data'));
+        return $this->render('appearance.display_appearance_slip', @compact('data','posted_data','slip_data'));
     }
 
-
-
-    public function modal_appearance_save() 
-    {
+    public function modal_appearance_save() {
         $postData = $this->request->getPost();
         $request = service('request');
         $session = session();
@@ -108,7 +104,6 @@ class AdvocateController extends BaseController
                 ]
             ],
         ];
-        // Validate request data          
         $this->validation->setRules($rules);
         if (!$this->validation->withRequest($request)->run()) {
             return $this->response->setJSON(['status' => 'error', 'data' => $this->validation->getErrors()]);
@@ -125,41 +120,34 @@ class AdvocateController extends BaseController
             'aor_code' => $aor_code
         ];
         $currentDiaryNo = $session->get('diary_no');
-        $appearPriority = $session->get('appear_priority', 1); // Default to 1 if not set
+        $appearPriority = $session->get('appear_priority', 1);
         if ($currentDiaryNo) {
             if ($currentDiaryNo == $request->getPost('diary_no')) {
-                // Increment priority if diary_no matches
                 $session->set('appear_priority', $appearPriority + 1);
             } else {
-                // Update diary_no and reset priority
                 $session->set('diary_no', $request->getPost('diary_no'));
                 $session->set('appear_priority', 1);
             }
         } else {
-            // Set diary_no and initialize priority
             $session->set('diary_no', $request->getPost('diary_no'));
             $session->set('appear_priority', 1);
         }
         $data['priority'] = $session->get('appear_priority');
         $builder = $this->e_services->table('appearing_in_diary');
-        // $builder->set($data);
-        // $sql = $builder->getCompiledInsert();
         $builder->insert($data);
-        $insertID = $this->e_services->insertID(); // Get the ID of the inserted row             
+        $insertID = $this->e_services->insertID();
         $data['entry_time'] = date('d-m-Y h:i:s A');
         $data['id'] = $insertID;
         if ($insertID) {
             return $this->response->setJSON(['status' => 'success', 'data' => $data]);
         } else {
             return $this->response->setJSON(['status' => 'error', 'data' => 'Insert failed']);
-        }        
-        // return response()->json(array('status' => 'error','data' => $validator->errors()->all())) ;
+        }
         return $this->response->setJSON(['status' => 'error', 'data' => $e->getMessage()]);
     }
 
     public function remove_advocate() {
         $request = service('request');
-
         $timeoutValidation = $this->timeoutValidation($request->getPost('next_dt'));
         if ($timeoutValidation) {
             return $this->response->setJSON(['status' => 'timeout']);
@@ -197,25 +185,14 @@ class AdvocateController extends BaseController
         }
     }
 
-    public function reportIndex() 
-    {
+    public function reportIndex() {
         $data['heading'] = "Advocates Appearing";
-        return $this->render('advocate.report', @compact('data'));
+        return $this->render('appearance.report', @compact('data'));
     }
 
     public function appearingReport() {
         $request = service('request');
-
         $heading = "Advocates Appearing";
-        // $request->validate(
-        //     [
-        //         'cause_list_date' => 'date|date_format:d-m-Y'
-        //     ], [
-        //     'required_if' => 'The :attribute field is required.'
-        // ], [
-        //         'cause_list_date' => 'Cause List Date'
-        //     ]
-        // );
         $cause_list_date = date('Y-m-d', strtotime($this->request->getPost('cause_list_date')));
         $cause_list_array = array();
         $cause_list= $this->AdvocateModel->getAppearingDiaryNosOnly($cause_list_date);
@@ -230,7 +207,7 @@ class AdvocateController extends BaseController
         }
         $cause_list_date = $this->request->getPost('cause_list_date');
         $list = $cause_list_array;
-        return $this->render('advocate.report', @compact('heading','cause_list_date','list'));
+        return $this->render('appearance.report', @compact('heading','cause_list_date','list'));
     }   
 
     public function confirm_final_submit() {
@@ -283,30 +260,23 @@ class AdvocateController extends BaseController
         $request = service('request');
         $data = $this->request->getPost();
         $previous_list_date= $this->AdvocateModel->getPreviousListingDate($data);
-        if($previous_list_date){
+        if($previous_list_date) {
             $previous_list_advocates= $this->AdvocateModel->getPreviousListAdvocates($data,$previous_list_date);
-        }
-        else{
+        } else {
             $previous_list_advocates = "";
         }
-        return $this->render('advocate.master_advocates_page', @compact('data','previous_list_advocates'));
+        return $this->render('appearance.master_advocates_page', @compact('data','previous_list_advocates'));
     }
 
-    public function master_list_submit() 
-    {
+    public function master_list_submit() {
         $request = service('request');
-
-        // Timeout validation
         $timeoutValidation = $this->timeout_validation($request->getPost('next_dt'));
         if ($timeoutValidation) {
             return $this->response->setJSON('timeout');
         }
-
         $data = $request->getPost('array');
-        $advocateModel = new AdvocateModel();
-        $a = $advocateModel->getAdvocateMasterList($data);        
+        $a = $this->advocateModel->getAdvocateMasterList($data);        
         $display = [];
-
         foreach ($a as $a_value) {
             $insert = [
                 'diary_no'        => $request->getPost('diary_no'),
@@ -319,9 +289,7 @@ class AdvocateController extends BaseController
                 'advocate_name'  => $a_value->advocate_name,
                 'aor_code'       => session()->get('aor_code')
             ];
-
             $session = session();
-
             if ($session->has('diary_no')) {
                 if ($session->get('diary_no') == $request->getPost('diary_no')) {
                     $session->set('appear_priority', $session->get('appear_priority') + 1);
@@ -333,13 +301,9 @@ class AdvocateController extends BaseController
                 $session->set('diary_no', $request->getPost('diary_no'));
                 $session->set('appear_priority', 1);
             }
-
             $insert['priority'] = $session->get('appear_priority');
-            $db3 = \Config\Database::connect('e_services'); 
-            $session = \Config\Services::session();
-            $builder = $db3->table('appearing_in_diary');
+            $builder = $this->e_services->table('appearing_in_diary');
             $value = $builder->insert($insert, true);
-
             $display[] = [
                 'id'             => $value,
                 'next_dt'        => $request->getPost('next_dt'),
@@ -349,13 +313,10 @@ class AdvocateController extends BaseController
                 'entry_time'     => date('d-m-Y h:i:s A')
             ];
         }
-
         return $this->response->setJSON($display);
     }  
 
-    public function timeout_validation($list_date) 
-    {
-        // Directly use the constants
+    public function timeout_validation($list_date) {
         if ($list_date == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME) {
             return true;
         } else {
@@ -363,10 +324,7 @@ class AdvocateController extends BaseController
         }
     }
 
-
-
-    public function timeoutValidation($listDate) 
-    {
+    public function timeoutValidation($listDate) {
         $currentDate = CURRENT_DATE;
         $appearanceAllowTime = APPEARANCE_ALLOW_TIME;
         if ($listDate == $currentDate && date('H:i:s') > $appearanceAllowTime) {

@@ -46,7 +46,7 @@
                                                             <label for="inputPassword6" class="col-form-label" style="position:relative; top:-8px !important;">List Date</label>
                                                         </div>
                                                         <div class="col-12 pe-0">
-                                                            <input class="form-control cus-form-ctrl datepick" id="cause_list_date" name="cause_list_date" placeholder="MM-DD-YYYY" type="text" value="<?php echo isset($cause_list_date) ? $cause_list_date : NULL; ?>" required />
+                                                            <input class="form-control cus-form-ctrl datepick" id="cause_list_date" name="cause_list_date" placeholder="MM/DD/YYYY" type="text" value="<?php echo isset($cause_list_date) ? $cause_list_date : NULL; ?>" required />
                                                         </div>
                                                     </div>
                                                 </div>

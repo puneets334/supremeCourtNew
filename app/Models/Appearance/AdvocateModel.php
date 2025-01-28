@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Advocate;
+namespace App\Models\Appearance;
 use CodeIgniter\Model;
 use Config\Database;
 use Config\Services;
