@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Advocate;
+namespace App\Models\Appearance;
 use CodeIgniter\Model;
 use Config\Database;
 use Config\Services;
@@ -28,8 +28,8 @@ class AdvocateModel extends Model {
             ->join('master.bar as b', 'b.bar_id = a.advocate_id')
             ->select('m.diary_no, m.reg_no_display, m.pet_name, m.res_name, h.next_dt, h.brd_slno, h.main_supp_flag, a.pet_res, r.courtno, m.pno, m.rno')
             ->where('b.aor_code', $aor_code)
-            ->where('m.c_status', 'P')
-            // ->where('h.next_dt >=', date('Y-m-d'))
+            ->whereIn('m.c_status', ['P','D'])
+            ->where('h.next_dt >=', date('Y-m-d'))
             ->where('c.display', 'Y')
             ->where('r.display', 'Y')
             ->where('a.display', 'Y')
