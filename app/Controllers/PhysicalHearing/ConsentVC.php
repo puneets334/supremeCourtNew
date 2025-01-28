@@ -41,8 +41,8 @@ class ConsentVC extends BaseController
         }
         $aor_code = getSessionData('login.aor_code');
 		$physical_hearing_data=array();
-		// $physical_hearing_data = json_decode(file_get_contents('http://10.40.186.150:88/Physicalhearing/get_case_details?aor_code='.$aor_code.'&court='.$court));
-		$physical_hearing_data = json_decode(file_get_contents(ICMIS_SERVICE_URL.'/Physicalhearing/get_case_details/?aor_code='.$aor_code.'&court='.$court));
+		$physical_hearing_data = json_decode(file_get_contents('http://10.40.186.150:88/Physicalhearing/get_case_details?aor_code='.$aor_code.'&court='.$court));
+		// $physical_hearing_data = json_decode(file_get_contents(ICMIS_SERVICE_URL.'/Physicalhearing/get_case_details/?aor_code='.$aor_code.'&court='.$court));
 		if (isset($physical_hearing_data) && !empty($physical_hearing_data)) {
             if (isset($physical_hearing_data) && !empty($physical_hearing_data) && isset($physical_hearing_data->physical_hearing) && !empty($physical_hearing_data->physical_hearing) && $physical_hearing_data->physical_hearing->status=='Y') {
                 $data = array();
