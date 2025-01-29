@@ -221,24 +221,22 @@ class AdvocateController extends BaseController
         $myValue = array();
         parse_str($box['array_id'], $myValue);
         $total_updated = 0;
-        if(!empty($myValue)) {
-            foreach ($myValue['sortable_id'] as $key => $value) {
-                $update['priority'] = $key;
-                $update['is_submitted'] = '1';
-                $builder = $this->e_services->table('appearing_in_diary');  
-                $result = $builder->where('id', $value)->where('is_active', '1')->update($update);
-                unset($update);
-                if ($result) {
-                    $total_updated += 1;
-                }
+        foreach ($myValue['sortable_id'] as $key => $value) {
+            $update['priority'] = $key;
+            $update['is_submitted'] = '1';
+            $builder = $this->e_services->table('appearing_in_diary');  
+            $result = $builder->where('id', $value)->where('is_active', '1')->update($update);
+            unset($update);
+            if ($result) {
+                $total_updated += 1;
             }
         }
         if ($total_updated > 0) {
-            if(getSessionData('login.mobile_number')) {
+            if(session('mobile')) {
                 $case_no_exploded_in = explode("IN", strtoupper($box['case_no']));
                 $sms_data['sms_content'] = "The appearance slip for case no. ".$case_no_exploded_in[0]." submitted by you on ".date('d-m-Y')." time ".date('h:i:s a')." is forwarded to court master of court room no. ".$box['courtno'].". -Supreme Court of India.";
-                $sms_data['mobile_no'] = getSessionData('login.mobile_number');
-                $sms_data['template_id'] = SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED;
+                $sms_data['mobile_no'] = session('mobile');
+                $sms_data['template_id'] = config("constants.SMS_TEMPLATE_APPEARANCE_SLIP_SUBMITTED");
 			    sendSMS(38, $sms_data['mobile_no'], $sms_data['sms_content'], $sms_data['template_id']);
             }
             return $this->response->setJSON([

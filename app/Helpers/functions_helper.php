@@ -1,5 +1,8 @@
 <?php
-
+//echo APPPATH;
+//die;
+//require_once '/opt/supremeCourtNew/app/ThirdParty/eSign/XMLSecurityDSig.php';
+use App\ThirdParty\eSign\XMLSecurityDSig;
 use App\Models\Affirmation\AffirmationModel;
 use App\Models\AppearingFor\AppearingForModel;
 use \App\Models\Common\CommonModel;
@@ -15,6 +18,8 @@ helper('view');
 use eftec\bladeone\BladeOne;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Libraries\webservices\Ecoping_webservices;
+use App\ThirdParty\eSign\XMLSecurityKey;
+
 if (!function_exists('pr')) {
     function pr($request)
     {
@@ -3392,27 +3397,10 @@ function message_show($type, $msg) {
 }
 
 function article_tracking_offline($articlenumber){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('post_tracking');
-    $builder->select('office, event_type, event_date, event_time');
-    $builder->where('barcode', $articlenumber);
-    $builder->orderBy('event_date','asc');
-    $builder->orderBy('event_time','asc');
-    $query = $builder->get();
-    if ($query->getNumRows() > 0){
-        $status = 'success';
-        $rows = array();
-        $selected_data = $query->getResultArray();
-        foreach($selected_data as $r) {
-            $rows[] = $r;   
-        }
-    }
-    else{
-        $status = 'Consignment Number Not Found.';
-        $rows = array();
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->articleTrackingOffline($articlenumber);
     //return $rate;
-    return json_encode(array("Status" => $status, "DataValue" => $rows));
+    return $result;
 }
 
 function getCopySearchResult($row){
@@ -3431,9 +3419,8 @@ function getCopyStatusResult($row,$asset_type_flag){
 
 function getCopyBarcode($row){
     $ecoping_webservices=new Ecoping_webservices();
-    $result=$ecoping_webservices->getCopyStatusResult($row['id']);
-
-    return $result;
+    $result=$ecoping_webservices->getCopyBarcode($row['id']);
+    return $result; 
 }
 
 function getCopyApplication($row){
@@ -3456,460 +3443,120 @@ function copyFormSentOn($row){
 }
 
 function eCopyingGetDiaryNo($ct, $cn, $cy){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $results = [];
-    $builder = $db2->table('public.main');
-
-    $builder->select("SUBSTRING(diary_no, 1, LENGTH(diary_no) - 4) AS dn, SUBSTRING(diary_no, -4) AS dy")
-        ->where("SUBSTRING_INDEX(fil_no, '-', 1) =", $ct)
-        ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(fil_no, '-', 2), '-', -1) AND SUBSTRING_INDEX(fil_no, '-', -1)")
-        ->where("(IF(reg_year_mh = 0 OR DATE(fil_dt) > DATE('2017-05-10'), 
-                    YEAR(fil_dt) = {$cy}, 
-                    reg_year_mh = {$cy}))");
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            // echo "<pre>Error: " . $error['message'] . "</pre>";
-            $result = [];
-        } else {
-            $result = $query->getRow();
-        }
-        return $result;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetDiaryNo($ct,$cn,$cy);
+    
+    return $result;   
 }
 
 function eCopyingCheckDiaryNo($ct, $cn, $cy){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $builder = $db2->table('public.main_casetype_history h');
-
-
-    $builder->select("SUBSTRING(h.diary_no, 1, LENGTH(h.diary_no) - 4) AS dn, SUBSTRING(h.diary_no, -4) AS dy, IF(h.new_registration_number != '',  SUBSTRING_INDEX(h.new_registration_number, '-', 1), '') AS ct1, IF(h.new_registration_number != '', SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1), '') AS crf1, IF(h.new_registration_number != '', SUBSTRING_INDEX(h.new_registration_number, '-', -1), '') AS crl1")
-        ->groupStart()
-            ->where("SUBSTRING_INDEX(h.new_registration_number, '-', 1) =", $ct)
-            ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(h.new_registration_number, '-', 2), '-', -1) AND SUBSTRING_INDEX(h.new_registration_number, '-', -1)")
-            ->where("h.new_registration_year", $cy)
-        ->groupEnd()
-        ->groupStart()
-            ->where("SUBSTRING_INDEX(h.old_registration_number, '-', 1) =", $ct)
-            ->where("CAST({$cn} AS UNSIGNED) BETWEEN SUBSTRING_INDEX(SUBSTRING_INDEX(h.old_registration_number, '-', 2), '-', -1) AND SUBSTRING_INDEX(h.old_registration_number, '-', -1)")
-            ->where("h.old_registration_year", $cy)
-            ->where("h.is_deleted", 't')
-        ->groupEnd()
-        ->where("h.is_deleted", 'f');
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            // echo "<pre>Error: " . $error['message'] . "</pre>";
-            $result = [];
-        } else {
-            $result = $query->getResult();
-        }
-        return $result;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingCheckDiaryNo($ct,$cn,$cy);
+    return $result;
 }
 
 function eCopyingGetFileDetails($diary_no){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $builder = $db2->table('public.main a');
+    
 
-    $results = $builder->select('a.diary_no, reg_no_display, pet_name, res_name, pno, rno, c_status, a.conn_key AS main_case')
-        ->where('diary_no', $diary_no)
-        ->where('diary_no >', 0)
-        ->get()
-        ->getResult();
-
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetFileDetails($diary_no);
+    return $result;
 }
 
 function getStatementVideo($mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets u');
-
-    $results = $builder->select('u.id')
-        ->where('u.mobile', $mobile)
-        ->where('u.email', $email)
-        ->where('u.asset_type', 3)
-        ->orderBy('ent_time', 'DESC')
-        ->limit(1)
-        ->get()
-        ->getRow();
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getStatementVideo($mobile, $email);
+    return $result;
 }
 
 function getStatementImage($mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets u');
-
-    $results = $builder->select('u.id')
-        ->where('u.mobile', $mobile)
-        ->where('u.email', $email)
-        ->where('u.asset_type', 2)
-        ->orderBy('ent_time', 'DESC')
-        ->limit(1)
-        ->get()
-        ->getRow();
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getStatementImage($mobile, $email);
+    return $result;
 }
 
 function getStatementIdProof($mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets u');
-
-    $results = $builder->select('u.id')
-        ->where('u.mobile', $mobile)
-        ->where('u.email', $email)
-        ->where('u.asset_type', 1)
-        ->orderBy('ent_time', 'DESC')
-        ->limit(1)
-        ->get()
-        ->getRow();
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getStatementIdProof($mobile, $email);
+    return $result;
 }
 
 function eCopyingStatementCheck($mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets u');
-
-    $builder->select('id')
-        ->where('mobile', $mobile)
-        ->where('email', $email)
-        ->where('diary_no !=', 0)
-        ->where('DATE(ent_time) = CURDATE()', null, false);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            // echo "<pre>Error: " . $error['message'] . "</pre>";
-            $results = [];
-        } else {
-            $results = $query->getResult();
-        }
-        return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingStatementCheck($mobile, $email);
+    return $result;
 }
 
 
 function eCopyingCheckMaxDigitalRequest($mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_online');
-
-    $builder->select('id')
-        ->where('allowed_request', 'digital_copy')
-        ->where('mobile', $mobile)
-        ->where('email', $email)
-        ->where('DATE(application_receipt) = CURDATE()', null, false);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            // echo "<pre>Error: " . $error['message'] . "</pre>";
-            $results = [];
-        } else {
-            $results = $query->getResult();
-        }
-        return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingCheckMaxDigitalRequest($mobile, $email);
+    return $result;
 }
 
 function eCopyingCopyStatus($diary_no, $check_asset_type, $mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets');
-
-    $results = $builder->select('asset_type, verify_status, verify_remark')
-        ->where('diary_no', $diary_no)
-        ->where('asset_type', $check_asset_type)
-        ->where('mobile', $mobile)
-        ->where('email', $email)
-        ->orderBy('ent_time', 'DESC')
-        ->limit(1);
-        $query = $builder->get();
-        if ($query === false) {
-            $error = $db2->error();
-            // echo "<pre>Error: " . $error['message'] . "</pre>";
-            $results = [];
-        } else {
-            $results = $query->getRow();
-        }
-        return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingCopyStatus($diary_no, $check_asset_type, $mobile, $email);
+    return $result;
 }
 
 function eCopyingGetBar($diary_no, $mobile){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $builder = $db2->table('public.advocate adv');
-
-    $results = $builder->select('bar.bar_id')
-    ->join('master.bar bar', 'adv.advocate_id = bar.bar_id', 'inner')
-    ->where('adv.diary_no', $diary_no)
-    ->where('bar.mobile', $mobile)
-    ->where('adv.display', 'Y')
-    ->where('bar.if_aor', 'Y')
-    ->where('bar.isdead', 'N')
-    ->limit(1)
-    ->get()
-    ->getRow();
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetBar($diary_no, $mobile);
+    return $result;
 }
 
 function getBailApplied($diary_no, $mobile, $email)
 {
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_online a');
-
-    $results = $builder->select('b.is_bail_order')
-        ->join('copying_application_documents_online b', 'b.copying_order_issuing_application_id = a.id', 'inner')
-        ->where('b.is_bail_order', 'Y')
-        ->where('a.mobile', $mobile)
-        ->where('a.email', $email)
-        ->where('a.diary', $diary_no)
-        ->get()
-        ->getRow();
-    if(!empty($results)){
-        $bail = 'YES';
-    }
-    else{
-        $bail = 'NO';
-    }
-    return $bail;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetBar($diary_no, $mobile, $email);
+    return $result;
 }
 
 function eCopyingGetCopyDetails($condition, $third_party_sub_qry, $OLD_ROP){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $builder1 = $db2->table('public.copying_request_verify u');
-    $builder1->select('vd.path as pdfname, CAST("vd"."order_date" AS DATE) AS "orderdate", 0 as s, ot.order_type as judgement_order, ot.id as judgement_order_code, vd.order_type_remark, vd.fee_clc_for_certification_no_doc, vd.fee_clc_for_certification_pages, vd.fee_clc_for_uncertification_no_doc, vd.fee_clc_for_uncertification_pages');
-    $builder1->join('public.copying_request_verify_documents vd', 'u.id = vd.copying_order_issuing_application_id', 'inner');
-    $builder1->join('master.ref_order_type ot', 'ot.id = vd.order_type', 'inner');
-    $builder1->where("u.diary IN ($condition)");
-    if ($third_party_sub_qry) {
-        $builder1->where($third_party_sub_qry, null, false);
-    }
-    $builder1->where('u.application_status !=', 'P');
-    $builder1->where('vd.request_status', 'D');
-    $builder1->where('vd.path !=', '');
-    $builder1->where('vd.path IS NOT NULL', null, false);
-    $builder1->where('ot.is_deleted', 'f');
-    $builder1->where('u.allowed_request', 'request_to_available');
-    $sql1 = $builder1->getCompiledSelect();
-
-    $builder2 = $db2->table('public.ordernet');
-    $builder2->select("pdfname, CAST(\"orderdate\" AS DATE) AS \"orderdate\", '1' as s, CASE WHEN type = 'O' THEN 'Record of Proceedings' WHEN type = 'J' THEN 'Judgement' END as judgement_order, CASE WHEN type = 'O' THEN 1 WHEN type = 'J' THEN 3 END as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
-    $builder2->where("DATE(orderdate) >", '2014-05-31');
-    $builder2->where("diary_no IN ($condition)");
-    $builder2->where('display', 'Y');
-    $sql2 = $builder2->getCompiledSelect();
-
-    $builder3 = $db2->table('public.tempo');
-    $builder3->select("jm as pdfname, CAST(\"dated\" AS DATE) AS \"orderdate\", '2' as s, CASE WHEN jt = 'rop' THEN 'Record of Proceedings' WHEN jt = 'judgment' THEN 'Judgement' END as judgement_order, CASE WHEN jt = 'rop' THEN 1 WHEN jt = 'judgment' THEN 3 END as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
-    $builder3->where("DATE(dated) >", '2014-05-31');
-    $builder3->where("diary_no IN ($condition)");
-    $builder3->where("(jt = 'rop' OR jt = 'judgment')");
-    $sql3 = $builder3->getCompiledSelect();
-
-
-    // $builder4 = $db2->table("$OLD_ROP.old_rop");
-    // $builder4->select("CONCAT('ropor/rop/all/', pno, '.pdf') as pdfname, orderDate as orderdate, '3' as s, 'Record of Proceedings' as judgement_order, '1' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
-    // $builder4->where("DATE(orderDate) >", '2014-05-31');
-    // $builder4->where("dn IN ($condition)");
-    // $sql4 = $builder4->getCompiledSelect();
-
-
-    $builder5 = $db2->table('public.scordermain');
-    $builder5->select("CONCAT('judis/', filename, '.pdf') as pdfname, CAST(\"juddate\" AS DATE) AS \"orderdate\", '4' as s, 'Judgement' as judgement_order, '3' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
-    $builder5->where("DATE(juddate) >", '2014-05-31');
-    $builder5->where("dn IN ($condition)");
-    $sql5 = $builder5->getCompiledSelect();
-
-
-    /*$builder6 = $db2->table("$OLD_ROP.ordertext");
-    $builder6->select("CONCAT('bosir/orderpdf/', pno, '.pdf') as pdfname, orderdate as orderdate, '5' as s, 'Record of Proceedings' as judgement_order, '1' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
-    $builder6->where("DATE(orderdate) >", '2014-05-31');
-    $builder6->where("dn IN ($condition)");
-    $sql6 = $builder6->getCompiledSelect();
-
-
-    $builder7 = $db2->table("$OLD_ROP.oldordtext");
-    $builder7->select("CONCAT('bosir/orderpdfold/', pno, '.pdf') as pdfname, orderdate as orderdate, '6' as s, 'Record of Proceedings' as judgement_order, '1' as judgement_order_code, null as order_type_remark, null as fee_clc_for_certification_no_doc, null as fee_clc_for_certification_pages, null as fee_clc_for_uncertification_no_doc, null as fee_clc_for_uncertification_pages");
-    $builder7->where("DATE(orderdate) >", '2014-05-31');
-    $builder7->where("dn IN ($condition)");
-    $sql7 = $builder7->getCompiledSelect();*/
-
-    $sql = "
-        SELECT * FROM (
-            $sql1
-            UNION ALL
-            $sql2
-            UNION ALL
-            $sql3
-            
-            UNION ALL
-            $sql5
-            
-        ) zz
-        ORDER BY orderdate
-    ";
-/*UNION ALL
-            $sql4
-UNION ALL
-            $sql6
-            UNION All
-            $sql7*/
-    try {
-        // pr($sql);
-        $query = $db2->query($sql);
-        $results = $query->getResultArray();
-    } catch (\Exception $e) {
-        // Handle exceptions
-        echo $e->getMessage();
-        $results = [];
-    }
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetCopyDetails($condition, $third_party_sub_qry, $OLD_ROP);
+    
+    return $result;
 }
 
 function eCopyingGetGroupConcat($main_case){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $db2->query("SET SESSION group_concat_max_len = 10000000000");
-    $builder = $db2->table('public.main');
-        $builder->select('GROUP_CONCAT(diary_no) AS conn_list');
-        $builder->where('conn_key', $main_case);
-
-        // Execute the query
-        $query = $builder->get();
-        $result = $query->getRowArray();
-        return $result;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetGroupConcat($main_case);
+    return $result;
 }
 
 function getIsPreviuslyApplied($copy_category, $diary_no, $mobile, $email, $order_type, $order_date)
 {
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    // $builder = $db2->table('copying_application_online a');
-    //     $builder->join('copying_application_documents_online b', 'a.id = b.copying_order_issuing_application_id', 'inner');
-    //     $builder->join('ref_order_type c', 'c.id = b.order_type', 'inner');
-    //     $builder->where('a.copy_category', $copy_category);
-    //     $builder->where('a.mobile', $mobile);
-    //     $builder->where('a.email', $email);
-    //     $builder->where('a.diary', $diary_no);
-    //     $builder->where('b.order_type', $order_type);
-        
-    //     // Custom condition for mandate_date_of_order_type
-    //     $builder->groupStart();
-    //     $builder->where('IF(c.mandate_date_of_order_type = \'Y\', DATE(b.order_date) = \'' . $order_date . '\', 1=1)', null, false);
-    //     $builder->groupEnd();
-    //     $sql = $builder->getCompiledSelect();
-    //     pr($sql);
-    //     // Execute the query
-    //     $query = $builder->get();
-    //     $results = $query->getResultArray();
-
-    $builder = $db2->table('copying_application_online a');
-    $builder->select('*');
-    $builder->join('copying_application_documents_online b', 'a.id = b.copying_order_issuing_application_id');
-    $builder->join('ref_order_type c', 'c.id = b.order_type');
-
-    $builder->where('a.copy_category', $copy_category);
-    $builder->where('a.mobile', $mobile);
-    $builder->where('a.email', $email);
-    $builder->where('a.diary', $diary_no);
-    $builder->where('b.order_type', $order_type);
-
-    // Custom conditional logic
-    $builder->groupStart()
-            ->where('c.mandate_date_of_order_type', 'Y')
-            ->where('DATE(b.order_date)', $order_date)
-            ->groupEnd()
-            ->orGroupStart()
-            ->where('c.mandate_date_of_order_type !=', 'Y')
-            ->groupEnd();
-            // $sql = $builder->getCompiledSelect();
-            //     pr($sql);
-    $query = $builder->get();
-    $result = $query->getResult();
-    if(count($result) > 0){
-        $result = 'YES';
-    }
-    else{
-        $result = 'NO';
-    }
-    return $result;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getIsPreviuslyApplied($copy_category, $diary_no, $mobile, $email, $order_type, $order_date);
+    return $result;   
 }
 
 function getUserAddress($mobile, $email)
 {
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_address');
-    
-    $builder->where('mobile', $mobile);
-    $builder->where('email', $email);
-    $builder->where('is_active', 'Y');
-    
-    $query = $builder->get();
-    
-    // Fetch the results
-    $results = $query->getResultArray();
-    
-    // Return or use the results as needed
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getUserAddress($mobile, $email);
+    return $result;
 }
 
 function eCopyingOtpVerification($email){
-    // $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    // $builder = $db2->table('verify_email');
-    // $builder->where('email', $email);
-    // $builder->where('CURDATE() = DATE(ent_dt)', null, false); // `null` for no value, `false` to disable escaping
-    // $builder->orderBy('id','DESC');
-    // $query = $builder->get();
     
-    // $query = $builder->get();
-    // if ($query === false) {
-    //     $error = $db2->error();
-    //     // echo "<pre>Error: " . $error['message'] . "</pre>";
-    //     $result = [];
-    // } else {
-    //     $result = $query->getRow();
-    // }
-    // return $result;
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('verify_email');
-    $builder->where('email', $email);
-    // $builder->where('ent_dt', date('Y-m-d'), null, false); // Direct comparison to current date
-    $builder->orderBy('id', 'DESC');
-    $query = $builder->get();
-    if ($query === false) {
-        $error = $db2->error();
-        // echo "<pre>Error: " . $error['message'] . "</pre>";
-        $result = [];
-    } else {
-        $result = $query->getRow();
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingOtpVerification($email);
     return $result;
 }
 
 function eCopyingGetBarDetails($bar_id){
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $builder = $db2->table('master.bar');
-    
-    $builder->select('name, email, mobile, aor_code, bar_id');
-    $builder->where('LENGTH(mobile)', 10, false); // `false` to disable escaping
-    $builder->where('if_aor', 'Y');
-    $builder->where('isdead', 'N');
-    $builder->where('bar_id', $bar_id);
-    $builder->limit(1);
-    $query = $builder->get();
-    $query = $builder->get();
-    if ($query === false) {
-        $error = $db2->error();
-        // echo "<pre>Error: " . $error['message'] . "</pre>";
-        $result = [];
-    } else {
-        $result = $query->getRow();
-    }
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetBarDetails($bar_id);
     return $result;
 }
 
 function eCopyingGetCopyCategory(){
-    $sql = "Select id,code,description from master.copy_category";
-    $db2 = Database::connect('sci_cmis_final');
-    try {
-        $query = $db2->query($sql);
-        $results = $query->getResultArray();
-    } catch (\Exception $e) {
-        // Handle exceptions
-        echo $e->getMessage();
-        $results = [];
-    }
-    return $results;
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCategory();
+    return $result;
 }
 
 function copying_weight_calculator($total_pages,$total_red_wrappers){
@@ -3997,159 +3644,40 @@ function speed_post_tariff_calc_online($weight,$desitnation_pincode){
 }
 
 function speed_post_tariff_calc_offline($weight,$desitnation_pincode){
-    $additional_weight_times = 0;
-    $rate = 0;
-    $status = 'Error';
-    $service_tax = 0;
-    $db2 = Database::connect('sci_cmis_final');
-    if ($weight > 0 && $desitnation_pincode > 0) {
-
-        if ($weight > 500) {
-            //get additional charges for each 500 and rest of them
-            $additional_weight_times = ceil(($weight - 500) / 500);
-            $weight = 500; //new weight due to more than 500
-        }
-
-        $builder = $db2->table('master.post_distance_master');
-        $builder->select('distance_from_sci');
-        $builder->where('pincode', $desitnation_pincode);
-        $builder->limit(1);
-        $query = $builder->get();
-        $result = $query->getRow();
-
-        if ($result) {
-            $distance = $result->distance_from_sci;
-        } else {
-            $distance = null; // or handle accordingly
-        }
-        if ($distance) {
-            $distance = ceil($distance);
-
-            if ($weight > 0) {
-                $builder = $db2->table('master.post_tariff_calc_master');
-                $builder->select('rate, tax');
-                $builder->where('weight_from <=', $weight);
-                $builder->where('weight_to >=', $weight);
-                $builder->where('distance_from <=', $distance);
-                $builder->where('distance_to >=', $distance);
-                $builder->where('to_date IS NULL');
-                $builder->limit(1);
-                $query = $builder->get();
-                $r_sql1 = $query->getRow();
-
-                if (!empty($r_sql1)) {
-                    $rate = $r_sql1->rate;
-                    if ($additional_weight_times > 0) {
-                        $builder = $db2->table('master.post_tariff_calc_master');
-                        $builder->select('rate');
-                        $builder->where('weight_type', 'W4');
-                        $builder->where('distance_from <=', $distance);
-                        $builder->where('distance_to >=', $distance);
-                        $builder->where('to_date IS NULL');
-                        $builder->limit(1);
-                        $query = $builder->get();
-                        $r_sql2 = $query->getRow();
-                        if (!empty($r_sql2)) {
-                            $rate += ($r_sql2->rate * $additional_weight_times);
-                        }
-                    }
-                    $status = 'Valid Input';
-                    $service_tax = $rate * $r_sql1->tax / 100;
-                }
-            }
-        } else {
-            $status = 'Pincode Not Matched';
-        }
-    }
-    //return $rate;
-    return json_encode(array("Validation Status" => $status, "Base Tariff" => $rate, "Service Tax" => $service_tax));
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->speedPostTariffCalcOffline($weight,$desitnation_pincode);
+    return $result;
+    
 }
 
 function eCopyingAvailableAllowedRequests($mobile, $email){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_online');
-    $builder->select('id')
-            ->where('allowed_request', 'request_to_available')
-            ->where('mobile', $mobile)
-            ->where('email', $email)
-            ->where('DATE(application_receipt)', date('Y-m-d'));
-    $query = $builder->get();
-
-    return $query->getResult();
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingAvailableAllowedRequests($mobile,$email);
+    return $result;
 }
 
 function eCopyingGetDocumentType($third_party_sub_qry){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('ref_order_type');
-
-    $builder->select('id, order_type, mandate_date_of_order_type, mandate_remark_of_order_type')
-            ->where('is_deleted', 'f')
-            ->where('id <', 5000);
-
-    if (!empty($third_party_sub_qry)) {
-        $builder->where($third_party_sub_qry, null, false);
-    }
-
-    $builder->orderBy('order_type');
-
-    $query = $builder->get();
-
-    return $query->getResult();
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetDocumentType($third_party_sub_qry);
+    return $result;  
 }
 
 function createCRN($service_user_id){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('bharat_kosh_services');
-    $builder->where('service_user_id', $service_user_id);
-    $builder->where('display', 'Y');
-    $query = $builder->get();
-    $stmt_bh_service = $query->getResult();
-    if (count($stmt_bh_service) == 1) {
-        $keyMaster = $stmt_bh_service[0]->key_master;
-        $builder = $db2->table('copying_application_online');
-        $builder->select('MAX(RIGHT(CRN, 5)) AS max_batch_code');
-        $builder->where('DATE(application_receipt)', date('Y-m-d'));
-        $builder->where('LEFT(CRN, 2)', $keyMaster);
-        $query = $builder->get();
-        $result = $query->getRow();
-        $OrderBatchMerchantBatchCode = $result->max_batch_code;
-        if ($OrderBatchMerchantBatchCode == null) {
-            $OrderBatchMerchantBatchCode = '00001';
-        } else {
-            $OrderBatchMerchantBatchCode = $OrderBatchMerchantBatchCode + 1;
-        }
-        $OrderBatchMerchantBatchCode = $keyMaster . date('Ymd') . str_pad($OrderBatchMerchantBatchCode, 5, '0', STR_PAD_LEFT);
-        $status = 'success';
-    }
-    else{
-        $status = 'Permission denied';
-    }
-    return json_encode(array("Status" => $status, "CRN" => $OrderBatchMerchantBatchCode));
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->createCRN($service_user_id);
+    return $result;
 }
 
 function insert_copying_application_online($dataArray){
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_online');
-    $last_application_id = '';
-    if ($builder->insert($dataArray)) {
-        $status = 'success';
-        $last_application_id = $db2->insertID();
-    } else {
-        $status = 'Error:Unable to Insert Records';
-    }
-    return json_encode(array("Status" => $status, "last_application_id" => $last_application_id));
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->insert_copying_application_online($dataArray);
+    return $result;
 }
 
 function insert_copying_application_documents_online($dataArray) {
-    $status = '';
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('copying_application_documents_online');
-    if ($builder->insert($dataArray)) {
-        $status = 'success';
-    } else{
-        $status = 'Error:Unable to Insert Records';
-    }
-    return json_encode(['Status' => $status]);
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->insert_copying_application_documents_online($dataArray);
+    return $result;
 }
 
 function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
@@ -4232,20 +3760,16 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
 }
 
 function eCopyingGetCasetoryById($id) {
-    $db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-    $builder = $db2->table('master.copy_category');
-    $builder->select('id, urgent_fee, per_certification_fee, per_page');
-    $builder->where('id', $id);
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->eCopyingGetCasetoryById($id);
     // $builder->where('to_date', '0000-00-00');
-    $query = $builder->get();
-    return $query->getRow();
+    //$query = $builder->get();
+    return $result;
 }
 
 function insert_user_assets($dataArray) {
-    $status = '';
-    $db2 = Database::connect('e_services'); // Connect to the 'e_services' database
-    $builder = $db2->table('user_assets');
-    $result = $builder->insert($dataArray);
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->insert_user_assets($dataArray);
     if ($result) {
         $status = 'success';
     } else{
@@ -4255,6 +3779,7 @@ function insert_user_assets($dataArray) {
 }
 
 function bharatKoshRequest($reqeust) {
+   
     //$xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="22" Version="1.0"/>'); //uat server
     $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="022" Version="1.0"/>');//production server
     $submit = $xml->addChild('Submit');
@@ -4388,11 +3913,11 @@ function bharatKoshRequest($reqeust) {
     //$objKey->passphrase = '123456';
     // Load the private key
     //$objKey->loadKey('privatekey_10082020.pem', TRUE);
-    $objKey->loadKey('private_key_capricon.pem', TRUE);
+    $objKey->loadKey(base_url('/public/private_key_capricon.pem'), TRUE);
     // Sign the XML file
     $objDSig->sign($objKey);
     // Add the associated public key to the signature
-    $objDSig->add509Cert(file_get_contents('publiccert_capricon.pem'), true, false, array('issuerSerial' => true));
+    $objDSig->add509Cert(file_get_contents(base_url('/public/publiccert_capricon.pem')), true, false, array('issuerSerial' => true));
     //$objDSig->add509Cert(file_get_contents('publiccert_10082020.pem'), true, false, array('issuerSerial' => true));
     // Append the signature to the XML
     $objDSig->appendSignature($doc->documentElement);
@@ -4400,7 +3925,17 @@ function bharatKoshRequest($reqeust) {
     $signedXML = $doc->saveXML();
     return $signedXML_encode64 = base64_encode($signedXML);
 }
-
+function bharaKoshDataServiceRequest($data){
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->bharatKoshRequest($data);
+    return $result;
+}
+function bharaKoshDataBatchServiceRequest($data){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->BharatKoshBatchRequest($data);
+    return $result; 
+}
 function encrypt_doc_id($doc_id) {
     $doc_parameter = $doc_id . '|1';
     $aes = new Crypt_AES();
@@ -4549,21 +4084,10 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
 }
 
 function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id) {
-    $db = \Config\Database::connect();
-    $response = array();
-    if (isset($ref_tbl_lower_court_details_id) && !empty($ref_tbl_lower_court_details_id) && isset($registration_id) && !empty($registration_id)){
-        // $ci = &get_instance();
-        // $ci->load->model('login/Login_model');
-        $loginModel = new LoginModel();  
-        $db = Database::connect();
-        $builder = $db->table('efil.tbl_certified_copy_details');
-        $builder->SELECT("*");
-        $builder->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
-        $builder->WHERE('registration_id', $registration_id);
-        $builder->WHERE('is_deleted',false);
-        $query = $builder->get();
-        $response = $query->getResultArray();
-    }
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $response=$ecoping_webservices->is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id);
+    
     return $response;
 }
 

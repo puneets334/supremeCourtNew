@@ -1,6 +1,7 @@
 <?php
     $postage_response = article_tracking_offline($_POST['cn']);
-    $postage_response = json_decode($postage_response, true);
+    
+    $postage_response = $postage_response;
 
     if ($postage_response['Status'] == 'success') {
         ?>

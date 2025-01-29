@@ -40,6 +40,13 @@
  * @copyright 2007-2017 Robert Richards <rrichards@cdatazone.org>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+namespace App\ThirdParty\eSign;
+
+use DOMDocument;
+use DOMElement;
+use DOMNode;
+use DOMXPath;
+use Exception;
 
 class XMLSecurityDSig
 {

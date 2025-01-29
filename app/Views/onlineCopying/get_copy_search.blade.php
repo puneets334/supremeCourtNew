@@ -163,10 +163,12 @@ if (is_array($results) && count($results) > 0) {
                             </thead>
                             <tbody>
                                 <?php
+                                $section_data_avl='';
                                 foreach ($rs as $row1) {
                                     if ($row['application_request'] == 'request' && $row['allowed_request'] == 'request_to_available') {
                                         $recv_from_sec = copyFormSentOn($row1);
-
+                    
+        
                                         if (count($recv_from_sec) > 0) {
                                             $section_data_avl = 'YES';
                                             foreach ($recv_from_sec as $row_section) {

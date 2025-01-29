@@ -32,7 +32,7 @@ if(isset($_POST['name'])){
         $scipay = 10001;
     //}
     $create_crn = createCRN($scipay);
-    $json_crn = json_decode($create_crn);
+    $json_crn = $create_crn;
     if ($json_crn->{'Status'} == "success") {
         $OrderBatchMerchantBatchCode = $json_crn->{'CRN'};
 
@@ -87,11 +87,9 @@ if(isset($_POST['name'])){
             "clientIP" => "$clientIP",
             "serviceUserID" => "$scipay"
         );
-        $db2 = \Config\Database::connect('e_services'); // Connect to the 'e_services' database
-        $builder = $db2->table('bharat_kosh_request');
-        $builder->insert($data);
-
-//var_dump($statement);
+        
+        $baratkoshresult=bharaKoshDataServiceRequest($data);
+        
         $loop_for_multi_item = 0;
         if ($json_data['service_charges'] > 0) {
             $loop_for_multi_item++;
@@ -108,8 +106,8 @@ if(isset($_POST['name'])){
                 "OrderContent" => "9570", //9570 for production server //7220 For UAT server 
                 "PaymentTypeId" => "9528" //9528 for production server //3132 For UAT server 
             );
-            $builder = $db2->table('bharat_kosh_request_batch');
-            $builder->insert($statement_batch);
+            
+            bharaKoshDataBatchServiceRequest($statement_batch);
 
             $child_request[] = array(
                 "ChildAmount" => number_format($json_data['service_charges'],2,".",""), //number_format($json_data['service_charges'], 2),
@@ -120,6 +118,7 @@ if(isset($_POST['name'])){
             ); 
 
         }
+        
         if ($json_data['fee_in_stamp'] > 0) {
             $loop_for_multi_item++;
             if ($loop_for_multi_item == 1) {
@@ -135,8 +134,7 @@ if(isset($_POST['name'])){
                 "OrderContent" => "9570", //9570 for production server //7220 For UAT server 
                 "PaymentTypeId" => "9527" //9527 for production server //3132 For UAT server 
             );
-            $builder = $db2->table('bharat_kosh_request_batch');
-            $builder->insert($statement_batch);
+            bharaKoshDataBatchServiceRequest($statement_batch);
 
             $child_request[] = array(
                 "ChildAmount" =>  number_format($json_data['fee_in_stamp'],2,".",""), //number_format($json_data['fee_in_stamp'], 2),
@@ -162,8 +160,7 @@ if(isset($_POST['name'])){
                 "OrderContent" => "9570", //9570 for production server //7220 For UAT server 
                 "PaymentTypeId" => "9525" //9525 for production server //3132 For UAT server 
             );
-            $builder = $db2->table('bharat_kosh_request_batch');
-            $builder->insert($statement_batch);
+            bharaKoshDataBatchServiceRequest($statement_batch);
 
             $child_request[] = array(
                 "ChildAmount" => number_format($json_data['postage'],2,".",""), //number_format($json_data['postage'], 2),
@@ -224,7 +221,7 @@ if(isset($_POST['name'])){
         );
 
         $insert_application = insert_copying_application_online($dataArray); //insert application
-        $json_insert_application = json_decode($insert_application);
+        $json_insert_application = $insert_application;
         $json_insert_application->{'Status'};
         if ($json_insert_application->{'Status'} == "success") {
 
@@ -258,7 +255,7 @@ if(isset($_POST['name'])){
                 'is_bail_order' => 'N',
             );
             $insert_application_documents = insert_copying_application_documents_online($document_array); //insert user assets
-            $json_insert_application_documents = json_decode($insert_application_documents);
+            $json_insert_application_documents =$insert_application_documents;
 
 
             //var_dump($json_insert_application_documents);
