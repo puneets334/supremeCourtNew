@@ -1,5 +1,8 @@
 <?php
-
+//echo APPPATH;
+//die;
+//require_once '/opt/supremeCourtNew/app/ThirdParty/eSign/XMLSecurityDSig.php';
+use App\ThirdParty\eSign\XMLSecurityDSig;
 use App\Models\Affirmation\AffirmationModel;
 use App\Models\AppearingFor\AppearingForModel;
 use \App\Models\Common\CommonModel;
@@ -15,6 +18,8 @@ helper('view');
 use eftec\bladeone\BladeOne;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Libraries\webservices\Ecoping_webservices;
+use App\ThirdParty\eSign\XMLSecurityKey;
+
 if (!function_exists('pr')) {
     function pr($request)
     {
@@ -3433,7 +3438,7 @@ function getCopyRequest($row){
 
 function copyFormSentOn($row){
     $ecoping_webservices=new Ecoping_webservices();
-    $result=$ecoping_webservices->copyFormSentOn($row1['id']);
+    $result=$ecoping_webservices->copyFormSentOn($row['id']);
     return $result;
 }
 
@@ -3504,7 +3509,7 @@ function eCopyingGetBar($diary_no, $mobile){
 function getBailApplied($diary_no, $mobile, $email)
 {
     $ecoping_webservices=new Ecoping_webservices();
-    $result=$ecoping_webservices->eCopyingGetBar($$diary_no, $mobile, $email);
+    $result=$ecoping_webservices->eCopyingGetBar($diary_no, $mobile, $email);
     return $result;
 }
 
@@ -3756,10 +3761,10 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
 
 function eCopyingGetCasetoryById($id) {
     $ecoping_webservices=new Ecoping_webservices();
-    $ecoping_webservices->eCopyingGetCasetoryById($id);
+    $result=$ecoping_webservices->eCopyingGetCasetoryById($id);
     // $builder->where('to_date', '0000-00-00');
-    $query = $builder->get();
-    return $query->getRow();
+    //$query = $builder->get();
+    return $result;
 }
 
 function insert_user_assets($dataArray) {
@@ -3774,6 +3779,7 @@ function insert_user_assets($dataArray) {
 }
 
 function bharatKoshRequest($reqeust) {
+   
     //$xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="22" Version="1.0"/>'); //uat server
     $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="022" Version="1.0"/>');//production server
     $submit = $xml->addChild('Submit');
@@ -3907,11 +3913,11 @@ function bharatKoshRequest($reqeust) {
     //$objKey->passphrase = '123456';
     // Load the private key
     //$objKey->loadKey('privatekey_10082020.pem', TRUE);
-    $objKey->loadKey('private_key_capricon.pem', TRUE);
+    $objKey->loadKey(base_url('/public/private_key_capricon.pem'), TRUE);
     // Sign the XML file
     $objDSig->sign($objKey);
     // Add the associated public key to the signature
-    $objDSig->add509Cert(file_get_contents('publiccert_capricon.pem'), true, false, array('issuerSerial' => true));
+    $objDSig->add509Cert(file_get_contents(base_url('/public/publiccert_capricon.pem')), true, false, array('issuerSerial' => true));
     //$objDSig->add509Cert(file_get_contents('publiccert_10082020.pem'), true, false, array('issuerSerial' => true));
     // Append the signature to the XML
     $objDSig->appendSignature($doc->documentElement);
@@ -3919,7 +3925,17 @@ function bharatKoshRequest($reqeust) {
     $signedXML = $doc->saveXML();
     return $signedXML_encode64 = base64_encode($signedXML);
 }
-
+function bharaKoshDataServiceRequest($data){
+    
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->bharatKoshRequest($data);
+    return $result;
+}
+function bharaKoshDataBatchServiceRequest($data){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->BharatKoshBatchRequest($data);
+    return $result; 
+}
 function encrypt_doc_id($doc_id) {
     $doc_parameter = $doc_id . '|1';
     $aes = new Crypt_AES();

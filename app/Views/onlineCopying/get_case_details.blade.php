@@ -1,5 +1,4 @@
 <?php
-//var_dump($_SESSION['user_address'][0]['first_name']);
 if (isset($_SESSION['is_token_matched']) && $_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"]) ) {
 if (isset($_SESSION['is_user_address_found']) && $_SESSION['is_user_address_found'] != 'YES') {
     //add your address *
@@ -171,7 +170,7 @@ if(count($res_fil_det) > 0){
     
        //DIGITAL COPY, MAX 10 REQUEST ALLOWED
     $stmt_check2 = eCopyingCheckMaxDigitalRequest($_SESSION["applicant_mobile"], $_SESSION["applicant_email"]);
-    if (count($stmt_check2) > 0) {
+    if (is_array($stmt_check2) && count($stmt_check2) > 0) {
         $_SESSION['max_digital_copy_per_day'] = count($stmt_check2);
         if($_SESSION['max_digital_copy_per_day'] >=10){
             ?>
@@ -226,6 +225,7 @@ if(count($res_fil_det) > 0){
         if($_SESSION["session_filed"] == 6){
             $applicant_aor_mobile = $_SESSION["aor_mobile"];
         }
+        
         $sql_verify = eCopyingGetBar($diary_no, $applicant_aor_mobile);
         if(!empty($sql_verify)){
             $_SESSION['diary_filed_user_verify_status'] = 'success';
@@ -497,7 +497,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
      
     <div class="form-row">
 
-        <div class="row m-1 firstWarn">
+        <div class="row m-1 firstWarn" style="display: none;">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Warning :</strong> While applying for Record of Proceedings (ROP), Please remember a possibility that Record of Proceedings can be clubbed with Judgements/Orders passed that day. If page count and cost is shown more than your expectations, please click and apply through unavailable documents.
                 <button type="button" class="btn btn-sm close firstWarnBtn" data-dismiss="alert" aria-label="Close">
@@ -506,7 +506,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
             </div>
         </div>
 
-        <div class="row m-1 secWarn">
+        <div class="row m-1 secWarn" style="display: none;">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Warning :</strong> When you are applying for Judgements/Orders and it is found that Record of Proceedings (ROP) is clubbed with such Judgements/Orders, in such case certified copy of the requested document will be issued where as unathenticated copy will be issued for other clubbed documents.
                 <button type="button" class="btn btn-sm close secWarnBtn" data-dismiss="alert" aria-label="Close">
@@ -531,9 +531,8 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
         
         if(isset($res_fil_det[0]->main_case) && ($res_fil_det[0]->main_case !='' && $res_fil_det[0]->main_case != null && $res_fil_det[0]->main_case != '0')){
             $sql_conn_list = eCopyingGetGroupConcat($res_fil_det[0]->main_case);
-            print_r($sql_conn_list);
-            die;
-            if(count($sql_conn_list) > 0){
+            
+            if(isset($sql_conn_list) && count($sql_conn_list) > 0){
                 $res_diary_data = $sql_conn_list;
                 $condition = $res_diary_data['conn_list'];
             }
@@ -547,15 +546,15 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
 
         //third party and appearing council allowed only judgemnet orders proceedings
         if($_SESSION["applicant_mobile"] != '9630100950' && (isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4))){
-            $third_party_sub_qry = " and ot.id in (36,8,3,20,1,2,4) ";    
+            $third_party_sub_qry = " ot.id in (36,8,3,20,1,2,4) ";    
         }
         else{
             $third_party_sub_qry = "";    
         }
         
         $jud_order = eCopyingGetCopyDetails($condition,$third_party_sub_qry,$OLD_ROP);
-        
-    if(count($jud_order) > 0){
+
+        if(is_array($jud_order) && count($jud_order) > 0){
 
       ?>
 
@@ -611,7 +610,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                }
            }
 
-
+           
            if($row1['s']==0 && $row1['judgement_order_code'] == 37){ //Data in Digital Format
                $NumberOfPages = 1;
            }
@@ -667,7 +666,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                                    $hide_order_dt = "class='d-none'";
                                }
                                ?>
-                               <span <?=$hide_order_dt?> id="sporderdate_<?php echo $sno; ?>"><?php echo date('d-m-Y',strtotime($row1['orderdate'])); ?></span>
+                               <span <?=$hide_order_dt?> id="sporderdate_<?php echo $sno; ?>"><?php echo !empty($row1['orderdate']) ? date('d-m-Y',strtotime($row1['orderdate'])) : ''; ?></span>
                             </td>
                             <td data-key="No. of Pages">
                                 <?php
@@ -720,6 +719,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
     <?php } ?>
         
     <?php
+    
     if(((isset($_SESSION['diary_filed_user_verify_status']) && $_SESSION['diary_filed_user_verify_status'] == 'success') && (isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6))){
     ?>    
     <div class="row col-md-12">

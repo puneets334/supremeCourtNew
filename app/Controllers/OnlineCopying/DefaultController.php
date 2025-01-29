@@ -23,8 +23,7 @@ class DefaultController extends BaseController
             is_user_status();
         }
         $this->ecoping_webservices=new Ecoping_webservices();
-        $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-        $this->db3 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+        
         $this->Common_model = new CommonModel();
         $_SESSION['is_token_matched'] = 'Yes';
         $_SESSION['applicant_email'] = getSessionData('login')['emailid'];
@@ -44,7 +43,9 @@ class DefaultController extends BaseController
         else{
             $_SESSION['is_user_address_found'] = 'NO';
         }
+        
         $dOtp = $this->ecoping_webservices->eCopyingOtpVerification($_SESSION['applicant_email']);
+        
         if($dOtp){
             $_SESSION['session_verify_otp'] = '000000';
             $_SESSION['session_otp_id'] = '999999';

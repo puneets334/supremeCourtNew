@@ -47,6 +47,7 @@ class Autoload extends AutoloadConfig
         'App\Models' => APPPATH . 'Models',
         'App\Services' => APPPATH . 'Services',
         'App\Libraries' => APPPATH . 'Libraries',
+        'App\ThirdParty' => APPPATH . 'ThirdParty',
     ];
 
     /**

@@ -39,6 +39,11 @@
  * @copyright 2007-2017 Robert Richards <rrichards@cdatazone.org>
  * @license   http://www.opensource.org/licenses/bsd-license.php  BSD License
  */
+namespace App\ThirdParty\eSign;
+
+use DOMElement;
+use Exception;
+use XMLSecEnc;
 
 class XMLSecurityKey
 {
@@ -444,7 +449,7 @@ class XMLSecurityKey
     private function decryptPublic($data)
     {
         if (! openssl_public_decrypt($data, $decrypted, $this->key, $this->cryptParams['padding'])) {
-            throw new Exception('Failure decrypting Data (openssl public) - ' . openssl_error_string);
+            throw new Exception('Failure decrypting Data (openssl public) - ' . openssl_error_string());
         }
         return $decrypted;
     }
