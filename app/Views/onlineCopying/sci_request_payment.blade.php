@@ -219,7 +219,7 @@ if(isset($_POST['name'])){
         );
 
         $insert_application = insert_copying_application_online($dataArray); //insert application
-        $json_insert_application = json_decode($insert_application);
+        $json_insert_application = $insert_application;
         $json_insert_application->{'Status'};
         if ($json_insert_application->{'Status'} == "success") {
 
@@ -253,7 +253,7 @@ if(isset($_POST['name'])){
                 'is_bail_order' => 'N',
             );
             $insert_application_documents = insert_copying_application_documents_online($document_array); //insert user assets
-            $json_insert_application_documents = json_decode($insert_application_documents);
+            $json_insert_application_documents = $insert_application_documents;
 
 
             //var_dump($json_insert_application_documents);
@@ -416,7 +416,7 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
 
 
         $create_crn = createCRN($scipay);//create crn
-        $json_crn = json_decode($create_crn);
+        $json_crn = $create_crn;
         if ($json_crn->{'Status'} == "success") {
             $OrderBatchMerchantBatchCode = $json_crn->{'CRN'};
 
@@ -460,7 +460,7 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
             );
 
             $insert_application = insert_copying_application_online($dataArray); //insert application
-            $json_insert_application = json_decode($insert_application);
+            $json_insert_application = $insert_application;
             if ($json_insert_application->{'Status'} == "success") {
                 $last_application_id = $json_insert_application->{'last_application_id'};
                 $array = array('status' => 'success');
@@ -489,7 +489,7 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
                     );
 
                     $insert_application_documents = insert_copying_application_documents_online($document_array); //insert user assets
-                    $json_insert_application_documents = json_decode($insert_application_documents);
+                    $json_insert_application_documents = $insert_application_documents;
                     if ($json_insert_application_documents->{'Status'} == "success") {
                         //  $array = array('status' => 'success');
                     } else {
