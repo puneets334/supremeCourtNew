@@ -489,7 +489,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="state_agency_div2" style="<?php echo !empty($state_agency_list) && isset($state_agency_list) ? 'display: block' : 'dislay: none;'; ?>">
+                    <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="state_agency_div2" style="<?php echo (isset($state_agency_list) && !empty($state_agency_list)) ? 'display: block' : 'display: none;'; ?>">
                         <div class="mb-3">
                             <label class="form-label">Agency
                                 Name
