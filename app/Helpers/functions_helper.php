@@ -4266,3 +4266,64 @@ if ( ! function_exists('force_download')) {
 	}
 
 }
+
+if (! function_exists('sendMailJioCron')) {
+    function sendMailJioCron($to,$subject,$message,$files=[]) {
+        $payload = json_encode([
+            "providerCode"  => "email",
+            "recipients"    => [
+                "emailAddresses" => 
+                [
+                    "to" => $to
+                ]
+            ],
+            "body"          => $message,
+            "scheduledAt"   => null,
+            "purpose"       => $subject,
+            "subject"       => $subject, 
+            "sender"        => [
+                "name" => "AAP",
+                "emailAddress" => "icmis@sci.nic.in"
+            ],
+            "createdByUser" => [
+                "id"               => env('LIVE_EMAIL_KEY'),
+                "name"             => "AAP",
+                "employeeCode"     => env('LIVE_EMAIL_KEY'),
+                "organizationName" => "AAP"
+            ],
+            "module"        => "AAP",
+            "project"       => "AAP",
+            "files"         => $files
+        ]); 
+        $ch = curl_init();
+        curl_setopt_array($ch,[
+            CURLOPT_URL => env('APP_ENV') == 'production' ? env('NEW_MAIL_SERVER_HOST_JIO_IP'):env('NEW_MAIL_SERVER_HOST_JIO_URL'),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HEADER => 0,
+            CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>"$payload",
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json','Accept: application/json','Authorization: Bearer '.env('LIVE_EMAIL_KEY_JIO_CLOUD')
+            ],
+        ]);
+        $response = curl_exec($ch);
+        if($response === false) {
+            return [
+                'status' =>false,
+                'message'=>curl_error($ch)
+            ];
+        } else {
+            return [
+                'status' =>true,
+                'message'=>$response
+            ];
+        }
+        curl_close($ch);
+    }
+}

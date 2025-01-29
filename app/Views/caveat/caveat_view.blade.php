@@ -214,7 +214,33 @@
             }
         }
     }
-
+    document.getElementById("copyButton").addEventListener("click", function() {
+        copyToClipboardMsg(document.getElementById("copyTarget_EfilingNumber"), "copyButton");
+    });
+    // document.getElementById("copyButton2").addEventListener("click", function() {
+    //     copyToClipboardMsg(document.getElementById("copyTarget2"), "copyButton");
+    // });
+    document.getElementById("pasteTarget").addEventListener("mousedown", function() {
+        this.value = "";
+    });
+    function copyToClipboardMsg(elem, msgElem) {
+        var EfilingNumber = document.getElementById('copyTarget_EfilingNumber').innerHTML;
+        var succeed = copyToClipboard(elem);
+        var msg;
+        if (!succeed) {
+            msg = "Copy not supported or blocked.  Press Ctrl+c to copy."
+        } else {
+            //msg = 'E-Filing Number: ' +EfilingNumber+' Copied.';
+            msg = 'Copied';
+        }
+        if (typeof msgElem === "string") {
+            msgElem = document.getElementById(msgElem);
+        }
+        msgElem.innerHTML = msg;
+        /* setTimeout(function() {
+            msgElem.innerHTML = "";
+        }, 5000);*/
+    }
 <?php if (!empty($efiling_civil_data[0]['pet_legal_heir']) && $efiling_civil_data[0]['pet_legal_heir'] == 'Y') { ?>
         $(document).ready(function () {
             document.getElementById('address_label_name').innerHTML = 'Address :';

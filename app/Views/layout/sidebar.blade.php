@@ -107,7 +107,7 @@ date_default_timezone_set('Asia/Kolkata');
                                 <li><a class="btn-link" href="<?php echo base_url('advocate/report') ?>">Reports</a></li>                                
                             </ul>                        
                         </li>
-                        <li class="premium">
+                        <!-- <li class="premium">
                             <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">eCopying<span><i class="fas fa-chevron-down"></i></span></a>
                             <ul id="collapse7" class="submenu accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
@@ -119,7 +119,7 @@ date_default_timezone_set('Asia/Kolkata');
                                 <li><a class="btn-link" href="https://registry.sci.gov.in/api/callback/bharat_kosh/eCopyingPublic_manual.pdf" target="_blank">Manual</a></li>
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                         <li class="premium"><a href="<?php echo base_url('clerks/Clerk_Controller/add_clerk') ?>" class="btn-link">Add Clerk</a> </li>
                         <!-- Start Generate and Download Template -->
                         <li class="premium"><a href="<?php echo base_url('admin/PrepareTemplate_Controller/prepared_templates_download?case=P'); ?>" class="btn-link">Download Templates</a> </li>
