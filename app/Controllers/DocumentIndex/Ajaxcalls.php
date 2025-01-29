@@ -164,7 +164,7 @@ class Ajaxcalls extends BaseController {
                 $dataResult = '<label class="control-label col-sm-12 input-sm mt-4"> If with affidavit? <span style="color: red">*</span></label>
                 <div class="col-sm-8">
                     <input type="hidden" name="affidavitCheck" value="affidavitCheck">
-                    <input type="radio" id="Yes" name="if_with_affidavit" value="Y">
+                    <input type="radio" id="Yes" name="if_with_affidavit" value="Y" required>
                     <label for="Yes">Yes</label>
                     <input type="radio" id="No" name="if_with_affidavit" value="N">
                     <label for="No">No</label>
@@ -173,7 +173,7 @@ class Ajaxcalls extends BaseController {
                 $dataResult = '<label class="control-label col-sm-5 input-sm">Is Letter of Inspection of File? <span style="color: red">*</span></label>
                 <div class="col-sm-7">
                     <input type="hidden" name="inspectionLetterCheck" value="inspectionLetterCheck">
-                    <input type="radio" id="Yes" name="letter_of_inspection_of_file" value="Y">
+                    <input type="radio" id="Yes" name="letter_of_inspection_of_file" value="Y" required>
                     <label for="Yes">Yes</label>
                     <input type="radio" id="No" name="letter_of_inspection_of_file" value="N">
                     <label for="No">No</label>
