@@ -36,6 +36,7 @@ if (is_array($results) && count($results) > 0) {
         $statusResult = getCopyStatusResult($row, $asset_type_flag);
         if (count($statusResult) > 0) {
             foreach ($statusResult as $data) {
+               
                 if ($data['verify_status'] == 1) {
                     $data_asset_status = ' <strong class="text-primary">Pending</strong>';
                 }
@@ -48,10 +49,11 @@ if (is_array($results) && count($results) > 0) {
                 //array_push($track_horizonal_timeline, array("flag_type"=> 'Verify '.$data_asset['asset_name'] ,"flag_description"=>$data_asset_status.' ('.date("d-m-Y H:i:s", strtotime($data_asset['verify_on'])).')'));
                 $data_asset_string .= $data['asset_name'] . $data_asset_status . ' (' . date("d-m-Y H:i:s", strtotime($data['verify_on'])) . ')';
             }
+            
         }
         array_push($track_horizonal_timeline, array("flag_type" => 'Verification', "flag_description" => $data_asset_string));
     }
-
+    
 
         if ($row['reg_no_display'] != '') {
             $case_no = $row['reg_no_display'];
@@ -107,7 +109,7 @@ if (is_array($results) && count($results) > 0) {
                             if ($row['delivery_mode'] == 1) {
                                 echo 'Post';
                                 $resBarcode = getCopyBarcode($row);
-                                if (count($resBarcode) > 0) {
+                                if (!empty($resBarcode) && count($resBarcode) > 0) {
                                     $explode_barcode = explode(",", $resBarcode['barcode']);
                             ?>
                                 <a href="#" onclick="mytrack_record()" id='myBtn'>Click to Track</a>
@@ -163,10 +165,12 @@ if (is_array($results) && count($results) > 0) {
                             </thead>
                             <tbody>
                                 <?php
+                                $section_data_avl='';
                                 foreach ($rs as $row1) {
                                     if ($row['application_request'] == 'request' && $row['allowed_request'] == 'request_to_available') {
                                         $recv_from_sec = copyFormSentOn($row1);
-
+                    
+        
                                         if (count($recv_from_sec) > 0) {
                                             $section_data_avl = 'YES';
                                             foreach ($recv_from_sec as $row_section) {

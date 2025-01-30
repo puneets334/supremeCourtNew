@@ -40,7 +40,8 @@ $routes->post('documentIndex/Ajaxcalls/get_index_type', 'DocumentIndex\Ajaxcalls
 $routes->post('newcase/Ajaxcalls/get_districts', 'NewCase\Ajaxcalls::get_districts');
 $routes->post('csrftoken/DefaultController/updateIsDeadMinorData', 'Csrftoken\DefaultController::updateIsDeadMinorData');
 $routes->match(['GET', 'POST'], 'newcase/view', 'NewCase\View::index');
-$routes->match(['GET', 'POST'], 'newcase/view/(:any)', 'NewCase\View::index/$1');
+// $routes->match(['GET', 'POST'], 'newcase/view/(:any)', 'NewCase\View::index/$1');
+$routes->match(['GET', 'POST'], 'newcase/view/(:any)', 'NewCase\DefaultController::index/$1');
 $routes->match(['GET', 'POST'], 'documentIndex', 'DocumentIndex\DefaultController::index');
 $routes->match(['GET', 'POST'], 'documentIndex/Ajaxcalls/load_document_index', 'DocumentIndex\Ajaxcalls::load_document_index');
 $routes->match(['GET', 'POST'], 'newcase/Ajaxcalls/load_document_index', 'DocumentIndex\Ajaxcalls::load_document_index');
@@ -485,3 +486,7 @@ $routes->match(['GET', 'POST'], 'Api/Cases/get_list_doc_cases_efiled', 'Api\Case
 $routes->match(['GET', 'POST'], 'Api/getAdvocateConsent', 'Api::getAdvocateConsent');
 $routes->match(['GET', 'POST'], 'admin/EfilingAction/newcase/FeeVerifyLock_Controller/feeVeryLock', 'NewCase\FeeVerifyLock_Controller::feeVeryLock');
 $routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit_ecopying', 'Register\AdvSignUp::final_submit_ecopying');
+$routes->get('api/v1/diaries', 'Api::diaries');
+$routes->get('api/v1/getAdvocateAppearanceDetails', 'Api::getAdvocateAppearanceDetails');
+$routes->get('api/v1/getAdvocateAppearanceAORIncludeORExclude', 'Api::getAdvocateAppearanceAORIncludeORExclude');
+

@@ -4,13 +4,6 @@ getSessionData('efiling_details')['stage_id'] == 11) ? 'Refile case' : 'Register
 @section('heading', !empty(getSessionData('efiling_details')['stage_id']) ? ((getSessionData('efiling_details')['stage_id'] == 10 or
 getSessionData('efiling_details')['stage_id'] == 11) ? 'Refiling' : 'Register a case') : '')
 @section('content')
-
-
-<?php
-$var = empty(@$registration_id) ? base_url(@$tab == 'affirmation' ? @$tab : 'newcase/' . @$tab) : base_url('newcase/defaultController/' . $registration_id);
-
-?>
-
 <div class="mainPanel ">
     <div class="panelInner">
         <div class="middleContent">
@@ -20,7 +13,7 @@ $var = empty(@$registration_id) ? base_url(@$tab == 'affirmation' ? @$tab : 'new
                         <div class="row">
                             <div class="col-12 sm-12 col-md-12 col-lg-12 middleContent-left">
                                 <div class="center-content-inner comn-innercontent">
-                                    <iframe name="content-iframe" class="col-12 iframe-scroll-bar" style="" src="{{ $var }}"></iframe>
+                                    <iframe name="content-iframe" class="col-12 iframe-scroll-bar" src="{{(empty(@$registration_id) ? base_url((@$tab == 'affirmation' ? @$tab : 'newcase/'.@$tab)) : base_url('newcase/defaultController/'.($registration_id)))}}"></iframe>
                                 </div>
                             </div>
                         </div>
@@ -30,5 +23,4 @@ $var = empty(@$registration_id) ? base_url(@$tab == 'affirmation' ? @$tab : 'new
         </div>
     </div>
 </div>
-
 @endsection

@@ -2,6 +2,8 @@
 @section('content')
 <?php
 extract($_POST);
+//print_r($_POST);
+//die;
 $clientIP = getClientIP();
 
 if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == '2'){ //party
@@ -60,9 +62,10 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
 
 
         
-        
+       
         $create_crn = createCRN($scipay);//for unavailable document request
-        $json_crn = json_decode($create_crn);
+       
+        $json_crn = $create_crn;
         if ($json_crn->{'Status'} == "success") {
         $crn = $json_crn->{'CRN'};
 
@@ -93,7 +96,8 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
             "advocate_or_party" => '0',
             "court_fee" => isset($_SESSION['session_total_amount_to_pay']) ? $_SESSION['session_total_amount_to_pay'] : 0,
             "delivery_mode" => $cop_mode,
-            "postal_fee" => $postal_fee,
+            //"postal_fee" => $postal_fee,
+            'postal_fee'=>$fee_in_stamp,
             "ready_date" => '',
             "dispatch_delivery_date" => '',
             "adm_updated_by" => '1',
@@ -116,14 +120,14 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
             "send_to_section" => 'f',
             "crn" => $crn,
             "email" => $_SESSION["applicant_email"],
-            "authorized_by_aor" => $_SESSION['session_authorized_bar_id'] > 0 ? $_SESSION['session_authorized_bar_id'] : '0',
+            "authorized_by_aor" => isset($_SESSION['session_authorized_bar_id'])> 0 ? $_SESSION['session_authorized_bar_id'] : '0',
             "allowed_request" => $allowed_request,
             "token_id" => '',
             "address_id" => $address_id
         );
                         
         $insert_application = insert_copying_application_online($dataArray); //insert application
-        $json_insert_application = json_decode($insert_application);
+        $json_insert_application = $insert_application;
         if ($json_insert_application->{'Status'} == "success") {
             $last_application_id = $json_insert_application->{'last_application_id'};
             $copy_detail = explode("#", $copy_detail);
@@ -149,7 +153,8 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
                     'is_bail_order' => 'N'
                 );
                 $insert_application_documents = insert_copying_application_documents_online($document_array); //insert user assets
-                $json_insert_application_documents = json_decode($insert_application_documents);
+                $json_insert_application_documents = $insert_application_documents;
+                
                 if ($json_insert_application_documents->{'Status'} == "success") {
 
                 }
@@ -174,7 +179,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
     else{
         $array = array('status' => 'Permission Denied');
     }
-    pr($json_insert_application);
+    
     if ($json_insert_application->{'Status'} == "success" && $json_insert_user_asset->{'Status'} == "success") {
         $random_string=time();
     ?>

@@ -75,7 +75,7 @@
                                                         <?php
                                                         foreach ($category as $rows) {
                                                             ?>
-                                                            <option value="<?php echo $rows->id ?>"><?php echo $rows->code; ?></option>
+                                                            <option value="<?php echo $rows['id'] ?>"><?php echo $rows['code']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
