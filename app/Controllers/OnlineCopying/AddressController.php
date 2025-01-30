@@ -259,7 +259,7 @@ class AddressController extends BaseController
                 $rowCheck = $address[0];
                 if (strtoupper($rowCheck['first_name']) == strtoupper($request->getPost('first_name')) &&
                     strtoupper($rowCheck['second_name']) == strtoupper($request->getPost('second_name'))) {
-                    $removeAddress= $this->AddressModel->removeApplicantAddress($addressID, $clientIP);    
+                    $removeAddress= $this->ecoping_webservices->removeApplicantAddress($addressID,$clientIP);    
                     $data = [
                         'mobile' => $applicantMobile,
                         'email' => $applicantEmail,

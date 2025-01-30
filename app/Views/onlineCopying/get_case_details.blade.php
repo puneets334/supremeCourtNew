@@ -98,7 +98,7 @@ if(count($res_fil_det) > 0){
                             ?>
                     </b>
                     
-                    <i class="fa fa-user text-info ml-5 " aria-hidden="true"></i> <?=$_SESSION['user_address'][0]['second_name'].' '.$_SESSION['user_address'][0]['first_name'];?> <i class="fa fa-phone-square text-info" aria-hidden="true"></i> <?=$_SESSION["applicant_mobile"];?> <i class="fa fa-envelope text-info" aria-hidden="true"></i> : <?=$_SESSION["applicant_email"];?></b>
+                    <i class="fa fa-user text-info ml-5 " aria-hidden="true"></i> <?=isset($_SESSION['user_address'][0]['second_name']).' '.isset($_SESSION['user_address'][0]['first_name']);?> <i class="fa fa-phone-square text-info" aria-hidden="true"></i> <?=$_SESSION["applicant_mobile"];?> <i class="fa fa-envelope text-info" aria-hidden="true"></i> : <?=$_SESSION["applicant_email"];?></b>
                     
                 </p>
                 
