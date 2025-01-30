@@ -30,7 +30,7 @@ class Ecoping_webservices {
         die;*/
         //return json_decode($response);
         //curl_setopt($ch,)
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/get_copy_search/?flag=$flag&crn=$crn&application_type=$application_type&application_no=$application_no&application_year=$application_year");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/get_copy_search?flag=$flag&crn=$crn&application_type=$application_type&application_no=$application_no&application_year=$application_year");
         
         if ($data != false) {
             
@@ -54,9 +54,8 @@ class Ecoping_webservices {
         );
         $context  = stream_context_create($opts);
         $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/online_copying/getCopySearchResult/', false, $context);
-
-        return json_decode($result,true);
+        $result = file_get_contents($url.'/online_copying/getCopySearchResult', false, $context);
+        return json_decode($result);
     }
   public function getCopyStatusResult($postdata,$asset_type_flag){
     $postdata['asset_type_flag']=$asset_type_flag;
@@ -73,12 +72,12 @@ class Ecoping_webservices {
     );
     $context  = stream_context_create($opts);
     $url = ICMIS_SERVICE_URL;
-    $result = file_get_contents($url.'/online_copying/getCopyStatusResult/',false,$context);
+    $result = file_get_contents($url.'/online_copying/getCopyStatusResult',false,$context);
     return json_decode($result,true);
   }
   public function getCopyBarcode($id){
     
-    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyBarcode/?id=$id");
+    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyBarcode?id=$id");
         
         if ($data != false) {
             
@@ -88,7 +87,7 @@ class Ecoping_webservices {
         }
   }
   public function getCopyApplication($id){
-    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyApplication/?id=$id");
+    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyApplication?id=$id");
         
     if ($data != false) {
         
@@ -99,7 +98,7 @@ class Ecoping_webservices {
   }
   public function copyFormSentOn($id){
     
-    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/copyFormSentOn/?id=$id");
+    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/copyFormSentOn?id=$id");
         
     if ($data != false) {
         
@@ -109,7 +108,7 @@ class Ecoping_webservices {
     }
   } 
   public function getCopyRequest($id){
-    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyRequest/?id=$id");
+    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyRequest?id=$id");
         
     if ($data != false) {
         
@@ -119,7 +118,7 @@ class Ecoping_webservices {
     }
   }
   public  function eCopyingGetDiaryNo($ct, $cn, $cy){
-    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDiaryNo/?ct=$ct&cn=$cn&cy=$cy");
+    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDiaryNo?ct=$ct&cn=$cn&cy=$cy");
         
     if ($data != false) {
         
@@ -131,7 +130,7 @@ class Ecoping_webservices {
   public function eCopyingCheckDiaryNo($ct, $cn, $cy){
     
     
-    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingCheckDiaryNo/?ct=$ct&cn=$cn&cy=$cy");
+    $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingCheckDiaryNo?ct=$ct&cn=$cn&cy=$cy");
         
     if ($data != false) {
         
@@ -141,7 +140,7 @@ class Ecoping_webservices {
     }
   }
     public function eCopyingGetFileDetails($diary_no){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetFileDetails/?diary_no=$diary_no");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetFileDetails?diary_no=$diary_no");
         
         if ($data != false) {
             
@@ -151,7 +150,7 @@ class Ecoping_webservices {
         }   
     }
     public function getStatementVideo($mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementVideo/?email=$email&mobile=$mobile");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementVideo?email=$email&mobile=$mobile");
         
         if ($data != false) {
             
@@ -161,7 +160,7 @@ class Ecoping_webservices {
         }   
     }
     public function getStatementImage($mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementImage/?email=$email&mobile=$mobile");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementImage?email=$email&mobile=$mobile");
         
         if ($data != false) {
             
@@ -171,7 +170,7 @@ class Ecoping_webservices {
         }   
     }
     public function getStatementIdProof($mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof/?email=$email&mobile=$mobile");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof?email=$email&mobile=$mobile");
         
         if ($data != false) {
             
@@ -181,7 +180,7 @@ class Ecoping_webservices {
         }   
     }
     public function eCopyingStatementCheck($mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof/?email=$email&mobile=$mobile");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof?email=$email&mobile=$mobile");
         
         if ($data != false) {
             
@@ -191,7 +190,7 @@ class Ecoping_webservices {
         }   
     }
     public function eCopyingCheckMaxDigitalRequest($mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof/?email=$email&mobile=$mobile");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof?email=$email&mobile=$mobile");
         
         if ($data != false) {
             
@@ -201,7 +200,7 @@ class Ecoping_webservices {
         }   
     }
     public function eCopyingCopyStatus($diary_no, $check_asset_type, $mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof/?diary_no=$diary_no&check_asset_type=$check_asset_type&mobile=$mobile&email=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getStatementIdProof?diary_no=$diary_no&check_asset_type=$check_asset_type&mobile=$mobile&email=$email");
         
         if ($data != false) {
             
@@ -213,7 +212,7 @@ class Ecoping_webservices {
     public function eCopyingGetBar($diary_no,$mobile){
         //echo ICMIS_SERVICE_URL."/online_copying/eCopyingGetBar/?diary_no=$diary_no&mobile=$mobile";
         //die;
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetBar/?diary_no=$diary_no&mobile=$mobile");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetBar?diary_no=$diary_no&mobile=$mobile");
         
         if ($data != false) {
             
@@ -223,7 +222,7 @@ class Ecoping_webservices {
         }   
     }
     public function getBailApplied($diary_no, $mobile, $email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getBailApplied/?diary_no=$diary_no&mobile=$mobile&email=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getBailApplied?diary_no=$diary_no&mobile=$mobile&email=$email");
         
         if ($data != false) {
             
@@ -261,7 +260,7 @@ curl_close($curl);
     }
     public function eCopyingGetGroupConcat($main_case){
         
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetGroupConcat/?main_case=$main_case");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetGroupConcat?main_case=$main_case");
         
         if ($data != false) {
             
@@ -271,7 +270,7 @@ curl_close($curl);
         }   
     }
     public function getIsPreviuslyApplied($copy_category, $diary_no, $mobile, $email, $order_type, $order_date){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getIsPreviuslyApplied/?copy_category=$copy_category&diary_no=$diary_no&mobile=$mobile&email=$email&order_type=$order_type&order_date=$order_date");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getIsPreviuslyApplied?copy_category=$copy_category&diary_no=$diary_no&mobile=$mobile&email=$email&order_type=$order_type&order_date=$order_date");
         
         if ($data != false) {
             
@@ -281,7 +280,7 @@ curl_close($curl);
         }   
     }
     public function speedPostTariffCalcOffline($weight,$desitnation_pincode){
-        $data = file_get_contents(ICMIS_SERVICE_URL."online_copying/speedPostTariffCalcOffline/?weight=$weight&desitnation_pincode=$desitnation_pincode");
+        $data = file_get_contents(ICMIS_SERVICE_URL."online_copying/speedPostTariffCalcOffline?weight=$weight&desitnation_pincode=$desitnation_pincode");
         
         if ($data != false) {
             
@@ -291,7 +290,7 @@ curl_close($curl);
         }   
     }
     public function eCopyingAvailableAllowedRequests($mobile,$email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingAvailableAllowedRequests/?mobile=$mobile&email=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingAvailableAllowedRequests?mobile=$mobile&email=$email");
         
         if ($data != false) {
             
@@ -301,7 +300,7 @@ curl_close($curl);
         }   
     }
     public function eCopyingGetDocumentType($third_party_sub_qry){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDocumentType/?third_party_sub_qry=$third_party_sub_qry");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDocumentType?third_party_sub_qry=$third_party_sub_qry");
         
         if ($data != false) {
             
@@ -311,7 +310,7 @@ curl_close($curl);
         }   
     }
     public function eCopyingGetCasetoryById($id){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetCasetoryById/?id=$id");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetCasetoryById?id=$id");
         
         if ($data != false) {
             
@@ -340,7 +339,7 @@ curl_close($curl);
     }
     public function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id){
         
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/is_certified_copy_details/?ref_tbl_lower_court_details_id=$ref_tbl_lower_court_details_id&registration_id=$registration_id");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/is_certified_copy_details?ref_tbl_lower_court_details_id=$ref_tbl_lower_court_details_id&registration_id=$registration_id");
         
         if ($data != false) {
             
@@ -350,7 +349,7 @@ curl_close($curl);
         }    
     }
     public function getAordetailsByAORCODE($aor_code){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getAordetailsByAORCODE/?aor_code=$aor_code");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getAordetailsByAORCODE?aor_code=$aor_code");
         
         if ($data != false) {
             
@@ -390,7 +389,7 @@ curl_close($curl);
         }   
     }*/
     public function articleTrackingOffline($articlenumber){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/articleTrackingOffline/?articlenumber=$articlenumber");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/articleTrackingOffline?articlenumber=$articlenumber");
         
         if ($data != false) {
             
@@ -443,7 +442,7 @@ curl_close($curl);
     
     public function copyFaq(){
         
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/copy_faq/");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/copy_faq");
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -452,7 +451,7 @@ curl_close($curl);
     }
     public function getCatogoryForApplication($idd){
         
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/get_catogory_for_application/?idd=$idd");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/get_catogory_for_application?idd=$idd");
         
         if ($data != false) {
             return json_decode($data);
@@ -478,7 +477,7 @@ curl_close($curl);
         return json_decode($result);
     }
     public function getCopyingRequestVerify($diary_no,$applicant_mobile){
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/get_catogory_for_application/?diary_no=$diary_no&applicant_mobile=$applicant_mobile");
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/get_catogory_for_application?diary_no=$diary_no&applicant_mobile=$applicant_mobile");
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -486,7 +485,7 @@ curl_close($curl);
         }   
     }
     public function createCRN($service_user_id){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/createCRN/?service_user_id=$service_user_id");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/createCRN?service_user_id=$service_user_id");
         
         if ($data != false) {
             return json_decode($data);
@@ -507,7 +506,7 @@ curl_close($curl);
         );
         $context  = stream_context_create($opts);
         $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/api/online_copying/saveSMSData/', false, $context);
+        $result = file_get_contents($url.'/api/online_copying/saveSMSData', false, $context);
         //$data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/saveSMSData/");
         if ($result != false) {
             return json_decode($result);
@@ -519,7 +518,7 @@ curl_close($curl);
         //echo ICMIS_SERVICE_URL."/online_copying/getUserAddress/?mobile=$mobile_no&emailid=$email";
         //die;
         //exit;
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getUserAddress/?mobile=$mobile_no&emailid=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getUserAddress?mobile=$mobile_no&emailid=$email");
         if ($data != false) {
             return json_decode($data,true);
         } else {
@@ -527,7 +526,7 @@ curl_close($curl);
         }  
     }
     public function verifyAadhar($mobile_no,$email){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/verifyAadhar/?mobile=$mobile_no&emailid=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/verifyAadhar?mobile=$mobile_no&emailid=$email");
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -537,7 +536,7 @@ curl_close($curl);
     public function getListedCases($mobile_no,$email){
         //echo ICMIS_SERVICE_URL."/online_copying/getListedCases/?mobile=$mobile_no&emailid=$email";
         //die;
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getListedCases/?mobile=$mobile_no&emailid=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getListedCases?mobile=$mobile_no&emailid=$email");
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -624,7 +623,7 @@ curl_close($curl);
         
     }
     public function getPincode($pincode){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getPincode/?pincode=$pincode");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getPincode?pincode=$pincode");
         
         if ($data != false) {
             return json_decode($data);
@@ -633,7 +632,7 @@ curl_close($curl);
         }     
     }
     public function RemoveApplicantAddress($addressID, $clientIP){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/RemoveApplicantAddress/?id=$addressID&deletedIP=$clientIP");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/RemoveApplicantAddress?id=$addressID&deletedIP=$clientIP");
         
         if ($data != false) {
             return json_decode($data);
@@ -644,7 +643,7 @@ curl_close($curl);
     public function eCopyingOtpVerification($email){
          //echo ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification/?emailid=$email";
          
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification/?emailid=$email");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification?emailid=$email");
         if ($data != false) {
             return json_decode($data);
         } else {
@@ -653,7 +652,7 @@ curl_close($curl);
     }
     public function eCopyingGetBarDetails($bar_id){
         
-        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetBarDetails/?bar_id=$bar_id");
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetBarDetails?bar_id=$bar_id");
         if ($data != false) {
             return json_decode($data);
         } else {
