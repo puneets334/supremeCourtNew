@@ -1,7 +1,7 @@
 <?php
 use App\Models\Department\DepartmentModel;
 $segment = service('uri');
-$StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : [];
+$StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSessionData('efiling_details')['breadcrumb_status']) : [1];
 ?>
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
@@ -444,6 +444,9 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
                         <li class="nav-item" role="presentation">
 
                             <?php
+                            $StageArray = array_map(function($value) {
+                                return $value === "" ? 1 : $value;
+                             }, $StageArray);
                             if ($segment->getSegment(1) == 'appearing_for') {
                                 $ColorCode = 'background-color: #01ADEF';
                                 $status_color = 'first active';

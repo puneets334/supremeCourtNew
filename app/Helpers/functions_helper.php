@@ -1234,7 +1234,7 @@ function remark_preview($reg_id, $current_stage_id)
         $msg .= '<p>' . script_remove($result_initial['defect_remark']) . '<p>';
 
         if ($result_initial['defect_cured_date'] ?? $result_initial['defect_cured_date'] != NULL) {
-            $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result_initial['defect_cured_date'])), ENT_QUOTES) . '<p>';
+            $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($result_initial['defect_cured_date']))), ENT_QUOTES) . '<p>';
         }
 
         $msg .= '</div>';
@@ -4539,7 +4539,7 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
         $msg .= '<p><strong>Defects :</strong><p>';
         $msg .= '<p>' . script_remove($result_initial->defect_remark) . '<p>';
         if ($result_initial->defect_cured_date != NULL) {
-            $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result_initial->defect_cured_date)), ENT_QUOTES) . '<p>';
+            $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($result_initial->defect_cured_date))), ENT_QUOTES) . '<p>';
         }
         $msg .= '</div>';
         return $msg;

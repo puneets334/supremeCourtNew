@@ -20,7 +20,7 @@ class New_case_support_model extends Model {
             $msg .= '<p><strong>Defects :</strong><p>';
             $msg .= '<p>' . script_remove($result->defect_remark) . '<p>';
             if ($result->defect_cured_date != NULL) {
-                $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime($result->defect_cured_date)), ENT_QUOTES) . '<p>';
+                $msg .= '<p align="right"><strong>Defect Cured On : </strong>' . htmlentities(date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($result->defect_cured_date))), ENT_QUOTES) . '<p>';
             }
             $msg .= '</div>';
             return $msg;
