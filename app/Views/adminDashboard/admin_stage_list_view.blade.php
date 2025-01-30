@@ -287,9 +287,9 @@
                                     if ($stages == Transfer_to_IB_Stage) { //echo $redirect_url; exit;
                                         ?>
                                         <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"> 
-                                            <a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no)) ?>"> 
+                                            <!-- <a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no)) ?>">  -->
                                                 <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
-                                            </a>
+                                            <!-- </a> -->
                                         </td>
                                         <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
                                         <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
