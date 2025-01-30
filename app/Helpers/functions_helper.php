@@ -4084,10 +4084,21 @@ function remark_preview_ia_docs($reg_id, $current_stage_id)
 }
 
 function is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id) {
-    
-    $ecoping_webservices=new Ecoping_webservices();
-    $response=$ecoping_webservices->is_certified_copy_details($ref_tbl_lower_court_details_id,$registration_id);
-    
+    $db = \Config\Database::connect();
+    $response = array();
+    if (isset($ref_tbl_lower_court_details_id) && !empty($ref_tbl_lower_court_details_id) && isset($registration_id) && !empty($registration_id)){
+        // $ci = &get_instance();
+        // $ci->load->model('login/Login_model');
+        $loginModel = new LoginModel();  
+        $db = Database::connect();
+        $builder = $db->table('efil.tbl_certified_copy_details');
+        $builder->SELECT("*");
+        $builder->WHERE('ref_tbl_lower_court_details_id', $ref_tbl_lower_court_details_id);
+        $builder->WHERE('registration_id', $registration_id);
+        $builder->WHERE('is_deleted',false);
+        $query = $builder->get();
+        $response = $query->getResultArray();
+    }
     return $response;
 }
 

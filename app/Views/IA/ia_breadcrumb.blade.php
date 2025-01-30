@@ -227,6 +227,8 @@ $StageArray = !empty(getSessionData('breadcrumb_enable')) ? explode(',', getSess
         </div>
     </div>
 <?php } ?>
+<div class="alert alert-success text-center" style="display: none;" role="alert" id="successAlert" data-auto-dismiss="5000"></div>
+<div class="alert alert-danger text-center" style="display: none;" role="alert" id="dangerAlert" data-auto-dismiss="5000"></div>
 <div class="dash-card dashboard-section tabs-section">
     <div class="tabs-sec-inner">
         <!-- form--start  -->
