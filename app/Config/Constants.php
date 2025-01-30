@@ -988,3 +988,5 @@ define('CLERK_ASSOCIATIONS',2);
 define('DOCUMENT_CASETYP_URL', "http://10.192.105.105:91/");
 define('APPEARANCE_SUBMISSION', "01-01-2023");
 define('SEND_TO_APPEARING_REPORT', ['fdsf@gmail.com', 'sasdsad@sci.nic.in']);
+
+define('SAN_ROOT', "/home/SAN_eCopy"); //SAN ADDRESS
