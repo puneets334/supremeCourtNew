@@ -209,46 +209,53 @@ class ReportModel extends Model
     {
         date_default_timezone_set('Asia/Kolkata');
         $builder = $this->db->table('efil.tbl_efiling_nums as en');
-        $builder->SELECT(array(
-            'en.efiling_for_type_id', 'en.efiling_for_id', 'en.ref_m_efiled_type_id',
-            'en.efiling_no', 'en.efiling_year', 'en.registration_id', 'en.allocated_on', 'en.create_on',
+        $builder->distinct();
+        $builder->SELECT(array('en.efiling_for_type_id', 'en.efiling_for_id', 'en.ref_m_efiled_type_id',
+            'en.efiling_no', 'en.efiling_year', 'en.registration_id', 'en.allocated_on','en.create_on',
             'et.efiling_type',
-            'cs.stage_id', 'ds.admin_stage_name', 'ds.portal', 'ds.meant_for', 'cs.activated_on', 'en.sub_created_by',
+            'cs.stage_id','ds.admin_stage_name','ds.portal','ds.meant_for','cs.activated_on', 'en.sub_created_by',
             'new_case_cd.cause_title ecase_cause_title', 'new_case_cd.sc_diary_num', 'new_case_cd.sc_diary_year', 'new_case_cd.sc_diary_date', 'new_case_cd.sc_display_num', 'new_case_cd.sc_reg_date',
-            'sc_case.diary_no', 'sc_case.diary_year', 'sc_case.reg_no_display', 'sc_case.cause_title', 'mdia.diary_no icmis_diary_no', 'mdia.diary_year icmis_diary_year', 'ec.pet_name', 'ec.res_name', 'ec.ref_m_efiling_nums_registration_id caveat_reg', 'ec.orgid', 'ec.resorgid', 'users.first_name', 'users.aor_code', 'users.ref_m_usertype_id', 'ut.user_type', 'admin_users.first_name allocated_to_user', 'admin_users.emp_id', 'ds.user_stage_name'
+            'sc_case.diary_no', 'sc_case.diary_year', 'sc_case.reg_no_display', 'sc_case.cause_title', 'mdia.diary_no icmis_diary_no', 'mdia.diary_year icmis_diary_year'
+        , 'ec.pet_name', 'ec.res_name', 'ec.ref_m_efiling_nums_registration_id caveat_reg', 'ec.orgid', 'ec.resorgid','users.first_name', 'users.aor_code', 'users.ref_m_usertype_id' ,'ut.user_type', 'admin_users.first_name allocated_to_user','admin_users.emp_id', 'ds.user_stage_name'
             //, 'max(cs1.activated_on) as filed_on'
-            , 'TRUNC(EXTRACT(EPOCH FROM (current_timestamp - cs.activated_on))/86400) as pending_since', 'ec.caveat_num',
-            'ec.caveat_year', 'ec.caveat_num_date', 'efdia.icmis_docnum', 'efdia.icmis_docyear'
+        , 'TRUNC(EXTRACT(EPOCH FROM (current_timestamp - cs.activated_on))/86400) as pending_since','ec.caveat_num',
+            'ec.caveat_year','ec.caveat_num_date','efdia.icmis_docnum','efdia.icmis_docyear'
         ));
-        // $builder->FROM();
         $builder->JOIN('efil.tbl_efiling_num_status as cs', '(en.registration_id = cs.registration_id) and (cs.is_active = true)');
-        //$builder->JOIN('efil.tbl_efiling_num_status as cs1', 'en.registration_id = cs1.registration_id and cs1.stage_id='.New_Filing_Stage,'left');
+        //$this->db->JOIN('efil.tbl_efiling_num_status as cs1', 'en.registration_id = cs1.registration_id and cs1.stage_id='.New_Filing_Stage,'left');
         $builder->JOIN('efil.m_tbl_dashboard_stages ds', '(ds.stage_id =cs.stage_id) and (ds.portal is not null)');
+
         $builder->JOIN('public.tbl_efiling_caveat as ec', 'en.registration_id = ec.ref_m_efiling_nums_registration_id', 'left');
+
         $builder->JOIN('efil.m_tbl_efiling_type as et', 'en.ref_m_efiled_type_id=et.id');
         $builder->JOIN('efil.tbl_case_details as new_case_cd', 'en.registration_id = new_case_cd.registration_id', 'left');
         $builder->JOIN('efil.tbl_misc_docs_ia as mdia', 'en.registration_id = mdia.registration_id', 'left');
         $builder->JOIN('efil.tbl_efiled_docs as efdia', '(en.registration_id = efdia.registration_id)  and (efdia.is_active = true)', 'left');
         $builder->JOIN('efil.tbl_sci_cases as sc_case', 'sc_case.diary_no=mdia.diary_no AND sc_case.diary_year = mdia.diary_year', 'left');
+
+
         $builder->JOIN('efil.tbl_users users', 'users.id=en.created_by', 'left');
         $builder->JOIN('efil.tbl_users admin_users', 'admin_users.id=en.allocated_to', 'left');
         $builder->JOIN('efil.tbl_user_types ut', 'ut.id=users.ref_m_usertype_id');
-        //$builder->WHERE('cs.is_active', 'TRUE');
+        //$builderdb->WHERE('cs.is_active', 'TRUE');
         $builder->WHERE('en.is_active', 'TRUE');
-        $builder->whereIn('en.ref_m_efiled_type_id', array('1', '2', '4', '12'));
-        if (!empty($search_type) && $search_type != null && $search_type == 'All' && $search_type != 'Diary' && $search_type != 'efiling') {
-            if ($status_type == 'C') {
+        $builder->whereIn('en.ref_m_efiled_type_id',array('1','2','4','12'));
+        if(!empty($search_type) && $search_type!=null && $search_type== 'All' && $search_type!='Diary' && $search_type!='efiling') {
+            if($status_type=='C'){
                 $builder->WHERE('ds.portal', 'C');
-                $builder->whereIn('ds.meant_for', array('C'));
-            } elseif ($status_type == 'P') {
-                $builder->whereNotIn('ds.portal', array('C'));
-                $builder->whereIn('ds.meant_for', array('A', 'R'));
+                $builder->whereIn('ds.meant_for',array('C'));
             }
-            /* if($status_type=='C') {
-                $builder->WHERE_IN('ds.meant_for',array('C'));
-            } else{
-                $builder->WHERE_IN('ds.meant_for',array('A','R'));
+            elseif ($status_type=='P'){
+                $builder->whereNotIn('ds.portal',array('C'));
+                $builder->whereIn('ds.meant_for',array('A','R'));
+            }
+           /* if($status_type=='C'){
+                $this->db->WHERE_IN('ds.meant_for',array('C'));
+            }
+            else{
+                $this->db->WHERE_IN('ds.meant_for',array('A','R'));
             }*/
+
             if (!empty($filing_type_id) && $filing_type_id != null && $filing_type_id != 'All') {
                 $builder->WHERE('en.ref_m_efiled_type_id', $filing_type_id);
             }
@@ -261,7 +268,7 @@ class ReportModel extends Model
                 $toDateF = $dates[1];
                 $fromDate = date("Y-m-d H:i:s", strtotime($fromDateF));
                 $toDate = date("Y-m-d H:i:s", strtotime($toDateF));
-                if ($fromDate != null && $toDate != null && $status_type == 'C') {
+                if ($fromDate != null && $toDate != null && $status_type=='C') {
                     $builder->WHERE('en.create_on >=', $fromDate);
                     $builder->WHERE('en.create_on <=', $toDate);
                 }
@@ -269,35 +276,37 @@ class ReportModel extends Model
                 $dates = explode('to', $DateRange);
                 $fromDateF = $dates[0];
                 $toDateF = $dates[1];
+
                 $fromDate = date("Y-m-d H:i:s", strtotime($fromDateF));
                 $toDate = date("Y-m-d H:i:s", strtotime($toDateF));
-                if ($fromDate != null && $toDate != null && $status_type == 'C') {
+                if ($fromDate != null && $toDate != null && $status_type=='C') {
                     $builder->WHERE('cs.activated_on >=', $fromDate);
                     $builder->WHERE('cs.activated_on <=', $toDate);
                 }
             }
+
             if (!empty($stage_ids[0]) && $stage_ids[0] != null && $stage_ids[0] != 'All') {
-                /* if (!in_array(LODGING_STAGE, $stage_ids) && !in_array(DELETE_AND_LODGING_STAGE, $stage_ids)) {
-                    $builder->WHERE('en.allocated_to', $_SESSION['login']['id']);
-                }*/
-                // pr($stage_ids[0]);
-                $builder->where('cs.stage_id', $stage_ids[0]);
+                $builder->whereIn('cs.stage_id', $stage_ids[0]);
             }
-        } elseif (!empty($search_type) && $search_type != null && $search_type == 'Diary' && $search_type != 'efiling' && $search_type != 'All') {
-            if (!empty($diary_no) && $diary_no != null) {
-                $builder->where('new_case_cd.sc_diary_num', $diary_no);
+
+        }elseif(!empty($search_type) && $search_type!=null && $search_type=='Diary' && $search_type!='efiling' && $search_type!= 'All') {
+            if(!empty($diary_no) && $diary_no!=null) {
+                $builder->WHERE('new_case_cd.sc_diary_num',$diary_no);
             }
-            if (!empty($diary_year) && $diary_year != null) {
-                $builder->WHERE('new_case_cd.sc_diary_year', $diary_year);
+            if(!empty($diary_year) && $diary_year!=null) {
+                $builder->WHERE('new_case_cd.sc_diary_year',$diary_year);
             }
-        } elseif (!empty($search_type) && $search_type != null && $search_type == 'efiling' && $search_type != 'Diary' && $search_type != 'All') {
-            if (!empty($efiling_no) && $efiling_no != null) {
-                $builder->LIKE('en.efiling_no', $efiling_no);
+
+        }elseif(!empty($search_type) && $search_type!=null && $search_type=='efiling' && $search_type!='Diary' && $search_type!= 'All') {
+            if(!empty($efiling_no) && $efiling_no!=null) {
+                $builder->LIKE('en.efiling_no',$efiling_no);
             }
-            if (!empty($efiling_year) && $efiling_year != null) {
-                $builder->WHERE('en.efiling_year', $efiling_year);
+            if(!empty($efiling_year) && $efiling_year!=null) {
+                $builder->WHERE('en.efiling_year',$efiling_year);
             }
         }
+
+
         if (!empty($admin_for_type_id) && $admin_for_type_id != null && $admin_for_type_id != 'All') {
             $where = '(en.efiling_for_type_id=' . $admin_for_type_id . ' or en.efiling_for_type_id = ' . E_FILING_TYPE_CAVEAT . ')';
             $builder->WHERE($where);
@@ -305,9 +314,10 @@ class ReportModel extends Model
         if (!empty($admin_for_id) && $admin_for_id != null && $admin_for_id != 'All') {
             $builder->WHERE('en.efiling_for_id', $admin_for_id);
         }
-        $builder->whereNotIn('cs.stage_id', array('1', '22', '24', '25'));
-        // $builder->ORDER_BY('cs.activated_on');
-        $builder->orderBy('pending_since', 'DESC');
+
+        $builder->whereNotIn('cs.stage_id',array('1','22','24','25'));
+        //$this->db->ORDER_BY('cs.activated_on');
+        $builder->orderBy('pending_since','DESC');
         $query = $builder->get();
         //echo $builder->last_query();//exit();
         if ($query->getNumRows() >= 1) {

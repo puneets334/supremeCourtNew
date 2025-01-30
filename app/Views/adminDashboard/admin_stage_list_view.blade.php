@@ -428,6 +428,139 @@
                                             <?php
                                         }
                                     }
+
+
+                                    //-----------------Payment Awaited List------------------------------//
+                                    if ($stages == Payment_Awaited_Stage) {
+                                        ?>
+
+                                        <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Payment_Awaited_Stage . '#' . $re->efiling_no)) ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
+                                        
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        
+                                        <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                        
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[4]);?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
+                                        <?php
+                                    }
+
+                                    //-----------------For Compliance------------------------------//
+                                    if ($stages == Initial_Defected_Stage) {
+                                       ?>
+ 
+                                        <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>">
+                                        <a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities(date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?></td>
+                                        <?php
+                                    }
+                                    //-----------------Dashboard -- Get CIS Status---------------//
+                                    if ($stages == Transfer_to_CIS_Stage) {
+                                        ?>
+
+                                        <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities(date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?></td>
+
+                                        <td width="14%" data-key="<?php echo htmlentities($data_key[5]); ?>">
+                                            <?php if (getSessionData('login')['userid'] != SC_ADMIN){?>
+                                            <input type="button"  class="btn btn-primary" Value="Get Status From ICMIS"  onclick="submitAction_CIS('<?php echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_CIS_Stage . '#' . $re->efiling_no)), ENT_QUOTES); ?>')"  />
+                                             <?php }?>
+                                        </td>
+
+                                        <?php
+                                    }
+
+
+                                    //-----------------Initial Defects Cures List------------------------------//
+                                    if ($stages == Initial_Defects_Cured_Stage) {
+                                        ?>
+
+                                        <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>                                        
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo htmlentities(date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime($re->activated_on, ENT_QUOTES)))); ?></td>
+                                        <td width="10%" data-key="<?php echo htmlentities($data_key[5]); ?>">
+                                            <?php if (getSessionData('login')['userid'] != SC_ADMIN){?>
+                                            <a class="quick-btn" href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defects_Cured_Stage . '#' . $re->efiling_no)) ?>"> 
+                                                <?php echo htmlentities('Action', ENT_QUOTES) ?>
+                                            </a>
+                                            <?php }?>
+                                        </td>            
+                                        <?php
+                                    }
+                                    //-----------------Transfer to CIS List------------------------------//
+                                    if ($stages == Transfer_to_IB_Stage) { //echo $redirect_url; exit;
+                                        ?>
+                                        <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"> 
+                                            <!-- <a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no)) ?>">  -->
+                                                <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?>
+                                            <!-- </a> -->
+                                        </td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>
+                                        <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                        <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
+                                    <?php if (getSessionData('login')['userid'] != SC_ADMIN){ ?>
+                                        <?php if($re->ref_m_efiled_type_id == E_FILING_TYPE_IA || $re->ref_m_efiled_type_id == E_FILING_TYPE_MISC_DOCS){
+                                            ?>
+                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"> <input type="submit" class="quick-btn" Value="<?php echo htmlentities($button_label, ENT_QUOTES) ?>"  onclick="callController('<?php echo htmlentities(url_encryption(trim($re->icmis_diary_no .$re->icmis_diary_year.'#'.$re->registration_id), ENT_QUOTES)); ?>')"  />
+                                       <?php } else { ?>
+                                        <!--<td width="12%"> <input type="submit" class="btn-success input-sm" Value="<?php /*echo htmlentities($button_label, ENT_QUOTES) */?>"  onclick="TransferToSection('<?php /*echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_case_reg_id . '#' . $re->efiling_no), ENT_QUOTES)); */?>')"  />-->
+                                            <td width="16%" data-key="<?php echo htmlentities($data_key[5]); ?>"><a class="quick-btn" href="<?php  echo $redirect_url.'/'. htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Transfer_to_IB_Stage . '#' . $re->efiling_no), ENT_QUOTES)); ?>"><?php echo $button_label;?></a></td>
+                                    <?php } ?>
+                                    <?php }else{ echo '<td width="16%"></td>';} ?>
+                                    </tr>
+                                    <?php
+                                }
+                                // vkg
+                                //-----------------Pending Scrutiny List------------------------------//
+                                if ($stages == I_B_Approval_Pending_Admin_Stage) {
+                                    
+                                   
+                                   
+                                
+                                    ?> 
+                                   
+ 
+                                   <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?=base_url('newcase').'/view/'.url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Approval_Pending_Admin_Stage . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php 
+                                //echo htmlentities($type, ENT_QUOTES) 
+                                echo htmlentities('New Case', ENT_QUOTES) 
+                                ?></td>                                                                    
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
+                                <td width="14%" data-key="<?php echo htmlentities($data_key[5]); ?>">
+                                    Automated
+                                    <?php if (getSessionData('login')['userid'] != SC_ADMIN){ ?>
+                                    <!--<input type="button"  class="btn btn-primary" Value="Get Scrutiny Status" onclick="submitAction_CIS('<?php /*echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Approval_Pending_Admin_Stage . '#' . $re->efiling_no)), ENT_QUOTES); */?>', '<?php /*echo htmlentities($re->ref_m_efiled_type_id, ENT_QUOTES); */?>')"  />-->
+                                    <?php } ?>
+                                </td>
+
+
+                                <?php
+                            }
+                            //-----------------Defective Cured List------------------------------//
+                            if ($stages == I_B_Defects_Cured_Stage) {
+                               
+                               
+                                ?> 
+                                <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defects_Cured_Stage)) ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?> </a></td>
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                
+                                <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></a></td>                                
+                                <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
+                                <td width="14%" data-key="<?php echo htmlentities($data_key[5]); ?>">
+                                <?php if (getSessionData('login')['userid'] != SC_ADMIN){ ?>
+                                    <!--<input type="button"  class="btn btn-primary" Value="Get Scrutiny Status" onclick="submitAction_CIS('<?php /*echo htmlentities(url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defects_Cured_Stage . '#' . $re->efiling_no)), ENT_QUOTES); */?>', '<?php /*echo htmlentities($re->ref_m_efiled_type_id, ENT_QUOTES); */?>')"  />-->
+                                <?php } ?>
+                                </td>
+
+                                <?php
+                            }
+
+                                if ($stages == I_B_Defected_Stage && $mark_as_error == MARK_AS_ERROR) {
+
                                     ?>
                                 </tbody>
                             </table>

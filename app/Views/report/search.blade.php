@@ -920,6 +920,7 @@
                 //var status_type = $("input[name='status_type']).val();
                 var status_type=$('input[type="radio"][name="status_type"]:checked').val();
                 var diary_no=$('#diary_no').val();
+                // var diary_year=$('#diary_year').val();
                 var efiling_no=$('#efiling_no').val();
                 var ActionFiledOnGet = $("input[name='ActionFiledOn']:checked").val();
                 var date=$('#listing_date_range').val();
@@ -947,13 +948,14 @@
                 }
                 $.ajax({
                     type: 'GET',
-                    url:  "<?php echo base_url('report/search/actionFiledon'); ?>?DateRange="+date+'&ActionFiledOn=' + ActionFiledOn+'&stage_id=' + stage_id+'&filing_type_id=' + filing_type_id+'&users_id=' + users_id+'&diary_no=' + diary_no+'&diary_year=' + diary_year+'&efiling_no=' + efiling_no+'&efiling_year=' + efiling_year+'&search_type=' + search_type +'&status_type=' + status_type,
+                    url:  "<?php echo base_url('report/search/actionFiledon'); ?>?DateRange="+date+"&ActionFiledOn=" +ActionFiledOn+"&stage_id=" + stage_id+"&filing_type_id=" + filing_type_id+"&users_id=" + users_id+"&diary_no=" + diary_no+"&diary_year=" + diary_year+"&efiling_no=" + efiling_no+"&efiling_year=" + efiling_year+"&search_type=" + search_type +"&status_type=" + status_type,
                     contentType: "text/plain",
-                    dataType: 'json',
+                    // dataType: 'json',
                     beforeSend: function(){
                         $('#divTitle').html('Loading...');
                     },
                     success: function (data) {
+                        data = JSON.parse(data);
                         var Report_fromDate_toDate=data.status.Report_fromDate_toDate;
                         if(ActionFiledOn !='All') {
                             //alert(Report_fromDate_toDate);
@@ -978,27 +980,65 @@
                 var diary_no_m=''; var diary_year_m=''; var open_case_status=''; var reg_no='';
                 var length = Object.keys(data.customers).length;
                 var redirect_url = ''; var efiling_no=''; var rd=''; var v=''; var res_name=''; var pet_name=''; var cause_title=''; var cause_details=''; var diary_no=''; var diary_year='';
+                if(length != 0){
                 for(var i = 0; i < length+1; i++) {
                     var sn=i+1;
                     var report = data.customers[i];
                     var stage_id=report.stage_id;
                     var documentIANumber='';
                     var caveatNumber='';
-                    if(report.cause_title!=null){cause_title=report.cause_title; }
-                    else if(report.ecase_cause_title!=null){cause_title=report.ecase_cause_title; }
-                    if(report.pet_name!=null){pet_name=report.pet_name+'Vs.';}else{ pet_name=''; }
-                    if(report.res_name!=null){res_name=report.res_name;} else{res_name='';}
+                    if(report.cause_title!=null){
+                        cause_title=report.cause_title; 
+                    }
+                    else if(report.ecase_cause_title!=null){
+                        cause_title=report.ecase_cause_title; 
+                    }
+                    if(report.pet_name!=null){
+                        pet_name=report.pet_name+'Vs.';
+                    }
+                    else{ 
+                        pet_name=''; 
+                    }
+                    if(report.res_name!=null){
+                        res_name=report.res_name;
+                    } else{
+                        res_name='';
+                    }
                     diary_no='';diary_year='';reg_no='';
                     /* if(report.diary_no!=null){diary_no='<b class="sci">Diary No: </b>'+report.diary_no+'/'; diary_no_m=report.diary_no;}else if(report.sc_diary_num!=null){diary_no='<b class="class="sci"">Diary No: </b>'+report.sc_diary_num+'/'; diary_no_m=report.sc_diary_num;}
                     if(report.diary_year!=null){diary_year=report.diary_year+'<br/>'; diary_year_m=report.diary_year;}else if(report.sc_diary_year!=null){diary_year=report.sc_diary_year+'<br/>'; diary_year_m=report.sc_diary_year;}*/
-                    if(report.diary_no!=null){diary_no=''+report.diary_no+'/'; diary_no_m=report.diary_no;}
-                    else if(report.sc_diary_num!=null){diary_no=''+report.sc_diary_num+'/'; diary_no_m=report.sc_diary_num;}
-                    if(report.caveat_num!=null){caveatNumber='Caveat No.:'+report.caveat_num+'/'; diary_no_m=report.caveat_num;}
-                    if(report.icmis_docnum!=null){documentIANumber='(ICMIS Doc./IA No.:'+report.icmis_docnum+'/'; diary_no_m=report.icmis_docnum;}
-                    if(report.diary_year!=null){diary_year=report.diary_year+'<br/>'; diary_year_m=report.diary_year;}
-                    else if(report.sc_diary_year!=null){diary_year=report.sc_diary_year+'<br/>'; diary_year_m=report.sc_diary_year;}
-                    if(report.caveat_year!=null){caveatNumber+=report.caveat_year+'<br/>'; diary_year_m=report.caveat_year;}
-                    if(report.icmis_docyear!=null && report.icmis_docnum!=null){documentIANumber+=report.icmis_docyear+')<br/>'; diary_year_m=report.icmis_docyear;}
+                    if(report.diary_no!=null){
+                        diary_no=''+report.diary_no+'/'; 
+                        diary_no_m=report.diary_no;
+                    }
+                    else if(report.sc_diary_num!=null){
+                        diary_no=''+report.sc_diary_num+'/'; 
+                        diary_no_m=report.sc_diary_num;
+                    }
+                    if(report.caveat_num!=null){
+                        caveatNumber='Caveat No.:'+report.caveat_num+'/'; 
+                        diary_no_m=report.caveat_num;
+                    }
+                    if(report.icmis_docnum!=null){
+                        documentIANumber='(ICMIS Doc./IA No.:'+report.icmis_docnum+'/'; 
+                        diary_no_m=report.icmis_docnum;
+                    }
+                    if(report.diary_year!=null){
+                        diary_year=report.diary_year+'<br/>'; 
+                        diary_year_m=report.diary_year;
+                    }
+                    else if(report.sc_diary_year!=null){
+                        diary_year=report.sc_diary_year+'<br/>'; 
+                        diary_year_m=report.sc_diary_year;
+                    }
+                    if(report.caveat_year!=null){
+                        caveatNumber+=report.caveat_year+'<br/>'; 
+                        diary_year_m=report.caveat_year;
+                    }
+                    if(report.icmis_docyear!=null && report.icmis_docnum!=null){
+                        documentIANumber+=report.icmis_docyear+')<br/>'; 
+                        diary_year_m=report.icmis_docyear;
+                    }
                     if (report.reg_no_display != '' && report.sc_display_num !=null) {
                         reg_no = '<b>Registration No.</b> : ' +report.sc_display_num+ '<br/> ';
                     } else {
@@ -1006,7 +1046,9 @@
                     }
                     if(diary_no_m !=null && diary_year_m !=null){
                         open_case_status='href="#" onClick="open_case_status()"';
-                    }else{ open_case_status='';}
+                    }else{ 
+                        open_case_status='';
+                    }
                     //cause_details= '<a '+open_case_status+' data-diary_no="'+diary_no_m+'" data-diary_year="'+diary_year_m+'">'+'<span class="sci">'+diary_no + diary_year + reg_no + cause_title+'<br/>'+pet_name+res_name+'</span>'+'</a>';
                     case_no=diary_no + diary_year + reg_no +documentIANumber+caveatNumber;
                     if(report.efiling_type!='CAVEAT'){
@@ -1020,38 +1062,47 @@
                         v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id + '/' + report.efiling_no;
                     }
                     else if(report.efiling_type !='' && report.efiling_type=='misc_document') {
-                    rd='miscellaneous_docs.defaultController'; //. equal to / required
-                    v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
+                        rd='miscellaneous_docs.defaultController'; //. equal to / required
+                        v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
                     }
                     else if(report.efiling_type !='' && report.efiling_type=='IA') {
-                    rd='IA.defaultController'; //. equal to / required
-                    v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
+                        rd='IA.defaultController'; //. equal to / required
+                        v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
                     }
                     else if(report.efiling_type !='' && report.efiling_type=='CAVEAT') {
-                    rd='case.caveat.crud'; //. equal to / required
-                    v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
+                        rd='case.caveat.crud'; //. equal to / required
+                        v='/'+report.registration_id + '/' + report.ref_m_efiled_type_id + '/' + report.stage_id;
                     }
-                    /*redirect_url = "<//?=base_url('report/search/view/')?>"+rd+v;
-                    efiling_no= '<a href="'+redirect_url+'">'+ report.efiling_no + '</a> <br>'+report.filed_on+'';*/
+
                     var str_efiling_type=report.efiling_type;
                     var efiling_type=str_efiling_type.replace("_"," ");
                     var filed_by='';
-                    if(report.ref_m_usertype_id==1){filed_by=report.first_name + '<br>(AOR Code: '+ report.aor_code + ')';}else if(report.ref_m_usertype_id==2){filed_by=report.first_name + '<br>(Party in person)';}
+                    if(report.ref_m_usertype_id==1){
+                        filed_by=report.first_name + '<br>(AOR Code: '+ report.aor_code + ')';
+                    }else if(report.ref_m_usertype_id==2){
+                        filed_by=report.first_name + '<br>(Party in person)';
+                    }
                     var allocated_to='';
-                    //if(report.allocated_to_user!='' && report.allocated_to_user!=null && report.meant_for!='C' ){allocated_to=report.allocated_to_user + '<br>(Emp Id: '+ report.emp_id + ')';}
-                    if(report.allocated_to_user!='' && report.allocated_to_user!=null && report.meant_for!='C' ){allocated_to=report.allocated_to_user ;}
+
+                    if(report.allocated_to_user!='' && report.allocated_to_user!=null && report.meant_for!='C' ){
+                        allocated_to=report.allocated_to_user;
+                    }
                     var create_on = report.create_on;
-                    var create_on_date = create_on.split(' '); var create_on_onlytime =create_on_date[1];
-                    var create_on_now = create_on_onlytime.split(':'); var create_on_hours = create_on_now[0];
+                    var create_on_date = create_on.split(' '); 
+                    var create_on_onlytime =create_on_date[1];
+                    var create_on_now = create_on_onlytime.split(':'); 
+                    var create_on_hours = create_on_now[0];
                     var create_on_ampm = create_on_hours >= 12 ? 'pm' : 'am';
-                    create_on = $.datepicker.formatDate("dd-mm-yy", $.datepicker.parseDate('yy-mm-dd', create_on));
+                    create_on = formatDate(create_on);
                     create_on=create_on+' '+create_on_onlytime;
                     var date = report.activated_on;
-                    var from_date = date.split(' '); var onlytime =from_date[1];
-                    var now = onlytime.split(':'); var hours = now[0];
+                    var from_date = date.split(' '); 
+                    var onlytime =from_date[1];
+                    var now = onlytime.split(':'); 
+                    var hours = now[0];
                     var ampm = hours >= 12 ? 'pm' : 'am';
-                    date = $.datepicker.formatDate("dd/mm/yy", $.datepicker.parseDate('yy-mm-dd', date));
-                    date=date+' '+onlytime;
+                    // date = formatDate('yy-mm-dd', date);
+                    // date=date+' '+onlytime;
                     redirect_url = "<?=base_url('report/search/view/')?>"+rd+v;
                     var date_filed_on="";
                     if(report.filed_on==null){
@@ -1064,11 +1115,9 @@
                         date_filed_on = $.datepicker.formatDate("dd/mm/yy", $.datepicker.parseDate('yy-mm-dd', date_filed_on));
                         date_filed_on=date_filed_on+' '+onlytime;
                     }
-                    //var filed_on = $.datepicker.formatDate("dd/mm/yy hh:ii", $.datepicker.parseDate('yy-mm-dd', report.filed_on));
                     efiling_no= '<a href="'+redirect_url+'">'+ report.efiling_no + '</a> <br>'+date_filed_on+'';
                     var current_dt = new Date();
                     var diff = new Date(new Date(current_dt) - new Date(report.activated_on));
-                    //alert(diff.getHours()+":"+diff.getMinutes());
                     var peding_since=report.pending_since;
                     if(peding_since>2){
                         peding_since="<span style='color: red;'><b>"+peding_since+"</b></span>";
@@ -1093,8 +1142,22 @@
                         $('#status_refresh').show();
                     }
                 }
+                }
             }
         });
+        function formatDate(date) {
+            var d = new Date(date),
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2) 
+                month = '0' + month;
+            if (day.length < 2) 
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
     </script>
     <script>
     function open_case_status(){

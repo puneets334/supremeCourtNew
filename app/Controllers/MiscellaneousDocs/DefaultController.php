@@ -17,14 +17,14 @@ class DefaultController extends BaseController {
         } else {
             is_user_status();
         }
-        // unset($_SESSION['estab_details']);
-        // unset($_SESSION['efiling_details']);
-        // unset($_SESSION['estab_details']);
-        // unset($_SESSION['case_table_ids']);
-        // unset($_SESSION['parties_list']);
-        // unset($_SESSION['efiling_type']);
-        // unset($_SESSION['pg_request_payment_details']);
-        // unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
+        unset($_SESSION['estab_details']);
+        unset($_SESSION['efiling_details']);
+        unset($_SESSION['estab_details']);
+        unset($_SESSION['case_table_ids']);
+        unset($_SESSION['parties_list']);
+        unset($_SESSION['efiling_type']);
+        unset($_SESSION['pg_request_payment_details']);
+        unset($_SESSION['eVerified_mobile_otp']['LITIGENT_MOB_OTP_VERIFY']);
     }
 
     // public function _remap($param = NULL) {
@@ -35,10 +35,10 @@ class DefaultController extends BaseController {
     //     }
     // }
 
-    public function index($id = NULL) {        
+    public function index($id = NULL) {
         if ($id) {
             $id = url_decryption($id);
-            $InputArrray = explode('#', $id);   // 0 => registration_id, 1 => type, 2 => stage
+            $InputArrray = explode('#', $id);   //0=>registration_id,1=>type,2=>stage
             if (!is_numeric($InputArrray[0]) || $InputArrray[1] != E_FILING_TYPE_MISC_DOCS || !is_numeric($InputArrray[2])) {
                 return redirect()->to(base_url('login'));
                 exit(0);
@@ -61,7 +61,7 @@ class DefaultController extends BaseController {
                 return redirect()->to(base_url('miscellaneous_docs/view'));
                 exit(0);
             }
-        }        
+        }
         if (isset($_SESSION['efiling_details']) && !empty($_SESSION['efiling_details'])) {
             $stages_array = array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage);
             $allowed_users = array(USER_ADVOCATE, USER_IN_PERSON, USER_ADMIN,USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN, USER_CLERK,AMICUS_CURIAE_USER);
@@ -69,21 +69,21 @@ class DefaultController extends BaseController {
                 return redirect()->to(base_url('miscellaneous_docs/view'));
                 exit(0);
             } elseif ((in_array($_SESSION['login']['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $stages_array)) || ($_SESSION['login']['ref_m_usertype_id'] = USER_DEPARTMENT && $_SESSION['efiling_details']['stage_id'] == Draft_Stage )) {
-                // echo  MISC_BREAD_CASE_DETAILS .'<br>'.MISC_BREAD_APPEARING_FOR .'<br>'. MISC_BREAD_ON_BEHALF_OF  .'<br>'.  MISC_BREAD_UPLOAD_DOC .'<br>'. MISC_BREAD_DOC_INDEX .'<br>'. MISC_BREAD_COURT_FEE .'<br>';
+                // echo '<pre>Ashu_'; pr($_SESSION['efiling_details']['breadcrumb_status']);
                 switch (max(explode(',', $_SESSION['efiling_details']['breadcrumb_status']))) {
                     case MISC_BREAD_CASE_DETAILS:
                         return redirect()->to(base_url('appearing_for'));
                     case MISC_BREAD_APPEARING_FOR:
                         return redirect()->to(base_url('on_behalf_of'));
                     case MISC_BREAD_ON_BEHALF_OF:
-                        return redirect()->to(base_url('uploadDocuments'));
-                        redirect('uploadDocuments');                    
+                        return redirect()->to(base_url('uploadDocuments'));                    
                     case MISC_BREAD_UPLOAD_DOC:
                         return redirect()->to(base_url('documentIndex'));
                     case MISC_BREAD_DOC_INDEX:
                         return redirect()->to(base_url('miscellaneous_docs/courtFee'));
                     case MISC_BREAD_COURT_FEE:
-                        return redirect()->to(base_url('IA/courtFee'));
+                        return redirect()->to(base_url('miscellaneous_docs/courtFee'));
+                        // return redirect()->to(base_url('IA/courtFee'));
                         // return redirect()->to(base_url('shareDoc'));
                     case MISC_BREAD_DOC_INDEX:
                         return redirect()->to(base_url('affirmation'));
