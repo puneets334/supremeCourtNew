@@ -677,6 +677,10 @@ define('ESIGN_SERVICE_URL',"http://10.25.78.22/web_service/index.php/Esigner/sig
 // define('ICMIS_SERVICE_URL',"http://10.25.78.43:84/out_service/index.php");
 //define('ICMIS_SERVICE_URL',"http://10.25.80.170:84/public");
 define('ICMIS_SERVICE_URL',"http://10.25.78.23:85");
+// define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
+// define('ICMIS_SERVICE_URL',"http://10.40.186.81:88");
+//define('ICMIS_SERVICE_URL',"http://10.25.78.48:83/public");
+//define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
 // define('ICMIS_SERVICE_URL',"http://10.25.78.48:83/public");
 #ICMIS_SERVICE_URL="http://10.40.186.102/out_service/index.php");
 #ICMIS_SERVICE_URL="http://10.40.186.11/out_service/index.php");
@@ -987,3 +991,4 @@ define('CLERK_ASSOCIATIONS',2);
 define('DOCUMENT_CASETYP_URL', "http://10.192.105.105:91/");
 define('APPEARANCE_SUBMISSION', "01-01-2023");
 define('SEND_TO_APPEARING_REPORT', ['fdsf@gmail.com', 'sasdsad@sci.nic.in']);
+define('SAN_ROOT', "/home/SAN_eCopy"); //SAN ADDRESS

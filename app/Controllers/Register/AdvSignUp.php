@@ -446,6 +446,128 @@ class AdvSignUp extends BaseController {
             }
         }
     }
+    
+    
+    function final_submit_ecopying() {
+
+
+        $adv_data = $_SESSION['register_data'];
+       // echo $adv_data['password'];
+        $profie_photo = array('photo_path' => $_SESSION['profile_image']['profile_photo']);
+
+        $id_proof = array('id_proof_path' => $_SESSION['image_and_id_view']['profile_photo']);
+
+        $adv_data1 = array_merge($adv_data, $profie_photo);
+        $final_data = array_merge($adv_data1, $id_proof);
+        $already_exist = $this->Register_model->check_already_reg_email($final_data['emailid']);
+
+        if (!empty($already_exist)) {
+            $this->session->setFlashdata('msg', 'Already Registerd Email.');
+            redirect('register/AdvSignUp');
+        } else {
+            $one_time_password= $_SESSION['user_created_password']; //$this->generateRandomString();
+
+            // $message="Registered Successfully with user id: ".$final_data['moblie_number']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
+            // sendSMS('38',$final_data['moblie_number'],$message,SCISMS_Change_Password_OTP);
+            // pr('he');
+            $add_adv = $this->Register_model->add_new_advocate_details($final_data);
+             
+            if (!empty($add_adv)) {
+                $to_email=trim($_SESSION['adv_details']['email_id']);
+                $subject="SC-EFM Registration Details";
+                $message="Registered Successfully with user id: ".$final_data['moblie_number']." and one time password is: ".$one_time_password." , Please do not share it with any one.";
+                sendSMS('38',$final_data['moblie_number'],$message,SCISMS_Change_Password_OTP);
+
+                send_mail_msg($to_email, $subject, $message);
+                $clientIP = getClientIP();
+                $new_name = "";
+                $allowedExts = array("webm");
+                $temp = explode(".", $_FILES["file"]["name"]);
+                $extension = end($temp);
+
+                $mime = mime_content_type($_FILES["file"]["tmp_name"]);//file name
+                $allowed = array("video/webm","webm", "video/x-matroska");
+                $file_name = $_FILES['file']['name'];
+                $file_type = $_FILES['file']['type'];
+
+                $fileExtension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+
+
+                if (empty($_FILES["file"]["name"])) {
+                    $array = array('status' => 'Empty file can not be uploaded');
+                } else if ($_FILES["file"]["error"] > 0) {
+                    $error_code = "Issue at Server/Error Return Code: " . $_FILES["file"]["error"];
+                    $array = array('status' => $error_code);
+                } else if (!($fileExtension == "webm" && in_array($mime, $allowed) && in_array($file_type, $allowed))) {
+                    $array = array('status' => 'Only Valid Video file allowed');
+                } else if ($_FILES["file"]["size"] > 12000000) {
+                    $array = array('status' => 'Not more then 12 mb allowed');
+                } else if (!(in_array($extension, $allowedExts) && $_FILES["file"]["type"] == "video/webm")) {
+                    $array = array('status' => 'Only Valid file allowed');
+                } else {
+                    //exit();
+                    //$master_to_path = $_SERVER['DOCUMENT_ROOT'] . "/copy_verify/attachments/video/";
+                    //$master_to_path = SAN_ROOT . "/copy_verify/attachments/video/";
+
+                    $master_to_path = SAN_ROOT."/copy_verify/attachments/video/";
+
+                    if (!file_exists($master_to_path)) {
+                        mkdir($master_to_path, 2770, true);
+                    }
+                    chdir($master_to_path);
+                    getcwd();
+
+                    $new_name = md5(uniqid(rand(), TRUE)) . '.' . $extension;
+                    $new_name = $master_to_path . "/" . $new_name;
+                    if (file_exists($new_name)) {
+                        $array = array('status' => 'Sorry File already exist.');
+                    } else {
+
+                        // $stmt_check = $dbo->prepare("select id from user_assets where diary_no = 0 and mobile = :mobile and email = :email and asset_type = 3 and verify_status in (1,2)");
+                        // $stmt_check->bindParam(':mobile', $user_mobile);
+                        // $stmt_check->bindParam(':email', $user_email);
+                        // $stmt_check->execute();
+                        // if ($stmt_check->rowCount() > 0) {
+                        //     //already done so no need to insert again
+                        //     $array = array('status' => 'Records Already Available');
+                        // }
+                        // else{
+
+                        //     if (move_uploaded_file($_FILES["file"]["tmp_name"], $new_name)) {
+
+                        //         $asset_array = array("mobile" => $_SESSION["applicant_mobile"],
+                        //                         "email" => $_SESSION["applicant_email"],
+                        //                         "asset_type" => '3',
+                        //                         "id_proof_type" => '0',
+                        //                         "diary_no" => '0',
+                        //                         "video_random_text" => $_SESSION['text_speak'],
+                        //                         "file_path" => str_replace(SAN_ROOT,'',$new_name),
+                        //                         "entry_time_ip" => $clientIP);
+                        //                 $insert_user_asset = insert_user_assets($asset_array); //insert user assets
+                        //                 $json_insert_user_asset = json_decode($insert_user_asset);
+                        //                 if ($json_insert_user_asset->{'Status'} == "success") {
+                        //                     $array = array('status' => 'success');
+                        //                     $_SESSION['video_verify_status'] = 1;
+                        //                 }
+                        //                 else{
+                        //                     $array = array('status' => 'Unable to insert records');
+                        //                 }
+
+                        //     } else {
+                        //         $array = array('status' => 'Not Allowed, Check Permission/Issue at Server');
+                        //     }
+                        // }
+                    }
+                }
+                //END
+                $this->session->setFlashdata('msg_success', 'Registration Successful.');
+                return redirect()->to(base_url('/'));
+            } else {
+                $this->session->setFlashdata('msg', 'Registration Failed');
+                return redirect()->to(base_url('register/AdvSignUp'));
+            }
+        }
+    }
 
 }
 

@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers\OnlineCopying;
-
 use App\Controllers\BaseController;
 use App\Models\OnlineCopying\CommonModel;
 use App\Models\OnlineCopying\AddressModel;
 use Config\Database;
+use App\Libraries\webservices\Ecoping_webservices;
 class AddressController extends BaseController
 {
 
@@ -12,7 +12,7 @@ class AddressController extends BaseController
     protected $Common_model;
     protected $AddressModel;
     protected $db2;
-
+    public $ecoping_webservices;
     public function __construct()
     {
         parent::__construct();
@@ -26,7 +26,7 @@ class AddressController extends BaseController
         $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
         $this->Common_model = new CommonModel();
         $this->AddressModel = new AddressModel();
-    
+        $this->ecoping_webservices=new Ecoping_webservices();
 
         unset($_SESSION['MSG']);
         unset($_SESSION['msg']);
@@ -48,9 +48,9 @@ class AddressController extends BaseController
             $emailid=getSessionData('login')['emailid'];
         }
         $verifyAadhar=$userAddress=$userBarAddress=[];
-        $userAddress= $this->AddressModel->checkUserAddress($mobile_number,$emailid );
-        $userAdharVerify= $this->AddressModel->verifyAadhar($mobile_number,$emailid );
-        $userBarAddress= $this->AddressModel->getListedCases($mobile_number,$emailid );
+        $userAddress= $this->ecoping_webservices->getUserAddress($mobile_number,$emailid);
+        $userAdharVerify=$this->ecoping_webservices->verifyAadhar($mobile_number,$emailid);
+        $userBarAddress=$this->ecoping_webservices->getListedCases($mobile_number,$emailid);
         
          
         return $this->render('onlineCopying.applicant_address', @compact('userAddress','userAdharVerify','userBarAddress'));
@@ -77,8 +77,9 @@ class AddressController extends BaseController
 
     public function saveApplicantAddress() 
     {
-       
-        if ($_SESSION['is_token_matched'] == 'Yes' && getSessionData('login')['emailid'] && getSessionData('login')['mobile_number'])
+       //print_r($_SESSION);
+       //die;
+        if ($_SESSION['is_token_matched'] == 'Yes' && getSessionData('login')['emailid'])
         {   
             $request = service('request');  
             $clientIP = $this->getClientIP(); 
@@ -94,16 +95,8 @@ class AddressController extends BaseController
             // $userAddress= $this->AddressModel->checkUserAddress($mobile_number,$emailid );
             $db3 = \Config\Database::connect('e_services'); 
             $session = \Config\Services::session();
+            $address= $this->ecoping_webservices->getUserAddress($applicantMobile,$applicantEmail);
             
-            $builder = $db3->table('user_address');
-            $address = $builder->where('mobile', $applicantMobile)
-            ->where('email', $applicantEmail)
-            ->where('is_active', 'Y')
-            ->get()
-            ->getResultArray();
-
-
-
             if(count($address)==3)
             {
                 $response = ['status' => 'Max 3 Addresses Already Added'];
@@ -137,19 +130,13 @@ class AddressController extends BaseController
                         'country' => $request->getPost('country'),
                         'entry_time_ip' => $clientIP,
                     ];
-
-                    $builder = $db3->table('user_address');
-                    $insertData= $builder->insert($data); 
-                  
-
-                    if ($insertData) {
+                    
+                    $insertData= $this->ecoping_webservices->saveUserAddress($data); 
+                    //print_r($insertData);
+                    //die;
+                    if ($insertData['status']=='success') {
                         $response = ['status' => 'success'];
-
-                        $builder = $db3->table('user_address');
-                        $builder->where('mobile', $applicantMobile);
-                        $builder->where('email', $applicantEmail);
-                        $builder->where('is_active', 'Y');
-                        $address = $builder->get()->getResult();
+                        $address=$this->ecoping_webservices->getUserAddress($applicantMobile,$applicantEmail);
                         if (count($address) > 0) {
                             $session->set('is_user_address_found', 'YES');
                             $session->set('user_address', $address);
@@ -166,6 +153,7 @@ class AddressController extends BaseController
         {
             $response = ['status' => 'Session Expired'];
         }
+        
         return $this->response->setJSON($response);
 
     }
@@ -176,7 +164,7 @@ class AddressController extends BaseController
         $request = service('request');
         $pincode= $request->getPost('pincode');
         // pr($pincode);
-        $pincodeDetails= $this->AddressModel->getPincode($pincode);
+        $pincodeDetails= $this->ecoping_webservices->getPincode($pincode);
         if ($pincodeDetails) {
             return $this->response->setJSON([
                 'status' => 'success',
@@ -196,14 +184,14 @@ class AddressController extends BaseController
         $session = \Config\Services::session();
         $clientIP = $this->getClientIP(); 
         $addressID = $this->request->getPost('address_id');
-        $removeAddress= $this->AddressModel->removeApplicantAddress($addressID, $clientIP);
+        $removeAddress= $this->ecoping_webservices->removeApplicantAddress($addressID, $clientIP);
 
         if ($removeAddress) {
             $array = ['status' => 'success'];
 
             $mobile =  $applicantMobile=getSessionData('login')['mobile_number'];
             $email =   $applicantEmail=getSessionData('login')['emailid'];         
-            $addressData = $this->AddressModel->getActiveAddresses($email, $mobile);
+            $addressData = $this->ecoping_webservices->getUserAddress($email,$mobile);
             if (!empty($addressData)) {
                 $session->set('is_user_address_found', 'YES');
                 $session->set('user_address', $addressData);
@@ -266,17 +254,12 @@ class AddressController extends BaseController
             $db3 = \Config\Database::connect('e_services'); 
             $session = \Config\Services::session();
             
-            $builder = $db3->table('user_address');
-            $address = $builder->where('mobile', $applicantMobile)
-            ->where('email', $applicantEmail)
-            ->where('is_active', 'Y')
-            ->get()
-            ->getResultArray();
+            $address= $this->ecoping_webservices->getUserAddress($applicantMobile,$applicantEmail);
             if (count($address) > 0){
                 $rowCheck = $address[0];
                 if (strtoupper($rowCheck['first_name']) == strtoupper($request->getPost('first_name')) &&
                     strtoupper($rowCheck['second_name']) == strtoupper($request->getPost('second_name'))) {
-                    $removeAddress= $this->AddressModel->removeApplicantAddress($addressID, $clientIP);    
+                    $removeAddress= $this->ecoping_webservices->removeApplicantAddress($addressID,$clientIP);    
                     $data = [
                         'mobile' => $applicantMobile,
                         'email' => $applicantEmail,
@@ -293,15 +276,10 @@ class AddressController extends BaseController
                     ];   
                     
                     // pr($data);
-                    $builder = $db3->table('user_address');
-                    $insertData= $builder->insert($data);               
+                    $insertData= $this->ecoping_webservices->saveUserAddress($data);               
                     if ($insertData){
                         $response = ['status' => 'success'];    
-                        $builder = $db3->table('user_address');
-                        $builder->where('mobile', $applicantMobile);
-                        $builder->where('email', $applicantEmail);
-                        $builder->where('is_active', 'Y');
-                        $address = $builder->get()->getResult();
+                        $address= $this->ecoping_webservices->getUserAddress($applicantMobile,$applicantEmail);
                         
                     } else {
                         $response = ['status' => 'Error:Record Not Inserted'];
@@ -320,37 +298,4 @@ class AddressController extends BaseController
         return $this->response->setJSON($response);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
 }

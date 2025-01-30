@@ -118,12 +118,12 @@ class Search extends BaseController {
             $status=array('search_type'=>$search_type,'status'=>'true','msg'=>'Data is found','Report_fromDate_toDate'=>$Report_fromDate_toDate);
             $dataDBFinal11['customers']=$data;
             $dataDBFinal11['status']=$status;
-            echo json_encode($dataDBFinal11);
+            return json_encode($dataDBFinal11);
         }else{
             $status=array('search_type'=>$search_type,'status'=>'false','msg'=>'Data is not found.','Report_fromDate_toDate'=>$Report_fromDate_toDate);
             $dataDBFinal11['customers']=$data;
             $dataDBFinal11['status']=$status;
-            echo json_encode($dataDBFinal11);
+            return json_encode($dataDBFinal11);
         }
     }
     function view() {

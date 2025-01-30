@@ -949,18 +949,17 @@ class ResponsiveVariantRouteController extends BaseController
     {
         //newcase/defaultController/48733382928292.EC81A34D
         //428#1#1
-        $registration_id = str_replace('_', '#', @$registration_id ?? '');
+        $registration_id=str_replace('_','#',@$registration_id);
         $tab = @$_REQUEST['tab'];
-
-        return $this->render('responsive_variant.case.crud', @compact('registration_id', 'tab'));
+        $this->render('responsive_variant.case.crud', @compact('registration_id','tab'));
     }
 
     //Start
     public function showCaseDocumentCrudByRegistrationId($registration_id = null)
     {
-        $registration_id = str_replace('_', '#', @$registration_id);
+        $registration_id=str_replace('_','#',@$registration_id);
         $tab = @$_REQUEST['tab'];
-        $this->render('responsive_variant.case.document.crud_registration', @compact('registration_id', 'tab'));
+        $this->render('responsive_variant.case.document.crud_registration', @compact('registration_id','tab'));
     }
 
     public function showCaseInterimApplicationCrudByRegistrationId($registration_id = null)

@@ -108,7 +108,7 @@ class Database extends Config
         ],
     ];
 
-    public array $physical_hearing = [
+   /* public array $physical_hearing = [
         'DSN'          => '',
         'hostname'     => '10.25.78.68',
         'username'     => 'postgres',
@@ -134,6 +134,36 @@ class Database extends Config
             'datetime' => 'Y-m-d H:i:s',
             'time'     => 'H:i:s',
         ],
+    ];*/
+
+public array $physical_hearing = [
+        'dsn'  => '',
+        'hostname'     => '10.25.78.68',
+        'username' => 'postgres',
+        'password' => 'postgres',
+        'database' => 'physical_hearing',
+        'DBDriver' => 'Postgre',
+        'DBPrefix' => '',
+        'pConnect' => FALSE,
+        'DBDebug' => (ENVIRONMENT !== 'development'),
+        'cacheOn' => FALSE,
+        'cacheDir' => '',
+        'charset' => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'strictOn' => FALSE,
+        'failover' => array(),
+        'port'         => 5432,
+        'numberNative' => false,
+        'save_queries' => TRUE,
+        'dateFormat'   => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+        'schema' => 'physical_hearing'
     ];
 
     //    /**
