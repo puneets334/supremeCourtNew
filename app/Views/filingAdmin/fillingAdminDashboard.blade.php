@@ -139,12 +139,33 @@
                                                             $total_count=$count_efiling_data[0]->total_hold_disposed_cases;
                                                         }
                                                         @endphp
-                                                        <tr>
+                                                        <!-- <tr>
                                                             <?php $href = ($total_count > 0) ? base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))) : ''; ?>
-                                                            <td data-key="Stages"><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>
+                                                            <td data-key="Stages">
+                                                                <a href="<?php echo $href; ?>">
+                                                                    <i class="fa fa-square dark_blue"></i>
                                                                 {{ isset($row->admin_stage_name) ? $row->admin_stage_name : '' }}</a>
                                                             </td>
                                                             <td data-key="Count"> <a href="<?php echo $href; ?>"></i>{{ $total_count }}</a> </td>
+                                                        </tr> -->
+                                                        <tr>
+                                                            <?php $users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
+                                                            if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?>
+                                                            <?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("report/search/list/" . htmlentities(url_encryption($row->stage_id, ENT_QUOTES))); ?>
+                                                            <?php }else{ ?>
+                                                                <?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id, ENT_QUOTES))); ?>
+                                                            <?php } ?>
+                                                            <td data-key="Stages">
+                                                                <a href="<?php echo $href; ?>" >
+                                                                    <i class="fa fa-square dark_blue"></i>
+                                                                    {{ isset($row->admin_stage_name) ? $row->admin_stage_name : '' }}
+                                                                </a>
+                                                            </td>
+                                                            <td data-key="Count">
+                                                                <a href="<?php echo $href; ?>" >
+                                                                    {{ $total_count }}
+                                                                </a>
+                                                            </td>
                                                         </tr>
                                                     @endif
                                                 @endforeach

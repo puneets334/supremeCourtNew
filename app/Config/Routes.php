@@ -489,4 +489,6 @@ $routes->match(['GET', 'POST'], 'register/AdvSignUp/final_submit_ecopying', 'Reg
 $routes->get('api/v1/diaries', 'Api::diaries');
 $routes->get('api/v1/getAdvocateAppearanceDetails', 'Api::getAdvocateAppearanceDetails');
 $routes->get('api/v1/getAdvocateAppearanceAORIncludeORExclude', 'Api::getAdvocateAppearanceAORIncludeORExclude');
+$routes->match(['GET', 'POST'], 'report/search/list/(:any)', 'Report\Search::list/$1');
+$routes->match(['GET', 'POST'], 'report/search/showCaseStatusReport', 'Report\Search::showCaseStatusReport');
 

@@ -463,7 +463,7 @@ class ReportModel extends Model
         $builder->WHERE('en.is_active', 'TRUE');
         $builder->whereIn('en.ref_m_efiled_type_id', array('1', '2', '4', '12'));
         if (!empty($stage_ids[0]) && $stage_ids[0] != null && $stage_ids[0] != 'All') {
-            $builder->whereIn('cs.stage_id', $stage_ids[0]);
+            $builder->whereIn('cs.stage_id', (array)$stage_ids[0]);
         }
         $builder->whereNotIn('cs.stage_id', array('1', '22', '24', '25'));
         // $builder->ORDER_BY('cs.activated_on');

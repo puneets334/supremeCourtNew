@@ -8606,8 +8606,8 @@ p.kyc-btns-aligns {display: flex;gap: 5px;}
 .pagination-area-new .pagination-new-inner {display: flex;justify-content: space-between;align-items: center;margin-top: 15px;}
 .pagination-area-new .showing-details-limit .page-label {padding: 0;}
 .pagination-area-new .showing-details-limit {display: flex;align-items: center;gap: 5px;}
-.no-paginations div#datatable-responsive_info {display: none;}
-.no-paginations div#datatable-responsive_paginate {display: none;}
+/* .no-paginations div#datatable-responsive_info {display: none;}
+.no-paginations div#datatable-responsive_paginate {display: none;} */
 /* New Pagination Area End  */
 
 .dash-card .table-sec table#datatable-responsive-sc_cases li.mycases-li {position: relative;}

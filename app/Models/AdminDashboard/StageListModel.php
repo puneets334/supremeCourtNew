@@ -59,9 +59,9 @@ class StageListModel extends Model
         $builder->whereIn('cs.stage_id', $stage_ids);
         //$this->db->WHERE_IN('cs.stage_id', [14]);
             // Apply limit and offset for pagination
-    if ($limit !== null) {
-        $builder->limit($limit,$offset);
-    }
+    // if ($limit !== null) {
+    //     $builder->limit($limit,$offset);
+    // }
         if (in_array(New_Filing_Stage, $stage_ids) && ($admin_for_type_id == E_FILING_TYPE_CAVEAT)) {
             $builder->orderBy('cs.activated_on', 'ASC');
         } else {

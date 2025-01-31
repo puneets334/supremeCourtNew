@@ -29,7 +29,6 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
-            <div class="dashboard-section dashboard-tiles-area"></div>
             <div class="dashboard-section">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">

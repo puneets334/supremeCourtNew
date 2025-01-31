@@ -5,7 +5,7 @@
     th{font-size: 13px;color: #000;} 
     td{font-size: 13px;color: #000;}
     .no-paginations div#datatable-responsive_length {
-        display: none;
+        display: block !important;
     }
     .dataTables_filter { margin: -45px 115px; }
 </style>
@@ -30,7 +30,7 @@
                     </div>
                     <div class="x_content">  
                         <div class="table-wrapper-scroll-y my-custom-scrollbar no-paginations">
-                            <table id="datatable-responsive" class="table table-striped custom-table" cellspacing="0" width="100%">
+                            <table id="datatable-responsive" class="table table-striped table-border custom-table mt-4">
                                 <thead>
                                     <tr class="success input-sm" role="row" >
                                         <?php foreach ($tab_head as $tab_hd) { ?>
@@ -274,7 +274,7 @@
                                                 //-----------------Defective Cured List------------------------------//
                                                 if ($stages == I_B_Defects_Cured_Stage) {
                                                     ?> 
-                                                    <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defects_Cured_Stage)) ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?> </a></td>
+                                                    <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a target="_blank" href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defects_Cured_Stage)) ?>"><?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?> </a></td>
                                                     <td width="12%" data-key="<?php echo htmlentities($data_key[2]); ?>"><?php echo htmlentities($type, ENT_QUOTES) ?></td>                                
                                                     <td data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo $case_details; ?></a></td>                                
                                                     <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
@@ -285,7 +285,7 @@
                                                     </td>
                                                     <?php
                                                 }
-                                                
+
                                                 if ($stages == I_B_Defected_Stage && $mark_as_error == MARK_AS_ERROR) {
                                                     ?>
                                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>">
@@ -433,40 +433,40 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="pagination-area-new">
-                            <form method="post" action="<?= base_url('adminDashboard/stageList/' . url_encryption($stages)); ?>">
+                        <!-- <div class="pagination-area-new">
+                            <form method="post" action="<?php // echo base_url('adminDashboard/stageList/' . url_encryption($stages)); ?>">
                                 <div class="pagination-new-inner">
                                     <div class="showing-details-limit" >
                                         <label for="limit" class="pull-left page-label"> Limit:</label>
                                         <div class="pull-left">
                                             <select id="limit" name="limit" class="form-control" onchange="$('#page_input').val(1);this.form.submit(); updateNames(this)">
-                                                <option value="10" <?php if ($limit == '10') { ?> selected="selected"<?php } ?> > 10</option>
-                                                <option value="25" <?php if ($limit == '25') { ?> selected="selected"<?php } ?> > 25</option>
-                                                <option value="50" <?php if ($limit == '50') { ?> selected="selected"<?php } ?>  > 50</option>
-                                                <option value="100" <?php if ($limit == '100') { ?> selected="selected"<?php } ?>  > 100</option>
+                                                <option value="10" <?php // if ($limit == '10') { ?> selected="selected"<?php // } ?> > 10</option>
+                                                <option value="25" <?php // if ($limit == '25') { ?> selected="selected"<?php // } ?> > 25</option>
+                                                <option value="50" <?php // if ($limit == '50') { ?> selected="selected"<?php // } ?>  > 50</option>
+                                                <option value="100" <?php // if ($limit == '100') { ?> selected="selected"<?php // } ?>  > 100</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="pagination-btns">
-                                        <input type="hidden" name="page_no_use" id="page" value="<?php echo $page; ?>" class="form-control">
+                                        <input type="hidden" name="page_no_use" id="page" value="<?php // echo $page; ?>" class="form-control">
                                         <div class="paging paging-prev">
                                             <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(1); this.form.submit();">First</button>
-                                            <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo ($page == 1) ? 1 : ($page - 1); ?>); this.form.submit();">Prev</button>
+                                            <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php // echo ($page == 1) ? 1 : ($page - 1); ?>); this.form.submit();">Prev</button>
                                         </div>
                                         <div class="paging paging-input">
                                             &nbsp;Page
-                                            <input type="text" name="page" id="page_input" value="<?php echo $page; ?>" class="form-control" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
-                                            of <?php echo isset($pages) ? $pages : ''; ?>
+                                            <input type="text" name="page" id="page_input" value="<?php // echo $page; ?>" class="form-control" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+                                            of <?php // echo isset($pages) ? $pages : ''; ?>
                                             &nbsp;
                                         </div>
                                         <div class="paging paging-next">
-                                            <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo (isset($pages) && $page == $pages) ? $pages : ($page + 1); ?>); this.form.submit();">Next</button>
-                                            <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php echo isset($pages) ? $pages : ''; ?>); this.form.submit();">Last</button>
+                                            <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php // echo (isset($pages) && $page == $pages) ? $pages : ($page + 1); ?>); this.form.submit();">Next</button>
+                                            <button class="btn btn-sm btn-primary" onclick="$('#page_input').val(<?php // echo isset($pages) ? $pages : ''; ?>); this.form.submit();">Last</button>
                                         </div>
                                     </div> 
                                 </div>
                             </form>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -489,19 +489,16 @@
 </div>
 @endsection
 @push('script')
-<script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
+<!-- <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script> -->
 <script>
+    // $(document).ready(function() {
+    //     window.onload = function() {
+    //         var limitValue = '<?php // echo $limit; ?>';
+    //         $('select[name="datatable-responsive_length"]').val(limitValue).change(); 
+    //     };
+    // });
     $(document).ready(function() {
-        window.onload = function() {
-            var limitValue = '<?php echo $limit; ?>';
-            $('select[name="datatable-responsive_length"]').val(limitValue).change(); 
-        };
-    });
-    $(document).ready(function() {
-        $('#datatable-responsive').DataTable({
-            // 'sorting': true,
-            // 'paging': true,
-        });
+        $('#datatable-responsive').DataTable();
     });
     function TransferToSection(frm_num) {
         y = confirm("Are you sure want to transfer ?");
