@@ -117,7 +117,7 @@
                             <div class="col-12 col-sm-12 col-md-6 col-lg-6">
                                 <div class="mb-3 lo">
                                     <label for="" class="form-label col-12 ps-0">Filing Type</label>
-                                    <select id="filing_type" name="filing_type" class="form-select input-sm form-control cus-form-ctrl" multiple="multiple" required>
+                                    <select id="filing_type" name="filing_type" class="input-sm form-control cus-form-ctrl" multiple="multiple" required>
                                         <!-- <option value="">Select Filing Type</option> -->
                                         <?php
                                         if (isset($filingType) && !empty($filingType)) {
@@ -286,7 +286,7 @@
                             var $ids = res.file_type_id.split(',');
                             // $('#filing_type').val($ids);
                             $('#filing_type').val($ids).trigger('change');
-                            $('#filing_type').select2();
+                            // $('#filing_type').select2();
                             var roleText = '';
                             ids.forEach(function(id) {
                                 var text = $('#filing_type option[value="' + id + '"]').text();

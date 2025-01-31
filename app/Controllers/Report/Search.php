@@ -225,9 +225,10 @@ class Search extends BaseController {
             //echo json_encode($dataDBFinal11);
         }
         //echo '<pre>';print_r($dataDBFinal11);exit();
-        $this->load->view('templates/header');
-        $this->load->view('report/search_list', $dataDBFinal11);
-        $this->load->view('templates/footer');
+        // $this->load->view('templates/header');
+        // $this->load->view('report/search_list', $dataDBFinal11);
+        // $this->load->view('templates/footer');
+        return $this->render('report.search_list',$dataDBFinal11);
     }
 
 }
