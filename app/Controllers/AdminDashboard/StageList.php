@@ -280,6 +280,7 @@ class StageList extends BaseController {
                 $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(DEFICIT_COURT_FEE_PAID), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
             }*/
             if ($stages == LODGING_STAGE || $stages == DELETE_AND_LODGING_STAGE || $mark_as_error == MARK_AS_ERROR) {
+                pr('tewyr');
                 $data['tabs_heading'] = "Idle/Unprocessed e-Filing";
                 $data['tab_head'] = array('#', 'eFiling No.', 'Type', 'Case Details', 'Status', 'Updated On');
                 $data['data_key'] =  array('#', 'eFiling No.', 'Type', 'Case Details', 'Status', 'Updated On');
