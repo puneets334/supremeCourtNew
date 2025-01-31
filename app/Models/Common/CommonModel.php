@@ -378,7 +378,7 @@ class CommonModel extends Model
             AND en.registration_id = $registration_id;
         ";
         $query = $this->db->query($sql);
-        if ($query->getNumRows() >= 1) {
+        if ($query && $query->getNumRows() >= 1) {
             $efiling_details = $query->getRowArray();
             $datamain = array(['no_of_petitioners' => 0, 'no_of_respondents' => 0,]);
             $case_details = $this->get_case_details($registration_id);
