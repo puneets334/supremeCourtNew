@@ -17,7 +17,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                             ?>
                             <th>Doc No.</th>
                         <?php } ?>
-                        <?php if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) { ?>                        
+                        <?php if (!empty(getSessionData('login')) && getSessionData('login.ref_m_usertype_id') == USER_ADMIN) { ?>                        
                             <!--<th>Admin Verified</th>-->
                         <?php } ?>
                     </tr>
@@ -46,11 +46,11 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                                         <a target="_blank" href="<?php echo base_url('documentIndex/WithoutLoginViewIndex/' . $encrypted_string ); ?>"><?php echo_data($doc_list->docdesc); ?></a>
                                         <?php
                                     } else {
-                                        if (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) {
+                                        if (!empty(getSessionData('login')) && in_array(getSessionData('login.ref_m_usertype_id'), $allowed_users) && in_array($_SESSION['efiling_details']['stage_id'], $user_stages)) {
                                             ?>
                                             <a target="_blank" href="<?php echo base_url('documentIndex/view_icmis_file/' . url_encryption($doc_list->doc_id)); ?>"><?php echo_data($doc_list->docdesc); ?></a>
                                             <?php
-                                        } elseif (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages)) { ?>
+                                        } elseif (!empty(getSessionData('login')) && in_array(getSessionData('login.ref_m_usertype_id'), $allowed_admins) && in_array($_SESSION['efiling_details']['stage_id'], $admin_stages)) { ?>
                                             <a target="_blank" href="<?php echo base_url('documentIndex/view_icmis_file/' . url_encryption($doc_list->doc_id)); ?>"><?php echo_data($doc_list->docdesc); ?></a>
                                             <?php
                                         } else {
@@ -63,12 +63,12 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                                     ?>
                                 </td>
                                 <?php
-                                if ((in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users) && in_array(getSessionData('efiling_details')['stage_id'], $user_stages)) || (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array(getSessionData('efiling_details')['stage_id'], $admin_stages))) {
+                                if ((!empty(getSessionData('login')) && in_array(getSessionData('login.ref_m_usertype_id'), $allowed_users) && in_array(getSessionData('efiling_details')['stage_id'], $user_stages)) || (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array(getSessionData('efiling_details')['stage_id'], $admin_stages))) {
                                     ?>
                                     <td data-key="Doc No."></td>
                                     <?php
                                 }
-                                if (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN) {
+                                if (!empty(getSessionData('login')) && getSessionData('login.ref_m_usertype_id') == USER_ADMIN) {
                                     $lbl_verified = @$doc_list->is_admin_checked ? 'Yes' : '';
                                     ?>                        
                                     <!--<td data-key="Admin Verified">
