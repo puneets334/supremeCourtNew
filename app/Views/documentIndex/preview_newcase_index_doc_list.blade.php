@@ -63,7 +63,7 @@ $admin_stages = array(Transfer_to_CIS_Stage, Get_From_CIS_Stage, I_B_Approval_Pe
                                     ?>
                                 </td>
                                 <?php
-                                if ((!empty(getSessionData('login')) && in_array(getSessionData('login.ref_m_usertype_id'), $allowed_users) && in_array(getSessionData('efiling_details')['stage_id'], $user_stages)) || (in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array(getSessionData('efiling_details')['stage_id'], $admin_stages))) {
+                                if ((!empty(getSessionData('login')) && in_array(getSessionData('login.ref_m_usertype_id'), $allowed_users) && in_array(getSessionData('efiling_details')['stage_id'], $user_stages)) || (!empty(getSessionData('login')) && in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_admins) && in_array(getSessionData('efiling_details')['stage_id'], $admin_stages))) {
                                     ?>
                                     <td data-key="Doc No."></td>
                                     <?php

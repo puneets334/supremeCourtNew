@@ -160,19 +160,14 @@ class DefaultController extends BaseController
 
     public function identify()
     {
-        // $uris = $this->request->uri->segment(1);
         $uris = service('uri');
         $sLast = $uris->getSegment(1);
-        $uris = $this->request->getUri(1);
+        // $uris = $this->request->getUri(1);
         $muri = str_replace('.', '/', $sLast);    
-        // $registration_id = $this->uri->segment(3);
-        // $type = $this->uri->segment(4);
-        // $stage = $this->uri->segment(5);
-        // $efiling_type = $this->uri->segment(6);
-        $registration_id = $uris->getSegment(3);
-        $type = $uris->getSegment(4);
-        $stage = $uris->getSegment(5);
-        $efiling_type = $uris->getSegment(6);
+        $registration_id = $uris->getSegment(4);
+        $type = $uris->getSegment(5);
+        $stage = $uris->getSegment(6);
+        $efiling_type = $uris->getSegment(7);
         $this->CommonModel->get_efiling_num_basic_Details($registration_id);
         $ids = $registration_id . '#' . $type . '#' . $stage . '#' . $efiling_type;
         // registration_id # ref_m_usertype_id # stage_id #  efiling_type (efiling_type='CAVEAT' or 'IA' or 'misc_document' or 'new_case')
@@ -180,13 +175,6 @@ class DefaultController extends BaseController
         // echo '1@@@' . $idss; exit(0);
         // $this->slice->view('responsive_variant.case.efiling_search.view', @compact('idss'));
         if (!empty($registration_id) && !empty($type) && !empty($stage)) {
-            // $urld = base_url('efiling_search/DefaultController/get_view_data/'.$idss);
-            // $data['registration_id'] = $registration_id;
-            // $data['ref_m_efiled_type_id'] = $type;
-            // $data['ref_m_usertype_id'] = $type;
-            // $data['stage_id'] = $stage;
-            // $data['efiling_type'] = $efiling_type;
-            // $_SESSION['efiling_details'] = $data;
             return redirect()->to(base_url('efiling_search/DefaultController/get_view_data/'.$idss)); 
         } else {
             return redirect()->to(base_url('efiling_search'));
