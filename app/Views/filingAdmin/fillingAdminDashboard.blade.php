@@ -195,6 +195,7 @@
                                                 @foreach ($stage_list as $row)
                                                     @if ($row->meant_for == 'A')
                                                         @php
+                                                        $stage_id=$row->stage_id;
                                                         $total_count='0';
                                                         if($row->stage_id==New_Filing_Stage) {
                                                             $total_count=$count_efiling_data[0]->total_new_efiling;
@@ -213,7 +214,7 @@
                                                         } elseif($row->stage_id==I_B_Approval_Pending_Admin_Stage) {
                                                             $total_count=$count_efiling_data[0]->total_pending_scrutiny;
                                                         } elseif($row->stage_id==I_B_Defected_Stage) {
-                                                            $total_count=$count_efiling_data[0]->total_lodged_cases;
+                                                            $total_count=$count_efiling_data[0]->total_waiting_defect_cured;
                                                         } elseif($row->stage_id==I_B_Rejected_Stage  || $row->stage_id==E_REJECTED_STAGE) {
                                                             $total_count=$count_efiling_data[0]->total_rejected;
                                                         } elseif($row->stage_id==I_B_Defects_Cured_Stage) {
@@ -235,7 +236,7 @@
                                                         }
                                                         @endphp	                                                                       
                                                         <tr>
-                                                            <?php $href = ($total_count > 0) ? base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id , ENT_QUOTES))) : ''; ?>	
+                                                            <?php $href = ($total_count > 0) ? base_url("adminDashboard/stageList/" . htmlentities(url_encryption($stage_id , ENT_QUOTES))) : ''; ?>	
                                                             <td data-key="Stages"><a href="<?php echo $href; ?>"><i class="fa fa-square dark_blue"></i>
                                                                 {{ isset($row->admin_stage_name) ? $row->admin_stage_name : '' }}</a>
                                                             </td>
