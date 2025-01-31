@@ -14,14 +14,14 @@
                                 <th style="width: 40% !important;">Uploaded Document(s) </th>
                                 <th style="width: 15% !important;">Uploaded On </th>
                                 <th style="width: 15% !important;">Pages</th>
-                                <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK)  and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
+                                <?php if ($segment->getSegment(2) != 'caseDetails' and (!empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || !empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || !empty(getSessionData('login')) && $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK)  and in_array(!empty(getSessionData('efiling_details')) && getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
                                     <th style="width: 20% !important;">Delete</th>
                                 <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                            if (getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage) {
+                            if (!empty(getSessionData('efiling_details')) && getSessionData('efiling_details')['stage_id'] == I_B_Defected_Stage) {
                                 $Common_model = new CommonModel();
                                 $result = $Common_model->max_pending_stage_date(getSessionData('efiling_details')['registration_id']);
                             }
@@ -51,7 +51,7 @@
                                     </td>
                                     <td data-key="Uploaded On"><?= date('d-m-Y H:i:s', strtotime('+5 hours 30 minutes', strtotime($doc['uploaded_on']))); ?></td>
                                     <td data-key="Pages"><?= htmlentities($doc['page_no'], ENT_QUOTES); ?></td>
-                                    <?php if ($segment->getSegment(2) != 'caseDetails' and ((getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) and in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
+                                    <?php if ($segment->getSegment(2) != 'caseDetails' and (!empty(getSessionData('login')) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADVOCATE || !empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'] == USER_IN_PERSON || !empty(getSessionData('login')) && $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) and !empty(getSessionData('efiling_details')) && in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage, I_B_Defected_Stage)))) { ?>
                                         <td data-key="Delete">
                                             <?php
                                             if (isset($result) && strtotime($doc['uploaded_on']) > strtotime($result[0]->max_date) || in_array(getSessionData('efiling_details')['stage_id'], array(Draft_Stage, Initial_Defected_Stage))) {
@@ -68,7 +68,7 @@
             </div>
             <input type="hidden" name="caveateDocNum" id="caveateDocNum" data-caveateDocNum="<?php echo $caveateDocNum; ?>" />
             <!-- start : To show previously submitted and deleted petition while re-filing -->
-            <?php if ($segment->getSegment(2) != 'caseDetails' && !empty($uploaded_deleted_docs_while_refiling) && (getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)) { ?>
+            <?php if ($segment->getSegment(2) != 'caseDetails' && !empty($uploaded_deleted_docs_while_refiling) && (!empty(getSessionData('login')) && getSessionData('login')['ref_m_usertype_id'] == USER_ADMIN)) { ?>
                 <div class="table-sec">
                     <div class="table-responsive">
                         <table id="datatable-responsive1" class="table table-striped custom-table datatableresponsive">
