@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers\EfilingSearch;
 
 use App\Controllers\BaseController;
@@ -10,13 +11,11 @@ use App\Models\Affirmation\AffirmationModel;
 use App\Models\MiscellaneousDocs\GetDetailsModel as MDGetDetailsModel;
 use App\Models\MiscellaneousDocs\MiscellaneousDocsModel as MDMiscellaneousDocsModel;
 use App\Models\MiscellaneousDocs\ViewModel as MDViewModel;
-
 use App\Models\Caveat\ViewModel as CaveatViewModel;
 use App\Models\Citation\CitationModel;
 use App\Models\NewCase\ActSectionsModel as NewCaseActSectionsModel;
 use App\Models\NewCase\DropdownListModel as NewCaseDropdownListModel;
 use App\Models\NewCase\ViewModel as NewCaseViewModel;
-
 use App\Models\IA\GetDetailsModel as IAGetDetailsModel;
 use App\Models\IA\ViewModel as IAViewModel;
 use App\Models\Common\CommonModel;
@@ -24,6 +23,7 @@ use App\Models\GetCISStatus\GetCISStatusModel;
 
 class DefaultController extends BaseController
 {
+
     protected $request;
     protected $UploadDocsModel;
     protected $ReportModel;
@@ -47,7 +47,6 @@ class DefaultController extends BaseController
     protected $efiling_webservices;
     protected $Citation_model;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -70,81 +69,49 @@ class DefaultController extends BaseController
         $this->Get_CIS_Status_model = new GetCISStatusModel();
         $this->efiling_webservices = new Efiling_webservices();
         $this->Citation_model = new CitationModel();
-        $this->uri = service('uri');;
-        // $this->load->library('slice');
-        // $this->load->library('encryption');
-        // $this->load->model('report/ReportModel');
-        // $this->load->model('uploadDocuments/UploadDocsModel');
-        // $this->load->model('caveat/ViewModel');
-        // $this->load->library('webservices/efiling_webservices');
-        // $this->load->model('newcase/GetDetailsModel');
+        $this->uri = service('uri');
     }
+
     public function index()
     {
-
         extract($_REQUEST);
-        if(isset($efiling_number)){
+        if(isset($efiling_number)) {
             $efiling_number;
-        }
-        else{
+        } else {
             $efiling_number = '';
         }
-        // $this->load->model('report/ReportModel');
-
         $efiling_no =$efiling_number;
-
         $data = $this->ReportModel->get_efilingByefiling_no($efiling_no);
-
         if (!empty($data) && $data != null && count($data) != 0 && $data[0]->efiling_no != null) {
-            //echo $status = 'Data is found';
             $report=$data[0];
-           // echo '<pre>';print_r($report);
-// pr($report);
-
             if($report->efiling_type !='' && $report->efiling_type=='new_case') {
                 $rd='newcase.defaultController'; //. equal to / required
                 $id='/'.$report->registration_id . '/'. $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
-            }
-            else if($report->efiling_type !='' && $report->efiling_type=='misc_document') {
+            } else if($report->efiling_type !='' && $report->efiling_type=='misc_document') {
                 $rd='miscellaneous_docs.DefaultController'; //. equal to / required
                 $id='/'.$report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
-            }
-            else if($report->efiling_type !='' && $report->efiling_type=='IA') {
+            } else if($report->efiling_type !='' && $report->efiling_type=='IA') {
                 $rd='IA.DefaultController'; //. equal to / required
                 $id='/'.$report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
-            }
-            else if($report->efiling_type !='' && $report->efiling_type=='CAVEAT') {
+            } else if($report->efiling_type !='' && $report->efiling_type=='CAVEAT') {
                 $rd='case.caveat.crud'; //. equal to / required
                 $id='/'.$report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
-            }
-            else if($report->efiling_type !='' && $report->ref_m_efiled_type_id==OLD_CASES_REFILING) {
+            } else if($report->efiling_type !='' && $report->ref_m_efiled_type_id==OLD_CASES_REFILING) {
                 $rd='oldCaseRefiling.DefaultController'; //. equal to / required
                 $id='/'.$report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_type;
             }
-
-            $redirect_url =base_url('efiling_search/identify').$id;
-            //echo $efiling_no= '<a target="_blank" id="'.$id.'" href="'.$redirect_url.'">'. $report->efiling_no . '</a>';
-            //pr($redirect_url);
-
+            $redirect_url = base_url('efiling_search/identify').$id;
             return redirect()->to($redirect_url);
         }
-
-
-        // $this->load->view('templates/user_header');
-        // $this->load->view('efiling_search/efiling_search', @compact('efiling_number'));
-        // $this->load->view('templates/footer');
     }
 
     public function efiling_search()
     {
-        // pr($_REQUEST);
-       return $this->render('responsive_variant.case.efiling_search.search'); 
-
+       return $this->render('responsive_variant.case.efiling_search.search');
     }
 
     function search()
     {
-        $this->load->model('report/ReportModel');
         $diary_no = trim($_GET['diary_no']);
         $efiling_no = trim($_GET['efiling_no']);
         $efiling_year = trim($_GET['efiling_year']);
@@ -153,11 +120,8 @@ class DefaultController extends BaseController
         $filing_type_id = trim(url_decryption($_GET['filing_type_id']));
         $users_id = trim(url_decryption($_GET['users_id']));
         $stages = url_decryption($_GET['stage_id']);
-
         $data = $this->ReportModel->get_efiling_search_list($ActionFiledOn, $DateRange, array($stages), $filing_type_id, $users_id, $diary_no, $efiling_no,$efiling_year, $_SESSION['login']['admin_for_type_id'], $_SESSION['login']['admin_for_id']);
-
         if (!empty($data) && $data != null && count($data) != 0 && $data[0]->efiling_no != null) {
-
             $status = array('status' => 'true', 'msg' => 'Data is found',);
             $dataDBFinal11['customers'] = $data;
             $dataDBFinal11['status'] = $status;
@@ -169,71 +133,68 @@ class DefaultController extends BaseController
             echo json_encode($dataDBFinal11);
         }
     }
+
     function identifyByicmis()
     {
-
         $uris = $this->uri->segment(1);
         $muri = str_replace('.', '/', $uris);
-
-         $efilno = $this->uri->segment(3);
-         //$efiling_type = $this->uri->segment(4);
-         $getdata=$this->ReportModel->get_registration_id_efiling_type($efilno);
-         $registration_id=$getdata->registration_id;
-         $type=$getdata->ref_m_efiled_type_id;
-         $stage=$getdata->stage_id;
-         $efiling_type=$getdata->efiling_type;
-        //echo '<pre>'; print_r($getdata);echo '<pre>';exit();
-
+        $efilno = $this->uri->segment(3);
+        // $efiling_type = $this->uri->segment(4);
+        $getdata=$this->ReportModel->get_registration_id_efiling_type($efilno);
+        $registration_id=$getdata->registration_id;
+        $type=$getdata->ref_m_efiled_type_id;
+        $stage=$getdata->stage_id;
+        $efiling_type=$getdata->efiling_type;
         $ids = $registration_id . '#' . $type . '#' . $stage . '#' . $efiling_type;
-        //registration_id # ref_m_usertype_id # stage_id #  efiling_type (efiling_type='CAVEAT' or 'IA' or 'misc_document' or 'new_case')
+        // registration_id # ref_m_usertype_id # stage_id #  efiling_type (efiling_type='CAVEAT' or 'IA' or 'misc_document' or 'new_case')
         $idss = url_encryption($ids);
-        //echo '1@@@' . $idss;exit(0);
+        // echo '1@@@' . $idss; exit(0);
         // $this->slice->view('responsive_variant.case.efiling_search.view', @compact('idss'));
-        if (!empty($registration_id) && !empty($type) && !empty($stage)){ redirect('efiling_search/get_view_data/'.$idss); }else{ redirect('efiling_search');}
+        if (!empty($registration_id) && !empty($type) && !empty($stage)) {
+            return redirect()->to(base_url('efiling_search/get_view_data/'.$idss));
+        } else {
+            return redirect()->to(base_url('efiling_search'));
+        }
 
     }
-   public function identify()
-   {
-    // $uris = $this->request->uri->segment(1);
-    $uris = service('uri');
-    $sLast = $uris->getSegment(1);
-    $uris = $this->request->getUri(1);
-    // pr($uris->getSegment(3));
 
-    $muri = str_replace('.', '/', $sLast);
-   
+    public function identify()
+    {
+        // $uris = $this->request->uri->segment(1);
+        $uris = service('uri');
+        $sLast = $uris->getSegment(1);
+        $uris = $this->request->getUri(1);
+        $muri = str_replace('.', '/', $sLast);    
         // $registration_id = $this->uri->segment(3);
         // $type = $this->uri->segment(4);
         // $stage = $this->uri->segment(5);
         // $efiling_type = $this->uri->segment(6);
-    $registration_id = $uris->getSegment(3);
-    $type = $uris->getSegment(4);
-    $stage = $uris->getSegment(5);
-    $efiling_type = $uris->getSegment(6);
-    $this->CommonModel->get_efiling_num_basic_Details($registration_id);
-    $ids = $registration_id . '#' . $type . '#' . $stage . '#' . $efiling_type;
-             //registration_id # ref_m_usertype_id # stage_id #  efiling_type (efiling_type='CAVEAT' or 'IA' or 'misc_document' or 'new_case')
-    $idss = url_encryption($ids);
-        //echo '1@@@' . $idss;exit(0);
-       // $this->slice->view('responsive_variant.case.efiling_search.view', @compact('idss'));
-    if (!empty($registration_id) && !empty($type) && !empty($stage)){
-        // $urld = base_url('efiling_search/DefaultController/get_view_data/'.$idss);
-        // $data['registration_id'] = $registration_id;
-        // $data['ref_m_efiled_type_id'] = $type;
-        // $data['ref_m_usertype_id'] = $type;
-        // $data['stage_id'] = $stage;
-        // $data['efiling_type'] = $efiling_type;
-        // $_SESSION['efiling_details'] = $data;
-        return redirect()->to(base_url('efiling_search/DefaultController/get_view_data/'.$idss)); 
-    }else{
-       return redirect()->to(base_url('efiling_search'));
-   }
-
-}
+        $registration_id = $uris->getSegment(3);
+        $type = $uris->getSegment(4);
+        $stage = $uris->getSegment(5);
+        $efiling_type = $uris->getSegment(6);
+        $this->CommonModel->get_efiling_num_basic_Details($registration_id);
+        $ids = $registration_id . '#' . $type . '#' . $stage . '#' . $efiling_type;
+        // registration_id # ref_m_usertype_id # stage_id #  efiling_type (efiling_type='CAVEAT' or 'IA' or 'misc_document' or 'new_case')
+        $idss = url_encryption($ids);
+        // echo '1@@@' . $idss; exit(0);
+        // $this->slice->view('responsive_variant.case.efiling_search.view', @compact('idss'));
+        if (!empty($registration_id) && !empty($type) && !empty($stage)) {
+            // $urld = base_url('efiling_search/DefaultController/get_view_data/'.$idss);
+            // $data['registration_id'] = $registration_id;
+            // $data['ref_m_efiled_type_id'] = $type;
+            // $data['ref_m_usertype_id'] = $type;
+            // $data['stage_id'] = $stage;
+            // $data['efiling_type'] = $efiling_type;
+            // $_SESSION['efiling_details'] = $data;
+            return redirect()->to(base_url('efiling_search/DefaultController/get_view_data/'.$idss)); 
+        } else {
+            return redirect()->to(base_url('efiling_search'));
+        }
+    }
 
     function view($idss = null)
     {
-       // echo $idss; exit();
         return  $this->render('responsive_variant.case.efiling_search.view', @compact('idss'));
     }
 
@@ -241,52 +202,49 @@ class DefaultController extends BaseController
     {
         if ($id) {
             $id = url_decryption($id);
-
             $InputArrray = explode('#', $id);
             $data['registration_id'] = $registration_id = $InputArrray[0];
             $data['ref_m_usertype_id'] = $type = $InputArrray[1];
             $data['stage_id'] = $stage = $InputArrray[2];
             $data['efiling_type'] = $efiling_type = trim($InputArrray[3]);
-
             $data['efiling_search_header']= 'efiling_search';
             $data_efiling_search['efiling_search_header']= 'efiling_search';
             if (!empty($registration_id) && !empty($efiling_type)) {
                 $data['uploaded_docs'] = $this->UploadDocsModel->get_uploaded_pdfs($registration_id);
                 if ($efiling_type == 'CAVEAT') {
-
                     $data['efiling_civil_data'] = $this->CaveatViewModel->get_efiling_civil_details($registration_id);
                     $data['extra_party_details'] = $this->CaveatViewModel->get_extra_party_preview_details($registration_id);
                     $subordinate_data = $this->CaveatViewModel->get_sub_qj_hc_court_details($registration_id);
-                    if(isset($subordinate_data[0]['sub_qj_high']) && !empty($subordinate_data[0]['sub_qj_high']) && $subordinate_data[0]['sub_qj_high'] == 3){
+                    if(isset($subordinate_data[0]['sub_qj_high']) && !empty($subordinate_data[0]['sub_qj_high']) && $subordinate_data[0]['sub_qj_high'] == 3) {
                         $case_type_id = !empty($subordinate_data[0]['case_type']) ? (int)$subordinate_data[0]['case_type'] : NULL;
                         $est_code = !empty($subordinate_data[0]['bench_code']) ? $subordinate_data[0]['bench_code'] : NULL;
                         $hc_id= !empty($subordinate_data[0]['court_id']) ? (int)$subordinate_data[0]['court_id'] : NULL;
                         $params = array();
-                        if(isset($hc_id) && !empty($hc_id)){
+                        if(isset($hc_id) && !empty($hc_id)) {
                             $params['type'] = 1;
                             $params['hc_id'] = $hc_id;
                             $highCourtDetails = $this->CaveatViewModel->getCourtDetails($params);
-                            if(isset($highCourtDetails[0]['name']) && !empty($highCourtDetails[0]['name'])){
+                            if(isset($highCourtDetails[0]['name']) && !empty($highCourtDetails[0]['name'])) {
                                 $highCourtName = $highCourtDetails[0]['name'];
                                 $subordinate_data['0']['highCourtName'] = $highCourtName;
                             }
                         }
-                        if(isset($hc_id) && !empty($hc_id) && isset($est_code) && !empty($est_code)){
+                        if(isset($hc_id) && !empty($hc_id) && isset($est_code) && !empty($est_code)) {
                             $params['type'] = 2;
                             $params['hc_id'] = $hc_id;
                             $params['est_code'] = $est_code;
                             $benchDetails = $this->CaveatViewModel->getCourtDetails($params);
-                            if(isset($benchDetails[0]['name']) && !empty($benchDetails[0]['name'])){
+                            if(isset($benchDetails[0]['name']) && !empty($benchDetails[0]['name'])) {
                                 $benchName = $benchDetails[0]['name'];
                                 $subordinate_data['0']['benchName'] = $benchName;
                             }
                         }
-                        if(isset($case_type_id) && !empty($case_type_id) && isset($est_code) && !empty($est_code)){
+                        if(isset($case_type_id) && !empty($case_type_id) && isset($est_code) && !empty($est_code)) {
                             $params['type'] = 3;
                             $params['id'] = $case_type_id;
                             $params['est_code'] = $est_code;
                             $caseDetails = $this->CaveatViewModel->getCourtDetails($params);
-                            if(isset($caseDetails[0]['type_name']) && !empty($caseDetails[0]['type_name'])){
+                            if(isset($caseDetails[0]['type_name']) && !empty($caseDetails[0]['type_name'])) {
                                 $caseName = $caseDetails[0]['type_name'];
                                 $subordinate_data['0']['caseName'] = $caseName;
                             }
@@ -295,180 +253,113 @@ class DefaultController extends BaseController
                     $data['subordinate_court_data'] =$subordinate_data;
                     $data['subordinate_court_details'] = $this->GetDetailsModel->get_subordinate_court_details($registration_id);
                     $data['efiled_docs_list'] = $this->CaveatViewModel->get_index_items_list($registration_id);
-
                     $data['payment_details'] = $this->CaveatViewModel->get_payment_details($registration_id);
-
-                    // pr($data['petitioner_details']);
                     return $this->render('caveat.caveat_preview',$data);
-                    // $this->load->view('templates/user_header',$data_efiling_search);
-                    // $this->load->view('caveat/caveat_preview', $data);
-                    // $this->load->view('templates/footer');
-                }
-                else if ($efiling_type == 'IA') {
-
-                    // $this->GetDetailsModel = new App\Models\IA\GetDetailsModel();
-                    
-
-                    $data['case_details'] = $this->IAGetDetailsModel->get_case_details($registration_id);
-                        
+                } else if ($efiling_type == 'IA') {
+                    $data['case_details'] = $this->IAGetDetailsModel->get_case_details($registration_id);                        
                     $data['filing_for_details'] = $this->IAViewModel->get_filing_for_parties($registration_id);
-
                     $data['efiled_docs_list'] = $this->IAViewModel->get_index_items_list($registration_id);
-
                     $data['payment_details'] = $this->IAViewModel->get_payment_details($registration_id);
-
                     $data['esigned_docs_details'] = $this->AffirmationModel->get_esign_doc_details($registration_id);
                     return $this->render('IA.ia_preview',$data);
-                    // $this->load->view('templates/user_header',$data_efiling_search);
-                    // $this->load->view('IA/ia_preview', $data);
-                    // $this->load->view('templates/footer');
-                }
-                else if ($efiling_type == 'misc_document') {
-                  
-
+                } else if ($efiling_type == 'misc_document') {
                     $data['case_details'] = $this->MDGetDetailsModel->get_case_details($registration_id);
                     $data['filing_for_details'] = $this->MDViewModel->get_filing_for_parties($registration_id);
                     $data['efiled_docs_list'] = $this->MDViewModel->get_index_items_list($registration_id);
                     $data['payment_details'] = $this->MDViewModel->get_payment_details($registration_id);
                     $data['esigned_docs_details'] = $this->AffirmationModel->get_esign_doc_details($registration_id);
                     return $this->render('miscellaneous_docs.misc_docs_preview',$data);
-
-                    // $this->load->view('templates/user_header',$data_efiling_search);
-                    // $this->load->view('miscellaneous_docs/misc_docs_preview', $data);
-                    // $this->load->view('templates/footer');
-
-                }
-                else if ($efiling_type == 'OLD-CASES-REFILING') {
-
+                } else if ($efiling_type == 'OLD-CASES-REFILING') {
                     $data['case_details'] = $this->GetDetailsModel->get_case_details($registration_id);
-
                     $data['filing_for_details'] = $this->ViewModel->get_filing_for_parties($registration_id);
-
                     $data['efiled_docs_list'] = $this->ViewModel->get_index_items_list($registration_id);
-
                     $data['payment_details'] = $this->ViewModel->get_payment_details($registration_id);
-
                     $data['esigned_docs_details'] = $this->AffirmationModel->get_esign_doc_details($registration_id);
-
-                    // $this->load->view('templates/user_header',$data_efiling_search);
-                    // $this->load->view('oldCaseRefiling/old_efiling_preview', $data);
-                    // $this->load->view('templates/footer');
-
                     return $this->render('oldCaseRefiling.old_efiling_preview',$data);
-
-                }
-                else if ($efiling_type == 'new_case') {
-                     
+                } else if ($efiling_type == 'new_case') {                     
                     $data['new_case_details'] = $this->GetDetailsModel->get_new_case_details($registration_id);
-                    $data['sc_case_type'] = $this->NewCaseDropdownListModel->get_sci_case_type_name($data['new_case_details'][0]->sc_case_type_id);
-                    $data['main_subject_cat'] = $this->NewCaseDropdownListModel->get_main_subject_category($data['new_case_details'][0]->subject_cat);
-
+                    $data['sc_case_type'] = $this->NewCaseDropdownListModel->get_sci_case_type_name($data['new_case_details'][0]['sc_case_type_id']);
+                    $data['main_subject_cat'] = $this->NewCaseDropdownListModel->get_main_subject_category($data['new_case_details'][0]['subject_cat']);
                     $data['petitioner_details'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => 'P', 'm_a_type' => 'M', 'party_id' => NULL, 'view_lr_list' => FALSE));
                     $data['respondent_details'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => 'R', 'm_a_type' => 'M', 'party_id' => NULL, 'view_lr_list' => FALSE));
-
                     $data['extra_parties_list'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => NULL, 'm_a_type' => 'A', 'party_id' => NULL, 'view_lr_list' => FALSE));
-
                     $data['lr_parties_list'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => NULL, 'm_a_type' => NULL, 'party_id' => NULL, 'view_lr_list' => TRUE));
-
                     $data['act_sections_list'] = $this->NewCaseActSectionsModel->get_act_sections_list($registration_id);
                     $data['party_details'] = $this->GetDetailsModel->get_case_parties_details($registration_id, array('p_r_type' => 'P', 'm_a_type' => 'M', 'party_id' => NULL, 'view_lr_list' => FALSE));
-
                     $data['subordinate_court_details'] = $this->GetDetailsModel->get_subordinate_court_details($registration_id);
-
                     $data['efiled_docs_list'] = $this->NewCaseViewModel->get_index_items_list($registration_id);
-
                     $data['payment_details'] = $this->NewCaseViewModel->get_payment_details($registration_id);
                     $data['esigned_docs_details'] = $this->AffirmationModel->get_esign_doc_details($registration_id);
                     return $this->render('newcase.efile_details_view',$data);
-
-                }
-                else {
-                    //echo 'dat not found';exit();
-                    redirect('efiling_search');
+                } else {
+                    return redirect()->to(base_url('efiling_search'));
                 }
             }
-
-
         } else {
-            //echo 'dat not found Default access';exit();
-            redirect('efiling_search');
+            return redirect()->to(base_url('efiling_search'));
         }
     }
 
     // START CRON JOB FOR SCRUTINY STATUS
-    public function cronJobForScrutinyStatus(){
-        $this->load->model('getCIS_status/Get_CIS_Status_model');
-        $this->load->library('webservices/efiling_webservices');
+    public function cronJobForScrutinyStatus()
+    {
         $totalCountData = $this->Get_CIS_Status_model->countPendingScrutiny(I_B_Approval_Pending_Admin_Stage,1,USER_ADMIN,USER_ADVOCATE);
         $totalData = $this->Get_CIS_Status_model->countPendingScrutiny(I_B_Approval_Pending_Admin_Stage,'',USER_ADMIN,USER_ADVOCATE);
         $totalRows = !empty($totalCountData[0]->total) ? $totalCountData[0]->total : NULL;
         $partionSize = 0; //partition size
         $totalPartion = 0; //total partition
-        if(isset($totalRows) && !empty($totalRows)){
-            if($totalRows >= 10000){
+        if(isset($totalRows) && !empty($totalRows)) {
+            if($totalRows >= 10000) {
                 $partionSize = 500;
-            }
-            else if($totalRows >= 8000){
+            } else if($totalRows >= 8000) {
                 $partionSize = 400;
-            }
-            else if($totalRows >= 6000){
+            } else if($totalRows >= 6000) {
                 $partionSize = 300;
-            }
-            else if($totalRows >= 4000){
+            } else if($totalRows >= 4000) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 2000){
+            } else if($totalRows >= 2000) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 1000){
+            } else if($totalRows >= 1000) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 800){
+            } else if($totalRows >= 800) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 600){
+            } else if($totalRows >= 600) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 400){
+            } else if($totalRows >= 400) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 200){
+            } else if($totalRows >= 200) {
                 $partionSize = 200;
-            }
-            else if($totalRows >= 100){
+            } else if($totalRows >= 100) {
                 $partionSize = 100;
-            }
-            else if($totalRows >= 50){
+            } else if($totalRows >= 50) {
                 $partionSize = 50;
-            }
-            else{
+            } else {
                 $partionSize = $totalRows;
             }
         }
-        if(isset($totalRows) && !empty($totalRows)){
+        if(isset($totalRows) && !empty($totalRows)) {
             $totalPartion = ceil($totalRows/$partionSize);
         }
         $efilingArrChunks = !empty($totalData[0]) ? array_chunk(array_column($totalData,'efiling_no'),$partionSize,false) : NULL;
         $efilingArrChunksData = !empty($totalData[0]) ? array_chunk($totalData,$partionSize,false) : NULL;
         $table_name = 'efil.tbl_cron_job_history';
-        $this->load->model('citation/Citation_model');
         if(isset($totalPartion) && !empty($totalPartion)) {
             for ($i = 0; $i < $totalPartion; $i++) {
                 $efilingStr = !empty($efilingArrChunks[$i]) ? implode(',',$efilingArrChunks[$i]) : NULL;
                 $result = $this->efiling_webservices->get_new_case_efiling_nums_status_from_SCIS($efilingStr);
                 $efiligNoFileTypeArr = array();
-                if(isset($efilingArrChunksData[$i]) && !empty($efilingArrChunksData[$i])){
-                    foreach ($efilingArrChunksData[$i] as $k=>$v){
+                if(isset($efilingArrChunksData[$i]) && !empty($efilingArrChunksData[$i])) {
+                    foreach ($efilingArrChunksData[$i] as $k=>$v) {
                         $efiligNoFileTypeArr[$v->efiling_no] = $v->efiling_for_type_id.'#'.$v->registration_id.'#'.$v->stage_id;
                     }
                 }
-                if(isset($result->consumed_data) && !empty($result->consumed_data)){
-                    foreach ($result->consumed_data as $k=>$v){
+                if(isset($result->consumed_data) && !empty($result->consumed_data)) {
+                    foreach ($result->consumed_data as $k=>$v) {
                         $fileType = NULL;
                         $registration_id = NULL;
                         $stageId = NULL;
-                        if(array_key_exists($v->efiling_no,$efiligNoFileTypeArr)){
-                            if(isset($efiligNoFileTypeArr[$v->efiling_no]) && !empty($efiligNoFileTypeArr[$v->efiling_no])){
+                        if(array_key_exists($v->efiling_no,$efiligNoFileTypeArr)) {
+                            if(isset($efiligNoFileTypeArr[$v->efiling_no]) && !empty($efiligNoFileTypeArr[$v->efiling_no])) {
                                 $efilDataArr = explode('#',$efiligNoFileTypeArr[$v->efiling_no]);
                                 $fileType = !empty($efilDataArr[0]) ? (int)trim($efilDataArr[0]) : NULL;
                                 $registration_id = !empty($efilDataArr[1]) ? $efilDataArr[1] : NULL;
@@ -483,8 +374,8 @@ class DefaultController extends BaseController
                         $cronHisArr['created_at'] = date('Y-m-d H:i:s');
                         $cronHisArr['status'] = true;
                         $this->Citation_model->insertData($table_name,$cronHisArr);
-                        if(isset($fileType) && !empty($fileType)){
-                            switch ($fileType){
+                        if(isset($fileType) && !empty($fileType)) {
+                            switch ($fileType) {
                                 case E_FILING_TYPE_NEW_CASE :
                                     $this->get_cis_status_for_newcase($v,$registration_id, $efiling_no, $stageId );
                                     break;
@@ -508,7 +399,9 @@ class DefaultController extends BaseController
             }
         }
     }
-    private function get_cis_status_for_newcase($data,$registration_id, $efiling_num, $curr_stage) {
+
+    private function get_cis_status_for_newcase($data,$registration_id, $efiling_num, $curr_stage)
+    {
         $curr_dt = date('Y-m-d H:i:s');
         $response = $data;
         if ($response->status == 'A') {
@@ -570,23 +463,26 @@ class DefaultController extends BaseController
                 $documents_status = $this->get_icmis_documents_status($registration_id, $cis_documents, TRUE, FALSE, $curr_dt);
             }
             $update_status = $this->Get_CIS_Status_model->update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_status[1], $objections_status[2], $documents_status[1]);
-//            if ($update_status) {
-//                if ($next_stage) {
-//                    if ($next_stage == I_B_Defected_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == E_Filed_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
-//                        exit(0);
-//                    }
-//                }
-//            }
+            // if ($update_status) {
+            //     if ($next_stage) {
+            //         if ($next_stage == I_B_Defected_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == E_Filed_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
+            //             exit(0);
+            //         }
+            //     }
+            // }
         }
     }
-    private function get_cis_status_for_miscdoc($data,$registration_id, $efiling_num , $curr_stage) {
+
+    private function get_cis_status_for_miscdoc($data,$registration_id, $efiling_num , $curr_stage)
+    {
+        $objections_status = array();
         $response = $data;
         $curr_dt = date('Y-m-d H:i:s');
         if ($response->status == 'A') {
@@ -598,23 +494,26 @@ class DefaultController extends BaseController
                 $next_stage = Document_E_Filed;
             }
             $update_status = $this->Get_CIS_Status_model->update_misc_doc_ia_status($registration_id, $next_stage, $curr_dt, $objections_status[1], $objections_status[2], $documents_status[1]);
-//            if ($update_status) {
-//                if ($next_stage) {
-//                    if ($next_stage == I_B_Defected_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == Document_E_Filed) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
-//                        exit(0);
-//                    }
-//                }
-//            }
+            // if ($update_status) {
+            //     if ($next_stage) {
+            //         if ($next_stage == I_B_Defected_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == Document_E_Filed) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
+            //             exit(0);
+            //         }
+            //     }
+            // }
         }
     }
-    private function get_cis_status_foria($data,$registration_id, $efiling_num, $curr_stage) {
+
+    private function get_cis_status_foria($data,$registration_id, $efiling_num, $curr_stage)
+    {
+        $objections_status = array();
         $response = $data;
         $curr_dt = date('Y-m-d H:i:s');
         if ($response->status == 'A') {
@@ -626,23 +525,25 @@ class DefaultController extends BaseController
                 $next_stage = IA_E_Filed;
             }
             $update_status = $this->Get_CIS_Status_model->update_misc_doc_ia_status($registration_id, $next_stage, $curr_dt, $objections_status[1], $objections_status[2], $documents_status[1]);
-//           if ($update_status) {
-//               if ($next_stage) {
-//                   if ($next_stage == I_B_Defected_Stage) {
-//                       echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
-//                       exit(0);
-//                   } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
-//                       echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
-//                       exit(0);
-//                   } elseif ($next_stage == IA_E_Filed) {
-//                       echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
-//                       exit(0);
-//                   }
-//               }
-//           }
+            // if ($update_status) {
+            //     if ($next_stage) {
+            //         if ($next_stage == I_B_Defected_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == IA_E_Filed) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
+            //             exit(0);
+            //         }
+            //     }
+            // }
         }
     }
-    private function get_cis_status_forcaveat($data,$registration_id, $efiling_num, $curr_stage) {
+
+    private function get_cis_status_forcaveat($data,$registration_id, $efiling_num, $curr_stage)
+    {
         $curr_dt = date('Y-m-d H:i:s');
         $response = $data;
         if ($response->status == 'A') {
@@ -704,23 +605,25 @@ class DefaultController extends BaseController
                 $documents_status = $this->get_icmis_documents_status($registration_id, $cis_documents, TRUE, FALSE, $curr_dt);
             }
             $update_status = $this->Get_CIS_Status_model->update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_status[1], $objections_status[2], $documents_status[1]);
-//            if ($update_status) {
-//                if ($next_stage) {
-//                    if ($next_stage == I_B_Defected_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == E_Filed_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
-//                        exit(0);
-//                    }
-//                }
-//            }
+            // if ($update_status) {
+            //     if ($next_stage) {
+            //         if ($next_stage == I_B_Defected_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == E_Filed_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
+            //             exit(0);
+            //         }
+            //     }
+            // }
         }
     }
-    private function get_cis_status_deficit_court_fee($data,$registration_id, $efiling_num, $curr_stage) {
+
+    private function get_cis_status_deficit_court_fee($data,$registration_id, $efiling_num, $curr_stage)
+    {
         $curr_dt = date('Y-m-d H:i:s');
         $response = $data;
         if ($response->status == 'A') {
@@ -782,23 +685,25 @@ class DefaultController extends BaseController
                 $documents_status = $this->get_icmis_documents_status($registration_id, $cis_documents, TRUE, FALSE, $curr_dt);
             }
             $update_status = $this->Get_CIS_Status_model->update_icmis_case_status($registration_id, $next_stage, $curr_dt, $case_details, $objections_status[1], $objections_status[2], $documents_status[1]);
-//            if ($update_status) {
-//                if ($next_stage) {
-//                    if ($next_stage == I_B_Defected_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
-//                        exit(0);
-//                    } elseif ($next_stage == E_Filed_Stage) {
-//                        echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
-//                        exit(0);
-//                    }
-//                }
-//            }
+            // if ($update_status) {
+            //     if ($next_stage) {
+            //         if ($next_stage == I_B_Defected_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Defective Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == I_B_Approval_Pending_Admin_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Pending Scrutiny Stage.";
+            //             exit(0);
+            //         } elseif ($next_stage == E_Filed_Stage) {
+            //             echo "eFiling No. " . $efiling_num . " updated to Efiled Stage.";
+            //             exit(0);
+            //         }
+            //     }
+            // }
         }
     }
-    private function get_icmis_objections_status($registration_id, $cis_objections, $curr_dt) {
+
+    private function get_icmis_objections_status($registration_id, $cis_objections, $curr_dt)
+    {
         $old_objections = $this->Get_CIS_Status_model->get_icmis_objections_list($registration_id);
         $insert_objections = array();
         $update_objections = array();
@@ -844,7 +749,9 @@ class DefaultController extends BaseController
         }
         return array($objections_pending, $insert_objections, $update_objections);
     }
-    private function get_icmis_documents_status($registration_id, $cis_documents, $ia_only, $check_verify, $curr_dt) {
+
+    private function get_icmis_documents_status($registration_id, $cis_documents, $ia_only, $check_verify, $curr_dt)
+    {
         $efil_docs = $temp_efil_docs = $this->Get_CIS_Status_model->get_efiled_docs_list($registration_id, $ia_only);
         $i = 0;
         foreach ($temp_efil_docs as $e_doc) {
@@ -888,6 +795,5 @@ class DefaultController extends BaseController
         }
         return array($documents_pending, $update_documents);
     }
-    // END CRON JOB FOR SCRUTINY STATUS
 
 }
