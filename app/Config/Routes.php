@@ -139,6 +139,7 @@ $routes->match(['GET', 'POST'], 'case/mentioning/(:any)', 'ResponsiveVariantRout
 $routes->match(['GET', 'POST'], 'case/certificate/(:any)', 'ResponsiveVariantRouteController::showCaseCertificateListing/$1');
 $routes->match(['GET', 'POST'], 'case/advocate/(:num)', 'ResponsiveVariantRouteController::showAdvocateData/$1');
 $routes->match(['GET', 'POST'], 'efiling_search/DefaultController', 'EfilingSearch\DefaultController::index');
+$routes->match(['GET', 'POST'], 'efiling_search/DefaultController/identify/(:any)', 'EfilingSearch\DefaultController::identify/$1');
 $routes->match(['GET', 'POST'], 'efiling_search/DefaultController/get_view_data/(:any)', 'EfilingSearch\DefaultController::get_view_data/$1');
 // $routes->match(['GET', 'POST'], 'efiling_search/(:any)', 'EfilingSearch\DefaultController::efiling_search/$1');
 $routes->match(['GET', 'POST'], 'efiling_search/identify/(:any)/(:any)/(:any)/(:any)', 'EfilingSearch\DefaultController::identify/$1/$2/$3/$4');
