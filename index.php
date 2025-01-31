@@ -54,3 +54,21 @@ $paths = new Config\Paths();
 require $paths->systemDirectory . '/Boot.php';
 
 exit(CodeIgniter\Boot::bootWeb($paths));
+
+$client_ip=getClientIP();
+if($client_ip)
+{
+    $ip_address = explode(".", $client_ip);
+   /*if(($ip_address[0]==10 || $ip_address[0]==164)  && ($ip_address[1]==40 || $ip_address[1]==249 || $ip_address[1]==25 || $ip_address[1]==26 || $ip_address[1]==100))
+    {
+        ##do nothing
+    } else
+    {
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1); ## to debug your maintenance view
+
+        require_once 'maintenance.php'; ## call view
+        return;
+        exit();
+    }*/
+}

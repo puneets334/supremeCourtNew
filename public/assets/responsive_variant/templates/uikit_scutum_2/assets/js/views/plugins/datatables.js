@@ -1,6 +1,6 @@
 /*
 *  Scutum Admin_template
-*  @version v1.0.1
+*  @version v2.2.1
 *  @author tzd
 *  @license http://themeforest.net/licenses
 
