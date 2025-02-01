@@ -362,52 +362,52 @@
 												foreach ($stage_list as $row) {
 													if($row->meant_for =='R') {
 														$total_count=0;
-														if($row['stage_id']==New_Filing_Stage) {
+														if($row->stage_id==New_Filing_Stage) {
 															$total_count=$count_efiling_data[0]->total_new_efiling;
-														} elseif($row['stage_id']==DEFICIT_COURT_FEE) {
+														} elseif($row->stage_id==DEFICIT_COURT_FEE) {
 															$total_count=$count_efiling_data[0]->total_efiled_deficit;
-														} elseif($row['stage_id']==Initial_Defected_Stage) {
+														} elseif($row->stage_id==Initial_Defected_Stage) {
 															$total_count=$count_efiling_data[0]->total_not_accepted;
-														} elseif($row['stage_id']==Transfer_to_CIS_Stage) {
+														} elseif($row->stage_id==Transfer_to_CIS_Stage) {
 															$total_count=$count_efiling_data[0]->total_available_for_cis;
-														} elseif($row['stage_id']==Get_From_CIS_Stage) {
+														} elseif($row->stage_id==Get_From_CIS_Stage) {
 															$total_count=0;
-														} elseif($row['stage_id']==Initial_Defects_Cured_Stage || $row['stage_id']==DEFICIT_COURT_FEE_PAID) {
+														} elseif($row->stage_id==Initial_Defects_Cured_Stage || $row->stage_id==DEFICIT_COURT_FEE_PAID) {
 															$total_count=$count_efiling_data[0]->total_refiled_cases;
-														} elseif($row['stage_id']==Transfer_to_IB_Stage) {
+														} elseif($row->stage_id==Transfer_to_IB_Stage) {
 															$total_count=$count_efiling_data[0]->total_transfer_to_efiling_sec;
-														} elseif($row['stage_id']==I_B_Approval_Pending_Admin_Stage) {
+														} elseif($row->stage_id==I_B_Approval_Pending_Admin_Stage) {
 															$total_count=$count_efiling_data[0]->total_pending_scrutiny;
-														} elseif($row['stage_id']==I_B_Defected_Stage) {
+														} elseif($row->stage_id==I_B_Defected_Stage) {
 															$total_count=$count_efiling_data[0]->total_lodged_cases;
-														} elseif($row['stage_id']==I_B_Rejected_Stage  || $row['stage_id']==E_REJECTED_STAGE) {
+														} elseif($row->stage_id==I_B_Rejected_Stage  || $row->stage_id==E_REJECTED_STAGE) {
 															$total_count=$count_efiling_data[0]->total_rejected;
-														} elseif($row['stage_id']==I_B_Defects_Cured_Stage) {
+														} elseif($row->stage_id==I_B_Defects_Cured_Stage) {
 															$total_count=$count_efiling_data[0]->total_defect_cured;
-														} elseif($row['stage_id']==LODGING_STAGE || $row['stage_id']==DELETE_AND_LODGING_STAGE || $row['stage_id']==MARK_AS_ERROR) {
+														} elseif($row->stage_id==LODGING_STAGE || $row->stage_id==DELETE_AND_LODGING_STAGE || $row->stage_id==MARK_AS_ERROR) {
 															$total_count=$count_efiling_data[0]->total_lodged_cases;
-														} elseif($row['stage_id']==E_Filed_Stage || $row['stage_id']==E_FILING_TYPE_NEW_CASE || $row['stage_id']==CDE_ACCEPTED_STAGE || $row['stage_id']==E_FILING_TYPE_CDE) {
+														} elseif($row->stage_id==E_Filed_Stage || $row->stage_id==E_FILING_TYPE_NEW_CASE || $row->stage_id==CDE_ACCEPTED_STAGE || $row->stage_id==E_FILING_TYPE_CDE) {
 															$total_count=$count_efiling_data[0]->total_efiled_cases;
-														} elseif($row['stage_id']==Document_E_Filed || $row['stage_id']==E_FILING_TYPE_MISC_DOCS) {
+														} elseif($row->stage_id==Document_E_Filed || $row->stage_id==E_FILING_TYPE_MISC_DOCS) {
 															$total_count=$count_efiling_data[0]->total_efiled_docs;
-														} elseif($row['stage_id']==DEFICIT_COURT_FEE_E_FILED || $row['stage_id']==E_FILING_TYPE_DEFICIT_COURT_FEE) {
+														} elseif($row->stage_id==DEFICIT_COURT_FEE_E_FILED || $row->stage_id==E_FILING_TYPE_DEFICIT_COURT_FEE) {
 															$total_count=$count_efiling_data[0]->total_efiled_deficit;
-														} elseif($row['stage_id']==IA_E_Filed || $row['stage_id']==E_FILING_TYPE_IA) {
+														} elseif($row->stage_id==IA_E_Filed || $row->stage_id==E_FILING_TYPE_IA) {
 															$total_count=$count_efiling_data[0]->total_efiled_ia;
-														} elseif($row['stage_id']==HOLD) {
+														} elseif($row->stage_id==HOLD) {
 															$total_count=$count_efiling_data[0]->total_hold_cases;
-														} elseif($row['stage_id']==DISPOSED) {
+														} elseif($row->stage_id==DISPOSED) {
 															$total_count=$count_efiling_data[0]->total_hold_disposed_cases;
 														}
 														?>
 														<tr>
 															<?php $users_read_only_array = array(USER_ADMIN_READ_ONLY,USER_EFILING_ADMIN);
 															if (in_array($_SESSION['login']['ref_m_usertype_id'], $users_read_only_array)) { ?>
-															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("report/search/list/" . htmlentities(url_encryption($row['stage_id'], ENT_QUOTES))); ?>
+															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("report/search/list/" . htmlentities(url_encryption($row->stage_id, ENT_QUOTES))); ?>
 															<?php } else{ ?>
-																<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row['stage_id'], ENT_QUOTES))); ?>
+																<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id, ENT_QUOTES))); ?>
 															<?php } ?>
-															<td><p><a href="<?php echo $href; ?>" ><i class="fa fa-square purple"></i><?=$row['admin_stage_name']?></a></p></td>
+															<td><p><a href="<?php echo $href; ?>" ><i class="fa fa-square purple"></i><?=$row->admin_stage_name?></a></p></td>
 															<td><p><a href="<?php echo $href; ?>" ><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></p></td>
 														</tr>
 														<?php
@@ -441,46 +441,46 @@
 												foreach ($stage_list as $row) {
 													if($row->meant_for =='A') {
 														$total_count=0;
-														if($row['stage_id']==New_Filing_Stage) {
+														if($row->stage_id==New_Filing_Stage) {
 															$total_count=$count_efiling_data[0]->total_new_efiling;
-														} elseif($row['stage_id']==DEFICIT_COURT_FEE) {
+														} elseif($row->stage_id==DEFICIT_COURT_FEE) {
 															$total_count=$count_efiling_data[0]->total_efiled_deficit;
-														} elseif($row['stage_id']==Initial_Defected_Stage) {
+														} elseif($row->stage_id==Initial_Defected_Stage) {
 															$total_count=$count_efiling_data[0]->total_not_accepted;
-														} elseif($row['stage_id']==Transfer_to_CIS_Stage) {
+														} elseif($row->stage_id==Transfer_to_CIS_Stage) {
 															$total_count=$count_efiling_data[0]->total_available_for_cis;
-														} elseif($row['stage_id']==Get_From_CIS_Stage) {
+														} elseif($row->stage_id==Get_From_CIS_Stage) {
 															$total_count=0;
-														} elseif($row['stage_id']==Initial_Defects_Cured_Stage || $row['stage_id']==DEFICIT_COURT_FEE_PAID) {
+														} elseif($row->stage_id==Initial_Defects_Cured_Stage || $row->stage_id==DEFICIT_COURT_FEE_PAID) {
 															$total_count=$count_efiling_data[0]->total_refiled_cases;
-														} elseif($row['stage_id']==Transfer_to_IB_Stage) {
+														} elseif($row->stage_id==Transfer_to_IB_Stage) {
 															$total_count=$count_efiling_data[0]->total_transfer_to_efiling_sec;
-														} elseif($row['stage_id']==I_B_Approval_Pending_Admin_Stage) {
+														} elseif($row->stage_id==I_B_Approval_Pending_Admin_Stage) {
 															$total_count=$count_efiling_data[0]->total_pending_scrutiny;
-														} elseif($row['stage_id']==I_B_Defected_Stage) {
+														} elseif($row->stage_id==I_B_Defected_Stage) {
 															$total_count=$count_efiling_data[0]->total_lodged_cases;
-														} elseif($row['stage_id']==I_B_Rejected_Stage  || $row['stage_id']==E_REJECTED_STAGE) {
+														} elseif($row->stage_id==I_B_Rejected_Stage  || $row->stage_id==E_REJECTED_STAGE) {
 															$total_count=$count_efiling_data[0]->total_rejected;
-														} elseif($row['stage_id']==I_B_Defects_Cured_Stage) {
+														} elseif($row->stage_id==I_B_Defects_Cured_Stage) {
 															$total_count=$count_efiling_data[0]->total_defect_cured;
-														} elseif($row['stage_id']==LODGING_STAGE || $row['stage_id']==DELETE_AND_LODGING_STAGE || $row['stage_id']==MARK_AS_ERROR) {
+														} elseif($row->stage_id==LODGING_STAGE || $row->stage_id==DELETE_AND_LODGING_STAGE || $row->stage_id==MARK_AS_ERROR) {
 															$total_count=$count_efiling_data[0]->total_lodged_cases;
-														} elseif($row['stage_id']==E_Filed_Stage || $row['stage_id']==E_FILING_TYPE_NEW_CASE || $row['stage_id']==CDE_ACCEPTED_STAGE || $row['stage_id']==E_FILING_TYPE_CDE) {
+														} elseif($row->stage_id==E_Filed_Stage || $row->stage_id==E_FILING_TYPE_NEW_CASE || $row->stage_id==CDE_ACCEPTED_STAGE || $row->stage_id==E_FILING_TYPE_CDE) {
 															$total_count=$count_efiling_data[0]->total_efiled_cases;
-														} elseif($row['stage_id']==Document_E_Filed || $row['stage_id']==E_FILING_TYPE_MISC_DOCS) {
+														} elseif($row->stage_id==Document_E_Filed || $row->stage_id==E_FILING_TYPE_MISC_DOCS) {
 															$total_count=$count_efiling_data[0]->total_efiled_docs;
-														} elseif($row['stage_id']==DEFICIT_COURT_FEE_E_FILED || $row['stage_id']==E_FILING_TYPE_DEFICIT_COURT_FEE) {
+														} elseif($row->stage_id==DEFICIT_COURT_FEE_E_FILED || $row->stage_id==E_FILING_TYPE_DEFICIT_COURT_FEE) {
 															$total_count=$count_efiling_data[0]->total_efiled_deficit;
-														} elseif($row['stage_id']==IA_E_Filed || $row['stage_id']==E_FILING_TYPE_IA) {
+														} elseif($row->stage_id==IA_E_Filed || $row->stage_id==E_FILING_TYPE_IA) {
 															$total_count=$count_efiling_data[0]->total_efiled_ia;
-														} elseif($row['stage_id']==HOLD) {
+														} elseif($row->stage_id==HOLD) {
 															$total_count=$count_efiling_data[0]->total_hold_cases;
-														} elseif($row['stage_id']==DISPOSED) {
+														} elseif($row->stage_id==DISPOSED) {
 															$total_count=$count_efiling_data[0]->total_hold_disposed_cases;
 														}
 														?>
 														<tr>
-															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row['stage_id'], ENT_QUOTES))); ?>
+															<?php $href = ($total_count ==0) ? 'javascript:void(0)' : base_url("adminDashboard/stageList/" . htmlentities(url_encryption($row->stage_id, ENT_QUOTES))); ?>
 															<td><a href="<?php echo $href; ?>" target="_blank"><i class="fa fa-square purple"></i> <?=$row->admin_stage_name ?></a></td>
 															<td><a href="<?php echo $href; ?>" target="_blank"><?php echo htmlentities($total_count, ENT_QUOTES); ?></a></td>
 														</tr>

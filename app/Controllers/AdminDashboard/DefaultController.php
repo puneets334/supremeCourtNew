@@ -53,7 +53,8 @@ class DefaultController extends BaseController {
 				}				
 				$data['count_efiling_data'] = $this->AdminDashboard_model->get_efilied_nums_stage_wise_count();
 				$data['stage_list'] = $this->Report_model->get_stage();				 
-				return $this->render('adminDashboard.admin_dashboard_view', $data);			  
+				// return $this->render('adminDashboard.admin_dashboard_view', $data);	
+                return $this->render('filingAdmin.fillingAdminDashboard',$data);		  
 			} else {
 				return response()->redirect(base_url('/'));
 				exit(0);

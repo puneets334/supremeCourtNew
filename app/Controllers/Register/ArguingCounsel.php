@@ -40,11 +40,6 @@ class ArguingCounsel extends BaseController {
         $this->request = \Config\Services::request();
         $this->config = \Config\Services::config();
         helper(['security']);
-        if(empty(getSessionData('login'))){
-            return response()->redirect(base_url('/')); 
-        }else{
-            is_user_status();
-        }
         
     }
 
@@ -244,80 +239,148 @@ class ArguingCounsel extends BaseController {
              // pr($_POST);
             $data['state_list'] = $this->Dropdown_list_model->get_states_list();
             $validation =  \Config\Services::validation();
+            // $rules=[
+            //     "name" => [
+            //         "label" => "Name",
+            //         "rules" => "required|max_length[100]|min_length[3]"
+            //     ],
+            //     "email" => [
+            //         "label" => "Email",
+            //         "rules" => "required|max_length[100]|valid_email"
+            //     ],
+            //     "mobile" => [
+            //         "label" => "Mobile",
+            //         "rules" => "required|exact_length[10]|is_natural"
+            //     ],
+            //     "bar_reg_no" => [
+            //         "label" => "Bar Registration No.",
+            //         "rules" => "max_length[30]"
+            //     ],
+            //     "relation" => [
+            //         "label" => "Relation",
+            //         "rules" => "required"
+            //     ],
+            //     "relation_name" => [
+            //         "label" => "Relation Name",
+            //         "rules" => "required"
+            //     ],
+            //     "c_address" => [
+            //         "label" => "Bar Chamber address.",
+            //         "rules" => "max_length[150]"
+            //     ],
+            //     "c_pincode" => [
+            //         "label" => "Pincode",
+            //         "rules" => "max_length[6]|is_natural"
+            //     ],
+            //     "c_city" => [
+            //         "label" => "City",
+            //         "rules" => "max_length[35]"
+            //     ],
+            //     "c_state" => [
+            //         "label" => "State",
+            //         "rules" => "required"
+            //     ],
+            //     "c_district" => [
+            //         "label" => "State",
+            //         "rules" => "required"
+            //     ],
+            //     "r_address" => [
+            //         "label" => "Bar Chamber address.",
+            //         "rules" => "max_length[150]"
+            //     ],
+            //     "r_pincode" => [
+            //         "label" => "Pincode",
+            //         "rules" => "max_length[6]|is_natural"
+            //     ],
+            //     "r_city" => [
+            //         "label" => "City",
+            //         "rules" => "max_length[35]"
+            //     ],
+            //     "r_state" => [
+            //         "label" => "State",
+            //         "rules" => "required"
+            //     ],
+            //     "r_district" => [
+            //         "label" => "State",
+            //         "rules" => "required"
+            //     ],                
+            //     "aor" => [
+            //         "label" => "AOR",
+            //         "rules" => "required"
+            //     ],
+            //     // "bar_id_card" => [
+            //     //     "label" => "Bar Id Card",
+            //     //     "rules" => "required"
+            //     // ],
+            // ] ;
+
             $rules=[
-                "name" => [
-                    "label" => "Name",
-                    "rules" => "required|max_length[100]|min_length[3]"
-                ],
-                "email" => [
-                    "label" => "Email",
-                    "rules" => "required|max_length[100]|valid_email"
-                ],
-                "mobile" => [
-                    "label" => "Mobile",
-                    "rules" => "required|exact_length[10]|is_natural"
-                ],
-                "bar_reg_no" => [
-                    "label" => "Bar Registration No.",
-                    "rules" => "max_length[30]"
-                ],
-                "relation" => [
-                    "label" => "Relation",
-                    "rules" => "required"
-                ],
-                "relation_name" => [
-                    "label" => "Relation Name",
-                    "rules" => "required"
-                ],
-                "c_address" => [
-                    "label" => "Bar Chamber address.",
-                    "rules" => "max_length[150]"
-                ],
-                "c_pincode" => [
-                    "label" => "Pincode",
-                    "rules" => "max_length[6]|is_natural"
-                ],
-                "c_city" => [
-                    "label" => "City",
-                    "rules" => "max_length[35]"
-                ],
-                "c_state" => [
-                    "label" => "State",
-                    "rules" => "required"
-                ],
-                "c_district" => [
-                    "label" => "State",
-                    "rules" => "required"
-                ],
-                "r_address" => [
-                    "label" => "Bar Chamber address.",
-                    "rules" => "max_length[150]"
-                ],
-                "r_pincode" => [
-                    "label" => "Pincode",
-                    "rules" => "max_length[6]|is_natural"
-                ],
-                "r_city" => [
-                    "label" => "City",
-                    "rules" => "max_length[35]"
-                ],
-                "r_state" => [
-                    "label" => "State",
-                    "rules" => "required"
-                ],
-                "r_district" => [
-                    "label" => "State",
-                    "rules" => "required"
-                ],                
-                "aor" => [
-                    "label" => "AOR",
-                    "rules" => "required"
-                ],
-                // "bar_id_card" => [
-                //     "label" => "Bar Id Card",
-                //     "rules" => "required"
-                // ],
-            ] ;
+                'name' => 
+                ["label" => 'Name',"rules" => 'trim|required|xss_clean|max_length[100]|min_length[3]|validate_alphacharacters'],
+                'email' => 
+                ["label" => 'Email',"rules" => 'trim|required|xss_clean|max_length[100]|valid_email'],
+            'mobile' => 
+                [ "label" => 'Mobile',"rules" => 'trim|required|xss_clean|exact_length[10]|is_natural'],
+            'bar_reg_no' => 
+                ["label" => 'Bar Registration No.', "rules" => 'trim|xss_clean'],
+            'relation' => 
+                ["label" => 'Relation', "rules" => 'trim|xss_clean|required'],
+            'relation_name' => 
+                ["label" => 'Relation Name',"rules" => 'trim|xss_clean|required|validate_alphacharacters']
+            ];
+            if(!empty($_POST['bar_reg_no'])){
+                $rules=[ 'bar_reg_no' => 
+                ["label" => 'Bar Registration No.',"rules" => 'trim|xss_clean|max_length[30]|min_length[3]|validate_alpha_numeric']];
+            }
+            if(!empty($_POST['c_address'])){
+                $rules=[ 'c_address' => 
+                ["label" => 'Bar Chamber address.',"rules" => 'trim|xss_clean|max_length[150]|min_length[3]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters']];
+            }
+            if(!empty($_POST['c_pincode'])){
+                $rules=[ 'c_pincode' => 
+                ["label" => 'Pincode',"rules" => 'trim|xss_clean|max_length[6]|is_natural']];
+            }
+            if(!empty($_POST['c_city'])){
+                $rules=[ 'c_city' => 
+                [ "label" => 'City', "rules" => 'trim|xss_clean|max_length[35]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters']];
+            }
+            if(!empty($_POST['c_state'])){
+                $rules=[ 'c_state' => 
+                [ "label" => 'State',"rules" => 'trim|xss_clean|required']];
+            }
+            if(!empty($_POST['c_district'])){
+                $rules=[ 'c_district' => 
+                ["label" => 'District',"rules" => 'trim|xss_clean|required']];
+            }
+            if(!empty($_POST['r_address'])){
+                $rules=[ 'r_address' => 
+                ["label" => 'Bar Chamber address.',"rules" => 'trim|xss_clean|max_length[150]|min_length[3]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters']];
+            }
+            if(!empty($_POST['r_pincode'])){
+                $rules=[ 'r_pincode' => 
+                [ "label" => 'Pincode',"rules" => 'trim|xss_clean|max_length[6]|is_natural']];
+            }
+            if(!empty($_POST['r_city'])){
+                $rules=[ 'r_city' => 
+                [ "label" => 'City',"rules" => 'trim|xss_clean|max_length[35]|validate_alpha_numeric_single_double_quotes_bracket_with_special_characters']];
+            }
+            if(!empty($_POST['r_state'])){
+                $rules=[ 'r_state' => 
+                [ "label" => 'State',"rules" => 'trim|xss_clean|required']];
+            }
+            if(!empty($_POST['r_district'])){
+                $rules=[ 'r_district' => 
+                [ "label" => 'District',"rules" => 'trim|xss_clean|required']];
+            }
+            if(!empty($_POST['aor'])){
+                $rules=[ 'aor' => 
+                [ "label" => 'AOR',"rules" => 'trim|xss_clean|required']];
+            }
+            if(empty($_FILES['bar_id_card']['name']))
+            {
+                $rules=[ 'bar_id_card' => 
+                ["label" => 'Bar Id Card', "rules" => 'required']];
+            }
             $arguingCounselId  = !empty(getSessionData('arguingCounselId')) ? trim(getSessionData('arguingCounselId')) : NULL;
             if(isset($arguingCounselId) && !empty($arguingCounselId)) {
                 $arguingCounselDetails = $this->getArguingCounselDetails($arguingCounselId);
