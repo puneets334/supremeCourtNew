@@ -129,6 +129,7 @@ class DefaultController extends BaseController
                 }
             } else {
                 log_message('error', 'User not authorized for this stage');
+                $this->session->setFlashdata('msg','<div class="alert alert-danger">User not authorized for this stage</div>');
                 return redirect()->to(base_url('newcase/caseDetails'));
             }
         } else {

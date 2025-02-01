@@ -138,14 +138,14 @@
                                                                             $rd = 'newcase.defaultController'; //. equal to / required
                                                                             $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_no;
                                                                         } else if ($report->efiling_type != '' && $report->efiling_type == 'misc_document') {
-                                                                            $rd = 'miscellaneous_docs.DefaultController'; //. equal to / required
-                                                                            $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id;
+                                                                            $rd = 'miscellaneous_docs.defaultController'; //. equal to / required
+                                                                            $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_no;
                                                                         } else if ($report->efiling_type != '' && $report->efiling_type == 'IA') {
-                                                                            $rd = 'IA.DefaultController'; //. equal to / required
-                                                                            $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id;
+                                                                            $rd = 'IA.defaultController'; //. equal to / required
+                                                                            $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_no;
                                                                         } else if ($report->efiling_type != '' && $report->efiling_type == 'CAVEAT') {
                                                                             $rd = 'case.caveat.crud'; //. equal to / required
-                                                                            $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id;
+                                                                            $v = '/' . $report->registration_id . '/' . $report->ref_m_efiled_type_id . '/' . $report->stage_id . '/' . $report->efiling_no;
                                                                         }
                                                                         $str_efiling_type = $report->efiling_type;
                                                                         $efiling_type = str_replace("_", " ", $str_efiling_type);
