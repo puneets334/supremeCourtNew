@@ -153,7 +153,7 @@ $hearing_model = new HearingModel();
                                                     "verify_peer_name"=>false,
                                                 ),
                                             );
-                                            $aud_nomination_status=(intval(file_get_contents(base_url('consent/case_listed_in_daily_status/').$case['diary_no'], false, stream_context_create($arrContextOptions))));
+                                            $aud_nomination_status=(intval(file_get_contents(ICMIS_SERVICE_URL.'/consent/case_listed_in_daily_status/'.$case['diary_no'], false, stream_context_create($arrContextOptions))));
                                             $case_aor_details = $hearing_model->aorCount($case['diary_no']);
                                             $aor_count=$case_aor_details[0]['advocate_count'];
                                             $consent_result = $Consent_VC_model->get_advocate_last_updated_consent($case['diary_no'],$case['next_dt'],$case['roster_id'],getSessionData('login.adv_sci_bar_id'),$case['court_no']);

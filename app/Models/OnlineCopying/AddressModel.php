@@ -4,14 +4,13 @@ namespace App\Models\OnlineCopying;
 
 use CodeIgniter\Model;
 use Config\Database;
+
 class AddressModel extends Model
 {
     protected $db2;
     protected $db3;
-    protected $table = 'user_address'; // Make sure this matches your table name
-    protected $primaryKey = 'id'; // Set the primary key if necessary
-
-    // Specify the fields allowed for mass assignment
+    protected $table = 'user_address';
+    protected $primaryKey = 'id';
     protected $allowedFields = [
         'mobile',
         'email',
@@ -27,10 +26,11 @@ class AddressModel extends Model
         'entry_time_ip',
         'deleted_on',
     ];
+
     function __construct()
     {
         parent::__construct();
-        $this->db2 = Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+        $this->db2 = Database::connect('sci_cmis_final');
         $this->db3 = Database::connect('e_services'); 
 
     }
@@ -39,8 +39,8 @@ class AddressModel extends Model
     {
         $builder = $this->db3->table('user_address'); 
         $builder->where('mobile', $mobile)
-                ->where('email', $email)
-                ->where('is_active', 'Y');      
+            ->where('email', $email)
+            ->where('is_active', 'Y');      
         $query = $builder->get();
         if ($query === false) {
             $error =  $this->db3->error();
@@ -52,11 +52,9 @@ class AddressModel extends Model
     }
 
     public function verifyAadhar($mobile, $email)
-    {
-        
+    {        
         $db3 = \Config\Database::connect('e_services');
         $builder = $db3->table('uidai_offline_kyc');
-        // $builder->select('"adhar_name" AS "user_name", CONCAT(careof, ", "house", ", "landmark", ", "loc", ", "po", ", "street", ", vtc) AS address, "subdist" AS "city", "district", "state", "pc" AS "pincode"');
         $builder->select([
             'adhar_name AS user_name',
             "CONCAT(careof, ', ', house, ', ', landmark, ', ', loc, ', ', po, ', ', street, ', ', vtc) AS address",
@@ -69,10 +67,6 @@ class AddressModel extends Model
         $builder->where("email", $email);
         $builder->limit(1);
         $query = $builder->get();
-        // // Get the last query
-        // $lastQuery = $db3->getLastQuery();
-        // // Print the SQL query
-        // echo($lastQuery); die();
         if ($query === false) {
             return false;
         } else {
@@ -83,13 +77,33 @@ class AddressModel extends Model
     public function getListedCases($mobile, $email)
     {
         
-        $builder = $this->db2->table('master.bar');
-        // $builder->select('name AS user_name, caddress AS address, ccity AS city, ccity AS district, IFNULL(state, "") AS state, IFNULL(pincode, "") AS pincode');
+        // $builder = $this->db2->table('master.bar');
+        // // $builder->select('name AS user_name, caddress AS address, ccity AS city, ccity AS district, IFNULL(state, "") AS state, IFNULL(pincode, "") AS pincode');
+        // $builder->select([
+        //     '"name" AS "user_name"',
+        //     '"caddress" AS "address"',
+        //     '"ccity" AS "city"',
+        //     '"ccity" AS "district"', // Duplicate city as district
+        //     "COALESCE('state', '') AS state",
+        //     "COALESCE('pincode', '') AS pincode",
+        // ]);
+        // $builder->where('mobile', $mobile);
+        // $builder->where('email', $email);
+        // $builder->limit(1);
+        // $query = $builder->get();
+        // // echo $this->db2->getLastQuery()->getOriginalQuery(); die();
+        // if ($query === false) {
+        //     return false;
+        // } else {
+        //     return $query->getResult();
+        // }
+
+        $builder = $this->db2->table('bar');
         $builder->select([
             '"name" AS "user_name"',
             '"caddress" AS "address"',
             '"ccity" AS "city"',
-            '"ccity" AS "district"', // Duplicate city as district
+            '"ccity" AS "district"',
             "COALESCE('state', '') AS state",
             "COALESCE('pincode', '') AS pincode",
         ]);
@@ -97,30 +111,38 @@ class AddressModel extends Model
         $builder->where('email', $email);
         $builder->limit(1);
         $query = $builder->get();
-        // echo $this->db2->getLastQuery()->getOriginalQuery(); die();
         if ($query === false) {
             return false;
         } else {
             return $query->getResult();
         }
-    } 
-
+    }
 
     public function getPincode($pincode)
     {
-        $builder = $this->db2->table('master.post_distance_master');           
+        // $builder = $this->db2->table('master.post_distance_master');           
+        // $builder->select('taluk_name, district_name, state');
+        // $builder->where('pincode', $pincode);
+        // // $sql = $builder->getCompiledSelect();
+        // // echo "<pre>$sql</pre>";
+        // $query = $builder->get();
+        // if ($query === false) {           
+        //     return false;
+        // }else {
+        //     $result = $query->getRow();           
+        // }
+        // return $result;
+
+        $builder = $this->db2->table('post_distance_master');           
         $builder->select('taluk_name, district_name, state');
         $builder->where('pincode', $pincode);
-        // $sql = $builder->getCompiledSelect();
-        // echo "<pre>$sql</pre>";
         $query = $builder->get();
         if ($query === false) {           
             return false;
-        }else {
+        } else {
             $result = $query->getRow();           
         }
-        return $result;
-        
+        return $result;        
     } 
 
     public function removeApplicantAddress($id, $deletedIP)
@@ -131,10 +153,10 @@ class AddressModel extends Model
             'deleted_on' => date('Y-m-d H:i:s'),
             'deleted_ip' => $deletedIP
         ];
-
         $builder->where('id', $id);
         return $builder->update($data);
     }
+
     public function getActiveAddresses($email, $mobile)
     {
         $builder = $this->db3->table('user_address');         
@@ -143,12 +165,5 @@ class AddressModel extends Model
         $builder->where('is_active', 'Y');
         return $builder->get()->getResultArray();
     }
-
-
-
-
-
-
-   
 
 }
