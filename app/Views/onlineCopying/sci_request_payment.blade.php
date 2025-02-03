@@ -541,8 +541,15 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
                   </div>
                   <div class="col-md-8">
                      <p><?php
+                        // $db2 = \Config\Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
+                        // $builder = $db2->table('master.copy_category'); // Specify the table name
+                        // $builder->select('id, code, description');
+                        // $builder->where('id', $app_type);
+                        // $query = $builder->get();
+                        // $row = $query->getRow(); // Fetch single row as an object
+
                         $db2 = \Config\Database::connect('sci_cmis_final'); // Connect to the 'sci_cmis_final' database
-                        $builder = $db2->table('master.copy_category'); // Specify the table name
+                        $builder = $db2->table('copy_category'); // Specify the table name
                         $builder->select('id, code, description');
                         $builder->where('id', $app_type);
                         $query = $builder->get();
