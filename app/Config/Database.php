@@ -54,11 +54,11 @@ class Database extends Config
 
     public array $sci_cmis_final = [
         'DSN'          => '',
-        'hostname'     => '10.25.78.68',
-        'username'     => 'postgres',
-        'password'     => 'postgres',
-        'database'     => 'sci_cmis_final_09_08_june',
-        'DBDriver'     => 'Postgre',
+        'hostname' => '10.25.78.43',
+        'username' => 'root',
+        'password' => 'password',
+        'database' => 'sci_cmis_final_04012025',
+        'DBDriver'     => 'MySQLi',
         'cacheOn'       => false,
         'cacheDir' => '',
         'DBPrefix'     => '',
@@ -71,7 +71,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 5432,
+        'port'         => 3306,
         'numberNative' => false,
         'dateFormat'   => [
             'date'     => 'Y-m-d',
@@ -79,6 +79,35 @@ class Database extends Config
             'time'     => 'H:i:s',
         ],
     ];
+
+    // public array $sci_cmis_final = [
+    //     'DSN'          => '',
+    //     'hostname'     => '10.25.78.68',
+    //     'username'     => 'postgres',
+    //     'password'     => 'postgres',
+    //     'database'     => 'sci_cmis_final_09_08_june',
+    //     // 'database'     => 'sci_cmis_final_09_08',
+    //     'DBDriver'     => 'Postgre',
+    //     'cacheOn'       => false,
+    //     'cacheDir' => '',
+    //     'DBPrefix'     => '',
+    //     'pConnect'     => false,
+    //     'DBDebug'      => (ENVIRONMENT !== 'development'),
+    //     'charset'      => 'utf8',
+    //     'DBCollat'     => 'utf8_general_ci',
+    //     'swapPre'      => '',
+    //     'encrypt'      => false,
+    //     'compress'     => false,
+    //     'strictOn'     => false,
+    //     'failover'     => [],
+    //     'port'         => 5432,
+    //     'numberNative' => false,
+    //     'dateFormat'   => [
+    //         'date'     => 'Y-m-d',
+    //         'datetime' => 'Y-m-d H:i:s',
+    //         'time'     => 'H:i:s',
+    //     ],
+    // ];
 
     public array $e_services = [
         'DSN'          => '',
@@ -109,31 +138,33 @@ class Database extends Config
     ];
 
     public array $physical_hearing = [
-        'DSN'          => '',
+        'dsn'  => '',
         'hostname'     => '10.25.78.68',
-        'username'     => 'postgres',
-        'password'     => 'postgres',
-        'database'     => 'physical_hearing',
-        'DBDriver'     => 'Postgre',
-        'cacheOn'       => false,
+        'username' => 'postgres',
+        'password' => 'postgres',
+        'database' => 'physical_hearing',
+        'DBDriver' => 'Postgre',
+        'DBPrefix' => '',
+        'pConnect' => FALSE,
+        'DBDebug' => (ENVIRONMENT !== 'development'),
+        'cacheOn' => FALSE,
         'cacheDir' => '',
-        'DBPrefix'     => '',
-        'pConnect'     => false,
-        'DBDebug'      => (ENVIRONMENT !== 'development'),
-        'charset'      => 'utf8',
-        'DBCollat'     => 'utf8_general_ci',
-        'swapPre'      => '',
-        'encrypt'      => false,
-        'compress'     => false,
-        'strictOn'     => false,
-        'failover'     => [],
+        'charset' => 'utf8',
+        'DBCollat' => 'utf8_general_ci',
+        'swapPre' => '',
+        'encrypt' => FALSE,
+        'compress' => FALSE,
+        'strictOn' => FALSE,
+        'failover' => array(),
         'port'         => 5432,
         'numberNative' => false,
+        'save_queries' => TRUE,
         'dateFormat'   => [
             'date'     => 'Y-m-d',
             'datetime' => 'Y-m-d H:i:s',
             'time'     => 'H:i:s',
         ],
+        'schema' => 'physical_hearing'
     ];
 
     //    /**
