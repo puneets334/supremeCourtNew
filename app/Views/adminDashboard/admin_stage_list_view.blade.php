@@ -24,7 +24,7 @@
                 <div class="x_panel">
                     <div class="x_title"> 
                         <h3>
-                            <?= htmlentities($tabs_heading, ENT_QUOTES) ?>
+                            <?= isset($tabs_heading) ? htmlentities($tabs_heading, ENT_QUOTES) : '' ?>
                             <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right mb-2"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                         </h3>
                     </div>
@@ -33,9 +33,9 @@
                             <table id="datatable-responsive" class="table table-striped table-border custom-table mt-4">
                                 <thead>
                                     <tr class="success input-sm" role="row" >
-                                        <?php foreach ($tab_head as $tab_hd) { ?>
+                                        <?php if(isset($tab_head)){ foreach ($tab_head as $tab_hd) { ?>
                                             <th><?php echo htmlentities($tab_hd, ENT_QUOTES); ?> </th>
-                                        <?php } ?>
+                                        <?php } } ?>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -396,7 +396,10 @@
                                                     ?>
                                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                                     </td>                                  
-                                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a>
+                                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>">
+                                                        <!-- <a href="<?php //echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"> -->
+                                                            <?php echo $case_details; ?>
+                                                        <!-- </a> -->
                                                     </td>
                                                     <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
                                                     <?php
@@ -405,7 +408,11 @@
                                                     ?>
                                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . MENTIONING_E_FILED . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a>
                                                     </td>                                  
-                                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>">
+                                                        <!-- <a href="<?php //echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"> -->
+                                                            <?php echo $case_details; ?>
+                                                        <!-- </a> -->
+                                                    </td>
                                                     <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
                                                     <?php
                                                 }
@@ -421,7 +428,11 @@
                                                 if ($stages == DISPOSED) {
                                                     ?>
                                                     <td width="14%" data-key="<?php echo htmlentities($data_key[1]); ?>"><a href="<?= $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . IA_E_Filed . '#' . $re->efiling_no)) ?>"> <?php echo htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) ?></a></td>
-                                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>"><a href="<?php echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"><?php echo $case_details; ?></a></td>
+                                                    <td data-key="<?php echo htmlentities($data_key[2]); ?>">
+                                                        <!-- <a href="<?php //echo base_url('stage_list/view_data_cino/' . url_encryption(htmlentities($re->ia_cnr_num ?? '' . '#' . $re->efiling_for_id . '#' . $re->efiling_for_type_id, ENT_QUOTES))); ?>"> -->
+                                                            <?php echo $case_details; ?>
+                                                        </a>
+                                                    </td>
                                                     <td width="12%" data-key="<?php echo htmlentities($data_key[3]); ?>"><?php echo date("d/m/Y h.i.s A", strtotime('+5 Hours 30 Minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))); ?></td>
                                                     <td width="12%" data-key="<?php echo htmlentities($data_key[4]); ?>"><?php echo $re->efiling_type; ?></td>
                                                 <?php } ?>
