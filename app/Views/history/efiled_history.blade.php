@@ -85,7 +85,7 @@
                                                     <div class="col-md-12 col-sm-12 col-xs-12"></div>
                                                     <div class="title-sec">
                                                         <h5 class="unerline-title"><?php echo $lbl_history; ?></h5>
-                                                        <a class="quick-btn" type="button" onclick="window.history.back()"> Back</a>
+                                                        <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                                     </div>
                                                     <!-- <h3 style="text-align: center"> <strong><?php // echo $lbl_history; ?></strong> </h3> -->
                                                     <div class="table-sec">
@@ -302,9 +302,6 @@
                                                             </div>
                                                         </div>
                                                     <?php } ?>
-                                                    <!-- <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <a class="quick-btn" type="button" onclick="window.history.back()"> Back</a>
-                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>

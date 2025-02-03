@@ -24,9 +24,7 @@ if ($uris->getSegment(2) != 'view') {
         <div class="row">
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="row">
-                    <div class="col-3">
-                        <label><strong>Diary No :</strong></label>
-                    </div>
+                    <div class="col-3"><label><strong>Diary No : </strong></label></div>
                     <div class="col-9">
                         <p> <?php echo_data($case_details[0]['diary_no'] . ' / ' . $case_details[0]['diary_year']); ?></p>
                     </div>
@@ -34,9 +32,7 @@ if ($uris->getSegment(2) != 'view') {
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                 <div class="row">
-                    <div class="col-4">
-                        <label><strong>Registration No. :</strong></label>
-                    </div>
+                    <div class="col-3"><label><strong>Registration No. : </strong></label></div>
                     <div class="col-9">
                         <p> <?php echo_data($case_details[0]['reg_no_display']); ?></p> 
                     </div>
@@ -44,9 +40,7 @@ if ($uris->getSegment(2) != 'view') {
             </div>
             <div class="col-12 col-md-4 col-lg-4">
                     <div class="row">
-                        <div class="col-3">
-                            <label><strong>Cause Title :</strong></label>
-                        </div>
+                        <div class="col-3"><label><strong>Cause Title : </strong></label></div>
                         <div class="col-9">
                             <p> <?php echo_data($case_details[0]['cause_title']); ?></p>
                         </div>
@@ -54,9 +48,7 @@ if ($uris->getSegment(2) != 'view') {
                 </div>
                 <div class="col-12 col-md-4 col-lg-4">
                     <div class="row">
-                        <div class="col-3">
-                            <label><strong>Status :</strong></label>
-                        </div>
+                        <div class="col-3"><label><strong>Status :</strong></label></div>
                         <div class="col-9">
                             <p><?php echo $case_details[0]['c_status'] == 'D' ? 'Disposed' : 'Pending'; ?></p>
                         </div>
@@ -64,11 +56,6 @@ if ($uris->getSegment(2) != 'view') {
                 </div>
             </div>
         </div>
-        <!-- <div class="row mt-2 mb-4">
-            <div class="col-12">
-                <div class="row"></div>
-            </div>
-        </div> -->
         <div class="row">
             <div class="col-md-12">
                 <?php
@@ -82,87 +69,71 @@ if ($uris->getSegment(2) != 'view') {
                         $filedBy = $name . ' (AOR- ' . $aor_code . ')';
                     }
                     echo '<div class="col-12 col-md-4 col-lg-4">
-                        <div class="form-group row">
-                            <label class="control-label col-3 text-right" for="filed_by">Filed By: </label>
-                            <div class="col-9">
-                                <p>' . $filedBy . '</p>
-                            </div>
+                        <div class="col-3"><label for="filed_by"><strong>Filed By : </strong></label></div>
+                        <div class="col-9">
+                            <p>' . $filedBy . '</p>
                         </div>
                     </div>';
                 }
                 if (isset($case_listing_details->listed[0]) && !empty($case_listing_details->listed[0])) {
                     ?>
                     <div class="col-12 col-md-4 col-lg-4">
-                        <div class="form-group">
+                        <div class="row">
                             <?php if (strtotime($case_listing_details->listed[0]->next_dt) >= strtotime(date("Y-m-d"))) { ?>
-                                <span class="row" style="color:red; font-size:14px; font-weight: bold;">
-                                    <label class="control-label col-3 text-right" for="case_status">Listed For :</label>
-                                    <div class="col-9">
-                                        <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
-                                    </div>
-                                </span>
+                                <div class="col-3"><label for="case_status"><strong>Listed For : </strong></label></div>
+                                <div class="col-9">
+                                    <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
+                                </div>
                             <?php  } else { ?>
-                                <div class="row">
-                                    <label class="control-label col-3 text-right" for="case_status">Last Listed On :</label>
-                                    <div class="col-9">
-                                        <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
-                                    </div>
+                                <div class="col-3"><label for="case_status"><strong>Listed On : </strong></label></div>
+                                <div class="col-9">
+                                    <p> <?= date('d-m-Y', strtotime($case_listing_details->listed[0]->next_dt)) ?>(<?= $case_listing_details->listed[0]->board_type ?>)</p>
                                 </div>
                             <?php } ?>
                         </div>
                     </div>
-                    <?php  }?>
-                <div class="col-md-6"></div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <?php if(isset($case_listing_details->all_listed) && !empty($case_listing_details->all_listed)) {?>
-
-                            <label  class="control-label col-md-4 text-right" for="case_status">Listed : </label>
-                            <div class="col-md-8">
-                                <?=sizeof($case_listing_details->all_listed);?> TIMES
+                <?php  } ?>
+                <!-- <div class="col-md-6"></div> -->
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="row">
+                        <?php if(isset($case_listing_details->all_listed) && !empty($case_listing_details->all_listed)) { ?>
+                            <div class="col-3"><label for="case_status"><strong>Listed : </strong></label></div>
+                            <div class="col-9">
+                                <p><?=sizeof($case_listing_details->all_listed);?> TIMES</p>
                             </div>
-                            <?php  }else{ ?>
-
-                            <label  class="control-label col-md-4 text-right" for="case_status">Listed : </label>
-                            <div class="col-md-8">
-                                <span  style="font-size:14px; font-weight: bold;">FRESH </span>
+                        <?php  } else { ?>
+                            <div class="col-3"><label for="case_status"><strong>Listed : </strong></label></div>
+                            <div class="col-9">
+                                <span> FRESH </span>
                             </div>
-
-                            <?php  } ?>
-                        </div>
+                        <?php  } ?>
                     </div>
-
-                <?php 
-                if (isset($details) && !empty($details)) {
-                    ?>
+                </div>
+                <?php if (isset($details) && !empty($details)) { ?>
                     <div class="col-12 col-md-4 col-lg-4">
-                        <label class="control-label col-md-6 text-right">
+                        <label><strong>
                             <?php if ($details['details'][0]['judgment_reserved_date'] != null) {
                                 echo '<font color=red>Judgment is reserved for :' . date('d-m-Y', strtotime($details['details'][0]['judgment_reserved_date'])) . '</font>';
                             }
                             ?>
-                        </label>
+                        </strong></label>
                     </div>
                     <?php
-                } if ($case_details[0]['p_r_type'] == 'I') { ?>
+                }
+                if ($case_details[0]['p_r_type'] == 'I') {
+                    ?>
                     <div class="col-12 col-md-4 col-lg-4">
-                        <div class="form-group row">
-                            <label class="control-label col-3 text-right" for="case_status">Intervenor Name:</label>
+                        <div class="row">
+                            <label for="case_status"><strong>Intervenor Name : </strong></label>
                             <div class="col-9">
-                                <p>
-                                    <?php
-                                    // echo $case_details[0]['intervenor_name'];
-                                    if (isset($case_details[0]['intervenorname']) && !empty($case_details[0]['intervenorname'])) {
-                                        echo strtoupper($case_details[0]['intervenorname']);
-                                    }
-                                    ?>
-                                </p>
+                                <p> <?php if (isset($case_details[0]['intervenorname']) && !empty($case_details[0]['intervenorname'])) { echo strtoupper($case_details[0]['intervenorname']); } ?> </p>
                             </div>
                         </div>
                     </div>
-                <?php } ?>
-                <?php // echo $_SESSION['efiling_details']['ref_m_efiled_type_id']; ?>
-                <?php if ($uris->getSegment(2) != 'view') { ?>
+                    <?php
+                }
+                if ($uris->getSegment(2) != 'view') {
+                    ?>
                     <div class="row">
                         <div class="col-md-offset-5 col-md-2 col-sm-offset-3 col-sm-6 col-xs-12 efiling_search">
                             <?php if ($_SESSION['efiling_details']['ref_m_efiled_type_id'] == E_FILING_TYPE_MENTIONING) { ?>
