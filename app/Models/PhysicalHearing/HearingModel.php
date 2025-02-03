@@ -1,5 +1,4 @@
 <?php
-// if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 namespace App\Models\PhysicalHearing;
 
@@ -15,7 +14,6 @@ class HearingModel extends Model
 
     function __construct()
     {
-        // Call the Model constructor
         parent::__construct();
         $db = \Config\Database::connect();
         $this->sci_cmis_final = Database::connect('sci_cmis_final');
@@ -26,7 +24,6 @@ class HearingModel extends Model
 
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
         $query = $physical_hearing_db->get_where($table, $condition);
-        //echo $this->db->last_query();exit(0);
         return $query->result_array();
     }
 
@@ -49,27 +46,29 @@ class HearingModel extends Model
     }
 
     function aorCount($diary_no){
+        // $sql="select count(distinct a.advocate_id) advocate_count
+        //     from public.main m
+        //     left outer join conct ct on cast(m.conn_key as BIGINT) = cast(ct.conn_key as BIGINT) 
+        //     inner join advocate a on cast(m.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
+        //     and a.display = 'Y' 
+        //     inner join master.bar b on a.advocate_id = b.bar_id
+        //     where (ct.list='Y' or ct.list is null) 
+        //     and b.if_aor='Y' AND b.isdead='N' and m.diary_no=?";
+        // $query = $this->sci_cmis_final->query($sql, array($diary_no));
+        // return $query->getResultArray();
+
         $sql="select count(distinct a.advocate_id) advocate_count
-            from public.main m
-            left outer join conct ct on cast(m.conn_key as BIGINT) = cast(ct.conn_key as BIGINT) 
-            inner join advocate a on cast(m.diary_no as BIGINT) = cast(a.diary_no as BIGINT) 
+            from main m
+            left outer join conct ct on cast(m.conn_key as unsigned) = cast(ct.conn_key as unsigned) 
+            inner join advocate a on cast(m.diary_no as unsigned) = cast(a.diary_no as unsigned) 
             and a.display = 'Y' 
-            inner join master.bar b on a.advocate_id = b.bar_id
+            inner join bar b on a.advocate_id = b.bar_id
             where (ct.list='Y' or ct.list is null) 
             and b.if_aor='Y' AND b.isdead='N' and m.diary_no=?";
-        /*$alternate_sql="select count(distinct advocate_id) as count_adv from
-            (select m.diary_no from main m where m.conn_key = '$diary_no' and c_status = 'P'
-            union
-            select m.diary_no from main m
-            inner join conct ct on ct.conn_key = m.conn_key
-            where m.conn_key = '$diary_no' and ct.list = 'Y' and m.c_status = 'P') m
-            inner join advocate a on m.diary_no = a.diary_no
-            inner join heardt h on h.diary_no = m.diary_no
-            where h.clno > 0 and h.next_dt = '$diary_no' and a.display = 'Y'";*/
         $query = $this->sci_cmis_final->query($sql, array($diary_no));
-        // echo $this->sci_cmis_final->getLastQuery();exit(0);
         return $query->getResultArray();
     }
+    
     function getCounselEntryForToday($diary_no,$roster_id,$mobile, $court_no)
     {
         $physical_hearing_db = $this->load->database('physical_hearing', TRUE);
@@ -85,19 +84,13 @@ class HearingModel extends Model
         $sql="select * from ref_court_seating_capacity where (court_number=? or alternate_court_number=?) and display='Y' ";
         $query = $physical_hearing_db->query($sql, array($court_no, $court_no));
         return $query->result_array();*/
-
         $court_capacity=array(array('seating_capacity'=>'20'));
         return $court_capacity;
     }
+
     function get_case_listed_in_daily_list($diary_no)
     {
         $current_date = date("Y-m-d");
-        // $sql="select a.diary_no,a.next_dt from (select  diary_no,next_dt, clno, roster_id, judges, mainhead 
-        // from public.heardt where clno!=0 and clno is not null and brd_slno!=0 and brd_slno is not null
-        // and roster_id!=0 and roster_id is not null 
-        // and next_dt >= ? and diary_no = ?) a 
-        // INNER JOIN cl_printed p ON p.next_dt = a.next_dt AND p.m_f = a.mainhead AND p.part = a.clno AND p.roster_id = a.roster_id AND p.display = 'Y'
-        // group by diary_no, a.next_dt";
         $sql = "select 
             a.diary_no, 
             a.next_dt 
@@ -131,7 +124,6 @@ class HearingModel extends Model
             diary_no, 
             a.next_dt";
         $query = $this->sci_cmis_final->query($sql, array($current_date,$diary_no));
-        // echo $this->sci_cmis_final->getLastQuery();exit(0);
         return $query->getResultArray();
 
     }
