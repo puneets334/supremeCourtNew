@@ -517,8 +517,19 @@ curl_close($curl);
     public function getUserAddress($mobile_no,$email){
         //echo ICMIS_SERVICE_URL."/online_copying/getUserAddress/?mobile=$mobile_no&emailid=$email";
         //die;
-        //exit;
+        //exit;gid
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getUserAddress?mobile=$mobile_no&emailid=$email");
+        if ($data != false) {
+            return json_decode($data,true);
+        } else {
+            return NULL;
+        }  
+    }
+    public function getUserAssets($mobile_no,$email){
+        //echo ICMIS_SERVICE_URL."/online_copying/getUserAddress/?mobile=$mobile_no&emailid=$email";
+        //die;
+        //exit;
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getUserAssets?mobile=$mobile_no&emailid=$email");
         if ($data != false) {
             return json_decode($data,true);
         } else {
