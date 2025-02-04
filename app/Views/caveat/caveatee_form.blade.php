@@ -242,7 +242,7 @@ span.select2.select2-container.select2-container--default {
                                     </div>
                                 </div>
 
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="otherOrgState" >
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Department Name <span style="color: red">*</span></label>
                                         <select name="org_dept" tabindex = '10' id="org_dept" class="form-control input-sm filter_select_dropdown org_dept">
@@ -279,7 +279,7 @@ span.select2.select2-container.select2-container--default {
                                     </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="stateDivBox" style="<?php echo $stateDiv; ?>">
+                                <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                                     <div class="mb-3">
                                         <label for="" class="form-label">Post Name<span style="color: red">*</span></label>
                                         <select name="org_post" id="org_post" tabindex = '12' class="form-control input-sm filter_select_dropdown org_post cus-form-ctrl">
@@ -516,7 +516,7 @@ span.select2.select2-container.select2-container--default {
         var OrgPost_ID='<?php echo isset($caveatee_details[0]['res_org_post'])?$caveatee_details[0]['res_org_post']:''; ?>';
         //alert(OrgDept_ID);
         if(OrgState_ID==0 && OrgState_ID!=''){
-            $('#otherOrgState').show();
+            // $('#otherOrgState').show();
             var OrgState_NAME='<?php echo isset($caveatee_details[0]['res_org_state_name'])?$caveatee_details[0]['res_org_state_name']:''; ?>';
             $('#res_org_state_name').text(OrgState_NAME);
         }
