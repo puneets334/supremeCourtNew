@@ -69,7 +69,7 @@ class AppearanceModel extends Model {
         $db2 = Database::connect('sci_cmis_final');
         $builder = $db1->table('appearing_in_diary a');
         $builder->distinct();
-        $builder->select('a.diary_no, a.item_no, a.court_no, a.list_date')
+        $builder->select('a.diary_no, a.item_no, a.court_no, a.list_date, a.aor_code')
             ->where('a.is_submitted', '1')
             ->where('a.is_active', '1')
             ->where('a.list_date', $list_date_ymd)
@@ -79,58 +79,45 @@ class AppearanceModel extends Model {
         if ($diaryQuery->getNumRows() === 0) {
             return $this->response->setJSON(['status' => 'error', 'message' => 'No Records Found']);
         }
+        $dData = $diaryQuery->getResultArray();
         $records = [];
-        foreach ($diaryQuery->getResultArray() as $diaryRow) {
+        foreach ($dData as $dKey => $diaryRow) {
             $diary_no = $diaryRow['diary_no'];
             $item_no = $diaryRow['item_no'];
             $mainBuilder = $this->db->table('icmis.main');
             $mainBuilder->where('diary_no', $diary_no);
             $mainQuery = $mainBuilder->get();
             $diary = $mainQuery->getRowArray();
-            $pet_name = $diary['pet_name'] . ($diary['pno'] > 1 ? " AND ORS." : "");
-            $res_name = $diary['res_name'] . ($diary['rno'] > 1 ? " AND ORS." : "");
-            // pr($res_name);
             $advocates = [];
-            $advocateBuilder = $db1->table('e_services.public.appearing_in_diary a')
-                ->select('e_services.public.a.aor_code, e_services.public.a.priority, master.b.title, master.b.name')
-                ->join('sci_cmis_final.master.bar b', 'sci_cmis_final.master.b.aor_code = e_services.public.a.aor_code', 'inner')
-                ->where('e_services.public.a.is_submitted', '1')
-                ->where('e_services.public.a.is_active', '1')
-                ->where('e_services.public.a.list_date', $list_date_ymd)
-                ->where('e_services.public.a.court_no', $court_no)
-                ->where('e_services.public.a.diary_no', $diary_no)
-                ->groupBy('e_services.public.a.aor_code')
-                ->orderBy('e_services.public.a.aor_code')
-                ->orderBy('e_services.public.a.priority');
-            // pr($advocateBuilder->getCompiledSelect());
-            $advocateQuery = $advocateBuilder->get();
-            foreach ($advocateQuery->getResultArray() as $advocate) {
-                $advocates[] = [
-                    'added_by' => ucwords(strtolower($advocate['title'] . ' ' . $advocate['name'])),
-                    'advocates' => []
-                ];
-                $advocateDetailBuilder = $db1->table('appearing_in_diary a')
-                    ->select('*')
-                    ->where('a.is_submitted', '1')
-                    ->where('a.is_active', '1')
-                    ->where('a.list_date', $list_date_ymd)
-                    ->where('a.court_no', $court_no)
-                    ->where('a.diary_no', $diary_no)
-                    ->where('a.aor_code', $advocate['aor_code'])
-                    ->orderBy('a.priority');
-                $advocateDetailQuery = $advocateDetailBuilder->get();
-                foreach ($advocateDetailQuery->getResultArray() as $advocateDetail) {
-                    $advocates[count($advocates) - 1]['advocates'][] = [
-                        'title' => $advocateDetail['advocate_title'],
-                        'name' => $advocateDetail['advocate_name'],
-                        'type' => $advocateDetail['advocate_type']
-                    ];
-                }
+            if($diary['pno'] == 2) {
+                $pet_name = $diary['pet_name']." AND ANR.";
+            } else if($diary['pno'] > 2) {
+                $pet_name = $diary['pet_name']." AND ORS.";
+            } else {
+                $pet_name = $diary['pet_name'];
             }
+            if($diary['rno'] == 2) {
+                $res_name = $diary['res_name']." AND ANR.";
+            } else if($diary['rno'] > 2) {
+                $res_name = $diary['res_name']." AND ORS.";
+            } else {
+                $res_name = $diary['res_name'];
+            }
+            $barBuilder = $db2->table('bar b')
+                ->select('b.title, b.name')
+                ->where('b.aor_code', $diaryRow['aor_code']);
+            $barQuery = $barBuilder->get();
+            $barRes = $barQuery->getRowArray();
+            $ddData = getAdvocatesFroApearenceAPI($list_date_ymd, $court_no, $diary_no, $diaryRow['aor_code'], $dKey);
+            $advocates[] = [
+                'added_by' => ucwords(strtolower($barRes['title'] . ' ' . $barRes['name'])),
+                'added_for' => $ddData['added_for'],
+                'advocates' => $ddData['advocates'],
+            ];            
             $records[] = [
                 'item_no' => $item_no,
                 'case_no' => $diary['reg_no_display'] ?: 'Diary No. ' . $diary_no,
-                'cause_title' => $pet_name . "<br>Vs.<br>" . $res_name,
+                'cause_title' => $pet_name . " Vs. " . $res_name,
                 'advocates' => $advocates
             ];
         }
