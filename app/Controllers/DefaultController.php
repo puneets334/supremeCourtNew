@@ -4,7 +4,7 @@ use App\Libraries\Slice;
 use App\Libraries\webservices\Efiling_webservices;
 use App\Models\Login\LoginModel;
 use stdClass;
-
+use App\Libraries\webservices\Ecoping_webservices;
 class DefaultController extends BaseController {
 
     protected $session;
@@ -16,11 +16,12 @@ class DefaultController extends BaseController {
     protected $Login_model;
     protected $Login_device;
     protected $efiling_webservices;
-
+    protected $ecoping_webservices;
     public function __construct() {
         parent::__construct();
         $this->Login_model = new LoginModel();
         $this->efiling_webservices = new Efiling_webservices();
+        $this->ecoping_webservices=new Ecoping_webservices();
         $this->agent = \Config\Services::request()->getUserAgent();
         $this->session = \Config\Services::session();
         $this->slice = new Slice();
@@ -79,6 +80,7 @@ class DefaultController extends BaseController {
         // }
         $validation =  \Config\Services::validation();
         //---Commented line are used for disable captcha----------------->
+        if(empty($this->request->getPost('userType'))){
         $rules=[
             "txt_username" => [
                 "label" => "User ID",
@@ -311,6 +313,98 @@ class DefaultController extends BaseController {
                 return $this->render('responsive_variant.authentication.frontLogin');
             }
         }
+    }else{
+        $rules=[
+            "using" => [
+                "label" => "Aor Code and Aor Mobile",
+                "rules" => "required|trim"
+            ],
+            "you_email" => [
+                "label" => "your Email",
+                "rules" => "required|trim"
+            ],
+            "yr_mobile" => [
+                "label" => "Your Mobile No.",
+                "rules" => "required|trim"
+            ],
+            
+            
+        ];
+        $data['userEnteredData']=array('using'=>$this->request->getPost('using'),'you_email'=>$this->request->getPost('you_email'),'yr_mobile'=>$this->request->getPost('yr_mobile'));
+        if($this->request->getPost('using')=='AOR Mobile'){
+           $rules['aor_mobile']=[
+                "label" => "AOR Mobile",
+                "rules" => "required|trim"
+                 ];
+                 $data['userEnteredData']['aor_mobile']=$this->request->getPost('aor_mobile');
+        }else{
+            $rules['aor_code']=[
+                "label" => "AOR Code",
+                "rules" => "required|trim"
+            ];
+            $data['userEnteredData']['aor_code']=$this->request->getPost('aor_code');
+        }
+        
+        if ($this->validate($rules) === FALSE) {
+            $data = [
+                'validation' => $this->validator,
+                'currentPath' => $this->slice->getSegment(1) ?? 'public',
+            ];
+            $this->session->set('login_salt', $this->generateRandomString());
+            $data['using']=$this->request->getPost('using');
+            $data['aor_flag']='yes';
+            return $this->render('responsive_variant.authentication.frontLogin', $data);
+        }else{
+            $userCaptcha=$this->request->getPost('userCaptcha');
+            $result=$this->ecoping_webservices->getCopyBarcodeBymobileOrAorCOde($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
+            if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')){
+                
+                if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')== @$_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]) {
+                    unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]);
+                    unset($_SESSION['impersonated_user_authentication_mobile_otp']);
+                    echo "verify Otp";
+                    die;
+                    //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
+                }else{
+                    $data['using']=$this->request->getPost('using');
+                    $data['aor_flag']='yes';
+                    $this->session->setFlashdata('msg', 'OTP Not Matched');
+                    return $this->render('responsive_variant.authentication.frontLogin', $data);
+                }
+                
+                //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
+            }elseif(!empty($result)){
+                $data['aor_flag']='yes';
+               
+                
+               
+                
+                $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
+                $data['aor_flag']='yes';
+                $data['bar_id']=$result->bar_id;
+                $data['using']=$this->request->getPost('using');
+                if ($this->session->get('captcha') != $userCaptcha) {
+                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                    
+                }else{
+                     //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+                    $impersonated_user_authentication_mobile_otp =123456;
+                    //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_efiling_OTP);
+                    $_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id] = $impersonated_user_authentication_mobile_otp;
+                    $message='Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp.'. - Supreme Court of India';
+                    $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
+                }
+                return $this->render('responsive_variant.authentication.frontLogin', $data);
+                //send_mail_msg($email,'Authentication OTP for eFiling' ,$message, $user_parts[1]);
+                //$result=$this->ecoping_webservices->getUserAddress($this->request->getPost('yr_mobile'),$this->request->getPost('you_email'));
+            }else{
+                $this->session->setFlashdata('msg', 'AOR Mobile No. OR AOR code Does Not Match');
+                $data['aor_flag']='no';
+                $data['using']=$this->request->getPost('using');
+                return $this->render('responsive_variant.authentication.frontLogin', $data);
+            }
+        }    
+    }
     }
 
     public function otp() {

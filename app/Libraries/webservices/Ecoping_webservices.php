@@ -221,6 +221,17 @@ class Ecoping_webservices {
             return NULL;
         }   
     }
+    public function getCopyBarcodeBymobileOrAorCOde($aor_code,$mobile){
+
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyBarcodeBymobileOrAorCOde?aor_code=$aor_code&aor_mobile=$mobile");
+        
+        if ($data != false) {
+            
+            return json_decode($data);
+        } else {
+            return NULL;
+        } 
+    }
     public function getBailApplied($diary_no, $mobile, $email){
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getBailApplied?diary_no=$diary_no&mobile=$mobile&email=$email");
         
@@ -320,6 +331,7 @@ curl_close($curl);
         }   
     }
     public function insert_user_assets($data){
+        
         $postdata = http_build_query(
             $data
         );
@@ -332,8 +344,8 @@ curl_close($curl);
             )
         );
         $context  = stream_context_create($opts);
-        $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/online_copying/add_user_assets', false, $context);
+        
+        $result = file_get_contents(ICMIS_SERVICE_URL.'/online_copying/add_user_assets', false, $context);
         
         return json_decode($result);
     }
@@ -526,9 +538,7 @@ curl_close($curl);
         }  
     }
     public function getUserAssets($mobile_no,$email){
-        //echo ICMIS_SERVICE_URL."/online_copying/getUserAddress/?mobile=$mobile_no&emailid=$email";
-        //die;
-        //exit;
+        
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getUserAssets?mobile=$mobile_no&emailid=$email");
         if ($data != false) {
             return json_decode($data,true);
