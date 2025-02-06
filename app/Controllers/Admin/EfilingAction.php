@@ -57,8 +57,8 @@ class EfilingAction extends BaseController {
                 if ($efiling_details->ref_m_efiled_type_id == E_FILING_TYPE_CAVEAT) {
                     $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">This efiling detail already transfered to ICMIS as Caveat number ' . $efiling_details->caveat_num . $efiling_details->caveat_year . '</div>');
                 }
-                redirect('adminDashboard');
-                exit();
+                return redirect()->to(base_url('adminDashboard'));
+                exit(0);
             }
         }
         

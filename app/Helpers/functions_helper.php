@@ -475,14 +475,13 @@ function getStringOfAmount($number)
     return $string;
 }
 
-function send_mail_msg($to_email, $subject, $message, $to_user_name = "")
-{
-    /*$url=EADMINSCI_URI."/stealth-a-push-mail-gw?toIds=".rawurlencode($to_email)."&subject=".rawurlencode($subject)."&msg=".rawurlencode($message)."&typeId=".SMS_EMAIL_API_USER;
-    $result=(array)json_decode(file_get_contents($url));*/
+function send_mail_msg($to_email, $subject, $message, $to_user_name="") {
     if (!empty($to_user_name) && $to_user_name != null) {
-        relay_mail_api_through_60_server(array($to_email), $subject, $message, $to_user_name);
+       //return relay_mail_api_through_60_server(array($to_email), $subject, $message, $to_user_name);
+       return relay_mail_api_through_jio_cloud_server(array($to_email), $subject, $message, $to_user_name);
     } else {
-        relay_mail_api_through_60_server(array($to_email), $subject, $message);
+       //return relay_mail_api_through_60_server(array($to_email), $subject, $message);
+       return relay_mail_api_through_jio_cloud_server(array($to_email), $subject, $message);
     }
 }
 
@@ -4568,4 +4567,132 @@ function getAdvocatesFroApearenceAPI($list_date_ymd, $court_no, $diary_no, $aor_
         }
     }
     return ['added_for' => $added_for, 'advocates' => $advocates];
+}
+
+function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, $to_user_name = "")
+{
+    foreach ($to_email as $val_email) {
+        $to_email = $val_email;
+        $email_message = '';
+
+        if (isset($_SESSION['citation_mail']) == 'Citation') {
+
+            $search_by = $_SESSION['citation_data'][1]['search_by'];
+            if ($search_by == 'J') {
+                $page_no = $_SESSION['citation_data'][1]['page_no'];
+                $volume = $_SESSION['citation_data'][1]['volume'];
+                $journal_year = $_SESSION['citation_data'][1]['journal_year'];
+                $journal = $_SESSION['citation_data'][1]['journal'];
+
+            } else {
+                $page_no = $_SESSION['citation_data'][0]['page_no'];
+                $volume = $_SESSION['citation_data'][0]['volume'];
+                $journal_year = $_SESSION['citation_data'][0]['journal_year'];
+                $journal = $_SESSION['citation_data'][0]['journal'];
+            }
+            $given_by = $_SESSION['login']['first_name'];
+            //$this->session->userdata['login']['first_name']
+
+            $case_data_info = array('diary_no' => $_SESSION['case_data'][0]['diary_no'], 'registation_no' => $_SESSION['case_data'][0]['reg_no_display']
+            , 'cause_title' => $_SESSION['case_data'][0]['cause_title'], 'dairy_yr' => $_SESSION['case_data'][0]['diary_year'],
+                'title' => $_SESSION['citation_data'][0]['title'], 'pubname' =>
+                    $_SESSION['citation_data'][0]['pubnm'], 'pubyear' => $_SESSION['citation_data'][0]['pubyr'], 'subject' => $_SESSION['citation_data'][0]['sub'],
+                'listing_date' => $_SESSION['citation_data'][0]['listing_date'], 'page_no' => $page_no, 'volume' => $volume, 'journal_year' => $journal_year, 'journal' => $journal, 'given_by' => $given_by);
+
+            $email_message = (render('templates.email.citation_mail', $case_data_info, true));
+
+        } elseif (isset($_SESSION['adv_details'], $_SESSION['adv_details']['first_name'], $_SESSION['adv_details']['last_name'])) {
+            $data = array('first_name' => $_SESSION['adv_details']['first_name'],
+                'last_name' => $_SESSION['adv_details']['last_name'],
+                'message' => $message
+            );
+            $email_message = (render('templates.email.password_reset', $data, true));
+        } elseif ($to_user_name == 'adjournment') {
+            $email_message = ($message);
+        } elseif ($to_user_name == 'arguing_counsel') {
+            $email_message = ($message);
+        } elseif (isset(getSessionData('login')['first_name'], getSessionData('login')['last_name'])) {
+            $data = array('first_name' => getSessionData('login')['first_name'],
+                'last_name' => getSessionData('login')['last_name'],
+                'message' => $message
+            );
+            $email_message = (render('templates.email.html_mail', $data, true));
+        } else {
+            $email_message = ($message);
+        }
+
+        /*start security Audit  code to stop sms flooding*/
+        $Common_model = new CommonModel();
+        //$_SESSION['last_sms'] = time();
+        $_SESSION['last_sms_to_email'] = $to_email;
+        $_SESSION['last_sms_ip'] = get_client_ip();
+        $ip_address = get_client_ip();
+        // Define rate limit parameters
+        $max_requests = 1; // Maximum number of requests
+        $time_period = 5; // Time period in seconds (e.g., 1 hour)
+        $request_time_time_period=date('Y-m-d H:i:s', time() - $time_period);
+        $request_count = $Common_model->check_efiling_sms_email_log($to_email,$request_time_time_period,$ip_address);
+        if ($request_count >= $max_requests) {
+            // Too many requests, show an error message
+            $text_msg = 'Please wait ' . SMS_RESEND_LIMIT . ' seconds and then try again!'; // code to stop sms flooding
+            session()->setFlashdata('msg', '<div class="uk-alert-danger" uk-alert> <a class="uk-alert-close" uk-close></a> <p style="text-align: center;">' . $text_msg . '</p> </div>');
+            return FALSE;
+        }
+        /*End security Audit  code to stop sms flooding*/
+        $json2=send_mail_JIO($to_email,$subject,$email_message);
+        $response=$json2;
+        if ($json2) {
+            if ($response == 'success') {
+                $result = 'success';
+                $data_email = array(
+                    'ip_address' => $ip_address,
+                    'email' => $to_email
+                );
+                $db_response_sms = $Common_model->insert_efiling_sms_email_dtl($data_email);
+            } else {
+                $result = 'failed';
+            }
+        }
+        return $result;
+    }
+}
+
+function send_mail_JIO($to_email,$subject,$message,$files=array())
+{
+    if (isset($to_email) && isset($subject) && isset($message)){
+        if (!is_array($to_email)){ $to_email=[$to_email]; }
+        $metadata = json_encode(array("providerCode" => "email","recipients" => array("emailAddresses" => array("to" =>$to_email)),"body" =>$message,"scheduledAt" => null,"purpose" => $subject,"subject" => $subject, "sender" => array("name" => "SC-eFM","emailAddress" => "icmis@sci.nic.in"),"createdByUser" => array("id" => LIVE_EMAIL_KEY,"name" => "SC-eFM","employeeCode" => LIVE_EMAIL_KEY,"organizationName" => "SC-eFM"),"module" => "SC-eFM","project" => "SC-eFM","files" => $files));
+        $curl = curl_init();
+        curl_setopt_array($curl,array(
+            CURLOPT_URL => NEW_MAIL_SERVER_HOST_JIO_URL,
+            CURLOPT_RETURNTRANSFER => true,CURLOPT_ENCODING => '',CURLOPT_MAXREDIRS => 10,CURLOPT_TIMEOUT => 0,CURLOPT_FOLLOWLOCATION => true,CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,CURLOPT_HEADER => 0,CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>"$metadata",
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json','Accept: application/json','Authorization: Bearer '.LIVE_EMAIL_KEY_JIO_CLOUD),
+        ));
+        $response = curl_exec($curl);
+        if ($response){
+            $json2 = json_decode($response);
+            if (isset($json2->data) && !empty($json2->data) && !empty($json2->data->job_batch_id)){
+                $json2=$json2->data->job_batch_id;
+            }else{ $json2=false;}
+        }else{ $json2 = $response; }
+        curl_close($curl);
+        if ($json2!=false) { $json2 = 'success';} else { $json2 = 'failed'; }
+    }else{$json2 = 'failed';}
+    return $json2;
+}
+function send_mail_cron_jio($data)
+{
+    if (!empty($data)) {
+        $to_email = $data['to_email'];
+        $subject = $data['subject'];
+        // $ci->load->library('email');
+        $email_message = (render('templates.email.reports', $data, true));
+        $files = array();
+        $json2=send_mail_JIO($to_email,$subject,$email_message,$files);
+        return $json2;
+    }//End of foreach loop..
+    $result = 'Data not found';
+    return $result;
 }
