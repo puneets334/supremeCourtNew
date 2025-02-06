@@ -855,7 +855,7 @@ class CitationNotes extends BaseController
             }
         }
         $response = sendSMS(41, $mobile_no, $message, SCISMS_Diary_Listing);
-        if ($response == "success") {
+        if ($response['status'] == 1) {
             echo '2@@@SMS sent successfully!' . $message;
         } else {
             echo '1@@@some error occured while sending SMS!';

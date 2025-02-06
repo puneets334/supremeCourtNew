@@ -167,4 +167,13 @@ class Test extends BaseController {
         //var_dump($cert_response);
     }
 
+    public function checkSMS(){
+        
+        echo $smsText = "Your eFiling Password fgdfg The login username has been sent to your registered email account. - Supreme Court of India";
+        echo "<br/>";
+        $response = sendSMS(38,'9953480625', $smsText,SCISMS_Login_Password_To_Email);
+        print_r($response);
+        die;
+    }
+
 }

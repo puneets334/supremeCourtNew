@@ -1634,75 +1634,75 @@ function doPushSms($mobileNos, $msg, $typeId, $roleIdCsv = '', $templateId = nul
             }*/
     return $statusFlag;
 }
-function sendSMS($typeId = "38", $mobileNo = "", $smsText = "", $templateId = "")
-{
-    if (
-        isset($_SESSION['last_sms_ip']) && $_SESSION['last_sms'] + SMS_RESEND_LIMIT > time() &&
-        $_SESSION['last_sms_template'] == $templateId && $_SESSION['last_sms_ip'] == get_client_ip()
-    ) {
-        die('Please wait ' . SMS_RESEND_LIMIT . ' seconds and then try again.'); // code to stop sms flooding
-    } else {
-        $_SESSION['last_sms'] = time();
-        $_SESSION['last_sms_template'] = $templateId;
-        $_SESSION['last_sms_ip'] = get_client_ip();
+// function sendSMS($typeId = "38", $mobileNo = "", $smsText = "", $templateId = "")
+// {
+//     if (
+//         isset($_SESSION['last_sms_ip']) && $_SESSION['last_sms'] + SMS_RESEND_LIMIT > time() &&
+//         $_SESSION['last_sms_template'] == $templateId && $_SESSION['last_sms_ip'] == get_client_ip()
+//     ) {
+//         die('Please wait ' . SMS_RESEND_LIMIT . ' seconds and then try again.'); // code to stop sms flooding
+//     } else {
+//         $_SESSION['last_sms'] = time();
+//         $_SESSION['last_sms_template'] = $templateId;
+//         $_SESSION['last_sms_ip'] = get_client_ip();
 
-        if (trim($mobileNo) == "") {
-            return "Blank Mobile No.";
-        }
-        date_default_timezone_set('Asia/Kolkata');
-        $sms_url = EADMINSCI_URI . '/a-push-sms-gw?mobileNos=' . $mobileNo . '&message=' . rawurlencode($smsText) .
-            '&typeId=' . $typeId . '&templateId=' . $templateId .
-            '&myUserId=NIC001001&myAccessId=root&authCod=sldkfjsklf126534__sdgdg-sf154ncvbvziu789asdsagd1235';
-        $sms_response = @file_get_contents($sms_url);
-        //print_r($sms_response);
-        $json = json_decode($sms_response);
-        // echo '<pre>Hello_'; print_r($json); die();
-        if (!empty($json) && $json->{'responseFlag'} == "success") {
-            //return "success";
-            $rslt_sms = "success";
-        } else {
-            //return "error";
-            $rslt_sms = "error";
-        }
-        if (!$sms_response) {
-            $sms_response = NULL;
-        }
+//         if (trim($mobileNo) == "") {
+//             return "Blank Mobile No.";
+//         }
+//         date_default_timezone_set('Asia/Kolkata');
+//         $sms_url = EADMINSCI_URI . '/a-push-sms-gw?mobileNos=' . $mobileNo . '&message=' . rawurlencode($smsText) .
+//             '&typeId=' . $typeId . '&templateId=' . $templateId .
+//             '&myUserId=NIC001001&myAccessId=root&authCod=sldkfjsklf126534__sdgdg-sf154ncvbvziu789asdsagd1235';
+//         $sms_response = @file_get_contents($sms_url);
+//         //print_r($sms_response);
+//         $json = json_decode($sms_response);
+//         // echo '<pre>Hello_'; print_r($json); die();
+//         if (!empty($json) && $json->{'responseFlag'} == "success") {
+//             //return "success";
+//             $rslt_sms = "success";
+//         } else {
+//             //return "error";
+//             $rslt_sms = "error";
+//         }
+//         if (!$sms_response) {
+//             $sms_response = NULL;
+//         }
 
-        if ($rslt_sms != '') {
-            if (isset($_SESSION['efiling_details']['registration_id']) && isset($_SESSION['login']['id'])) {
-                $registrationId = $_SESSION['efiling_details']['registration_id'];
-                $created_byId = $_SESSION['login']['id'];
-            } else if (isset($_SESSION['login']['id'])) {
-                $registrationId = NULL;
-                $created_byId = $_SESSION['login']['id'];
-            } else {
-                $registrationId = NULL;
-                $created_byId = NULL;
-            }
-            if ($rslt_sms == 'success') {
-                $staus = TRUE;
-            } else {
-                $staus = FALSE;
-            }
-            $efiling_sms_details = array(
-                'mobile_no' => $mobileNo,
-                'msg' => $smsText,
-                'type_id' => $typeId,
-                'sent_on' => date('Y-m-d H:i:s'),
-                'sms_get_status' => $sms_response,
-                'status' => $staus,
-                'registration_id' => $registrationId,
-                'created_by' => $created_byId
-            );
-            // $ci = &get_instance();
-            // $ci->load->model('common/Common_model');
-            // $ci->load->library('session');
-            $common_model = new \App\Models\Common\CommonModel();
-            $db_response_sms = $common_model->insert_efiling_sms_dtl($efiling_sms_details);
-            return $rslt_sms;
-        } //end of if condition $rslt_sms..
-    }
-}
+//         if ($rslt_sms != '') {
+//             if (isset($_SESSION['efiling_details']['registration_id']) && isset($_SESSION['login']['id'])) {
+//                 $registrationId = $_SESSION['efiling_details']['registration_id'];
+//                 $created_byId = $_SESSION['login']['id'];
+//             } else if (isset($_SESSION['login']['id'])) {
+//                 $registrationId = NULL;
+//                 $created_byId = $_SESSION['login']['id'];
+//             } else {
+//                 $registrationId = NULL;
+//                 $created_byId = NULL;
+//             }
+//             if ($rslt_sms == 'success') {
+//                 $staus = TRUE;
+//             } else {
+//                 $staus = FALSE;
+//             }
+//             $efiling_sms_details = array(
+//                 'mobile_no' => $mobileNo,
+//                 'msg' => $smsText,
+//                 'type_id' => $typeId,
+//                 'sent_on' => date('Y-m-d H:i:s'),
+//                 'sms_get_status' => $sms_response,
+//                 'status' => $staus,
+//                 'registration_id' => $registrationId,
+//                 'created_by' => $created_byId
+//             );
+//             // $ci = &get_instance();
+//             // $ci->load->model('common/Common_model');
+//             // $ci->load->library('session');
+//             $common_model = new \App\Models\Common\CommonModel();
+//             $db_response_sms = $common_model->insert_efiling_sms_dtl($efiling_sms_details);
+//             return $rslt_sms;
+//         } //end of if condition $rslt_sms..
+//     }
+// }
 
 function send_otp($text, $type_id = 38, $send_otp_mail = 0, $control_flag = 0)
 {
@@ -4348,4 +4348,224 @@ function rand_string( $length ) {
 
     }
     return $str;
+}
+
+
+function get_constants_key_by_value($constants_key_value=""){
+    $constantName = null;
+    if (!empty($constants_key_value)){
+        $constants = get_defined_constants(true);
+        if (isset($constants['user'])) { foreach ($constants['user'] as $name => $value) { if ($value === $constants_key_value) { $constantName = $name;break; } } }
+    }
+    return $constantName;
+}
+
+function sendSMS($typeId="38",$mobileNo="",$smsText="",$templateId="")
+{
+    $templateId   = strval((string)$templateId); 
+    $templateCode_orignal = get_constants_key_by_value($templateId);
+    $templateCode = str_replace('SCISMS_','',$templateCode_orignal);
+
+    if(in_array($templateCode,['Submit_Pending','Efiling_No_Generated'])){
+        $templateCode = $templateCode.'_UPD';
+    }
+
+    $smsText = str_replace("&", "and", $smsText);
+
+    if (isset($mobileNo) && isset($smsText) && isset($templateCode))
+    {
+        if (!is_array($mobileNo))
+        { 
+            $mobileNo=["$mobileNo"]; 
+        }else{
+            $mobileNo=["$mobileNo"];
+        }
+
+        $metadata = json_encode(
+            [
+                "providerCode" => "sms",
+                "recipients" => 
+                    [
+                        "mobileNumbers" => $mobileNo
+                    ],
+                "templateCode" => $templateCode,
+                "body"         =>"$smsText",
+                "scheduledAt"  => null,
+                "purpose"      => "SC-eFM",
+                "createdByUser"=> 
+                    [
+                        "id"               => LIVE_SMS_KEY_JIO_CLOUD,
+                        "name"             => "SC-eFM",
+                        "employeeCode"     => LIVE_SMS_KEY_JIO_CLOUD,
+                        "organizationName" => "SC-eFM"
+                    ],
+                "module" => "SC-eFM",
+                "project" => "SC-eFM"
+            ]
+        );
+        $curl = curl_init();
+        curl_setopt_array($curl,[
+            CURLOPT_URL => NEW_SMS_SERVER_HOST_JIO_URL,
+            CURLOPT_RETURNTRANSFER => true,CURLOPT_ENCODING => '',CURLOPT_MAXREDIRS => 10,CURLOPT_TIMEOUT => 0,CURLOPT_FOLLOWLOCATION => true,CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,CURLOPT_SSL_VERIFYHOST => FALSE,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS =>"$metadata",
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json','Accept: application/json','Authorization: Bearer '.LIVE_SMS_KEY_JIO_CLOUD),
+        ]);
+        $response = curl_exec($curl);
+        if ($response){
+            $json2 = json_decode($response);
+            if (isset($json2->data) && !empty($json2->data) && !empty($json2->data->job_batch_id))
+            {
+                $json2 = $json2->data->job_batch_id;
+            }
+            else
+            {
+                $json2 = false;
+            }
+        }else{ 
+            $json2 = $response; 
+        }
+        curl_close($curl);
+
+        $payload = [
+            'template_id'=>$templateId,
+            'templateCode_orignal'=>$templateCode_orignal,
+            'templateCode'=>$templateCode
+        ];
+
+        if ($json2 != false) { 
+            $result = [
+                'status'=>true,
+                'payload'=>$payload,
+                'message'=>$response
+            ];
+        } 
+        else { 
+            $result = [
+                'status'=>true,
+                'payload'=>$payload,
+                'message'=>$response
+            ];
+        }
+    }
+    else{
+        $result = [
+            'status'=>true,
+            'message'=>'Something wrong in mobile, message or template id '
+        ];
+    }
+    return $result;
+}
+
+function parsePBDownloadResponseHeaders($curl,$header_return){
+    header($header_return);
+    return strlen($header_return);
+}
+function downloadCasePaperBook($url, $headers = [], $if_return_metadata = false)
+{
+    $curl = curl_init();
+    curl_setopt_array($curl, array(
+        CURLOPT_URL => $url,
+        CURLOPT_RETURNTRANSFER => false,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_SSL_VERIFYHOST => false,
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HEADERFUNCTION => 'parsePBDownloadResponseHeaders',
+        CURLOPT_HTTPHEADER => ($headers ?: array('User-Agent: AutoBot')),
+    ));
+    $response = curl_exec($curl);
+    curl_close($curl);
+    return $response;
+}
+
+function getAdvocatesFroApearenceAPI($list_date_ymd, $court_no, $diary_no, $aor_code, $x){
+    $db1 = Database::connect('e_services');
+    $db2 = Database::connect('sci_cmis_final');
+    $advocateBuilderP = $db1->table('appearing_in_diary a')
+        ->distinct()
+        ->select('a.aor_code, a.priority')
+        ->where('a.is_submitted', '1')
+        ->where('a.is_active', '1')
+        ->where('a.appearing_for', 'P')
+        ->where('a.list_date', $list_date_ymd)
+        ->where('a.court_no', $court_no)
+        ->where('a.diary_no', $diary_no)
+        ->where('a.diary_no', $aor_code)
+        ->groupBy('a.aor_code')
+        ->groupBy('a.priority')
+        ->orderBy('a.aor_code')
+        ->orderBy('a.priority');
+    $advocateQueryP = $advocateBuilderP->get();
+    $advDataForP = $advocateQueryP->getResultArray();
+    $added_for = '';
+    $advocates = [];
+    if(is_array($advDataForP) && count($advDataForP) > 0){
+        $added_for = 'For Petitioners';
+        foreach ($advDataForP as $key=>$advocateP) {
+            if(!empty($advocateP)){
+                $advocateDetailBuilder = $db1->table('appearing_in_diary a')
+                    ->distinct()
+                    ->select('*')
+                    ->where('a.is_submitted', '1')
+                    ->where('a.is_active', '1')
+                    ->where('a.appearing_for != ', 'P')
+                    ->where('a.list_date', $list_date_ymd)
+                    ->where('a.court_no', $court_no)
+                    ->where('a.diary_no', $diary_no)
+                    ->where('a.aor_code', $advocateP['aor_code'])
+                    ->orderBy('a.priority');
+                $advocateDetailQuery = $advocateDetailBuilder->get();
+                foreach ($advocateDetailQuery->getResultArray() as $advocateDetail) {
+                    $advocates[] = $advocateDetail['advocate_title'].' '.$advocateDetail['advocate_name'].' '.$advocateDetail['advocate_type'];
+                }
+            }
+        }
+    }
+    $advocateBuilderR = $db1->table('appearing_in_diary a')
+        ->distinct()
+        ->select('a.aor_code, a.priority')
+        ->where('a.is_submitted', '1')
+        ->where('a.is_active', '1')
+        ->where('a.appearing_for !=', 'P')
+        ->where('a.list_date', $list_date_ymd)
+        ->where('a.court_no', $court_no)
+        ->where('a.diary_no', $diary_no)
+        ->where('a.aor_code', $aor_code)
+        ->groupBy('a.aor_code')
+        ->groupBy('a.priority')
+        ->orderBy('a.aor_code')
+        ->orderBy('a.priority');
+    // if($x == 7) {
+    //     pr($advocateBuilderR->getCompiledSelect());
+    // }
+    $advocateQueryR = $advocateBuilderR->get();
+    $advDataForR = $advocateQueryR->getResultArray();    
+    if(is_array($advDataForR) && count($advDataForR) > 0) {
+        $added_for = 'For Respondents';
+        foreach ($advDataForR as $key=>$advocateR) {
+            if(!empty($advocateR)) {                
+                $advocateDetailBuilder = $db1->table('appearing_in_diary a')
+                    ->distinct()
+                    ->select('*')
+                    ->where('a.is_submitted', '1')
+                    ->where('a.is_active', '1')
+                    ->where('a.appearing_for != ', 'P')
+                    ->where('a.list_date', $list_date_ymd)
+                    ->where('a.court_no', $court_no)
+                    ->where('a.diary_no', $diary_no)
+                    ->where('a.aor_code', $advocateR['aor_code'])
+                    ->orderBy('a.priority');
+                $advocateDetailQuery = $advocateDetailBuilder->get();
+                foreach ($advocateDetailQuery->getResultArray() as $advocateDetail) {
+                    $advocates[] = $advocateDetail['advocate_title'].' '.$advocateDetail['advocate_name'].' '.$advocateDetail['advocate_type'];
+                }
+            }
+        }
+    }
+    return ['added_for' => $added_for, 'advocates' => $advocates];
 }

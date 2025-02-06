@@ -49,6 +49,18 @@ class EfilingAction extends BaseController {
 
         $regid = getSessionData('efiling_details')['registration_id'];
         $filing_type = getSessionData('efiling_details')['ref_m_efiled_type_id'];
+
+        if ($filing_type == E_FILING_TYPE_CAVEAT) {
+            $is_already_approved_CaveatNoGenerated = $this->Efiling_action_model->is_already_approved_CaveatNoGenerated($regid);
+            if ($is_already_approved_CaveatNoGenerated) {
+                $efiling_details = $is_already_approved_CaveatNoGenerated;
+                if ($efiling_details->ref_m_efiled_type_id == E_FILING_TYPE_CAVEAT) {
+                    $this->session->setFlashdata('msg', '<div class="alert alert-success text-center">This efiling detail already transfered to ICMIS as Caveat number ' . $efiling_details->caveat_num . $efiling_details->caveat_year . '</div>');
+                }
+                redirect('adminDashboard');
+                exit();
+            }
+        }
         
         if ($filing_type == E_FILING_TYPE_NEW_CASE) {
             $redirectURL = 'newcase/view';
