@@ -688,9 +688,83 @@ if(!empty(getSessionData('login'))){
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
+                                <div class="col-6">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="mb-3">
+                                            <label class="radio-inline mb-2"><input type="checkbox" name="ecopyingCheck" id="ecopyingCheck" value="1">&nbsp;&nbsp;Applying for eCopying</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div class="mb-3">
+                                            <div class="card-body">
+                                                <div class="row m-1" style="display:none;">
+                                                    <div class="alert alert-warning alert-dismissible">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong>Unless there is request for Certified Copy/Digital Copy, your identity as claimed will not be verified.</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="row m-1" style="display: none;">
+                                                    <div class="alert alert-warning alert-dismissible">
+                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                        <strong>Remove mask, spectacles or any other face covering.</strong>
+                                                    </div>
+                                                </div>
+                                                <div class="left" style="display: none;">
+                                                    After you click start recording speak following things and record :<br>
+                                                    1. Speak your full name<br>
+                                                    2. Speak date of birth<br>
+                                                    3. Speak this Code : <span class="font-weight-bolder text-danger"><?php echo $_SESSION['text_speak'] = rand_string(5); ?></span>
+                                                    <br>
+                                                    <div id="startButton" class="btn btn-primary mt-2">
+                                                        Start Recording
+                                                    </div>
+                                                </div>
+
+                                                <div class="center">
+                                                    <div id="stopButton" class="button" style="display:none;">
+                                                        Stop
+                                                    </div>
+                                                    <div id="cam_preview" style="display:none;">
+                                                        <h6 class="font-weight-bolder">Recording Started </h6>
+                                                        <video  id="preview" width="340px" autoplay muted></video>
+                                                    </div>
+                                                    <div id="view_recording" style="display:none;">
+                                                        <h6 class="font-weight-bolder">Preview</h6>
+                                                        <video id="recording" width="340px" controls></video>
+                                                    </div>
+                                                </div>
+                                                <div class="bottom">
+                                                    <pre id="log"></pre>
+                                                </div>
+                                                 <form  method="post" enctype="multipart/form-data">
+                                                    <a id="downloadButton" class="button" style="display:none;">
+                                                        Download
+                                                    </a>
+                                                    <div id="video_action" class="left1" style="display:none;">
+                                                        <a href="user_video.php" class="btn btn-primary" >
+                                                            Try Again!
+                                                        </a>
+                                                        
+                                                    </div>
+                                                </form> 
+                                                <div class="row show_msg col-12 mb-3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-text">Upload Speech Recoreded <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" type="file" value="" name="speech_recorded" id="speech_recorded"  placeholder="Speech file" maxlength="25" tabindex="19" />
+                                                        <div id="error_r_city"></div>
+                                                        
+                                                    </div>
                                                 <!-- right box end -->
                                                 <div style="text-align: center;">
                                                     <!-- <input type="submit" class="btn btn-primary quick-btn mt-3" name="register" id="register" value="Register"> -->
+                                                    <a id="saveButton" class="btn btn-primary" style="display:none">
+                                                            Save & Next
+                                                        
+                                                    </a>
                                                     <button type="submit" class="quick-btn mt-3" name="register" id="register" >Register</button>
                                                     <button type="button" class=" gray-btn quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                                    
@@ -1380,7 +1454,7 @@ if(!empty(getSessionData('login'))){
                                 res = JSON.parse(res);
                             }
                             if(res.success = 'success'){
-                                alert(res.message);
+                                //alert(res.message);
                                 window.location.reload();
                             }
                             else  if(res.error = 'error'){
@@ -1501,4 +1575,255 @@ if(!empty(getSessionData('login'))){
             return true;
         }
     </script>
+    <script>
+/*function validateImage() {
+    var fileInput = document.getElementById('advocate_image');
+    var filePath = fileInput.value;
+    var allowedExtensions = /(\.jpg|\.jpeg)$/i;
+    var maxSize = 1 * 1024 * 1024; // 2MB in bytes
+    
+    // Check file type
+    if (!allowedExtensions.exec(filePath)) {
+        alert('Please upload a file with .jpg or .jpeg extension.');
+        fileInput.value = ''; // Clear the input
+        return false;
+    }
+    
+    // Check file size
+    if (fileInput.files[0].size > maxSize) {
+        alert('The file size should not exceed 1 MB.');
+        fileInput.value = ''; // Clear the input
+        return false;
+    }
+}*/
+
+    let preview_display = document.getElementById("cam_preview");
+    let recording_display = document.getElementById("view_recording");
+    let preview = document.getElementById("preview");
+    let recording = document.getElementById("recording");
+    let startButton = document.getElementById("startButton");
+    let stopButton = document.getElementById("stopButton");
+    let downloadButton = document.getElementById("downloadButton");
+    let logElement = document.getElementById("log");
+
+    let myfile = document.getElementById("myfile");
+    let recordedBlob = '';
+    recording_display.style.visibility = "hidden";
+    let recordingTimeMS = 10000;
+    function log(msg) {
+        logElement.innerHTML += msg + "\n";
+    }
+    function wait(delayInMS) {
+        return new Promise(resolve => setTimeout(resolve, delayInMS));
+    }
+    function startRecording(stream, lengthInMS) {
+        let recorder = new MediaRecorder(stream);
+        let data = [];
+
+        recorder.ondataavailable = event => data.push(event.data);
+        recorder.start();
+        log(recorder.state + " for " + (lengthInMS/1000) + " seconds...");
+
+        let stopped = new Promise((resolve, reject) => {
+            recorder.onstop = resolve;
+            recorder.onerror = event => reject(event.name);
+        });
+
+        let recorded = wait(lengthInMS).then(
+            () => recorder.state == "recording" && recorder.stop()
+        );
+
+        return Promise.all([
+            stopped,
+            recorded
+        ])
+            .then(() => data);
+    }
+    function stop(stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+    startButton.addEventListener("click", function() {
+        $("#cam_preview").show();
+        $("#startButton").hide();
+        //$("#stopButton").show();
+        
+        navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true
+        }).then(stream => {
+            preview.srcObject = stream;
+            downloadButton.href = stream;
+            preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+            return new Promise(resolve => preview.onplaying = resolve);
+        }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+            .then (recordedChunks => {
+                preview_display.style.visibility = "hidden";
+                recording_display.style.visibility = "visible";
+                $("#cam_preview").hide();
+                $("#view_recording").show();
+                $("#video_action").show();
+                recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+
+                recording.src = URL.createObjectURL(recordedBlob);
+                downloadButton.href = recording.src;
+                downloadButton.download = "RecordedVideo.webm";
+                log("Successfully recorded " + recordedBlob.size + " bytes of " +recordedBlob.type + " media.");
+                //log("Successfully recorded");
+
+                // sendBlobToServer(recordedBlob);
+            })
+            .catch(log);
+    }, false);
+
+    stopButton.addEventListener("click", function() {
+        stop(preview.srcObject);
+        $('#saveButton').show();
+        $('#finalBtn').hide();
+    }, false);
+
+
+
+    $(document).on("click", "#saveButton", function () {
+        
+                var nameRegPattern = /^[a-zA-Z‘_ ]+$/i;
+                var emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                var mobilePattern = /^\d{10}$/;
+                var alphanumPattern = /^[a-zA-Z0-9]+$/i;
+                var validation = true;
+                var name =  $.trim($("#name").val());
+                var email =  $.trim($("#email").val());
+                var mobile = $.trim($("#mobile").val());
+                var bar_reg_no = $.trim($("#bar_reg_no").val());
+                if(name == ''){
+                    $("#name").focus();
+                    $("#error_name").text("Please fill name.");
+                    $("#error_name").css({'color':'red'});
+                    alert("Please fill name.");
+                    validation = false;
+                    return false;
+                }
+                else if(!nameRegPattern.test(name)){
+                    $("#name").focus();
+                    $("#error_name").text("Please fill name only characters.");
+                    $("#error_name").css({'color':'red'});
+                    alert("Please fill name only characters.");
+                    validation = false;
+                    return false;
+                }
+                else if(name.length < 3 || name.length >100){
+                    $("#name").focus();
+                    $("#error_name").text("Please fill name between minimum 3 and maximum 100 characters.");
+                    $("#error_name").css({'color':'red'});
+                    alert("Please fill name between minimum 3 and maximum 100 characters.");
+                    validation = false;
+                    return false;
+                }
+                else if(email == ''){
+                    $("#email").focus();
+                    $("#error_email").text("Please fill email.");
+                    $("#error_email").css({'color':'red'});
+                    alert("Please fill email.");
+                    validation = false;
+                    return false;
+                }
+                else if(email && !emailPattern.test(email)){
+                    $("#email").focus();
+                    $("#error_email").text("Please fill valid  email");
+                    $("#error_email").css({'color':'red'});
+                    alert("Please fill valid email");
+                    validation = false;
+                    return false;
+                }
+                else if(mobile == ''){
+                    $("#mobile").focus();
+                    $("#error_mobile").text("Please fill mobile.");
+                    $("#error_mobile").css({'color':'red'});
+                    alert("Please fill mobile.");
+                    validation = false;
+                    return false;
+                }
+                else if(mobile && !mobilePattern.test(mobile)){
+                    $("#mobile").focus();
+                    $("#error_mobile").text("Please fill valid  mobile No.");
+                    $("#error_mobile").css({'color':'red'});
+                    alert("Please fill valid mobile No.");
+                    validation = false;
+                    return false;
+                }
+                else if(bar_reg_no && !alphanumPattern.test(bar_reg_no)){
+                    $("#bar_reg_no").focus();
+                    $("#error_bar_reg_no").text("Please fill valid  bar reg. no.");
+                    $("#error_bar_reg_no").css({'color':'red'});
+                    alert("Please fill valid bar reg no.");
+                    validation = false;
+                    return false;
+                }else{
+                    var filename = "RecordedVideo.webm";
+        var filewebm = $('#speech_recorded')[0].files[0];
+        //console.log('webmfile',filewebm);
+        var fd1 = new FormData();
+        if(filewebm){
+            fd1.append("file", filewebm, filename);
+        }else{
+            fd1.append("file", recordedBlob, filename);   
+        }
+        alert($('#ecopyingCheck').val());
+        fd1.append("name",$('#name').val());
+        fd1.append("email",$('#email').val());
+        fd1.append("mobile",$('#mobile').val());
+        fd1.append("relation",$('#mobile').val());
+        fd1.append("relation_name",$('#relation_name').val());
+        fd1.append("c_address",$('#c_address').val());
+        fd1.append("bar_id_card",$('#bar_id_card')[0].files[0]);
+        fd1.append("bar_reg_no",$('#bar_reg_no').val());
+        fd1.append("c_pincode",$('#c_pincode').val());
+        fd1.append("c_state",$('#c_state').val());
+        fd1.append("c_district",$('#c_district').val());
+        fd1.append("c_city",$('#c_city').val());
+        fd1.append("r_address",$('#r_address').val());
+        fd1.append("r_pincode",$('#r_pincode').val());
+        fd1.append("isOnlineCopying",$('#ecopyingCheck').val());
+        fd1.append("r_city",$('#r_city').val());
+        fd1.append("r_state",$('#r_state').val());
+        fd1.append("r_district",$('#r_district').val());
+        fd1.append("aor",$('#aor').val());
+        
+        $.ajax
+        ({
+            url: "<?php echo base_url('saveArguingCounselCompleteDetailsForOnlineCoping'); ?>",
+            //dataType: "json",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data:fd1,
+            type: 'post',
+            beforeSend: function () {
+                $('.show_msg').html('<table widht="100%" align="center"><tr><td>Loading...</td></tr></table>');
+            },
+            xhr: function() {
+                var myXhr = $.ajaxSettings.xhr();
+                return myXhr;
+            },
+            success: function(data)
+            {
+                location.reload();
+            }
+        });
+                }
+                
+        
+    });
+    $(document).on('click', '#ecopyingCheck', function(){
+        if($(this).is(":checked")){
+            $('.left').show();
+            $('#saveButton').show();
+            $('#register').hide();
+        }else{
+            $('.left').hide(); 
+            $('#register').show();
+            $('#saveButton').hide(); 
+        }
+        
+    })
+</script>
 @endsection

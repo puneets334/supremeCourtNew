@@ -5,16 +5,17 @@ use App\Controllers\BaseController;
 use App\Libraries\webservices\Efiling_webservices;
 use App\Models\Register\RegisterModel;
 use DateTime;
-
+use App\Libraries\webservices\Ecoping_webservices;
 class AdvSignUp extends BaseController {
     protected $Register_model;
     protected $efiling_webservices;
     protected $request;
-
+    protected $ecoping_webservices;
     public function __construct() {
         parent::__construct();
         $this->Register_model = new RegisterModel();
         $this->efiling_webservices = new Efiling_webservices();
+        $this->ecoping_webservices=new Ecoping_webservices();
         $this->request = \Config\Services::request();
         helper(['form']);
     }
@@ -522,41 +523,37 @@ class AdvSignUp extends BaseController {
                     if (file_exists($new_name)) {
                         $array = array('status' => 'Sorry File already exist.');
                     } else {
-
-                        // $stmt_check = $dbo->prepare("select id from user_assets where diary_no = 0 and mobile = :mobile and email = :email and asset_type = 3 and verify_status in (1,2)");
-                        // $stmt_check->bindParam(':mobile', $user_mobile);
-                        // $stmt_check->bindParam(':email', $user_email);
-                        // $stmt_check->execute();
-                        // if ($stmt_check->rowCount() > 0) {
+                        $results=$this->ecoping_webservices->getUserAssets($final_data['moblie_number'],$to_email);
+                         if (sizeof($results) > 0) {
                         //     //already done so no need to insert again
-                        //     $array = array('status' => 'Records Already Available');
-                        // }
-                        // else{
+                             $array = array('status' => 'Records Already Available');
+                         }
+                         else{
 
-                        //     if (move_uploaded_file($_FILES["file"]["tmp_name"], $new_name)) {
+                             if (move_uploaded_file($_FILES["file"]["tmp_name"], $new_name)) {
 
-                        //         $asset_array = array("mobile" => $_SESSION["applicant_mobile"],
-                        //                         "email" => $_SESSION["applicant_email"],
-                        //                         "asset_type" => '3',
-                        //                         "id_proof_type" => '0',
-                        //                         "diary_no" => '0',
-                        //                         "video_random_text" => $_SESSION['text_speak'],
-                        //                         "file_path" => str_replace(SAN_ROOT,'',$new_name),
-                        //                         "entry_time_ip" => $clientIP);
-                        //                 $insert_user_asset = insert_user_assets($asset_array); //insert user assets
-                        //                 $json_insert_user_asset = json_decode($insert_user_asset);
-                        //                 if ($json_insert_user_asset->{'Status'} == "success") {
-                        //                     $array = array('status' => 'success');
-                        //                     $_SESSION['video_verify_status'] = 1;
-                        //                 }
-                        //                 else{
-                        //                     $array = array('status' => 'Unable to insert records');
-                        //                 }
+                                 $asset_array = array("mobile" => $_SESSION["applicant_mobile"],
+                                                 "email" => $_SESSION["applicant_email"],
+                                                 "asset_type" => '3',
+                                                 "id_proof_type" => '0',
+                                                 "diary_no" => '0',
+                                                 "video_random_text" => $_SESSION['text_speak'],
+                                                 "file_path" => str_replace(SAN_ROOT,'',$new_name),
+                                                 "entry_time_ip" => $clientIP);
+                                         $insert_user_asset = $this->ecoping_webservices->insert_user_assets($asset_array); //insert user assets
+                                         $json_insert_user_asset =$insert_user_asset;
+                                         if ($json_insert_user_asset->{'Status'} == "success") {
+                                             $array = array('status' => 'success');
+                                             $_SESSION['video_verify_status'] = 1;
+                                         }
+                                        else{
+                                             $array = array('status' => 'Unable to insert records');
+                                         }
 
-                        //     } else {
-                        //         $array = array('status' => 'Not Allowed, Check Permission/Issue at Server');
-                        //     }
-                        // }
+                             } else {
+                                 $array = array('status' => 'Not Allowed, Check Permission/Issue at Server');
+                             }
+                              }
                     }
                 }
                 //END
