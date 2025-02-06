@@ -318,7 +318,11 @@ function validateImage() {
         });
     });
     $(document).on('click', '#ecopyingCheck', function(){
-        $('.left').show();
+        if($(this).is(":checked")){
+            $('.left').show();
+        }else{
+            $('.left').hide();  
+        }
     })
 </script>
 @endpush

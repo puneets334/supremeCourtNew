@@ -137,6 +137,38 @@
             // @endif    
         });
     </script>
+    <!--$aor_flag-->
+    <?php
+    if(isset($aor_flag)){
+        ?>
+        <script>
+          $("#aor").show();
+          $("#default").hide();  
+        </script>
+        <?php
+    }
+    ?>
+    <script>
+$(document).ready(function(){
+  $(".aor-login").click(function(){
+    $('#userType').val('AOR')
+    
+    $("#aor").show();
+    $("#default").hide();
+  });
+ $(".using").change(function(){
+    if($(this).val()=='AOR Mobile'){
+    $("#aorMobileBox").show();
+    $("#aorcodeBox").hide();
+    }else{
+        $("#aorcodeBox").show();
+        $("#aorMobileBox").hide();
+    }
+  });
+  
+  //$("input:radio:not(:checked), input:radio:not(:checked) + span"). hide(); 
+});
+</script>
     <script>
         function enableSubmit() {
             var form = this;

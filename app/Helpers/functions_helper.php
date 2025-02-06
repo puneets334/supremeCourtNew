@@ -19,6 +19,7 @@ use eftec\bladeone\BladeOne;
 use GuzzleHttp\Exception\GuzzleException;
 use App\Libraries\webservices\Ecoping_webservices;
 use App\ThirdParty\eSign\XMLSecurityKey;
+use CodeIgniter\View\RendererInterface;
 
 if (!function_exists('pr')) {
     function pr($request)
@@ -4571,6 +4572,7 @@ function getAdvocatesFroApearenceAPI($list_date_ymd, $court_no, $diary_no, $aor_
 
 function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, $to_user_name = "")
 {
+    $view = service('renderer');
     foreach ($to_email as $val_email) {
         $to_email = $val_email;
         $email_message = '';
@@ -4598,15 +4600,16 @@ function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, 
                 'title' => $_SESSION['citation_data'][0]['title'], 'pubname' =>
                     $_SESSION['citation_data'][0]['pubnm'], 'pubyear' => $_SESSION['citation_data'][0]['pubyr'], 'subject' => $_SESSION['citation_data'][0]['sub'],
                 'listing_date' => $_SESSION['citation_data'][0]['listing_date'], 'page_no' => $page_no, 'volume' => $volume, 'journal_year' => $journal_year, 'journal' => $journal, 'given_by' => $given_by);
-
-            $email_message = (view('templates.email.citation_mail', $case_data_info, true));
+            $v = new RendererInterface();
+            $email_message = ($view->setVar($case_data_info)->render('templates.email.citation_mail'));
 
         } elseif (isset($_SESSION['adv_details'], $_SESSION['adv_details']['first_name'], $_SESSION['adv_details']['last_name'])) {
             $data = array('first_name' => $_SESSION['adv_details']['first_name'],
                 'last_name' => $_SESSION['adv_details']['last_name'],
                 'message' => $message
             );
-            $email_message = (view('templates.email.password_reset', $data, true));
+            $email_message = ($view->setVar($data)->render('templates.email.password_reset'));
+            // $email_message = (view('templates.email.password_reset', $data, true));
         } elseif ($to_user_name == 'adjournment') {
             $email_message = ($message);
         } elseif ($to_user_name == 'arguing_counsel') {
@@ -4616,7 +4619,8 @@ function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, 
                 'last_name' => getSessionData('login')['last_name'],
                 'message' => $message
             );
-            $email_message = (view('templates.email.html_mail', $data, true));
+            $email_message = ($view->setVar($data)->render('templates.email.html_mail'));
+            // $email_message = (view('templates.email.html_mail', $data, true));
         } else {
             $email_message = ($message);
         }
