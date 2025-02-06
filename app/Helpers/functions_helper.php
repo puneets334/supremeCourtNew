@@ -4599,14 +4599,14 @@ function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, 
                     $_SESSION['citation_data'][0]['pubnm'], 'pubyear' => $_SESSION['citation_data'][0]['pubyr'], 'subject' => $_SESSION['citation_data'][0]['sub'],
                 'listing_date' => $_SESSION['citation_data'][0]['listing_date'], 'page_no' => $page_no, 'volume' => $volume, 'journal_year' => $journal_year, 'journal' => $journal, 'given_by' => $given_by);
 
-            $email_message = (render('templates.email.citation_mail', $case_data_info, true));
+            $email_message = (view('templates.email.citation_mail', $case_data_info, true));
 
         } elseif (isset($_SESSION['adv_details'], $_SESSION['adv_details']['first_name'], $_SESSION['adv_details']['last_name'])) {
             $data = array('first_name' => $_SESSION['adv_details']['first_name'],
                 'last_name' => $_SESSION['adv_details']['last_name'],
                 'message' => $message
             );
-            $email_message = (render('templates.email.password_reset', $data, true));
+            $email_message = (view('templates.email.password_reset', $data, true));
         } elseif ($to_user_name == 'adjournment') {
             $email_message = ($message);
         } elseif ($to_user_name == 'arguing_counsel') {
@@ -4616,7 +4616,7 @@ function relay_mail_api_through_jio_cloud_server($to_email, $subject, $message, 
                 'last_name' => getSessionData('login')['last_name'],
                 'message' => $message
             );
-            $email_message = (render('templates.email.html_mail', $data, true));
+            $email_message = (view('templates.email.html_mail', $data, true));
         } else {
             $email_message = ($message);
         }
@@ -4688,7 +4688,7 @@ function send_mail_cron_jio($data)
         $to_email = $data['to_email'];
         $subject = $data['subject'];
         // $ci->load->library('email');
-        $email_message = (render('templates.email.reports', $data, true));
+        $email_message = (view('templates.email.reports', $data, true));
         $files = array();
         $json2=send_mail_JIO($to_email,$subject,$email_message,$files);
         return $json2;
