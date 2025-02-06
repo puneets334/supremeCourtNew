@@ -2208,7 +2208,7 @@ class CommonModel extends Model
         $builder->insert($sms_details);
         $insertID = $this->db->insertID(); 
         // $this->db->INSERT('efil.otp_requests', $sms_details);
-        if ($insertID()) {
+        if ($insertID) {
             return true;
         } else{
             return false;
