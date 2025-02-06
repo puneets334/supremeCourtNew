@@ -4350,6 +4350,7 @@ function rand_string( $length ) {
     return $str;
 }
 
+
 function get_constants_key_by_value($constants_key_value=""){
     $constantName = null;
     if (!empty($constants_key_value)){
@@ -4480,4 +4481,91 @@ function downloadCasePaperBook($url, $headers = [], $if_return_metadata = false)
     $response = curl_exec($curl);
     curl_close($curl);
     return $response;
+}
+
+function getAdvocatesFroApearenceAPI($list_date_ymd, $court_no, $diary_no, $aor_code, $x){
+    $db1 = Database::connect('e_services');
+    $db2 = Database::connect('sci_cmis_final');
+    $advocateBuilderP = $db1->table('appearing_in_diary a')
+        ->distinct()
+        ->select('a.aor_code, a.priority')
+        ->where('a.is_submitted', '1')
+        ->where('a.is_active', '1')
+        ->where('a.appearing_for', 'P')
+        ->where('a.list_date', $list_date_ymd)
+        ->where('a.court_no', $court_no)
+        ->where('a.diary_no', $diary_no)
+        ->where('a.diary_no', $aor_code)
+        ->groupBy('a.aor_code')
+        ->groupBy('a.priority')
+        ->orderBy('a.aor_code')
+        ->orderBy('a.priority');
+    $advocateQueryP = $advocateBuilderP->get();
+    $advDataForP = $advocateQueryP->getResultArray();
+    $added_for = '';
+    $advocates = [];
+    if(is_array($advDataForP) && count($advDataForP) > 0){
+        $added_for = 'For Petitioners';
+        foreach ($advDataForP as $key=>$advocateP) {
+            if(!empty($advocateP)){
+                $advocateDetailBuilder = $db1->table('appearing_in_diary a')
+                    ->distinct()
+                    ->select('*')
+                    ->where('a.is_submitted', '1')
+                    ->where('a.is_active', '1')
+                    ->where('a.appearing_for != ', 'P')
+                    ->where('a.list_date', $list_date_ymd)
+                    ->where('a.court_no', $court_no)
+                    ->where('a.diary_no', $diary_no)
+                    ->where('a.aor_code', $advocateP['aor_code'])
+                    ->orderBy('a.priority');
+                $advocateDetailQuery = $advocateDetailBuilder->get();
+                foreach ($advocateDetailQuery->getResultArray() as $advocateDetail) {
+                    $advocates[] = $advocateDetail['advocate_title'].' '.$advocateDetail['advocate_name'].' '.$advocateDetail['advocate_type'];
+                }
+            }
+        }
+    }
+    $advocateBuilderR = $db1->table('appearing_in_diary a')
+        ->distinct()
+        ->select('a.aor_code, a.priority')
+        ->where('a.is_submitted', '1')
+        ->where('a.is_active', '1')
+        ->where('a.appearing_for !=', 'P')
+        ->where('a.list_date', $list_date_ymd)
+        ->where('a.court_no', $court_no)
+        ->where('a.diary_no', $diary_no)
+        ->where('a.aor_code', $aor_code)
+        ->groupBy('a.aor_code')
+        ->groupBy('a.priority')
+        ->orderBy('a.aor_code')
+        ->orderBy('a.priority');
+    // if($x == 7) {
+    //     pr($advocateBuilderR->getCompiledSelect());
+    // }
+    $advocateQueryR = $advocateBuilderR->get();
+    $advDataForR = $advocateQueryR->getResultArray();    
+    if(is_array($advDataForR) && count($advDataForR) > 0) {
+        $added_for = 'For Respondents';
+        foreach ($advDataForR as $key=>$advocateR) {
+            if(!empty($advocateR)) {                
+                $advocateDetailBuilder = $db1->table('appearing_in_diary a')
+                    ->distinct()
+                    ->select('*')
+                    ->where('a.is_submitted', '1')
+                    ->where('a.is_active', '1')
+                    ->where('a.appearing_for != ', 'P')
+                    ->where('a.list_date', $list_date_ymd)
+                    ->where('a.court_no', $court_no)
+                    ->where('a.diary_no', $diary_no)
+                    ->where('a.aor_code', $advocateR['aor_code'])
+                    ->orderBy('a.priority');
+                $advocateDetailQuery = $advocateDetailBuilder->get();
+                foreach ($advocateDetailQuery->getResultArray() as $advocateDetail) {
+                    $advocates[] = $advocateDetail['advocate_title'].' '.$advocateDetail['advocate_name'].' '.$advocateDetail['advocate_type'];
+                }
+            }
+        }
+    }
+    return ['added_for' => $added_for, 'advocates' => $advocates];
 }
