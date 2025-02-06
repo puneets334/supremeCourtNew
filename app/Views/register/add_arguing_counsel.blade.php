@@ -736,7 +736,7 @@ if(!empty(getSessionData('login'))){
                                                 <div class="bottom">
                                                     <pre id="log"></pre>
                                                 </div>
-                                                <!-- <form  method="post" enctype="multipart/form-data">
+                                                 <form  method="post" enctype="multipart/form-data">
                                                     <a id="downloadButton" class="button" style="display:none;">
                                                         Download
                                                     </a>
@@ -744,19 +744,27 @@ if(!empty(getSessionData('login'))){
                                                         <a href="user_video.php" class="btn btn-primary" >
                                                             Try Again!
                                                         </a>
-                                                        <a id="saveButton" class="btn btn-primary"  style="display:none;">
-                                                            Save & Next
-                                                        </a>
+                                                        
                                                     </div>
-                                                </form> -->
+                                                </form> 
                                                 <div class="row show_msg col-12 mb-3"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-12 col-md-6">
+                                                        <label class="form-label" for="form-stacked-text">Upload Speech Recoreded <span style="color: red">*</span> :</label>
+                                                        <input class="form-control cus-form-ctrl" type="file" value="" name="speech_recorded" id="speech_recorded"  placeholder="Speech file" maxlength="25" tabindex="19" />
+                                                        <div id="error_r_city"></div>
+                                                        
+                                                    </div>
                                                 <!-- right box end -->
                                                 <div style="text-align: center;">
                                                     <!-- <input type="submit" class="btn btn-primary quick-btn mt-3" name="register" id="register" value="Register"> -->
+                                                    <a id="saveButton" class="btn btn-primary" style="display:none">
+                                                            Save & Next
+                                                        
+                                                    </a>
                                                     <button type="submit" class="quick-btn mt-3" name="register" id="register" >Register</button>
                                                     <button type="button" class=" gray-btn quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
                                                    
@@ -1446,7 +1454,7 @@ if(!empty(getSessionData('login'))){
                                 res = JSON.parse(res);
                             }
                             if(res.success = 'success'){
-                                alert(res.message);
+                                //alert(res.message);
                                 window.location.reload();
                             }
                             else  if(res.error = 'error'){
@@ -1676,14 +1684,114 @@ if(!empty(getSessionData('login'))){
 
 
     $(document).on("click", "#saveButton", function () {
-        var filename = "RecordedVideo.webm";
+        
+                var nameRegPattern = /^[a-zA-Z‘_ ]+$/i;
+                var emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                var mobilePattern = /^\d{10}$/;
+                var alphanumPattern = /^[a-zA-Z0-9]+$/i;
+                var validation = true;
+                var name =  $.trim($("#name").val());
+                var email =  $.trim($("#email").val());
+                var mobile = $.trim($("#mobile").val());
+                var bar_reg_no = $.trim($("#bar_reg_no").val());
+                if(name == ''){
+                    $("#name").focus();
+                    $("#error_name").text("Please fill name.");
+                    $("#error_name").css({'color':'red'});
+                    alert("Please fill name.");
+                    validation = false;
+                    return false;
+                }
+                else if(!nameRegPattern.test(name)){
+                    $("#name").focus();
+                    $("#error_name").text("Please fill name only characters.");
+                    $("#error_name").css({'color':'red'});
+                    alert("Please fill name only characters.");
+                    validation = false;
+                    return false;
+                }
+                else if(name.length < 3 || name.length >100){
+                    $("#name").focus();
+                    $("#error_name").text("Please fill name between minimum 3 and maximum 100 characters.");
+                    $("#error_name").css({'color':'red'});
+                    alert("Please fill name between minimum 3 and maximum 100 characters.");
+                    validation = false;
+                    return false;
+                }
+                else if(email == ''){
+                    $("#email").focus();
+                    $("#error_email").text("Please fill email.");
+                    $("#error_email").css({'color':'red'});
+                    alert("Please fill email.");
+                    validation = false;
+                    return false;
+                }
+                else if(email && !emailPattern.test(email)){
+                    $("#email").focus();
+                    $("#error_email").text("Please fill valid  email");
+                    $("#error_email").css({'color':'red'});
+                    alert("Please fill valid email");
+                    validation = false;
+                    return false;
+                }
+                else if(mobile == ''){
+                    $("#mobile").focus();
+                    $("#error_mobile").text("Please fill mobile.");
+                    $("#error_mobile").css({'color':'red'});
+                    alert("Please fill mobile.");
+                    validation = false;
+                    return false;
+                }
+                else if(mobile && !mobilePattern.test(mobile)){
+                    $("#mobile").focus();
+                    $("#error_mobile").text("Please fill valid  mobile No.");
+                    $("#error_mobile").css({'color':'red'});
+                    alert("Please fill valid mobile No.");
+                    validation = false;
+                    return false;
+                }
+                else if(bar_reg_no && !alphanumPattern.test(bar_reg_no)){
+                    $("#bar_reg_no").focus();
+                    $("#error_bar_reg_no").text("Please fill valid  bar reg. no.");
+                    $("#error_bar_reg_no").css({'color':'red'});
+                    alert("Please fill valid bar reg no.");
+                    validation = false;
+                    return false;
+                }else{
+                    var filename = "RecordedVideo.webm";
+        var filewebm = $('#speech_recorded')[0].files[0];
+        //console.log('webmfile',filewebm);
         var fd1 = new FormData();
-        fd1.append("file", recordedBlob, filename);
-
+        if(filewebm){
+            fd1.append("file", filewebm, filename);
+        }else{
+            fd1.append("file", recordedBlob, filename);   
+        }
+        alert($('#ecopyingCheck').val());
+        fd1.append("name",$('#name').val());
+        fd1.append("email",$('#email').val());
+        fd1.append("mobile",$('#mobile').val());
+        fd1.append("relation",$('#mobile').val());
+        fd1.append("relation_name",$('#relation_name').val());
+        fd1.append("c_address",$('#c_address').val());
+        fd1.append("bar_id_card",$('#bar_id_card')[0].files[0]);
+        fd1.append("bar_reg_no",$('#bar_reg_no').val());
+        fd1.append("c_pincode",$('#c_pincode').val());
+        fd1.append("c_state",$('#c_state').val());
+        fd1.append("c_district",$('#c_district').val());
+        fd1.append("c_city",$('#c_city').val());
+        fd1.append("r_address",$('#r_address').val());
+        fd1.append("r_pincode",$('#r_pincode').val());
+        fd1.append("isOnlineCopying",$('#ecopyingCheck').val());
+        fd1.append("r_city",$('#r_city').val());
+        fd1.append("r_state",$('#r_state').val());
+        fd1.append("r_district",$('#r_district').val());
+        fd1.append("aor",$('#aor').val());
+        
         $.ajax
         ({
-            url: "<?php echo base_url('register/AdvSignUp/final_submit_ecopying'); ?>",
-            dataType: "json",
+            url: "<?php echo base_url('saveArguingCounselCompleteDetailsForOnlineCoping'); ?>",
+            //dataType: "json",
             cache: false,
             contentType: false,
             processData: false,
@@ -1698,28 +1806,22 @@ if(!empty(getSessionData('login'))){
             },
             success: function(data)
             {
-                if(data.status == 'success'){
-                    swal({
-                        title: "SUCCESS!",
-                        text: "Video Uploaded Successfully",
-                        icon: "success",
-                        button: "Next",
-                    }).then(function () {
-                        $.redirect('user_image.php');
-                    }
-                    );
-                }
-                else{
-                    $('.show_msg').html('<div class="alert alert-danger alert-dismissible"><strong>'+data.status+'</strong></div>');
-                }
+                location.reload();
             }
         });
+                }
+                
+        
     });
     $(document).on('click', '#ecopyingCheck', function(){
         if($(this).is(":checked")){
             $('.left').show();
+            $('#saveButton').show();
+            $('#register').hide();
         }else{
-            $('.left').hide();  
+            $('.left').hide(); 
+            $('#register').show();
+            $('#saveButton').hide(); 
         }
         
     })
