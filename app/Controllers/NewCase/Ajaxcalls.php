@@ -3,6 +3,7 @@ namespace App\Controllers\NewCase;
 
 use App\Controllers\BaseController;
 use App\Libraries\webservices\Efiling_webservices;
+use App\Models\Admin\EfilingActionModel;
 use App\Models\Citation\CitationModel;
 use App\Models\Common\CommonModel;
 use App\Models\DocumentIndex\DocumentIndexSelectModel;
@@ -25,6 +26,7 @@ class Ajaxcalls extends BaseController {
     protected $Act_sections_model;
     protected $Citation_model;
     protected $Get_CIS_Status_model;
+    protected $Efiling_action_model;
 
     public function __construct() {
         parent::__construct();
@@ -37,6 +39,7 @@ class Ajaxcalls extends BaseController {
         $this->Act_sections_model = new ActSectionsModel();
         $this->Citation_model = new CitationModel();
         $this->Get_CIS_Status_model = new GetCISStatusModel();
+        $this->Efiling_action_model = new EfilingActionModel();
     }
     public function getAddressByPincode(){
         $enpincode = url_encryption($_POST['pincode']);
@@ -480,7 +483,13 @@ class Ajaxcalls extends BaseController {
                     $arr['registration_id'] = $registration_id;
                     $arr['step'] = 3;
                     $caveator = $this->Common_model->getCaveatDataByRegistrationId($arr);
-
+                    $is_already_approved_CaveatNoGenerated=$this->Efiling_action_model->is_already_approved_CaveatNoGenerated($registration_id);
+                    if ($is_already_approved_CaveatNoGenerated){
+                        $efiling_details=$is_already_approved_CaveatNoGenerated;
+                        $result["status"] = "ERROR_CAVEAT";
+                        $result["error"] = "This efiling detail already transfered to ICMIS as Caveat number ".$efiling_details->caveat_num.$efiling_details->caveat_year;
+                        echo json_encode($result);exit();
+                    }
                     $createdBy = !empty($caveator[0]->createdby) ? (int)$caveator[0]->createdby : NULL;
                     $case_type_id = !empty($caveator[0]->case_type_id) ? (int)$caveator[0]->case_type_id : NULL;
                     $tmpArr = array();
