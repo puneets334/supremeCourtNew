@@ -997,3 +997,6 @@ define('SAN_ROOT', "/home/SAN_eCopy"); //SAN ADDRESS
 define('NEW_SMS_SERVER_HOST_JIO_URL', "https://uninotify.sci.gov.in/api/v1/send");
 define('NEW_SMS_SERVER_HOST_JIO_IP', "http://10.192.105.124:91/api/v1/send");
 define('LIVE_SMS_KEY_JIO_CLOUD', "sdfmsdbfjh327654t3ufb58");
+define('LIVE_EMAIL_KEY_JIO_CLOUD', "sdfmsdbfjh327654t3ufb59");
+define('NEW_MAIL_SERVER_HOST_JIO_URL', "https://uninotify.sci.gov.in/api/v1/send");
+define('NEW_MAIL_SERVER_HOST_JIO_IP', "http://10.192.105.124:91/api/v1/send");
