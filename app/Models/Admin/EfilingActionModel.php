@@ -609,4 +609,21 @@ class EfilingActionModel extends Model {
         }
     }
 
+    public  function is_already_approved_CaveatNoGenerated($registration_id)
+    {
+        $builder = $this->db->table('efil.tbl_efiling_nums ten');
+        $builder->SELECT("ten.registration_id,ten.efiling_no,ten.ref_m_efiled_type_id,tec.caveat_num,tec.caveat_year,tec.caveat_num_date");
+        $builder->JOIN('public.tbl_efiling_caveat tec', 'ten.registration_id = tec.ref_m_efiling_nums_registration_id');
+        $builder->WHERE('ten.registration_id', $registration_id);
+        $builder->WHERE('ten.is_active', TRUE);
+        $builder->WHERE('tec.caveat_num is not null and tec.caveat_year is not null');
+        $query = $builder->get();
+        if ($query->getNumRows() >= 1) {
+            $efiling_details = $query->getRow();
+            return $efiling_details;
+        } else {
+            return false;
+        }
+    }
+
 }
