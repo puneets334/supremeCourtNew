@@ -381,4 +381,21 @@ class LoginModel extends Model
         }
     }
 
+    function get_user_for_ecopy($aor_code,$aor_mobile) {
+        $userid = strtoupper($aor_code);
+        $sql="SELECT users.*, est.pg_request_function, est.pg_response_function, est.estab_code,tut.user_type
+            FROM efil.tbl_users users 
+            JOIN efil.m_tbl_establishments est ON 1 = 1
+            LEFT JOIN efil.tbl_user_types tut ON tut.id=users.ref_m_usertype_id
+            WHERE (upper(users.userid) = ? OR users.moblie_number = ?  OR users.emailid ilike ?)
+            AND users.is_deleted = 'false' AND users.is_active = '1' AND tut.is_deleted = false ORDER by users.ref_m_usertype_id";
+        $query =$this->db->query($sql, array($userid, $aor_mobile, $aor_mobile));
+        // $res_array = $query->result(); echo "<pre>"; print_r($res_array);die;
+        if ($query->getNumRows() >= 1) {
+            $res_array = $query->getResult();
+        } else {
+            return false;
+        }
+    }
+
 }
