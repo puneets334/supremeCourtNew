@@ -245,8 +245,8 @@ class StageList extends BaseController {
                 }                
                 $data['tab_head'] = array('#', $lbl_efiling_no, 'Type', 'Case Details', 'Updated on');
                 $data['data_key'] = array('#', $lbl_efiling_no, 'Type', 'Case Details', 'Updated on');
-                $data['result'] = $this->StageList_model->get_efiled_list_admin(array(E_Filed_Stage, CDE_ACCEPTED_STAGE), array(E_FILING_TYPE_NEW_CASE, E_FILING_TYPE_CDE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
-                // $data['count'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(Initial_Defected_Stage), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
+                // $data['result'] = $this->StageList_model->get_efiled_list_admin(array(E_Filed_Stage, CDE_ACCEPTED_STAGE), array(E_FILING_TYPE_NEW_CASE, E_FILING_TYPE_CDE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
+                $data['result'] = $this->StageList_model->get_efilied_nums_stage_wise_list_admin(array(E_Filed_Stage, CDE_ACCEPTED_STAGE), getSessionData('login')['admin_for_type_id'], getSessionData('login')['admin_for_id']);
                 // $totalRecords = isset($data['count'])  && !empty($data['count']) ? count($data['count']) : 0;
                 // // pr($totalRecords);
                 // $data['pages'] = ceil($totalRecords / $data['limit']);
