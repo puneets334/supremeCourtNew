@@ -46,7 +46,7 @@
             <?php
             $attribute = ['class' => 'form-horizontal', 'name' => 'add_case_details', 'id' => 'add_case_details', 'autocomplete' => 'off', 'enctype' => 'multipart/form-data'];
             echo form_open('#', $attribute);
-            $cause_title = explode(' Vs. ', @$new_case_details[0]->cause_title ?? '');
+            $cause_title = explode(' Vs. ', @$new_case_details[0]['cause_title'] ?? '');
             ?>
             <div class="tab-form-inner">
                 <div class="row">
@@ -152,7 +152,7 @@
                                 <?php
                                 if (count($sc_case_type)) {
                                     foreach ($sc_case_type as $dataRes) {
-                                        $sel = (@$new_case_details[0]->sc_case_type_id == (string) $dataRes->casecode) ? "selected=selected" : '';
+                                        $sel = (@$new_case_details[0]['sc_case_type_id'] == (string) $dataRes->casecode) ? "selected=selected" : '';
                                 ?>
                                         <option <?php echo $sel; ?> value="<?php echo_data(url_encryption(trim($dataRes->casecode) . '##' . 'abcd')); ?>"><?php echo_data($dataRes->casename); ?>
                                         </option>;
@@ -171,9 +171,9 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Special Case Type <span style="color: red" class="astriks">*</span></label>
                             <?php
-                            $selectNone = @$new_case_details[0]->sc_sp_case_type_id == '1' ? 'selected=selected' : '';
-                            $selectJP = @$new_case_details[0]->sc_sp_case_type_id == '6' ? 'selected=selected' : '';
-                            $selectPUD = @$new_case_details[0]->sc_sp_case_type_id == '7' ? 'selected=selected' : '';
+                            $selectNone = @$new_case_details[0]['sc_sp_case_type_id'] == '1' ? 'selected=selected' : '';
+                            $selectJP = @$new_case_details[0]['sc_sp_case_type_id'] == '6' ? 'selected=selected' : '';
+                            $selectPUD = @$new_case_details[0]['sc_sp_case_type_id'] == '7' ? 'selected=selected' : '';
                             ?>
                             <select tabindex='4' name="sc_sp_case_type_id" id="sc_sp_case_type_id" class="form-control cus-form-ctrl filter_select_dropdown" style="width: 100%" required onchange="getdtmodel()">
                                 <option value="" title="Select">Select Special Case Type</option>
@@ -186,7 +186,7 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4" id="dtsign">
                         <div class="mb-3 icon-input">
                             <label for="" class="form-label">Date of signature of jail incharge</label>
-                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value=" <?php  echo isset($new_case_details[0]) && !empty($new_case_details[0]->jail_signature_date) ? date("d/m/Y", strtotime($new_case_details[0]->jail_signature_date)) : ''; ?>" type="text" > 
+                            <input tabindex='5' class="form-control cus-form-ctrl datesignjail" id="datesignjail" name="datesignjail" value=" <?php  echo isset($new_case_details[0]) && !empty($new_case_details[0]['jail_signature_date']) ? date("d/m/Y", strtotime($new_case_details[0]['jail_signature_date'])) : ''; ?>" type="text" > 
                             <span class="input-group-addon" data-placement="bottom" data-toggle="popover" data-content="Please Enter Date of Birth." title="Please Enter Date of Birth.">
                                 <i class="fa fa-question-circle-o"></i>
                             </span>
@@ -201,7 +201,7 @@
                                 <?php
                                 if (count($main_subject_cat)) {
                                     foreach ($main_subject_cat as $dataRes) {
-                                        $sel = (@$new_case_details[0]->subj_main_cat == $dataRes->id) ? "selected=selected" : '';
+                                        $sel = (@$new_case_details[0]['subj_main_cat'] == $dataRes->id) ? "selected=selected" : '';
                                 ?>
                                         <option <?php echo $sel; ?> value="<?php echo_data(url_encryption(trim($dataRes->id . '##' . $dataRes->subcode1))); ?>">
                                             <?php echo_data(strtoupper($dataRes->sub_name1));
@@ -231,12 +231,12 @@
                             <select tabindex="8" id="special_category" name="special_category" class="form-control cus-form-ctrl filter_select_dropdown" required>
                                 <?php
                                 if (count($special_category)) {
-                                    $sel = (@$new_case_details[0]->special_category == 0) ? "selected=selected" : ''; ?>
+                                    $sel = (@$new_case_details[0]['special_category'] == 0) ? "selected=selected" : ''; ?>
                                     <option <?php echo $sel; ?> value="<?php echo_data(url_encryption(0)); ?>"><?php echo_data(strtoupper('None')); ?>
                                     </option>
                                     <?php
                                     foreach ($special_category as $specCat) {
-                                        $sel = (@$new_case_details[0]->special_category == $specCat->id) ? "selected=selected" : '';
+                                        $sel = (@$new_case_details[0]['special_category'] == $specCat->id) ? "selected=selected" : '';
                                     ?>
                                         <option <?php echo $sel; ?> value="<?php echo_data(url_encryption(trim($specCat->id))); ?>"><?php echo_data(strtoupper($specCat->category_name)); ?>
                                         </option>;
@@ -253,14 +253,14 @@
                                 <div class="col-12 col-sm-12 col-md-2 col-lg-2">
                                     <label for="" class="form-label">If SCLSC</label>
                                     <div class="form-check form-switch">
-                                        <input tabindex="9" class="form-check-input if_sclsc" type="checkbox" name="if_sclsc" id="if_sclsc flexSwitchCheckDefault" <?php echo !empty(@$new_case_details[0]->if_sclsc) && @$new_case_details[0]->if_sclsc == 1 ? 'checked' : ''; ?>>
+                                        <input tabindex="9" class="form-check-input if_sclsc" type="checkbox" name="if_sclsc" id="if_sclsc flexSwitchCheckDefault" <?php echo !empty(@$new_case_details[0]['if_sclsc']) && @$new_case_details[0]['if_sclsc'] == 1 ? 'checked' : ''; ?>>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-5 col-lg-5 toggle_amr">
                                     <label class="form-label">ANR No
                                         <span style="color: red">*</span>
                                     </label>
-                                    <input id="sclsc_amr_no" class="form-control cus-form-ctrl" name="sclsc_amr_no" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->sclsc_amr_no; ?>" minlength="1" placeholder="Enter ANR No" type="text">
+                                    <input id="sclsc_amr_no" class="form-control cus-form-ctrl" name="sclsc_amr_no" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]['sclsc_amr_no']; ?>" minlength="1" placeholder="Enter ANR No" type="text">
                                 </div>
                                 <div class="col-12 col-sm-12 col-md-5 col-lg-5 toggle_amr">
                                     <label class="form-label">ANR Year
@@ -290,14 +290,14 @@
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Number of Petitioner (s) <span style="color: red" class="astriks">*</span></label>
-                            <input min="0" tabindex="10" max="9999" maxlength="4" pattern="\d*" id="no_of_petitioners" name="no_of_petitioners" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_petitioners; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Petitioner" type="text" required>
+                            <input min="0" tabindex="10" max="9999" maxlength="4" pattern="\d*" id="no_of_petitioners" name="no_of_petitioners" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]['no_of_petitioners']; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Petitioner" type="text" required>
                         </div>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                         <div class="mb-3">
                             <label for="" class="form-label">Number of Respondent (s) <span style="color: red" class="astriks">*</span></label>
-                            <input min="0" tabindex="11" max="9999" maxlength="4" pattern="\d*" id="no_of_respondents" name="no_of_respondents" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]->no_of_respondents; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Respondent" type="text" required>
+                            <input min="0" tabindex="11" max="9999" maxlength="4" pattern="\d*" id="no_of_respondents" name="no_of_respondents" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?php echo @$new_case_details[0]['no_of_respondents']; ?>" minlength="1" class="form-control cus-form-ctrl" placeholder="No of Respondent" type="text" required>
                         </div>
                     </div>
                     <div class="col-12 col-sm-12 col-md-4 col-lg-4">
@@ -306,7 +306,7 @@
 
                                 <label class="form-label" for="inlineRadio1">Earlier Court Details <span class="pink-text"> (Order Challenged)</span></label>
 
-                                <input tabindex="8" class="cus-form-check" type="checkbox" name="Earlier_not_court_type" id="Earlier_not_court_type" value="4" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 4 ? 'checked' : ''; ?>>No Earlier Court</label>
+                                <input tabindex="8" class="cus-form-check" type="checkbox" name="Earlier_not_court_type" id="Earlier_not_court_type" value="4" <?php echo !empty($new_case_details[0]['court_type']) && $new_case_details[0]['court_type'] == 4 ? 'checked' : ''; ?>>No Earlier Court</label>
                             </div>
                         </div>
                     </div>
@@ -317,12 +317,12 @@
                             <select id="court_name" name="court_name" class="form-control cus-form-ctrl filter_select_dropdown" required>
                                 <option value="">Select Court Name</option>
                                 <?php
-                                if (!empty(@$new_case_details[0]->court_type)) {
+                                if (!empty(@$new_case_details[0]['court_type'])) {
                                 ?>
-                                    <option value="4" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 4 ? 'selected="selected"' : ''; ?>>Supreme Court</option>
-                                    <option value="1" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 1 ? 'selected="selected"' : ''; ?>>High Court</option>
-                                    <option value="3" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 3 ? 'selected="selected"' : ''; ?>>District Court</option>
-                                    <option value="5" <?php echo !empty($new_case_details[0]->court_type) && $new_case_details[0]->court_type == 5 ? 'selected="selected"' : ''; ?>>State Agency</option>
+                                    <option value="4" <?php echo !empty($new_case_details[0]['court_type']) && $new_case_details[0]['court_type'] == 4 ? 'selected="selected"' : ''; ?>>Supreme Court</option>
+                                    <option value="1" <?php echo !empty($new_case_details[0]['court_type']) && $new_case_details[0]['court_type'] == 1 ? 'selected="selected"' : ''; ?>>High Court</option>
+                                    <option value="3" <?php echo !empty($new_case_details[0]['court_type']) && $new_case_details[0]['court_type'] == 3 ? 'selected="selected"' : ''; ?>>District Court</option>
+                                    <option value="5" <?php echo !empty($new_case_details[0]['court_type']) && $new_case_details[0]['court_type'] == 5 ? 'selected="selected"' : ''; ?>>State Agency</option>
                                 <?php
                                 } else {
                                 ?>
@@ -343,7 +343,7 @@
                         <div class="col-12 col-sm-12 col-md-4 col-lg-4">
                             <div class="mb-3">
                                 <label for="" class="form-label">Whether filed by Government?</label>
-                                <input class="form-check-input" type="checkbox" id="" name="is_govt_filing" id="is_govt_filing flexSwitchCheckDefault" <?php echo !empty(@$new_case_details[0]->is_govt_filing) && @$new_case_details[0]->is_govt_filing == 1 ? 'checked' : ''; ?>>
+                                <input class="form-check-input" type="checkbox" id="" name="is_govt_filing" id="is_govt_filing flexSwitchCheckDefault" <?php echo !empty(@$new_case_details[0]['is_govt_filing']) && @$new_case_details[0]['is_govt_filing'] == 1 ? 'checked' : ''; ?>>
                             </div>
                         </div>
                     <?php } ?>
@@ -355,7 +355,7 @@
                                 <?php
                                 if (isset($supreme_court_state) && !empty($supreme_court_state)) {
                                     foreach ($supreme_court_state as $k => $v) {
-                                        if (isset($new_case_details[0]->supreme_court_state) && !empty($new_case_details[0]->supreme_court_state) && $new_case_details[0]->supreme_court_state == $v['id']) {
+                                        if (isset($new_case_details[0]['supreme_court_state']) && !empty($new_case_details[0]['supreme_court_state']) && $new_case_details[0]->supreme_court_state == $v['id']) {
                                             echo '<option value="' . $v['id'] . '" selected="selected">' . $v['name'] . '</option>';
                                         } else {
                                             echo '<option value="' . $v['id'] . '">' . $v['name'] . '</option>';
@@ -375,7 +375,7 @@
                                 <?php
                                 if (isset($supreme_court_bench) && !empty($supreme_court_bench)) {
                                     foreach ($supreme_court_bench as $k => $v) {
-                                        if (isset($new_case_details[0]->supreme_court_bench) && !empty($new_case_details[0]->supreme_court_bench) && $new_case_details[0]->supreme_court_bench == $v['id']) {
+                                        if (isset($new_case_details[0]['supreme_court_bench']) && !empty($new_case_details[0]['supreme_court_bench']) && $new_case_details[0]['supreme_court_bench'] == $v['id']) {
                                             echo '<option value="' . $v['id'] . '" selected="selected">' . $v['name'] . '</option>';
                                         } else {
                                             echo '<option value="' . $v['id'] . '">' . $v['name'] . '</option>';
@@ -394,7 +394,7 @@
                                 <?php
                                 if (isset($high_court_drop_down) && !empty($high_court_drop_down)) {
                                     foreach ($high_court_drop_down as $k => $v) {
-                                        if ($v->hc_id == @$new_case_details[0]->estab_id) {
+                                        if ($v->hc_id == @$new_case_details[0]['estab_id']) {
                                             echo '<option selected="selected" value="' . escape_data(url_encryption($v->hc_id . '##' . $v->name)) . '">' . escape_data(strtoupper($v->name)) . '</option>';
                                         } else {
                                             echo '<option value="' . escape_data(url_encryption($v->hc_id . '##' . $v->name)) . '">' . escape_data(strtoupper($v->name)) . '</option>';
@@ -416,7 +416,7 @@
 
                                 if (isset($high_court_bench) && !empty($high_court_bench)) {
                                     foreach ($high_court_bench as $k => $bench) {
-                                        if ($bench['est_code'] == @$new_case_details[0]->estab_code) {
+                                        if ($bench['est_code'] == @$new_case_details[0]['estab_code']) {
                                             echo '<option selected="selected" value="' . escape_data(url_encryption($bench['bench_id'] . '##' . $bench['name'] . '##' . $bench['est_code'])) . '">' . escape_data(strtoupper($bench['name'])) . '</option>';
                                         } else {
                                             echo '<option value="' . escape_data(url_encryption($bench['bench_id'] . '##' . $bench['name'] . '##' . $bench['est_code'])) . '">' . escape_data(strtoupper($bench['name'])) . '</option>';
@@ -437,7 +437,7 @@
                                 <?php
                                 if (isset($state_list) && !empty($state_list)) {
                                     foreach ($state_list as $k => $state) {
-                                        if (isset($new_case_details[0]->state_id) && !empty($new_case_details[0]->state_id) && $new_case_details[0]->state_id == $state['state_code']) {
+                                        if (isset($new_case_details[0]['state_id']) && !empty($new_case_details[0]['state_id']) && $new_case_details[0]['state_id'] == $state['state_code']) {
                                             echo '<option selected="selected" value="' . escape_data(url_encryption($state['state_code'] . '#$' . $state['state_name'] . '#$' . $state['state_name'])) . '">' . escape_data(strtoupper($state['state_name'])) . '</option>';
                                         } else {
                                             echo '<option  value="' . escape_data(url_encryption($state['state_code'] . '#$' . $state['state_name'] . '#$' . $state['state_name'])) . '">' . escape_data(strtoupper($state['state_name'])) . '</option>';
@@ -457,7 +457,7 @@
                                 <?php
                                 if (isset($district_list) && !empty($district_list)) {
                                     foreach ($district_list as $k => $district) {
-                                        if (isset($new_case_details[0]->district_id) && !empty($new_case_details[0]->district_id) && $new_case_details[0]->district_id == $district['district_code']) {
+                                        if (isset($new_case_details[0]['district_id']) && !empty($new_case_details[0]['district_id']) && $new_case_details[0]['district_id'] == $district['district_code']) {
                                             echo '<option selected="selected" value="' . htmlentities(url_encryption($district['district_code'] . '#$' . $district['district_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($district['district_name']), ENT_QUOTES) . '</option>';
                                         } else {
                                             echo '<option  value="' . htmlentities(url_encryption($district['district_code'] . '#$' . $district['district_name']), ENT_QUOTES) . '">' . htmlentities(strtoupper($district['district_name']), ENT_QUOTES) . '</option>';
@@ -478,7 +478,7 @@
                                 <?php
                                 if (isset($state_agency_list) && !empty($state_agency_list)) {
                                     foreach ($state_agency_list as $dataRes) {
-                                        if (isset($new_case_details[0]->state_id) && !empty($new_case_details[0]->state_id) && $new_case_details[0]->state_id == $dataRes->cmis_state_id) {
+                                        if (isset($new_case_details[0]['state_id']) && !empty($new_case_details[0]['state_id']) && $new_case_details[0]['state_id'] == $dataRes->cmis_state_id) {
                                             echo '<option selected="selected" value="' . escape_data(url_encryption($dataRes->cmis_state_id . '#$' . $dataRes->agency_state)) . '">' . escape_data(strtoupper($dataRes->agency_state)) . '</option>';
                                         } else {
                                             echo '<option value="' . escape_data(url_encryption($dataRes->cmis_state_id . '#$' . $dataRes->agency_state)) . '">' . escape_data(strtoupper($dataRes->agency_state)) . '</option>';
@@ -499,7 +499,7 @@
                                 <?php
                                 if (isset($agencies) && !empty($agencies)) {
                                     foreach ($agencies as $agency) {
-                                        if (isset($new_case_details[0]->estab_id) && !empty($new_case_details[0]->estab_id) && $new_case_details[0]->estab_id == $agency['id']) {
+                                        if (isset($new_case_details[0]['estab_id']) && !empty($new_case_details[0]['estab_id']) && $new_case_details[0]['estab_id'] == $agency['id']) {
                                             echo '<option selected="selected" value="' . escape_data(url_encryption($agency['id'] . '##' . $agency['agency_name'] . '##' . $agency['short_agency_name'])) . '">' . escape_data(strtoupper($agency['short_agency_name'])) . ' - ' . escape_data(strtoupper($agency['agency_name'])) . '</option>';
                                         } else {
                                             echo '<option value="' . escape_data(url_encryption($agency['id'] . '##' . $agency['agency_name'] . '##' . $agency['short_agency_name'])) . '">' . escape_data(strtoupper($agency['short_agency_name'])) . ' - ' . escape_data(strtoupper($agency['agency_name'])) . '</option>';
@@ -565,7 +565,7 @@
 {{-- @endsection --}}
 <script>
     <?php
-    if(isset($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1){ ?>
+    if(isset($new_case_details[0]['if_sclsc']) && $new_case_details[0]['if_sclsc'] == 1){ ?>
     $(document).ready(function () {
         $(".toggle_amr").show();
         $(".if_sclsc").click(function() {
@@ -600,8 +600,8 @@
         }
         // Set the selected value
         <?php
-        if((isset($new_case_details[0]->if_sclsc) && $new_case_details[0]->if_sclsc == 1) && (isset($new_case_details[0]->sclsc_amr_year) && !empty($new_case_details[0]->sclsc_amr_year))){ ?>
-        yearDropdown.value = "<?=@$new_case_details[0]->sclsc_amr_year;?>"; // Make sure to use a string for the value
+        if((isset($new_case_details[0]['if_sclsc']) && $new_case_details[0]['if_sclsc'] == 1) && (isset($new_case_details[0]['sclsc_amr_year']) && !empty($new_case_details[0]['sclsc_amr_year']))){ ?>
+        yearDropdown.value = "<?=@$new_case_details[0]['sclsc_amr_year'];?>"; // Make sure to use a string for the value
         <?php } ?>
     });
     $('#party_dob').datepicker({
@@ -819,25 +819,25 @@
     }
 </script>
 <script type="text/javascript">
-    <?php if (isset($new_case_details[0]->subj_sub_cat_1) && !empty($new_case_details[0]->subj_sub_cat_1) && $new_case_details[0]->subj_sub_cat_1 == 222) { ?>
-        var selected_sub_cat = '<?php echo_data(url_encryption($new_case_details[0]->subj_sub_cat_1 . '##' . $new_case_details[0]->court_fee_calculation_helper_flag)); ?>';
+    <?php if (isset($new_case_details[0]['subj_sub_cat_1']) && !empty($new_case_details[0]['subj_sub_cat_1']) && $new_case_details[0]['subj_sub_cat_1'] == 222) { ?>
+        var selected_sub_cat = '<?php echo_data(url_encryption($new_case_details[0]['subj_sub_cat_1'] . '##' . $new_case_details[0]['court_fee_calculation_helper_flag'])); ?>';
         get_matrimonial(selected_sub_cat);
 
 
     <?php } ?>
-    <?php if (isset($new_case_details[0]->sc_case_type_id) && !empty($new_case_details[0]->sc_case_type_id) && $new_case_details[0]->sc_case_type_id == 7) { ?>
-        var selected_case_type = '<?php echo_data(isset($new_case_details) ? url_encryption($new_case_details[0]->sc_case_type_id . '"##"' . $new_case_details[0]->court_fee_calculation_helper_flag) : ''); ?>';
+    <?php if (isset($new_case_details[0]['sc_case_type_id']) && !empty($new_case_details[0]['sc_case_type_id']) && $new_case_details[0]['sc_case_type_id'] == 7) { ?>
+        var selected_case_type = '<?php echo_data(isset($new_case_details) ? url_encryption($new_case_details[0]['sc_case_type_id'] . '"##"' . $new_case_details[0]['court_fee_calculation_helper_flag']) : ''); ?>';
         get_matrimonial_for_casetype(selected_case_type);
     <?php } ?>
 
     <?php if (isset($new_case_details[0]) && !empty($new_case_details[0])) { ?>
-        var selected_sub_cat = '<?php echo_data(isset($new_case_details[0]->subj_sub_cat_1) ? url_encryption($new_case_details[0]->subj_sub_cat_1) : ''); ?>';
+        var selected_sub_cat = '<?php echo_data(isset($new_case_details[0]['subj_sub_cat_1']) ? url_encryption($new_case_details[0]['subj_sub_cat_1']) : ''); ?>';
         get_sub_category('subj_sub_cat_1', 'subj_cat_main', selected_sub_cat);
     <?php } ?>
 
     //----------Get Sub Category List----------------------//
     $('#subj_cat_main').change(function() {
-        var selected_sub_cat = '<?php echo_data(isset($new_case_details) ? url_encryption(@$new_case_details[0]->subj_sub_cat_1) : ''); ?>';
+        var selected_sub_cat = '<?php echo_data(isset($new_case_details) ? url_encryption(@$new_case_details[0]['subj_sub_cat_1']) : ''); ?>';
         selected_sub_cat = this.value;
         get_sub_category('subj_sub_cat_1', 'subj_cat_main', selected_sub_cat);
     });
@@ -969,7 +969,7 @@
 
         var spcasetype_id = $('#sc_sp_case_type_id').val();
 
-        var dateSignatureDiv = "<?php echo @$new_case_details[0]->jail_signature_date; ?>";
+        var dateSignatureDiv = "<?php echo @$new_case_details[0]['jail_signature_date']; ?>";
         //alert(dateSignatureDiv);
         if (dateSignatureDiv && spcasetype_id == 6) {
             $('#dtsign').show();

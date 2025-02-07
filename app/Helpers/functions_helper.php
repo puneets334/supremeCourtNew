@@ -4688,11 +4688,13 @@ function send_mail_JIO($to_email,$subject,$message,$files=array())
 }
 function send_mail_cron_jio($data)
 {
+    $view = service('renderer');
     if (!empty($data)) {
         $to_email = $data['to_email'];
         $subject = $data['subject'];
         // $ci->load->library('email');
-        $email_message = (view('templates.email.reports', $data, true));
+        // $email_message = (view('templates.email.reports', $data, true));
+        $email_message = ($view->setData($data)->render('templates/email/reports'));
         $files = array();
         $json2=send_mail_JIO($to_email,$subject,$email_message,$files);
         return $json2;

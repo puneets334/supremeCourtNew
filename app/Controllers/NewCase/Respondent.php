@@ -469,7 +469,7 @@ class Respondent extends BaseController {
             $party_details = array_merge($party_details, $party_create_data);           
             $inserted_party_id = $this->New_case_model->add_update_case_parties($registration_id, $party_details, NEW_CASE_RESPONDENT);           
             if ($inserted_party_id) {
-                $_SESSION['case_table_ids']->m_respondent_id = $inserted_party_id;
+                $_SESSION['case_table_ids']['m_respondent_id'] = $inserted_party_id;
                 echo '2@@@' . htmlentities('Respondent details added successfully', ENT_QUOTES) . '@@@' . base_url('newcase/defaultController/' . url_encryption(trim($registration_id . '#' . E_FILING_TYPE_NEW_CASE . '#' . Draft_Stage)));
             } else{ 
                 echo '1@@@' . htmlentities('Some error ! Please Try again.', ENT_QUOTES);
