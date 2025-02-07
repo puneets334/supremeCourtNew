@@ -65,14 +65,14 @@ class SubordinateCourt extends BaseController {
             $this->Get_details_model->get_case_table_ids($registration_id);
             $casedetails=$this->Get_details_model->get_new_case_details($registration_id);
             // pr($casedetails);
-            $sc_casetype=$casedetails[0]->sc_case_type_id;
+            $sc_casetype=$casedetails[0]['sc_case_type_id'];
             $data['sc_case_typeId_div_hide']=$sc_casetype;
             $criminal_case_type_id=array(10,12,14,26,2,28,6,4,8,18,20,29,16,33,35,36,41);
             if(in_array($sc_casetype,$criminal_case_type_id))
                 $criminal_case=1;
         }
         $caseData = array();
-        $caseData['court_type'] = !empty($casedetails[0]->court_type) ? $casedetails[0]->court_type : NULL;
+        $caseData['court_type'] = !empty($casedetails[0]['court_type']) ? $casedetails[0]['court_type'] : NULL;
         $data['hc_value'] ='';
         $data['hc_bench_value'] ='';
         $data['state_value'] ='';
@@ -85,8 +85,8 @@ class SubordinateCourt extends BaseController {
             $params = array();
             switch($court_type){
                 case 1:
-                    $estab_id = !empty($casedetails[0]->estab_id) ? $casedetails[0]->estab_id : NULL; // high court estab_id
-                    $estab_code = !empty($casedetails[0]->estab_code) ? $casedetails[0]->estab_code : NULL; //bench estab_code
+                    $estab_id = !empty($casedetails[0]['estab_id']) ? $casedetails[0]['estab_id'] : NULL; // high court estab_id
+                    $estab_code = !empty($casedetails[0]['estab_code']) ? $casedetails[0]['estab_code'] : NULL; //bench estab_code
                     if(isset($estab_id) && !empty($estab_id) && isset($estab_code) && !empty($estab_code)){
                         $params['hc_id'] = $estab_id;
                         $params['est_code'] = $estab_code;
@@ -98,8 +98,8 @@ class SubordinateCourt extends BaseController {
                     }
                     break;
                 case 3:
-                    $state_id = !empty($casedetails[0]->state_id) ? $casedetails[0]->state_id : NULL;
-                    $district_id = !empty($casedetails[0]->district_id) ? $casedetails[0]->district_id : NULL;
+                    $state_id = !empty($casedetails[0]['state_id']) ? $casedetails[0]['state_id'] : NULL;
+                    $district_id = !empty($casedetails[0]['district_id']) ? $casedetails[0]['district_id'] : NULL;
                     $arr = array();
                     $arr['state_id'] = $state_id;
                     $arr['district_id'] = $district_id;
@@ -113,8 +113,8 @@ class SubordinateCourt extends BaseController {
                 case 4:
                     break;
                 case 5:
-                    $state_id = !empty($casedetails[0]->state_id) ? $casedetails[0]->state_id : NULL;
-                    $estab_id = !empty($casedetails[0]->estab_id) ? $casedetails[0]->estab_id : NULL;
+                    $state_id = !empty($casedetails[0]['state_id']) ? $casedetails[0]['state_id'] : NULL;
+                    $estab_id = !empty($casedetails[0]['estab_id']) ? $casedetails[0]['estab_id'] : NULL;
                     $agencyArr = array();
                     $agencyArr['state_id'] = $state_id;
                     $agencyArr['estab_id'] = $estab_id;
@@ -509,7 +509,7 @@ class SubordinateCourt extends BaseController {
         }
         //  echo '<pre>';print_r($case_details);echo '</pre>';exit();
         $casedetails=$this->Get_details_model->get_new_case_details($registration_id);
-        $sc_casetype=isset($casedetails[0]->sc_case_type_id)?$casedetails[0]->sc_case_type_id:'';
+        $sc_casetype=isset($casedetails[0]['sc_case_type_id'])?$casedetails[0]['sc_case_type_id']:'';
         $criminal_case_type_id=array(10,12,14,26,2,28,6,4,8,18,20,29,16,33,35,36,41);
         if(in_array($sc_casetype,$criminal_case_type_id) || getSessionData('efiling_details')['ref_m_efiled_type_id'] == E_FILING_TYPE_CAVEAT) {
             if(isset($_POST['fir_state']) && !empty($_POST['fir_state'])){
