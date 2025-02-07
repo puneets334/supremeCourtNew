@@ -357,13 +357,76 @@ class DefaultController extends BaseController {
         }else{
             $userCaptcha=$this->request->getPost('userCaptcha');
             $result=$this->ecoping_webservices->getCopyBarcodeBymobileOrAorCOde($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
+            $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($this->request->getPost('you_email'));
             if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')){
                 
                 if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')== @$_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]) {
                     unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]);
                     unset($_SESSION['impersonated_user_authentication_mobile_otp']);
-                    echo "verify Otp";
-                    die;
+                    // echo "verify Otp";
+                    // die;
+
+                    $row = $this->Login_model->get_user_for_ecopy($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
+                    if(is_array($row) && !empty($row)){
+                        $impersonator_user = $row[0];
+                        $logindata = array(
+                            'id' => $row[0]->id,
+                            'userid' => $row[0]->userid,
+                            'ref_m_usertype_id' => AUTHENTICATED_BY_AOR,
+                            'first_name' => $row[0]->first_name,
+                            'last_name' => $row[0]->last_name,
+                            'mobile_number' => $row[0]->moblie_number,
+                            'emailid' => $row[0]->emailid,
+                            'adv_sci_bar_id' => $row[0]->adv_sci_bar_id,
+                            'aor_code' => $row[0]->aor_code,
+                            'bar_reg_no' => $row[0]->bar_reg_no,
+                            'gender' => $row[0]->gender,
+                            'pg_request_fun' => null,
+                            'pg_response_fun' => null,
+                            'photo_path' => $row[0]->photo_path,
+                            'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
+                            'admin_for_type_id'=>$row[0]->admin_for_type_id,
+                            'admin_for_id' =>$row[0]->admin_for_id,
+                            'account_status' => $row[0]->account_status,
+                            'refresh_token' => $row[0]->refresh_token,
+                            'impersonator_user' => $impersonator_user,//for efiling_assistant
+                            'processid' => getmypid(),
+                            'department_id' => $row[0]->ref_department_id,
+                            'icmis_usercode' => $row[0]->icmis_usercode
+                        );
+                    } else {
+                        $logindata = array(
+                            'id' => null,
+                            'userid' => $this->request->getPost('aor_code'),
+                            'ref_m_usertype_id' => AUTHENTICATED_BY_AOR,
+                            'first_name' => $result->name,
+                            'last_name' => null,
+                            'mobile_number' => $result->mobile,
+                            'emailid' => $result->email,
+                            'adv_sci_bar_id' => $result->bar_id,
+                            'aor_code' => $this->request->getPost('aor_code'),
+                            'bar_reg_no' => $result->bar_id,
+                            'gender' => $result->sex,
+                            'pg_request_fun' => null,
+                            'pg_response_fun' => null,
+                            'photo_path' => null,
+                            'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
+                            'admin_for_type_id'=>null,
+                            'admin_for_id' =>null,
+                            'account_status' => null,
+                            'refresh_token' => null,
+                            'impersonator_user' => [],
+                            'processid' => getmypid(),
+                            'department_id' => null,
+                            'icmis_usercode' => $result->bar_id
+                        );
+                    }
+                    $sessiondata = array(
+                        'login' => $logindata
+                    );
+                    $this->session->set($sessiondata);
+                    $this->logUser('login', $logindata);
+                    $this->redirect_on_login();
                     //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
                 }else{
                     $data['using']=$this->request->getPost('using');
@@ -375,10 +438,6 @@ class DefaultController extends BaseController {
                 //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
             }elseif(!empty($result)){
                 $data['aor_flag']='yes';
-               
-                
-               
-                
                 $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
                 $data['aor_flag']='yes';
                 $data['bar_id']=$result->bar_id;
@@ -387,12 +446,19 @@ class DefaultController extends BaseController {
                     $this->session->setFlashdata('msg', 'Invalid Captcha!');
                     
                 }else{
-                     //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+                    if($authorizedByAorAdvocateVerification->email==$this->request->getPost('you_email') && $authorizedByAorAdvocateVerification->mobile==$this->request->getPost('yr_mobile')){
+                       //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                     $impersonated_user_authentication_mobile_otp =123456;
-                    //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_efiling_OTP);
+                    //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
                     $_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id] = $impersonated_user_authentication_mobile_otp;
                     $message='Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp.'. - Supreme Court of India';
                     $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
+                    $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
+                    }else{
+                        $this->session->setFlashdata('msg', 'Wrong your Email and Mobile');   
+                    }
+                     
+                    
                 }
                 return $this->render('responsive_variant.authentication.frontLogin', $data);
                 //send_mail_msg($email,'Authentication OTP for eFiling' ,$message, $user_parts[1]);
@@ -543,6 +609,10 @@ class DefaultController extends BaseController {
             exit();
         } else if (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == USER_ADVOCATE) {
             return response()->redirect("dashboard_alt");
+            exit();
+        }
+        else if (!empty($this->session->get('login')) && $this->session->get('login')['ref_m_usertype_id'] == AUTHENTICATED_BY_AOR) {
+            return response()->redirect("ecopying_dashboard");
             exit();
         }
         /* elseif ($this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_PENDING_APPROVAL || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_OBJECTION || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_REJECTED || $this->session->userdata['login']['account_status'] == ACCOUNT_STATUS_DEACTIVE || $this->session->userdata['login']['bar_approval_status'] == BAR_APPROVAL_STATUS_ON_HOLD || $this->session->userdata['login']['bar_approval_status'] == BAR_APPROVAL_STATUS_DEACTIVATED) {

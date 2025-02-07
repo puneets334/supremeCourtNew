@@ -45,7 +45,7 @@ class ResponsiveVariantRouteController extends BaseController
         }else{
             is_user_status();
         }
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL,AMICUS_CURIAE_USER);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL,AMICUS_CURIAE_USER,AUTHENTICATED_BY_AOR);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('adminDashboard'));
             exit(0);
@@ -2221,6 +2221,70 @@ class ResponsiveVariantRouteController extends BaseController
             $final_submitted_applications = array();
         }
         return $this->render('responsive_variant.dashboard.index_alt_test', @compact('final_submitted_applications', 'totalRecords','pages','limit','page'));
+    }
+
+
+    public function ecopying_dashboard()
+    {
+        if(empty(getSessionData('login'))){
+            return response()->redirect(base_url('/')); 
+        }
+
+        $allowed_users_array = array(AUTHENTICATED_BY_AOR);
+        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+            return response()->redirect(base_url('/'));
+            exit(0);
+        } 
+        $advocate_id = getSessionData('login')['adv_sci_bar_id'];
+        $sr_advocate_data = '';
+        $mobile = $_SESSION['login']['mobile_number'];
+        $email = $_SESSION['login']['emailid'];        
+        // Connect to the second database
+        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
+        // Online applications
+        $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
+        $builder->select([
+            'COUNT(mobile) AS total_online_application',
+            "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
+            "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('source', 6);
+        $builder->where('is_deleted', FALSE);
+        $builder->groupBy('is_deleted');
+        $online = $builder->get()->getRow(); // Fetch online applications        
+        // Reset builder for the next query (offline applications)
+        $builder->resetQuery();        
+        // Offline applications
+        $builder->select([
+            'COUNT(mobile) AS total_offline_application',
+            "SUM(CASE WHEN application_status IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS disposed_appl",
+            "SUM(CASE WHEN application_status NOT IN ('F', 'R', 'D', 'C', 'W') THEN 1 ELSE 0 END) AS pending_appl",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('source !=', 6);
+        $builder->where('is_deleted', FALSE);
+        $builder->groupBy('is_deleted');
+        $offline = $builder->get()->getRow(); // Fetch offline applications        
+        // Reset builder again for the next query (requests)
+        $builder->resetQuery();        
+        // Requests
+        $builder = $sci_cmis_final->table('copying_request_verify');
+        $builder->select([
+            'COUNT(mobile) AS total_request',
+            "SUM(CASE WHEN application_status = 'D' THEN 1 ELSE 0 END) AS disposed_request",
+            "SUM(CASE WHEN application_status = 'P' THEN 1 ELSE 0 END) AS pending_request",
+        ]);
+        $builder->where('mobile', $mobile);
+        $builder->where('email', $email);
+        $builder->where('allowed_request', 'request_to_available');
+        $builder->where('is_deleted', FALSE); 
+        $builder->groupBy('is_deleted');
+        $request = $builder->get()->getRow(); // Fetch request data
+
+        return $this->render('responsive_variant.dashboard.ecopying_dashboard', @compact('online','offline','request'));
     }
     
 }

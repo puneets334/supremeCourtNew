@@ -299,36 +299,53 @@ class Search extends BaseController {
             $_SESSION['efiling_details'] = '';           
             if (isset($_POST['radio_appearing_for'])) {
                 $intervenorName = "";
-                $radio_appearing_for = $_POST['radio_appearing_for'];
-                if ($radio_appearing_for == 'E') {
-                    $this->session->set('radio_appearing_for', $radio_appearing_for);
-                    $appearance_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
-                    if (!$appearance_exists) {
-                        $diary_number = $diary_no . $diary_year;
+                // $radio_appearing_for = $_POST['radio_appearing_for'];
+                // if ($radio_appearing_for == 'E') {
+                //     $this->session->set('radio_appearing_for', $radio_appearing_for);
+                //     $appearance_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
+                //     if (!$appearance_exists) {
+                //         $diary_number = $diary_no . $diary_year;
+                //         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
+                //         foreach ($advPartyDetails as $index => $detail) {
+                //             $result = $this->FetchDataModel->updateAdvocatePartyDetails($detail);
+                //         }
+                //         $appearance_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
+                //         if (!$appearance_exists) {
+                //             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>');
+                //         }
+                //     }
+                // }
+                $radio_appearing_for = escape_data($_POST['radio_appearing_for']);
+                if($radio_appearing_for == 'E') {
+                    $this->session->set('radio_appearing_for',$radio_appearing_for);
+                    $appearance_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no,$diary_year);
+                    if(!$appearance_exists){
+                        $diary_number = $diary_no.$diary_year;
                         $advPartyDetails = $this->efiling_webservices->getAdvPartyMappingBydiaryNo($diary_number);
-                        foreach ($advPartyDetails as $index => $detail) {
+                        foreach($advPartyDetails as $index => $detail) {
                             $result = $this->FetchDataModel->updateAdvocatePartyDetails($detail);
                         }
-                        $appearance_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
-                        if (!$appearance_exists) {
+                        $appearance_exists=$this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no,$diary_year);
+                        if(!$appearance_exists) {
                             $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please Select "Want to represent new litigant." option and proceed..</p></div>');
+                            return redirect()->to(base_url('case/search/' . url_encryption($_SESSION['efiling_type'])));
                         }
                     }
                 }
                 // CaseSearchModel
                 // 12/11/2020 check for advocate exist
                 else if ($radio_appearing_for == 'N') {
-                    $this->session->setFlashdata('radio_appearing_for', $radio_appearing_for);
-                    if ($_SESSION['efiling_type'] == 'ia') {
-                        $advocate_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
-                        if (!$advocate_exists) {
-                            $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please select intervenor/other.</p></div>');
-                            // redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
-                            return redirect()->to(base_url('case/interim_application/crud'));
-                        } else {
-                            $this->session->set('radio_appearing_for', $radio_appearing_for);
-                        }
-                    }
+                    $this->session->set('radio_appearing_for', $radio_appearing_for);
+                    // if ($_SESSION['efiling_type'] == 'ia') {
+                    //     $advocate_exists = $this->MiscellaneousDocsModel->check_existence_of_appearing_for($diary_no, $diary_year);
+                    //     if (!$advocate_exists) {
+                    //         $this->session->setFlashdata('msg', '<div class="alert alert-danger text-center">You are not appearing in this case. Please select intervenor/other.</p></div>');
+                    //         // redirect('case/search/' . url_encryption($_SESSION['efiling_type']));
+                    //         return redirect()->to(base_url('case/interim_application/crud'));
+                    //     } else {
+                    //         $this->session->set('radio_appearing_for', $radio_appearing_for);
+                    //     }
+                    // }
                 }
                 // 12/11/2020
                 else if ($radio_appearing_for == 'I') {
@@ -456,7 +473,6 @@ class Search extends BaseController {
                         
                     }
                 } elseif (isset($_SESSION['efiling_type']) && $_SESSION['efiling_type'] == 'ia') {
-                    // pr("Debugging 1");
                     $intervenorNameString = NULL;
                     if (isset($intervenorName) && !empty($intervenorName) && count($intervenorName) > 0) {
                         $intervenorNameString = implode(',', $intervenorName);

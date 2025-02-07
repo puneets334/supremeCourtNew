@@ -1229,177 +1229,177 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
            //      }
            //  }
 
-            if(file_type == 'new_case'){
-                filteredData.push({field_name: "case_detail", field_value: "1"});
-                filteredData.push({field_name: "petitioner", field_value: "1"});
-                filteredData.push({field_name: "respondent", field_value: "1"});
-                filteredData.push({field_name: "extra_party", field_value: "1"});
-                filteredData.push({field_name: "legal_representative", field_value: "1"});
-                filteredData.push({field_name: "act_section", field_value: "1"});
-                filteredData.push({field_name: "earlier_courts", field_value: "1"});
-                filteredData.push({field_name: "upload_document", field_value: "1"});
-                filteredData.push({field_name: "index", field_value: "1"});
-                filteredData.push({field_name: "pay_court_fee", field_value: "1"});
-                typeGeneration ='diary no.';
-            }
-            else if(file_type == 'caveat'){
-                filteredData.push({field_name: "caveator", field_value: "1"});
-                filteredData.push({field_name: "caveatee", field_value: "1"});
-                filteredData.push({field_name: "extra_party", field_value: "1"});
-                filteredData.push({field_name: "subordinate_court", field_value: "1"});
-                filteredData.push({field_name: "upload_document", field_value: "1"});
-                filteredData.push({field_name: "index", field_value: "1"});
-                filteredData.push({field_name: "pay_court_fee", field_value: "1"});
-                typeGeneration ='caveat no.';
-            }
-            var conformRes =  confirm("Are you sure want to generate "+typeGeneration+" ?");
-            if(noError && file_type && conformRes){
-            var CSRF_TOKEN = 'CSRF_TOKEN';
-            var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
-            var postData = {CSRF_TOKEN: CSRF_TOKEN_VALUE, file_type: file_type};
-            $.ajax({
-                type: "POST",
-                data: JSON.stringify(postData),
-                url: "<?php echo base_url('newcase/Ajaxcalls/getAllFilingDetailsByRegistrationId'); ?>",
-                dataType:'json',
-                ContentType: 'application/json',
-                cache:false,
-                async: false,
-                beforeSend: function() {
-                    $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php echo base_url('assets/images/loading-data.gif');?>">');
-                    $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
-                },
-                success: function (data){
-                    if(typeof data == 'string'){
-                        data = JSON.parse(data);
-                    }
-                    // return false;
-                    if(data){
-                        $("#exampleModal").modal('show');
-                        $('#generateDiaryNoDiv').modal('hide');
-                        var diaryStatus ='';
-                        var diaryNo = '';
-                        var insertData = {};
-                        var status = '';
-                        var diaryData ='';
-                        var alloted_to ='';
-                        var insertedDocNums ='';
-                        if(data.status == 'SUCCESS') {
-                            diaryStatus = 'new_diary';
-                            if (data.diary_no) {
-                                diaryNo = data.diary_no;
-                            }
-                            if (data.alloted_to) {
-                                alloted_to = data.alloted_to;
-                            }
-                            if (data.insertedDocNums) {
-                                insertedDocNums = data.insertedDocNums;
-                            }
-                            if (data.status) {
-                                status = data.status;
-                            }
-                            if (data.records_inserted) {
-                                insertData.records_inserted = data.records_inserted;
-                            }
-                                insertData.diaryNo = diaryNo;
-                                insertData.alloted_to = alloted_to;
-                                insertData.insertedDocNums = insertedDocNums;
-                                insertData.status = status;
-                                insertData.selectedcheckBox = filteredData;
-                                insertData.diaryStatus = diaryStatus;
-                            }
-                            else  if(data.status == 'ERROR_ALREADY_IN_ICMIS') {
-                                var errorMessage = data.error.split(" ");
-                                diaryData = errorMessage.pop();
-                                diaryStatus = 'exist_diary';
-                                insertData.records_inserted = {};
-                                if(data.status) {
-                                    status = data.status;
-                                }
-                                if(data.records_inserted) {
-                                    insertData.records_inserted = data.records_inserted;
-                                }
-                                insertData.diaryNo = diaryData;
-                                insertData.status = status;
-                                insertData.selectedcheckBox = filteredData;
-                                insertData.diaryStatus = diaryStatus;
-                            }
-                            else  if(data.status == 'ERROR_MAIN') {
-                                $("#customErrorMessage").html('');
-                                $("#customErrorMessage").html(data.error);
-                                $("#customErrorMessage").css('color','green');
-                                $("#customErrorMessage").css({ 'font-size': '30px' });
-                                return false;
-                            }
-                            else if(data.status == 'ERROR_CAVEAT'){
-                                $("#customErrorMessage").html('');
-                                $("#customErrorMessage").html(data.error);
-                                $("#customErrorMessage").css('color','green');
-                                $("#customErrorMessage").css({ 'font-size': '30px' });
-                                return false;
-                             }
-                            if(insertData){
-                                if(file_type == 'new_case'){
-                                    $('#createDiaryNo').html('Generate Diary No.');
-                                    var errorMessage ='Diary no. generation has been successfully!';
-                                }
-                                else{
-                                    $('#createDiaryNo').html('Generate Caveat No.');
-                                    var errorMessage ='Caveat no. generation has been successfully!';
-                                }
-                                $("#customErrorMessage").html('');
-                                $("#customErrorMessage").html(errorMessage);
-                                $("#customErrorMessage").css('color','green');
-                                $("#customErrorMessage").css({ 'font-size': '30px' });
-                                    $.ajax({
-                                        type: "POST",
-                                        data: JSON.stringify(insertData),
-                                        url: "<?php echo base_url('newcase/Ajaxcalls/updateDiaryDetails'); ?>",
-                                        dataType:'json',
-                                        ContentType: 'application/json',
-                                        cache:false,
-                                        beforeSend: function() {
-                                            $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
-                                        },
-                                        success: function(updateData){
-                                            // return false;
-                                            $("#loader_div").html('');
-                                            if(updateData.success == 'success'){
-                                                $("#customErrorMessage").html('');
-                                                $("#customErrorMessage").html(updateData.message);
-                                            }
-                                            else  if(updateData.success == 'error'){
-                                                $("#customErrorMessage").html('');
-                                                $("#customErrorMessage").html(updateData.message);
-                                            }
-                                            else{
-                                                $("#customErrorMessage").html('');
-                                                $("#customErrorMessage").html(updateData.message);
-                                            }
-                                        }
-                                    });
-                            }
+            // if(file_type == 'new_case'){
+            //     filteredData.push({field_name: "case_detail", field_value: "1"});
+            //     filteredData.push({field_name: "petitioner", field_value: "1"});
+            //     filteredData.push({field_name: "respondent", field_value: "1"});
+            //     filteredData.push({field_name: "extra_party", field_value: "1"});
+            //     filteredData.push({field_name: "legal_representative", field_value: "1"});
+            //     filteredData.push({field_name: "act_section", field_value: "1"});
+            //     filteredData.push({field_name: "earlier_courts", field_value: "1"});
+            //     filteredData.push({field_name: "upload_document", field_value: "1"});
+            //     filteredData.push({field_name: "index", field_value: "1"});
+            //     filteredData.push({field_name: "pay_court_fee", field_value: "1"});
+            //     typeGeneration ='diary no.';
+            // }
+            // else if(file_type == 'caveat'){
+            //     filteredData.push({field_name: "caveator", field_value: "1"});
+            //     filteredData.push({field_name: "caveatee", field_value: "1"});
+            //     filteredData.push({field_name: "extra_party", field_value: "1"});
+            //     filteredData.push({field_name: "subordinate_court", field_value: "1"});
+            //     filteredData.push({field_name: "upload_document", field_value: "1"});
+            //     filteredData.push({field_name: "index", field_value: "1"});
+            //     filteredData.push({field_name: "pay_court_fee", field_value: "1"});
+            //     typeGeneration ='caveat no.';
+            // }
+            // var conformRes =  confirm("Are you sure want to generate "+typeGeneration+" ?");
+            // if(noError && file_type && conformRes){
+            // var CSRF_TOKEN = 'CSRF_TOKEN';
+            // var CSRF_TOKEN_VALUE = $('[name="CSRF_TOKEN"]').val();
+            // var postData = {CSRF_TOKEN: CSRF_TOKEN_VALUE, file_type: file_type};
+            // $.ajax({
+            //     type: "POST",
+            //     data: JSON.stringify(postData),
+            //     url: "<?php // echo base_url('newcase/Ajaxcalls/getAllFilingDetailsByRegistrationId'); ?>",
+            //     dataType:'json',
+            //     ContentType: 'application/json',
+            //     cache:false,
+            //     async: false,
+            //     beforeSend: function() {
+            //         $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php echo base_url('assets/images/loading-data.gif');?>">');
+            //         $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+            //     },
+            //     success: function (data){
+            //         if(typeof data == 'string'){
+            //             data = JSON.parse(data);
+            //         }
+            //         // return false;
+            //         if(data){
+            //             $("#exampleModal").modal('show');
+            //             $('#generateDiaryNoDiv').modal('hide');
+            //             var diaryStatus ='';
+            //             var diaryNo = '';
+            //             var insertData = {};
+            //             var status = '';
+            //             var diaryData ='';
+            //             var alloted_to ='';
+            //             var insertedDocNums ='';
+            //             if(data.status == 'SUCCESS') {
+            //                 diaryStatus = 'new_diary';
+            //                 if (data.diary_no) {
+            //                     diaryNo = data.diary_no;
+            //                 }
+            //                 if (data.alloted_to) {
+            //                     alloted_to = data.alloted_to;
+            //                 }
+            //                 if (data.insertedDocNums) {
+            //                     insertedDocNums = data.insertedDocNums;
+            //                 }
+            //                 if (data.status) {
+            //                     status = data.status;
+            //                 }
+            //                 if (data.records_inserted) {
+            //                     insertData.records_inserted = data.records_inserted;
+            //                 }
+            //                     insertData.diaryNo = diaryNo;
+            //                     insertData.alloted_to = alloted_to;
+            //                     insertData.insertedDocNums = insertedDocNums;
+            //                     insertData.status = status;
+            //                     insertData.selectedcheckBox = filteredData;
+            //                     insertData.diaryStatus = diaryStatus;
+            //                 }
+            //                 else  if(data.status == 'ERROR_ALREADY_IN_ICMIS') {
+            //                     var errorMessage = data.error.split(" ");
+            //                     diaryData = errorMessage.pop();
+            //                     diaryStatus = 'exist_diary';
+            //                     insertData.records_inserted = {};
+            //                     if(data.status) {
+            //                         status = data.status;
+            //                     }
+            //                     if(data.records_inserted) {
+            //                         insertData.records_inserted = data.records_inserted;
+            //                     }
+            //                     insertData.diaryNo = diaryData;
+            //                     insertData.status = status;
+            //                     insertData.selectedcheckBox = filteredData;
+            //                     insertData.diaryStatus = diaryStatus;
+            //                 }
+            //                 else  if(data.status == 'ERROR_MAIN') {
+            //                     $("#customErrorMessage").html('');
+            //                     $("#customErrorMessage").html(data.error);
+            //                     $("#customErrorMessage").css('color','green');
+            //                     $("#customErrorMessage").css({ 'font-size': '30px' });
+            //                     return false;
+            //                 }
+            //                 else if(data.status == 'ERROR_CAVEAT'){
+            //                     $("#customErrorMessage").html('');
+            //                     $("#customErrorMessage").html(data.error);
+            //                     $("#customErrorMessage").css('color','green');
+            //                     $("#customErrorMessage").css({ 'font-size': '30px' });
+            //                     return false;
+            //                  }
+            //                 if(insertData){
+            //                     if(file_type == 'new_case'){
+            //                         $('#createDiaryNo').html('Generate Diary No.');
+            //                         var errorMessage ='Diary no. generation has been successfully!';
+            //                     }
+            //                     else{
+            //                         $('#createDiaryNo').html('Generate Caveat No.');
+            //                         var errorMessage ='Caveat no. generation has been successfully!';
+            //                     }
+            //                     $("#customErrorMessage").html('');
+            //                     $("#customErrorMessage").html(errorMessage);
+            //                     $("#customErrorMessage").css('color','green');
+            //                     $("#customErrorMessage").css({ 'font-size': '30px' });
+            //                         $.ajax({
+            //                             type: "POST",
+            //                             data: JSON.stringify(insertData),
+            //                             url: "<?php // echo base_url('newcase/Ajaxcalls/updateDiaryDetails'); ?>",
+            //                             dataType:'json',
+            //                             ContentType: 'application/json',
+            //                             cache:false,
+            //                             beforeSend: function() {
+            //                                 $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
+            //                             },
+            //                             success: function(updateData){
+            //                                 // return false;
+            //                                 $("#loader_div").html('');
+            //                                 if(updateData.success == 'success'){
+            //                                     $("#customErrorMessage").html('');
+            //                                     $("#customErrorMessage").html(updateData.message);
+            //                                 }
+            //                                 else  if(updateData.success == 'error'){
+            //                                     $("#customErrorMessage").html('');
+            //                                     $("#customErrorMessage").html(updateData.message);
+            //                                 }
+            //                                 else{
+            //                                     $("#customErrorMessage").html('');
+            //                                     $("#customErrorMessage").html(updateData.message);
+            //                                 }
+            //                             }
+            //                         });
+            //                 }
 
-                        // else {
-                        //         var errorMessage = data.error;
-                        //         $("#customErrorMessage").html('');
-                        //         $("#customErrorMessage").html(errorMessage);
-                        //         $("#customErrorMessage").css('color','red');
-                        //         $("#customErrorMessage").css({'font-size': '15px'});
-                        //         $('#createDiaryNo').html('Generate Diary No.');
-                        // }
-                    }
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                },
-                error: function () {
-                    $.getJSON("<?php echo base_url('csrftoken'); ?>", function (result) {
-                        $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
-                    });
-                }
-            });
-        }
+            //             // else {
+            //             //         var errorMessage = data.error;
+            //             //         $("#customErrorMessage").html('');
+            //             //         $("#customErrorMessage").html(errorMessage);
+            //             //         $("#customErrorMessage").css('color','red');
+            //             //         $("#customErrorMessage").css({'font-size': '15px'});
+            //             //         $('#createDiaryNo').html('Generate Diary No.');
+            //             // }
+            //         }
+            //         $.getJSON("<?php // echo base_url('csrftoken'); ?>", function (result) {
+            //             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+            //         });
+            //     },
+            //     error: function () {
+            //         $.getJSON("<?php // echo base_url('csrftoken'); ?>", function (result) {
+            //             $('[name="CSRF_TOKEN"]').val(result.CSRF_TOKEN_VALUE);
+            //         });
+            //     }
+            // });
+        // }
 
         });
 
