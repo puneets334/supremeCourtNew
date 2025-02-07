@@ -327,24 +327,24 @@ class Ajaxcalls extends BaseController {
                     $case_details = $this->Get_details_model->get_new_case_details($registration_id);
                     $tmpArr = array();
                     if (isset($case_details[0]) && !empty($case_details[0])) {
-                        $tmpArr['casetype_id'] = !empty($case_details[0]->sc_case_type_id) ? $case_details[0]->sc_case_type_id : NULL;
+                        $tmpArr['casetype_id'] = !empty($case_details[0]['sc_case_type_id']) ? $case_details[0]['sc_case_type_id'] : NULL;
                         $tmpArr['diary_user_id'] = $userIcmisCode;
-                        $tmpArr['pno'] = !empty($case_details[0]->no_of_petitioners) ? $case_details[0]->no_of_petitioners : NULL;
-                        $tmpArr['rno'] = !empty($case_details[0]->no_of_respondents) ? $case_details[0]->no_of_respondents : NULL;
+                        $tmpArr['pno'] = !empty($case_details[0]['no_of_petitioners']) ? $case_details[0]['no_of_petitioners'] : NULL;
+                        $tmpArr['rno'] = !empty($case_details[0]['no_of_respondents']) ? $case_details[0]['no_of_respondents'] : NULL;
 
-                        $mainParties=explode('Vs.',$case_details[0]->cause_title);
+                        $mainParties=explode('Vs.',$case_details[0]['cause_title']);
                         $tmpArr['pet_name_causetitle']= is_array($mainParties) ? $mainParties[0] : '';
                         $tmpArr['res_name_causetitle']= is_array($mainParties) ? $mainParties[1] : '';
-                        $tmpArr['subject_cat'] = !empty($case_details[0]->subject_cat) ? $case_details[0]->subject_cat : NULL;
-                        $tmpArr['subj_main_cat'] = !empty($case_details[0]->subj_main_cat) ? $case_details[0]->subj_main_cat : NULL;
-                        $tmpArr['sc_sp_case_type_id'] = !empty($case_details[0]->sc_sp_case_type_id) ? $case_details[0]->sc_sp_case_type_id : NULL;
-                        $tmpArr['jail_signature_date'] = !empty($case_details[0]->jail_signature_date) ? $case_details[0]->jail_signature_date : NULL;
-                        $tmpArr['efiling_no'] = !empty($case_details[0]->efiling_no) ? $case_details[0]->efiling_no : NULL;
-                        $tmpArr['if_sclsc']=!empty($case_details[0]->if_sclsc)?$case_details[0]->if_sclsc:0;
-                        $tmpArr['sclsc_amr_no'] = !empty($case_details[0]->sclsc_amr_no) ? $case_details[0]->sclsc_amr_no : NULL;
-                        $tmpArr['sclsc_amr_year'] = !empty($case_details[0]->sclsc_amr_year) ? $case_details[0]->sclsc_amr_year : NULL;
-                        $tmpArr['special_category']=!empty($case_details[0]->special_category) ? $case_details[0]->special_category : 0;
-                        $created_by = !empty($case_details[0]->created_by) ? $case_details[0]->created_by : NULL;
+                        $tmpArr['subject_cat'] = !empty($case_details[0]['subject_cat']) ? $case_details[0]['subject_cat'] : NULL;
+                        $tmpArr['subj_main_cat'] = !empty($case_details[0]['subj_main_cat']) ? $case_details[0]['subj_main_cat'] : NULL;
+                        $tmpArr['sc_sp_case_type_id'] = !empty($case_details[0]['sc_sp_case_type_id']) ? $case_details[0]['sc_sp_case_type_id'] : NULL;
+                        $tmpArr['jail_signature_date'] = !empty($case_details[0]['jail_signature_date']) ? $case_details[0]['jail_signature_date'] : NULL;
+                        $tmpArr['efiling_no'] = !empty($case_details[0]['efiling_no']) ? $case_details[0]['efiling_no'] : NULL;
+                        $tmpArr['if_sclsc']=!empty($case_details[0]['if_sclsc'])?$case_details[0]['if_sclsc']:0;
+                        $tmpArr['sclsc_amr_no'] = !empty($case_details[0]['sclsc_amr_no']) ? $case_details[0]['sclsc_amr_no'] : NULL;
+                        $tmpArr['sclsc_amr_year'] = !empty($case_details[0]['sclsc_amr_year']) ? $case_details[0]['sclsc_amr_year'] : NULL;
+                        $tmpArr['special_category']=!empty($case_details[0]['special_category']) ? $case_details[0]['special_category'] : 0;
+                        $created_by = !empty($case_details[0]['created_by']) ? $case_details[0]['created_by'] : NULL;
                         if (isset($created_by) && !empty($created_by)) {
                             $userData = $this->Common_model->getUserDetailsById($created_by);
                             if (isset($userData) && !empty($userData)) {
@@ -364,7 +364,7 @@ class Ajaxcalls extends BaseController {
                         }
                     }
                     $courtData = $this->Common_model->getEarlierCourtDetailByRegistrationId($registration_id);
-                    $court_type = !empty($case_details[0]->court_type) ? (int)$case_details[0]->court_type : NULL;
+                    $court_type = !empty($case_details[0]['court_type']) ? (int)$case_details[0]['court_type'] : NULL;
                     if(isset($court_type) && !empty($court_type)){
                         switch($court_type){
                             case 1:

@@ -109,11 +109,15 @@ class GetDetailsModel extends Model
     function get_case_table_ids($registration_id)
     {
         $sql = "SELECT
-            (SELECT id FROM efil.tbl_case_parties WHERE registration_id = $registration_id AND p_r_type = 'P' AND m_a_type = 'M' AND is_deleted IS FALSE) m_petitioner_id,
-            (SELECT id FROM efil.tbl_case_parties WHERE registration_id = $registration_id AND p_r_type = 'R' AND m_a_type = 'M' AND is_deleted IS FALSE) m_respondent_id,
-            (SELECT id FROM efil.tbl_case_details WHERE registration_id = $registration_id) case_details_id";
+            (SELECT id FROM efil.tbl_case_parties WHERE registration_id = $registration_id AND p_r_type = 'P' AND m_a_type = 'M' AND is_deleted IS FALSE LIMIT 1) m_petitioner_id,
+            (SELECT id FROM efil.tbl_case_parties WHERE registration_id = $registration_id AND p_r_type = 'R' AND m_a_type = 'M' AND is_deleted IS FALSE LIMIT 1) m_respondent_id,
+            (SELECT id FROM efil.tbl_case_details WHERE registration_id = $registration_id LIMIT 1) case_details_id";
         $query = $this->db->query($sql);
-        $result = $query->getResultArray();
+        if ($query->getNumRows() >= 1) {
+            $result = $query->getResultArray();
+        } else {
+            $result = false;
+        }
         $_SESSION['case_table_ids'] = $result[0];
     }
 
