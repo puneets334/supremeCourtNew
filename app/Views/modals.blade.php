@@ -223,16 +223,18 @@ $filing_type = '';
         <div class="modal-content" style="width: 927px;height: 300px;">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Diary Details</h5>
-                <button type="button" class="close closeButton" data-bs-dismiss="modal" data-close="1" aria-label="Close">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <!-- <button type="button" class="close closeButton" data-bs-dismiss="modal" data-close="1" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
             </div>
             <div class="modal-body">
                 <span id="customErrorMessage"></span>
             </div>
             <div class="modal-footer">
-                <button type="button" data-close="1" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Close</button>
-                <!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+                <button type="button"  data-close="1" class="btn btn-secondary closeButton" data-dismiss="modal">Close</button>
+                <!-- <button type="button" data-close="1" class="btn btn-secondary closeButton" data-bs-dismiss="modal">Close</button> -->
+                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
             </div>
         </div>
     </div>
