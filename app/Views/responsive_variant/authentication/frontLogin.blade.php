@@ -113,7 +113,7 @@
                         <div class="regester-txts">
                         <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
-                                    <a href="javascript:;" class="blue-txt aor-login">AOR</a>
+                                    <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
                                    
                                 </div>
                             <h6 class="htsmall">Register As :</h6>
@@ -266,7 +266,7 @@
                             <div class="regester-txts">
                             <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
-                                    <a href="javascript:;" class="blue-txt aor-login">AOR</a>
+                                    <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
                                    
                                 </div>
                                 <h6 class="htsmall">Register As :</h6>
