@@ -152,7 +152,21 @@ date_default_timezone_set('Asia/Kolkata');
                                 <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
                             </ul>
                         </li> -->
-                    <?php } else { ?>
+                    <?php } else if ((!empty(getSessionData('login')['ref_m_usertype_id'])) && (getSessionData('login')['ref_m_usertype_id'] == AUTHENTICATED_BY_AOR)) { ?>
+                        <li class="premium">
+                            <a href="javascript:void(0)" class="accordion-button collapsed btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse7">eCopying<span><i class="fas fa-chevron-down"></i></span></a>
+                            <ul id="collapse7" class="submenu accordion-collapse collapse" aria-labelledby="heading7" data-bs-parent="#accordionExample">
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/copy_search'); ?>">Copy Status</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/track_consignment'); ?>">Track</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/case_search'); ?>">Application</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/applicant_address'); ?>">Address</a></li> 
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/faq'); ?>">FAQ's</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/screen_reader'); ?>">Screen Reader</a></li>
+                                <li><a class="btn-link" href="https://registry.sci.gov.in/api/callback/bharat_kosh/eCopyingPublic_manual.pdf" target="_blank">Manual</a></li>
+                                <li><a class="btn-link" href="<?php echo base_url('online_copying/contact_us'); ?>">Contact Us</a></li>
+                            </ul>
+                        </li>
+                        <?php } else { ?>
                         <?php if ($segment->getSegment(1) == 'registrarActionDashboard') { ?>
                             <li class="health "><a href="<?= base_url('adminDashboard') ?>">Home</a></li>
                         <?php } else { ?>

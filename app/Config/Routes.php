@@ -493,3 +493,4 @@ $routes->get('api/v1/getAdvocateAppearanceAORIncludeORExclude', 'Api::getAdvocat
 $routes->match(['GET', 'POST'], 'report/search/list/(:any)', 'Report\Search::list/$1');
 $routes->match(['GET', 'POST'], 'report/search/showCaseStatusReport', 'Report\Search::showCaseStatusReport');
 
+$routes->match(['GET', 'POST'], 'ecopying_dashboard', 'ResponsiveVariantRouteController::ecopying_dashboard');
