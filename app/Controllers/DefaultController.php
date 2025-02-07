@@ -357,13 +357,14 @@ class DefaultController extends BaseController {
         }else{
             $userCaptcha=$this->request->getPost('userCaptcha');
             $result=$this->ecoping_webservices->getCopyBarcodeBymobileOrAorCOde($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
+            $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($this->request->getPost('you_email'));
             if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')){
                 
                 if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')== @$_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]) {
                     unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]);
                     unset($_SESSION['impersonated_user_authentication_mobile_otp']);
-                    echo "verify Otp";
-                    die;
+                    echo "user is verified";
+                    //verified user
                     //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
                 }else{
                     $data['using']=$this->request->getPost('using');
@@ -379,7 +380,7 @@ class DefaultController extends BaseController {
                 
                
                 
-                $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
+                
                 $data['aor_flag']='yes';
                 $data['bar_id']=$result->bar_id;
                 $data['using']=$this->request->getPost('using');
@@ -387,12 +388,19 @@ class DefaultController extends BaseController {
                     $this->session->setFlashdata('msg', 'Invalid Captcha!');
                     
                 }else{
-                     //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+                    if($authorizedByAorAdvocateVerification->email==$this->request->getPost('you_email') && $authorizedByAorAdvocateVerification->mobile==$this->request->getPost('yr_mobile')){
+                       //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                     $impersonated_user_authentication_mobile_otp =123456;
-                    //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_efiling_OTP);
+                    //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
                     $_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id] = $impersonated_user_authentication_mobile_otp;
                     $message='Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp.'. - Supreme Court of India';
                     $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
+                    $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
+                    }else{
+                        $this->session->setFlashdata('msg', 'Wrong your Email and Mobile');   
+                    }
+                     
+                    
                 }
                 return $this->render('responsive_variant.authentication.frontLogin', $data);
                 //send_mail_msg($email,'Authentication OTP for eFiling' ,$message, $user_parts[1]);

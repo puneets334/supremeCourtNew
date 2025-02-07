@@ -663,7 +663,7 @@ curl_close($curl);
     }
     public function eCopyingOtpVerification($email){
          //echo ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification/?emailid=$email";
-         
+         //die;
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification?emailid=$email");
         if ($data != false) {
             return json_decode($data);
