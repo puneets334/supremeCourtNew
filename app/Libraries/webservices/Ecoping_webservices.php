@@ -222,7 +222,7 @@ class Ecoping_webservices {
         }   
     }
     public function getCopyBarcodeBymobileOrAorCOde($aor_code,$mobile){
-
+        
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyBarcodeBymobileOrAorCOde?aor_code=$aor_code&aor_mobile=$mobile");
         
         if ($data != false) {
@@ -662,8 +662,7 @@ curl_close($curl);
         }  
     }
     public function eCopyingOtpVerification($email){
-         //echo ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification/?emailid=$email";
-         //die;
+         //echo ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification?emailid=$email";
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingOtpVerification?emailid=$email");
         if ($data != false) {
             return json_decode($data);
