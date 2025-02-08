@@ -114,7 +114,7 @@
                         <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                     <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
-                                   
+                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNCIL</a>
                                 </div>
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
@@ -212,14 +212,14 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 authenticatedByAor">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Your Mobile No.</label>
                                             <input type="text" name="yr_mobile" class="form-control cus-form-ctrl" id="yr_mobile" placeholder="Enter Your Mobile No." maxlength="128" value="<?=(!empty($userEnteredData['yr_mobile'])?$userEnteredData['yr_mobile']:'')?>">
                                             
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 authenticatedByAor">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Your Email</label>
                                             <input type="email" name="you_email" class="form-control cus-form-ctrl" id="you_email" placeholder="Enter Your Email" maxlength="128" value="<?=(!empty($userEnteredData['you_email'])?$userEnteredData['you_email']:'')?>">
@@ -267,13 +267,13 @@
                             <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                     <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
-                                   
+                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNCIL</a>
                                 </div>
                                 <h6 class="htsmall">Register As :</h6>
                                 <div class="regester-links">
                                     <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
                                     <span class="gray-txt">Or</span>
-                                    <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
+                                    <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt">AOR</a>
                                     <span class="gray-txt">Or</span>
                                     <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
                                 </div>

@@ -139,23 +139,39 @@
     </script>
     <!--$aor_flag-->
     <?php
-    if(isset($aor_flag)){
+    if(!empty($userEnteredData) && $userEnteredData['userType']=='AOAUTHENTICATED_BY_AOR'){
         ?>
         <script>
           $("#aor").show();
-          $("#default").hide();  
+          $("#default").hide();
+          $('.authenticatedByAor').show();   
         </script>
         <?php
+    }elseif(!empty($userEnteredData) && $userEnteredData['userType']=='APPEARING_COUNCIL'){
+        ?>
+       <script>
+          $("#aor").show();
+          $("#default").hide();
+          $('.authenticatedByAor').hide();  
+        </script> 
+    <?php
     }
     ?>
     <script>
 $(document).ready(function(){
   $(".aor-login").click(function(){
-    $('#userType').val('AOR')
-    
+    $('#userType').val('AOAUTHENTICATED_BY_AOR');
+    $('.authenticatedByAor').show();
     $("#aor").show();
     $("#default").hide();
   });
+  $(".apcil-login").click(function(){
+    $('#userType').val('APPEARING_COUNCIL');
+    $('.authenticatedByAor').hide();
+    $("#aor").show();
+    $("#default").hide();
+  });
+  
  $(".using").change(function(){
     if($(this).val()=='AOR Mobile'){
     $("#aorMobileBox").show();

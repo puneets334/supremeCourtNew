@@ -1002,3 +1002,4 @@ define('NEW_MAIL_SERVER_HOST_JIO_URL', "https://uninotify.sci.gov.in/api/v1/send
 define('NEW_MAIL_SERVER_HOST_JIO_IP', "http://10.192.105.124:91/api/v1/send");
 
 define('AUTHENTICATED_BY_AOR',24);
+define('APPEARING_COUNCIL',25);
