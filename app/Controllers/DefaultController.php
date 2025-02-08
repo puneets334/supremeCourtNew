@@ -320,7 +320,7 @@ class DefaultController extends BaseController {
                 "rules" => "required|trim"
             ]
         ];
-        if($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR'){
+        if($this->request->getPost('userType')=='AUTHENTICATED_BY_AOR'){
             $rules['you_email']=[
                 "label" => "your Email",
                 "rules" => "required|trim"
@@ -346,6 +346,7 @@ class DefaultController extends BaseController {
         }
         
         if ($this->validate($rules) === FALSE) {
+        
             $data = [
                 'validation' => $this->validator,
                 'currentPath' => $this->slice->getSegment(1) ?? 'public',
@@ -357,11 +358,8 @@ class DefaultController extends BaseController {
         }else{
             $userCaptcha=$this->request->getPost('userCaptcha');
             $result=$this->ecoping_webservices->getCopyBarcodeBymobileOrAorCOde($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
-            if($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR'){
-                $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($this->request->getPost('you_email')); 
-            }elseif($this->request->getPost('userType')=='APPEARING_COUNCIL'){
-                $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($result->email);
-            }
+            
+            
             
             if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')){
                 
@@ -452,7 +450,14 @@ class DefaultController extends BaseController {
                     $this->session->setFlashdata('msg', 'Invalid Captcha!');
                     
                 }else{
-                    if($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR'){
+                    if($this->request->getPost('userType')=='AUTHENTICATED_BY_AOR'){
+                        $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($this->request->getPost('you_email')); 
+                    }elseif($this->request->getPost('userType')=='APPEARING_COUNCIL'){
+                        
+                        $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($result->email);
+                        
+                    }
+                    if($this->request->getPost('userType')=='AUTHENTICATED_BY_AOR'){
                         if($authorizedByAorAdvocateVerification->email==$this->request->getPost('you_email') && $authorizedByAorAdvocateVerification->mobile==$this->request->getPost('yr_mobile')){
                             //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                          $impersonated_user_authentication_mobile_otp =123456;
@@ -465,7 +470,7 @@ class DefaultController extends BaseController {
                              $this->session->setFlashdata('msg', 'Wrong your Email and Mobile');   
                          }    
                     }elseif($this->request->getPost('userType')=='APPEARING_COUNCIL'){
-                        if($authorizedByAorAdvocateVerification->mobile==$result->mobile){
+                        if(!empty($authorizedByAorAdvocateVerification) && $authorizedByAorAdvocateVerification->mobile==$result->mobile){
                             //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                          $impersonated_user_authentication_mobile_otp =123456;
                          //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);

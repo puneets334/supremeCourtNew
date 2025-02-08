@@ -139,7 +139,7 @@
     </script>
     <!--$aor_flag-->
     <?php
-    if(!empty($userEnteredData) && $userEnteredData['userType']=='AOAUTHENTICATED_BY_AOR'){
+    if(!empty($userEnteredData) && $userEnteredData['userType']=='AUTHENTICATED_BY_AOR'){
         ?>
         <script>
           $("#aor").show();
@@ -160,7 +160,7 @@
     <script>
 $(document).ready(function(){
   $(".aor-login").click(function(){
-    $('#userType').val('AOAUTHENTICATED_BY_AOR');
+    $('#userType').val('AUTHENTICATED_BY_AOR');
     $('.authenticatedByAor').show();
     $("#aor").show();
     $("#default").hide();

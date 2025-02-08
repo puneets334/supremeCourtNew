@@ -258,7 +258,7 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                         <div class="mb-3">
-                                            <button class="btn quick-btn aor-login">LOGIN</button>
+                                            <button class="btn quick-btn">LOGIN</button>
                                         </div>
                                     </div>
                                 </div>
