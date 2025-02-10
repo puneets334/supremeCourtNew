@@ -145,8 +145,17 @@
           $("#aor").show();
           $("#default").hide();
           $('#userType').val('AUTHENTICATED_BY_AOR');
-          $('.authenticatedByAor').show();   
+        //   $('.authenticatedByAor').show();   
         </script>
+        <?php if((empty($session->get('impersonated_user_authentication_mobile_otp'))&& empty($userEnteredData['aor_code']) || empty($userEnteredData['aor_mobile']))){ ?>
+            <script>
+                $('.authenticatedByAor').show();
+            </script>
+        <?php }else{ ?>
+            <script>
+                $('.authenticatedByAor').hide();
+            </script>
+        <?php } ?>
         <?php
     }elseif(!empty($userEnteredData) && $userEnteredData['userType']=='APPEARING_COUNCIL'){
         ?>

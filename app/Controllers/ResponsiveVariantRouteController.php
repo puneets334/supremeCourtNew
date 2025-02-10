@@ -11,6 +11,7 @@ use App\Models\Certificate\CertificateModel;
 use App\Models\Mentioning\MentioningModel;
 use App\Models\Citation\CitationModel;
 use App\Libraries\webservices\Efiling_webservices;
+use App\Libraries\webservices\Ecoping_webservices;
 use Exception;
 use stdClass;
 
@@ -26,7 +27,7 @@ class ResponsiveVariantRouteController extends BaseController
     protected $MentioningModel;
     protected $CitationModel;
     protected $efiling_webservices;
-
+    protected $ecoping_webservices;
     public function __construct()
     {
         parent::__construct();
@@ -40,6 +41,7 @@ class ResponsiveVariantRouteController extends BaseController
         $this->MentioningModel = new MentioningModel();
         $this->CitationModel = new CitationModel();
         $this->efiling_webservices = new Efiling_webservices();
+        $this->ecoping_webservices = new Ecoping_webservices();
         if(empty(getSessionData('login'))){
             return response()->redirect(base_url('/')); 
         }else{
@@ -531,9 +533,12 @@ class ResponsiveVariantRouteController extends BaseController
             $my_cases_recently_updated = [];
         } 
         $mobile = $_SESSION['login']['mobile_number'];
-        $email = $_SESSION['login']['emailid'];        
+        $email = $_SESSION['login']['emailid'];
+        $online=$this->ecoping_webservices->online($email,$mobile);
+        $offline=$this->ecoping_webservices->offline($email,$mobile);
+        $request=$this->ecoping_webservices->requests($email,$mobile);        
         // Connect to the second database
-        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
+        /*$sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
         // Online applications
         $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
         $builder->select([
@@ -575,7 +580,7 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->where('allowed_request', 'request_to_available');
         $builder->where('is_deleted', FALSE); 
         $builder->groupBy('is_deleted');
-        $request = $builder->get()->getRow(); // Fetch request data
+        $request = $builder->get()->getRow(); // Fetch request data*/
 
         /*Start Amicus */
         if(getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
@@ -1323,55 +1328,22 @@ class ResponsiveVariantRouteController extends BaseController
     public function showCasePaperBookViewer($diary_id)
     {
         $filename = $diary_id . "_" . date('d-m-Y_H_i_s') . ".pdf";
-        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book?taskStage=live", array(), true));
-        if ($response_code == 417) {
-            echo $case_file_paper_books;
-        } else {
-            $filesize = strlen($case_file_paper_books);
-            header('Content-Description: Consolidated Paperbook - Diary No. ' . $diary_id);
-            header('Content-Type: application/pdf');
-            header('Content-Disposition: attachment; filename=' . $filename);
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . $filesize);
-            echo $case_file_paper_books;
-        }
-        //status 403
-    }
-
-    /*public function showCasePaperBookViewer($diary_id){
-	    $case_file_paper_books = (curl_get_contents(env(API_SCI_INTERACT_PAPERBOOK_PDF).$diary_id."/get/paper_book?taskStage=live"));
-        header('Access-Control-Allow-Origin: *');
-        header('Content-type: application/pdf');
-        header("Cache-Control: no-cache");
-        header("Pragma: no-cache");
-        echo $case_file_paper_books;
-
-    }*/
-
-    public function showCase3PDFPaperBookViewerupto04052024($diary_id = null)
-    {
-        $file_name = "Casefile_of_DNo_" . $diary_id . "_" . date('d-m-Y_H:i:s') . ".zip";
-        // list($case_file_paper_books, $response_code) = (curl_get_contents(env(API_SCI_INTERACT_PAPERBOOK_PDF).$diary_id."/get/paper_book/categorized",array(),true));
-        // parameter added in the exiting API on 02042023 as per API given by SCI-Interact team
-        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live", array(), true));
-        if ($response_code == 417) {
-            echo $case_file_paper_books;
-        } else {
-            $filesize = strlen($case_file_paper_books);
-            header('Content-Description: Consolidated Paperbook - Diary No. ' . $diary_id);
-            header('Content-Type: application/zip');
-            header('Content-Disposition: attachment; filename=' . $file_name);
-            header('Content-Transfer-Encoding: binary');
-            header("Cache-Control: no-cache");
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . $filesize);
-            echo $case_file_paper_books;
-        }
+        list($case_file_paper_books, $response_code) = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book?taskStage=live",array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'),true));
+        // list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book?taskStage=live", array(), true));
+        // if ($response_code == 417) {
+        //     echo $case_file_paper_books;
+        // } else {
+        //     $filesize = strlen($case_file_paper_books);
+        //     header('Content-Description: Consolidated Paperbook - Diary No. ' . $diary_id);
+        //     header('Content-Type: application/pdf');
+        //     header('Content-Disposition: attachment; filename=' . $filename);
+        //     header('Content-Transfer-Encoding: binary');
+        //     header('Expires: 0');
+        //     header('Cache-Control: must-revalidate');
+        //     header('Pragma: public');
+        //     header('Content-Length: ' . $filesize);
+        //     echo $case_file_paper_books;
+        // }
         //status 403
     }
 
@@ -1389,23 +1361,23 @@ class ResponsiveVariantRouteController extends BaseController
         $requestedBy = $requestedBy . ' ' . $designation;
         if (!empty($requestedBy))
             $requestedBy = str_replace([' ', '(', ')'], ['%20', '%28', '%29'], $requestedBy);
-
-        list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
-        if ($response_code == 417) {
-            echo $case_file_paper_books;
-        } else {
-            $filesize = strlen($case_file_paper_books);
-            header('Content-Description: Consolidated Paperbook - Diary No. ' . $diary_id);
-            header('Content-Type: application/zip');
-            header('Content-Disposition: attachment; filename=' . $file_name);
-            header('Content-Transfer-Encoding: binary');
-            header("Cache-Control: no-cache");
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . $filesize);
-            echo $case_file_paper_books;
-        }
+        list($case_file_paper_books, $response_code) = (downloadCasePaperBook(API_SCI_INTERACT_PAPERBOOK_PDF.$diary_id."/get/paper_book?taskStage=live",array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'),true));
+        // list($case_file_paper_books, $response_code) = (curl_get_contents(API_SCI_INTERACT_PAPERBOOK_PDF . $diary_id . "/get/paper_book/categorized?taskStage=live&requestedBy=" . $requestedBy, array('Authorization: Bearer Bdjdgejshdv16484_svsg123134'), true));
+        // if ($response_code == 417) {
+        //     echo $case_file_paper_books;
+        // } else {
+        //     $filesize = strlen($case_file_paper_books);
+        //     header('Content-Description: Consolidated Paperbook - Diary No. ' . $diary_id);
+        //     header('Content-Type: application/zip');
+        //     header('Content-Disposition: attachment; filename=' . $file_name);
+        //     header('Content-Transfer-Encoding: binary');
+        //     header("Cache-Control: no-cache");
+        //     header('Expires: 0');
+        //     header('Cache-Control: must-revalidate');
+        //     header('Pragma: public');
+        //     header('Content-Length: ' . $filesize);
+        //     echo $case_file_paper_books;
+        // }
         //status 403
     }
 
@@ -2243,7 +2215,7 @@ class ResponsiveVariantRouteController extends BaseController
         $mobile = $_SESSION['login']['mobile_number'];
         $email = $_SESSION['login']['emailid'];        
         // Connect to the second database
-        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
+        /*$sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
         // Online applications
         $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
         $builder->select([
@@ -2285,7 +2257,10 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->where('allowed_request', 'request_to_available');
         $builder->where('is_deleted', FALSE); 
         $builder->groupBy('is_deleted');
-        $request = $builder->get()->getRow(); // Fetch request data
+        $request = $builder->get()->getRow(); // Fetch request data*/
+        $online=$this->ecoping_webservices->online($email,$mobile);
+        $offline=$this->ecoping_webservices->offline($email,$mobile);
+        $request=$this->ecoping_webservices->requests($email,$mobile);
         
         return $this->render('responsive_variant.dashboard.ecopying_dashboard', @compact('online','offline','request'));
     }

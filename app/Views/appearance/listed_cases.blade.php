@@ -47,29 +47,29 @@
                                         <tbody>
                                             <?php
                                             foreach($list as $key => $advocate) {
-                                                if($advocate['pno'] == 2) {
-                                                    $pet_name = $advocate['pet_name']." AND ANR.";
-                                                } elseif($advocate['pno'] > 2) {
-                                                    $pet_name = $advocate['pet_name']." AND ORS.";
+                                                if(isset($advocate->pno) && $advocate->pno == 2) {
+                                                    $pet_name = $advocate->pet_name." AND ANR.";
+                                                } elseif(isset($advocate->pno) && $advocate->pno > 2) {
+                                                    $pet_name = $advocate->pet_name." AND ORS.";
                                                 } else {
-                                                    $pet_name = $advocate['pet_name'];
+                                                    $pet_name = isset($advocate->pet_name) ? $advocate->pet_name : NULL;
                                                 }
-                                                if($advocate['rno'] == 2) {
-                                                    $res_name = $advocate['res_name']." AND ANR.";
-                                                } elseif($advocate['rno'] > 2) {
-                                                    $res_name = $advocate['res_name']." AND ORS.";
+                                                if(isset($advocate->rno) && $advocate->rno == 2) {
+                                                    $res_name = $advocate->res_name." AND ANR.";
+                                                } elseif(isset($advocate->rno) && $advocate->rno > 2) {
+                                                    $res_name = $advocate->res_name." AND ORS.";
                                                 } else {
-                                                    $res_name = $advocate['res_name'];
+                                                    $res_name = isset($advocate->res_name) ? $advocate->res_name : NULL;
                                                 }
                                                 ?>
                                                 <tr>
                                                     <td>{{ $key+1 }}</td>
-                                                    <td>{{ date('d-m-Y', strtotime($advocate['next_dt'])) }}</td>
-                                                    <td>{{ $advocate['courtno'] == '21' ? 'Registrar Court' : $advocate['courtno'] }}</td>
-                                                    <td>{{ $advocate['brd_slno'] }}</td>
-                                                    <td>{{ $advocate['reg_no_display'] ? '' : $advocate['diary_no'] }}</td>
+                                                    <td>{{ isset($advocate->next_dt) ? date('d-m-Y', strtotime($advocate->next_dt)) : NULL }}</td>
+                                                    <td>{{ isset($advocate->courtno) && $advocate->courtno == '21' ? 'Registrar Court' : $advocate->courtno }}</td>
+                                                    <td>{{ $advocate->brd_slno }}</td>
+                                                    <td>{{ isset($advocate->reg_no_display) && $advocate->reg_no_display ? '' : $advocate->diary_no }}</td>
                                                     <td>
-                                                        <p class="{{ isset($advocate['c_status']) && $advocate['c_status'] == 'P' ? 'text-success': 'text-danger' }}">{{ isset($advocate['c_status']) && $advocate['c_status'] == 'P' ? 'Pending' : 'Disposed' }}</p>
+                                                        <p class="{{ isset($advocate->c_status) && $advocate->c_status == 'P' ? 'text-success': 'text-danger' }}">{{ isset($advocate->c_status) && $advocate->c_status == 'P' ? 'Pending' : 'Disposed' }}</p>
                                                     </td>
                                                     <td><p> {{ $pet_name }}<br>
                                                         Vs.
@@ -77,20 +77,20 @@
                                                         {{ $res_name }}</p>
                                                     </td>
                                                     <td>
-                                                        @if(isset($advocate['c_status']) && $advocate['c_status'] == 'P')
-                                                            @if($advocate['next_dt'] == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME)
-                                                                <span data-courtno="{{ $advocate['courtno'] }}" data-toggle="modal" data-target="#modal-lg" class="badge badge-danger time_out_msg">{{ MSG_TIME_OUT }}</span>
+                                                        @if(isset($advocate->c_status) && $advocate->c_status == 'P')
+                                                            @if($advocate->next_dt == CURRENT_DATE && date('H:i:s') > APPEARANCE_ALLOW_TIME)
+                                                                <span data-courtno="{{ $advocate->courtno }}" data-toggle="modal" data-target="#modal-lg" class="badge badge-danger time_out_msg">{{ MSG_TIME_OUT }}</span>
                                                             @else
                                                                 <button data-toggle="modal" data-target="#modal-lg" type="button"
-                                                                    data-diary_no="{{ $advocate['diary_no'] }}"
-                                                                    data-next_dt="{{ $advocate['next_dt'] }}"
-                                                                    data-appearing_for="{{ $advocate['pet_res'] }}"
-                                                                    data-pet_name="{{ $advocate['pet_name'] }}"
-                                                                    data-res_name="{{ $advocate['res_name'] }}"
-                                                                    data-courtno="{{ $advocate['courtno'] }}"
-                                                                    data-brd_slno="{{ $advocate['brd_slno'] }}"
-                                                                    data-reg_no_display="{{ $advocate['reg_no_display'] }}"
-                                                                    data-c_status="{{ $advocate['c_status'] }}"
+                                                                    data-diary_no="{{ $advocate->diary_no }}"
+                                                                    data-next_dt="{{ $advocate->next_dt }}"
+                                                                    data-appearing_for="{{ $advocate->pet_res }}"
+                                                                    data-pet_name="{{ $advocate->pet_name }}"
+                                                                    data-res_name="{{ $advocate->res_name }}"
+                                                                    data-courtno="{{ $advocate->courtno }}"
+                                                                    data-brd_slno="{{ $advocate->brd_slno }}"
+                                                                    data-reg_no_display="{{ $advocate->reg_no_display }}"
+                                                                    data-c_status="{{ $advocate->c_status }}"
                                                                     name="btn_click" class="btn_click btn btn-success">Click
                                                                 </button>
                                                             @endif
