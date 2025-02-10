@@ -228,214 +228,98 @@ td {
                         @if(!in_array($_SESSION['login']['ref_m_usertype_id'],array(ARGUING_COUNSEL,SR_ADVOCATE)))
                         <div class="dashboard-section dashboard-tiles-area">
                             <div class="row">
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="dashbord-tile pink-tile" tabindex="0">
                                         <div >
-                                            <h6 class="tile-title" tabindex="0">Recent Documents</h6>
-                                            <p class="tile-subtitle" tabindex="0">By Me</p>
-                                            <button id="byOthers" class="btn btn-info pull-right" tabindex="0">#By
-                                                others</button>
-                                            <h4 class="main-count" tabindex="0">
-                                                <?php
-                                                            echo '00';
-                                                        ?>
-                                            </h4>
+                                            <h6 class="tile-title" tabindex="0">Online</h6>
                                             <div class="tiles-comnts">
                                                 <div class="tile-comnt" tabindex="0">
                                                     <h6 class="comts-no">
                                                         <?php
-                                                                    echo '00';
-                                                                ?>
+                                                        if (isset($online->disposed_appl) && !empty($online->disposed_appl)) {
+                                                            echo $online->disposed_appl;
+                                                        } else {
+                                                            echo '00';
+                                                        }
+                                                        ?>
                                                     </h6>
-                                                    <p class="comnt-name">Rejoinder</p>
+                                                    <p class="comnt-name">Disposed</p>
                                                 </div>
                                                 <div class="tile-comnt" tabindex="0">
                                                     <h6 class="comts-no">
                                                         <?php
-                                                                    echo '00';
-                                                                ?>
+                                                        if (isset($online->pending_appl) && !empty($online->pending_appl)) {
+                                                            echo $online->pending_appl;
+                                                        } else {
+                                                            echo '00';
+                                                        }
+                                                        ?>
                                                     </h6>
-                                                    <p class="comnt-name">Reply</p>
-                                                </div>
-                                                <div class="tile-comnt" tabindex="0">
-                                                    <h6 class="comts-no">
-                                                        <?php
-                                                                    echo '00';
-                                                                ?>
-                                                    </h6>
-                                                    <p class="comnt-name">IA</p>
-                                                </div>
-                                                <div class="tile-comnt" tabindex="0">
-                                                    <h6 class="comts-no">
-                                                        <?php
-                                                                    echo '00';
-                                                                ?>
-                                                    </h6>
-                                                    <p class="comnt-name">Other</p>
+                                                    <p class="comnt-name">Pending</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <!--End 2nd grid-->
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="dashbord-tile purple-tile" tabindex="0">
-                                        <h6 class="tile-title" tabindex="0">Incomplete Filings</h6>
-                                        <p class="tile-subtitle" tabindex="0">Cases/appl. Filed by you</p>
-                                        <h4 class="main-count" tabindex="0">
-                                            <?php
+                                        <h6 class="tile-title" tabindex="0">Offline</h6>
+                                        <div class="tiles-comnts">
+                                            <div class="tile-comnt" tabindex="0">
+                                                <h6 class="comts-no">
+                                                    <?php
+                                                    if (isset($offline->disposed_appl) && !empty($offline->disposed_appl)) {
+                                                        echo $offline->disposed_appl;
+                                                    } else {
                                                         echo '00';
+                                                    }
                                                     ?>
-                                        </h4>
-                                        <div class="tiles-comnts">
-                                            <div class="tile-comnt" tabindex="0">
-                                                <h6 class="comts-no">
-                                                    <?php
-                                                                echo '00';
-                                                            ?>
                                                 </h6>
-                                                <p class="comnt-name">Draft</p>
+                                                <p class="comnt-name">Disposed</p>
                                             </div>
                                             <div class="tile-comnt" tabindex="0">
                                                 <h6 class="comts-no">
                                                     <?php
-                                                                echo '00';
-                                                            ?>
+                                                    if (isset($offline->pending_appl) && !empty($offline->pending_appl)) {
+                                                        echo $offline->pending_appl;
+                                                    } else {
+                                                        echo '00';
+                                                    }
+                                                    ?>
                                                 </h6>
-                                                <p class="comnt-name">For Compliance</p>
+                                                <p class="comnt-name">Pending</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-4">
                                     <div class="dashbord-tile blue-tile" tabindex="0">
-                                        <h6 class="tile-title" tabindex="0">Scrutiny Status</h6>
-                                        <p class="tile-subtitle" tabindex="0">Cases/appl. Filed by you</p>
-                                        <h4 class="main-count">&nbsp;&nbsp;</h4>
+                                        <h6 class="tile-title" tabindex="0">Document Requested</h6>
                                         <div class="tiles-comnts">
                                             <div class="tile-comnt" tabindex="0">
                                                 <h6 class="comts-no">
                                                     <?php
-                                                                echo '00';
-                                                            ?>
+                                                    if (isset($request->disposed_request) && !empty($request->disposed_request)) {
+                                                        echo $request->disposed_request;
+                                                    } else {
+                                                        echo '00';
+                                                    }
+                                                    ?>
                                                 </h6>
-                                                <p class="comnt-name">Defect Notified</p>
+                                                <p class="comnt-name">Disposed</p>
                                             </div>
                                             <div class="tile-comnt" tabindex="0">
                                                 <h6 class="comts-no">
                                                     <?php
-                                                                echo '00';
-                                                            ?>
+                                                    if (isset($request->pending_request) && !empty($request->pending_request)) {
+                                                        echo $request->pending_request;
+                                                    } else {
+                                                        echo '00';
+                                                    }
+                                                    ?>
                                                 </h6>
-                                                <p class="comnt-name">Pending Scrutiny</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- -----  -->
-                                <div class="col-12 col-sm-12 col-md-6 col-lg-3">
-                                    <div class="dashbord-tile purple-tile application-tile" tabindex="0">
-                                        <h6 class="tile-title" tabindex="0">Application</h6>
-                                        <p class="tile-subtitle"></p>
-                                        <h4 class="main-count">&nbsp;&nbsp;</h4>
-                                        <div class="application-tile-sections">
-                                            <div class="applictin-tile-sec">
-                                                <div class="appliction-til-nam" tabindex="0">
-                                                    <h6>Online</h6>
-                                                </div>
-                                                <div class="tiles-comnts">
-                                                    <div class="tile-comnt" tabindex="0">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                            
-                                                                    if (isset($online->disposed_appl) && !empty($online->disposed_appl)) {
-                                                                        echo $online->disposed_appl;
-                                                                    } else {
-                                                                        echo '00';
-                                                                    }
-                                                                    ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Disposed</p>
-
-                                                    </div>
-                                                    <div class="tile-comnt" tabindex="0">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                                    if (isset($online->pending_appl) && !empty($online->pending_appl)) {
-                                                                        echo $online->pending_appl;
-                                                                    } else {
-                                                                        echo '00';
-                                                                    }
-                                                                    ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Pending</p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="applictin-tile-sec">
-                                                <div class="appliction-til-nam" tabindex="0">
-                                                    <h6>Offline</h6>
-                                                </div>
-                                                <div class="tiles-comnts">
-                                                    <div class="tile-comnt" tabindex="0">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                                    if (isset($offline->disposed_appl) && !empty($offline->disposed_appl)) {
-                                                                        echo $offline->disposed_appl;
-                                                                    } else {
-                                                                        echo '00';
-                                                                    }
-                                                                    ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Disposed</p>
-                                                    </div>
-                                                    <div class="tile-comnt" tabindex="0">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                                    if (isset($offline->pending_appl) && !empty($offline->pending_appl)) {
-                                                                        echo $offline->pending_appl;
-                                                                    } else {
-                                                                        echo '00';
-                                                                    }
-                                                                    ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Pending</p>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div class="applictin-tile-sec">
-                                                <div class="appliction-til-nam" tabindex="0">
-                                                    <h6>Document Requested</h6>
-                                                </div>
-                                                <div class="tiles-comnts">
-                                                    <div class="tile-comnt" tabindex="0">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                                    if (isset($request->disposed_request) && !empty($request->disposed_request)) {
-                                                                        echo $request->disposed_request;
-                                                                    } else {
-                                                                        echo '00';
-                                                                    }
-                                                                    ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Disposed</p>
-                                                    </div>
-                                                    <div class="tile-comnt" tabindex="0">
-                                                        <h6 class="comts-no">
-                                                            <?php
-                                                                    if (isset($request->pending_request) && !empty($request->pending_request)) {
-                                                                        echo $request->pending_request;
-                                                                    } else {
-                                                                        echo '00';
-                                                                    }
-                                                                    ?>
-                                                        </h6>
-                                                        <p class="comnt-name">Pending</p>
-                                                    </div>
-                                                </div>
-
+                                                <p class="comnt-name">Pending</p>
                                             </div>
                                         </div>
                                     </div>
