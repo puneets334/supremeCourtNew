@@ -11,6 +11,7 @@ use App\Models\Certificate\CertificateModel;
 use App\Models\Mentioning\MentioningModel;
 use App\Models\Citation\CitationModel;
 use App\Libraries\webservices\Efiling_webservices;
+use App\Libraries\webservices\Ecoping_webservices;
 use Exception;
 use stdClass;
 
@@ -26,7 +27,7 @@ class ResponsiveVariantRouteController extends BaseController
     protected $MentioningModel;
     protected $CitationModel;
     protected $efiling_webservices;
-
+    protected $ecoping_webservices;
     public function __construct()
     {
         parent::__construct();
@@ -40,6 +41,7 @@ class ResponsiveVariantRouteController extends BaseController
         $this->MentioningModel = new MentioningModel();
         $this->CitationModel = new CitationModel();
         $this->efiling_webservices = new Efiling_webservices();
+        $this->ecoping_webservices = new Ecoping_webservices();
         if(empty(getSessionData('login'))){
             return response()->redirect(base_url('/')); 
         }else{
@@ -531,9 +533,12 @@ class ResponsiveVariantRouteController extends BaseController
             $my_cases_recently_updated = [];
         } 
         $mobile = $_SESSION['login']['mobile_number'];
-        $email = $_SESSION['login']['emailid'];        
+        $email = $_SESSION['login']['emailid'];
+        $online=$this->ecoping_webservices->online($email,$mobile);
+        $offline=$this->ecoping_webservices->offline($email,$mobile);
+        $request=$this->ecoping_webservices->requests($email,$mobile);        
         // Connect to the second database
-        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
+        /*$sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
         // Online applications
         $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
         $builder->select([
@@ -575,7 +580,7 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->where('allowed_request', 'request_to_available');
         $builder->where('is_deleted', FALSE); 
         $builder->groupBy('is_deleted');
-        $request = $builder->get()->getRow(); // Fetch request data
+        $request = $builder->get()->getRow(); // Fetch request data*/
 
         /*Start Amicus */
         if(getSessionData('login')['ref_m_usertype_id'] == AMICUS_CURIAE_USER) {
@@ -2243,7 +2248,7 @@ class ResponsiveVariantRouteController extends BaseController
         $mobile = $_SESSION['login']['mobile_number'];
         $email = $_SESSION['login']['emailid'];        
         // Connect to the second database
-        $sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
+        /*$sci_cmis_final = \Config\Database::connect('sci_cmis_final');        
         // Online applications
         $builder = $sci_cmis_final->table('copying_order_issuing_application_new');
         $builder->select([
@@ -2285,7 +2290,10 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->where('allowed_request', 'request_to_available');
         $builder->where('is_deleted', FALSE); 
         $builder->groupBy('is_deleted');
-        $request = $builder->get()->getRow(); // Fetch request data
+        $request = $builder->get()->getRow(); // Fetch request data*/
+        $online=$this->ecoping_webservices->online($email,$mobile);
+        $offline=$this->ecoping_webservices->offline($email,$mobile);
+        $request=$this->ecoping_webservices->requests($email,$mobile);
         
         return $this->render('responsive_variant.dashboard.ecopying_dashboard', @compact('online','offline','request'));
     }
