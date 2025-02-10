@@ -45,7 +45,7 @@ class ResponsiveVariantRouteController extends BaseController
         }else{
             is_user_status();
         }
-        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL,AMICUS_CURIAE_USER,AUTHENTICATED_BY_AOR);
+        $allowed_users_array = array(USER_ADVOCATE, USER_IN_PERSON, USER_CLERK, USER_DEPARTMENT, USER_ADMIN, USER_ADMIN_READ_ONLY, USER_EFILING_ADMIN, SR_ADVOCATE, ARGUING_COUNSEL,AMICUS_CURIAE_USER,AUTHENTICATED_BY_AOR,APPEARING_COUNCIL);
         if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('adminDashboard'));
             exit(0);
@@ -2226,16 +2226,19 @@ class ResponsiveVariantRouteController extends BaseController
 
     public function ecopying_dashboard()
     {
+        
         if(empty(getSessionData('login'))){
             return response()->redirect(base_url('/')); 
         }
-
-        $allowed_users_array = array(AUTHENTICATED_BY_AOR);
-        if (getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
+        
+        $allowed_users_array = array(AUTHENTICATED_BY_AOR,APPEARING_COUNCIL);
+        if(getSessionData('login') != '' && !in_array(getSessionData('login')['ref_m_usertype_id'], $allowed_users_array)) {
             return response()->redirect(base_url('/'));
             exit(0);
         } 
+    
         $advocate_id = getSessionData('login')['adv_sci_bar_id'];
+        
         $sr_advocate_data = '';
         $mobile = $_SESSION['login']['mobile_number'];
         $email = $_SESSION['login']['emailid'];        
@@ -2283,7 +2286,7 @@ class ResponsiveVariantRouteController extends BaseController
         $builder->where('is_deleted', FALSE); 
         $builder->groupBy('is_deleted');
         $request = $builder->get()->getRow(); // Fetch request data
-
+        
         return $this->render('responsive_variant.dashboard.ecopying_dashboard', @compact('online','offline','request'));
     }
     

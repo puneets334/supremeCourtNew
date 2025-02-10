@@ -1,5 +1,7 @@
 @extends('layout.app')
+
 @section('content')
+
 <style>
 .btn-info {
     margin: -13% 15%;
@@ -476,16 +478,18 @@ td {
         </div>
     </div>
     @endsection
+    
     <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js'></script>
- 
+    
     <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
     <script src="<?= base_url() ?>assets/newAdmin/js/angular.min.js"></script>
+    
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit.min.js')}}"></script>
     <script src="{{base_url('assets/responsive_variant/frameworks/uikit_3-4-1/js/uikit-icons.min.js')}}"></script>
- 
+    
     <script>
     function loadPaperBookViewer(obj){
         // alert(obj);
@@ -510,6 +514,7 @@ td {
         
     });
     </script>
+    
     <script>
     $(document).ready(function() {
         $("#byMe").click(function() {
@@ -522,6 +527,7 @@ td {
         });
     });
     </script>
+    
     <script>
     $(document).ready(function() {
         var calendarEl = document.getElementById('calendar');
@@ -775,4 +781,4 @@ td {
         });
     });
     </script>
-       
+     
