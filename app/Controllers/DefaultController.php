@@ -107,7 +107,7 @@ class DefaultController extends BaseController {
             if($this->isNewUser($_POST['txt_username']) == 1){ 
                 $userCaptcha = $_POST['userCaptcha'];
                 if ($this->session->get('captcha') != $userCaptcha) {
-                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                    $this->session->setFlashdata('errMsg', 'Invalid Captcha!');
                     $this->session->setFlashdata('old_username', $_POST['txt_username']);
                     return response()->redirect(base_url('/'));
                 }
@@ -119,10 +119,10 @@ class DefaultController extends BaseController {
                 $password = $_POST['txt_password'];
                 $userCaptcha = $_POST['userCaptcha'];
                 if ($username == NULL  || $password == NULL || preg_match('/[^A-Za-z0-9!@#$]/i', $password) || $userCaptcha == NULL || preg_match('/[^A-Za-z0-9]/i', $userCaptcha)) { 
-                    $this->session->setFlashdata('msg', 'Invalid username or password or Captcha!');
+                    $this->session->setFlashdata('errMsg', 'Invalid username or password or Captcha!');
                     return response()->redirect(base_url('/'));
                 } elseif ($this->session->get('captcha') != $userCaptcha) {
-                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                    $this->session->setFlashdata('errMsg', 'Invalid Captcha!');
                     $this->session->setFlashdata('old_username', $username);
                     return response()->redirect(base_url('/'));
                 } else {            
@@ -161,7 +161,7 @@ class DefaultController extends BaseController {
                                             redirect('login');
                                             exit(0);
                                         } else{
-                                            $this->session->setFlashdata('msg', 'Impersonated user has no registered mobile number');
+                                            $this->session->setFlashdata('errMsg', 'Impersonated user has no registered mobile number');
                                             return response()->redirect(base_url('/'));
                                             exit(0);
                                         }
@@ -169,12 +169,12 @@ class DefaultController extends BaseController {
                                         unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$impersonated_user->id]);
                                         $row = $this->Login_model->get_user($user_parts[1], null, true, false);
                                     } else{
-                                        $this->session->setFlashdata('msg', 'Invalid authentication OTP');
+                                        $this->session->setFlashdata('errMsg', 'Invalid authentication OTP');
                                         return response()->redirect(base_url('/'));
                                         exit(0);
                                     }
                                 } else{
-                                    $this->session->setFlashdata('msg', 'Invalid impersonated user');
+                                    $this->session->setFlashdata('errMsg', 'Invalid impersonated user');
                                     return response()->redirect(base_url('/'));
                                     exit(0);
                                 }
@@ -182,7 +182,7 @@ class DefaultController extends BaseController {
                                 $row = $this->Login_model->get_user($username, $password);
                             }
                         } else{
-                            $this->session->setFlashdata('msg', 'Invalid user or password.');
+                            $this->session->setFlashdata('errMsg', 'Invalid user or password.');
                             return response()->redirect(base_url('/'));
                             exit(0);
                         }
@@ -225,7 +225,7 @@ class DefaultController extends BaseController {
                                 $fullDays = floor($diff / (60 * 60 * 24));
                                 $fullMinutes = floor(($diff - ($fullDays * 60 * 60 * 24) - ($fullHours * 60 * 60)) / 60);
                                 if ($fullDays == 0 && $fullMinutes <= 5 && $failure_no_attmpt==3) {
-                                    $this->session->setFlashdata('msg', 'You are Blocked Try After 5 min');
+                                    $this->session->setFlashdata('errMsg', 'You are Blocked Try After 5 min');
                                     return response()->redirect(base_url('/'));
                                     exit(0);
 
@@ -234,7 +234,7 @@ class DefaultController extends BaseController {
                             $user_name = ucwords($row[0]->first_name . ' ' . $row[0]->last_name);
                             //Check user role
                             if(logged_in_check_user_type($row[0]->ref_m_usertype_id)){
-                                $this->session->setFlashdata('msg', 'You are not authorized !!');
+                                $this->session->setFlashdata('errMsg', 'You are not authorized !!');
                                 return response()->redirect(base_url('/'));
                                 exit(0);
                             }
@@ -245,7 +245,7 @@ class DefaultController extends BaseController {
                                     $unauthorized_access = array_keys(array_column($log_data, 'block'), 't');
                                     $new_login_agent = array_keys(array_column($log_data, 'user_agent'), $_SERVER['HTTP_USER_AGENT']);
                                     if(isset($unauthorized_access[0]) && !empty($unauthorized_access[0])) {
-                                        $this->session->setFlashdata('msg', 'Unauthorized Access.');
+                                        $this->session->setFlashdata('errMsg', 'Unauthorized Access.');
                                         return response()->redirect(base_url('/'));
                                         exit(0);
                                     }
@@ -299,12 +299,12 @@ class DefaultController extends BaseController {
                             $this->logUser('login', $logindata);
                             $this->redirect_on_login();
                         } else{
-                            $this->session->setFlashdata('msg', 'Invalid username or password !');
+                            $this->session->setFlashdata('errMsg', 'Invalid username or password !');
                             return response()->redirect(base_url('/'));
                             exit(0);
                         }
                     } else{
-                        $this->session->setFlashdata('msg', 'Invalid username or password !');
+                        $this->session->setFlashdata('errMsg', 'Invalid username or password !');
                         return response()->redirect(base_url('/'));
                         exit(0);
                     }
@@ -365,80 +365,85 @@ class DefaultController extends BaseController {
             
             
             if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')){
-                
-                if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')== @$_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]) {
-                    unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]);
-                    unset($_SESSION['impersonated_user_authentication_mobile_otp']);
-                    
-                    $row = $this->Login_model->get_user_for_ecopy($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
-                    if(is_array($row) && !empty($row)){
-                        $impersonator_user = $row[0];
-                        //APPEARING_COUNCIL
-                        $logindata = array(
-                            'id' => $row[0]->id,
-                            'userid' => $row[0]->userid,
-                            'ref_m_usertype_id' => ($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR')?AUTHENTICATED_BY_AOR:APPEARING_COUNCIL,
-                            'first_name' => $row[0]->first_name,
-                            'last_name' => $row[0]->last_name,
-                            'mobile_number' => $row[0]->moblie_number,
-                            'emailid' => $row[0]->emailid,
-                            'adv_sci_bar_id' => $row[0]->adv_sci_bar_id,
-                            'aor_code' => $row[0]->aor_code,
-                            'bar_reg_no' => $row[0]->bar_reg_no,
-                            'gender' => $row[0]->gender,
-                            'pg_request_fun' => null,
-                            'pg_response_fun' => null,
-                            'photo_path' => $row[0]->photo_path,
-                            'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
-                            'admin_for_type_id'=>$row[0]->admin_for_type_id,
-                            'admin_for_id' =>$row[0]->admin_for_id,
-                            'account_status' => $row[0]->account_status,
-                            'refresh_token' => $row[0]->refresh_token,
-                            'impersonator_user' => $impersonator_user,//for efiling_assistant
-                            'processid' => getmypid(),
-                            'department_id' => $row[0]->ref_department_id,
-                            'icmis_usercode' => $row[0]->icmis_usercode
-                        );
-                    } else {
-                        $logindata = array(
-                            'id' => null,
-                            'userid' => $this->request->getPost('aor_code'),
-                            'ref_m_usertype_id' => ($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR')?AUTHENTICATED_BY_AOR:APPEARING_COUNCIL,
-                            'first_name' => $result->name,
-                            'last_name' => null,
-                            'mobile_number' => $result->mobile,
-                            'emailid' => $result->email,
-                            'adv_sci_bar_id' => $result->bar_id,
-                            'aor_code' => $this->request->getPost('aor_code'),
-                            'bar_reg_no' => $result->bar_id,
-                            'gender' => $result->sex,
-                            'pg_request_fun' => null,
-                            'pg_response_fun' => null,
-                            'photo_path' => null,
-                            'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
-                            'admin_for_type_id'=>null,
-                            'admin_for_id' =>null,
-                            'account_status' => null,
-                            'refresh_token' => null,
-                            'impersonator_user' => [],
-                            'processid' => getmypid(),
-                            'department_id' => null,
-                            'icmis_usercode' => $result->bar_id
-                        );
-                    }
-                    $sessiondata = array(
-                        'login' => $logindata
-                    );
-                    $this->session->set($sessiondata);
-                    $this->logUser('login', $logindata);
-                    $this->redirect_on_login();
-                    //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
-                }else{
-                    $data['using']=$this->request->getPost('using');
-                    $data['aor_flag']='yes';
-                    $this->session->setFlashdata('msg', 'OTP Not Matched');
+                if ($this->session->get('captcha') != $userCaptcha) {
+                    $this->session->setFlashdata('errMsg', 'Invalid Captcha!');
                     return $this->render('responsive_variant.authentication.frontLogin', $data);
+                }else{
+                    if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')== @$_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]) {
+                        unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]);
+                        unset($_SESSION['impersonated_user_authentication_mobile_otp']);
+                        
+                        $row = $this->Login_model->get_user_for_ecopy($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
+                        if(is_array($row) && !empty($row)){
+                            $impersonator_user = $row[0];
+                            //APPEARING_COUNCIL
+                            $logindata = array(
+                                'id' => $row[0]->id,
+                                'userid' => $row[0]->userid,
+                                'ref_m_usertype_id' => ($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR')?AUTHENTICATED_BY_AOR:APPEARING_COUNCIL,
+                                'first_name' => $row[0]->first_name,
+                                'last_name' => $row[0]->last_name,
+                                'mobile_number' => $row[0]->moblie_number,
+                                'emailid' => $row[0]->emailid,
+                                'adv_sci_bar_id' => $row[0]->adv_sci_bar_id,
+                                'aor_code' => $row[0]->aor_code,
+                                'bar_reg_no' => $row[0]->bar_reg_no,
+                                'gender' => $row[0]->gender,
+                                'pg_request_fun' => null,
+                                'pg_response_fun' => null,
+                                'photo_path' => $row[0]->photo_path,
+                                'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
+                                'admin_for_type_id'=>$row[0]->admin_for_type_id,
+                                'admin_for_id' =>$row[0]->admin_for_id,
+                                'account_status' => $row[0]->account_status,
+                                'refresh_token' => $row[0]->refresh_token,
+                                'impersonator_user' => $impersonator_user,//for efiling_assistant
+                                'processid' => getmypid(),
+                                'department_id' => $row[0]->ref_department_id,
+                                'icmis_usercode' => $row[0]->icmis_usercode
+                            );
+                        } else {
+                            $logindata = array(
+                                'id' => null,
+                                'userid' => $this->request->getPost('aor_code'),
+                                'ref_m_usertype_id' => ($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR')?AUTHENTICATED_BY_AOR:APPEARING_COUNCIL,
+                                'first_name' => $result->name,
+                                'last_name' => null,
+                                'mobile_number' => $result->mobile,
+                                'emailid' => $result->email,
+                                'adv_sci_bar_id' => $result->bar_id,
+                                'aor_code' => $this->request->getPost('aor_code'),
+                                'bar_reg_no' => $result->bar_id,
+                                'gender' => $result->sex,
+                                'pg_request_fun' => null,
+                                'pg_response_fun' => null,
+                                'photo_path' => null,
+                                'login_active_session' => substr(number_format(time() * rand(), 0, '', ''), 0, 6),
+                                'admin_for_type_id'=>null,
+                                'admin_for_id' =>null,
+                                'account_status' => null,
+                                'refresh_token' => null,
+                                'impersonator_user' => [],
+                                'processid' => getmypid(),
+                                'department_id' => null,
+                                'icmis_usercode' => $result->bar_id
+                            );
+                        }
+                        $sessiondata = array(
+                            'login' => $logindata
+                        );
+                        $this->session->set($sessiondata);
+                        $this->logUser('login', $logindata);
+                        $this->redirect_on_login();
+                        //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
+                    }else{
+                        $data['using']=$this->request->getPost('using');
+                        $data['aor_flag']='yes';
+                        $this->session->setFlashdata('errMsg', 'OTP Not Matched');
+                        return $this->render('responsive_variant.authentication.frontLogin', $data);
+                    }
                 }
+                
                 
                 //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
             }elseif(!empty($result)){
@@ -448,7 +453,7 @@ class DefaultController extends BaseController {
                 $data['bar_id']=$result->bar_id;
                 $data['using']=$this->request->getPost('using');
                 if ($this->session->get('captcha') != $userCaptcha) {
-                    $this->session->setFlashdata('msg', 'Invalid Captcha!');
+                    $this->session->setFlashdata('errMsg', 'Invalid Captcha!');
                     
                 }else{
                     
@@ -470,7 +475,7 @@ class DefaultController extends BaseController {
                          $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
                          
                          }else{
-                             $this->session->setFlashdata('msg', 'Email not available or verified.');
+                             $this->session->setFlashdata('errMsg', 'Email not available or verified.');
                                 
                          }    
                     }elseif($this->request->getPost('userType')=='APPEARING_COUNCIL'){
@@ -489,7 +494,7 @@ class DefaultController extends BaseController {
                          $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
                          
                          }else{
-                             $this->session->setFlashdata('msg', 'User Not Verified');
+                             $this->session->setFlashdata('errMsg', 'User Not Verified');
                                 
                          }
                             
@@ -504,7 +509,7 @@ class DefaultController extends BaseController {
                 //send_mail_msg($email,'Authentication OTP for eFiling' ,$message, $user_parts[1]);
                 //$result=$this->ecoping_webservices->getUserAddress($this->request->getPost('yr_mobile'),$this->request->getPost('you_email'));
             }else{
-                $this->session->setFlashdata('msg', 'AOR Mobile No. OR AOR code Does Not Match');
+                $this->session->setFlashdata('errMsg', 'AOR Mobile No. OR AOR code Does Not Match');
                 $data['aor_flag']='no';
                 $data['using']=$this->request->getPost('using');
                 return $this->render('responsive_variant.authentication.frontLogin', $data);

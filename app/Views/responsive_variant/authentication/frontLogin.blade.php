@@ -172,12 +172,20 @@
                         </div>
                         <div class="loin-form">
                             <?php if (session()->getFlashdata('msg')) : ?>
-                                <div class="alert alert-danger text-center flashmessage" role="alert">
-                                    <div class="flas-msg-inner">
+                                <div class="alert alert-success text-center flashmessage" role="alert">
+                                    <div class="flas-msg-inner" style="color:green;border:darkgreen">
                                         <?= session()->getFlashdata('msg') ?>
                                     </div>
                                 </div>
                             <?php endif; ?>
+                            <?php if (session()->getFlashdata('errMsg')) : ?>
+                                <div class="alert alert-danger text-center flashmessage" role="alert">
+                                    <div class="flas-msg-inner">
+                                        <?= session()->getFlashdata('errMsg') ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
+                            
                             <?php  //echo $_SESSION["captcha"];
                             $attribute = array('class' => 'form_horizontal', 'name' => 'form_horizontal', 'id' => 'login-form', 'accept-charset' => 'utf-8', 'autocomplete' => 'off', 'onsubmit' => 'enableSubmit();');
                             echo form_open(base_url('login'), $attribute);
@@ -196,21 +204,41 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="mb-3" id="aorMobileBox">
+                                    <?php if(empty($session->get('impersonated_user_authentication_mobile_otp')) && empty($userEnteredData['aor_mobile'])){
+                                        $dis = 'style="display: block;"';
+                                    }else{
+                                        $dis = 'style="display: none;"';
+                                    }?>
+
+                                        <div class="mb-3" id="aorMobileBox" <?=$dis; ?>>
                                             <label for="" class="form-label">AOR Mobile</label>
                                             <input type="text" class="form-control cus-form-ctrl" id="aor_mobile" name="aor_mobile"  placeholder="Mobile" maxlength="60" value="<?=(!empty($userEnteredData['aor_mobile'])?$userEnteredData['aor_mobile']:'')?>">
-                                            @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_mobile']))
-                                            <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
-                                            @endif
                                         </div>
-                                        <div class="mb-3" id="aorcodeBox" style="display:none;">
+                                    
+                                    @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_mobile']))
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">OTP</label>
+                                            <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
+                                        </div>
+                                    @endif
+                                    <?php if(empty($session->get('impersonated_user_authentication_mobile_otp'))&& empty($userEnteredData['aor_code'])){
+                                        $dis1 = 'style="display: none;"';
+                                    } else {
+                                        $dis1 = 'style="display: none;"';
+                                    } ?>
+                                        <div class="mb-3" id="aorcodeBox" <?=$dis1; ?>>
                                             <label for="" class="form-label">AOR Code</label>
                                             <input type="text" class="form-control cus-form-ctrl" id="aor_code" name="aor_code"  placeholder="AOR code" maxlength="60" value="<?=(!empty($userEnteredData['aor_code'])?$userEnteredData['aor_code']:'')?>">
-                                            @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_code']))
-                                            <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control cus-form-ctrl uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
-                                            @endif
                                         </div>
+                                        
+                                    @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_code']))
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">OTP</label>
+                                            <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control cus-form-ctrl uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
+                                        </div>
+                                    @endif
                                     </div>
+                                    
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 authenticatedByAor">
                                         <div class="mb-3">
                                             <label for="" class="form-label">Your Mobile No.</label>

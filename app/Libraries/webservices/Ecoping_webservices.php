@@ -679,4 +679,32 @@ curl_close($curl);
             return NULL;
         }  
     }
+    public function online($email,$mobile){
+        
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/online?email=$email&mobile=$mobile");
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }  
+    }
+    public function offline($email,$mobile){
+        
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/offline?email=$email&mobile=$mobile");
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }  
+    }
+    public function requests($email,$mobile){
+        
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/requests?email=$email&mobile=$mobile");
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }  
+    }
+    
 }
