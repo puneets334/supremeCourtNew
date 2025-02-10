@@ -1266,7 +1266,7 @@ $sas = array(Initial_Defected_Stage, I_B_Defected_Stage);
             //     cache:false,
             //     async: false,
             //     beforeSend: function() {
-            //         $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php echo base_url('assets/images/loading-data.gif');?>">');
+            //         $("#loader_div").html('<img id="loader_img" style="position: fixed; left: 63%;margin-top: -164px;  margin-left: -100px;" src="<?php // echo base_url('assets/images/loading-data.gif');?>">');
             //         $('#createDiaryNo').append('<i class="status_refresh fa fa-refresh fa-spin"></i>');
             //     },
             //     success: function (data){
