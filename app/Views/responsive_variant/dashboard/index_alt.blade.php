@@ -495,7 +495,7 @@ td {
                                 <!-- -----  -->
                                 <div class="col-12 col-sm-12 col-md-6 col-lg-3">
                                     <div class="dashbord-tile purple-tile application-tile" tabindex="0">
-                                        <h6 class="tile-title" tabindex="0">Application</h6>
+                                        <h6 class="tile-title" tabindex="0">Certified Copies</h6>
                                         <p class="tile-subtitle"></p>
                                         <h4 class="main-count">&nbsp;&nbsp;</h4>
                                         <div class="application-tile-sections">
