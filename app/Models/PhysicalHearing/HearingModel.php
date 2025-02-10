@@ -90,42 +90,52 @@ class HearingModel extends Model
 
     function get_case_listed_in_daily_list($diary_no)
     {
-        $current_date = date("Y-m-d");
-        $sql = "select 
-            a.diary_no, 
-            a.next_dt 
-            from 
-            (
-                select 
-                diary_no, 
-                next_dt, 
-                clno, 
-                roster_id, 
-                judges, 
-                mainhead 
-                from 
-                public.heardt 
-                where 
-                clno != 0 
-                and clno is not null 
-                and brd_slno != 0 
-                and brd_slno is not null 
-                and roster_id != 0 
-                and roster_id is not null 
-                and next_dt >= DATE '".$current_date."' 
-                and diary_no = '".$diary_no."'
-            ) a 
-            INNER JOIN cl_printed p ON p.next_dt = a.next_dt 
-            AND p.m_f = a.mainhead 
-            AND p.part = a.clno 
-            AND p.roster_id = a.roster_id 
-            AND p.display = 'Y' 
-            group by 
-            diary_no, 
-            a.next_dt";
-        $query = $this->sci_cmis_final->query($sql, array($current_date,$diary_no));
-        return $query->getResultArray();
+        // $current_date = date("Y-m-d");
+        // $sql = "select 
+        //     a.diary_no, 
+        //     a.next_dt 
+        //     from 
+        //     (
+        //         select 
+        //         diary_no, 
+        //         next_dt, 
+        //         clno, 
+        //         roster_id, 
+        //         judges, 
+        //         mainhead 
+        //         from 
+        //         public.heardt 
+        //         where 
+        //         clno != 0 
+        //         and clno is not null 
+        //         and brd_slno != 0 
+        //         and brd_slno is not null 
+        //         and roster_id != 0 
+        //         and roster_id is not null 
+        //         and next_dt >= DATE '".$current_date."' 
+        //         and diary_no = '".$diary_no."'
+        //     ) a 
+        //     INNER JOIN cl_printed p ON p.next_dt = a.next_dt 
+        //     AND p.m_f = a.mainhead 
+        //     AND p.part = a.clno 
+        //     AND p.roster_id = a.roster_id 
+        //     AND p.display = 'Y' 
+        //     group by 
+        //     diary_no, 
+        //     a.next_dt";
+        // $query = $this->sci_cmis_final->query($sql, array($current_date,$diary_no));
+        // return $query->getResultArray();
 
+        $current_date = date("Y-m-d");
+        $sql="select a.diary_no,a.next_dt from (select  diary_no,next_dt, clno, roster_id, judges, mainhead 
+            from heardt where clno!=0 and clno is not null and brd_slno!=0 and brd_slno is not null
+            and roster_id!=0 and roster_id is not null 
+            and next_dt >= ? and diary_no = ?) a 
+            INNER JOIN cl_printed p ON p.next_dt = a.next_dt AND p.m_f = a.mainhead AND p.part = a.clno AND p.roster_id = a.roster_id AND p.display = 'Y'
+            group by diary_no";
+        $query = $this->sci_cmis_final->query($sql, array($current_date,$diary_no));
+        // echo $this->db->last_query();exit(0);
+        return $query->getResultArray();
     }
 
     function seatsAllocatedCount($roster_id,$diary_no, $adv_id, $court_no){
