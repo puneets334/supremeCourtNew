@@ -80,7 +80,8 @@ $parties_details = $data['parties_details'];
                 </div>
             </div>
             <div class="table-responsive">
-                <table id="onbehalf_table" class="table table-bordered table-hover">
+                <!-- <table id="onbehalf_table" class="table table-bordered table-hover"> -->
+                <table id="onbehalf_table" class="table table-striped custom-table dataTable no-footer">
                     <thead>
                         <tr>
                             <th class="text-center">Party Name</th>
