@@ -183,8 +183,7 @@
                             echo form_open(base_url('login'), $attribute);
                             ?>
                                 <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
-                                <input type="hidden"  name="userType" value="" id="userType">
-                                <div class="row">
+                                <input type="hidden" name="userType" id="userType" class="userType">
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 row">
                                         <div class="col-5">
                                             <label for="AOR Mobile" class="form-label">AOR Mobile</label>

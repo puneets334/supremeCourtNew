@@ -80,6 +80,7 @@ class DefaultController extends BaseController {
         // }
         $validation =  \Config\Services::validation();
         //---Commented line are used for disable captcha----------------->
+        
         if(empty($this->request->getPost('userType'))){
         $rules=[
             "txt_username" => [
@@ -314,6 +315,7 @@ class DefaultController extends BaseController {
             }
         }
     }else{
+        
         $rules=[
             "using" => [
                 "label" => "Aor Code and Aor Mobile",
@@ -356,6 +358,7 @@ class DefaultController extends BaseController {
             $data['aor_flag']='yes';
             return $this->render('responsive_variant.authentication.frontLogin', $data);
         }else{
+            
             $userCaptcha=$this->request->getPost('userCaptcha');
             $result=$this->ecoping_webservices->getCopyBarcodeBymobileOrAorCOde($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
             
@@ -366,9 +369,7 @@ class DefaultController extends BaseController {
                 if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')== @$_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]) {
                     unset($_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id]);
                     unset($_SESSION['impersonated_user_authentication_mobile_otp']);
-                    // echo "verify Otp";
-                    // die;
-
+                    
                     $row = $this->Login_model->get_user_for_ecopy($this->request->getPost('aor_code'),$this->request->getPost('aor_mobile'));
                     if(is_array($row) && !empty($row)){
                         $impersonator_user = $row[0];
@@ -450,6 +451,7 @@ class DefaultController extends BaseController {
                     $this->session->setFlashdata('msg', 'Invalid Captcha!');
                     
                 }else{
+                    
                     if($this->request->getPost('userType')=='AUTHENTICATED_BY_AOR'){
                         $authorizedByAorAdvocateVerification=$this->ecoping_webservices->eCopyingOtpVerification($this->request->getPost('you_email')); 
                     }elseif($this->request->getPost('userType')=='APPEARING_COUNCIL'){
@@ -458,7 +460,7 @@ class DefaultController extends BaseController {
                         
                     }
                     if($this->request->getPost('userType')=='AUTHENTICATED_BY_AOR'){
-                        if($authorizedByAorAdvocateVerification->email==$this->request->getPost('you_email') && $authorizedByAorAdvocateVerification->mobile==$this->request->getPost('yr_mobile')){
+                        if((!empty($authorizedByAorAdvocateVerification->email) && $authorizedByAorAdvocateVerification->email==$this->request->getPost('you_email')) && $authorizedByAorAdvocateVerification->mobile==$this->request->getPost('yr_mobile')){
                             //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                          $impersonated_user_authentication_mobile_otp =123456;
                          //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
@@ -466,27 +468,39 @@ class DefaultController extends BaseController {
                          $message='Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp.'. - Supreme Court of India';
                          $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
                          $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
+                         
                          }else{
-                             $this->session->setFlashdata('msg', 'Wrong your Email and Mobile');   
+                             $this->session->setFlashdata('msg', 'Email not available or verified.');
+                                
                          }    
                     }elseif($this->request->getPost('userType')=='APPEARING_COUNCIL'){
+                        
                         if(!empty($authorizedByAorAdvocateVerification) && $authorizedByAorAdvocateVerification->mobile==$result->mobile){
                             //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
                          $impersonated_user_authentication_mobile_otp =123456;
+                         
                          //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
                          $_SESSION['impersonated_user_authentication_mobile_otp.'.$result->bar_id] = $impersonated_user_authentication_mobile_otp;
+                         
                          $message='Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp.'. - Supreme Court of India';
+                         
                          $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
+                         
                          $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
+                         
                          }else{
-                             $this->session->setFlashdata('msg', 'User Not Verified');   
-                         }   
+                             $this->session->setFlashdata('msg', 'User Not Verified');
+                                
+                         }
+                            
                     }
                     
-                     
+                    
                     
                 }
+                
                 return $this->render('responsive_variant.authentication.frontLogin', $data);
+                
                 //send_mail_msg($email,'Authentication OTP for eFiling' ,$message, $user_parts[1]);
                 //$result=$this->ecoping_webservices->getUserAddress($this->request->getPost('yr_mobile'),$this->request->getPost('you_email'));
             }else{

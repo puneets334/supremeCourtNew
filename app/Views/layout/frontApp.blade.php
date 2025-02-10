@@ -144,14 +144,17 @@
         <script>
           $("#aor").show();
           $("#default").hide();
+          $('#userType').val('AUTHENTICATED_BY_AOR');
           $('.authenticatedByAor').show();   
         </script>
         <?php
     }elseif(!empty($userEnteredData) && $userEnteredData['userType']=='APPEARING_COUNCIL'){
         ?>
        <script>
+          
           $("#aor").show();
           $("#default").hide();
+          $('#userType').val('APPEARING_COUNCIL');
           $('.authenticatedByAor').hide();  
         </script> 
     <?php
