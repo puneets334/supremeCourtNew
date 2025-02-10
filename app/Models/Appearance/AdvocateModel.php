@@ -46,11 +46,36 @@ class AdvocateModel extends Model {
         //     return $query->getResultArray();
 
 
+        // $builder = $this->db2->table('main as m')
+        //     ->join('heardt as h', 'h.diary_no = m.diary_no')
+        //     ->join('cl_printed as c', 'c.next_dt = h.next_dt AND c.roster_id = h.roster_id AND c.part = h.clno')
+        //     ->join('roster as r', 'r.id = h.roster_id')
+        //     ->join('advocate as a', 'cast(a.diary_no as unsigned) = cast(m.diary_no  as unsigned)')
+        //     ->join('bar as b', 'b.bar_id = a.advocate_id')
+        //     ->select('m.diary_no, m.reg_no_display, m.pet_name, m.res_name, h.next_dt, h.brd_slno, h.main_supp_flag, a.pet_res, r.courtno, m.pno, m.rno')
+        //     ->where('b.aor_code', $aor_code)
+        //     ->whereIn('m.c_status', ['P','D'])
+        //     // ->where('h.next_dt >=', date('Y-m-d'))
+        //     ->where('c.display', 'Y')
+        //     ->where('r.display', 'Y')
+        //     ->where('a.display', 'Y')
+        //     ->orderBy('h.next_dt')
+        //     ->orderBy('r.courtno')
+        //     ->orderBy('h.brd_slno')
+        //     ->distinct();
+        //     pr($builder->getCompiledSelect());
+        //     $query = $builder->get();        
+        //     if (!$query) {
+        //         return $this->db2->error();
+        //     }
+        //     return $query->getResultArray();
+
+        // Get the database instance
         $builder = $this->db2->table('main as m')
             ->join('heardt as h', 'h.diary_no = m.diary_no')
             ->join('cl_printed as c', 'c.next_dt = h.next_dt AND c.roster_id = h.roster_id AND c.part = h.clno')
             ->join('roster as r', 'r.id = h.roster_id')
-            ->join('advocate as a', 'cast(a.diary_no as unsigned) = cast(m.diary_no  as unsigned)')
+            ->join('advocate as a', 'a.diary_no = m.diary_no')
             ->join('bar as b', 'b.bar_id = a.advocate_id')
             ->select('m.diary_no, m.reg_no_display, m.pet_name, m.res_name, h.next_dt, h.brd_slno, h.main_supp_flag, a.pet_res, r.courtno, m.pno, m.rno')
             ->where('b.aor_code', $aor_code)
@@ -63,11 +88,13 @@ class AdvocateModel extends Model {
             ->orderBy('r.courtno')
             ->orderBy('h.brd_slno')
             ->distinct();
-            $query = $builder->get();        
-            if (!$query) {
-                return $this->db2->error();
-            }
-            return $query->getResultArray();
+            // ->paginate(1000);
+        $query = $builder->get();        
+        // You can fetch the results as an array
+        $results = $query->getResult();
+        return $results;
+        // Optionally, access pagination info
+        // $pagination = $query->pager;
     } 
 
 
