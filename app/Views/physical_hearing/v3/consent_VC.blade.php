@@ -68,11 +68,11 @@ $hearing_model = new HearingModel();
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="dash-card">
                                 <div class="row">
-                                    <?= getSessionData('msg'); ?>
+                                    <?// = getSessionData('msg'); ?>
+                                    <?= session()->getFlashdata('msg'); ?>
                                 </div>
                                 <div class="title-sec">
                                     <h5 class="unerline-title"> Physical Hearing </h5>
-                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
                                     <a href="<?php echo base_url('physical_hearing'); ?>" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
                                 </div>
                                 <div class="row g-3 align-items-center">
@@ -112,18 +112,13 @@ $hearing_model = new HearingModel();
                                     </div>
                                 </div>
                                 <div class="row col-sm-12" style="text-align: center;">
-                                    <!-- <div class="col-sm-6" style="color:red;">If you opt for physical hearing then kindly proceed to nominate counsels.</div>-->
                                     <div class="col-sm-12 mt-3">
                                         <span class="col-xs-12" style="color: red; font-weight: bold;">
                                             To get the VC Mode link, you can give your consent upto 8 AM on the day of listing</span>
                                     </div>
                                 </div>
                                 <?php
-                                /*<input type="checkbox" name="hearingModeConsent['.$case['diary_no'].']" class="hearingMode"  data-toggle="toggle" data-on="Virtual" data-off="Physical">*/                                                
-                                // $this->load->helper('url');
-                                // $court_from_uri = $this->uri->segment(3, 0);
                                 $court_from_uri = $segment->getSegment(1);
-                                // pr($court_from_uri);
                                 if(isset($cases) && sizeof($cases)>0) {
                                     echo '<div class="box-body no-padding">
                                         <table id="datatable-responsive" class="table table-striped">
@@ -138,14 +133,9 @@ $hearing_model = new HearingModel();
                                                     <th>Mode of Hearing </th>
                                                 </tr>';                            
                                     $sno=0;
-                                    // $CI =&get_instance();
-                                    // $CI->load->model('Consent_VC_model');
-                                    // $CI->load->model('Hearing_model');
                                     foreach ($cases as $case) {
                                         $is_valid_consent_date_and_time = checkEntryWithinAllowDateAndTime($case['next_dt']);
                                         if(!empty($is_valid_consent_date_and_time)) {
-                                            //ToDo changes for court direction
-                                            // $hearing_mode_court_direction=$case['consent'];
                                             $hearing_mode_court_direction=$case['consent_diaries'];
                                             $arrContextOptions=array(
                                                 "ssl"=>array(
@@ -153,7 +143,8 @@ $hearing_model = new HearingModel();
                                                     "verify_peer_name"=>false,
                                                 ),
                                             );
-                                            $aud_nomination_status=(intval(file_get_contents(ICMIS_SERVICE_URL.'/consent/case_listed_in_daily_status/'.$case['diary_no'], false, stream_context_create($arrContextOptions))));
+                                            // $aud_nomination_status=(intval(file_get_contents(ICMIS_SERVICE_URL.'/consent/case_listed_in_daily_status/'.$case['diary_no'], false, stream_context_create($arrContextOptions))));
+                                            $aud_nomination_status=case_listed_in_daily_list_status($case['diary_no']);
                                             $case_aor_details = $hearing_model->aorCount($case['diary_no']);
                                             $aor_count=$case_aor_details[0]['advocate_count'];
                                             $consent_result = $Consent_VC_model->get_advocate_last_updated_consent($case['diary_no'],$case['next_dt'],$case['roster_id'],getSessionData('login.adv_sci_bar_id'),$case['court_no']);
@@ -171,7 +162,6 @@ $hearing_model = new HearingModel();
                                                     $vChecked='checked';
                                                     $label='Virtual';
                                                 } else {
-
                                                     $pChecked='checked';
                                                     $vChecked='';
                                                     $label='Physical';
@@ -181,9 +171,7 @@ $hearing_model = new HearingModel();
                                                 $vChecked='';
                                                 $label='Physical';
                                             }
-                                            if($aud_nomination_status==1 )
-                                            /* if($aud_nomination_status==1 || $aud_nomination_status==2)*/
-                                            {
+                                            if($aud_nomination_status==1 ) {
                                                 if($aor_count>CASES_ALLOWD_MAX_LIMIT_OF_AOR) {
                                                     $label='Physical hearing is not allowed in this case';
                                                     $buttonHTML="<button type='button' class='btn btn-danger'><strong>".$label."</strong></button>";
@@ -195,11 +183,6 @@ $hearing_model = new HearingModel();
                                                         $label='Virtual';
                                                         $buttonHTML='<button type="button" class="btn btn-warning"><strong>'.$label.'</strong></button><br><span style="color:red">[Honble court direction]</span>';
                                                     } else {
-                                                        /*$buttonHTML='<span class="switch-field">
-                                                            <input type="hidden" name="hearingModeConsent['.$case['diary_no'].']" value="0" />
-                                                            <input type="checkbox" id="radio-two'.$case['diary_no'].'" name="hearingModeConsent['.$case['diary_no'].']" value="V" '.$vChecked.' />
-                                                            <label for="radio-two'.$case['diary_no'].'">Virtual</label>
-                                                        </span>';*/
                                                         $buttonHTML='<span class="switch-field">
                                                             <input type="radio" id="radio-one'.$case['diary_no'].'" name="hearingModeConsent['.$case['diary_no'].']" value="P" '.$pChecked.' />
                                                             <label for="radio-one'.$case['diary_no'].'">Physical</label>
@@ -209,7 +192,6 @@ $hearing_model = new HearingModel();
                                                     }
                                                 }
                                             } else {
-                                                /*$buttonHTML='<button type="button" class="btn btn-warning"><strong>'.$label.'</strong></button><br><span style="color:red">[Case listed for Today]</span>';*/
                                                 $buttonHTML='<button type="button" class="btn btn-warning"><strong>'.$label.'</strong></button><br><span style="color:red">[Case listed for Today]</span>';
                                             }
                                             $sno++;
@@ -266,9 +248,6 @@ $hearing_model = new HearingModel();
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    // $CI =&get_instance();
-                                                    // $CI->load->model('Consent_VC_model');
-                                                    // pr($advocate_cases_summary);
                                                     foreach ($advocate_cases_summary as $court) {
                                                         $consent_result = $Consent_VC_model->getAdvocateVCConsentSummary(getSessionData('login.adv_sci_bar_id'),$listing_date[0], $court['courtno']);
                                                         ?>
@@ -282,7 +261,6 @@ $hearing_model = new HearingModel();
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <!-- /.box-body -->
                                     </div>
                                 <?php } ?>
                             </div>
@@ -295,7 +273,6 @@ $hearing_model = new HearingModel();
 @endsection
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script src="<?=base_url()?>assets/physical_hearing/plugins/jQuery/jQuery.min.js"></script>
-<!-- <script src="<?=base_url()?>assets/physical_hearing/js/bootstrap.min.js"></script> -->
 <script src="<?= base_url() ?>assets/physical_hearing/js/angular.min.js"></script>
 <script src="<?= base_url() ?>assets/physical_hearing/js/angular-cookies.js"></script>
 <script src="<?= base_url() ?>assets/physical_hearing/js/angular-route.js"></script>
@@ -308,7 +285,6 @@ $hearing_model = new HearingModel();
         if(!sel_ct) {
             alert('Please Select the Court List!');
         } else {
-            // alert("/index/"+sel_ct);
             window.location.href = "<?= base_url('Consent_VC/index/') ?>"+sel_ct;
         }
     }
