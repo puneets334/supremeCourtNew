@@ -51,73 +51,14 @@ class AdvListingModel extends Model
   function case_details($diary_nos)
   {
     $diary_nos=trim($diary_nos,'\'"');
-    // $sql = "SELECT 
-    //       STRING_AGG(
-    //         CONCAT(
-    //           x.reg_no_display, 
-    //           '@', 
-    //           x.diary_no, 
-    //           '(', 
-    //           x.main_connected, 
-    //           ')'
-    //         ), 
-    //         ','
-    //       ) AS consent_for_cases 
-    //     FROM 
-    //       (
-    //         SELECT 
-    //           m.reg_no_display, 
-    //           m.diary_no, 
-    //           CASE 
-    //             WHEN (
-    //               cast(m.diary_no as BIGINT) = cast(m.conn_key as BIGINT) 
-    //               OR m.conn_key = '' 
-    //               OR m.conn_key IS NULL 
-    //               OR m.conn_key = '0'
-    //             ) THEN 'M' 
-    //             ELSE 'C' 
-    //           END AS main_connected 
-    //         FROM 
-    //           public.main m 
-    //         WHERE 
-    //           diary_no IN ('".$diary_nos."') 
-    //           AND c_status = 'P'
-    //       ) x";
-    // $query = $this->sci_cmis_final->query($sql);
-    // return $query->getResult();
-
-    $sql = "SELECT 
-          STRING_AGG(
-            CONCAT(
-              x.reg_no_display, 
-              '@', 
-              x.diary_no, 
-              '(', 
-              x.main_connected, 
-              ')'
-            ), 
-            ','
-          ) AS consent_for_cases 
-        FROM 
-          (
-            SELECT 
-              m.reg_no_display, 
-              m.diary_no, 
-              CASE 
-                WHEN (
-                  cast(m.diary_no as unsigned) = cast(m.conn_key as unsigned) 
-                  OR m.conn_key = '' 
-                  OR m.conn_key IS NULL 
-                  OR m.conn_key = '0'
-                ) THEN 'M' 
-                ELSE 'C' 
-              END AS main_connected 
-            FROM 
-              main m 
-            WHERE 
-              diary_no IN ('".$diary_nos."') 
-              AND c_status = 'P'
-          ) x";
+    $sql="select group_concat(concat(x.reg_no_display,'@',x.diary_no,'(',CAST(x.main_connected AS CHAR CHARACTER SET utf8),')') SEPARATOR ',') as consent_for_cases 
+      from
+      (select m.reg_no_display,m.diary_no,
+      case when (m.diary_no = m.conn_key OR m.conn_key = '' OR m.conn_key IS NULL OR m.conn_key = '0')
+      then 'M' else 'C' end as main_connected
+      from main m where diary_no in ($diary_nos)
+      and c_status='P'
+      )x";
     $query = $this->sci_cmis_final->query($sql);
     return $query->getResult();
   }
