@@ -186,7 +186,7 @@ $(document).ready(function(){
     
     $("#aor").show();
     $("#default").hide();
-    alert($(".using").val())
+    
     if($(".using").val()=='AOR Mobile'){
         $("#aorMobileBox").show();   
     }
