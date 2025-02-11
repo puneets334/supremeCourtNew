@@ -204,7 +204,8 @@
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                    <?php if(empty($session->get('impersonated_user_authentication_mobile_otp')) && empty($userEnteredData['aor_mobile'])){
+                                      
+                                    <?php if(!empty($userEnteredData) && (empty($session->get('impersonated_user_authentication_mobile_otp')) && $userEnteredData['using']=='AOR Mobile')){
                                         $dis = 'style="display: block;"';
                                     }else{
                                         $dis = 'style="display: none;"';
@@ -221,8 +222,8 @@
                                             <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
                                         </div>
                                     @endif
-                                    <?php if(empty($session->get('impersonated_user_authentication_mobile_otp'))&& empty($userEnteredData['aor_code'])){
-                                        $dis1 = 'style="display: none;"';
+                                    <?php if(!empty($userEnteredData)&&(empty($session->get('impersonated_user_authentication_mobile_otp'))&& $userEnteredData['using']=='AOR Code')){
+                                        $dis1 = 'style="display: block;"';
                                     } else {
                                         $dis1 = 'style="display: none;"';
                                     } ?>

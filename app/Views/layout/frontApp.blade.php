@@ -176,12 +176,20 @@ $(document).ready(function(){
     $('.authenticatedByAor').show();
     $("#aor").show();
     $("#default").hide();
+    if($(".using").val()=='AOR Mobile'){
+        $("#aorMobileBox").show();   
+    }
   });
   $(".apcil-login").click(function(){
     $('#userType').val('APPEARING_COUNCIL');
     $('.authenticatedByAor').hide();
+    
     $("#aor").show();
     $("#default").hide();
+    alert($(".using").val())
+    if($(".using").val()=='AOR Mobile'){
+        $("#aorMobileBox").show();   
+    }
   });
   
  $(".using").change(function(){
