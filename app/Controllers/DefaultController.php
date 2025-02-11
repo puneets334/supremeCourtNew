@@ -348,11 +348,13 @@ class DefaultController extends BaseController {
         }
         
         if ($this->validate($rules) === FALSE) {
-        
-            $data = [
-                'validation' => $this->validator,
-                'currentPath' => $this->slice->getSegment(1) ?? 'public',
-            ];
+            //print_r($this->validator);
+            //die;
+            /*$data = [
+                'validation' =>$this->validator->getErrors(),
+            ];*/
+            
+            
             $this->session->set('login_salt', $this->generateRandomString());
             $data['using']=$this->request->getPost('using');
             $data['aor_flag']='yes';

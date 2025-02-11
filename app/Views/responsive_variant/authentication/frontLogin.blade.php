@@ -170,6 +170,7 @@
                         <div class="httxt">
                             <h4>Login</h4>
                         </div>
+                        <span style="color:red;"><?php echo validation_list_errors();?></span>
                         <div class="loin-form">
                             <?php if (session()->getFlashdata('msg')) : ?>
                                 <div class="alert alert-success text-center flashmessage" role="alert">
