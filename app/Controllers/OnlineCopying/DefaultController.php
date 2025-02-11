@@ -307,14 +307,14 @@ class DefaultController extends BaseController
                         //Your request successfully submitted with CRN {#var#} for reference - Supreme Court Of India
                         $mobile = $_SESSION["applicant_mobile"];
 
-                        $sms_response = sci_send_sms($mobile, $sms, 'ecop', SCISMS_e_copying_crn_created);
-                        $json = json_decode($sms_response);
-                        if ($json->{'Status'} == "success") {
-                            $_SESSION['max_unavailable_copy_request_per_day'] = $_SESSION['max_unavailable_copy_request_per_day'] + 1;
-                            $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
-                            $array = array('status' => 'success');
-                        }
-
+                        // $sms_response = sci_send_sms($mobile, $sms, 'ecop', SCISMS_e_copying_crn_created);
+                        // $json = json_decode($sms_response);
+                        // if ($json->{'Status'} == "success") {
+                        //     $_SESSION['max_unavailable_copy_request_per_day'] = $_SESSION['max_unavailable_copy_request_per_day'] + 1;
+                        //     $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
+                        //     $array = array('status' => 'success');
+                        // }
+                        $array = array('status' => 'success');
                     } else {
                         $array = array('status' => 'Unable to insert records');
                     }
