@@ -518,7 +518,7 @@ curl_close($curl);
         );
         $context  = stream_context_create($opts);
         $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/api/online_copying/saveSMSData', false, $context);
+        $result = file_get_contents($url.'/online_copying/saveSMSData', false, $context);
         //$data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/saveSMSData/");
         if ($result != false) {
             return json_decode($result);
