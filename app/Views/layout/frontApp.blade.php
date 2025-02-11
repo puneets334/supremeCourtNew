@@ -145,6 +145,8 @@
           $("#aor").show();
           $("#default").hide();
           $('#userType').val('AUTHENTICATED_BY_AOR');
+          $('.loginAs').html(' ');
+          $('.loginAs').html(' as Authenticated By AOR');
         //   $('.authenticatedByAor').show();   
         </script>
         <?php if((empty($session->get('impersonated_user_authentication_mobile_otp'))&& empty($userEnteredData['aor_code']) || empty($userEnteredData['aor_mobile']))){ ?>
@@ -165,6 +167,8 @@
           $("#default").hide();
           $('#userType').val('APPEARING_COUNCIL');
           $('.authenticatedByAor').hide();  
+          $('.loginAs').html(' ');
+          $('.loginAs').html(' as Appearing Council');
         </script> 
     <?php
     }
@@ -173,6 +177,8 @@
 $(document).ready(function(){
   $(".aor-login").click(function(){
     $('#userType').val('AUTHENTICATED_BY_AOR');
+    $('.loginAs').html(' ');
+    $('.loginAs').html(' as Authenticated By AOR');
     $('.authenticatedByAor').show();
     $("#aor").show();
     $("#default").hide();
@@ -183,7 +189,8 @@ $(document).ready(function(){
   $(".apcil-login").click(function(){
     $('#userType').val('APPEARING_COUNCIL');
     $('.authenticatedByAor').hide();
-    
+    $('.loginAs').html(' ');
+    $('.loginAs').html(' as Appearing Council');
     $("#aor").show();
     $("#default").hide();
     
