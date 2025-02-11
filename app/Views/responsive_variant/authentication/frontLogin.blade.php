@@ -114,7 +114,7 @@
                         <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                     <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
-                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNCIL</a>
+                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNSEL</a>
                                 </div>
                         </div>
                         <div class="regester-txts">
@@ -298,7 +298,7 @@
                             <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                     <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
-                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNCIL</a>
+                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNSEL</a>
                                 </div>
                             </div>
                             <div class="regester-txts">
