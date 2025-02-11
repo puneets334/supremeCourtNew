@@ -122,7 +122,7 @@ if(count($res_fil_det) > 0){
         if (is_array($stmt_video) && count($stmt_video) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
-                Please <a class='btn btn-danger' href='user_video.php'>Click here</a> to record your 10 seconds video. (It's mandatory)
+                Please record your 10 seconds video. (It's mandatory)
             </div>
             <?php
             exit();
@@ -134,7 +134,8 @@ if(count($res_fil_det) > 0){
         if (is_array($stmt_image) && count($stmt_image) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
-                Please <a class='btn btn-danger' href='user_image.php'>Click here</a> to capture your photo. (It's mandatory)
+                <!-- Please <a class='btn btn-danger' href='user_image.php'>Click here</a> to capture your photo. (It's mandatory) -->
+                Please upload your photo. (It's mandatory)
             </div>
             <?php
             exit();
@@ -144,7 +145,8 @@ if(count($res_fil_det) > 0){
         if (is_array($stmt_id_proof) && count($stmt_id_proof) == 0) {
             ?>
             <div class="alert alert-danger alert-dismissible">
-                Please <a class='btn btn-danger' href='user_id_proof.php'>Click here</a> to upload you ID Proof. (It's mandatory)
+                <!-- Please <a class='btn btn-danger' href='user_id_proof.php'>Click here</a> to upload you ID Proof. (It's mandatory) -->
+                Please upload your ID Proof. (It's mandatory)
             </div>
             <?php
             exit();
@@ -157,7 +159,7 @@ if(count($res_fil_det) > 0){
         if($_SESSION['max_cases_verify_per_day'] >=10){
             ?>
                 <div class="alert alert-danger alert-dismissible">
-                    Max 10 requests reached for verification per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                    Max 10 requests reached for verification per day. 
                 </div>                  
             <?php                
             exit();
@@ -175,7 +177,7 @@ if(count($res_fil_det) > 0){
         if($_SESSION['max_digital_copy_per_day'] >=10){
             ?>
                 <div class="alert alert-danger alert-dismissible">
-                    Max 10 digital copy request reached per day. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                    Max 10 digital copy request reached per day. 
                 </div>                  
             <?php
             exit();
@@ -193,7 +195,7 @@ if(count($res_fil_det) > 0){
                 $_SESSION['diary_filed_user_verify_status'] = 'pending';
                 ?>
                     <div class="alert alert-danger alert-dismissible">
-                        Your Verification for case no. <?=$case_no?> is under process, wait till completion of verification process. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                        Your Verification for case no. <?=$case_no?> is under process, wait till completion of verification process.
                     </div>                  
                 <?php
 
@@ -234,7 +236,7 @@ if(count($res_fil_det) > 0){
                 $_SESSION['diary_filed_user_verify_status'] = 'unregistered';
         ?>
                 <div class="alert alert-danger alert-dismissible">
-                    You are not registered in case no. <?=$case_no?>. <a class='btn btn-danger' href='logout.php'>Exit</a>
+                    You are not registered in case no. <?=$case_no?>.
                 </div>                  
             <?php                
             exit();
