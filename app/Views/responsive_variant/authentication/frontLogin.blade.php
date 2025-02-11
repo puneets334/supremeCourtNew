@@ -51,7 +51,7 @@
 
 
                     <div class="httxt">
-                        <h4>Login</h4>
+                        <h4>Login <span class="loginAs"></span></h4>
                     </div>
                     <div class="loin-form">
                         <?php  //echo $_SESSION["captcha"];
@@ -114,8 +114,10 @@
                         <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                     <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
-                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNCIL</a>
+                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNSEL</a>
                                 </div>
+                        </div>
+                        <div class="regester-txts">
                             <h6 class="htsmall">Register As :</h6>
                             <div class="regester-links">
                                 <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
@@ -168,8 +170,9 @@
                         </div>
                         @endif -->
                         <div class="httxt">
-                            <h4>Login</h4>
+                            <h4>Login <span class="loginAs"></span></h4>
                         </div>
+                        <span style="color:red;"><?php echo validation_list_errors();?></span>
                         <div class="loin-form">
                             <?php if (session()->getFlashdata('msg')) : ?>
                                 <div class="alert alert-success text-center flashmessage" role="alert">
@@ -295,9 +298,11 @@
                             <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                     <a href="javascript:;" class="blue-txt aor-login">AUTHENTICATED BY AOR</a>
-                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNCIL</a>
+                                    <a href="javascript:;" class="blue-txt apcil-login">APPEARING COUNSEL</a>
                                 </div>
-                                <h6 class="htsmall">Register As :</h6>
+                            </div>
+                            <div class="regester-txts">
+                                <h6 class="htsmall mt-2">Register As :</h6>
                                 <div class="regester-links">
                                     <a href="{{base_url('register')}}" class="blue-txt">Individual (Party In Person)</a>
                                     <span class="gray-txt">Or</span>
