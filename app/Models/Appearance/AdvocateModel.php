@@ -261,5 +261,4 @@ class AdvocateModel extends Model {
             }
             return $result;
     }
-
 }

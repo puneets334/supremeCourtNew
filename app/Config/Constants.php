@@ -676,12 +676,11 @@ define('ESIGN_SERVICE_URL',"http://10.25.78.22/web_service/index.php/Esigner/sig
 #ICMIS_SERVICE_URL="http://10.25.78.22:84/out_service/index.php" #original akg
 // define('ICMIS_SERVICE_URL',"http://10.25.78.43:84/out_service/index.php");
 //define('ICMIS_SERVICE_URL',"http://10.25.80.170:84/public");
+define('ICMIS_SERVICE_URL',"http://10.25.78.23:85");
 // define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
 // define('ICMIS_SERVICE_URL',"http://10.40.186.81:88");
 //define('ICMIS_SERVICE_URL',"http://10.25.78.48:83/public");
 //define('ICMIS_SERVICE_URL',"http://10.40.186.78:83/public");
-define('ICMIS_SERVICE_URL',"http://10.40.186.239:88");
-// define('ICMIS_SERVICE_URL',"http://10.40.186.239:83/public");
 // define('ICMIS_SERVICE_URL',"http://10.25.78.48:83/public");
 #ICMIS_SERVICE_URL="http://10.40.186.102/out_service/index.php");
 #ICMIS_SERVICE_URL="http://10.40.186.11/out_service/index.php");
@@ -935,8 +934,9 @@ define('AUTO_UPDATE_CRON_USER',2647);
 define('SMS_RESEND_LIMIT', 30);
 define('LIVE_EMAIL_KEY', "cKLKqvPlW8");
 
-// define('ADMIN_SERVER_URL',"http://10.40.186.78:83/");
-define('ADMIN_SERVER_URL',"http://10.25.80.170:82/");
+define('ADMIN_SERVER_URL',"http://10.25.78.48:82/public/");
+// define('ADMIN_SERVER_URL',"http://10.25.80.170:82/");
+
 define('ADMIN_AUTO_DIARY_USER_ID_FOR_EFM',7087);
 define('ADMIN_AUTO_DIARY_ICMIS_USER_CODE',10531);
 define('ADMIN_AUTO_DIARY_EMP_ID',9999);
@@ -981,18 +981,16 @@ define('GET_SERVER_IP', "10.0.0.0"); //server ip
 define('CEPT_GOV_IN', 'https://api.cept.gov.in/tariff/api/values/gettariff');
 define('SCISMS_URL', '10.0.0.0:36521/api/v1/send');
 define('SCISMS_e_copying_crn_created','e-copying_crn_created');
-define('DOCUMENT_CASETYPE_URL', 'http://10.25.80.170:82/');
+define('DOCUMENT_CASETYPE_URL', 'http://10.25.78.48:81/');
 define('AIASSISTED_USER_IN_LIST',[6282,1975,1378,1537,2563,1600,1619,2309,2465,2121]);
 define('CHANGE_EFILE_STAGE',['3','5','6','8','9','10','11']);
 define('ICMIS_IITM_EFILE_COMPARISON_USERS',['SCI4599','SC-ADMIN']);
-
 define('GVT_AOR_LIMIT',10);
 define('NON_GVT_AOR_LIMIT',3);
 define('CLERK_ASSOCIATIONS',2);
 define('DOCUMENT_CASETYP_URL', "http://10.192.105.105:91/");
 define('APPEARANCE_SUBMISSION', "01-01-2023");
 define('SEND_TO_APPEARING_REPORT', ['fdsf@gmail.com', 'sasdsad@sci.nic.in']);
-
 define('SAN_ROOT', "/home/SAN_eCopy"); //SAN ADDRESS
 define('NEW_SMS_SERVER_HOST_JIO_URL', "https://uninotify.sci.gov.in/api/v1/send");
 define('NEW_SMS_SERVER_HOST_JIO_IP', "http://10.192.105.124:91/api/v1/send");
@@ -1000,6 +998,5 @@ define('LIVE_SMS_KEY_JIO_CLOUD', "sdfmsdbfjh327654t3ufb58");
 define('LIVE_EMAIL_KEY_JIO_CLOUD', "sdfmsdbfjh327654t3ufb59");
 define('NEW_MAIL_SERVER_HOST_JIO_URL', "https://uninotify.sci.gov.in/api/v1/send");
 define('NEW_MAIL_SERVER_HOST_JIO_IP', "http://10.192.105.124:91/api/v1/send");
-
 define('AUTHENTICATED_BY_AOR',24);
 define('APPEARING_COUNCIL',25);

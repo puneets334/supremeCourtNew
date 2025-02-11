@@ -17,6 +17,7 @@ class NewCaseModel extends Model {
         if ($generated_efil_num['efiling_num']) {
             // Saving data to efiling nums
             $result['registration_id'] = $this->add_efiling_nums($generated_efil_num, $curr_dt_time);
+            
             if (isset($result['registration_id']) && !empty($result['registration_id'])) {
                 $created_by = getSessionData('login')['id'];
                 $adv_sci_bar_id=$_SESSION['login']['adv_sci_bar_id'];
@@ -33,8 +34,10 @@ class NewCaseModel extends Model {
                     'created_by_ip' => getClientIP()
                 );
                 $case_details = array_merge($case_details, $case_details_create_data);
+                
                 // INSERT NEW CASE DETAILS IN CASE PARTIES
                 $this->add_update_case_details($result['registration_id'], $case_details, NEW_CASE_CASE_DETAIL);
+                
                 $adv_details = array(
                     'registration_id' => $result['registration_id'],
                     'adv_bar_id' => $adv_sci_bar_id,
@@ -188,12 +191,12 @@ class NewCaseModel extends Model {
             }
         } else {
             $builder = $this->db->table('efil.tbl_efiling_num_status');
-            $builder->insert( $activate_next_stage);
+           $result = $builder->insert( $activate_next_stage);
             $sData = getSessionData('estab_details');
             $mdata = array_merge($sData, $activate_next_stage);
             // pr($mdata);
             setSessionData('efiling_details', $mdata);
-            if ($this->db->insertID()) {
+            if ($result) {
                 return TRUE;
             } else {
                 return FALSE;
@@ -294,7 +297,6 @@ class NewCaseModel extends Model {
     }
 
     function add_update_case_details($registration_id, $data, $breadcrumb_step, $case_details_id = null) {
-
         if ($case_details_id) {
             $this->db->transStart();
             if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_DEPARTMENT]) && !is_null(getSessionData('login')['aor_code'])) {
@@ -323,9 +325,11 @@ class NewCaseModel extends Model {
             $builder->update($data);
             $this->db->transComplete();
             if ($this->db->transStatus() === FALSE) {
+           
                 return FALSE;
             }
             if ($this->db->affectedRows() > 0) {
+        
                 return TRUE;
             } else {
                 return FALSE;
@@ -333,35 +337,45 @@ class NewCaseModel extends Model {
         } else {
             $this->db->transStart();
             $this->update_breadcrumbs($registration_id, $breadcrumb_step);
+            // pr($data);
             $builder = $this->db->table('efil.tbl_case_details');
+            
             $builder->insert($data);
-            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_DEPARTMENT]) && !empty(getSessionData('login')['aor_code'])) {
+            //pr($result);
+            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_DEPARTMENT]) && !empty(getSessionData('login')['aor_code'])) { 
+              
                 $builder = $this->db->table('efil.department_filings');
                 $builder->insert(['registration_id'=>$registration_id, 'ref_department_id'=>getSessionData('login')['department_id'], 'aor_code'=>trim(getSessionData('login')['aor_code'])]);
             }
-            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_CLERK]) && !is_null(getSessionData('login')['aor_code'])) {
+            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_CLERK]) && !is_null(getSessionData('login')['aor_code'])) {  
                 $builder = $this->db->table('efil.clerk_filings');
                 $builder->insert(['registration_id'=>$registration_id, 'ref_user_id'=>getSessionData('login')['id'], 'aor_code'=>trim(getSessionData('login')['aor_code'])]);
             }
-            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_ADVOCATE]) && isset($_POST['impersonated_department']) && !is_null($_SESSION['impersonated_department'])) {
+            
+           
+            if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_ADVOCATE]) && isset($_SESSION['impersonated_department']) && !is_null($_SESSION['impersonated_department'])) {   
                 $builder=$this->db->table('efil.department_filings');
                 $builder->where('registration_id', $registration_id);
                 $query = $builder->get();
                 $row = $query->getResult();
-                if ($query->getNumRows()) {
+             
+                if ($query->getNumRows()) {   
                     $builder = $this->db->table('efil.department_filings');
                     $builder->where('id', $row[0]['id']);
                     $builder->update(['ref_department_id'=>trim($_SESSION['impersonated_department'])]);
-                } else{
+                } else{  
                     $builder = $this->db->table('efil.department_filings');
                     $builder->insert(['registration_id'=>$registration_id, 'ref_department_id'=>$_SESSION['impersonated_department'], 'aor_code'=>trim($_SESSION['login']['aor_code'])]);
                 }
             }
+            //pr($result);
             $this->db->transComplete();
-            // echo $this->db->last_query(); exit;
+           // echo $this->db->last_query(); exit;
             if ($this->db->transStatus() === FALSE) {
+            
                 return FALSE;
             } else {
+           
                 return $this->db->insertID();
             }
         }
@@ -369,8 +383,8 @@ class NewCaseModel extends Model {
 
     function add_update_adv_details($registration_id, $data) {
         $builder = $this->db->table('efil.tbl_case_advocates');
-        $builder->insert($data);
-        if ($this->db->insertID()) {
+        // $builder->insert($data);
+        if ($builder->insert($data)) {
             return true;
         } else {
             return false;
