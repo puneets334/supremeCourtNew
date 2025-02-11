@@ -168,7 +168,7 @@
           $('#userType').val('APPEARING_COUNCIL');
           $('.authenticatedByAor').hide();  
           $('.loginAs').html(' ');
-          $('.loginAs').html(' as Appearing Council');
+          $('.loginAs').html(' as Appearing Counsel');
         </script> 
     <?php
     }
@@ -190,7 +190,7 @@ $(document).ready(function(){
     $('#userType').val('APPEARING_COUNCIL');
     $('.authenticatedByAor').hide();
     $('.loginAs').html(' ');
-    $('.loginAs').html(' as Appearing Council');
+    $('.loginAs').html(' as Appearing Counsel');
     $("#aor").show();
     $("#default").hide();
     
