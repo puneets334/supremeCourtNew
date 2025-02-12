@@ -92,13 +92,13 @@ class CaseDetails extends BaseController
             if (getSessionData('login')['ref_m_usertype_id'] == USER_CLERK) {
                 $data['selected_aor'] = $this->Clerk_model->selected_aor_for_case($registration_id);
             }
-            $court_type = (!empty($data['new_case_details'][0]->court_type) && isset($data['new_case_details'][0]->court_type)) ? (int)$data['new_case_details'][0]->court_type : NULL;
-            $state_id = (!empty($data['new_case_details'][0]->state_id) && isset($data['new_case_details'][0]->state_id)) ? $data['new_case_details'][0]->state_id : NULL;
-            $district_id = (!empty($data['new_case_details'][0]->district_id) && isset($data['new_case_details'][0]->district_id)) ? $data['new_case_details'][0]->district_id : NULL;
-            $estab_code = (!empty($data['new_case_details'][0]->estab_code) && isset($data['new_case_details'][0]->estab_code)) ? $data['new_case_details'][0]->estab_code : NULL;
-            $estab_id = (!empty($data['new_case_details'][0]->estab_id) && isset($data['new_case_details'][0]->estab_id)) ? $data['new_case_details'][0]->estab_id : NULL;
-            $supreme_court_state = (!empty($data['new_case_details'][0]->supreme_court_state) && isset($data['new_case_details'][0]->supreme_court_state)) ? $data['new_case_details'][0]->supreme_court_state : NULL;
-            $supreme_court_bench = (!empty($data['new_case_details'][0]->supreme_court_bench) && isset($data['new_case_details'][0]->supreme_court_bench)) ? $data['new_case_details'][0]->supreme_court_bench : NULL;
+            $court_type = (!empty($data['new_case_details'][0]['court_type']) && isset($data['new_case_details'][0]['court_type'])) ? (int)$data['new_case_details'][0]['court_type'] : NULL;
+            $state_id = (!empty($data['new_case_details'][0]['state_id']) && isset($data['new_case_details'][0]['state_id'])) ? $data['new_case_details'][0]['state_id'] : NULL;
+            $district_id = (!empty($data['new_case_details'][0]['district_id']) && isset($data['new_case_details'][0]['district_id'])) ? $data['new_case_details'][0]['district_id'] : NULL;
+            $estab_code = (!empty($data['new_case_details'][0]['estab_code']) && isset($data['new_case_details'][0]['estab_code'])) ? $data['new_case_details'][0]['estab_code'] : NULL;
+            $estab_id = (!empty($data['new_case_details'][0]['estab_id']) && isset($data['new_case_details'][0]['estab_id'])) ? $data['new_case_details'][0]['estab_id'] : NULL;
+            $supreme_court_state = (!empty($data['new_case_details'][0]['supreme_court_state']) && isset($data['new_case_details'][0]['supreme_court_state'])) ? $data['new_case_details'][0]['supreme_court_state'] : NULL;
+            $supreme_court_bench = (!empty($data['new_case_details'][0]['supreme_court_bench']) && isset($data['new_case_details'][0]['supreme_court_bench'])) ? $data['new_case_details'][0]['supreme_court_bench'] : NULL;
             $data['high_court_drop_down'] = [];
             if (isset($court_type) && !empty($court_type)) {
                 switch ($court_type) {
@@ -111,7 +111,7 @@ class CaseDetails extends BaseController
                         $data['high_court_bench'] = $this->Common_model->getHighCourtData($params);
                         break;
                     case 3:
-                        $state_id = !empty($data['new_case_details'][0]->state_id) ? (int)$data['new_case_details'][0]->state_id : NULL;
+                        $state_id = !empty($data['new_case_details'][0]['state_id']) ? (int)$data['new_case_details'][0]['state_id'] : NULL;
                         $params = array('type' => 1);
                         $state_list = $this->Common_model->getSubordinateCourtData($params);
                         $data['state_list'] = $state_list;
@@ -130,7 +130,7 @@ class CaseDetails extends BaseController
                     case 5:
                         $state_agency_list = $this->Dropdown_list_model->get_states_list();
                         $data['state_agency_list'] = $state_agency_list;
-                        $state_id = !empty($data['new_case_details'][0]->state_id) ? (int)$data['new_case_details'][0]->state_id : NULL;
+                        $state_id = !empty($data['new_case_details'][0]['state_id']) ? (int)$data['new_case_details'][0]['state_id'] : NULL;
                         $court_type = 5;
                         $agencies = $this->Dropdown_list_model->icmis_state_agencies($state_id, $court_type);
                         $data['agencies'] = $agencies;
