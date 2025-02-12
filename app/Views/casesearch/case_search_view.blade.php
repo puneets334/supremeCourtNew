@@ -136,7 +136,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <div class="col-md-4 col-sm-12 col-xs-12">
                                                     <div class="row">
                                                         <div class="row mb-3 w-100 align-items-center">
                                                             <div class="col-12">
@@ -157,7 +157,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-4 col-sm-12 col-xs-12" style="margin-top: 1.75%;">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
                                                             <button type="submit" class="quick-btn" id="search_sc_case" value="SEARCH">Search</button>
@@ -192,7 +192,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <div class="col-md-3 col-sm-12 col-xs-12">
                                                     <div class="row">
                                                         <div class="row mb-3 w-100 align-items-center">
                                                             <div class="col-12">
@@ -204,7 +204,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-3 col-sm-3 col-xs-12">
+                                                <div class="col-md-3 col-sm-12 col-xs-12">
                                                     <div class="row">
                                                         <div class="row mb-3 w-100 align-items-center">
                                                             <div class="col-12">
@@ -225,7 +225,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-md-3 col-sm-12 col-xs-12" style="margin-top: 1.75%;">
                                                     <div class="save-form-details">
                                                         <div class="save-btns">
                                                             <button type="submit" class="quick-btn">Search</button>

@@ -1733,6 +1733,7 @@
 <?php } ?>
 <script>
     function validateInput(event) {
+        var initVal = $(this).val();
         const input = event.target.value;
         outputVal = initVal.replace(/[^a-zA-Z0-9\.\/@_\\,'()\s"-]/g, "").replace(/^\./, "");
         if (initVal != outputVal) {

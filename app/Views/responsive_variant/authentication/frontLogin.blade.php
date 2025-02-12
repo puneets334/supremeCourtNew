@@ -28,9 +28,9 @@
                         <b>{{ esc($session->get('msg_success')) }}</b>
                     </div>
                     @endif
-                    @if($session->has('msg'))
+                    @if($session->has('errMsg'))
                     <div class="text-danger">
-                        <b>{{ esc($session->get('msg')) }}</b>
+                        <b>{{ esc($session->get('errMsg')) }}</b>
                     </div>
                     @endif
                     @if($session->has('information'))
@@ -194,7 +194,17 @@
                         echo form_open(base_url('login'), $attribute);
                         ?>
                         <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="userType" id="userType" class="userType">
+                        <div class="mb-3" id="iam">
+                                <label for="" class="form-label">I AM</label>
+                                <select  class="form-control cus-form-ctrl" id="filed_by" name="filed_by">
+                                    <option>SELECT</option>
+                                    <option>Advocate on Record</option>
+                                    <option>Party/Party-in-person</option>
+                                    <option>Appearing Counsel</option>
+                                    <option>Authenticated By AOR</option>
+                                    
+                                </select>
+                        </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 row">
                             <div class="col-5">
                                 <label for="AOR Mobile" class="form-label">AOR Mobile</label>
