@@ -17,6 +17,7 @@
         "guzzlehttp/guzzle": "^7.8",
         "hashids/hashids": "^5.0",
         "jenssegers/blade": "^2.0",
+        "smalot/pdfparser": "^2.11",
         "tecnickcom/tcpdf": "^6.7",
         "vektormuhammadlutfi/codeigniter-log-viewer": "1.0"
     },

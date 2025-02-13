@@ -733,7 +733,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
     
     if(((isset($_SESSION['diary_filed_user_verify_status']) && $_SESSION['diary_filed_user_verify_status'] == 'success') && (isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6))){
     ?>    
-    <div class="row col-md-12">
+    <div class="row col-md-12 mt-2">
             <div class="col-md-6">
 
                 <div class="form-row confirm_validate_toggle">
