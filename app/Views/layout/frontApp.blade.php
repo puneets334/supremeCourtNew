@@ -139,6 +139,7 @@
     </script>
     <!--$aor_flag-->
     <?php
+    
     if(!empty($userEnteredData) && $userEnteredData['userType']=='AUTHENTICATED_BY_AOR'){
         ?>
         <script>
