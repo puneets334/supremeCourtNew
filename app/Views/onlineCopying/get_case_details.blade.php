@@ -386,6 +386,7 @@ if(count($res_fil_det) > 0){
 
 <?php
 
+
 if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6)){
     $is_bail_applied = getBailApplied($diary_no, $_SESSION['applicant_mobile'], $_SESSION['applicant_email']);
     

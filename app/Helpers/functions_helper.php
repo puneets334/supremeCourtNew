@@ -21,6 +21,7 @@ use App\Libraries\webservices\Ecoping_webservices;
 use App\ThirdParty\eSign\XMLSecurityKey;
 use CodeIgniter\View\RendererInterface;
 
+//use Mpdf;
 if (!function_exists('pr')) {
     function pr($request)
     {
@@ -3624,9 +3625,8 @@ function speed_post_tariff_calc_online($weight,$desitnation_pincode){
     curl_setopt($curl, CURLOPT_POSTFIELDS, $content);
     
     $json_response = curl_exec($curl);
-    //var_dump($json_response);
     $status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-    
+   
     if($status == 200 || $status == 201) {    
         $response_array = json_decode($json_response);  
         $response = json_encode($response_array[0]);      
@@ -4685,6 +4685,10 @@ function send_mail_JIO($to_email,$subject,$message,$files=array())
         if ($json2!=false) { $json2 = 'success';} else { $json2 = 'failed'; }
     }else{$json2 = 'failed';}
     return $json2;
+}
+function countPdfPages($filePath){
+$pdf=new TCPDF();
+return $pdf->setSourceFile($filePath);
 }
 function send_mail_cron_jio($data)
 {

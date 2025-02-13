@@ -421,6 +421,8 @@ $routes->match(['GET', 'POST'], 'online_copying/case_search', 'OnlineCopying\Def
 $routes->match(['GET', 'POST'], 'online_copying/get_case_details', 'OnlineCopying\DefaultController::getCaseDetails');
 $routes->match(['GET', 'POST'], 'online_copying/applicant_address', 'OnlineCopying\AddressController::applicantAddress');
 $routes->match(['GET', 'POST'], 'online_copying/get_app_charge', 'OnlineCopying\DefaultController::getAppCharge');
+//$routes->match(['GET', 'POST'], 'online_copying/testpdf', 'OnlineCopying\DefaultController::testpdf');
+
 $routes->match(['GET', 'POST'], 'online_copying/get_tot_copy', 'OnlineCopying\DefaultController::getTotCopy');
 $routes->match(['GET', 'POST'], 'online_copying/get_pincode_details', 'OnlineCopying\AddressController::getPincodeDetails');
 $routes->match(['GET', 'POST'], 'online_copying/user_address_save', 'OnlineCopying\AddressController::saveApplicantAddress');

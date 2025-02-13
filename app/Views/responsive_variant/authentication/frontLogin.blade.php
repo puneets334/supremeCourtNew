@@ -1,3 +1,4 @@
+
 @extends('layout.frontApp')
 @section('content')
 <!-- Login Area Start  -->
@@ -114,7 +115,7 @@
                             <h6 class="htsmall">Login As :</h6>
                             <div class="regester-links">
                                 <a href="javascript:;" class="blue-txt aor-login">Authenticated by AOR</a>
-                                <a href="javascript:;" class="blue-txt apcil-login">Appearing Counsel</a>
+                                <!--<a href="javascript:;" class="blue-txt apcil-login">Appearing Counsel</a>-->
                             </div>
                         </div>
                         <div class="regester-txts">
@@ -194,17 +195,7 @@
                         echo form_open(base_url('login'), $attribute);
                         ?>
                         <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
-                        <div class="mb-3" id="iam">
-                                <label for="" class="form-label">I AM</label>
-                                <select  class="form-control cus-form-ctrl" id="filed_by" name="filed_by">
-                                    <option>SELECT</option>
-                                    <option>Advocate on Record</option>
-                                    <option>Party/Party-in-person</option>
-                                    <option>Appearing Counsel</option>
-                                    <option>Authenticated By AOR</option>
-                                    
-                                </select>
-                        </div>
+                        <input type="hidden" name="userType" class="userType" id="userType" value="">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 row">
                             <div class="col-5">
                                 <label for="AOR Mobile" class="form-label">AOR Mobile</label>
@@ -309,7 +300,7 @@
                         <h6 class="htsmall">Login As :</h6>
                         <div class="regester-links">
                             <a href="javascript:;" class="blue-txt aor-login">Authenticated by AOR</a>
-                            <a href="javascript:;" class="blue-txt apcil-login">Appearing Counsel</a>
+                            <!--<a href="javascript:;" class="blue-txt apcil-login">Appearing Counsel</a>-->
                         </div>
                     </div>
                     <div class="regester-txts">
