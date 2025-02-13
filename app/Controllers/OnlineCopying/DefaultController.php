@@ -1,10 +1,10 @@
 <?php
 namespace App\Controllers\OnlineCopying;
-
 use App\Controllers\BaseController;
 use App\Models\OnlineCopying\CommonModel;
 use Config\Database;
 use App\Libraries\webservices\Ecoping_webservices;
+use TCPDF;
 class DefaultController extends BaseController
 {
 
@@ -25,9 +25,13 @@ class DefaultController extends BaseController
         $this->ecoping_webservices=new Ecoping_webservices();
         
         $this->Common_model = new CommonModel();
+        
         $_SESSION['is_token_matched'] = 'Yes';
         $_SESSION['applicant_email'] = getSessionData('login')['emailid'];
         $_SESSION['applicant_mobile'] = getSessionData('login')['mobile_number'];
+        //print_r($_SESSION);
+        //die;
+        
         $checkUserAddress = $this->ecoping_webservices->getUserAddress(getSessionData('login')['mobile_number'], getSessionData('login')['emailid']);
         
         if (count($checkUserAddress) > 0){
@@ -45,7 +49,6 @@ class DefaultController extends BaseController
         }
         
         $dOtp = $this->ecoping_webservices->eCopyingOtpVerification($_SESSION['applicant_email']);
-        
         if($dOtp){
             $_SESSION['session_verify_otp'] = '000000';
             $_SESSION['session_otp_id'] = '999999';
@@ -57,6 +60,7 @@ class DefaultController extends BaseController
             
             $_SESSION["session_filed"] = $dOtp->filed_by;
             $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;
+            
             if($dOtp->filed_by == 6){
                 // $_SESSION['session_authorized_bar_id'] = $dOtp->authorized_bar_id;            
                 $aor_data = $this->ecoping_webservices->eCopyingGetBarDetails($dOtp->authorized_bar_id);
@@ -66,6 +70,7 @@ class DefaultController extends BaseController
                 }
             }
         }
+        
         unset($_SESSION['MSG']);
         unset($_SESSION['msg']);
     }
@@ -132,6 +137,7 @@ class DefaultController extends BaseController
     }
     public function getCaseDetails()
     {
+        
         
         return $this->render('onlineCopying.get_case_details');
     }
@@ -325,7 +331,13 @@ class DefaultController extends BaseController
             echo json_encode($array);
         }
     }
-
+    /*public function testpdf(){
+        $parser = new \Smalot\PdfParser\Parser();
+        $pdf = $parser->parseFile('http://10.40.186.239:84/filesample_150kB.pdf');
+        
+        $pages = $pdf->getPages();
+        echo count($pages);
+    }*/
     public function caseRelationVerification(){
         return $this->render('onlineCopying.case_relation_verification');
     }
