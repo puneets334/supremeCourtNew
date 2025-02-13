@@ -376,8 +376,8 @@ class NewCaseModel extends Model {
             return false;
         }
     }
-
-    function add_subordinate_court_info($registration_id, $data, $breadcrumb_step,$fir_data,$subordinate_court_details,$add_subordinate_court_info) {
+    
+    function add_subordinate_court_info($registration_id, $data, $breadcrumb_step,$fir_data,$subordinate_court_details,$certified_copy_details=array()) {
         $this->db->transStart();
         if($subordinate_court_details && $subordinate_court_details[0]['is_hc_exempted']=='t') {
             $curr_dt_time = date('Y-m-d H:i:s');
