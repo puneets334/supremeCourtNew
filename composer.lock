@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< Updated upstream
     "content-hash": "f4e206b345a5fd694ed08fc76a386ebb",
-=======
-    "content-hash": "4cb94054feb5e2c7344417733b3e1df3",
->>>>>>> Stashed changes
     "packages": [
         {
             "name": "carbonphp/carbon-doctrine-types",
