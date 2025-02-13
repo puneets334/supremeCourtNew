@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_SESSION['is_token_matched']) && $_SESSION['is_token_matched'] == 'Yes' && isset($_SESSION["applicant_email"]) && isset($_SESSION["applicant_mobile"]) ) {
 if (isset($_SESSION['is_user_address_found']) && $_SESSION['is_user_address_found'] != 'YES') {
     //add your address *
@@ -227,7 +228,8 @@ if(count($res_fil_det) > 0){
         if($_SESSION["session_filed"] == 6){
             $applicant_aor_mobile = $_SESSION["aor_mobile"];
         }
-        
+        //print_r($_SESSION);
+        //echo $diary_no.' '.$applicant_aor_mobile;
         $sql_verify = eCopyingGetBar($diary_no, $applicant_aor_mobile);
         if(!empty($sql_verify)){
             $_SESSION['diary_filed_user_verify_status'] = 'success';
@@ -589,12 +591,13 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                    $sno=1;$tot_pages=0;$tot_amt=0;
        //while ($row1 = mysqli_fetch_array($jud_order)) {
        foreach($jud_order as $row1){
-
+           //print_r($row1);
            $t_pages_x='';
            $pdfname_exploded=explode("/",$row1['pdfname']);
+
            //Requested documents
            if($row1['s']==0){
-               //$path = "http://localhost/".$row1['pdfname'];
+               $path = "http://localhost/".$row1['pdfname'];
                $path = "http://".GET_SERVER_IP."/".$row1['pdfname'];
                $rop_public_path = MAIN_SCI_GOV_IN."/".$row1['pdfname'];
                $path_to_save = $row1['pdfname'];
@@ -617,8 +620,14 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
                $NumberOfPages = 1;
            }
            else{
-               $nm_s=  exec ('pdftk '.$path. ' dump_data | grep NumberOfPages');
-               $NumberOfPages = str_replace('NumberOfPages: ','', $nm_s);
+               $path='http://10.40.186.239:84/file-sample_150kB.pdf';
+               //$nm_s=  exec ('pdftk '.$path. ' dump_data | grep NumberOfPages');
+               //$NumberOfPages = str_replace('NumberOfPages: ','', $nm_s);
+               //echo $NumberOfPages;
+               $parser = new \Smalot\PdfParser\Parser();
+               $pdf = $parser->parseFile('http://10.40.186.239:84/filesample_150kB.pdf');
+               $pages = $pdf->getPages();
+               $NumberOfPages=count($pages);
            }
        ?>
                        <tr>
@@ -724,7 +733,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
     
     if(((isset($_SESSION['diary_filed_user_verify_status']) && $_SESSION['diary_filed_user_verify_status'] == 'success') && (isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2 || $_SESSION["session_filed"] == 1 || $_SESSION["session_filed"] == 6))){
     ?>    
-    <div class="row col-md-12">
+    <div class="row col-md-12 mt-2">
             <div class="col-md-6">
 
                 <div class="form-row confirm_validate_toggle">
@@ -808,7 +817,7 @@ $(document).on('click','.firstWarnBtn', function(){
 else{
     echo "Session Expired";
     ?>
-       <script type='text/javascript'>window.location.href='logout.php'</script>
+       <script type='text/javascript'>window.location.href='<?=base_url()?>'</script>
     <?php
 }
 ?>
