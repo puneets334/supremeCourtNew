@@ -94,6 +94,26 @@ class RegisterModel extends Model
         }
     }
 
+    public function check_already_reg_user($mobile=null,$email=null)
+    {
+        $builder = $this->db->table('efil.tbl_users');
+        $builder->select('moblie_number, first_name, last_name');
+        
+        if (!empty($mobile) && $mobile !=null) {
+            $builder->where('moblie_number', $mobile);
+        } elseif (!empty($email) && $email !=null){
+            $builder->where('UPPER(emailid)', $email);
+        }
+        $builder->WHERE('is_active','1');
+        $query = $builder->get();
+
+        if ($query->getNumRows() >= 1) {
+            return $query->getResultArray();
+        } else {
+            return false;
+        }
+    }
+
     public function getStateList()
     {
         // Your query to get state list

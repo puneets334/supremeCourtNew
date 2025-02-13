@@ -237,9 +237,11 @@ class ForgetPasswordController extends BaseController
             return redirect()->to(base_url('Register/ForgetPassword'));
         }    
         // Check if mobile and email exist
-        $mobile_exist = $this->Register_model->check_already_reg_mobile($adv_mobile);        
-        $email_exist = $this->Register_model->check_already_reg_email(strtoupper($adv_email));    
-        if (!$mobile_exist || !$email_exist) {
+        $mobile_exist = $this->Register_model->check_already_reg_mobile($adv_mobile);     
+        $email_exist = $this->Register_model->check_already_reg_email(strtoupper($adv_email));  
+        
+        $check_user = $this->Register_model->check_already_reg_user($adv_mobile, strtoupper($adv_email));
+        if (empty($check_user)) {
             $this->session->setFlashdata('msg', 'Not Registered With This Mobile Number or Email ID!');    
             return redirect()->to(base_url('Register/ForgetPassword'));
         }
