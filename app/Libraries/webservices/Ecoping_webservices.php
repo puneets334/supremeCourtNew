@@ -233,11 +233,12 @@ class Ecoping_webservices {
         } 
     }
     public function getBailApplied($diary_no, $mobile, $email){
+        
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getBailApplied?diary_no=$diary_no&mobile=$mobile&email=$email");
         
         if ($data != false) {
             
-            return json_decode($data,true);
+            return  $data;
         } else {
             return NULL;
         }   
