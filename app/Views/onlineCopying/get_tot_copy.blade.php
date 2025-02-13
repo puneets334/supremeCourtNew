@@ -93,6 +93,7 @@ if(count($o_array)>0) {
                         if($_REQUEST['cop_mode'] == 1 && strlen($_REQUEST['pincode']) == 6) {
                             $total_pages = $t_pages * $_REQUEST['num_copy']; //1 A4 page = 80 gsm = 5 grams
                             $weight = copying_weight_calculator($total_pages, $total_red_wrappers);
+                            
                             if ($weight > 0) {
                                 $desitnation_pincode = $_REQUEST['pincode']; //destination pincode
                                 //$postage_response = speed_post_tariff_calc_offline($total_pages,$desitnation_pincode);
