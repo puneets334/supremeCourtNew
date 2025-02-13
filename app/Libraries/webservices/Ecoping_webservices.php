@@ -291,7 +291,7 @@ curl_close($curl);
         }   
     }
     public function speedPostTariffCalcOffline($weight,$desitnation_pincode){
-        $data = file_get_contents(ICMIS_SERVICE_URL."online_copying/speedPostTariffCalcOffline?weight=$weight&desitnation_pincode=$desitnation_pincode");
+        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/speedPostTariffCalcOffline?weight=$weight&desitnation_pincode=$desitnation_pincode");
         
         if ($data != false) {
             

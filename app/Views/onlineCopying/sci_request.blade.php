@@ -4,13 +4,10 @@
 extract($_POST);
 
 $first_post_base64string = base64_encode(json_encode($_POST));
-//print_r($_POST);
-//die;
 // $cop_mode = '';
 if(isset($_POST['name'])){
     
     $data = base64_decode(trim($_POST['posted_values']));
-   
     $json_data = json_decode($data, true);
 
     if(isset($_SESSION['user_address'])) {
@@ -175,7 +172,7 @@ if(isset($_POST['name'])){
         }
 
 
-        //online_copying table insert
+//online_copying table insert
 
         if ($scipay == '10001') {
             $requision_title = "COPYING REQUISTION";
@@ -421,7 +418,7 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
 
 
         $create_crn = createCRN($scipay);//create crn
-        $json_crn = $create_crn;
+        $json_crn = json_decode($create_crn);
         if ($json_crn->{'Status'} == "success") {
             $OrderBatchMerchantBatchCode = $json_crn->{'CRN'};
 
@@ -461,7 +458,7 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
                 "authorized_by_aor" => $_SESSION['session_authorized_bar_id'] > 0 ? $_SESSION['session_authorized_bar_id'] : '0',
                 "allowed_request" => $allowed_request,
                 "token_id" => '',
-                "address_id" => (!empty($json_data['address_id'])?$json_data['address_id']:$_POST['address_id'])
+                "address_id" => $json_data['address_id']
             );
 
             $insert_application = insert_copying_application_online($dataArray); //insert application
