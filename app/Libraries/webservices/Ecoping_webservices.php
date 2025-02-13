@@ -233,11 +233,12 @@ class Ecoping_webservices {
         } 
     }
     public function getBailApplied($diary_no, $mobile, $email){
+        
         $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/getBailApplied?diary_no=$diary_no&mobile=$mobile&email=$email");
         
         if ($data != false) {
             
-            return json_decode($data,true);
+            return  $data;
         } else {
             return NULL;
         }   
@@ -247,7 +248,8 @@ class Ecoping_webservices {
         // $data = json_decode(curl_get_contents(ICMIS_SERVICE_URL . "/online_copying/eCopyingGetCopyDetails/?condition=$condition&third_party_sub_qry=$third_party_sub_qry&OLD_ROP=$OLD_ROP"));
         $curl = curl_init();
         $third_party_sub_qry = urlencode($third_party_sub_qry);
-
+//echo ICMIS_SERVICE_URL."/online_copying/eCopyingGetCopyDetails?condition=$condition&third_party_sub_qry=$third_party_sub_qry&OLD_ROP=$OLD_ROP";
+//die;
 curl_setopt_array($curl, array(
   CURLOPT_URL => ICMIS_SERVICE_URL."/online_copying/eCopyingGetCopyDetails?condition=$condition&third_party_sub_qry=$third_party_sub_qry&OLD_ROP=$OLD_ROP",
   CURLOPT_RETURNTRANSFER => true,
@@ -670,6 +672,32 @@ curl_close($curl);
             return NULL;
         }  
     }
+    public function saveauthenticatedByAorDteail($data){
+        $postdata = http_build_query(
+            $data
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $url = ICMIS_SERVICE_URL;
+        $result = file_get_contents($url.'/online_copying/saveauthenticatedByAorDteail',true, $context);
+        
+        //$data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/saveSMSData/");
+        
+        
+        if ($result != false) {
+        return json_decode($result,true);
+            
+        } else {
+            return NULL;
+        }
+    }
+    
     public function eCopyingGetBarDetails($bar_id){
         
         $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetBarDetails?bar_id=$bar_id");
