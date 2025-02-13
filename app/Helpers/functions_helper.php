@@ -3509,7 +3509,7 @@ function eCopyingGetBar($diary_no, $mobile){
 function getBailApplied($diary_no, $mobile, $email)
 {
     $ecoping_webservices=new Ecoping_webservices();
-    $result=$ecoping_webservices->eCopyingGetBar($diary_no, $mobile, $email);
+    $result=$ecoping_webservices->getBailApplied($diary_no, $mobile, $email);
     return $result;
 }
 
