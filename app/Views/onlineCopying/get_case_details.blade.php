@@ -621,6 +621,8 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
            }
            else{
                $path='http://10.40.186.239:84/file-sample_150kB.pdf';
+               //$pdf=new TCPDF();
+               //$NumberOfPages=$pdf->SetSourceFile($path);
                //$nm_s=  exec ('pdftk '.$path. ' dump_data | grep NumberOfPages');
                //$NumberOfPages = str_replace('NumberOfPages: ','', $nm_s);
                //echo $NumberOfPages;
