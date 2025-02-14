@@ -688,86 +688,80 @@ if(!empty(getSessionData('login'))){
                                                         <?php endif; ?>
                                                     </div>
                                                 </div>
-                                <div class="col-6">
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="mb-3">
-                                            <label class="radio-inline mb-2"><input type="checkbox" name="ecopyingCheck" id="ecopyingCheck" value="1">&nbsp;&nbsp;Applying for eCopying</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                                        <div class="mb-3">
-                                            <div class="card-body">
-                                                <div class="row m-1" style="display:none;">
-                                                    <div class="alert alert-warning alert-dismissible">
-                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                        <strong>Unless there is request for Certified Copy/Digital Copy, your identity as claimed will not be verified.</strong>
+                                                <div class="col-6">
+                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="radio-inline mb-2"><input type="checkbox" name="ecopyingCheck" id="ecopyingCheck" value="1">&nbsp;&nbsp;Applying for eCopying</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                                                        <div class="mb-3">
+                                                            <div class="card-body">
+                                                                <div class="row m-1" style="display:none;">
+                                                                    <div class="alert alert-warning alert-dismissible">
+                                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                                        <strong>Unless there is request for Certified Copy/Digital Copy, your identity as claimed will not be verified.</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row m-1" style="display: none;">
+                                                                    <div class="alert alert-warning alert-dismissible">
+                                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                                                        <strong>Remove mask, spectacles or any other face covering.</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="left" style="display: none;">
+                                                                    After you click start recording speak following things and record :<br>
+                                                                    1. Speak your full name<br>
+                                                                    2. Speak date of birth<br>
+                                                                    3. Speak this Code : <span class="font-weight-bolder text-danger"><?php echo $_SESSION['text_speak'] = rand_string(5); ?></span>
+                                                                    <br>
+                                                                    <div id="startButton" class="btn btn-primary mt-2">
+                                                                        Start Recording
+                                                                    </div>
+                                                                </div>
+                                                                <div class="center">
+                                                                    <div id="stopButton" class="button" style="display:none;">
+                                                                        Stop
+                                                                    </div>
+                                                                    <div id="cam_preview" style="display:none;">
+                                                                        <h6 class="font-weight-bolder">Recording Started </h6>
+                                                                        <video  id="preview" width="340px" autoplay muted></video>
+                                                                    </div>
+                                                                    <div id="view_recording" style="display:none;">
+                                                                        <h6 class="font-weight-bolder">Preview</h6>
+                                                                        <video id="recording" width="340px" controls></video>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="bottom">
+                                                                    <pre id="log"></pre>
+                                                                </div>
+                                                                <form  method="post" enctype="multipart/form-data">
+                                                                    <a id="downloadButton" class="button" style="display:none;">
+                                                                        Download
+                                                                    </a>
+                                                                    <div id="video_action" class="left1" style="display:none;">
+                                                                        <a href="user_video.php" class="btn btn-primary" >
+                                                                            Try Again!
+                                                                        </a>
+                                                                        
+                                                                    </div>
+                                                                </form> 
+                                                                <div class="row show_msg col-12 mb-3"></div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="row m-1" style="display: none;">
-                                                    <div class="alert alert-warning alert-dismissible">
-                                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                                        <strong>Remove mask, spectacles or any other face covering.</strong>
-                                                    </div>
-                                                </div>
-                                                <div class="left" style="display: none;">
-                                                    After you click start recording speak following things and record :<br>
-                                                    1. Speak your full name<br>
-                                                    2. Speak date of birth<br>
-                                                    3. Speak this Code : <span class="font-weight-bolder text-danger"><?php echo $_SESSION['text_speak'] = rand_string(5); ?></span>
-                                                    <br>
-                                                    <div id="startButton" class="btn btn-primary mt-2">
-                                                        Start Recording
-                                                    </div>
-                                                </div>
-
-                                                <div class="center">
-                                                    <div id="stopButton" class="button" style="display:none;">
-                                                        Stop
-                                                    </div>
-                                                    <div id="cam_preview" style="display:none;">
-                                                        <h6 class="font-weight-bolder">Recording Started </h6>
-                                                        <video  id="preview" width="340px" autoplay muted></video>
-                                                    </div>
-                                                    <div id="view_recording" style="display:none;">
-                                                        <h6 class="font-weight-bolder">Preview</h6>
-                                                        <video id="recording" width="340px" controls></video>
-                                                    </div>
-                                                </div>
-                                                <div class="bottom">
-                                                    <pre id="log"></pre>
-                                                </div>
-                                                 <form  method="post" enctype="multipart/form-data">
-                                                    <a id="downloadButton" class="button" style="display:none;">
-                                                        Download
-                                                    </a>
-                                                    <div id="video_action" class="left1" style="display:none;">
-                                                        <a href="user_video.php" class="btn btn-primary" >
-                                                            Try Again!
-                                                        </a>
-                                                        
-                                                    </div>
-                                                </form> 
-                                                <div class="row show_msg col-12 mb-3"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                                        <label class="form-label" for="form-stacked-text">Upload Speech Recoreded <span style="color: red">*</span> :</label>
-                                                        <input class="form-control cus-form-ctrl" type="file" value="" name="speech_recorded" id="speech_recorded"  placeholder="Speech file" maxlength="25" tabindex="19" />
-                                                        <div id="error_r_city"></div>
-                                                        
-                                                    </div>
+                                                <!-- <div class="col-sm-12 col-md-6">
+                                                    <label class="form-label" for="form-stacked-text">Upload Speech Recoreded <span style="color: red">*</span> :</label>
+                                                    <input class="form-control cus-form-ctrl" type="file" value="" name="speech_recorded" id="speech_recorded"  placeholder="Speech file" maxlength="25" tabindex="19" />
+                                                    <div id="error_r_city"></div>
+                                                </div> -->
                                                 <!-- right box end -->
                                                 <div style="text-align: center;">
                                                     <!-- <input type="submit" class="btn btn-primary quick-btn mt-3" name="register" id="register" value="Register"> -->
-                                                    <a id="saveButton" class="btn btn-primary" style="display:none">
-                                                            Save & Next
-                                                        
-                                                    </a>
+                                                    <a id="saveButton" class="btn btn-primary" style="display:none"> Save & Next </a>
                                                     <button type="submit" class="quick-btn mt-3" name="register" id="register" >Register</button>
-                                                    <button type="button" class=" gray-btn quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>
-                                                   
+                                                    <button type="button" class=" gray-btn quick-btn mt-3" name="back" id="back" value="back" onclick="history.back()" >Back</button>                                                   
                                                 </div>
                                             </div>
                                             <?php
