@@ -39,7 +39,8 @@ class Ajaxcalls extends BaseController {
             $party_name_array = explode('##', $parties_details[0]['r_partyname']);
             $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);            
         }
-        $parties_list = array_combine($party_sr_no_array, $party_name_array);
+        // $parties_list = array_combine($party_sr_no_array, $party_name_array);
+        $parties_list = $party_name_array;
         if ((isset($appearing_for_details) && !empty($appearing_for_details)) && $appearing_for_details[0]['partytype'] == $partytype) {
             $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
             $saved_appearing_for = explode('$$', $saved_appearing_for);
