@@ -496,3 +496,5 @@ $routes->match(['GET', 'POST'], 'report/search/list/(:any)', 'Report\Search::lis
 $routes->match(['GET', 'POST'], 'report/search/showCaseStatusReport', 'Report\Search::showCaseStatusReport');
 
 $routes->match(['GET', 'POST'], 'ecopying_dashboard', 'ResponsiveVariantRouteController::ecopying_dashboard');
+
+$routes->match(['GET', 'POST'], 'online_copying/verifyUser', 'OnlineCopying\DefaultController::verifyUser');
