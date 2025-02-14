@@ -183,8 +183,7 @@
         </div>
         <div class="row">
             <div class="col-12 text-right" style="text-align: right!important;">
-                <!-- {{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}} -->
-                <?php echo getSessionData('login.first_name').' '.getSessionData('login.last_name'); ?>
+                <?= str_replace(' @ ','.',ucwords(strtolower(str_replace('.',' @ ', getSessionData('login.first_name').' '.getSessionData('login.last_name'))))); ?>
                 <br>
                 For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
             </div>
@@ -192,7 +191,7 @@
     </div>
 @endif
 <div class="modal-footer justify-content-between" style="float:right !important;">
-    {{-- <h3 class="card-title">Add - Name of Advocates</h3>--}}
+    <!-- {{-- <h3 class="card-title">Add - Name of Advocates</h3>--}} -->
     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
     @if(count($data['is_submitted'])==0)
         <button type="button" class="quick-btn gray-btn final-submit"
@@ -204,13 +203,14 @@
         data-case_no="{{$posted_data['reg_no_display'] ?: 'Diary No. '.$posted_data['diary_no']}}"
         data-cause_title="{{$posted_data['pet_name'].' Vs. '.$posted_data['res_name']}}">Submit</button>
     @endif
-    {{--<div class="row text-right">
-        <br>{{ucwords(strtolower(session('user_title'))).' '.ucwords(strtolower(session('user_name')))}}
+    <!-- <div class="row text-right">
+        <br>
+        <?php // echo str_replace(' @ ','.',ucwords(strtolower(str_replace('.',' @ ', getSessionData('login.first_name').' '.getSessionData('login.last_name'))))); ?>
         <br>
         For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
     </div>
     <div class="row">
         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary final-submit" data-next_dt="{{$posted_data['next_dt']}}" >Submit</button>
-    </div>--}}
+    </div> -->
 </div>
