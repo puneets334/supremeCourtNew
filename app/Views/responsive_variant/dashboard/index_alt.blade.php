@@ -1029,7 +1029,7 @@ td {
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec efiled-cases-table">
-                                                    <div class="table-responsive" style="height: 800px; overflow-x: overlay;">
+                                                    <div class="table-responsive" style="height: auto; overflow-x: overlay;">
                                                         <table id="datatable-responsive"
                                                             class="table table-striped custom-table ">
                                                             <thead>
@@ -1757,6 +1757,12 @@ td {
             "pageLength": 5,
             // "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
         });
+        $('#datatable-responsive').DataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+        });
 
         
     });
@@ -2024,6 +2030,29 @@ td {
                 }
             });
         });
+    });
+$(document).ready(function(){
+    $.ajax({
+        url: '<?php echo base_url(); ?>e_filed_cases',
+        method: "POST",
+        // dataType: 'json',
+        beforeSend: function() {
+            $('#loader-wrapper').show();
+            var loaderTimeout = setTimeout(function() {
+                $('#loader-wrapper').fadeOut('slow', function() {
+                    $('#content').fadeIn('slow');
+                });
+            }, 3000);
+        },
+        success: function(res) {
+            $('#datatable-responsive').html('');
+            $('#datatable-responsive').html(res);
+
+        },
+        error: function(xhr, status, error) {
+            
+        }
+    });
     });
     </script>
        

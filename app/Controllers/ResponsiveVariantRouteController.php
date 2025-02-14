@@ -522,7 +522,8 @@ class ResponsiveVariantRouteController extends BaseController
             // $page = $this->request->getVar('page') ?? 1;  
             //  $offset = ($page - 1) * $limit; 
             // pr($data);    
-            $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            // $final_submitted_applications = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
+            $final_submitted_applications = false;
             // $final_submitted_applications_count = ($this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 ));
             // $totalRecords = isset($final_submitted_applications_count)  && !empty($final_submitted_applications_count) ? count($final_submitted_applications_count) : 0;
             // $pages = ceil($totalRecords / $limit);
