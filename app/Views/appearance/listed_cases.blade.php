@@ -287,6 +287,16 @@
             }
         });
     });
+    $(document).on("change", "#advocate_type", function () {
+        var advocate_type = $("#advocate_type").val();
+        if(advocate_type == 'AOR'){
+            $("#advocate_name").val("<?php echo str_replace(' @ ','.',ucwords(strtolower(str_replace('.',' @ ',getSessionData('login.first_name').' '.getSessionData('login.last_name')))));?>");
+            $("#advocate_title").val("<?php echo ucwords(strtolower(getSessionData('login.user_title')));?>");
+        } else {
+            $("#advocate_name").val("");
+            $("#advocate_title").val("");
+        }
+    });
     /* Apearance Final Submit  */
     $(document).on("click", ".final-submit", function () {
         var array_id = $('input[name="sortable_id[]"]').serialize();
