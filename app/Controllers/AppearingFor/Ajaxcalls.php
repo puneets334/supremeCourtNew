@@ -61,8 +61,8 @@ class Ajaxcalls extends BaseController {
                 $saved_sr_no = array_search($key, $saved_appearing_for);*/
                 $selected =!empty($saved_appearing_for) && (in_array($key, $saved_appearing_for)) ? 'checked' : NULL;
                 $saved_sr_no =!empty($saved_appearing_for) ? array_search($key, $saved_appearing_for) : '';
-                $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
-                $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
+                $email = ($selected && isset($saved_appearing_for_email[$saved_sr_no])) ? $saved_appearing_for_email[$saved_sr_no] : NULL;
+                $mobile = ($selected && isset($saved_appearing_for_mobile[$saved_sr_no])) ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
                 $appearing_id = isset($appearing_for_details[0]['id']) ? $appearing_for_details[0]['id'] : '';
                 $appearing_contact_id = isset($appearing_for_details[0]['contact_tbl_id']) ? $appearing_for_details[0]['contact_tbl_id'] : '';
                 $parties_data .='<tr>
