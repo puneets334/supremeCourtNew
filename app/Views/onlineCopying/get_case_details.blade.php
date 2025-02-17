@@ -406,7 +406,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
             <div class="row">
                 <div class="row w-100 align-items-center">
                     <div class="col-5">
-                        <label for="inputPassword6" id="bail_order" class="col-form-label">Are you applying first time for Bail Order ?</label>
+                        <label for="inputPassword6" id="bail_order" class="col-form-label">Are you applying first time for Bail Order ? </label>
                     </div>
                     <div class="col-7 pe-0">
                         <div id="radioBtn" class="btn-group">
