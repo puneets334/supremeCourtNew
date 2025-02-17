@@ -37,14 +37,10 @@ $parties_details = $data['parties_details'];
                                 $petitioner_user_type_disabled = 'disabled';
                                 $respondent_user_type_disabled = '';
                             } else {
-                                //$petitioner_user_type_disabled='disabled';
-                                //$respondent_user_type_disabled='disabled';
                                 $petitioner_user_type_disabled = '';
                                 $respondent_user_type_disabled = '';
                             }
                         }
-                        //echo 'petitioner_user_type_disabled:'.$petitioner_user_type_disabled.'#respondent_user_type_disabled:'.$respondent_user_type_disabled.'#pet_default_checked:'.$pet_default_checked.'#res_checked:'.$res_checked.'<br>';
-                        //$pet_default_checked = ($appearing_for_details[0]['partytype'] == 'P' || $appearing_for_details[0]['appearing_for'] == NULL) ? 'checked' : NULL;
                         $pet_default_checked = ($appearing_for_details[0]['partytype'] == 'P') ? 'checked' : NULL;
                         $res_checked = ($appearing_for_details[0]['partytype'] == 'R') ? 'checked' : NULL;
                         ?>
@@ -63,7 +59,8 @@ $parties_details = $data['parties_details'];
                             $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);
                         }
                         // $parties_list = array_combine($party_sr_no_array, $party_name_array);
-                        $parties_list = $party_name_array;
+                        $keys = range(1, count($party_name_array));
+                        $parties_list = array_combine($keys, $party_name_array);
                         if (($appearing_for_details[0]['partytype'] == 'P') || ($appearing_for_details[0]['partytype'] == 'R')) {
                             $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
                             $saved_appearing_for = explode('$$', $saved_appearing_for);
@@ -81,7 +78,6 @@ $parties_details = $data['parties_details'];
                 </div>
             </div>
             <div class="table-responsive">
-                <!-- <table id="onbehalf_table" class="table table-bordered table-hover"> -->
                 <table id="onbehalf_table" class="table table-striped custom-table dataTable no-footer">
                     <thead>
                         <tr>
@@ -93,7 +89,6 @@ $parties_details = $data['parties_details'];
                     </thead>
                     <tbody class="parties_list_data">
                         <?php
-                        //echo "<pre>"; print_r($parties_list); echo "</pre>";
                         if (count($parties_list) > 0) {
                             $i = 1;
                             $email = '';
@@ -107,7 +102,6 @@ $parties_details = $data['parties_details'];
                                 if (isset($saved_appearing_for_mobile[$saved_sr_no]) && $saved_appearing_for_mobile[$saved_sr_no] != '') {
                                     $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
                                 }
-                                $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
                                 $appearing_id = $appearing_for_details[0]['id'];
                                 $appearing_contact_id = $appearing_for_details[0]['contact_tbl_id'];
                                 ?>
@@ -148,8 +142,6 @@ $parties_details = $data['parties_details'];
                                 $petitioner_user_type_disabled = 'disabled';
                                 $respondent_user_type_disabled = '';
                             } else {
-                                //$petitioner_user_type_disabled='disabled';
-                                //$respondent_user_type_disabled='disabled';
                                 $petitioner_user_type_disabled = '';
                                 $respondent_user_type_disabled = '';
                             }
@@ -167,11 +159,9 @@ $parties_details = $data['parties_details'];
                             $party_name_array = explode('##', $parties_details[0]['r_partyname']);
                             $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);
                         }
-                        // $parties_list = array_combine($party_sr_no_array, $party_name_array);
-                        $parties_list = $party_name_array;
-                        // pr($appearing_for_details);
+                        $keys = range(1, count($party_name_array));
+                        $parties_list = array_combine($keys, $party_name_array);
                         if (!empty($appearing_for_details[0]) && ($appearing_for_details[0]['partytype'] == 'P' || $appearing_for_details[0]['partytype'] == 'R')) {
-                            // pr($appearing_for_details);
                             $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
                             $saved_appearing_for = explode('$$', $saved_appearing_for);
                             $saved_appearing_for_email = $appearing_for_details[0]['p_email'];
@@ -207,11 +197,6 @@ $parties_details = $data['parties_details'];
                             foreach ($parties_list as $key => $value) {
                                 $selected = isset($saved_appearing_for) && (in_array($key, $saved_appearing_for)) ? 'checked' : NULL;
                                 $saved_sr_no = isset($saved_appearing_for) && array_search($key, $saved_appearing_for);
-                                // $selected = NULL;
-                                // echo "<pre>"; print_r($parties_list); die;
-                                // $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
-                                // $mobile = $selected ? $saved_appearing_for_mobile[$saved_sr_no] : NULL;
-                                // pr($saved_appearing_for_email[$saved_sr_no]);
                                 if (isset($saved_appearing_for_email[$saved_sr_no]) && $saved_appearing_for_email[$saved_sr_no] != '') {
                                     $email = $selected ? $saved_appearing_for_email[$saved_sr_no] : NULL;
                                 }
@@ -262,16 +247,11 @@ $parties_details = $data['parties_details'];
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
-<!-- <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.5.1.slim.min.js"></script> -->
 <script src="<?= base_url() . 'assets' ?>/vendors/jquery/dist/jquery.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery.min.js"></script> -->
-<!-- <script src="<?= base_url() . 'assets' ?>/js/jquery-ui.min.js"></script> -->
-<!-- <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.js"></script> -->
 <script src="<?= base_url() ?>assets/js/bootstrap-datepicker.min.js"></script>
 <script src="<?= base_url() ?>assets/js/sha256.js"></script>
 <script src="<?= base_url() ?>assets/newAdmin/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
-<!-- <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script> -->
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -301,28 +281,16 @@ $parties_details = $data['parties_details'];
                     var resArr = data.split('@@@');
                     // alert(resArr[1]);
                     if (resArr[0] == 1) {
-                        // $('#msg').show();
-                        // $(".form-response").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                        // setTimeout(function() {
-                        //     location.reload();
-                        // });
 						$('.msg').show();
 						$("#result").html("<p class='message success' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                         location.reload();
                     }
                     if (resArr[0] == 2) {
-                        // $('#msg').show();
-                        // $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
-                        // setTimeout(function() {
-                        //     location.reload();
-                        // });
 						$('.msg').show();
 						$("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                         location.reload();
                     }
                     if (resArr[0] == 3) {
-                        // $('#msg').show();
-                        // $(".form-response").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "  <span class='close' onclick=hideMessageDiv()>X</span></p>");
 						$('.msg').show();
 						$("#result").html("<p class='message error' id='msgdiv'>&nbsp;&nbsp;&nbsp; " + resArr[1] + "</p>");
                     }
