@@ -115,12 +115,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="save-form-details">
-                                            <div class="save-btns">
-                                                <button type="button" class="quick-btn gray-btn" id="sub" value="SEARCH">Search</button>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                    <div class="col-12">
+                                                    <label for="inputPassword6" class="col-form-label"> &nbsp;</label>
+                                                </div>
+                                        <button type="button" class="quick-btn gray-btn" id="sub" value="SEARCH">Search</button>
                                     </div>
                                 </div>
                             </div>
@@ -159,12 +158,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <div class="save-form-details">
-                                            <div class="save-btns">
-                                                <button type="button" id="sub" class="quick-btn gray-btn">Search</button>
-                                            </div>
+                                    <div class="col-md-2 col-sm-2 col-xs-2">
+                                        <div class="col-12">
+                                            <label for="inputPassword6" class="col-form-label"> &nbsp;</label>
                                         </div>
+                                        <button type="button" id="sub" class="quick-btn gray-btn">Search</button>
                                     </div>
                                 </div>
                             </div>
