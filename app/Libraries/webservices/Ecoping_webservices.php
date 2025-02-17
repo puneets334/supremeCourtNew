@@ -118,6 +118,7 @@ class Ecoping_webservices {
     }
   }
   public  function eCopyingGetDiaryNo($ct, $cn, $cy){
+    
     $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDiaryNo?ct=$ct&cn=$cn&cy=$cy");
         
     if ($data != false) {
