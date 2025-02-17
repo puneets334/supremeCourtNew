@@ -1834,10 +1834,18 @@ td {
                         }, 1000);
                     },
                     success: function(res) {
-                        var Table = document.getElementById("datatable-responsive");
-                        Table.innerHTML = "";
                         $('#datatable-responsive').html('');
                         $('#datatable-responsive').html(res);
+                        $('#datatable-responsive').DataTable().destroy();
+                        $('#datatable-responsive').DataTable({
+                            "bPaginate": true,
+                            "bLengthChange": false,
+                            "bFilter": false,
+                            "bInfo": false,
+                            "bAutoWidth": false,
+                            "pageLength": 10,
+                            // "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
+                        });
 
                     },
                     error: function(xhr, status, error) {
@@ -1852,7 +1860,28 @@ td {
     });
 
     function showAllCases(){
-        window.location.reload();
+        // window.location.reload();
+        $.ajax({
+            url: '<?php echo base_url(); ?>e_filed_cases',
+            method: "POST",
+            // dataType: 'json',
+            beforeSend: function() {
+                $('#loader-wrapper').show();
+                var loaderTimeout = setTimeout(function() {
+                    $('#loader-wrapper').fadeOut('slow', function() {
+                        $('#content').fadeIn('slow');
+                    });
+                }, 3000);
+            },
+            success: function(res) {
+                $('#datatable-responsive').html('');
+                $('#datatable-responsive').html(res);
+
+            },
+            error: function(xhr, status, error) {
+                
+            }
+        });
     }
     // function showAllCases(){
     //     $.ajax({
