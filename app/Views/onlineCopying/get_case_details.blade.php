@@ -235,11 +235,12 @@ if(count($res_fil_det) > 0){
             $_SESSION['diary_filed_user_verify_status'] = 'success';
         }
         else{
-                $_SESSION['diary_filed_user_verify_status'] = 'unregistered';
-        ?>
-                <div class="alert alert-danger alert-dismissible">
-                    You are not registered in case no. <?=$case_no?>.
-                </div>                  
+            $_SESSION['diary_filed_user_verify_status'] = 'unregistered';
+            ?>
+            <div class="alert alert-danger alert-dismissible">
+                You are not registered in case no : <?= $case_no; ?>
+            </div>&nbsp;&nbsp;
+            <center><a href="<?= base_url('online_copying/verifyUser');?>" class="quick-btn"> Verify User </a></center>                  
             <?php                
             exit();
         }        

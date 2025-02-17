@@ -22,34 +22,32 @@
                         <div>Appearing For : <strong>{{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}</strong></div>
                     </div>
                 </div>
-
                 <?php $sno = 1; ?>
                 @if($data['slip_data'])
-                <div class="table-responsive-sm">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th class="center">#</th>
-                            <th>Name of Advocates</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($data['slip_data'] as $added_data)
-                            <tr>
-                                <td data-key="#" class="center">{{$sno++}}</td>
-                                <td data-key="Name of Advocates" class="left strong">{{$added_data->advocate_title.' '.$added_data->advocate_name.', '.$added_data->advocate_type}}</td>
-                            </tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive-sm">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="center">#</th>
+                                    <th>Name of Advocates</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($data['slip_data'] as $added_data)
+                                    <tr>
+                                        <td data-key="#" class="center">{{$sno++}}</td>
+                                        <td data-key="Name of Advocates" class="left strong">{{$added_data->advocate_title.' '.$added_data->advocate_name.', '.$added_data->advocate_type}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 @else
                     No Records Found
                 @endif
                 <div class="row">
                     <div class="col-12 text-right" style="text-align: right!important;">
-                        <!-- {{ucwords(strtolower(session('user_title') ?? '')).' '.ucwords(strtolower(session('user_name') ?? ''))}} -->
-                        <?php echo getSessionData('login.first_name').' '.getSessionData('login.last_name'); ?>
+                        <?= str_replace(' @ ','.',ucwords(strtolower(str_replace('.',' @ ', getSessionData('login.first_name').' '.getSessionData('login.last_name'))))); ?>
                         <br>
                         For the {{$posted_data['appearing_for'] == 'P' ? 'Petitioner' : 'Respondent'}}
                     </div>
