@@ -71,7 +71,8 @@ if ($segment->getSegment(2) != 'view') {
                                 $party_sr_no_array = explode('##', $parties_details[0]['r_sr_no']);
                             }
                             // $parties_list = array_combine($party_sr_no_array, $party_name_array);
-                            $parties_list = $party_name_array;
+                            $keys = range(1, count($party_name_array));
+                            $parties_list = array_combine($keys, $party_name_array);
                             if (($appearing_for_details[0]['partytype'] == 'P') || ($appearing_for_details[0]['partytype'] == 'R')) {
                                 $saved_appearing_for = $appearing_for_details[0]['appearing_for'];
                                 $saved_appearing_for = explode('$$', $saved_appearing_for);
