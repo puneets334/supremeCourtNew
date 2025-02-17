@@ -309,11 +309,13 @@ if(count($res_fil_det) > 0){
                     </p>
                 </div>
 
-                <?php if($address_array == 1){ ?>
+                <?php 
+                if(count($_SESSION['user_address']) > 1){
+                if($address_array == 1){ ?>
                 <div class="row text-right pl-2">
-                    <button type="button" style="color: #0554DB;" class="btn btn_more_address">more...</button>
+                    <button type="button" class="btn btn-primary btn_more_address">more...</button>
                 </div>
-                <?php } ?>
+                <?php } } ?>
             </div>
 
         </div>

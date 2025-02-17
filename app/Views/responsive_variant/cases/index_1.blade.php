@@ -209,14 +209,13 @@
                                         </div>
                                     <?php } ?>
                                     <div class="uk-grid uk-flex-middle uk-grid-small dt-uikit-header uk-margin">
-                                        <!-- <div class="uk-width-1-2@m">
+                                        <div class="col-2">
                                             <div>
-                                            Show 
                                             <select ng-model="countperpage" ng-change="chnagePerPage()" ng-options="x for x in countperpageArray" class="form-control cus-form-ctrl">
-                                            </select> entries
-                                            </div>
-                                        </div> -->
-                                        <div class="uk-width-1-2@m uk-text-right@m">
+                                            </select></div>
+                                        </div>
+                                        <div class="col-8">&nbsp;</div>
+                                        <div class="col-2">
                                             <div id="efiled-cases-table_filter" class="dataTables_filter">
                                                 <input type="text" class="form-control cus-form-ctrl" ng-model="searchQuery"  placeholder="Diary / Reg. No..." ng-change="fetchData()" />
                                             </div>
