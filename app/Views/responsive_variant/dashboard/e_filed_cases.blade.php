@@ -1,7 +1,9 @@
 <div class="table-responsive" style="height: auto; overflow-x: overlay;">
 <input type="hidden" class="txt_csrfname" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" />
-    <table id="userTable"
-        class="table table-striped custom-table ">
+<div class="table-sec">
+                                                        <div class="table-responsive">
+    <table id="userTables"
+        class="table table-striped custom-table " style="width: 100% !important">
         <thead>
             <tr>
                 <th>Sr. No.</th>
@@ -23,20 +25,15 @@
         </tbody>
     </table>
 </div>
-<!-- Datatable CSS -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.css"/>
-
-<!-- jQuery Library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<!-- Datatable JS -->
-<script src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+</div>
+</div>
 <script>
     $(document).ready(function(){
-      $('#userTable').DataTable({
+      $('#userTables').DataTable({
          'processing': true,
          'serverSide': true,
          'serverMethod': 'post',
+         'searching' : false,
          'ajax': {
             'url':"<?=base_url('getData')?>",
             'data': function(data){
@@ -65,6 +62,7 @@
             { data: 'type' },
             { data: 'case_details' },
             { data: 'submitted_on' },
+            { data: 'action' },
             { data: 'allocated_to' },
          ]
       });
