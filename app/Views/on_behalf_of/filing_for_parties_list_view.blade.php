@@ -8,7 +8,8 @@ if ($filing_for_details[0]['p_r_type'] == 'P') {
     $party_sr_no_array = explode('##', $filing_for_details[0]['r_sr_no']);
 }
 // $parties_list = array_combine($party_sr_no_array, $party_name_array);
-$parties_list = $party_name_array;
+$keys = range(1, count($party_name_array));
+$parties_list = array_combine($keys, $party_name_array);
 $saved_filing_for = $filing_for_details[0]['filing_for_parties'];
 $saved_filing_for = explode('$$', $saved_filing_for);
 ?>
