@@ -1029,7 +1029,7 @@ td {
                                                     <h5 class="unerline-title">e-Filed Cases</h5>
                                                 </div>
                                                 <div class="table-sec efiled-cases-table">
-                                                    <div class="table-responsive" style="height: auto; overflow-x: overlay;">
+                                                    <div class="table-responsive" style="height: 800px; overflow-x: overlay;">
                                                         <table id="datatable-responsive"
                                                             class="table table-striped custom-table ">
                                                             <thead>

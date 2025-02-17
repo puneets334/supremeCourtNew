@@ -125,6 +125,7 @@ class GetEfiledCasesController extends BaseController
             $builder->whereNotIn('cs.stage_id', $stageIds);
         }
 
+
         $builder->groupStart();
         if ($_SESSION['login']['ref_m_usertype_id'] == USER_DEPARTMENT || $_SESSION['login']['ref_m_usertype_id'] == USER_CLERK) {
             $builder->where('en.sub_created_by', $createdBy);
@@ -339,7 +340,6 @@ class GetEfiledCasesController extends BaseController
                 } else {
                     $user_stage_name = $re->user_stage_name;
                 }
-                $efiling_no = '';
                 //--------------------Pending Acceptence-------------------------->
                 $arrayStage = array(Initial_Approaval_Pending_Stage, Initial_Defects_Cured_Stage, TRASH_STAGE);
                 $case_details = '<a onClick="open_case_statusStop()" title="show CaseStatus"  data-diary_no="' . $re->diary_no . '" data-diary_year="' . $re->diary_year . '">' . $case_details . '</a>';
@@ -353,7 +353,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 //--------------------Draft------------------>
                 if ($stages == Draft_Stage) {
@@ -363,7 +363,7 @@ class GetEfiledCasesController extends BaseController
                     }
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '<a class="form-control btn btn-success"
+                    $action = '<a class="form-control btn btn-success"
                                 href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Draft_Stage)) . '">' . htmlentities("View", ENT_QUOTES) . '</a>';
                 }
                 //<!--------------------For Compliance------------------>
@@ -374,7 +374,7 @@ class GetEfiledCasesController extends BaseController
                     }
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
-                    $allocated_to = '<a class="btn btn-primary"
+                    $action = '<a class="btn btn-primary"
                                 href="' . base_url($recheck_url . '/' . url_encryption((trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Defected_Stage)))) . '">
                                 <span
                                     class="uk-label md-bg-grey-900">' . htmlentities("Re-Submit", ENT_QUOTES) . '</span></a>';
@@ -387,7 +387,7 @@ class GetEfiledCasesController extends BaseController
                     }
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '<a class="form-control btn btn-success"
+                    $action = '<a class="form-control btn btn-success"
                                 href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . Initial_Approved_Stage)) . '">' . htmlentities("Make Payment", ENT_QUOTES) . '</a>';
                 }
                 //<!--------------------Payment Receipts------------------>
@@ -399,9 +399,9 @@ class GetEfiledCasesController extends BaseController
                     }
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
-                    $allocated_to = "<b>" . htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) . "</b>" . "<br>";
+                    $action = "<b>" . htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) . "</b>" . "<br>";
                     if (isset($re->efiling_for_name) && !empty($re->efiling_for_name) && ($re->efiling_for_name) != NULL) {
-                        $allocated_to .=  htmlentities($re->efiling_for_name, ENT_QUOTES) . $allocated;
+                        $action .=  htmlentities($re->efiling_for_name, ENT_QUOTES) . $allocated;
                     }
                     $submitted_on = date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES))));
                 }
@@ -415,7 +415,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 //<!--------------------Defective------------------>
                 if ($stages == I_B_Defected_Stage) {
@@ -430,7 +430,7 @@ class GetEfiledCasesController extends BaseController
                     }
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
-                    $allocated_to = '<a class="btn btn-primary"
+                    $action = '<a class="btn btn-primary"
                                 href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Defected_Stage)) . '">' . htmlentities("Cure Defects", ENT_QUOTES) . '</a>';
                 }
                 //<!--------------------E-filed Cases------------------>
@@ -443,7 +443,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 //<!--------------------E-filed Misc. Documents------------------>
                 if ($stages == Document_E_Filed) {
@@ -455,7 +455,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 //<!--------------------E-filed Misc. Documents------------------>
                 if ($stages == DEFICIT_COURT_FEE_E_FILED) {
@@ -467,7 +467,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 if ($stages == I_B_Rejected_Stage) {
                     $efiling_no = '<a
@@ -479,18 +479,18 @@ class GetEfiledCasesController extends BaseController
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
                     if ($re->stage_id == I_B_Rejected_Stage) {
-                        $allocated_to = htmlentities('Filing Section', ENT_QUOTES);
+                        $action = htmlentities('Filing Section', ENT_QUOTES);
                     } elseif ($re->stage_id == E_REJECTED_STAGE) {
-                        $allocated_to = htmlentities('eFiling Admin', ENT_QUOTES);
+                        $action = htmlentities('eFiling Admin', ENT_QUOTES);
                     } else {
-                        $allocated_to = '&nbsp;';
+                        $action = '&nbsp;';
                     }
                 }
                 if ($stages == DEFICIT_COURT_FEE) {
                     $efiling_no = efile_preview(htmlentities($re->efiling_no, ENT_QUOTES));
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '<a class="form-control btn btn-success" href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . DEFICIT_COURT_FEE)) . '">' . htmlentities("View", ENT_QUOTES) . '</a>';
+                    $action = '<a class="form-control btn btn-success" href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . DEFICIT_COURT_FEE)) . '">' . htmlentities("View", ENT_QUOTES) . '</a>';
                 }
                 if ($stages == LODGING_STAGE) {
                     $efiling_no = '<a href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . LODGING_STAGE)) . '"><b>"' . htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) . "</b><br>";
@@ -506,7 +506,7 @@ class GetEfiledCasesController extends BaseController
                     } elseif ($re->stage_id == TRASH_STAGE) {
                         $stages_name = 'Trashed (Self)';
                     }
-                    $allocated_to = htmlentities($stages_name, ENT_QUOTES);
+                    $action = htmlentities($stages_name, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
                 }
                 if ($stages == IA_E_Filed) {
@@ -517,7 +517,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 if ($stages == MENTIONING_E_FILED) {
                     $efiling_no = '<a
@@ -528,7 +528,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 if ($stages == CITATION_E_FILED) {
                     $efiling_no = '<a
@@ -539,7 +539,7 @@ class GetEfiledCasesController extends BaseController
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 if ($stages == CERTIFICATE_E_FILED) {
                     if (!empty($api_certificate_efiling_no) && $api_certificate_efiling_no == $re->efiling_no && !empty($api_certificate_request_no) && $api_certificate_request_no != null) {
@@ -563,37 +563,38 @@ class GetEfiledCasesController extends BaseController
                     }
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime(htmlentities($re->activated_on, ENT_QUOTES)))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
                 }
                 if (in_array($stages, $exclude_stages_array)) {
-                    $efiling_no = '<a
-                                href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Approval_Pending_Stage)) . '">
-                                <b>' . htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) . "</b>" . "<br>";
+                    $efiling_no = '<a href="' . $redirect_url . '/' . url_encryption(trim($re->registration_id . '#' . $re->ref_m_efiled_type_id . '#' . I_B_Approval_Pending_Stage)) . '"><b>' . htmlentities(efile_preview($re->efiling_no, ENT_QUOTES)) . '</b><br>';
                     if (isset($re->efiling_for_name) && !empty($re->efiling_for_name) && ($re->efiling_for_name) != NULL) {
                         $efiling_no .= htmlentities($re->efiling_for_name, ENT_QUOTES) . $allocated;
                     }
                     $efiling_no .= '</a>';
                     $type = htmlentities($type, ENT_QUOTES);
                     $submitted_on = htmlentities(date("d/m/Y h:i:s A", strtotime('+5 hours 30 minutes', strtotime($re->activated_on, ENT_QUOTES))));
-                    $allocated_to = '&nbsp;';
+                    $action = '&nbsp;';
+                    
                 }
+                $allocated_to = '';
+                $allocated_to .= (!empty($re->allocated_user_first_name)) ? htmlentities($re->allocated_user_first_name, ENT_QUOTES) : '';
+                $allocated_to .= (!empty($re->allocated_user_last_name)) ? htmlentities($re->allocated_user_last_name, ENT_QUOTES) : '';
+                $allocated_to .=  (!empty($re->allocated_to_user_id)) ? ' (' . htmlentities($re->allocated_to_user_id, ENT_QUOTES) . ')' : '';
+                $allocated_to .= '<br>';
+                $allocated_to .= (!empty($re->allocated_to_da_on)) ? htmlentities(date("d/m/Y h.i.s A", strtotime('+5 hours 30 minutes', strtotime($re->allocated_to_da_on, ENT_QUOTES)))) : '';
                 if ($stages != Draft_Stage || $stages != TRASH_STAGE) {
-                    $efiling_no = '';
-                    $type = '';
-                    $submitted_on = '';
-                    $allocated_to = '';
-                    $allocated_to .= (!empty($re->allocated_user_first_name)) ? htmlentities($re->allocated_user_first_name, ENT_QUOTES) : '';
-                    $allocated_to .= (!empty($re->allocated_user_last_name)) ? htmlentities($re->allocated_user_last_name, ENT_QUOTES) : '';
-                    $allocated_to .=  (!empty($re->allocated_to_user_id)) ? ' (' . htmlentities($re->allocated_to_user_id, ENT_QUOTES) . ')' : '';
-                    $allocated_to .= '<br>';
-                    $allocated_to .= (!empty($re->allocated_to_da_on)) ? htmlentities(date("d/m/Y h.i.s A", strtotime('+5 hours 30 minutes', strtotime($re->allocated_to_da_on, ENT_QUOTES)))) : '';
+                    // $efiling_no = '';
+                    // $type = '';
+                    // $submitted_on = '';
+                    
                 } else {
                     $efiling_no = '';
                     $type = '';
                     $submitted_on = '';
                     $allocated_to = '';
+                    $action = '';
                 }
-
+                // pr($efiling_no);
                 $data[] = array(
                     "id" => $i++,
                     "user_stage_name" => $user_stage_name,
@@ -601,6 +602,7 @@ class GetEfiledCasesController extends BaseController
                     "type" => $type,
                     "case_details" => $case_details,
                     "submitted_on" => $submitted_on,
+                    "action" => $action,
                     "allocated_to" => $allocated_to
                 );
             }
