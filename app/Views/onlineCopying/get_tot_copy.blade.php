@@ -27,7 +27,7 @@ if(count($o_array)>0) {
                         <?php
                         $t_pages=0;$t_copies=0;$t_amt=0;   $service_charges = 0; $fee_in_stamp = 0; $total_red_wrappers = 0;
                         for($i=0;$i<count($o_array);$i++) {
-                            $sporderdate = ($o_array[$i][0] != '01-01-1970') ? date('Y-m-d', strtotime($o_array[$i][0])) : '';
+                            $sporderdate = !empty($o_array[$i][0]) ? date('Y-m-d', strtotime($o_array[$i][0])) : '';
                             $sptotalpages = ($o_array[$i][1]) ? $o_array[$i][1] : 0;
                             $spjudgementorder = ($o_array[$i][2]) ? $o_array[$i][2] : '';
                             $ischargable = $o_array[$i][3];
