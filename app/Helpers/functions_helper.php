@@ -3743,7 +3743,7 @@ function sci_send_sms($mobile,$cnt,$from_adr,$template_id) {
                 "c_status" => 'Y',
                 "ent_time" => date('Y-m-d H:i:s'),
                 "update_time" => date('Y-m-d H:i:s'),
-                "templateId" => trim($template_id)
+                "template_id" => trim($template_id)
             );
             $result=$ecoping_webservices->saveSMSData($dataArr);
             //$builder = $db2->table('sms_pool');

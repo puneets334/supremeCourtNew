@@ -166,11 +166,11 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == '2' || $_
             
             $sms = "Your request successfully submitted with CRN $crn for reference - Supreme Court Of India";
             $mobile = $_SESSION["applicant_mobile"];
-            $sms_response = sci_send_sms($mobile,$sms,'ecop',SCISMS_e_copying_crn_created);
-            $json = json_decode($sms_response);
-            if ($json->{'Status'} == "success") {
-                $array = array('status' => 'success');
-            }
+            // $sms_response = sci_send_sms($mobile,$sms,'ecop',SCISMS_e_copying_crn_created);
+            // $json = json_decode($sms_response);
+            // if ($json->{'Status'} == "success") {
+            //     $array = array('status' => 'success');
+            // }
         }
         else{
             $array = array('status' => 'Unable to insert records');
