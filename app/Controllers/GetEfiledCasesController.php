@@ -34,6 +34,7 @@ class GetEfiledCasesController extends BaseController
     {
         $stageIds = array(1);
         $createdBy = getSessionData('login')['id'];
+        $data=array();
         $notIn = 1;
         $request = service('request');
         $postData = $request->getPost();
@@ -149,8 +150,8 @@ class GetEfiledCasesController extends BaseController
         $builder->orderBy('cs.activated_on', 'DESC');
         $query = $builder->get($rowperpage, $start);
         $qdataCount = $this->StageslistModel->get_efilied_nums_stage_wise_list(array(1), getSessionData('login')['id'], 1 );
-        $totalRecords = count($qdataCount);
-        $totalRecordwithFilter = count($qdataCount);
+        $totalRecords = !empty($qdataCount)?count($qdataCount):0;
+        $totalRecordwithFilter = !empty($qdataCount)?count($qdataCount):0;
         $final_submitted_applications = $query->getResult();
         $resData = array();
         if (isset($final_submitted_applications) && !empty($final_submitted_applications) && count($final_submitted_applications) > 0) {
