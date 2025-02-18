@@ -314,8 +314,24 @@ curl_close($curl);
         }   
     }
     public function eCopyingGetDocumentType($third_party_sub_qry){
-        $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDocumentType?third_party_sub_qry=$third_party_sub_qry");
-        
+        // $data = file_get_contents(ICMIS_SERVICE_URL."/online_copying/eCopyingGetDocumentType?third_party_sub_qry=$third_party_sub_qry");
+
+        $curl = curl_init();
+
+curl_setopt_array($curl, array(
+  CURLOPT_URL => ICMIS_SERVICE_URL."/online_copying/eCopyingGetDocumentType?third_party_sub_qry=$third_party_sub_qry",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => '',
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 0,
+  CURLOPT_FOLLOWLOCATION => true,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => 'GET',
+));
+
+$data = curl_exec($curl);
+
+curl_close($curl);
         if ($data != false) {
             
             return json_decode($data,true);

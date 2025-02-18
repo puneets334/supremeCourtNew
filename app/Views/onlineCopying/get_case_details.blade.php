@@ -74,7 +74,7 @@ if(count($res_fil_det) > 0){
     $_SESSION['session_case_no'] = $case_no;
     $_SESSION['session_cause_title'] = $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;
     $_SESSION['session_c_status'] = $res_fil_det[0]->c_status ;
-    $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
+    // $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
     
 ?>
 
