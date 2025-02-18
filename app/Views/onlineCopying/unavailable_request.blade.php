@@ -45,7 +45,7 @@
                                 $_SESSION['max_unavailable_copy_request_per_day'] = 0;
                             }
 
-                            if($_SESSION['unavailable_copy_requested_diary_no'] == $diary_no){
+                            if(isset($_SESSION['unavailable_copy_requested_diary_no']) && $_SESSION['unavailable_copy_requested_diary_no'] == $diary_no){
                             ?>
                                 <div class="alert alert-danger alert-dismissible">
                                     Please wait till completion of your previous request. 
@@ -107,16 +107,19 @@
                                                             <option value="">-Select-</option>
                                                             <?php
                                                             if($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4){
-                                                                $third_party_sub_qry = " and id in (8,3,20,1,2) ";
+                                                                $third_party_sub_qry = " id in (8,3,20,1,2) ";
                                                             }
                                                             else{
                                                                 $third_party_sub_qry = "";
                                                             }
-
+                                                            if(!empty($third_party_sub_qry)){
+                                                                $third_party_sub_qry = urlencode($third_party_sub_qry);
+                                                            }
                                                             $app_category = eCopyingGetDocumentType($third_party_sub_qry);
+                                                            
                                                             foreach ($app_category as $row) {
                                                                 ?>
-                                                                <option data-mandate_date_of_order_type="<?=$row->mandate_date_of_order_type?>" data-mandate_remark_of_order_type="<?=$row->mandate_remark_of_order_type?>" value="<?=$row->id?>"><?= ucwords(strtolower($row->order_type)); ?></option>
+                                                                <option data-mandate_date_of_order_type="<?=$row['mandate_date_of_order_type']?>" data-mandate_remark_of_order_type="<?=$row['mandate_remark_of_order_type']?>" value="<?=$row['id']?>"><?= ucwords(strtolower($row['order_type'])); ?></option>
                                                                 <?php
                                                             }
                                                             ?>

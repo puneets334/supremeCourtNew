@@ -74,7 +74,7 @@ if(count($res_fil_det) > 0){
     $_SESSION['session_case_no'] = $case_no;
     $_SESSION['session_cause_title'] = $res_fil_det[0]->pet_name . $pno . " Vs " . $res_fil_det[0]->res_name . $rno;
     $_SESSION['session_c_status'] = $res_fil_det[0]->c_status ;
-    $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
+    // $_SESSION['unavailable_copy_requested_diary_no'] = $diary_no;
     
 ?>
 
@@ -507,7 +507,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
      
     <div class="form-row">
 
-        <div class="row m-1 firstWarn" style="display: none;">
+        <div class="row m-1 firstWarn">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Warning :</strong> While applying for Record of Proceedings (ROP), Please remember a possibility that Record of Proceedings can be clubbed with Judgements/Orders passed that day. If page count and cost is shown more than your expectations, please click and apply through unavailable documents.
                 <button type="button" class="btn btn-sm close firstWarnBtn" data-dismiss="alert" aria-label="Close">
@@ -516,7 +516,7 @@ if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 1 || $_SE
             </div>
         </div>
 
-        <div class="row m-1 secWarn" style="display: none;">
+        <div class="row m-1 secWarn">
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 <strong>Warning :</strong> When you are applying for Judgements/Orders and it is found that Record of Proceedings (ROP) is clubbed with such Judgements/Orders, in such case certified copy of the requested document will be issued where as unathenticated copy will be issued for other clubbed documents.
                 <button type="button" class="btn btn-sm close secWarnBtn" data-dismiss="alert" aria-label="Close">

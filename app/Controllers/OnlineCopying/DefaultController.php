@@ -139,21 +139,24 @@ class DefaultController extends BaseController
     {        
         $r_sql = $this->ecoping_webservices->getCatogoryForApplication($_REQUEST['idd']);        
         $app_rule='';
-        if($r_sql->urgent_fee!=0) {
-            $app_rule=$app_rule.$r_sql->urgent_fee.'/- urgency fees + ';
+        if(!empty($r_sql)){
+            if($r_sql->urgent_fee!=0) {
+                $app_rule=$app_rule.$r_sql->urgent_fee.'/- urgency fees + ';
+            }
+            if($r_sql->per_certification_fee!=0) {
+                $app_rule=$app_rule.$r_sql->per_certification_fee.'/- per certification + ';
+            }
+            if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4 && $_REQUEST['idd'] != 5) {
+                $app_rule=$app_rule.'5/- (third party charges) + ';
+            }
+            $app_rule=$app_rule.$r_sql->per_page.'/- per page';
+            $app='';
+            if($r_sql->id==5) {
+                $app= " <span class='font-weight-bold text-info'>First copy free of cost, thereafter - </span>";
+            }
+            return $app."Rs. ".$app_rule;
         }
-        if($r_sql->per_certification_fee!=0) {
-            $app_rule=$app_rule.$r_sql->per_certification_fee.'/- per certification + ';
-        }
-        if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4 && $_REQUEST['idd'] != 5) {
-            $app_rule=$app_rule.'5/- (third party charges) + ';
-        }
-        $app_rule=$app_rule.$r_sql->per_page.'/- per page';
-        $app='';
-        if($r_sql->id==5) {
-            $app= " <span class='font-weight-bold text-info'>First copy free of cost, thereafter - </span>";
-        }
-        return $app."Rs. ".$app_rule;
+        return "Please select application category. ";
     }
 
     public function getTotCopy()

@@ -479,7 +479,7 @@
                 });
                 var bail_order = $("#radioBtn .active").data('title');
                 if(o_array == ''){
-                    alert('Please select applied for');
+                    // alert('Please select applied for');
                 }else{
                     $.ajax({
                         url:'<?php echo base_url('online_copying/get_tot_copy'); ?>',
