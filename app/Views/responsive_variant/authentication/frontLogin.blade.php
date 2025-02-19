@@ -215,13 +215,13 @@
                                 $dis1 = 'style="display: block;"';
                             } else {
                                 $dis1 = 'style="display: none;"';
-                            } ?>
+                            }?>
                             <div class="mb-3" id="aorcodeBox" <?= $dis1; ?>>
                                 <label for="" class="form-label">AOR Code</label>
                                 <input type="text" class="form-control cus-form-ctrl" id="aor_code" name="aor_code" placeholder="AOR code" maxlength="60" value="<?= (!empty($userEnteredData['aor_code']) ? $userEnteredData['aor_code'] : '') ?>">
                             </div>
 
-                            @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_code']))
+                            @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& (!empty($userEnteredData['aor_code']) || !empty($userEnteredData['aor_mobile'])))
                                 <div class="mb-3">
                                     <label for="" class="form-label">OTP</label>
                                     <input name="impersonatedUserAuthenticationMobileOtp" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" aria-label="Mobile OTP" class="form-control cus-form-ctrl uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
@@ -243,7 +243,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_code']))
+                    @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& (!empty($userEnteredData['aor_code']) || !empty($userEnteredData['aor_mobile'])))
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="captchaimage">
