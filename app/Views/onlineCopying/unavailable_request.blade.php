@@ -67,11 +67,11 @@
                                         <strong><?= $_SESSION['session_case_no']; ?> (<?= $_SESSION['session_c_status'] =='P' ? '<span style="color: #0554DB;">Pending</span>' : '<span class="text-danger">Disposed</span>'; ?>)</strong>
                                         <p class="text-left">
                                             Applying as :<b>
-                                            <?php if($_SESSION["session_filed"] == 1){ echo "AOR";}
-                                                else if($_SESSION["session_filed"] == 2){ echo "Party of the case"; }
-                                                else if($_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
-                                                else if($_SESSION["session_filed"] == 4){ echo "Third Party"; }
-                                                else if($_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
+                                            <?php if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1){ echo "AOR";}
+                                                else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2){ echo "Party of the case"; }
+                                                else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
+                                                else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){ echo "Third Party"; }
+                                                else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
                                                 ?></b>
                                             <i class="fa fa-user text-info ml-5 " aria-hidden="true"></i> <?=$_SESSION['user_address'][0]['second_name'].' '.$_SESSION['user_address'][0]['first_name'];?> <i class="fa fa-phone-square text-info" aria-hidden="true"></i> <?=$_SESSION["applicant_mobile"];?> <i class="fa fa-envelope text-info" aria-hidden="true"></i> : <?=$_SESSION["applicant_email"];?></b>
                                         </p>
@@ -81,7 +81,7 @@
 
                             <?php //third party not allowed in pending cases to request any copy
                             $res_fil_det = eCopyingGetFileDetails($diary_no);
-                            if($res_fil_det[0]->c_status=='P' && ($_SESSION["session_filed"] == 4)){
+                            if($res_fil_det[0]->c_status=='P' && (isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4)){
                                 ?>
                                 <div class="alert alert-danger alert-dismissible">
                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -106,7 +106,7 @@
                                                         <select name="document_type[]" aria-labelledby="doctype_addon" class="form-select cus-form-ctrl order_master document_type_class" required="">
                                                             <option value="">-Select-</option>
                                                             <?php
-                                                            if($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4){
+                                                            if(isset($_SESSION["session_filed"]) && ($_SESSION["session_filed"] == 3 || $_SESSION["session_filed"] == 4)){
                                                                 $third_party_sub_qry = " id in (8,3,20,1,2) ";
                                                             }
                                                             else{

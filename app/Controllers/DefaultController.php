@@ -332,7 +332,12 @@ class DefaultController extends BaseController {
                 "rules" => "required|trim"
             ];
         }
-        $data['userEnteredData']=array('using'=>$this->request->getPost('using'),'you_email'=>$this->request->getPost('you_email'),'yr_mobile'=>$this->request->getPost('yr_mobile'),'userType'=>$this->request->getPost('userType'));
+        $data['userEnteredData']=array(
+            'using'=>$this->request->getPost('using'),
+            'you_email'=>$this->request->getPost('you_email'),
+            'yr_mobile'=>$this->request->getPost('yr_mobile'),
+            'userType'=>$this->request->getPost('userType')
+        );
         if($this->request->getPost('using')=='AOR Mobile'){
            $rules['aor_mobile']=[
                 "label" => "AOR Mobile",
