@@ -150,7 +150,7 @@
           $('.loginAs').html(' as Authenticated By AOR');
         //   $('.authenticatedByAor').show();   
         </script>
-        <?php if((empty($session->get('impersonated_user_authentication_mobile_otp'))&& empty($userEnteredData['aor_code']) || empty($userEnteredData['aor_mobile']))){ ?>
+        <?php if((empty($session->get('impersonated_user_authentication_mobile_otp')) && (empty($userEnteredData['aor_code']) || empty($userEnteredData['aor_mobile'])))){ ?>
             <script>
                 $('.authenticatedByAor').show();
             </script>
@@ -160,18 +160,6 @@
             </script>
         <?php } ?>
         <?php
-    }elseif(!empty($userEnteredData) && $userEnteredData['userType']=='APPEARING_COUNCIL'){
-        ?>
-       <script>
-          
-          $("#aor").show();
-          $("#default").hide();
-          $('#userType').val('APPEARING_COUNCIL');
-          $('.authenticatedByAor').hide();  
-          $('.loginAs').html(' ');
-          $('.loginAs').html(' as Appearing Counsel');
-        </script> 
-    <?php
     }
     ?>
     <script>
@@ -181,20 +169,11 @@ $(document).ready(function(){
     $('.loginAs').html(' ');
     $('.loginAs').html(' as Authenticated By AOR');
     $('.authenticatedByAor').show();
+    $('#yr_mobile').attr('required', true);
+    $('#you_email').attr('required', true);
     $("#aor").show();
+    $("#captchaDiv").remove();
     $("#default").hide();
-    if($(".using").val()=='AOR Mobile'){
-        $("#aorMobileBox").show();   
-    }
-  });
-  $(".apcil-login").click(function(){
-    $('#userType').val('APPEARING_COUNCIL');
-    $('.authenticatedByAor').hide();
-    $('.loginAs').html(' ');
-    $('.loginAs').html(' as Appearing Counsel');
-    $("#aor").show();
-    $("#default").hide();
-    
     if($(".using").val()=='AOR Mobile'){
         $("#aorMobileBox").show();   
     }
