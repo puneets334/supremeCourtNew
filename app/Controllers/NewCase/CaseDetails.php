@@ -539,7 +539,7 @@ class CaseDetails extends BaseController
             if (in_array(getSessionData('login')['ref_m_usertype_id'], [USER_ADVOCATE]) && isset($_POST['impersonated_department']) && !empty($_POST['impersonated_department'])) {
                 $_SESSION['impersonated_department'] = $_POST['impersonated_department'];
             }
-            if (isset($registration_id) && !empty($registration_id) && isset($_SESSION['case_table_ids']->case_details_id) && !empty($_SESSION['case_table_ids']->case_details_id)) {
+            if (isset($registration_id) && !empty($registration_id) && isset($_SESSION['case_table_ids']['case_details_id']) && !empty($_SESSION['case_table_ids']['case_details_id'])) {
                 if (in_array($_SESSION['login']['ref_m_usertype_id'], [USER_CLERK])) {
                     $aorData = getAordetailsByAORCODE($_SESSION['login']['aor_code']);
                     $created_by=!empty($aorData) ? $aorData[0]->id  : null;
@@ -583,7 +583,7 @@ class CaseDetails extends BaseController
                         exit();
                     }
                 }
-                $status = $this->New_case_model->add_update_case_details($registration_id, $case_details, NEW_CASE_CASE_DETAIL, getSessionData('case_table_ids')->case_details_id);
+                $status = $this->New_case_model->add_update_case_details($registration_id, $case_details, NEW_CASE_CASE_DETAIL, getSessionData('case_table_ids')['case_details_id']);
                 if ($status) {
                     //SESSION efiling_details
                     $this->Common_model->get_efiling_num_basic_Details($registration_id);
