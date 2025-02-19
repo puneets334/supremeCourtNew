@@ -145,7 +145,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 login-section">
-                <div class="login-s-inner">
+                <div class="login-s-inner loin-form">
                     <?php $session = session(); ?>
                     <div class="httxt">
                         <h4>Login <span class="loginAs"></span></h4>
