@@ -330,13 +330,16 @@ class DefaultController extends BaseController
                 ]
             ];
             if ($this->request->getPost('userType') == 'AUTHENTICATED_BY_AOR') {
-                $rules['you_email'] = [
-                    "label" => "your Email",
-                    "rules" => "required|trim"
+                $rules += [
+                    'you_email' => [
+                        "label" => "your Email",
+                        "rules" => "required|trim"
+                    ]
                 ];
-                $rules['yr_mobile'] = [
-                    "label" => "Your Mobile No.",
-                    "rules" => "required|trim"
+                $rules += ['yr_mobile' => [
+                        "label" => "Your Mobile No.",
+                        "rules" => "required|trim"
+                    ]
                 ];
             }
             $data['userEnteredData'] = array(
@@ -346,51 +349,40 @@ class DefaultController extends BaseController
                 'userType' => $this->request->getPost('userType')
             );
             if ($this->request->getPost('using') == 'AOR Mobile') {
-                $rules['aor_mobile'] = [
-                    "label" => "AOR Mobile",
-                    "rules" => "required|trim"
+                $rules += ['aor_mobile' => [
+                        "label" => "AOR Mobile",
+                        "rules" => "required|trim"
+                    ]
                 ];
                 $data['userEnteredData']['aor_mobile'] = $this->request->getPost('aor_mobile');
             } else {
-                $rules['aor_code'] = [
-                    "label" => "AOR Code",
-                    "rules" => "required|trim"
+                $rules += ['aor_code' => [
+                        "label" => "AOR Code",
+                        "rules" => "required|trim"
+                    ]
                 ];
                 $data['userEnteredData']['aor_code'] = $this->request->getPost('aor_code');
             }
 
             if ($this->validate($rules) === FALSE) {
-                //print_r($this->validator);
-                //die;
-                /*$data = [
-                'validation' =>$this->validator->getErrors(),
-            ];*/
-
-
                 $this->session->set('login_salt', $this->generateRandomString());
                 $data['using'] = $this->request->getPost('using');
                 $data['aor_flag'] = 'yes';
                 return $this->render('responsive_variant.authentication.frontLogin', $data);
             } else {
-
                 $userCaptcha = $this->request->getPost('userCaptcha');
                 $result = $this->ecoping_webservices->getCopyBarcodeBymobileOrAorCOde($this->request->getPost('aor_code'), $this->request->getPost('aor_mobile'));
-
-
-
                 if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp')) {
                     if ($this->request->getPost('impersonatedUserAuthenticationMobileOtp') == @$_SESSION['impersonated_user_authentication_mobile_otp.' . $result->bar_id]) {
                         unset($_SESSION['impersonated_user_authentication_mobile_otp.' . $result->bar_id]);
                         unset($_SESSION['impersonated_user_authentication_mobile_otp']);
-
                         $row = $this->Login_model->get_user_for_ecopy($this->request->getPost('aor_code'), $this->request->getPost('aor_mobile'));
                         if (is_array($row) && !empty($row)) {
                             $impersonator_user = $row[0];
-                            //APPEARING_COUNCIL
                             $logindata = array(
                                 'id' => $row[0]->id,
                                 'userid' => $row[0]->userid,
-                                'ref_m_usertype_id' => ($this->request->getPost('userType') == 'AOAUTHENTICATED_BY_AOR') ? AUTHENTICATED_BY_AOR : APPEARING_COUNCIL,
+                                'ref_m_usertype_id' => AUTHENTICATED_BY_AOR,
                                 'first_name' => $row[0]->first_name,
                                 'last_name' => $row[0]->last_name,
                                 'mobile_number' => $row[0]->moblie_number,
@@ -445,56 +437,30 @@ class DefaultController extends BaseController
                         $this->session->set($sessiondata);
                         $this->logUser('login', $logindata);
                         $this->redirect_on_login();
-                        //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
                     } else {
                         $data['using'] = $this->request->getPost('using');
                         $data['aor_flag'] = 'yes';
                         $this->session->setFlashdata('errMsg', 'OTP Not Matched');
                         return $this->render('responsive_variant.authentication.frontLogin', $data);
                     }
-                    //$row = $this->Login_model->get_user($user_parts[1], null, true, false);
                 } elseif (!empty($result)) {
-                    $data['aor_flag'] = 'yes';
-                    //$this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
                     $data['aor_flag'] = 'yes';
                     $data['bar_id'] = $result->bar_id;
                     $data['using'] = $this->request->getPost('using');
-                    if ($this->request->getPost('userType') == 'AUTHENTICATED_BY_AOR') {
-                        $userdata = array('email' => $this->request->getPost('you_email'), 'mobile' => $this->request->getPost('yr_mobile'), 'authorized_bar_id' => $result->bar_id, 'filed_by' => 6);
-
-                        $authorizedByAorAdvocateVerification = $this->ecoping_webservices->saveauthenticatedByAorDteail($userdata);
-                    } elseif ($this->request->getPost('userType') == 'APPEARING_COUNCIL') {
-
-                        $authorizedByAorAdvocateVerification = $this->ecoping_webservices->eCopyingOtpVerification($result->email);
-                    }
-                    if ($this->request->getPost('userType') == 'AUTHENTICATED_BY_AOR') {
-
-                        //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-                        $impersonated_user_authentication_mobile_otp = 123456;
-                        //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
-                        $_SESSION['impersonated_user_authentication_mobile_otp.' . $result->bar_id] = $impersonated_user_authentication_mobile_otp;
-                        $message = 'Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp . '. - Supreme Court of India';
-                        $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
-                        $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
-                    } elseif ($this->request->getPost('userType') == 'APPEARING_COUNCIL') {
-
-                        if (!empty($authorizedByAorAdvocateVerification) && $authorizedByAorAdvocateVerification->mobile == $result->mobile) {
-                            //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
-                            $impersonated_user_authentication_mobile_otp = 123456;
-
-                            //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
-                            $_SESSION['impersonated_user_authentication_mobile_otp.' . $result->bar_id] = $impersonated_user_authentication_mobile_otp;
-
-                            $message = 'Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp . '. - Supreme Court of India';
-
-                            $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
-
-                            $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
-                        } else {
-                            $this->session->setFlashdata('errMsg', 'User Not Verified');
-                        }
-                    }
-
+                    $userdata = array(
+                        'email' => $this->request->getPost('you_email'), 
+                        'mobile' => $this->request->getPost('yr_mobile'), 
+                        'authorized_bar_id' => $result->bar_id, 
+                        'filed_by' => 6
+                    );
+                    $authorizedByAorAdvocateVerification = $this->ecoping_webservices->saveauthenticatedByAorDteail($userdata);
+                    //$impersonated_user_authentication_mobile_otp = substr(number_format(time() * rand(), 0, '', ''), 0, 6);
+                    $impersonated_user_authentication_mobile_otp = 123456;
+                    //@sendSMS(38, $result['mobile'],"Advocate ON Record",SCISMS_e_copying_login);
+                    $_SESSION['impersonated_user_authentication_mobile_otp.' . $result->bar_id] = $impersonated_user_authentication_mobile_otp;
+                    $message = 'Authentication OTP for AOR is: ' . $impersonated_user_authentication_mobile_otp . '. - Supreme Court of India';
+                    $_SESSION['impersonated_user_authentication_mobile_otp'] = $impersonated_user_authentication_mobile_otp;
+                    $this->session->setFlashdata('msg', 'OTP has been Sent on Your Registered Mobile No.');
                     return $this->render('responsive_variant.authentication.frontLogin', $data);
 
                     //send_mail_msg($email,'Authentication OTP for eFiling' ,$message, $user_parts[1]);
