@@ -72,13 +72,10 @@
                                 <div class="mb-3">
                                     <label for="" class="form-label">Password <span style="color: red;">*</span></label>
                                     <input type="password" name="txt_password" class="form-control cus-form-ctrl" id="password" placeholder="Password" maxlength="128" value="" required>
-                                    @if(!empty($session->get('impersonated_user_authentication_mobile_otp')))
-                                    <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
-                                    @endif
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row" id="captchaDiv">
                             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                                 <div class="captchaimage">
                                     <div class="mb-3">
@@ -150,26 +147,6 @@
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 login-section">
                 <div class="login-s-inner">
                     <?php $session = session(); ?>
-                    <!-- @if($session->has('msg'))
-                        <div class="uk-text-danger">
-                            <b>{{ esc($session->get('msg')) }}</b>
-                        </div>
-                        @endif
-                        @if($session->has('information'))
-                        <div class="uk-text-primary">
-                            <b>{{esc($session->get('information'))}}</b>
-                        </div>
-                        @endif
-                        @if(isset($validation) && !empty($validation->getError('txt_username')))
-                        <div class="uk-text-danger">
-                            <b>{{ $validation->getError('txt_username')}}</b>
-                        </div>
-                        @endif
-                        @if(isset($validation) && !empty($validation->getError('txt_password')))
-                        <div class="uk-text-danger">
-                            <b>{{ $validation->getError('txt_password')}}</b>
-                        </div>
-                        @endif -->
                     <div class="httxt">
                         <h4>Login <span class="loginAs"></span></h4>
                     </div>
@@ -195,22 +172,32 @@
                         echo form_open(base_url('login'), $attribute);
                         ?>
                         <input type="text" style="display: none;" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="userType" class="userType" id="userType" value="">
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 row">
-                            <div class="col-5">
-                                <label for="AOR Mobile" class="form-label">AOR Mobile</label>
+                        <input type="hidden" name="userType" class="userType" id="userType" value="AUTHENTICATED_BY_AOR">
+                        <?php if (!empty($userEnteredData) && !empty($session->get('impersonated_user_authentication_mobile_otp'))) {
+                                $dis11 = 'style="display: none;"';
+                            } else {
+                                $dis11 = 'style="display: block;"';
+                            } ?>
+                        <div class="row" <?=$dis11; ?>>
+                            <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label for="AOR Mobile" class="form-label">AOR Mobile</label>
 
-                                <input type="radio" class="using" name="using" value="AOR Mobile" <?php if ((!empty($userEnteredData) && $userEnteredData['using'] == 'AOR Mobile') || (empty($userEnteredData) && empty($userEnteredData['using']))) {
+                                    <input type="radio" class="using" name="using" value="AOR Mobile" <?php if ((!empty($userEnteredData) && $userEnteredData['using'] == 'AOR Mobile') || (empty($userEnteredData) && empty($userEnteredData['using']))) {
+                                                                                                            echo "checked";
+                                                                                                        } ?>>
+                                </div>
+                                <div class="col-4">
+                                    <label for="AOR Code" class="form-label">AOR Code</label>
+                                    <input type="radio" class="using" name="using" value="AOR Code" <?php if (!empty($userEnteredData) && $userEnteredData['using'] == 'AOR Code') {
                                                                                                         echo "checked";
                                                                                                     } ?>>
+                                </div>
                             </div>
-                            <div class="col-4">
-                                <label for="AOR Code" class="form-label">AOR Code</label>
-                                <input type="radio" class="using" name="using" value="AOR Code" <?php if (!empty($userEnteredData) && $userEnteredData['using'] == 'AOR Code') {
-                                                                                                    echo "checked";
-                                                                                                } ?>>
                             </div>
                         </div>
+                        <hr>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
 
                             <?php if (!empty($userEnteredData) && (empty($session->get('impersonated_user_authentication_mobile_otp')) && $userEnteredData['using'] == 'AOR Mobile')) {
@@ -221,15 +208,9 @@
 
                             <div class="mb-3" id="aorMobileBox" <?= $dis; ?>>
                                 <label for="" class="form-label">AOR Mobile</label>
-                                <input type="text" class="form-control cus-form-ctrl" id="aor_mobile" name="aor_mobile" placeholder="Mobile" maxlength="60" value="<?= (!empty($userEnteredData['aor_mobile']) ? $userEnteredData['aor_mobile'] : '') ?>">
+                                <input type="text" class="form-control cus-form-ctrl" id="aor_mobile" name="aor_mobile" placeholder="Mobile" maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?= (!empty($userEnteredData['aor_mobile']) ? $userEnteredData['aor_mobile'] : '') ?>">
                             </div>
 
-                            @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_mobile']))
-                            <div class="mb-3">
-                                <label for="" class="form-label">OTP</label>
-                                <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
-                            </div>
-                            @endif
                             <?php if (!empty($userEnteredData) && (empty($session->get('impersonated_user_authentication_mobile_otp')) && $userEnteredData['using'] == 'AOR Code')) {
                                 $dis1 = 'style="display: block;"';
                             } else {
@@ -241,28 +222,28 @@
                             </div>
 
                             @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_code']))
-                            <div class="mb-3">
-                                <label for="" class="form-label">OTP</label>
-                                <input name="impersonatedUserAuthenticationMobileOtp" aria-label="Mobile OTP" class="form-control cus-form-ctrl uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
-                            </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">OTP</label>
+                                    <input name="impersonatedUserAuthenticationMobileOtp" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" aria-label="Mobile OTP" class="form-control cus-form-ctrl uk-input uk-width uk-form-large uk-form-blank uk-text-bold uk-text-medium" style="border-top: 0.001rem #ccc dashed;" type="text" placeholder="Mobile OTP">
+                                </div>
                             @endif
                         </div>
-
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 authenticatedByAor">
                             <div class="mb-3">
                                 <label for="" class="form-label">Your Mobile No.</label>
-                                <input type="text" name="yr_mobile" class="form-control cus-form-ctrl" id="yr_mobile" placeholder="Enter Your Mobile No." maxlength="128" value="<?= (!empty($userEnteredData['yr_mobile']) ? $userEnteredData['yr_mobile'] : '') ?>">
+                                <input type="text" name="yr_mobile" class="form-control cus-form-ctrl" id="yr_mobile" placeholder="Enter Your Mobile No." maxlength="10" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="<?= (!empty($userEnteredData['yr_mobile']) ? $userEnteredData['yr_mobile'] : '') ?>">
 
                             </div>
                         </div>
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 authenticatedByAor">
                             <div class="mb-3">
                                 <label for="" class="form-label">Your Email</label>
-                                <input type="email" name="you_email" class="form-control cus-form-ctrl" id="you_email" placeholder="Enter Your Email" maxlength="128" value="<?= (!empty($userEnteredData['you_email']) ? $userEnteredData['you_email'] : '') ?>">
+                                <input type="email" name="you_email" class="form-control cus-form-ctrl" id="you_email" placeholder="Enter Your Email" maxlength="50" value="<?= (!empty($userEnteredData['you_email']) ? $userEnteredData['you_email'] : '') ?>">
 
                             </div>
                         </div>
                     </div>
+                    @if(!empty($session->get('impersonated_user_authentication_mobile_otp'))&& !empty($userEnteredData['aor_code']))
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="captchaimage">
@@ -272,22 +253,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                    <label class="form-check-label gray-txt" for="exampleCheck1">Remember
-                                        Me</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 text-right">
-                            <div class="mb-3">
-                                <label class="form-label gray-txt">Forgot Password ? <a href="<?php echo base_url('Register/ForgetPassword'); ?>" class="blue-txt"> Click Here</a></label>
-                            </div>
-                        </div>
-                    </div>
+                    @endif
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                             <div class="mb-3">

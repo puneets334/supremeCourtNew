@@ -5,7 +5,7 @@ extract($_POST);
 //print_r($_POST);
 //die;
 $clientIP = getClientIP();
-
+$aotAuth = '';
 if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == '2'){ //party
     $scipay = 10005;
     $requision_title = "Verification of Party";
@@ -25,11 +25,10 @@ else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == '3'){
     $allowed_request = 'appearing_counsel';
 }
 else{
-    echo "Not an Authenticated Request";
-    exit();
+    $aotAuth = "Not an Authenticated Request";
 }
 
-
+if(empty($aotAuth)){
 if(isset($_SESSION['affidavit_file_name']))
     $affidavit_file_name_v = $_SESSION['affidavit_file_name'];
 else
@@ -461,6 +460,40 @@ else{
 else{
     echo "Error";
 }
+}
+else{ ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="dash-card dashboard-section">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class=" dashboard-bradcrumb">
+                            <div class="left-dash-breadcrumb">
+                                <div class="page-title">
+                                    <h5><i class="fa fa-file"></i> Case Search</h5>
+                                </div>
+                                <div class="form-response" id="msg" role="alert" data-auto-dismiss="5000"></div>
+                            </div>
+                            <div class="ryt-dash-breadcrumb">
+                                <div class="btns-sec">
+                                    <!-- <a href="javascript:void(0)" class="quick-btn pull-right mb-2" onclick="window.history.back()"><span class="mdi mdi-chevron-double-left"></span>Back</a> -->
+                                    <a href="javascript:void(0)" onclick="window.history.back()" class="quick-btn pull-right"><span class="mdi mdi-chevron-double-left"></span>Back</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <?=$aotAuth; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php }
     
 // unset($_SESSION['session_d_no']);
 // unset($_SESSION['session_d_year']);

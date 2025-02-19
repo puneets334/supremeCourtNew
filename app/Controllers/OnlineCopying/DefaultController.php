@@ -201,12 +201,12 @@ class DefaultController extends BaseController
             $diary_no=$_SESSION['session_d_no'].$_SESSION['session_d_year'];
             // VERIFICATION OF CASE ALREADY APPLIED
             $result=$this->ecoping_webservices->getCopyingRequestVerify($diary_no,$_SESSION["applicant_mobile"]);
-            if (count($result) > 0 || $_SESSION['unavailable_copy_requested_diary_no'] == $diary_no) {
+            if ((is_array($result) && count($result) > 0) || (isset($_SESSION['unavailable_copy_requested_diary_no']) && $_SESSION['unavailable_copy_requested_diary_no'] == $diary_no)) {
                 $array = array('status' => 'Please wait till completion of your previous request.');
             } else {
                 if (isset($_SESSION['user_address'])) {
                     foreach ($_SESSION['user_address'] as $data_address) {
-                        $address_id = $data_address['address_id'];
+                        $address_id = $data_address['id'];
                         $first_name = $data_address['first_name'];
                         $second_name = $data_address['second_name'];
                         $postal_add = $data_address['address'];
@@ -245,7 +245,7 @@ class DefaultController extends BaseController
                         "defect_code" => '',
                         "defect_description" => '',
                         "notification_date" => '',
-                        "filed_by" => $_SESSION["session_filed"],
+                        "filed_by" => isset($_SESSION["session_filed"]) ? $_SESSION["session_filed"] : '',
                         "name" => $first_name . ' ' . $second_name,
                         "mobile" => $_SESSION["applicant_mobile"],
                         "address" => $postal_add . ', ' . $city . ', ' . $district . ', ' . $state . ', ' . $country . ' - ' . $pincode,
@@ -256,7 +256,7 @@ class DefaultController extends BaseController
                         "send_to_section" => 'f',
                         "crn" => $crn,
                         "email" => $_SESSION["applicant_email"],
-                        "authorized_by_aor" => $_SESSION['session_authorized_bar_id'] > 0 ? $_SESSION['session_authorized_bar_id'] : '0',
+                        "authorized_by_aor" => (isset($_SESSION['session_authorized_bar_id']) && $_SESSION['session_authorized_bar_id'] > 0) ? $_SESSION['session_authorized_bar_id'] : '0',
                         "allowed_request" => $allowed_request,
                         "token_id" => '',
                         "address_id" => $address_id
