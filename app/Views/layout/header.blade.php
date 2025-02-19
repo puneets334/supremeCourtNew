@@ -100,7 +100,7 @@
                         </div>
                         <div class="user-action-sec">
                             <ul>
-                                <?php if(getSessionData('login')['ref_m_usertype_id'] != AUTHENTICATED_BY_AOR || getSessionData('login')['ref_m_usertype_id'] != APPEARING_COUNCIL){?>
+                                <?php if(getSessionData('login')['ref_m_usertype_id'] != AUTHENTICATED_BY_AOR){?>
                                 <li>
                                     <a href="<?= base_url('profile'); ?>">Profile</a>
                                 </li>

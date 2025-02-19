@@ -92,7 +92,7 @@ if(count($res_fil_det) > 0){
                     Applying as :<b> 
                     <?php   if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 1){ echo "AOR";}
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2){ echo "Party of the case"; }
-                            else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){ echo "Appearing Counsel"; }
+                            else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){ echo "Advocate/Appearing Counsel"; }
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){ echo "Third Party"; }
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 6){ echo "Authorized by AOR"; }
                             
@@ -240,7 +240,7 @@ if(count($res_fil_det) > 0){
             <div class="alert alert-danger alert-dismissible">
                 You are not registered in case no : <?= $case_no; ?>
             </div>&nbsp;&nbsp;
-            <center><a href="<?= base_url('online_copying/verifyUser');?>" class="quick-btn"> Verify User </a></center>                  
+            <!-- <center><a href="<?= base_url('online_copying/verifyUser');?>" class="quick-btn"> Verify User </a></center>                   -->
             <?php                
             exit();
         }        
