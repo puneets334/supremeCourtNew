@@ -408,7 +408,7 @@ class DefaultController extends BaseController {
                             $logindata = array(
                                 'id' => null,
                                 'userid' => $this->request->getPost('aor_code'),
-                                'ref_m_usertype_id' => ($this->request->getPost('userType')=='AOAUTHENTICATED_BY_AOR')?AUTHENTICATED_BY_AOR:APPEARING_COUNCIL,
+                                'ref_m_usertype_id' => AUTHENTICATED_BY_AOR,
                                 'first_name' => $result->name,
                                 'last_name' => null,
                                 'mobile_number' => $result->mobile,

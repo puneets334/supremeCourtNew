@@ -125,7 +125,7 @@
                                 <span class="gray-txt">Or</span>
                                 <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt"> AOR</a>
                                 <span class="gray-txt">Or</span>
-                                <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
+                                <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate/Appearing Counsel</a>
                             </div>
                         </div>
                     </div>
@@ -310,7 +310,7 @@
                             <span class="gray-txt">Or</span>
                             <a href="{{base_url('register/AdvocateOnRecord')}}" class="blue-txt">AOR</a>
                             <span class="gray-txt">Or</span>
-                            <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate</a>
+                            <a href="{{base_url('arguingCounselRegister')}}" class="blue-txt">Advocate/Appearing Counsel</a>
                         </div>
                     </div>
                 </div>
