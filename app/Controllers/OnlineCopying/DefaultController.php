@@ -360,7 +360,7 @@ class DefaultController extends BaseController
                 "response_amount" => $TotalAmount == 0 ? '0.00' : $TotalAmount
             ];
         $service_row_count=getBharakoshPaymentStatus($data);
-        if (sizeof($service_row_count) > 0) {
+        if (count($service_row_count) > 0) {
         if (bharatkoshSaveStatus($data)) {
             $data=getBharatKoshRequest($orderCode);
             $select_statement_row_count =count($data);
