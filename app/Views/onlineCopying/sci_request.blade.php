@@ -359,7 +359,7 @@ if(isset($_POST['name'])){
         
         Redirecting to Payment Gateway ...
         <!--<form id="myform" name="myform" target="_self" action="<?=BHARATKOSH_PAYMENT_GATEWAY; ?>" method="post">-->
-        <form id="myform" name="myform" target="_self" action="http://10.40.186.239:84/online_copying/sci_response" method="post">
+        <form id="myform" name="myform" target="_self" action="<?=base_url()?>/online_copying/sci_response" method="post">
             <input type="hidden" name="bharrkkosh" value="<?= $signedXML; ?>">
             <input type="submit" name="name" value="CLICK" style="visibility: hidden;"/>
         </form>
