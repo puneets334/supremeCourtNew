@@ -329,10 +329,136 @@ class DefaultController extends BaseController
     {
         return $this->render('onlineCopying.sci_request');
     }
+    public function sci_response(){
+        $_POST['BharatkoshResponse'] = 'PD94bWwgdmVyc2lvbj0iMS4wIj8+PHBheW1lbnRTZXJ2aWNlIHZlcnNpb249IjEuMCIgbWVyY2hhbnRDb2RlPSJNRVJDSEFOVCI+PHJlcGx5PjxvcmRlclN0YXR1cyBvcmRlckNvZGU9IkNQMjAyMDA5MjEwMDAwMiIgc3RhdHVzPSJTVUNDRVNTIj48cmVmZXJlbmNlIGlkPSIyMTA5MjAwMDAxMjk0IiBCYW5rVHJhbnNhY3N0aW9uRGF0ZT0iMDkvMjEvMjAyMCAxMToyNjowMSIgVG90YWxBbW91bnQ9IjEiPjwvcmVmZXJlbmNlPjwvb3JkZXJTdGF0dXM+PC9yZXBseT48U2lnbmF0dXJlIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjIj48U2lnbmVkSW5mbz48Q2Fub25pY2FsaXphdGlvbk1ldGhvZCBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnL1RSLzIwMDEvUkVDLXhtbC1jMTRuLTIwMDEwMzE1IiAvPjxTaWduYXR1cmVNZXRob2QgQWxnb3JpdGhtPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwLzA5L3htbGRzaWcjcnNhLXNoYTEiIC8+PFJlZmVyZW5jZSBVUkk9IiI+PFRyYW5zZm9ybXM+PFRyYW5zZm9ybSBBbGdvcml0aG09Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvMDkveG1sZHNpZyNlbnZlbG9wZWQtc2lnbmF0dXJlIiAvPjwvVHJhbnNmb3Jtcz48RGlnZXN0TWV0aG9kIEFsZ29yaXRobT0iaHR0cDovL3d3dy53My5vcmcvMjAwMC8wOS94bWxkc2lnI3NoYTEiIC8+PERpZ2VzdFZhbHVlPmJmeGpZOVA2eTYzL3lOaDRMSTdYTlJaNHZNQT08L0RpZ2VzdFZhbHVlPjwvUmVmZXJlbmNlPjwvU2lnbmVkSW5mbz48U2lnbmF0dXJlVmFsdWU+cnJaaTBBLzVTb0g2WWM2SGw5d3dUUm9HMTZadEd3ZEtaY3lzbFNFTzZPNVhRWlFDN2laenU3YjM1enJ0OEZIUjdVOWhNYW90SCtSZnlURlBaRytZd2VTWW55VnM4dkxyOUFDM3VxbGxoRmRRQ1MrTUVMMXFFK3ZyRjFkZm1EY2pYWnhNcGw2bXFEWWRSU3hzY1dVSWZ5MnBxUWRGdmdJVlN0M1VkQmtEYUJvbEp5VGFvTnJua1NCNldWRWR6MUovSGFVUVI2aHlPSE9XYmhkdkNyUGx2Wks3cFhwOWhLejUzQUZIZUpETzhHT1dPeStqZXdVRS9QdzN5ZGF3OGprYTFEVE8zS01tQk9ReWdYNGtzN0I0Ry9ITEw2eERlYWIxWDgxZFc2LzdMTHcvci9RY3RnSVd5NmZES3dIM0NzemdyU0FleWVRdUF3MGhtQTF4N0duYUF3PT08L1NpZ25hdHVyZVZhbHVlPjxLZXlJbmZvPjxYNTA5RGF0YT48WDUwOUlzc3VlclNlcmlhbD48WDUwOUlzc3Vlck5hbWU+Q049R2VvVHJ1c3QgUlNBIENBIDIwMTgsIE9VPXd3dy5kaWdpY2VydC5jb20sIE89RGlnaUNlcnQgSW5jLCBDPVVTPC9YNTA5SXNzdWVyTmFtZT48WDUwOVNlcmlhbE51bWJlcj4xNTkyMDE2NDUzMjQ3OTU5NDMwMDcyODgwNTAxMTE5MjQ0NTcyMDwvWDUwOVNlcmlhbE51bWJlcj48L1g1MDlJc3N1ZXJTZXJpYWw+PFg1MDlDZXJ0aWZpY2F0ZT5NSUlHcERDQ0JZeWdBd0lCQWdJUUMvb2N0bmhCZE0zYjJtTVY4aFo3R0RBTkJna3Foa2lHOXcwQkFRc0ZBREJlTVFzd0NRWURWUVFHRXdKVlV6RVZNQk1HQTFVRUNoTU1SR2xuYVVObGNuUWdTVzVqTVJrd0Z3WURWUVFMRXhCM2QzY3VaR2xuYVdObGNuUXVZMjl0TVIwd0d3WURWUVFERXhSSFpXOVVjblZ6ZENCU1UwRWdRMEVnTWpBeE9EQWVGdzB4T1RBeU1EY3dNREF3TURCYUZ3MHlNVEF5TURZeE1qQXdNREJhTUlHQU1Rc3dDUVlEVlFRR0V3SkpUakVPTUF3R0ExVUVDQk1GUkdWc2FHa3hFakFRQmdOVkJBY1RDVTVGZHlCRVpXeG9hVEV0TUNzR0ExVUVDaE1rUTI5dWRISnZiR3hsY2lCSFpXNWxjbUZzSUc5bUlFRmpZMjkxYm5SeklDaERSMEVwTVI0d0hBWURWUVFERXhWM2QzY3VZbWhoY21GMGEyOXphQzVuYjNZdWFXNHdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFETFRqdlRadDkzV3QyYnI5S2hHTjFUcmcxdHpqTm5CQ2MvVzZGbWhuT081OUJSTHRPNkdtdm9wOW9WNGJscmcwNm8zbjFsVVdtTXdZQ1BTSFUrb21XRVdvV2thZFZtV1lPNmlyYzBBWHN4ZEhXMHdkVzNPdnFRZzZjYWRQVzVVeGFaM1djQmtPWGNqMkdvR2w1SktlNlBER0FKSWtkQm8xclhJdjlrMXd5SE5waFFjbGlsNVNsUjNEZFdFaWg1MUJBL1NhN3hyRTNGbzhydnhyajR6WGhFM1U5UFdSYTlGYW12ZGVMQUtFU2JPemNaUjE0TmNQV1FlVXkrZ0E4bWVKc2s4SXVoMjRDREJQNHQwYUs3dWFMb3JiWS93S3lzbnMwYmVJcU93Unc5TnQwbDN1amlNZmRnbm1qMXUrTDlPLzMwQmNmMzBIVEtpcWVQTloyQ00zc3pBZ01CQUFHamdnTTVNSUlETlRBZkJnTlZIU01FR0RBV2dCU1FXUCt3bkhXb1VWUjNzZTN5bzBNV09KNXN4VEFkQmdOVkhRNEVGZ1FVNUxLdGh1cWo5NWxNcXZvK2NSckVXVUlMZWdFd013WURWUjBSQkN3d0tvSVZkM2QzTG1Kb1lYSmhkR3R2YzJndVoyOTJMbWx1Z2hGaWFHRnlZWFJyYjNOb0xtZHZkaTVwYmpBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGxCQll3RkFZSUt3WUJCUVVIQXdFR0NDc0dBUVVGQndNQ01ENEdBMVVkSHdRM01EVXdNNkF4b0MrR0xXaDBkSEE2THk5alpIQXVaMlZ2ZEhKMWMzUXVZMjl0TDBkbGIxUnlkWE4wVWxOQlEwRXlNREU0TG1OeWJEQk1CZ05WSFNBRVJUQkRNRGNHQ1dDR1NBR0cvV3dCQVRBcU1DZ0dDQ3NHQVFVRkJ3SUJGaHhvZEhSd2N6b3ZMM2QzZHk1a2FXZHBZMlZ5ZEM1amIyMHZRMUJUTUFnR0JtZUJEQUVDQWpCMUJnZ3JCZ0VGQlFjQkFRUnBNR2N3SmdZSUt3WUJCUVVITUFHR0dtaDBkSEE2THk5emRHRjBkWE11WjJWdmRISjFjM1F1WTI5dE1EMEdDQ3NHQVFVRkJ6QUNoakZvZEhSd09pOHZZMkZqWlhKMGN5NW5aVzkwY25WemRDNWpiMjB2UjJWdlZISjFjM1JTVTBGRFFUSXdNVGd1WTNKME1Ba0dBMVVkRXdRQ01BQXdnZ0Y5QmdvckJnRUVBZFo1QWdRQ0JJSUJiUVNDQVdrQlp3QjJBS1M1Q1pDMEdGZ1VoN3NUb3N4bmNBbzhOWmdFK1J2ZnVPTjN6UTdJRGR3UUFBQUJhTWMwa29ZQUFBUURBRWN3UlFJaEFOcnlwdWRCUmtKZFhJN0l1L2Zad3hIZ2ZPZFl6Q2lGMytVUExiMWd3R0gvQWlCRisrUHJuc2RJYXBuMENtdk5IUmZqTzFIQ0xCckFUTlYxSFhuMGZlUDRlZ0IyQUlkMXYrZFpmUGlNUTVsZnZmTnUvMWFOUjFZMi8wcTFZTUcwNnY5ZW9JTVBBQUFCYU1jMGsxb0FBQVFEQUVjd1JRSWhBSnRyZ0JzNURLOUplaE1uSThBaytDUW1KRlNwYmZFUGRKTzVScGlhOWwwTUFpQmtyaytOanIvcXN4OUw2VVZKRlpxUzRrcTJaYUdvc1QyL0RWZjd0TkJDWFFCMUFHOVRkcXd4OERFWjJKa0FwRkVWLzNjVkhCSFpBc0VBS1FhTnNnaWFOOWtUQUFBQmFNYzBrOXNBQUFRREFFWXdSQUlnUFo1TmxaR0hseHFqdU5jNFNxL25GaDYrMElnejJHNktDbGFWYUxBK25rRUNJQXFYOHNVT1pjM1dsZGpoRE9pbFpxNGRDTGRUNFdqT0xkRDRUTGl5L2lrRk1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQU9heVBXL3g3RkFVdWE0ckU3bE0wMCt0SVV2aURjVGhaQVdpMkJTeVNDRmszU0QzQmhsVVVFZFFaQzZ4b0NrMDdtbkpOaFZuWW9yd1k0bXpRa0luUm5TUndIa1ZVUytxMnRuM1ZTZC9VakNNbmZTTk1NOU0yc2ZiTExXYWtKU09GSk5DdkQwUzBmMWhjb1NqbzlkUExDc3pmQ1Z0N2U5TjJEcERwRXY1dld2Ynd5L0JEUC9UaUZLWTFiUVNGK0xsOXVGQ3JQT09OUG1Pc0xxRkNhVWltZEhrNkk0bUtxRElEN2VQbzdYL0E4dldnalFRNDNQOEdRWVl5b2hmeG9pYyt0OVU0TlRpRHJjVzRHek4vd1U0Q2hETVB6OGxiKysydlZ4cGlTNzh4alhJdG9RTlFObTM3STRuS2dqWXNsV1dRQXh1czhITVZlQlZrWGFpMnEwT0p0PC9YNTA5Q2VydGlmaWNhdGU+PC9YNTA5RGF0YT48L0tleUluZm8+PC9TaWduYXR1cmU+PC9wYXltZW50U2VydmljZT4=';
+        $responseString = $_POST['BharatkoshResponse'];
+        //echo "111<br><br>";
+        $responseStringBase64_decode = base64_decode($responseString);
+        if(!empty($_POST['BharatkoshResponse'])){
+        //$signature_match = bharatKoshResponse($responseStringBase64_decode);
+         $signature_match='Signature validated';
+        if($signature_match == 'Signature validated') {
+            $xml = simplexml_load_string($responseStringBase64_decode);
+            $reply = $xml->reply;
+    
+            //var_dump($reply);
+            //print_r($reply);
+            $orderStatus = $reply[0]->orderStatus;
+            $orderCode = $orderStatus->attributes()->orderCode;
+            $orderStatus = $orderStatus->attributes()->status;
+    
+            $reference = $reply[0]->orderStatus->reference;
+            $referenceID = $reference->attributes()->id;
+            $BankTransacstionDate = $reference->attributes()->BankTransacstionDate;
+            $TotalAmount = $reference->attributes()->TotalAmount;
+            $key_master = substr($orderCode, 0, 2);
+            $data=[
+                "orderCode" => "$orderCode",
+                "orderStatus" => "$orderStatus",
+                "referenceID" => "$referenceID",
+                "bankTransactionDate" => "$BankTransacstionDate",
+                "response_amount" => $TotalAmount == 0 ? '0.00' : $TotalAmount
+            ];
+        $service_row_count=getBharakoshPaymentStatus($data);
+        if (sizeof($service_row_count) > 0) {
+        if (bharatkoshSaveStatus($data)) {
+            $data=getBharatKoshRequest($orderCode);
+            $select_statement_row_count =count($data);
+            $data=$data[0];
+            $orderStatus = $orderStatus;
+            $referenceID = $referenceID;
+            $orderDate = $data->entry_time;
+            $OrderBatchTotalAmounts = $data->order_batch_total_amount;
+            $ShippingFirstName = $data->shipping_first_name;
+            $ShippingLastName = $data->shipping_last_name;
+            $ShippingAddress1 = $data->shipping_address1;
+            $ShippingAddress2 = $data->shipping_address2;
+            $ShippingPostalCode = $data->shipping_postal_code;
+            $ShippingCity = $data->shipping_city;
+            $ShippingStateRegion = $data->shipping_state_region;
+            $ShippingState = $data->shipping_state;
+            $ShippingCountryCode = $data->shipping_country_code;
+            $ShippingMobileNumber = $data->shipping_mobile_number;
+            $ShopperEmailAddress = $data->shopper_email_address;
+            $application_id = $data->application_id;
 
+        if($select_statement_row_count > 0) {
+            if($key_master =='RT') {
+            
+            return $this->render('onlineCopying.sci_response',$data);
+            }
+            if ($orderStatus == 'SUCCESS'){
+                $sms_text = "eCopying charges Rs. $TotalAmount received successfully. CRN $orderCode allotted for your reference. - Supreme Court Of India";
+                //eCopying charges Rs. {#var#} received successfully. CRN {#var#} allotted for your reference. - Supreme Court Of India
+                //$sms_response = sci_send_sms($ShippingMobileNumber,$sms_text,'ecop',SCISMS_eCopying_charges);
+                //$json_for_aor = json_decode($sms_response);
+
+            $orderCode='AC2021031700001';
+            $copyingDetails = getCopyingDetails($orderCode);
+            $diary_no = $copyingDetails[0];
+            $required_document = $copyingDetails[1];
+            $data=array('OrderBatchTotalAmounts'=>$OrderBatchTotalAmounts,'orderDate'=>$orderDate,'orderCode'=>$orderCode);
+            $htmlContent=$this->render('onlineCopying.sci_email_response',$data);
+            $subject='Payment Confirmation';
+            $to_email=$ShopperEmailAddress;
+            //send_mail_msg($to_email, $subject,$htmlContent, $to_user_name="");
+            return response()->redirect(base_url('online_copying/sci_response_reciept'));   
+            }
+        
+        }
+       }
+        }else{
+            //logout
+            //<!--<script type='text/javascript'>window.location.href = 'online_copying/logout.php'</script>-->
+        }
+        }
+        }    
+    }
+    
+    public function sci_response_reciept(){
+        //print_r($_SESSION);
+        //die;
+        ob_start();
+        //$this->render('onlineCopying.sci_response_success_receipt',$_SESSION);
+        //die;
+        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        
+        // pr($pdf);
+        $pdf->SetPrintHeader(TRUE);
+        $pdf->SetPrintFooter(TRUE);
+        $pdf->SetAuthor('Supreme Court of India');
+        $pdf->SetTitle('Supreme Court of India');
+        $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+        $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+        $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+        $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+        
+        if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
+            require_once(dirname(__FILE__) . '/lang/eng.php');
+            $pdf->setLanguageArray($l);
+        }
+
+        $pdf->SetFont('helvetica', '', 8, '', true);
+        $pdf->AddPage();
+        $content='hi sant';
+        $output_file_name ="ResponseReciept.pdf";
+        $content = view('onlineCopying/sci_response_success_receipt',$_SESSION);
+        $pdf->writeHTML($content. '', true, false, false, false, '');
+        $pdf->lastPage();
+        
+        ob_end_clean();
+        
+        
+        
+        $pdf->Output($output_file_name, 'I');
+        exit(0);
+
+        //return $this->render('onlineCopying.sci_response_success_receipt');    
+    }
     public function sciRequestPayment()
     {
         return $this->render('onlineCopying.sci_request_payment');
+
     }
     
     public function verifyUser()
