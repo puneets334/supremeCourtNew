@@ -269,11 +269,11 @@ if (isset($diary_no) && !empty($diary_no)) {
                     <label class="radio-inlin"><input type="radio" class="clsRadio" id="radio_new" name="radio_appearing_for" value="N"> Want to represent existing litigant(s) (Un-represented/New appearance)</label><br />
 
                     <?php if ($lbl_confirm == 'Interlocutary Application') { ?>
-                        <label class="radio-inlin"><input type="radio" class="clsRadio" id="radio_intervenor" name="radio_appearing_for" value="I"> Intervenor/Other.</label>
+                        <label class="radio-inlin"><input type="radio" class="clsRadio" id="radio_intervenor" name="radio_appearing_for" value="I"> Intervenor/Other..</label>
                         <hr />
                     <?php } ?>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="divAppearingFor" hidden>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="divAppearingFor" style="display: none;">
                     <div class="form-group">
                         <label class="text-left"><strong>Appearing For :</strong></label>
                         <!--<input type="text" class="col-md-8" id="txtIntervenorName" name="txtIntervenorName">-->
@@ -320,7 +320,6 @@ if (isset($diary_no) && !empty($diary_no)) {
 }
 ?>
 </div>
-@push('script')
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/general.js"></script>
@@ -335,12 +334,14 @@ if (isset($diary_no) && !empty($diary_no)) {
 <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
 <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
 <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
+
 <?php if ($lbl_confirm == 'Mentioning') { ?>
     <script type="text/javascript">
         document.getElementById("confirm_yes").checked = true;
         //document.getElementById('save_searched_case').submit();
     </script>
 <?php } ?>
+
 <script type="text/javascript">
     $(function() {
         $('.clsRadio').click(function() {
@@ -371,4 +372,3 @@ if (isset($diary_no) && !empty($diary_no)) {
         })
     });
 </script>
-@endpush

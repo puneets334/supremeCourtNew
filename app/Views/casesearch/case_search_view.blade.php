@@ -296,7 +296,6 @@
         <script src="<?= base_url() . 'assets' ?>/js/select2.min.js"></script>
         <script src="<?= base_url() . 'assets' ?>/js/select2-tab-fix.min.js"></script>
         <script type="text/javascript" src="<?= base_url() . 'assets' ?>/js/jquery.validate.js"></script>
-      
         <!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script> -->
         <script>
