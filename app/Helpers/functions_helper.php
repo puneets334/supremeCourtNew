@@ -3640,6 +3640,7 @@ function speed_post_tariff_calc_online($weight,$desitnation_pincode){
         $response = array("Validation Status" => $error_type);    
     }
     curl_close($curl);
+    
     return json_encode($response);
 }
 
