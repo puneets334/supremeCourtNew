@@ -1,3 +1,4 @@
+<div class="card">
 <link rel="shortcut icon" href="<?= base_url().'assets/newDesign/images/logo.png' ?>" type="image/png" />
 <!-- <link rel="shortcut icon" href="<?= base_url() . 'assets/newAdmin/' ?>images/favicon.gif"> -->
 <link href="<?= base_url() . 'assets/newAdmin/' ?>css/bootstrap.min.css" rel="stylesheet">
@@ -318,6 +319,7 @@ if (isset($diary_no) && !empty($diary_no)) {
     echo '<p style="font-size:14px;" class="text-danger text-center"><strong>No Records Found !</strong></p>';
 }
 ?>
+</div>
 @push('script')
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/jquery-3.3.1.min.js"></script>
 <script src="<?= base_url() . 'assets/newAdmin/' ?>js/bootstrap.bundle.min.js"></script>
