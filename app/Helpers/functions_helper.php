@@ -3637,10 +3637,10 @@ function speed_post_tariff_calc_online($weight,$desitnation_pincode){
     }
     else{
         $error_type = "Network Issue";
-        $response = json_encode(array("Validation Status" => $error_type));    
+        $response = array("Validation Status" => $error_type);    
     }
     curl_close($curl);
-    return $response;
+    return json_encode($response);
 }
 
 function speed_post_tariff_calc_offline($weight,$desitnation_pincode){
