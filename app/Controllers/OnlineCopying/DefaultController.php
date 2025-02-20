@@ -463,7 +463,6 @@ class DefaultController extends BaseController
 
         $pdf->SetFont('helvetica', '', 8, '', true);
         $pdf->AddPage();
-        $content='hi sant';
         $output_file_name ="ResponseReciept.pdf";
         $content = view('onlineCopying/sci_response_success_receipt',$_SESSION);
         $pdf->writeHTML($content. '', true, false, false, false, '');
@@ -473,10 +472,10 @@ class DefaultController extends BaseController
         
         
         
-        $pdf->Output($output_file_name, 'I');
-        exit(0);
+        // $pdf->Output($output_file_name, 'I');
+        // exit(0);
 
-        //return $this->render('onlineCopying.sci_response_success_receipt');    
+        return view('onlineCopying/sci_response_success_receipt',$_SESSION);   
     }
     public function sciRequestPayment()
     {
