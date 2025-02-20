@@ -789,7 +789,6 @@ curl_close($curl);
         
         //$data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/saveSMSData/");
         
-        
         if ($result != false) {
         return json_decode($result,true);
             
