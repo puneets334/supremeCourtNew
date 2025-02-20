@@ -3633,15 +3633,15 @@ function speed_post_tariff_calc_online($weight,$desitnation_pincode){
     }
     else if($status == 0){
         //$error_type = "Network Issue";
-        $response = speed_post_tariff_calc_offline($weight,$desitnation_pincode); //json_encode(array("Validation Status" => $error_type));
+        $response = json_encode(speed_post_tariff_calc_offline($weight,$desitnation_pincode)); //json_encode(array("Validation Status" => $error_type));
     }
     else{
         $error_type = "Network Issue";
-        $response = array("Validation Status" => $error_type);    
+        $response = json_encode(array("Validation Status" => $error_type));    
     }
     curl_close($curl);
-    
-    return json_encode($response);
+
+    return $response;
 }
 
 function speed_post_tariff_calc_offline($weight,$desitnation_pincode){
