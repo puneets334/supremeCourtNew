@@ -637,21 +637,42 @@ curl_close($curl);
         
     }
     public function bharatKoshRequest($dataArr){
-        //print_r($dataArr);
-        //die;
+        
         $postdata = http_build_query(
             $dataArr
         );
-        $opts = array('http' =>
+        
+        $curl = curl_init();
+
+          curl_setopt_array($curl, array(
+             CURLOPT_URL => 'http://10.40.186.239:88/online_copying/BharatKoshRequest',
+             CURLOPT_RETURNTRANSFER => true,
+             CURLOPT_ENCODING => '',
+             CURLOPT_MAXREDIRS => 10,
+             CURLOPT_TIMEOUT => 0,
+             CURLOPT_FOLLOWLOCATION => true,
+             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+             CURLOPT_CUSTOMREQUEST => 'POST',
+             CURLOPT_POSTFIELDS =>$postdata,
+             CURLOPT_HTTPHEADER => array(
+             'Content-Type: application/x-www-form-urlencoded'
+             ),
+           ));
+            
+           $result = curl_exec($curl);
+           
+           curl_close($curl);
+          
+        /*$opts = array('http' =>
             array(
                 'method'  => 'POST',
                 'header'  => 'Content-Type: application/x-www-form-urlencoded',
-                'content' => $postdata
+                'content' =>$postdata
             )
         );
         $context  = stream_context_create($opts);
         $url = ICMIS_SERVICE_URL;
-        $result = file_get_contents($url.'/online_copying/BharatKoshRequest',true, $context);
+        $result = file_get_contents($url.'/online_copying/BharatKoshRequest',true, $context);*/
         
         //$data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/saveSMSData/");
         if ($result != false) {
@@ -751,5 +772,57 @@ curl_close($curl);
             return NULL;
         }  
     }
-    
+    public function bharatkoshSaveStatus($data){
+        $postdata = http_build_query(
+            $data
+        );
+        $opts = array('http' =>
+            array(
+                'method'  => 'POST',
+                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+                'content' => $postdata
+            )
+        );
+        $context  = stream_context_create($opts);
+        $url = ICMIS_SERVICE_URL;
+        $result = file_get_contents($url.'/online_copying/bharatkoshSaveStatus',true, $context);
+        
+        //$data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/saveSMSData/");
+        
+        
+        if ($result != false) {
+        return json_decode($result,true);
+            
+        } else {
+            return NULL;
+        }
+        
+    }
+    public function getBharakoshPaymentStatus($orderCode,$orderStatus){
+        
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/getBharakoshPaymentStatus?orderCode=$orderCode&orderStatus=$orderStatus");
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }  
+    }
+    public function getBharatKoshRequest($orderCode){
+        
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/getBharatKoshRequest?orderCode=$orderCode");
+        if ($data != false) {
+            return json_decode($data);
+        } else {
+            return NULL;
+        }  
+    }
+    public function getCopyingDetails($crn){
+        
+        $data = curl_get_contents(ICMIS_SERVICE_URL."/online_copying/getCopyingDetails?crn=$crn");
+        if ($data != false) {
+            return json_decode($data);
+        } else{
+            return NULL;
+        }  
+    }
 }
