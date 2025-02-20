@@ -1,8 +1,26 @@
 @extends('layout.advocateApp')
 @section('content')
 <?php
+/*[ { "SN": 1, "TxnInitDate": "0001-01-01T00:00:00", "TxnCompDate": "0001-01-
+    01T00:00:00", "TxnRefNo": "0405170000006", "ChallanNo": "", "OrderCode":
+    "IFFOL0012412", "Amount": 100.00, "Purpose": "LobaBifurcationTest",
+    "PaymentType": "", "PaymentFrequency": "", "Department_Officer": "",
+    "DateofCredittoPAOAccount": "0001-01-01T00:00:00", "DepositorCategory":
+    "Individual", "DepositorName": "TestLOBA ", "MobileNumber": "9999999999",
+    "Email": "pfms.rakesh@gmail.com", "Shippingaddress": "", "City":
+    "Jalandhar", "State_Name": "DAMAN & DIU", "Pincode": "110092",
+    "PaymentMode": "ONLine", "ReceiptAccountNumber": "", "UTRNo": "",
+    "IsVerified": "" }, { "SN": 2, "TxnInitDate": "0001-01-01T00:00:00",
+    "TxnCompDate": "0001-01-01T00:00:00", "TxnRefNo": "0405170000006",
+    "ChallanNo": "", "OrderCode": "IFFOL0012412", "Amount": 100.00, "Purpose":
+    "LobaBifurcationTest", "PaymentType": "", "PaymentFrequency": "",
+    "Department_Officer": "", "DateofCredittoPAOAccount": "0001-01-
+    01T00:00:00", "DepositorCategory": "Individual", "DepositorName": "TestLOBA
+    ", "MobileNumber": "9999999999", "Email": "pfms.rakesh@gmail.com",
+    "Shippingaddress": "", "City": "Jalandhar", "State_Name": "DAMAN & DIU",
+    "Pincode": "110092", "PaymentMode": "ONLine", "ReceiptAccountNumber": "",
+    "UTRNo": "", "IsVerified": "" } ]*/
 extract($_POST);
-
 $first_post_base64string = base64_encode(json_encode($_POST));
 // $cop_mode = '';
 if(isset($_POST['name'])){
@@ -50,17 +68,21 @@ if(isset($_POST['name'])){
             $loop_for_batch++;
         }
         $data = array(
-            //"DepartmentCode" => "22", // UAT Server
-            "DepartmentCode" => "022",  //Production Server
+            "DepartmentCode" => "22", // UAT Server
+            //"DepartmentCode" => "022",  //Production Server
             "OrderBatchTransactions" => "$loop_for_batch",
+            "Transactions" => "$loop_for_batch",
             "OrderBatchMerchantBatchCode" => "$OrderBatchMerchantBatchCode",
+            "merchantBatchCode" => "$OrderBatchMerchantBatchCode",
             "OrderBatchTotalAmount" => number_format($_SESSION['session_total_amount_to_pay'],2,".",""), //number_format($_SESSION['session_total_amount_to_pay'], 2),
-            "InstallationId" => "10017",
+            "TotalAmount" => number_format($_SESSION['session_total_amount_to_pay'],2,".",""), //number_format($_SESSION['session_total_amount_to_pay'], 2),
+            "InstallationId" => "10051",
+            // "InstallationId" => "10017", //live
             "OrderCode" => "$OrderBatchMerchantBatchCode",
             "CartDescription" => "Copying Service Charges",
             "OrderContent" => "9570", //9570 for production server //7220 For UAT server
             "PaymentTypeId" => "9528", //9528 for production server //3132 For UAT server
-            "PAOCode" => "031709",
+            "PAOCode" => "PAO",
             "DDOCode" => "231710",
             "PaymentMethodMode" => "Online",
             "ShopperEmailAddress" => $_SESSION["applicant_email"],
@@ -85,7 +107,8 @@ if(isset($_POST['name'])){
             "BillingCountryCode" => "",
             "BillingMobileNumber" => "",
             "clientIP" => "$clientIP",
-            "serviceUserID" => "$scipay"
+            "serviceUserID" => "$scipay",
+            "CurrencyCode" => "INR"
         );
         
         $baratkoshresult=bharaKoshDataServiceRequest($data);
@@ -100,6 +123,7 @@ if(isset($_POST['name'])){
             }
             $statement_batch = array(
                 "OrderBatchMerchantBatchCode" => "$OrderBatchMerchantBatchCode",
+                "merchantBatchCode" => "$OrderBatchMerchantBatchCode",
                 "OrderCode" => $new_order_batch_code,
                 "amount" => number_format($json_data['service_charges'],2,".",""),//number_format($json_data['service_charges'], 2),
                 "CartDescription" => "Copying Service Charges",
@@ -128,6 +152,7 @@ if(isset($_POST['name'])){
             }
             $statement_batch = array(
                 "OrderBatchMerchantBatchCode" => "$OrderBatchMerchantBatchCode",
+                "merchantBatchCode" => "$OrderBatchMerchantBatchCode",
                 "OrderCode" => $new_order_batch_code,
                 "amount" => number_format($json_data['fee_in_stamp'],2,".",""), // number_format($json_data['fee_in_stamp'], 2),
                 "CartDescription" => "Copying Fee in Stamp",
@@ -154,6 +179,7 @@ if(isset($_POST['name'])){
             }
             $statement_batch = array(
                 "OrderBatchMerchantBatchCode" => "$OrderBatchMerchantBatchCode",
+                "merchantBatchCode" => "$OrderBatchMerchantBatchCode",
                 "OrderCode" => $new_order_batch_code,
                 "amount" =>  number_format($json_data['postage'],2,".",""), //number_format($json_data['postage'], 2),
                 "CartDescription" => "Postage",
@@ -172,7 +198,7 @@ if(isset($_POST['name'])){
         }
 
 
-//online_copying table insert
+        //online_copying table insert
 
         if ($scipay == '10001') {
             $requision_title = "COPYING REQUISTION";
@@ -270,30 +296,36 @@ if(isset($_POST['name'])){
         //OrderContent different for each head
         ////InstallationId given by pfms is unique for sci
         //installation id = 10017 new created
-        $request = array("DepartmentCode" => "022", //022 for production server, 22 for UAT server
+        $request = array(
+            "DepartmentCode" =>"022", //022 for production server, 22 for UAT server
             "OrderBatchTransactions" => "$loop_for_batch",
-            "OrderBatchMerchantBatchCode" => "$OrderBatchMerchantBatchCode",
+            "Transactions" =>"$loop_for_batch",
+            "OrderBatchMerchantBatchCode" =>"TEST04092019",
+            "merchantBatchCode" => "TEST04092019",
             "OrderBatchTotalAmount" => number_format($_SESSION['session_total_amount_to_pay'],2,".",""), //number_format($_SESSION['session_total_amount_to_pay'], 2),
+            "TotalAmount" => number_format($_SESSION['session_total_amount_to_pay'],2,".",""), //number_format($_SESSION['session_total_amount_to_pay'], 2),
             "InstallationId" => "10017",
-            "OrderCode" => "$OrderBatchMerchantBatchCode",
+            "OrderCode" => "TEST04092019",
             "CartDescription" => "Copying Service Charges",
             "OrderContent" => "9570", //9570 for production server //7220 For UAT server
-            "PaymentTypeId" => "9528", //9528 for production server //3132 For UAT server
-            "PAOCode" => "031709",
-            "DDOCode" => "231710",
+            "PaymentTypeId" => "'9528", //9528 for production server //3132 For UAT server
+            "PAOCode" => "031709", //031709 for production 028825 for uat
+            "DDOCode" => "231710", //231710 for production 200727 for uat
             "MultiHeadArray" => $child_request,
-            "PaymentMethodMode" => "Online",
-            "ShopperEmailAddress" => $_SESSION["applicant_email"],
-            "ShippingFirstName" => $first_name,
-            "ShippingLastName" => $second_name,
-            "ShippingAddress1" => $postal_add,
-            "ShippingAddress2" => "",
-            "ShippingPostalCode" => $pincode,
-            "ShippingCity" => $city,
-            "ShippingStateRegion" => $district,
-            "ShippingState" => $state,
-            "ShippingCountryCode" => $country,
-            "ShippingMobileNumber" => $_SESSION["applicant_mobile"],
+            "PaymentMethodMode" =>"COPYING SERVICE CHARGES",
+            "Code" => "All",
+            "ShopperEmailAddress" =>$_SESSION["applicant_email"],
+            "ShippingFirstName" =>$first_name,
+            "ShippingLastName" =>$second_name,
+            
+            "ShippingAddress1" =>$postal_add,
+            "ShippingAddress2" =>"",
+            "ShippingPostalCode" =>$pincode,
+            "ShippingCity" =>$city,
+            "ShippingStateRegion" =>$district,
+            "ShippingState" =>$state,
+            "ShippingCountryCode" =>$country,
+            "ShippingMobileNumber" =>$_SESSION["applicant_mobile"],
             "BillingFirstName" => "",
             "BillingLastName" => "",
             "BillingAddress1" => "",
@@ -304,15 +336,30 @@ if(isset($_POST['name'])){
             "BillingState" => "",
             "BillingCountryCode" => "",
             "BillingMobileNumber" => "",
-            "clientIP" => "$clientIP",
-            "serviceUserID" => "$scipay"
+            "clientIP" =>"$clientIP",
+            "serviceUserID" =>"$scipay",
+            "CurrencyCode" =>"INR",
+            "ShippingAddress" =>$postal_add,
+            "MobileNumber" =>$_SESSION["applicant_mobile"],
+            "FirstName" =>$first_name,
+            "LastName" =>$second_name,
+            "PostalCode" => $pincode,
+            "City" => $city,
+            "StateRegion"=>$district,
+            "State" =>$state,
+            "CountryCode" =>$country,
         );
 
        $signedXML = bharatKoshRequest($request);
-
+       
+        //$uat='https://training.pfms.gov.in/bharatkosh/bkepay'
+        //$production=https://bharatkosh.gov.in/bkepay;
+        //BHARATKOSH_PAYMENT_GATEWAY;
         ?>
+        
         Redirecting to Payment Gateway ...
-        <form id="myform" name="myform" target="_self" action="https://bharatkosh.gov.in/bkepay" method="post">
+        <!--<form id="myform" name="myform" target="_self" action="<?=BHARATKOSH_PAYMENT_GATEWAY; ?>" method="post">-->
+        <form id="myform" name="myform" target="_self" action="http://10.40.186.239:84/online_copying/sci_response" method="post">
             <input type="hidden" name="bharrkkosh" value="<?= $signedXML; ?>">
             <input type="submit" name="name" value="CLICK" style="visibility: hidden;"/>
         </form>
@@ -360,7 +407,8 @@ if ($cop_mode == 1 OR $cop_mode == 2 OR $cop_mode == 3) {
             }
         }
     }
-
+    //print_r($_POST);
+    //die;
     if( (($_SESSION['session_total_amount_to_pay'] == '0' OR $_SESSION['session_total_amount_to_pay'] == '0.00') && $cop_mode == 3 && $app_type == 5) || $bail_order == 'Y') {
 
         $copy_detail_temp = explode("#", $copy_detail);

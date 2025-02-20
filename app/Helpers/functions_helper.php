@@ -3553,7 +3553,7 @@ function eCopyingGetBarDetails($bar_id){
     $result=$ecoping_webservices->eCopyingGetBarDetails($bar_id);
     return $result;
 }
-
+ 
 function eCopyingGetCopyCategory(){
     $ecoping_webservices=new Ecoping_webservices();
     $result=$ecoping_webservices->getCategory();
@@ -3633,7 +3633,7 @@ function speed_post_tariff_calc_online($weight,$desitnation_pincode){
     }
     else if($status == 0){
         //$error_type = "Network Issue";
-        $response = speed_post_tariff_calc_offline($weight,$desitnation_pincode); //json_encode(array("Validation Status" => $error_type));
+        $response = json_encode(speed_post_tariff_calc_offline($weight,$desitnation_pincode)); //json_encode(array("Validation Status" => $error_type));
     }
     else{
         $error_type = "Network Issue";
@@ -3779,34 +3779,35 @@ function insert_user_assets($dataArray) {
 }
 
 function bharatKoshRequest($reqeust) {
-   
-    //$xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="22" Version="1.0"/>'); //uat server
-    $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="022" Version="1.0"/>');//production server
+    
+    $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="22" merchantCode
+="MERCHANT" Version="1.0"/>'); //uat server
+    // $xml = new SimpleXMLElement('<BharatKoshPayment DepartmentCode="022" Version="1.0"/>');//production server
     $submit = $xml->addChild('Submit');
     $order_batch = $submit->addChild('OrderBatch');
-    $order_batch->addAttribute('TotalAmount', "$reqeust[OrderBatchTotalAmount]");
-    $order_batch->addAttribute('Transactions', "$reqeust[OrderBatchTransactions]");
+    $order_batch->addAttribute('TotalAmount', $reqeust['OrderBatchTotalAmount']);
+    $order_batch->addAttribute('Transactions',$reqeust['OrderBatchTransactions']);
     //$order_batch->addAttribute('Transactions', "2");
-    $order_batch->addAttribute('merchantBatchCode', "$reqeust[OrderBatchMerchantBatchCode]");
+    $order_batch->addAttribute('merchantBatchCode',$reqeust['OrderBatchMerchantBatchCode']);
     if($reqeust['OrderBatchTransactions'] == 1){
         $order = $order_batch->addChild('Order');
-        $order->addAttribute('InstallationId', "$reqeust[InstallationId]");//given by pfms is unique for sci
+        $order->addAttribute('InstallationId',$reqeust['InstallationId']);//given by pfms is unique for sci
         //$order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
-        $order->addAttribute('OrderCode', "$reqeust[OrderBatchMerchantBatchCode]");
+        $order->addAttribute('OrderCode',$reqeust['OrderBatchMerchantBatchCode']);
         $cart = $order->addChild('CartDetails');
-        $cart->addChild('Description', "$reqeust[CartDescription]");
+        $cart->addChild('Description',$reqeust['CartDescription']);
         //$cart->addChild('Description');
         //$cart->addChild('Amount CurrencyCode="INR" exponent="0" value="1"');
         $cart->addChild('Amount CurrencyCode="INR" exponent="2" value="' . $reqeust['OrderBatchTotalAmount'] . '"');
-        $cart->addChild('OrderContent', "$reqeust[OrderContent]"); //also knows purposeId //OrderContent different for each head
-        $cart->addChild('PaymentTypeId', "$reqeust[PaymentTypeId]");
-        $cart->addChild('PAOCode', "$reqeust[PAOCode]");
-        $cart->addChild('DDOCode', "$reqeust[DDOCode]");
+        $cart->addChild('OrderContent',$reqeust['OrderContent']); //also knows purposeId //OrderContent different for each head
+        $cart->addChild('PaymentTypeId',$reqeust['PaymentTypeId']);
+        $cart->addChild('PAOCode',$reqeust['PAOCode']);
+        $cart->addChild('DDOCode',$reqeust['DDOCode']);
         //repeating code
         $pay_method_mask = $order->addChild('PaymentMethodMask');
         $pay_method_mask->addChild('Include Code="'.$reqeust['PaymentMethodMode'].'"');
         $shopper = $order->addChild('Shopper');
-        $shopper->addChild('ShopperEmailAddress', "$reqeust[ShopperEmailAddress]");
+        $shopper->addChild('ShopperEmailAddress',$reqeust['ShopperEmailAddress']);
         $shopper->addChild('ShopperEmailAddress');
         $shipping = $order->addChild('ShippingAddress');
         $shipping_address = $shipping->addChild('Address');
@@ -3892,12 +3893,12 @@ function bharatKoshRequest($reqeust) {
     $xmlString = $xml->asXML();
     // Load the XML to be signed
     $doc = new DOMDocument('1.0', 'utf-8');
-    $doc->encoding = 'utf-8';
-    $doc->formatOutput = false;
-    $doc->preserveWhiteSpace = true;
+    // $doc->encoding = 'utf-8';
+    // $doc->formatOutput = false;
+    // $doc->preserveWhiteSpace = true;
     $doc->loadXML($xmlString);
     // Create a new Security object
-    $objDSig = new XMLSecurityDSig("");
+    $objDSig = new XMLSecurityDSig();
     // Use the c14n exclusive canonicalization
     $objDSig->setCanonicalMethod(XMLSecurityDSig::C14N);
     //$options['prefix'] = '';
@@ -3909,20 +3910,22 @@ function bharatKoshRequest($reqeust) {
     // Create a new (private) Security key
     $objKey = new XMLSecurityKey(XMLSecurityKey::RSA_SHA1, array('type' => 'private'));
     //If key has a passphrase, set it using
-    $objKey->passphrase = 'Savan@#2020';
-    //$objKey->passphrase = '123456';
+    // $objKey->passphrase = 'Savan@#2020';
+    $objKey->passphrase = '123456';
     // Load the private key
     //$objKey->loadKey('privatekey_10082020.pem', TRUE);
-    $objKey->loadKey(base_url('/public/private_key_capricon.pem'), TRUE);
+    $objKey->loadKey(base_url('/public/private_key.pem'), TRUE);
     // Sign the XML file
     $objDSig->sign($objKey);
+    
     // Add the associated public key to the signature
-    $objDSig->add509Cert(file_get_contents(base_url('/public/publiccert_capricon.pem')), true, false, array('issuerSerial' => true));
+    $objDSig->add509Cert(file_get_contents(base_url('/public/certificate.crt')), true, false, array('issuerSerial' => true));
     //$objDSig->add509Cert(file_get_contents('publiccert_10082020.pem'), true, false, array('issuerSerial' => true));
     // Append the signature to the XML
     $objDSig->appendSignature($doc->documentElement);
     // Save the signed XML
     $signedXML = $doc->saveXML();
+    
     return $signedXML_encode64 = base64_encode($signedXML);
 }
 function bharaKoshDataServiceRequest($data){
@@ -4705,4 +4708,25 @@ function send_mail_cron_jio($data)
     }//End of foreach loop..
     $result = 'Data not found';
     return $result;
+}
+function bharatkoshSaveStatus($data){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->bharatkoshSaveStatus($data);
+    return $result;
+}
+function getBharakoshPaymentStatus($data){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getBharakoshPaymentStatus($data['orderCode'],$data['orderStatus']);
+    return $result;
+}
+function getBharatKoshRequest($orderCode){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getBharatKoshRequest($orderCode);
+    return $result;  
+}
+function getCopyingDetails($crn){
+    $ecoping_webservices=new Ecoping_webservices();
+    $result=$ecoping_webservices->getCopyingDetails($crn);
+    return $result;
+    
 }
