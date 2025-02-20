@@ -388,15 +388,38 @@ class DefaultController extends BaseController
             return $this->render('onlineCopying.sci_response',$data);
             }
             if ($orderStatus == 'SUCCESS'){
+                $orderCode='AC2021031700001';
+                $copyingDetails = getCopyingDetails($orderCode);
+                $diary_no = $copyingDetails[0];
+                $required_document = $copyingDetails[1];
                 $sms_text = "eCopying charges Rs. $TotalAmount received successfully. CRN $orderCode allotted for your reference. - Supreme Court Of India";
+                $_SESSION['orderStatus'] = (string)$orderStatus;
+                $_SESSION['OrderBatchTotalAmounts'] = $OrderBatchTotalAmounts;
+                $_SESSION['orderCode'] = (string)$orderCode;
+                $_SESSION['ShippingMobileNumber'] = $ShippingMobileNumber;
+
+                $_SESSION['ShopperEmailAddress'] = $ShopperEmailAddress;
+                $_SESSION['ShippingFirstName'] = $ShippingFirstName;
+                $_SESSION['ShippingLastName'] = $ShippingLastName;
+                $_SESSION['ShippingAddress1'] = $ShippingAddress1;
+                $_SESSION['ShippingAddress2'] = $ShippingAddress2;
+                $_SESSION['ShippingCity'] = $ShippingCity;
+                $_SESSION['ShippingStateRegion'] = $ShippingStateRegion;
+                $_SESSION['ShippingState'] = $ShippingState;
+
+                $_SESSION['ShippingPostalCode'] = $ShippingPostalCode;
+                $_SESSION['ShippingCountryCode'] = $ShippingCountryCode;
+                $_SESSION['orderDate'] = $orderDate;
+                $_SESSION['diary_no'] = $diary_no;
+                $_SESSION['required_document'] = $required_document;
+                $_SESSION['ShippingState'] = $ShippingState;
+                $_SESSION['ShippingState'] = $ShippingState;
+                $_SESSION['ShippingState'] = $ShippingState;
                 //eCopying charges Rs. {#var#} received successfully. CRN {#var#} allotted for your reference. - Supreme Court Of India
                 //$sms_response = sci_send_sms($ShippingMobileNumber,$sms_text,'ecop',SCISMS_eCopying_charges);
                 //$json_for_aor = json_decode($sms_response);
 
-            $orderCode='AC2021031700001';
-            $copyingDetails = getCopyingDetails($orderCode);
-            $diary_no = $copyingDetails[0];
-            $required_document = $copyingDetails[1];
+           
             $data=array('OrderBatchTotalAmounts'=>$OrderBatchTotalAmounts,'orderDate'=>$orderDate,'orderCode'=>$orderCode);
             $htmlContent=$this->render('onlineCopying.sci_email_response',$data);
             $subject='Payment Confirmation';
@@ -440,7 +463,6 @@ class DefaultController extends BaseController
 
         $pdf->SetFont('helvetica', '', 8, '', true);
         $pdf->AddPage();
-        $content='hi sant';
         $output_file_name ="ResponseReciept.pdf";
         $content = view('onlineCopying/sci_response_success_receipt',$_SESSION);
         $pdf->writeHTML($content. '', true, false, false, false, '');
@@ -450,10 +472,10 @@ class DefaultController extends BaseController
         
         
         
-        $pdf->Output($output_file_name, 'I');
-        exit(0);
+        // $pdf->Output($output_file_name, 'I');
+        // exit(0);
 
-        //return $this->render('onlineCopying.sci_response_success_receipt');    
+        return view('onlineCopying/sci_response_success_receipt',$_SESSION);   
     }
     public function sciRequestPayment()
     {
