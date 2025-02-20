@@ -1003,3 +1003,5 @@ define('NEW_MAIL_SERVER_HOST_JIO_IP', "http://10.192.105.124:91/api/v1/send");
 
 define('AUTHENTICATED_BY_AOR',24);
 define('APPEARING_COUNCIL',25);
+define('BHARATKOSH_PAYMENT_GATEWAY','https://training.pfms.gov.in/bharatkosh/bkepay'); //test
+// define('BHARATKOSH_PAYMENT_GATEWAY','https://bharatkosh.gov.in/bkepay'); //live
