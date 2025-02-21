@@ -94,7 +94,7 @@ if(count($res_fil_det) > 0){
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 2){ echo "Party of the case"; }
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 3){ echo "Advocate/Appearing Counsel"; }
                             else if(isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 4){ echo "Third Party"; }
-                            else if((isset($_SESSION["session_filed"]) && $_SESSION["session_filed"] == 6) || (isset(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == AUTHENTICATED_BY_AOR)){ echo "Authorized by AOR"; }
+                            else if((isset(getSessionData('login')['ref_m_usertype_id']) && getSessionData('login')['ref_m_usertype_id'] == AUTHENTICATED_BY_AOR)){ echo "Authorized by AOR"; }
                             ?>
                     </b>
                     
