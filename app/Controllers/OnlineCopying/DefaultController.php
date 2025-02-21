@@ -388,7 +388,8 @@ class DefaultController extends BaseController
             return $this->render('onlineCopying.sci_response',$data);
             }
             if ($orderStatus == 'SUCCESS'){
-                $orderCode='AC2021031700001';
+                $orderCode='AC2022071400002';
+                // $orderCode=$data->order_batch_merchant_batch_code;
                 $copyingDetails = getCopyingDetails($orderCode);
                 $diary_no = $copyingDetails[0];
                 $required_document = $copyingDetails[1];
